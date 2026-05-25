@@ -1,0 +1,139 @@
+        <section id="chap1" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 1</span>
+            <h2>Denombrement</h2>
+            <p>Le chapitre sert a compter des issues avant de passer aux probabilites uniformes.</p>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Plan du cours</h4>
+            <ul>
+              <li><span class="key-term">Notions sur les ensembles</span> : ensembles finis, denombrables, cardinaux.</li>
+              <li><span class="key-term">p-listes</span> : suites avec ordre et repetition possible.</li>
+              <li><span class="key-term">Arrangements</span> : p-listes sans repetition, permutations.</li>
+              <li><span class="key-term">Parties d'un ensemble</span> : combinaisons et cardinal de \(\mathcal P(E)\).</li>
+            </ul>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Ensemble fini et denombrable</h4>
+              <ul class="formula-list">
+                <li><strong>Ensemble fini</strong> : \(E\) est de cardinal \(n\) s'il existe une bijection de \(\llbracket 1,n\rrbracket\) vers \(E\), ou si \(E=\varnothing\) pour \(n=0\).</li>
+                <li><strong>Ensemble denombrable</strong> : il existe une bijection de \(\mathbb N\) vers \(E\).</li>
+                <li><strong>Exemples classiques</strong> : \(\mathbb Z\), \(\mathbb N^2\), \(\mathbb Q\) sont denombrables ; \(\mathbb R\) et \(\mathcal P(\mathbb N)\) ne le sont pas.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Cardinaux</h4>
+              <ul class="formula-list">
+                <li><strong>Cas disjoint</strong> : si \(A\cap B=\varnothing\), alors <span class="formula-chip">\( |A\cup B|=|A|+|B| \)</span>.</li>
+                <li><strong>Inclusion-exclusion</strong> : <span class="formula-chip">\( |A\cup B|=|A|+|B|-|A\cap B| \)</span>.</li>
+                <li><strong>Difference</strong> : \( |A\setminus B|=|A|-|A\cap B| \).</li>
+                <li><strong>Complementaire</strong> : \( |\overline A|=|E|-|A| \).</li>
+                <li><strong>Produit cartesien</strong> : \( |A\times B|=|A||B| \).</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Principe multiplicatif</h4>
+              <p>Si une construction se fait en plusieurs choix successifs independants en nombre \(n_1,\ldots,n_p\), le nombre total est \(n_1\cdots n_p\).</p>
+              <p>Exemple du cours : lancer un de et une piece donne \(6\times2=12\) issues.</p>
+            </div>
+            <div class="content-block remember">
+              <h4>Question reflexe</h4>
+              <p>Avant toute formule : ordre ? repetition ? tirage successif ou simultane ? remise ou sans remise ?</p>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>p-liste</h4>
+              <ul class="formula-list">
+                <li><strong>Objet compte</strong> : une suite de \(p\) elements de \(E\), donc un element de \(E^p\).</li>
+                <li><strong>Ordre</strong> : il compte.</li>
+                <li><strong>Repetition</strong> : elle est autorisee.</li>
+                <li><strong>Nombre</strong> : <span class="formula-chip">\(n^p\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Arrangement et permutation</h4>
+              <ul class="formula-list">
+                <li><strong>Objet compte</strong> : une p-liste d'elements distincts.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(A_n^p=n(n-1)\cdots(n-p+1)=\frac{n!}{(n-p)!}\)</span>.</li>
+                <li><strong>Permutation</strong> : arrangement de \(n\) elements, donc <span class="formula-chip">\(n!\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Combinaison</h4>
+              <ul class="formula-list">
+                <li><strong>Objet compte</strong> : une partie de \(E\) a \(p\) elements.</li>
+                <li><strong>Ordre</strong> : il ne compte pas.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(\binom np=\frac{A_n^p}{p!}=\frac{n!}{p!(n-p)!}\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Coefficients binomiaux</h4>
+              <ul class="formula-list">
+                <li><strong>Symetrie</strong> : \(\binom np=\binom n{n-p}\).</li>
+                <li><strong>Bords</strong> : \(\binom n0=\binom nn=1\).</li>
+                <li><strong>Un seul choix</strong> : \(\binom n1=n\).</li>
+                <li><strong>Pascal</strong> : <span class="formula-chip">\(\binom np=\binom{n-1}{p-1}+\binom{n-1}{p}\)</span>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block theorem">
+              <h4>Binome de Newton</h4>
+              <ul class="formula-list">
+                <li><strong>Formule</strong> : <span class="formula-chip">\((a+b)^n=\sum_{k=0}^n \binom nk a^k b^{n-k}\)</span>.</li>
+                <li><strong>Condition importante</strong> : pour des matrices, on ne developpe ainsi que si elles commutent.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Parties d'un ensemble</h4>
+              <ul class="formula-list">
+                <li><strong>Resultat a retenir</strong> : si \(|E|=n\), alors <span class="formula-chip">\(|\mathcal P(E)|=2^n\)</span>.</li>
+                <li><strong>Justification</strong> : \(|\mathcal P(E)|=\sum_{k=0}^n \binom nk=(1+1)^n=2^n\).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>Erreur frequente</strong>
+            <p>Ne pas confondre tirage simultane et tirage successif sans remise : les deux ne modelisent pas les memes objets, meme si les probabilites finales peuvent parfois coincider.</p>
+          </div>
+
+          <article class="exercise-card" data-exercise>
+            <header>
+              <div>
+                <span class="status-pill">Cours</span>
+                <h3>Cartes et choix de formule</h3>
+              </div>
+              <button class="ghost-button" type="button" data-toggle-redo>A refaire</button>
+            </header>
+            <div class="exercise-meta">
+              <span>Objectif : distinguer p-liste, arrangement, combinaison</span>
+              <span>Difficulte : 2/3</span>
+              <span>Temps : 12 min</span>
+            </div>
+            <p class="statement">Dans un jeu de 32 cartes, compter les tirages de 5 cartes avec remise, sans remise successivement, puis simultanement.</p>
+            <div class="button-row">
+              <button type="button" data-toggle="hint-c1">Afficher l'indice</button>
+              <button type="button" data-toggle="sol-c1">Afficher la correction</button>
+              <button type="button" data-mark-done>Marquer comme fait</button>
+            </div>
+            <div id="hint-c1" class="hidden-panel">
+              <strong>Indice</strong>
+              <p>Avec remise : repetitions possibles. Sans remise successif : ordre et pas de repetition. Simultane : pas d'ordre.</p>
+            </div>
+            <div id="sol-c1" class="hidden-panel">
+              <strong>Correction</strong>
+              <p>Avec remise : \(32^5\). Sans remise successivement : \(A_{32}^5=\frac{32!}{27!}\). Simultanement : \(\binom{32}{5}\).</p>
+              <div class="annotation" data-annotation>
+                <strong>Methode</strong>
+                <p>Ecris toujours le type d'objet compte avant la formule : suite avec repetition, suite sans repetition, ou partie.</p>
+              </div>
+            </div>
+          </article>
+        </section>

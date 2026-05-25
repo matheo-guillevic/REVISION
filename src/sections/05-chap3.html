@@ -1,0 +1,203 @@
+        <section id="chap3" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 3</span>
+            <h2>Variables aleatoires discretes</h2>
+            <p>Le cours passe d'evenements a des grandeurs numeriques : loi, repartition, moments et lois usuelles.</p>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Plan du cours</h4>
+            <ul>
+              <li><span class="key-term">Definitions</span> : variable aleatoire reelle discrete, loi, fonction de repartition, variables independantes.</li>
+              <li><span class="key-term">Moments</span> : esperance, transfert, variance, ecart-type, centrage-reduction, covariance.</li>
+              <li><span class="key-term">Cas denombrable</span> : convergence absolue des series definissant les moments.</li>
+              <li><span class="key-term">Lois usuelles</span> : uniforme, Bernoulli, binomiale, geometrique, Poisson et approximation de Poisson.</li>
+            </ul>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Variable aleatoire discrete</h4>
+              <p>Sur \((\Omega,\mathcal A,P)\), une variable aleatoire reelle discrete est une application \(X:\Omega\to\mathbb R\) dont l'ensemble de valeurs \(X(\Omega)\) est fini ou denombrable.</p>
+            </div>
+            <div class="content-block definition">
+              <h4>Loi de probabilite</h4>
+              <p>La loi de \(X\) est l'ensemble des couples \((x_k,p_k)\) ou \(x_k\in X(\Omega)\) et \(p_k=P(X=x_k)\). En cas fini, on la presente souvent sous forme de tableau.</p>
+              <p>Verification obligatoire : \(\sum_k p_k=1\).</p>
+            </div>
+            <div class="content-block definition">
+              <h4>Fonction de repartition</h4>
+              <ul class="formula-list">
+                <li><strong>Definition</strong> : <span class="formula-chip">\(F_X(x)=P(X\le x)\)</span>.</li>
+                <li><strong>Forme discrete</strong> : \(F_X\) est en escalier.</li>
+                <li><strong>Sauts</strong> : le saut en \(x_k\) vaut \(P(X=x_k)\).</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Variables independantes</h4>
+              <p>\(X\) et \(Y\) sont independantes si, pour tous \(a\in X(\Omega)\), \(b\in Y(\Omega)\), les evenements \((X=a)\) et \((Y=b)\) sont independants.</p>
+              <p>Pour montrer qu'elles ne le sont pas, il suffit de trouver \((a,b)\) tel que \(P(X=a,Y=b)\ne P(X=a)P(Y=b)\).</p>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block theorem">
+              <h4>Esperance</h4>
+              <ul class="formula-list">
+                <li><strong>Formule</strong> : <span class="formula-chip">\(E(X)=\sum_i x_iP(X=x_i)=\sum_i x_ip_i\)</span>.</li>
+                <li><strong>Interpretation</strong> : valeur moyenne theorique de \(X\).</li>
+                <li><strong>Variable centree</strong> : \(E(X)=0\).</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Theoreme de transfert</h4>
+              <ul class="formula-list">
+                <li><strong>Une variable</strong> : <span class="formula-chip">\(E(g(X))=\sum_i g(x_i)P(X=x_i)\)</span>.</li>
+                <li><strong>Deux variables</strong> : \(E(g(X,Y))=\sum_i\sum_j g(x_i,y_j)P(X=x_i,Y=y_j)\).</li>
+                <li><strong>Usage</strong> : calculer \(E(X^2)\), \(E(XY)\), ou une fonction d'une variable sans redeterminer toute la loi.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Lineairite et produit</h4>
+              <ul class="formula-list">
+                <li><strong>Constante</strong> : \(E(a)=a\).</li>
+                <li><strong>Somme</strong> : \(E(X+Y)=E(X)+E(Y)\).</li>
+                <li><strong>Affine</strong> : \(E(aX+b)=aE(X)+b\).</li>
+                <li><strong>Produit independant</strong> : <span class="formula-chip">\(E(XY)=E(X)E(Y)\)</span> si \(X,Y\) sont independantes.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Variance et ecart-type</h4>
+              <ul class="formula-list">
+                <li><strong>Definition</strong> : \(V(X)=E((X-E(X))^2)\).</li>
+                <li><strong>Formule de Koenig-Huygens</strong> : <span class="formula-chip">\(V(X)=E(X^2)-E(X)^2\)</span>.</li>
+                <li><strong>Ecart-type</strong> : \(\sigma(X)=\sqrt{V(X)}\).</li>
+                <li><strong>Transformation affine</strong> : \(V(aX+b)=a^2V(X)\), \(\sigma(aX+b)=|a|\sigma(X)\).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Variable centree reduite</h4>
+              <ul class="formula-list">
+                <li><strong>Condition</strong> : \(\sigma(X)\ne0\).</li>
+                <li><strong>Definition</strong> : <span class="formula-chip">\(X^*=\frac{X-E(X)}{\sigma(X)}\)</span>.</li>
+                <li><strong>Resultat</strong> : \(E(X^*)=0\) et \(\sigma(X^*)=1\).</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Covariance</h4>
+              <ul class="formula-list">
+                <li><strong>Definition</strong> : \(\operatorname{Cov}(X,Y)=E((X-E(X))(Y-E(Y)))\).</li>
+                <li><strong>Formule utile</strong> : <span class="formula-chip">\(\operatorname{Cov}(X,Y)=E(XY)-E(X)E(Y)\)</span>.</li>
+                <li><strong>Variance d'une somme</strong> : \(V(X+Y)=V(X)+V(Y)+2\operatorname{Cov}(X,Y)\).</li>
+                <li><strong>Si independance</strong> : \(\operatorname{Cov}(X,Y)=0\) et \(V(X+Y)=V(X)+V(Y)\).</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Cas denombrable</h4>
+              <p>Si \(X(\Omega)=\{x_i,\ i\in\mathbb N\}\), le moment d'ordre \(\alpha\) existe lorsque la serie \(\sum_i x_i^\alpha P(X=x_i)\) converge absolument.</p>
+              <p>Le moment d'ordre 1 est l'esperance, celui d'ordre 2 permet de definir la variance.</p>
+            </div>
+            <div class="content-block remember">
+              <h4>Series a connaitre</h4>
+              <ul class="formula-list">
+                <li><strong>Exponentielle</strong> : \(\sum_{n=0}^{+\infty}\frac{x^n}{n!}=e^x\).</li>
+                <li><strong>Geometrique</strong> : si \(|x|<1\), alors \(\sum_{n=0}^{+\infty}x^n=\frac1{1-x}\).</li>
+                <li><strong>Utilite</strong> : preuves des lois geometrique et de Poisson.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block method">
+              <h4>Loi uniforme discrete</h4>
+              <ul class="formula-list">
+                <li><strong>Notation</strong> : \(X\sim\mathcal U(\llbracket 1,n\rrbracket)\).</li>
+                <li><strong>Loi</strong> : \(P(X=i)=1/n\).</li>
+                <li><strong>Esperance</strong> : <span class="formula-chip">\(E(X)=\frac{n+1}{2}\)</span>.</li>
+                <li><strong>Variance</strong> : <span class="formula-chip">\(V(X)=\frac{n^2-1}{12}\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi de Bernoulli</h4>
+              <ul class="formula-list">
+                <li><strong>Notation</strong> : \(X\sim\mathcal B(p)\).</li>
+                <li><strong>Loi</strong> : \(P(X=1)=p\), \(P(X=0)=1-p\).</li>
+                <li><strong>Esperance</strong> : <span class="formula-chip">\(E(X)=p\)</span>.</li>
+                <li><strong>Variance</strong> : <span class="formula-chip">\(V(X)=p(1-p)\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi binomiale</h4>
+              <ul class="formula-list">
+                <li><strong>Reconnaissance</strong> : \(X\) compte les succes dans \(n\) epreuves de Bernoulli independantes.</li>
+                <li><strong>Loi</strong> : <span class="formula-chip">\(P(X=k)=\binom nkp^k(1-p)^{n-k}\)</span>.</li>
+                <li><strong>Esperance</strong> : \(E(X)=np\).</li>
+                <li><strong>Variance</strong> : \(V(X)=np(1-p)\).</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi geometrique</h4>
+              <ul class="formula-list">
+                <li><strong>Reconnaissance</strong> : \(X\) est le rang du premier succes.</li>
+                <li><strong>Support</strong> : \(X\in\mathbb N^*\).</li>
+                <li><strong>Loi</strong> : <span class="formula-chip">\(P(X=k)=(1-p)^{k-1}p\)</span>.</li>
+                <li><strong>Moments</strong> : \(E(X)=\frac1p\), \(V(X)=\frac{1-p}{p^2}\).</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi de Poisson</h4>
+              <ul class="formula-list">
+                <li><strong>Notation</strong> : \(X\sim\mathcal P(\lambda)\), avec \(\lambda>0\).</li>
+                <li><strong>Support</strong> : \(X\in\mathbb N\).</li>
+                <li><strong>Loi</strong> : <span class="formula-chip">\(P(X=k)=e^{-\lambda}\frac{\lambda^k}{k!}\)</span>.</li>
+                <li><strong>Moments</strong> : \(E(X)=\lambda\), \(V(X)=\lambda\).</li>
+                <li><strong>Somme</strong> : si \(X_1,X_2\) sont independantes, \(X_1+X_2\sim\mathcal P(\lambda_1+\lambda_2)\).</li>
+              </ul>
+            </div>
+            <div class="content-block warning">
+              <h4>Approximation de Poisson</h4>
+              <ul class="formula-list">
+                <li><strong>Depart</strong> : \(X\sim\mathcal B(n,p)\).</li>
+                <li><strong>Conditions pratiques</strong> : \(n\ge30\), \(p\le0,1\), \(np<15\).</li>
+                <li><strong>Approximation</strong> : <span class="formula-chip">\(X\approx Y\sim\mathcal P(np)\)</span>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <article class="exercise-card" data-exercise>
+            <header>
+              <div>
+                <span class="status-pill">Lois usuelles</span>
+                <h3>Orchestre et loi binomiale</h3>
+              </div>
+              <button class="ghost-button" type="button" data-toggle-redo>A refaire</button>
+            </header>
+            <div class="exercise-meta">
+              <span>Objectif : modeliser avec une binomiale</span>
+              <span>Difficulte : 3/3</span>
+              <span>Temps : 20 min</span>
+            </div>
+            <p class="statement">Deux orchestres A et B ont 4 et 6 musiciens. Chaque musicien est present avec probabilite \(p\), independamment. Un orchestre joue si strictement plus de la moitie est presente. Comparer les probabilites.</p>
+            <div class="button-row">
+              <button type="button" data-toggle="hint-c3">Afficher l'indice</button>
+              <button type="button" data-toggle="sol-c3">Afficher la correction</button>
+              <button type="button" data-mark-done>Marquer comme fait</button>
+            </div>
+            <div id="hint-c3" class="hidden-panel">
+              <strong>Indice</strong>
+              <p>Pour A, il faut au moins 3 presents sur 4. Pour B, au moins 4 presents sur 6.</p>
+            </div>
+            <div id="sol-c3" class="hidden-panel">
+              <strong>Correction</strong>
+              <p>Si \(X_A\sim\mathcal B(4,p)\), \(P(A)=P(X_A\ge3)=\binom43p^3(1-p)+p^4=4p^3-3p^4\).</p>
+              <p>Si \(X_B\sim\mathcal B(6,p)\), \(P(B)=P(X_B\ge4)=15p^4(1-p)^2+6p^5(1-p)+p^6=15p^4-24p^5+10p^6\).</p>
+              <div class="annotation" data-annotation>
+                <strong>Examen</strong>
+                <p>La modelisation vaut autant que le calcul : il faut ecrire clairement la loi suivie par chaque variable.</p>
+              </div>
+            </div>
+          </article>
+        </section>

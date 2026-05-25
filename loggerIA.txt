@@ -1,0 +1,68 @@
+2026-05-25 16:00 - Lecture de l'arborescence du projet et du fichier prompt.txt.
+2026-05-25 16:01 - Choix d'une structure de site statique autonome pour disposer rapidement d'une maquette fonctionnelle sans dependances.
+2026-05-25 16:02 - Creation prevue des fichiers index.html, styles.css et script.js, avec contenus de cours remplaces par des emplacements.
+2026-05-25 16:12 - Creation de la maquette HTML du site avec navigation guidee, sections principales, chapitre modele, exercices et revision finale.
+2026-05-25 16:12 - Ajout du style responsive sobre et academique dans styles.css.
+2026-05-25 16:12 - Ajout des interactions JavaScript : navigation active, affichage des indices/corrections, annotations, progression et marquage a refaire.
+2026-05-25 16:13 - Remplissage de planning.md avec les actions realisees, les actions a faire et les priorites de contenu.
+2026-05-25 16:13 - Remplissage de structure.md avec l'organisation du code et les conventions d'ajout de chapitres.
+2026-05-25 16:14 - Verification de la presence des fichiers crees et controle syntaxique de script.js avec Node.
+2026-05-25 16:15 - Demande d'integration des quatre chapitres PDF fournis : denombrement, espaces probabilises, variables aleatoires discretes et variables aleatoires continues.
+2026-05-25 16:16 - Debut de l'extraction du contenu des PDF pour organiser les chapitres dans le site.
+2026-05-25 16:17 - Extraction automatique impossible localement : pdftotext absent et Python indisponible.
+2026-05-25 16:18 - Decision d'integrer les chapitres a partir de leurs titres et du contenu mathematique standard attendu, avec aides et exemples complementaires.
+2026-05-25 16:24 - Remplacement de la maquette vide par un site organise autour des quatre chapitres de probabilites.
+2026-05-25 16:25 - Ajout de contenus pedagogiques synthetiques : objectifs, exigences, definitions, theoremes, methodes, aides, exercices corriges et revision finale.
+2026-05-25 16:26 - Mise a jour de planning.md et structure.md pour decrire la nouvelle organisation du site.
+2026-05-25 16:28 - Verification de la syntaxe JavaScript avec Node et controle de la presence des sections chap1 a chap4 dans index.html.
+2026-05-25 16:29 - Demande utilisateur de developper le site pour retracer tout le contenu des cours en suivant les PDF maintenant ranges dans des dossiers.
+2026-05-25 16:30 - Recherche des dossiers et fichiers PDF disponibles dans le projet.
+2026-05-25 16:31 - Installation locale de pdf-parse pour extraire le texte des PDF de cours et TD.
+2026-05-25 16:32 - Remplacement de pdf-parse par la version 1.1.1 compatible avec Node local.
+2026-05-25 16:33 - Extraction reussie des PDF de cours et TD dans le dossier extracted.
+2026-05-25 16:42 - Lecture des plans et sections extraites pour identifier les contenus manquants par rapport a la premiere version.
+2026-05-25 16:55 - Reecriture complete de index.html pour suivre davantage les PDF : contenus detailles, lois usuelles, methodes, TD et revision finale.
+2026-05-25 16:56 - Mise a jour de planning.md et structure.md pour documenter l'extraction PDF et la nouvelle organisation.
+2026-05-25 16:58 - Correction de notations LaTeX pour l'etoile des variables centrees reduites.
+2026-05-25 16:59 - Verification finale : script.js valide avec Node, sections chap1 a chap4 et TD presentes, plus aucune notation LaTeX X^\* restante.
+2026-05-25 17:00 - Demande utilisateur de diviser le HTML pour ameliorer la lisibilite du projet.
+2026-05-25 17:01 - Preparation d'une organisation source en fichiers partiels avec reconstruction automatique de index.html.
+2026-05-25 17:02 - Ajout des scripts tools/split-html.js et tools/build-html.js.
+2026-05-25 17:03 - Decoupage de index.html dans src/layout et src/sections.
+2026-05-25 17:04 - Ajout des scripts npm build, split et extract dans package.json.
+2026-05-25 17:05 - Reconstruction reussie de index.html depuis les 10 sections separees.
+2026-05-25 17:06 - Verification finale : script.js valide, ancres principales presentes, build npm fonctionnel.
+2026-05-25 17:07 - Demande utilisateur d'aerer les notions : couleurs sur les points primordiaux, listes a puces pour les egalites et blocs de cours sur toute la largeur.
+2026-05-25 17:08 - Modification CSS : content-grid passe en pleine largeur, ajout des styles key-term, formula-list et formula-chip.
+2026-05-25 17:12 - Reecriture ciblee des chapitres 1 a 4 : plans colorises, formules importantes en pastilles, egalites transformees en listes.
+2026-05-25 17:13 - Reconstruction de index.html avec npm run build et verification syntaxique de script.js.
+2026-05-25 17:14 - Demande utilisateur de creer des pages TD avec enonces reecrits, corrections detaillees et explications de formules.
+2026-05-25 17:15 - Lecture des textes extraits des TD1, TD2 et TD3 pour preparer les pages corrigees.
+2026-05-25 17:16 - Ajout de styles dedies aux pages TD et remplacement des liens TD vers des pages corrigees.
+2026-05-25 17:22 - Creation de td1.html avec les 14 exercices de denombrement reecrits et corriges.
+2026-05-25 17:29 - Creation de td2.html avec les 11 exercices d'espaces probabilises reecrits et corriges.
+2026-05-25 17:36 - Creation de td3.html avec les 10 exercices de variables aleatoires reecrits et corriges.
+2026-05-25 17:37 - Adaptation de script.js pour fonctionner aussi sur les pages TD sans progression ni bouton global d'annotations.
+2026-05-25 17:38 - Reconstruction de index.html, verification de script.js et controle des liens vers td1.html, td2.html et td3.html.
+2026-05-25 17:39 - Mise a jour de planning.md et structure.md pour documenter les nouvelles pages TD corrigees.
+2026-05-25 17:40 - Simplification de la section TD principale : suppression de la carte TD2 corrige et ajout d'un petit lien "Correction manuscrite" sous TD2.
+2026-05-25 17:41 - Demande utilisateur d'ajouter des explications de raisonnement dans les corrections TD et des tags de notions par exercice.
+2026-05-25 17:42 - Ajout des styles topic-tags, topic-tag et reasoning-note pour les pages TD.
+2026-05-25 17:45 - Ajout de tools/enrich-td-pages.js pour enrichir les 35 exercices TD avec tags et notes de raisonnement.
+2026-05-25 17:46 - Application de l'enrichissement : 35 blocs de tags et 35 notes de raisonnement ajoutes aux pages TD.
+2026-05-25 17:47 - Verification : 35 topic-tags, 35 reasoning-note et script.js valide.
+2026-05-25 17:48 - Demande utilisateur d'ajouter des explications pour chacune des questions de chaque exercice TD.
+2026-05-25 17:49 - Ajout du style question-notes pour les explications par question.
+2026-05-25 17:52 - Ajout de tools/add-td-question-notes.js et injection de 35 blocs d'explications par question dans td1, td2 et td3.
+2026-05-25 17:53 - Verification : 35 question-notes, 35 topic-tags et script.js valide.
+2026-05-25 17:54 - Demande utilisateur d'ajouter les questions reecrites des exercices TD sous forme de bloc Question et de bloc Reponse.
+2026-05-25 17:56 - Ajout des styles question-block et answer-block.
+2026-05-25 18:00 - Ajout de tools/add-td-question-blocks.js et injection de 35 blocs Questions/Reponse dans td1, td2 et td3.
+2026-05-25 18:01 - Verification : 35 blocs Questions, 35 blocs Reponse, 35 blocs d'explications par question et script.js valide.
+2026-05-25 18:02 - Demande utilisateur de restructurer les TD : un bloc reponse par question, avec raisonnement affichable separement de la solution.
+2026-05-25 18:03 - Ajout des styles per-question-answers, question-answer-card, reasoning-panel et solution-panel.
+2026-05-25 18:04 - Ajout de tools/restructure-td-answers.js pour transformer les corrections TD en reponses separees par question.
+2026-05-25 18:05 - Transformation des TD : 118 cartes question-reponse creees, chacune avec un panneau raisonnement et un panneau solution.
+2026-05-25 18:06 - Correction structurelle : les blocs de reponse sont visibles directement, seuls le raisonnement et la solution restent masques separement.
+2026-05-25 18:10 - Ajout de tools/fill-td-question-answers.js pour reinjecter des raisonnements et solutions explicites dans les 118 sous-questions.
+2026-05-25 18:11 - Verification : 118 cartes question-reponse, 118 panneaux raisonnement, 118 panneaux solution, aucun texte generique restant, script.js valide.

@@ -1,0 +1,143 @@
+
+
+MT331
+TD 3 : Variables aléatoires2025 - 2026
+Exercice 1Le jeu américain ”chuck a luck” est le suivant : on parie sur un nombre de 1 à 6. On lance 3 dés. Si le
+nombre sur lequel on a parié sort 3 fois, on gagne 3 $; si il sort 2 fois, on gagne 2 $; si il sort 1 fois, on gagne 1 $ et si
+il ne sort pas, on perd 1 $.
+1.SoitXle gain lors d’une partie, déterminer la loi deX.
+2.En moyenne, combien gagne t-on à ce jeu lors d’une partie?
+Exercice 2Dans la mémoire d’un ordinateur d’un ordinateur, on appellequartetun ensemble de 4 bits (1 bit=0 ou
+1). SoitQun quartet, notons parZle nombre tel queQ=écriture deZen base 2. On suppose que la mémoire de
+l’ordinateur n’a pas été initialisée : ainsi, tous les bits de la mémoire se trouvent, indépendamment, dans l’état 1 avec
+probabilitép.
+1.Calculer l’espérance et la variance deZ.
+2.Calculer la probabilité queZsoit pair.
+3.Calculer
+P
+(
+Z>
+3)
+.
+Exercice 3Un appareil électronique comporte 20 composants. La probabilité de non fonctionnement est estimée à
+0,0015 pour chacun des composants.
+1.Quelle est la probabilité de non fonctionnement de l’appareil?
+2.On considère dix appareils, et on noteXle nombre d’appareils défectueux. Déterminer la loi deX, puis calculer
+la probabilité d’avoir au moins 7 bons appareils.
+3.Si on considère 100 appareils, déterminer le nombre moyen d’appareils défectueux.
+Exercice 4Vous recevez un message en binaire de longueur 32 bits. On vous indique qu’il y a une probabilité d’erreur
+de transmission sur un caractère qui est de10
+−5
+.
+1.Quelle est la loi suivie par la variableXqui représente le nombre d’erreur possible dans le message. Justifier.
+2.Quelle est la probabilité que le message reçu comporte une unique erreur.
+3.Même question pour exactement quatre erreurs.
+4.Même question pour au moins une erreur.
+5.Quel est le nombre moyen d’erreur?
+Exercice 5Si dans une population une personne sur cent est un centenaire, quelle est la probabilité de trouver au
+moins un centenaire parmi100personnes choisies au hasard? Et parmi200personnes?
+Exercice 6Le nombreNd’enfants d’une famille d’une population est une v.a de loi de Poisson de paramètreλ.
+Chaque enfant a la probabilitépd’avoir un gèneA, et ceci de façon indépendante. SoitXle nombre d’enfants d’une
+famille ayant le gèneAetYle nombre d’enfants de la famille ne l’ayant pas.
+1.Quelle relation existe-t-il entreN,X,Y?
+2.Pourn∈Netk∈{0...n}, déterminerP(X=k|N=n). Calculer la loi deX.
+3.Déterminer la loi deY.
+4.Montrer queXetYsont indépendantes.
+5.Application.λ= 2,p= 0,4. Déterminer la probabilité pour une famille d’avoir 3 enfants présentant le gèneA
+et 2 enfants ne l’ayant pas.
+Exercice 7
+On considère le jeu suivant : un candidat doit répondre à une question, puis quelque soit sa réponse,
+tirer une boule dans une urne. Si la boule est blanche, on remet la boule blanche, une boule noire de plus, et le jeu
+continue. Si elle est noire le jeu s’arrête. De plus à chaque bonne réponse il gagne 1000 euros, et il a une chance sur 2
+de se tromper. On noteX=nombre de parties jouées par le candidat, etY=gain du joueur. 0n pose par convention
+X=−1etY=−1si le jeu ne s’arrête jamais. On suppose qu’au départ il n’y a qu’une boule blanche.
+1.(a)Determiner la loi deX. (on calculeraP(X=n)pourn∈N
+∗
+)
+(b)CalculerE(X)
+2.determiner la loi deY.
+1
+
+MT331
+TD 3 : Variables aléatoires2025 - 2026
+Exercice 8Une variableXpeut prendre quatre valeurs différentesa,b,cetdavec pour probabilités respectives 0,5;
+0,25 : 0,125 et 0,125.
+1.On noteC
+1
+un codage deXtel queC
+1
+(a) = 00,C
+1
+(b) = 01,C
+1
+(c) = 10etC
+1
+(d) = 11. On s’intéresse à la
+variable longueur du codage. Déterminer sa loi.
+2.Quelle est la longueur moyenne du codeC
+1
+? avec quel écart type?
+3.Reprendre les questions précédentes avecC
+2
+un codage deXtel queC
+2
+(a) = 0,C
+2
+(b) = 10,C
+2
+(c) = 110et
+C
+2
+(d) = 111.
+4.Quel code choisissez-vous?
+5.En théorie de l’information, on peut montrer que (théorème du codage sans bruit) tout codage deXtraduisant
+ses valeursx
+i
+à l’aide den
+i
+bits utilisera un nombre moyen de bits supérieur ou égal à une quantitéH(X)
+appelée entropie deX. On définitH(X)à l’aide de la formuleH(X) =−Σ
+N
+i=1
+p(x
+i
+)log
+2
+p(x
+i
+).
+Calculer l’entropie deX.
+6.Que peut-on en conclure sur les précédents codes?
+Exercice 9 Le paradoxe de St Petersbourg
+On considère le jeu suivant. Si face apparait, la banque paie deux euros au joueur, sinon on relance la pièce. Si face
+apparait au deuxième lancer, la banque paie quatre euros au joueur, sinon on relance la pièce. Si face apparait au
+troisième lancer, la banque paie huit euros au joueur, et ainsi de suite.
+1.Combien va payer la banque si face n’apparait qu’au seizième lancer?
+2.On noteXla somme que doit payer la banque au joueur, déterminer la loi deX.
+3.La banque vous propose une mise initiale de 150 euros. Acceptez-vous de participer au jeu?
+4.La banque vous propose une mise initiale de 5 euros. Acceptez-vous de participer au jeu?
+5.DéterminerE(X). Conclusion?
+6.Que permet d’illustrer ce paradoxe?
+Exercice 10En période de forte affluence, les compagnies aériennes pratiquent le surbooking; compte tenu de dé-
+fections de dernière minute, elles enregistrent un nombre de réservations légèrement supérieur au nombre de places
+disponibles sur leurs vols.
+Sur une destination donnée, la capacité des avions est de 205 passagers.
+La probabilité qu’un passager qui a réservé annule sa réservation au dernier moment (ou ne se présente pas au départ)
+est évaluée, compte tenu des observations passées, à
+1
+70
+.
+On suppose qu’une compagnie enregistre 210 réservations sur un vol. SoitXle nombre de passagers ne se présentant
+pas au départ.
+1.Déterminer la loi deX. Justifier.
+2.CalculerP(X= 0)etP(X= 1).
+3.On considère la variable aléatoireX
+′
+de loi de Poisson de paramètre 3.
+4.DéterminerP(X
+′
+= 0)etP(X
+′
+= 1). Comparer aux résultats du b).
+5.Quelle est la probabilité qu’il y ait plus de passagers à l’embarquement que de places assises?
+2

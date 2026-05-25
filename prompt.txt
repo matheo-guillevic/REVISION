@@ -1,0 +1,187 @@
+Je veux créer un site web de révision en mathématiques destiné à des élèves de prépa, mais uniquement pour préparer un examen précis de fin de semestre. Le site ne doit pas être une plateforme générale ou flexible : il doit suivre un parcours fermé, guidé et centré uniquement sur mes cours, mes notions, mes exercices et les attentes de l’examen.
+
+Le site doit avoir une apparence sobre, sérieuse, académique et moderne. Il doit donner l’impression d’un outil de travail efficace pour élèves de prépa, pas d’un site scolaire grand public. L’interface doit être claire, lisible, responsive, avec une excellente gestion des formules LaTeX.
+
+Objectif du site :
+Aider les élèves à réviser efficacement un semestre de mathématiques en suivant un parcours imposé :
+1. comprendre le cours sélectionné ;
+2. retenir les définitions, théorèmes et méthodes exigibles ;
+3. s’entraîner sur des exercices corrigés ;
+4. comprendre les corrections grâce à des annotations pédagogiques ;
+5. se préparer à un sujet type examen.
+
+Structure générale du site :
+- Page d’accueil
+- Programme du semestre
+- Chapitres de cours
+- Méthodes obligatoires
+- Exercices corrigés annotés
+- Sujets type examen
+- Révision finale
+
+Page d’accueil :
+Créer une page d’accueil qui présente clairement l’objectif du site :
+“Préparation à l’examen de mathématiques du semestre”.
+
+La page doit afficher :
+- une courte introduction ;
+- la liste des chapitres du semestre ;
+- une progression globale ;
+- les priorités de révision ;
+- un bouton pour commencer ou reprendre le parcours.
+
+Exemple de sections :
+- Objectif de l’examen
+- Parcours de révision
+- Chapitres du semestre
+- À revoir en priorité
+- Accès rapide aux exercices
+- Sujet blanc final
+
+Navigation :
+Le site doit avoir une navigation simple et dirigée.
+Prévoir un menu latéral avec les chapitres dans l’ordre du semestre.
+Chaque chapitre doit être accessible dans un ordre logique.
+La navigation ne doit pas encourager une exploration libre trop large : elle doit guider l’élève dans le parcours prévu.
+
+Structure d’un chapitre :
+Chaque chapitre doit suivre exactement la même structure :
+
+1. Objectifs du chapitre
+Présenter ce que l’élève doit savoir faire à l’examen.
+
+2. Ce qui est exigible
+Liste claire des définitions, théorèmes, propriétés, démonstrations ou méthodes à connaître.
+
+3. Cours sélectionné
+Présenter uniquement les notions du cours que je choisis.
+Le cours doit être découpé en blocs :
+- Définition
+- Théorème
+- Propriété
+- Méthode
+- Exemple
+- Remarque
+- Attention
+- À retenir
+
+4. Exemples commentés
+Chaque exemple doit être détaillé étape par étape.
+Les passages importants doivent être annotés pour expliquer pourquoi on applique une méthode, quelle hypothèse est utilisée, ou quelle erreur éviter.
+
+5. Exercices corrigés
+Prévoir une liste limitée mais bien choisie d’exercices :
+- exercices d’application directe ;
+- exercices classiques ;
+- exercices type examen.
+
+Chaque exercice doit contenir :
+- énoncé ;
+- objectif de l’exercice ;
+- notions utilisées ;
+- difficulté ;
+- temps conseillé ;
+- indice facultatif ;
+- correction détaillée ;
+- annotations dans la correction ;
+- méthode à retenir.
+
+6. Méthodes à retenir
+À la fin du chapitre, résumer les raisonnements essentiels sous forme de fiches courtes.
+
+7. Questions type examen
+Ajouter quelques questions représentatives de ce qui peut tomber à l’examen.
+
+Annotations pédagogiques :
+Le site doit intégrer un système d’annotations très visible mais non intrusif.
+
+Types d’annotations :
+- “À retenir absolument”
+- “Attention”
+- “Erreur fréquente”
+- “Pourquoi ?”
+- “Détail”
+- “Rédaction attendue”
+- “Examen”
+- “Méthode”
+
+Les annotations peuvent apparaître en marge, dans des bulles, ou dans des encadrés à côté du cours et des corrections.
+
+Exemple :
+Dans une correction, si on applique un théorème, ajouter une annotation :
+“On peut appliquer ce théorème car toutes les hypothèses ont été vérifiées.”
+
+Ou :
+“Erreur fréquente : conclure trop vite sans vérifier la liberté de la famille.”
+
+Style visuel :
+Le design doit être :
+- sobre ;
+- académique ;
+- moderne ;
+- très lisible ;
+- adapté à un usage intensif ;
+- compatible ordinateur, tablette et mobile.
+
+Prévoir :
+- fond clair ;
+- typographie lisible ;
+- blocs bien espacés ;
+- menu latéral fixe sur ordinateur ;
+- cartes pour les chapitres ;
+- encadrés colorés pour les définitions, théorèmes, méthodes et alertes ;
+- formules mathématiques en LaTeX ;
+- boutons pour afficher ou masquer les indices et corrections.
+
+Couleurs suggérées :
+- bleu pour les définitions ;
+- vert pour les méthodes ;
+- violet ou gris foncé pour les théorèmes ;
+- orange pour les remarques importantes ;
+- rouge pour les erreurs fréquentes ;
+- jaune pâle pour les points à retenir.
+
+Fonctionnalités importantes :
+- afficher/masquer les indices ;
+- afficher/masquer les corrections ;
+- afficher les annotations pédagogiques ;
+- suivre la progression dans le semestre ;
+- marquer un exercice comme “à refaire” ;
+- accéder rapidement aux notions exigibles ;
+- proposer une page “révision finale” ;
+- proposer un sujet blanc type examen.
+
+Page “Méthodes obligatoires” :
+Créer une page dédiée aux méthodes transversales que l’élève doit maîtriser.
+Chaque méthode doit contenir :
+- quand l’utiliser ;
+- plan standard ;
+- exemple minimal ;
+- erreurs fréquentes ;
+- exercice associé.
+
+Page “Sujets type examen” :
+Créer une page avec un ou plusieurs sujets blancs.
+Chaque sujet doit contenir :
+- durée conseillée ;
+- consignes ;
+- barème indicatif ;
+- énoncé ;
+- correction détaillée ;
+- annotations de rédaction ;
+- points à ne pas oublier.
+
+Page “Révision finale” :
+Créer une page synthétique pour les derniers jours avant l’examen.
+Elle doit contenir :
+- liste des définitions essentielles ;
+- liste des théorèmes à connaître ;
+- formules importantes ;
+- erreurs fréquentes ;
+- méthodes indispensables ;
+- exercices à refaire absolument ;
+- mini-plan de révision.
+
+Ton attendu :
+Propose une maquette détaillée du site, la structure des pages, les composants principaux, l’organisation visuelle, les interactions, et si possible un exemple de page de chapitre avec du faux contenu mathématique en LaTeX.
+Le résultat doit être suffisamment précis pour servir de base à la création du site.

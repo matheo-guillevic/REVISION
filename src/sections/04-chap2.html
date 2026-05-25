@@ -1,0 +1,155 @@
+        <section id="chap2" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 2</span>
+            <h2>Espaces probabilises</h2>
+            <p>Le chapitre fixe le vocabulaire et les outils de calcul : probabilite, conditionnement, Bayes, independance.</p>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Plan du cours</h4>
+            <ul>
+              <li><span class="key-term">Vocabulaire</span> : experience aleatoire, univers, evenement, evenement elementaire, incompatibilite, contraire.</li>
+              <li><span class="key-term">Espace probabilise fini</span> : definition, proprietes, caracterisation, equiprobabilite.</li>
+              <li><span class="key-term">Cas general</span> : tribu, espace probabilisable, espace probabilise, systeme complet.</li>
+              <li><span class="key-term">Outils de calcul</span> : probabilites conditionnelles, probabilites totales, Bayes, independance.</li>
+            </ul>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Vocabulaire</h4>
+              <ul class="formula-list">
+                <li><strong>Experience aleatoire</strong> : experience dont le resultat depend du hasard.</li>
+                <li><strong>Univers</strong> : ensemble \(\Omega\) de toutes les issues possibles.</li>
+                <li><strong>Evenement</strong> : partie de \(\Omega\).</li>
+                <li><strong>Incompatibilite</strong> : \(A\cap B=\varnothing\).</li>
+                <li><strong>Contraire</strong> : \(\overline A=\Omega\setminus A\).</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Probabilite finie</h4>
+              <p>Si \(\Omega\) est fini, une probabilite sur \(\mathcal P(\Omega)\) est une application \(P:\mathcal P(\Omega)\to[0,1]\) telle que \(P(\Omega)=1\) et, si \(A\cap B=\varnothing\), \(P(A\cup B)=P(A)+P(B)\).</p>
+            </div>
+            <div class="content-block theorem">
+              <h4>Proprietes de base</h4>
+              <ul class="formula-list">
+                <li><strong>Impossible</strong> : \(P(\varnothing)=0\).</li>
+                <li><strong>Contraire</strong> : \(P(\overline A)=1-P(A)\).</li>
+                <li><strong>Difference</strong> : \(P(A\setminus B)=P(A)-P(A\cap B)\).</li>
+                <li><strong>Croissance</strong> : si \(A\subset B\), alors \(P(A)\le P(B)\).</li>
+                <li><strong>Union</strong> : <span class="formula-chip">\(P(A\cup B)=P(A)+P(B)-P(A\cap B)\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Caracterisation finie</h4>
+              <ul class="formula-list">
+                <li><strong>Poids elementaires</strong> : \(p_i=P(\{\omega_i\})\).</li>
+                <li><strong>Conditions</strong> : \(p_i\ge0\) et <span class="formula-chip">\(\sum_i p_i=1\)</span>.</li>
+                <li><strong>Probabilite d'un evenement</strong> : \(P(A)=\sum_{\omega_i\in A}p_i\).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block method">
+              <h4>Equiprobabilite</h4>
+              <ul class="formula-list">
+                <li><strong>Hypothese</strong> : toutes les issues elementaires ont la meme probabilite.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(P(A)=\frac{|A|}{|\Omega|}\)</span>.</li>
+                <li><strong>Lecture</strong> : nombre de cas favorables divise par nombre de cas possibles.</li>
+                <li><strong>Lien</strong> : le chapitre 1 sert a calculer ces cardinaux.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Tribu</h4>
+              <ul class="formula-list">
+                <li><strong>Contient</strong> : \(\Omega\in\mathcal A\).</li>
+                <li><strong>Stable par contraire</strong> : si \(B\in\mathcal A\), alors \(\overline B\in\mathcal A\).</li>
+                <li><strong>Stable par reunion</strong> : une reunion finie ou denombrable d'evenements reste un evenement.</li>
+                <li><strong>Cas fini</strong> : \(\mathcal P(\Omega)\) est une tribu.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Systeme complet d'evenements</h4>
+              <p>Une famille \((A_i)_{i\in I}\) est un systeme complet si les \(A_i\) sont des evenements, deux a deux incompatibles, et si \(\bigcup_i A_i=\Omega\).</p>
+            </div>
+            <div class="content-block theorem">
+              <h4>Continuite des probabilites</h4>
+              <p>Si \((A_n)\) est croissante, \(P(\bigcup_n A_n)=\lim P(A_n)\). Si elle est decroissante, \(P(\bigcap_n A_n)=\lim P(A_n)\).</p>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Probabilite conditionnelle</h4>
+              <ul class="formula-list">
+                <li><strong>Hypothese</strong> : \(P(A)>0\).</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(P_A(B)=P(B\mid A)=\frac{P(A\cap B)}{P(A)}\)</span>.</li>
+                <li><strong>Point important</strong> : \(B\mapsto P_A(B)\) est encore une probabilite.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Probabilites totales</h4>
+              <ul class="formula-list">
+                <li><strong>Hypothese</strong> : \(A_1,\ldots,A_n\) forment un systeme complet et \(P(A_k)>0\).</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(P(B)=\sum_{k=1}^n P(A_k)P(B\mid A_k)\)</span>.</li>
+                <li><strong>Cas general</strong> : meme idee pour un systeme complet denombrable.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Bayes</h4>
+              <ul class="formula-list">
+                <li><strong>But</strong> : inverser une probabilite conditionnelle.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(P(A_k\mid B)=\frac{P(A_k)P(B\mid A_k)}{\sum_{i=1}^nP(A_i)P(B\mid A_i)}\)</span>.</li>
+                <li><strong>Denominateur</strong> : c'est \(P(B)\), obtenu par probabilites totales.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Independance</h4>
+              <ul class="formula-list">
+                <li><strong>Deux evenements</strong> : <span class="formula-chip">\(P(A\cap B)=P(A)P(B)\)</span>.</li>
+                <li><strong>Famille</strong> : verifier l'independance pour toute intersection finie de sous-famille.</li>
+                <li><strong>Piege</strong> : independance n'est pas incompatibilite.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>Attention</strong>
+            <p>Incompatibilite signifie \(A\cap B=\varnothing\). Independance signifie \(P(A\cap B)=P(A)P(B)\). Deux evenements incompatibles non impossibles ne sont pas independants.</p>
+          </div>
+
+          <article class="exercise-card" data-exercise>
+            <header>
+              <div>
+                <span class="status-pill">TD / Bayes</span>
+                <h3>Controle antidopage</h3>
+              </div>
+              <button class="ghost-button" type="button" data-toggle-redo>A refaire</button>
+            </header>
+            <div class="exercise-meta">
+              <span>Objectif : conditionner et inverser une probabilite</span>
+              <span>Difficulte : 2/3</span>
+              <span>Temps : 15 min</span>
+            </div>
+            <p class="statement">En competition, \(P(P)=0,02\). Le medicament \(M\) est utilise par 25% des sportifs et \(P(P\mid M)=0,05\). Calculer \(P(M\cap P)\), puis discuter \(P(M\mid P)\).</p>
+            <div class="button-row">
+              <button type="button" data-toggle="hint-c2">Afficher l'indice</button>
+              <button type="button" data-toggle="sol-c2">Afficher la correction</button>
+              <button type="button" data-mark-done>Marquer comme fait</button>
+            </div>
+            <div id="hint-c2" class="hidden-panel">
+              <strong>Indice</strong>
+              <p>Commence par \(P(M\cap P)=P(M)P(P\mid M)\), puis utilise Bayes.</p>
+            </div>
+            <div id="sol-c2" class="hidden-panel">
+              <strong>Correction</strong>
+              <p>\(P(M\cap P)=0,25\times0,05=0,0125\).</p>
+              <p>Comme \(P(P)=0,02\), \(P(M\mid P)=\frac{P(M\cap P)}{P(P)}=\frac{0,0125}{0,02}=0,625\).</p>
+              <div class="annotation" data-annotation>
+                <strong>Redaction attendue</strong>
+                <p>Ne pas ecrire \(P(M\mid P)=P(P\mid M)\). Le sens de la condition est l'un des pieges principaux du chapitre.</p>
+              </div>
+            </div>
+          </article>
+        </section>
