@@ -1,0 +1,451 @@
+
+
+          
+          
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+AU361 – TD 1 
+Analyse et Commande des systèmes linéaires continus 
+Invariants causaux à temps continu et à temps discret 
+ 
+ 
+     
+ Nathalie Fulget 
+ Département Automatique 
+ Grenoble INP Esisar 
+ 
+Exercices portant sur la partie Représentation des processus 
+Points abordés:  Variables(  entrée,  sortie,  perturbation),  paramètres - Schéma  fonctionnel 
+des   systèmes   asservis - mise   en   équation   des   systèmes   physiques - Analyse   et 
+caractéristiques des systèmes linéaires représentés sous forme de fonction de transfert 
+ 
+ 
+
+_________________________________________________________________________  
+Régulation de niveau d’un réservoir d’eau : 
+ 
+Soit un réservoir d'eau, cylindrique de section S (en m
+2
+), qui sert à alimenter un ensemble de 
+consommateurs. Il se vide en fonction de la demande des consommateurs selon un débit q
+s
+(t) 
+(en  m
+3
+/s).  D'autre  part,  il  peut  être  rempli  grâce  à  un  débit  q
+e
+(t)  (en  m
+3
+/s)  permettant  de 
+maintenir un niveau n(t) (en m) autour d'une consigne constante. On désire, en effet, maintenir 
+le niveau constant dans ce réservoir afin de maintenir une pression constante. 
+ 
+1.  Donner  la  liste  des paramètres et  la  liste  des variables de  ce  système  en  précisant parmi 
+celles-ci l'entrée u(t), la sortie y(t), et la perturbation. Cette perturbation est notée 
+1
+(t). 
+ 
+2. Ecrire l'équation différentielle de ce système en fonction de q
+e
+(t), q
+s
+(t), n(t), et S. 
+ 
+3.  On  suppose  que  la  régulation  de  niveau  de  ce  système  est  réalisée  grâce  à  un  régulateur 
+proportionnel de gain K. C'est à dire que la varible de commande est proportionnelle à l'écart 
+entre la consigne et la mesure de la variable à piloter. 
+Donner le schéma fonctionnel du système asservi. On note cn(t) la consigne de niveau, R le 
+régulateur et H le processus à piloter. 
+ 
+4. Ecrire l'équation différentielle du système asservi en fonction de q
+s
+(t), n(t), cn(t), K et S. 
+ 
+5. On note R(p) la fonction de transfert du régulateur proportionnel de gain K et H(p) la 
+fonction de transfert du processus à piloter. Donner leurs expressions respectives. 
+ 
+6. Tracer le diagramme de Bode de la fonction de transfert H(p) 
+ 
+7. On note CN(p), Y(p), et 
+1
+(p) les transformées de Laplace de cn(t), y(t) et 
+1
+(t).Donner les 
+expressions des fonctions de transfert T(p)et T
+
+(p) telles que: 
+ 
+Y
+p
+T
+p
+CN
+p
+T
+p
+p
+(
+)
+(
+)
+(
+)
+(
+)
+(
+)
+=
++
+
+1
+1
+
+ 
+ 
+8. Donner la valeur des pôles des fonctions de transfert T(p) et T
+
+(p). Correspondent -elles à 
+des systèmes stables? 
+ 
+9. Tracer le diagramme de Bode de la fonction de transfert bH(p) et de la fonction de transfert 
+T(p). 
+ 
+10. On suppose que cn(t) = 0, 
+
+t, n(t) = 0, et q
+s
+(t) = 0 pour t<0, q
+s
+(t) = 1 pour t
+
+0 
+Quelle est la valeur de n(t) en régime permanent (t 
+→
+
+). 
+Remarque: La référence niveau à zéro ne correspond pas à un réservoir vide. 
+ 
+
+___________________________________________________________________________ 
+Asservissement de vitesse d’une scie :  
+Soit  un  système  constitué  d'un  moteur  à  courant  continu  entraînant  une  scie  circulaire.  On 
+désire  que  la  rotation  de  la  scie  se  fasse  à  vitesse  constante,  malgré  les  variations  du  couple 
+résistant  Cr(t)  dues  à  la  charge.  On  note  u(t)  la  tension  de  commande  du  moteur,  w(t)  la 
+vitesse  angulaire  du  moteur,  i(t)  le  courant  moteur,  e(t)  la  force  contre-électromotrice,  J 
+l'inertie du moteur, K1 le coefficient de proportionnalité entre le couple moteur et le courant, 
+K2  le  coefficient  de  proportionnalité  entre  la  force  contre-électromotrice  et  la  vitesse 
+angulaire, et R la résistance du moteur. 
+ 
+1. Donner la liste des variables de ce système en indiquant celle qui est l'entrée, celle qui est 
+la sortie, et celle qui est la perturbation. Donner la liste des paramètres de ce système. 
+ 
+2. Ecrire l'équation différentielle de ce système. 
+ 
+3.  Mettre  ce  système  sous  forme  d'équation  d'état,  en  supposant  que  le  vecteur  d'entrée  est 
+composé de l'entrée de commande et de la perturbation. 
+ 
+4. On suppose que le couple résistant est nul. Donner l'expression de la fonction de transfert 
+T(p) du système entre la tension de commande u(t) et la vitesse angulaire w(t). 
+ 
+5. Quels sont les pôles du système? Le système est-il stable? 
+ 
+6. On applique un échelon de commande u(t) de 10V au moteur a l'instant t = 0. 
+ 
+Quelle est la valeur de la vitesse angulaire w lorsque t tend vers l'infini. 
+Quelle est la valeur de la vitesse angulaire w(t=0
++
+). 
+Quelle est la valeur de l'accélération angulaire acc(t=0
++
+). 
+ 
+7. On note respectivement CR(p), U(p) et W(p) les tranformées de Laplace des signaux Cr(t), 
+u(t) et w(t). Montrer que l'on a l'égalité suivante: 
+W
+p
+T
+p
+U
+p
+T
+p
+CR
+p
+(
+)
+(
+)
+(
+)
+(
+)
+(
+)
+=
++
+
+   et donner l'expression de T
+
+(p). 
+
+___________________________________________________________________________  
+Régulation de température d'une enceinte thermique 
+On considère le problème de la régulation de température au sein d'une enceinte thermique. 
+Celle ci est assurée par une résistance électrique passant à l'intérieur de la paroi. Cette paroi 
+est isolée sur sa partie extérieure pour minimiser au maximum les pertes thermiques. On note 
+Tint(t) la température dans l'enceinte thermique, Text(t) la température extérieure, et Tpar(t) la 
+température dans la paroi. La puissance de chauffe (aux bornes de la résistance) est notée 
+Puis(t). 
+             
+Tint
+Text
+Tpar
+Puis
+ 
+ 
+ Figure 1: Enceinte thermique 
+ 
+Les équations différentielles caractérisant l'évolution thermique de ce système sont: 
+ 
+d
+dt
+Tpar
+(
+t
+)
+.
+(
+Tint
+(
+t
+)
+Tpar
+(
+t
+)
+)
+.
+(
+Text
+(
+t
+)
+Tpar
+(
+t
+)
+)
+Puis
+(
+t
+)
+d
+dt
+Tint
+(
+t
+)
+.
+(
+Tpar
+(
+t
+)
+Tint
+(
+t
+)
+)
+2
+3
+=
+−
++
+−
++
+=
+−
+
+
+
+1
+ 
+ 
+1
+, 
+2
+,et 
+3
+ sont des constantes positives. 
+ 
+1: Détermination du système à piloter 
+1.a: Donner la liste des variables, et la liste des paramètres de ce système. 
+1.b: Parmi les variables, indiquer la variable de commande, la variable à piloter, et la 
+perturbation. 
+ 
+2: Représentation externe 
+ 2.a: Exprimer les deux fonctions de transfert suivantes en fonction de 
+1
+, 
+2
+,et 
+3
+: 
+ - H(p) entre Puis(t) et Tint(t) 
+ - Hd(p)  entre Text(t) et Tint(t). 
+ 2.b: Que vaut le gain statique de la fonction de transfert Hd(p)? 
+ 
+3: Enceinte parfaitement isolée  
+Dans toute cette partie, on suppose que l'enceinte est parfaitement isolée (échanges thermiques 
+avec l'extérieur inexistants )  
+ 3.a: Que peut on conclure sur la fonction de transfert Hd(p)? 
+ 3.b: Montrer que la fonction de transfert H(p) se met sous la forme: 
+ 
+H
+p
+G
+p
+Tp
+(
+)
+(
+)
+=
++
+1
+ 
+ Donner l'expression de G et T en fonction des paramètres du système. 
+ 3.c: Exprimer et tracer la réponse indicielle de H(p). 
+  
+ 
+4: Enceinte avec pertes thermiques  
+On  suppose  maintenant  que  les  pertes  thermiques  de  l'enceinte  ne  sont  pas  négligeables.  On 
+considère les valeurs numériques suivantes pour les paramètres du système: 
+
+
+1
+ =0.9, 
+2
+ =0.01, et 
+3
+ =0.1  
+ 4.a: A  partir  de  leur  réponse  indicielle  (figure  2),  Montrer  que  les  fonctions  de 
+transfert  H(p)  et  Hd(p)  peuvent  être  approximées  par  des  fonctions  de  transfert  du  premier 
+ordre  dont  on  donnera  le  gain  statique  et  la  constante  de  temps.  Remarquer  d'après  leur 
+expression, que les deux fonctions de transfert ont la même constante de temps. 
+0
+1000
+2000
+3000
+4000
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+Time (secs)
+Amplitude
+réponse indicielle de H(p)
+0
+1000
+2000
+3000
+4000
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Time (secs)
+Amplitude
+réponse indicielle de Hd(p)
+ Figure 2: Réponses indicielles du système avec pertes thermiques 
+ 
+  
+
+___________________________________________________________________________  
+Régulation de température d’un cryostat  
+Pour des applications de détection infrarouge, il est nécessaire d’amener et de maintenir le 
+composant infrarouge (détecteur) à une température de consigne très faible ( environ 100  
+Kelvin). Pour cela on utilise un cryostat composé de 2 pistons pilotés par un moteur électrique 
+brushless. Le principe de refroidissement utilisé est l’effet Stirling (compression/ détente de 
+l’Hélium).  
+Chaque cycle de piston amène une certaine puissance de froid. On régule donc la température 
+en agissant sur la vitesse du moteur, par l’intermédiaire de la tension d’alimentation du 
+moteur. La tension à appliquer au moteur est simplement proportionnelle à la consigne de 
+vitesse. La modulation de la tension d’alimentation du moteur se fait par un signal PWM 
+La tension maximale de 30V (obtenue pour un rapport cyclique de 1) correspond à une vitesse 
+de 3000 tr/min. 
+La tension minimale de 0V (obtenue pour un rapport cyclique de 0) correspond à une vitesse 
+nulle. 
+La grandeur à réguler est la température du cryostat Temp(t), exprimée en Kelvin. 
+La grandeur d’action est le rapport cyclique du signal PWM (entre 0 et 1), noté U(t). 
+ 
+1 : Modélisation du cryostat : Le cryostat est modélisé sous la forme suivante 
+H(p)
+Hd
+(p)
++
+Temp
+(t)
+Text
+(t)
+U(t)
+ 
+ 
+ 
+ avec 
+)
+p
+(
+den
+G
+)
+p
+(
+H
+=
+et 
+)
+p
+(
+den
+1
+)
+p
+(
+Hd
+=
+ 
+ 
+ den (0) =1 
+Un essai appliqué sur le système est donné ci-dessous. Dans cet essai, la température extérieure est 
+constante à 300 Kelvin. La consigne de vitesse est exprimée en tr/min. Déterminer le gain G, et le 
+dénominateur den(p) du modèle interne de la commande H(p). 
+
+ESISAR- Département Automatique 
+7/7 NF - 18/03/2025 
+ 

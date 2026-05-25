@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cours de mathematiques - Revision ESISAR</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navigation principale">
+        <a class="brand" href="index.html" aria-label="Retour a l'accueil">
+          <span class="brand-mark">M</span>
+          <span>
+            <strong>Cours de math</strong>
+            <small>Probabilites</small>
+          </span>
+        </a>
+
+        <nav class="nav-list">
+          <a class="nav-link" href="index.html">Accueil</a>
+          <a class="nav-link active" href="math.html#probabilites">Accueil</a>
+          <a class="nav-link" href="math.html#probabilites-programme">Programme</a>
+          <a class="nav-link" href="math.html#probabilites-chap1">1. Denombrement</a>
+          <a class="nav-link" href="math.html#probabilites-chap2">2. Espaces probabilises</a>
+          <a class="nav-link" href="math.html#probabilites-chap3">3. Variables discretes</a>
+          <a class="nav-link" href="math.html#probabilites-chap4">4. Variables continues</a>
+          <a class="nav-link" href="math.html#probabilites-methodes">Methodes</a>
+          <a class="nav-link" href="math.html#probabilites-td">TD</a>
+          <a class="nav-link" href="math.html#probabilites-sujets">Sujet type</a>
+          <a class="nav-link" href="math.html#probabilites-revision">Revision finale</a>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">Mathematiques</span>
+            <h1>Cours de probabilites</h1>
+          </div>
+          <a class="primary-button" href="index.html">Accueil</a>
+        </header>
+
+        <section id="probabilites" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Objectif</span>
+            <h2>Retracer le cours dans l'ordre des PDF, puis s'entrainer.</h2>
+            <p>
+              Cette version suit les chapitres extraits des PDF : denombrement, espaces probabilises,
+              variables aleatoires discretes, variables aleatoires continues. Les blocs ajoutent aussi
+              des aides de lecture pour reconnaitre les methodes en exercice.
+            </p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="progress-card">
+              <span class="card-kicker">Progression exercices</span>
+              <strong id="main-progress-label">0%</strong>
+              <div class="progress-track large" aria-hidden="true">
+                <span id="main-progress"></span>
+              </div>
+              <p>La progression evolue quand les exercices sont marques comme faits.</p>
+            </article>
+            <article class="priority-card">
+              <span class="card-kicker">Priorites</span>
+              <ol class="ordered-list">
+                <li>Connaitre les definitions et hypotheses exactes.</li>
+                <li>Savoir choisir la bonne formule avant de calculer.</li>
+                <li>Savoir justifier l'independance ou le conditionnement.</li>
+                <li>Maitriser esperance, variance, covariance et lois usuelles.</li>
+                <li>Savoir passer d'une densite a une fonction de repartition, et inversement.</li>
+              </ol>
+            </article>
+          </div>
+
+          <div class="quick-grid">
+            <a class="quick-link" href="#probabilites-programme">Programme</a>
+            <a class="quick-link" href="#probabilites-methodes">Methodes</a>
+            <a class="quick-link" href="#probabilites-td">TD</a>
+            <a class="quick-link" href="#probabilites-revision">Fiche finale</a>
+          </div>
+        </section>
+
+        <section id="probabilites-programme" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Programme</span>
+            <h2>Parcours du semestre</h2>
+            <p>Les chapitres sont ranges dans l'ordre ou ils se soutiennent mutuellement.</p>
+          </div>
+
+          <div class="timeline">
+            <article>
+              <span>01</span>
+              <h3>Denombrement</h3>
+              <p>Ensembles finis, cardinaux, produits cartesiens, p-listes, arrangements, permutations, combinaisons, binome de Newton, parties de \(E\).</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Espaces probabilises</h3>
+              <p>Vocabulaire, probabilites finies, equiprobabilite, tribus, systemes complets, probabilites conditionnelles, Bayes, independance.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Variables aleatoires discretes</h3>
+              <p>Loi, fonction de repartition, independance, esperance, transfert, variance, covariance, lois uniforme, Bernoulli, binomiale, geometrique, Poisson.</p>
+            </article>
+            <article>
+              <span>04</span>
+              <h3>Variables aleatoires continues</h3>
+              <p>Fonction de repartition, densite, esperance, transfert, variance, lois uniforme, exponentielle, normale, standardisation et sommes de normales.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="probabilites-chap1" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 1</span>
+            <h2>Denombrement</h2>
+            <p>Le chapitre sert a compter des issues avant de passer aux probabilites uniformes.</p>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Plan du cours</h4>
+            <ul>
+              <li><span class="key-term">Notions sur les ensembles</span> : ensembles finis, denombrables, cardinaux.</li>
+              <li><span class="key-term">p-listes</span> : suites avec ordre et repetition possible.</li>
+              <li><span class="key-term">Arrangements</span> : p-listes sans repetition, permutations.</li>
+              <li><span class="key-term">Parties d'un ensemble</span> : combinaisons et cardinal de \(\mathcal P(E)\).</li>
+            </ul>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Ensemble fini et denombrable</h4>
+              <ul class="formula-list">
+                <li><strong>Ensemble fini</strong> : \(E\) est de cardinal \(n\) s'il existe une bijection de \(\llbracket 1,n\rrbracket\) vers \(E\), ou si \(E=\varnothing\) pour \(n=0\).</li>
+                <li><strong>Ensemble denombrable</strong> : il existe une bijection de \(\mathbb N\) vers \(E\).</li>
+                <li><strong>Exemples classiques</strong> : \(\mathbb Z\), \(\mathbb N^2\), \(\mathbb Q\) sont denombrables ; \(\mathbb R\) et \(\mathcal P(\mathbb N)\) ne le sont pas.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Cardinaux</h4>
+              <ul class="formula-list">
+                <li><strong>Cas disjoint</strong> : si \(A\cap B=\varnothing\), alors <span class="formula-chip">\( |A\cup B|=|A|+|B| \)</span>.</li>
+                <li><strong>Inclusion-exclusion</strong> : <span class="formula-chip">\( |A\cup B|=|A|+|B|-|A\cap B| \)</span>.</li>
+                <li><strong>Difference</strong> : \( |A\setminus B|=|A|-|A\cap B| \).</li>
+                <li><strong>Complementaire</strong> : \( |\overline A|=|E|-|A| \).</li>
+                <li><strong>Produit cartesien</strong> : \( |A\times B|=|A||B| \).</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Principe multiplicatif</h4>
+              <p>Si une construction se fait en plusieurs choix successifs independants en nombre \(n_1,\ldots,n_p\), le nombre total est \(n_1\cdots n_p\).</p>
+              <p>Exemple du cours : lancer un de et une piece donne \(6\times2=12\) issues.</p>
+            </div>
+            <div class="content-block remember">
+              <h4>Question reflexe</h4>
+              <p>Avant toute formule : ordre ? repetition ? tirage successif ou simultane ? remise ou sans remise ?</p>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>p-liste</h4>
+              <ul class="formula-list">
+                <li><strong>Objet compte</strong> : une suite de \(p\) elements de \(E\), donc un element de \(E^p\).</li>
+                <li><strong>Ordre</strong> : il compte.</li>
+                <li><strong>Repetition</strong> : elle est autorisee.</li>
+                <li><strong>Nombre</strong> : <span class="formula-chip">\(n^p\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Arrangement et permutation</h4>
+              <ul class="formula-list">
+                <li><strong>Objet compte</strong> : une p-liste d'elements distincts.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(A_n^p=n(n-1)\cdots(n-p+1)=\frac{n!}{(n-p)!}\)</span>.</li>
+                <li><strong>Permutation</strong> : arrangement de \(n\) elements, donc <span class="formula-chip">\(n!\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Combinaison</h4>
+              <ul class="formula-list">
+                <li><strong>Objet compte</strong> : une partie de \(E\) a \(p\) elements.</li>
+                <li><strong>Ordre</strong> : il ne compte pas.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(\binom np=\frac{A_n^p}{p!}=\frac{n!}{p!(n-p)!}\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Coefficients binomiaux</h4>
+              <ul class="formula-list">
+                <li><strong>Symetrie</strong> : \(\binom np=\binom n{n-p}\).</li>
+                <li><strong>Bords</strong> : \(\binom n0=\binom nn=1\).</li>
+                <li><strong>Un seul choix</strong> : \(\binom n1=n\).</li>
+                <li><strong>Pascal</strong> : <span class="formula-chip">\(\binom np=\binom{n-1}{p-1}+\binom{n-1}{p}\)</span>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block theorem">
+              <h4>Binome de Newton</h4>
+              <ul class="formula-list">
+                <li><strong>Formule</strong> : <span class="formula-chip">\((a+b)^n=\sum_{k=0}^n \binom nk a^k b^{n-k}\)</span>.</li>
+                <li><strong>Condition importante</strong> : pour des matrices, on ne developpe ainsi que si elles commutent.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Parties d'un ensemble</h4>
+              <ul class="formula-list">
+                <li><strong>Resultat a retenir</strong> : si \(|E|=n\), alors <span class="formula-chip">\(|\mathcal P(E)|=2^n\)</span>.</li>
+                <li><strong>Justification</strong> : \(|\mathcal P(E)|=\sum_{k=0}^n \binom nk=(1+1)^n=2^n\).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>Erreur frequente</strong>
+            <p>Ne pas confondre tirage simultane et tirage successif sans remise : les deux ne modelisent pas les memes objets, meme si les probabilites finales peuvent parfois coincider.</p>
+          </div>
+
+          <article class="exercise-card" data-exercise>
+            <header>
+              <div>
+                <span class="status-pill">Cours</span>
+                <h3>Cartes et choix de formule</h3>
+              </div>
+              <button class="ghost-button" type="button" data-toggle-redo>A refaire</button>
+            </header>
+            <div class="exercise-meta">
+              <span>Objectif : distinguer p-liste, arrangement, combinaison</span>
+              <span>Difficulte : 2/3</span>
+              <span>Temps : 12 min</span>
+            </div>
+            <p class="statement">Dans un jeu de 32 cartes, compter les tirages de 5 cartes avec remise, sans remise successivement, puis simultanement.</p>
+            <div class="button-row">
+              <button type="button" data-toggle="hint-c1">Afficher l'indice</button>
+              <button type="button" data-toggle="sol-c1">Afficher la correction</button>
+              <button type="button" data-mark-done>Marquer comme fait</button>
+            </div>
+            <div id="hint-c1" class="hidden-panel">
+              <strong>Indice</strong>
+              <p>Avec remise : repetitions possibles. Sans remise successif : ordre et pas de repetition. Simultane : pas d'ordre.</p>
+            </div>
+            <div id="sol-c1" class="hidden-panel">
+              <strong>Correction</strong>
+              <p>Avec remise : \(32^5\). Sans remise successivement : \(A_{32}^5=\frac{32!}{27!}\). Simultanement : \(\binom{32}{5}\).</p>
+              <div class="annotation" data-annotation>
+                <strong>Methode</strong>
+                <p>Ecris toujours le type d'objet compte avant la formule : suite avec repetition, suite sans repetition, ou partie.</p>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="probabilites-chap2" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 2</span>
+            <h2>Espaces probabilises</h2>
+            <p>Le chapitre fixe le vocabulaire et les outils de calcul : probabilite, conditionnement, Bayes, independance.</p>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Plan du cours</h4>
+            <ul>
+              <li><span class="key-term">Vocabulaire</span> : experience aleatoire, univers, evenement, evenement elementaire, incompatibilite, contraire.</li>
+              <li><span class="key-term">Espace probabilise fini</span> : definition, proprietes, caracterisation, equiprobabilite.</li>
+              <li><span class="key-term">Cas general</span> : tribu, espace probabilisable, espace probabilise, systeme complet.</li>
+              <li><span class="key-term">Outils de calcul</span> : probabilites conditionnelles, probabilites totales, Bayes, independance.</li>
+            </ul>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Vocabulaire</h4>
+              <ul class="formula-list">
+                <li><strong>Experience aleatoire</strong> : experience dont le resultat depend du hasard.</li>
+                <li><strong>Univers</strong> : ensemble \(\Omega\) de toutes les issues possibles.</li>
+                <li><strong>Evenement</strong> : partie de \(\Omega\).</li>
+                <li><strong>Incompatibilite</strong> : \(A\cap B=\varnothing\).</li>
+                <li><strong>Contraire</strong> : \(\overline A=\Omega\setminus A\).</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Probabilite finie</h4>
+              <p>Si \(\Omega\) est fini, une probabilite sur \(\mathcal P(\Omega)\) est une application \(P:\mathcal P(\Omega)\to[0,1]\) telle que \(P(\Omega)=1\) et, si \(A\cap B=\varnothing\), \(P(A\cup B)=P(A)+P(B)\).</p>
+            </div>
+            <div class="content-block theorem">
+              <h4>Proprietes de base</h4>
+              <ul class="formula-list">
+                <li><strong>Impossible</strong> : \(P(\varnothing)=0\).</li>
+                <li><strong>Contraire</strong> : \(P(\overline A)=1-P(A)\).</li>
+                <li><strong>Difference</strong> : \(P(A\setminus B)=P(A)-P(A\cap B)\).</li>
+                <li><strong>Croissance</strong> : si \(A\subset B\), alors \(P(A)\le P(B)\).</li>
+                <li><strong>Union</strong> : <span class="formula-chip">\(P(A\cup B)=P(A)+P(B)-P(A\cap B)\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Caracterisation finie</h4>
+              <ul class="formula-list">
+                <li><strong>Poids elementaires</strong> : \(p_i=P(\{\omega_i\})\).</li>
+                <li><strong>Conditions</strong> : \(p_i\ge0\) et <span class="formula-chip">\(\sum_i p_i=1\)</span>.</li>
+                <li><strong>Probabilite d'un evenement</strong> : \(P(A)=\sum_{\omega_i\in A}p_i\).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block method">
+              <h4>Equiprobabilite</h4>
+              <ul class="formula-list">
+                <li><strong>Hypothese</strong> : toutes les issues elementaires ont la meme probabilite.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(P(A)=\frac{|A|}{|\Omega|}\)</span>.</li>
+                <li><strong>Lecture</strong> : nombre de cas favorables divise par nombre de cas possibles.</li>
+                <li><strong>Lien</strong> : le chapitre 1 sert a calculer ces cardinaux.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Tribu</h4>
+              <ul class="formula-list">
+                <li><strong>Contient</strong> : \(\Omega\in\mathcal A\).</li>
+                <li><strong>Stable par contraire</strong> : si \(B\in\mathcal A\), alors \(\overline B\in\mathcal A\).</li>
+                <li><strong>Stable par reunion</strong> : une reunion finie ou denombrable d'evenements reste un evenement.</li>
+                <li><strong>Cas fini</strong> : \(\mathcal P(\Omega)\) est une tribu.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Systeme complet d'evenements</h4>
+              <p>Une famille \((A_i)_{i\in I}\) est un systeme complet si les \(A_i\) sont des evenements, deux a deux incompatibles, et si \(\bigcup_i A_i=\Omega\).</p>
+            </div>
+            <div class="content-block theorem">
+              <h4>Continuite des probabilites</h4>
+              <p>Si \((A_n)\) est croissante, \(P(\bigcup_n A_n)=\lim P(A_n)\). Si elle est decroissante, \(P(\bigcap_n A_n)=\lim P(A_n)\).</p>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Probabilite conditionnelle</h4>
+              <ul class="formula-list">
+                <li><strong>Hypothese</strong> : \(P(A)>0\).</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(P_A(B)=P(B\mid A)=\frac{P(A\cap B)}{P(A)}\)</span>.</li>
+                <li><strong>Point important</strong> : \(B\mapsto P_A(B)\) est encore une probabilite.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Probabilites totales</h4>
+              <ul class="formula-list">
+                <li><strong>Hypothese</strong> : \(A_1,\ldots,A_n\) forment un systeme complet et \(P(A_k)>0\).</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(P(B)=\sum_{k=1}^n P(A_k)P(B\mid A_k)\)</span>.</li>
+                <li><strong>Cas general</strong> : meme idee pour un systeme complet denombrable.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Bayes</h4>
+              <ul class="formula-list">
+                <li><strong>But</strong> : inverser une probabilite conditionnelle.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(P(A_k\mid B)=\frac{P(A_k)P(B\mid A_k)}{\sum_{i=1}^nP(A_i)P(B\mid A_i)}\)</span>.</li>
+                <li><strong>Denominateur</strong> : c'est \(P(B)\), obtenu par probabilites totales.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Independance</h4>
+              <ul class="formula-list">
+                <li><strong>Deux evenements</strong> : <span class="formula-chip">\(P(A\cap B)=P(A)P(B)\)</span>.</li>
+                <li><strong>Famille</strong> : verifier l'independance pour toute intersection finie de sous-famille.</li>
+                <li><strong>Piege</strong> : independance n'est pas incompatibilite.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>Attention</strong>
+            <p>Incompatibilite signifie \(A\cap B=\varnothing\). Independance signifie \(P(A\cap B)=P(A)P(B)\). Deux evenements incompatibles non impossibles ne sont pas independants.</p>
+          </div>
+
+          <article class="exercise-card" data-exercise>
+            <header>
+              <div>
+                <span class="status-pill">TD / Bayes</span>
+                <h3>Controle antidopage</h3>
+              </div>
+              <button class="ghost-button" type="button" data-toggle-redo>A refaire</button>
+            </header>
+            <div class="exercise-meta">
+              <span>Objectif : conditionner et inverser une probabilite</span>
+              <span>Difficulte : 2/3</span>
+              <span>Temps : 15 min</span>
+            </div>
+            <p class="statement">En competition, \(P(P)=0,02\). Le medicament \(M\) est utilise par 25% des sportifs et \(P(P\mid M)=0,05\). Calculer \(P(M\cap P)\), puis discuter \(P(M\mid P)\).</p>
+            <div class="button-row">
+              <button type="button" data-toggle="hint-c2">Afficher l'indice</button>
+              <button type="button" data-toggle="sol-c2">Afficher la correction</button>
+              <button type="button" data-mark-done>Marquer comme fait</button>
+            </div>
+            <div id="hint-c2" class="hidden-panel">
+              <strong>Indice</strong>
+              <p>Commence par \(P(M\cap P)=P(M)P(P\mid M)\), puis utilise Bayes.</p>
+            </div>
+            <div id="sol-c2" class="hidden-panel">
+              <strong>Correction</strong>
+              <p>\(P(M\cap P)=0,25\times0,05=0,0125\).</p>
+              <p>Comme \(P(P)=0,02\), \(P(M\mid P)=\frac{P(M\cap P)}{P(P)}=\frac{0,0125}{0,02}=0,625\).</p>
+              <div class="annotation" data-annotation>
+                <strong>Redaction attendue</strong>
+                <p>Ne pas ecrire \(P(M\mid P)=P(P\mid M)\). Le sens de la condition est l'un des pieges principaux du chapitre.</p>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="probabilites-chap3" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 3</span>
+            <h2>Variables aleatoires discretes</h2>
+            <p>Le cours passe d'evenements a des grandeurs numeriques : loi, repartition, moments et lois usuelles.</p>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Plan du cours</h4>
+            <ul>
+              <li><span class="key-term">Definitions</span> : variable aleatoire reelle discrete, loi, fonction de repartition, variables independantes.</li>
+              <li><span class="key-term">Moments</span> : esperance, transfert, variance, ecart-type, centrage-reduction, covariance.</li>
+              <li><span class="key-term">Cas denombrable</span> : convergence absolue des series definissant les moments.</li>
+              <li><span class="key-term">Lois usuelles</span> : uniforme, Bernoulli, binomiale, geometrique, Poisson et approximation de Poisson.</li>
+            </ul>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Variable aleatoire discrete</h4>
+              <p>Sur \((\Omega,\mathcal A,P)\), une variable aleatoire reelle discrete est une application \(X:\Omega\to\mathbb R\) dont l'ensemble de valeurs \(X(\Omega)\) est fini ou denombrable.</p>
+            </div>
+            <div class="content-block definition">
+              <h4>Loi de probabilite</h4>
+              <p>La loi de \(X\) est l'ensemble des couples \((x_k,p_k)\) ou \(x_k\in X(\Omega)\) et \(p_k=P(X=x_k)\). En cas fini, on la presente souvent sous forme de tableau.</p>
+              <p>Verification obligatoire : \(\sum_k p_k=1\).</p>
+            </div>
+            <div class="content-block definition">
+              <h4>Fonction de repartition</h4>
+              <ul class="formula-list">
+                <li><strong>Definition</strong> : <span class="formula-chip">\(F_X(x)=P(X\le x)\)</span>.</li>
+                <li><strong>Forme discrete</strong> : \(F_X\) est en escalier.</li>
+                <li><strong>Sauts</strong> : le saut en \(x_k\) vaut \(P(X=x_k)\).</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Variables independantes</h4>
+              <p>\(X\) et \(Y\) sont independantes si, pour tous \(a\in X(\Omega)\), \(b\in Y(\Omega)\), les evenements \((X=a)\) et \((Y=b)\) sont independants.</p>
+              <p>Pour montrer qu'elles ne le sont pas, il suffit de trouver \((a,b)\) tel que \(P(X=a,Y=b)\ne P(X=a)P(Y=b)\).</p>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block theorem">
+              <h4>Esperance</h4>
+              <ul class="formula-list">
+                <li><strong>Formule</strong> : <span class="formula-chip">\(E(X)=\sum_i x_iP(X=x_i)=\sum_i x_ip_i\)</span>.</li>
+                <li><strong>Interpretation</strong> : valeur moyenne theorique de \(X\).</li>
+                <li><strong>Variable centree</strong> : \(E(X)=0\).</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Theoreme de transfert</h4>
+              <ul class="formula-list">
+                <li><strong>Une variable</strong> : <span class="formula-chip">\(E(g(X))=\sum_i g(x_i)P(X=x_i)\)</span>.</li>
+                <li><strong>Deux variables</strong> : \(E(g(X,Y))=\sum_i\sum_j g(x_i,y_j)P(X=x_i,Y=y_j)\).</li>
+                <li><strong>Usage</strong> : calculer \(E(X^2)\), \(E(XY)\), ou une fonction d'une variable sans redeterminer toute la loi.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Lineairite et produit</h4>
+              <ul class="formula-list">
+                <li><strong>Constante</strong> : \(E(a)=a\).</li>
+                <li><strong>Somme</strong> : \(E(X+Y)=E(X)+E(Y)\).</li>
+                <li><strong>Affine</strong> : \(E(aX+b)=aE(X)+b\).</li>
+                <li><strong>Produit independant</strong> : <span class="formula-chip">\(E(XY)=E(X)E(Y)\)</span> si \(X,Y\) sont independantes.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Variance et ecart-type</h4>
+              <ul class="formula-list">
+                <li><strong>Definition</strong> : \(V(X)=E((X-E(X))^2)\).</li>
+                <li><strong>Formule de Koenig-Huygens</strong> : <span class="formula-chip">\(V(X)=E(X^2)-E(X)^2\)</span>.</li>
+                <li><strong>Ecart-type</strong> : \(\sigma(X)=\sqrt{V(X)}\).</li>
+                <li><strong>Transformation affine</strong> : \(V(aX+b)=a^2V(X)\), \(\sigma(aX+b)=|a|\sigma(X)\).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Variable centree reduite</h4>
+              <ul class="formula-list">
+                <li><strong>Condition</strong> : \(\sigma(X)\ne0\).</li>
+                <li><strong>Definition</strong> : <span class="formula-chip">\(X^*=\frac{X-E(X)}{\sigma(X)}\)</span>.</li>
+                <li><strong>Resultat</strong> : \(E(X^*)=0\) et \(\sigma(X^*)=1\).</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Covariance</h4>
+              <ul class="formula-list">
+                <li><strong>Definition</strong> : \(\operatorname{Cov}(X,Y)=E((X-E(X))(Y-E(Y)))\).</li>
+                <li><strong>Formule utile</strong> : <span class="formula-chip">\(\operatorname{Cov}(X,Y)=E(XY)-E(X)E(Y)\)</span>.</li>
+                <li><strong>Variance d'une somme</strong> : \(V(X+Y)=V(X)+V(Y)+2\operatorname{Cov}(X,Y)\).</li>
+                <li><strong>Si independance</strong> : \(\operatorname{Cov}(X,Y)=0\) et \(V(X+Y)=V(X)+V(Y)\).</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Cas denombrable</h4>
+              <p>Si \(X(\Omega)=\{x_i,\ i\in\mathbb N\}\), le moment d'ordre \(\alpha\) existe lorsque la serie \(\sum_i x_i^\alpha P(X=x_i)\) converge absolument.</p>
+              <p>Le moment d'ordre 1 est l'esperance, celui d'ordre 2 permet de definir la variance.</p>
+            </div>
+            <div class="content-block remember">
+              <h4>Series a connaitre</h4>
+              <ul class="formula-list">
+                <li><strong>Exponentielle</strong> : \(\sum_{n=0}^{+\infty}\frac{x^n}{n!}=e^x\).</li>
+                <li><strong>Geometrique</strong> : si \(|x|<1\), alors \(\sum_{n=0}^{+\infty}x^n=\frac1{1-x}\).</li>
+                <li><strong>Utilite</strong> : preuves des lois geometrique et de Poisson.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block method">
+              <h4>Loi uniforme discrete</h4>
+              <ul class="formula-list">
+                <li><strong>Notation</strong> : \(X\sim\mathcal U(\llbracket 1,n\rrbracket)\).</li>
+                <li><strong>Loi</strong> : \(P(X=i)=1/n\).</li>
+                <li><strong>Esperance</strong> : <span class="formula-chip">\(E(X)=\frac{n+1}{2}\)</span>.</li>
+                <li><strong>Variance</strong> : <span class="formula-chip">\(V(X)=\frac{n^2-1}{12}\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi de Bernoulli</h4>
+              <ul class="formula-list">
+                <li><strong>Notation</strong> : \(X\sim\mathcal B(p)\).</li>
+                <li><strong>Loi</strong> : \(P(X=1)=p\), \(P(X=0)=1-p\).</li>
+                <li><strong>Esperance</strong> : <span class="formula-chip">\(E(X)=p\)</span>.</li>
+                <li><strong>Variance</strong> : <span class="formula-chip">\(V(X)=p(1-p)\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi binomiale</h4>
+              <ul class="formula-list">
+                <li><strong>Reconnaissance</strong> : \(X\) compte les succes dans \(n\) epreuves de Bernoulli independantes.</li>
+                <li><strong>Loi</strong> : <span class="formula-chip">\(P(X=k)=\binom nkp^k(1-p)^{n-k}\)</span>.</li>
+                <li><strong>Esperance</strong> : \(E(X)=np\).</li>
+                <li><strong>Variance</strong> : \(V(X)=np(1-p)\).</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi geometrique</h4>
+              <ul class="formula-list">
+                <li><strong>Reconnaissance</strong> : \(X\) est le rang du premier succes.</li>
+                <li><strong>Support</strong> : \(X\in\mathbb N^*\).</li>
+                <li><strong>Loi</strong> : <span class="formula-chip">\(P(X=k)=(1-p)^{k-1}p\)</span>.</li>
+                <li><strong>Moments</strong> : \(E(X)=\frac1p\), \(V(X)=\frac{1-p}{p^2}\).</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi de Poisson</h4>
+              <ul class="formula-list">
+                <li><strong>Notation</strong> : \(X\sim\mathcal P(\lambda)\), avec \(\lambda>0\).</li>
+                <li><strong>Support</strong> : \(X\in\mathbb N\).</li>
+                <li><strong>Loi</strong> : <span class="formula-chip">\(P(X=k)=e^{-\lambda}\frac{\lambda^k}{k!}\)</span>.</li>
+                <li><strong>Moments</strong> : \(E(X)=\lambda\), \(V(X)=\lambda\).</li>
+                <li><strong>Somme</strong> : si \(X_1,X_2\) sont independantes, \(X_1+X_2\sim\mathcal P(\lambda_1+\lambda_2)\).</li>
+              </ul>
+            </div>
+            <div class="content-block warning">
+              <h4>Approximation de Poisson</h4>
+              <ul class="formula-list">
+                <li><strong>Depart</strong> : \(X\sim\mathcal B(n,p)\).</li>
+                <li><strong>Conditions pratiques</strong> : \(n\ge30\), \(p\le0,1\), \(np<15\).</li>
+                <li><strong>Approximation</strong> : <span class="formula-chip">\(X\approx Y\sim\mathcal P(np)\)</span>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <article class="exercise-card" data-exercise>
+            <header>
+              <div>
+                <span class="status-pill">Lois usuelles</span>
+                <h3>Orchestre et loi binomiale</h3>
+              </div>
+              <button class="ghost-button" type="button" data-toggle-redo>A refaire</button>
+            </header>
+            <div class="exercise-meta">
+              <span>Objectif : modeliser avec une binomiale</span>
+              <span>Difficulte : 3/3</span>
+              <span>Temps : 20 min</span>
+            </div>
+            <p class="statement">Deux orchestres A et B ont 4 et 6 musiciens. Chaque musicien est present avec probabilite \(p\), independamment. Un orchestre joue si strictement plus de la moitie est presente. Comparer les probabilites.</p>
+            <div class="button-row">
+              <button type="button" data-toggle="hint-c3">Afficher l'indice</button>
+              <button type="button" data-toggle="sol-c3">Afficher la correction</button>
+              <button type="button" data-mark-done>Marquer comme fait</button>
+            </div>
+            <div id="hint-c3" class="hidden-panel">
+              <strong>Indice</strong>
+              <p>Pour A, il faut au moins 3 presents sur 4. Pour B, au moins 4 presents sur 6.</p>
+            </div>
+            <div id="sol-c3" class="hidden-panel">
+              <strong>Correction</strong>
+              <p>Si \(X_A\sim\mathcal B(4,p)\), \(P(A)=P(X_A\ge3)=\binom43p^3(1-p)+p^4=4p^3-3p^4\).</p>
+              <p>Si \(X_B\sim\mathcal B(6,p)\), \(P(B)=P(X_B\ge4)=15p^4(1-p)^2+6p^5(1-p)+p^6=15p^4-24p^5+10p^6\).</p>
+              <div class="annotation" data-annotation>
+                <strong>Examen</strong>
+                <p>La modelisation vaut autant que le calcul : il faut ecrire clairement la loi suivie par chaque variable.</p>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="probabilites-chap4" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 4</span>
+            <h2>Variables aleatoires continues</h2>
+            <p>Le cours remplace les sommes par des integrales et introduit les lois continues de reference.</p>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Plan du cours</h4>
+            <ul>
+              <li><span class="key-term">Variable continue</span> et fonction de repartition.</li>
+              <li><span class="key-term">Densite</span> : proprietes, probabilites d'intervalles.</li>
+              <li><span class="key-term">Moments</span> : esperance, transfert, variance et ecart-type par integrales.</li>
+              <li><span class="key-term">Lois de reference</span> : uniforme, exponentielle, normale centree reduite et normale generale.</li>
+            </ul>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Variable continue</h4>
+              <p>Une variable aleatoire continue \(X:\Omega\to\mathbb R\) prend ses valeurs dans un ensemble non denombrable et les evenements \(\{X\le x\}\) sont mesurables.</p>
+            </div>
+            <div class="content-block definition">
+              <h4>Fonction de repartition</h4>
+              <ul class="formula-list">
+                <li><strong>Definition</strong> : <span class="formula-chip">\(F_X(x)=P(X\le x)\)</span>.</li>
+                <li><strong>Variations</strong> : \(F_X\) est croissante.</li>
+                <li><strong>Limites</strong> : \(F_X(x)\to0\) en \(-\infty\), \(F_X(x)\to1\) en \(+\infty\).</li>
+                <li><strong>Intervalle</strong> : \(P(a<X\le b)=F_X(b)-F_X(a)\).</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Densite</h4>
+              <ul class="formula-list">
+                <li><strong>Definition</strong> : \(X\) est a densite s'il existe \(f_X:\mathbb R\to\mathbb R_+\), integrable.</li>
+                <li><strong>Lien avec \(F_X\)</strong> : <span class="formula-chip">\(F_X(x)=\int_{-\infty}^x f_X(t)\,dt\)</span>.</li>
+                <li><strong>Aire totale</strong> : \(\int_{-\infty}^{+\infty}f_X(t)\,dt=1\).</li>
+                <li><strong>Probabilite d'intervalle</strong> : \(P(a\le X\le b)=\int_a^b f_X(t)\,dt\).</li>
+              </ul>
+            </div>
+            <div class="content-block warning">
+              <h4>Point cle</h4>
+              <p>Pour une variable continue a densite, \(P(X=a)=0\). Les bornes strictes ou larges ne changent pas une probabilite d'intervalle.</p>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block theorem">
+              <h4>Esperance</h4>
+              <ul class="formula-list">
+                <li><strong>Condition</strong> : l'integrale doit etre absolument convergente.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(E(X)=\int_{-\infty}^{+\infty}t f_X(t)\,dt\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Theoreme de transfert</h4>
+              <ul class="formula-list">
+                <li><strong>Condition</strong> : \(|g(t)|f_X(t)\) est integrable.</li>
+                <li><strong>Formule</strong> : <span class="formula-chip">\(E(g(X))=\int_{-\infty}^{+\infty}g(t)f_X(t)\,dt\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Variance</h4>
+              <ul class="formula-list">
+                <li><strong>Definition</strong> : \(V(X)=E((X-E(X))^2)\).</li>
+                <li><strong>Formule utile</strong> : <span class="formula-chip">\(V(X)=E(X^2)-E(X)^2\)</span>.</li>
+                <li><strong>Affine</strong> : \(V(aX+b)=a^2V(X)\).</li>
+                <li><strong>Independance</strong> : si \(X,Y\) sont independantes, \(V(X+Y)=V(X)+V(Y)\).</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Donner une loi continue</h4>
+              <p>On peut donner soit sa densite, soit sa fonction de repartition. Pour passer de \(F\) a \(f\), on derive \(F\) la ou elle est derivable.</p>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block method">
+              <h4>Loi uniforme sur \([a,b]\)</h4>
+              <ul class="formula-list">
+                <li><strong>Densite</strong> : \(f(t)=\frac1{b-a}\) sur \([a,b]\), et \(0\) sinon.</li>
+                <li><strong>Repartition</strong> : pour \(x\in[a,b]\), \(F_X(x)=\frac{x-a}{b-a}\).</li>
+                <li><strong>Intervalle</strong> : si \([c,d]\subset[a,b]\), \(P(c\le X\le d)=\frac{d-c}{b-a}\).</li>
+                <li><strong>Moments</strong> : <span class="formula-chip">\(E(X)=\frac{a+b}{2}\)</span>, <span class="formula-chip">\(V(X)=\frac{(b-a)^2}{12}\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi exponentielle</h4>
+              <ul class="formula-list">
+                <li><strong>Notation</strong> : \(X\sim\mathcal E(\lambda)\), \(\lambda>0\).</li>
+                <li><strong>Densite</strong> : <span class="formula-chip">\(f(t)=\lambda e^{-\lambda t}\)</span> pour \(t\ge0\), et \(0\) sinon.</li>
+                <li><strong>Repartition</strong> : \(F_X(x)=1-e^{-\lambda x}\) pour \(x\ge0\).</li>
+                <li><strong>Moments</strong> : \(E(X)=\frac1\lambda\), \(V(X)=\frac1{\lambda^2}\).</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Sans memoire</h4>
+              <ul class="formula-list">
+                <li><strong>Hypothese</strong> : \(X\sim\mathcal E(\lambda)\), \(a,b\ge0\).</li>
+                <li><strong>Propriete</strong> : <span class="formula-chip">\(P(X>a+b\mid X>a)=P(X>b)\)</span>.</li>
+                <li><strong>Interpretation</strong> : le temps deja attendu ne change pas la loi du temps restant.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi normale centree reduite</h4>
+              <ul class="formula-list">
+                <li><strong>Notation</strong> : \(X\sim\mathcal N(0,1)\).</li>
+                <li><strong>Densite</strong> : <span class="formula-chip">\(f(x)=\frac1{\sqrt{2\pi}}e^{-x^2/2}\)</span>.</li>
+                <li><strong>Moments</strong> : \(E(X)=0\), \(V(X)=1\).</li>
+                <li><strong>Calculs</strong> : sa fonction de repartition se lit avec une table ou un outil.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Symetrie normale</h4>
+              <ul class="formula-list">
+                <li><strong>Queue gauche/droite</strong> : \(P(X<-a)=P(X>a)=1-P(X<a)\).</li>
+                <li><strong>Intervalle centre</strong> : <span class="formula-chip">\(P(-a<X<a)=2P(X<a)-1\)</span>.</li>
+                <li><strong>Reperes</strong> : environ 0,68 dans \([-1,1]\), 0,95 dans \([-2,2]\), 0,997 dans \([-3,3]\).</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Loi normale \(\mathcal N(\mu,\sigma)\)</h4>
+              <ul class="formula-list">
+                <li><strong>Notation</strong> : \(X\sim\mathcal N(\mu,\sigma)\), \(\sigma>0\).</li>
+                <li><strong>Densite</strong> : \(f(x)=\frac1{\sigma\sqrt{2\pi}}e^{-\frac12\left(\frac{x-\mu}{\sigma}\right)^2}\).</li>
+                <li><strong>Standardisation</strong> : <span class="formula-chip">\(X^*=\frac{X-\mu}{\sigma}\sim\mathcal N(0,1)\)</span>.</li>
+                <li><strong>Moments</strong> : \(E(X)=\mu\), \(V(X)=\sigma^2\).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-block theorem">
+            <h4>Somme de lois normales</h4>
+            <ul class="formula-list">
+              <li><strong>Hypotheses</strong> : \(X_1\) et \(X_2\) independantes, \(X_1\sim\mathcal N(m_1,\sigma_1)\), \(X_2\sim\mathcal N(m_2,\sigma_2)\).</li>
+              <li><strong>Somme</strong> : <span class="formula-chip">\(X_1+X_2\sim\mathcal N\left(m_1+m_2,\sqrt{\sigma_1^2+\sigma_2^2}\right)\)</span>.</li>
+              <li><strong>Sans independance</strong> : ajouter \(2\operatorname{Cov}(X_1,X_2)\) dans la variance.</li>
+            </ul>
+          </div>
+
+          <article class="exercise-card" data-exercise>
+            <header>
+              <div>
+                <span class="status-pill">Normale</span>
+                <h3>Standardisation</h3>
+              </div>
+              <button class="ghost-button" type="button" data-toggle-redo>A refaire</button>
+            </header>
+            <div class="exercise-meta">
+              <span>Objectif : utiliser la table normale</span>
+              <span>Difficulte : 2/3</span>
+              <span>Temps : 15 min</span>
+            </div>
+            <p class="statement">Soit \(X\sim\mathcal N(5,2)\). Calculer \(P(X<3)\), \(P(X\ge2)\) et \(P(1\le X\le6)\).</p>
+            <div class="button-row">
+              <button type="button" data-toggle="hint-c4">Afficher l'indice</button>
+              <button type="button" data-toggle="sol-c4">Afficher la correction</button>
+              <button type="button" data-mark-done>Marquer comme fait</button>
+            </div>
+            <div id="hint-c4" class="hidden-panel">
+              <strong>Indice</strong>
+              <p>Pose \(X^*=\frac{X-5}{2}\), puis utilise la symetrie de la loi normale centree reduite.</p>
+            </div>
+            <div id="sol-c4" class="hidden-panel">
+              <strong>Correction</strong>
+              <p>\(P(X<3)=P(X^*<-1)=1-\Phi(1)\approx1-0,8413=0,1587\).</p>
+              <p>\(P(X\ge2)=P(X^*\ge-1,5)=P(X^*<1,5)\approx0,9332\).</p>
+              <p>\(P(1\le X\le6)=P(-2\le X^*\le0,5)=\Phi(0,5)-\Phi(-2)\approx0,6915-(1-0,9772)=0,6687\).</p>
+            </div>
+          </article>
+        </section>
+
+        <section id="probabilites-methodes" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Methodes obligatoires</span>
+            <h2>Automatismes de resolution</h2>
+          </div>
+
+          <div class="method-list">
+            <article class="method-card">
+              <h3>Choisir une formule de denombrement</h3>
+              <dl>
+                <dt>Quand l'utiliser</dt>
+                <dd>Avant une probabilite uniforme ou une question "combien".</dd>
+                <dt>Plan standard</dt>
+                <dd>Identifier l'objet, tester ordre/repetition, choisir \(n^p\), \(A_n^p\), \(n!\) ou \(\binom np\).</dd>
+                <dt>Erreur frequente</dt>
+                <dd>Compter des groupes comme des suites.</dd>
+              </dl>
+            </article>
+            <article class="method-card">
+              <h3>Utiliser un systeme complet</h3>
+              <dl>
+                <dt>Quand l'utiliser</dt>
+                <dd>Quand plusieurs cas exclusifs expliquent un evenement.</dd>
+                <dt>Plan standard</dt>
+                <dd>Nommer \(A_i\), verifier partition et probabilites non nulles, appliquer les probabilites totales.</dd>
+                <dt>Erreur frequente</dt>
+                <dd>Oublier un cas ou prendre des cas non disjoints.</dd>
+              </dl>
+            </article>
+            <article class="method-card">
+              <h3>Reconnaitre une loi discrete</h3>
+              <dl>
+                <dt>Quand l'utiliser</dt>
+                <dd>Quand une variable compte un nombre de succes, un rang, ou un nombre d'occurrences rares.</dd>
+                <dt>Plan standard</dt>
+                <dd>Identifier support, parametres, formule de \(P(X=k)\), esperance et variance.</dd>
+                <dt>Erreur frequente</dt>
+                <dd>Confondre binomiale et geometrique : nombre de succes fixe vs rang du premier succes.</dd>
+              </dl>
+            </article>
+            <article class="method-card">
+              <h3>Travailler avec une densite</h3>
+              <dl>
+                <dt>Quand l'utiliser</dt>
+                <dd>Quand une fonction \(f\) est donnee ou quand la variable est continue.</dd>
+                <dt>Plan standard</dt>
+                <dd>Verifier \(f\ge0\), normaliser, integrer sur le bon support, calculer \(F\), \(E\), \(V\).</dd>
+                <dt>Erreur frequente</dt>
+                <dd>Integrer hors support ou oublier la constante de normalisation.</dd>
+              </dl>
+            </article>
+          </div>
+        </section>
+
+        <section id="probabilites-td" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">TD</span>
+            <h2>Documents d'entrainement disponibles</h2>
+            <p>Les PDF de TD sont repertories pour relier le cours aux exercices.</p>
+          </div>
+
+          <div class="chapter-layout">
+            <article class="chapter-card">
+              <span class="status-pill">TD1</span>
+              <h3>Denombrement</h3>
+              <p>Exercices de comptage, tirages, arrangements et combinaisons, avec corrections detaillees.</p>
+              <a href="td1.html">Ouvrir la page corrigee</a>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">TD2</span>
+              <h3>Espaces probabilises</h3>
+              <p>Exercices de probabilites, conditionnement, totales, Bayes et independance, avec corrections detaillees.</p>
+              <a href="td2.html">Ouvrir la page corrigee</a>
+              <p class="secondary-link"><a href="pdf/math/TD/TD2_espaces_probabilises_corrige.pdf">Correction manuscrite</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">TD3</span>
+              <h3>Variables aleatoires</h3>
+              <p>Exercices de lois discretes, esperance, variance et lois usuelles, avec corrections detaillees.</p>
+              <a href="td3.html">Ouvrir la page corrigee</a>
+            </article>
+          </div>
+        </section>
+
+        <section id="probabilites-sujets" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Sujet type examen</span>
+            <h2>Sujet blanc guide</h2>
+          </div>
+
+          <article class="exam-card">
+            <h3>Composition type 2 h</h3>
+            <div class="exercise-meta">
+              <span>Duree : 2 h</span>
+              <span>Calculatrice : selon consigne du cours</span>
+              <span>Objectif : couvrir les 4 chapitres</span>
+            </div>
+            <ol class="ordered-list">
+              <li>Denombrement : trois modelisations de tirage, puis probabilite uniforme.</li>
+              <li>Conditionnement : arbre, probabilites totales, Bayes.</li>
+              <li>Variable discrete : loi, fonction de repartition, esperance, variance, reconnaissance d'une loi usuelle.</li>
+              <li>Variable continue : densite, fonction de repartition, esperance, loi exponentielle ou normale.</li>
+            </ol>
+            <button type="button" data-toggle="exam-solution">Afficher la methode de correction</button>
+            <div id="exam-solution" class="hidden-panel">
+              <strong>Methode de correction</strong>
+              <p>Chaque reponse doit nommer les objets, verifier les hypotheses, appliquer une formule citee, puis conclure par une phrase. Les calculs seuls ne suffisent pas.</p>
+            </div>
+          </article>
+        </section>
+
+        <section id="probabilites-revision" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Revision finale</span>
+            <h2>Liste de controle avant examen</h2>
+          </div>
+
+          <div class="revision-grid">
+            <article class="checklist">
+              <h3>Definitions</h3>
+              <p>Ensemble fini/denombrable, p-liste, arrangement, combinaison, tribu, systeme complet, probabilite conditionnelle, independance, loi, densite.</p>
+            </article>
+            <article class="checklist">
+              <h3>Formules</h3>
+              <p>\(n^p\), \(A_n^p\), \(\binom np\), Newton, probabilites totales, Bayes, \(E\), \(V\), covariance, transfert.</p>
+            </article>
+            <article class="checklist">
+              <h3>Lois discretes</h3>
+              <p>Uniforme, Bernoulli, binomiale, geometrique, Poisson : support, probabilites, esperance, variance.</p>
+            </article>
+            <article class="checklist">
+              <h3>Lois continues</h3>
+              <p>Uniforme, exponentielle, normale centree reduite, normale generale : densite, repartition, esperance, variance, standardisation.</p>
+            </article>
+            <article class="checklist">
+              <h3>Erreurs frequentes</h3>
+              <p>Inverser une condition, confondre independance/incompatibilite, oublier de sommer a 1, mal choisir le support, appliquer Newton a des matrices non commutatives.</p>
+            </article>
+            <article class="checklist">
+              <h3>Mini-plan</h3>
+              <p>Jour 1 : chap. 1-2. Jour 2 : chap. 3. Jour 3 : chap. 4 + TD. Derniere session : sujet blanc en temps limite.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+      <button class="annotation-toggle" type="button" data-toggle-annotations>Masquer annotations</button>
+    </div>
+  </body>
+</html>

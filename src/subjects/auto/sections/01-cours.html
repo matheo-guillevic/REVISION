@@ -1,0 +1,373 @@
+        <section id="auto-intro" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">AU361</span>
+            <h2>Analyse et commande des systemes lineaires</h2>
+            <p>
+              Ce cours reprend les supports d'automatique du dossier <code>pdf/auto</code> :
+              representation entree-sortie, transformee de Laplace, fonctions de transfert,
+              analyse temporelle et frequentielle, stabilite, robustesse, precision, PID et RST.
+            </p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="progress-card">
+              <span class="card-kicker">Objectif</span>
+              <strong>AU361</strong>
+              <p>Comprendre un systeme lineaire, analyser ses performances, puis choisir ou synthetiser un correcteur.</p>
+            </article>
+            <article class="priority-card">
+              <span class="card-kicker">Priorites de revision</span>
+              <ol class="ordered-list">
+                <li>Savoir passer d'une equation differentielle a une fonction de transfert.</li>
+                <li>Identifier gain, poles, zeros, stabilite et regime permanent.</li>
+                <li>Lire Bode, Nyquist et Black pour juger rapidite, resonance et marges.</li>
+                <li>Relier cahier des charges, PID/RST et performances obtenues.</li>
+              </ol>
+            </article>
+          </div>
+
+          <div class="quick-grid">
+            <a class="quick-link" href="#auto-modelisation">Modelisation</a>
+            <a class="quick-link" href="#auto-analyse">Analyse</a>
+            <a class="quick-link" href="#auto-commande">Commande</a>
+            <a class="quick-link" href="#auto-revision">Fiche finale</a>
+          </div>
+
+          <figure class="system-diagram" aria-label="Representation generale d'un systeme automatique">
+            <img src="assets/auto/systeme-entree-sortie.svg" alt="Schema entree-sortie avec commande, processus, perturbation et sortie." loading="lazy">
+            <figcaption class="diagram-caption">Lecture de base : une commande agit sur le processus, une perturbation peut le modifier, et la sortie est la grandeur que l'on veut controler.</figcaption>
+          </figure>
+        </section>
+
+        <section id="auto-modelisation" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 1</span>
+            <h2>Systeme, variables et representation externe</h2>
+            <p>Un systeme automatique se lit d'abord comme un ensemble entrees, sorties, perturbations et parametres.</p>
+          </div>
+
+          <figure class="system-diagram" aria-label="Passage de l'equation physique a la fonction de transfert">
+            <img src="assets/auto/modelisation-laplace.svg" alt="Schema du passage loi physique, transformee de Laplace, fonction de transfert." loading="lazy">
+            <figcaption class="diagram-caption">Le passage au domaine de Laplace remplace une equation differentielle par une fraction rationnelle plus facile a analyser.</figcaption>
+          </figure>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Vocabulaire minimal</h4>
+              <ul class="formula-list">
+                <li><strong>Entree de commande</strong> : grandeur imposee par l'actionneur ou le regulateur.</li>
+                <li><strong>Sortie</strong> : grandeur que l'on mesure ou que l'on veut piloter.</li>
+                <li><strong>Consigne</strong> : valeur souhaitee de la sortie.</li>
+                <li><strong>Perturbation</strong> : action exterieure non choisie qui modifie la sortie.</li>
+                <li><strong>Parametre</strong> : constante physique du modele, par exemple une masse, une resistance, une section ou une constante de temps.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Methode de modelisation</h4>
+              <ol class="solution-steps">
+                <li>Choisir les variables et leurs unites.</li>
+                <li>Ecrire une loi physique : bilan de debit, loi de Newton, bilan thermique, loi electrique.</li>
+                <li>Isoler l'equation differentielle reliant entree et sortie.</li>
+                <li>Appliquer Laplace avec conditions initiales nulles.</li>
+                <li>Former la fonction de transfert \(H(p)=Y(p)/U(p)\).</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Fonction de transfert</h4>
+              <p>Pour un systeme lineaire invariant causal, la representation externe s'ecrit souvent :</p>
+              <p><span class="formula-chip">\(H(p)=\frac{Y(p)}{U(p)}=\frac{N(p)}{D(p)}\)</span></p>
+              <ul class="formula-list">
+                <li>Les racines de \(D(p)\) sont les <strong>poles</strong>.</li>
+                <li>Les racines de \(N(p)\) sont les <strong>zeros</strong>.</li>
+                <li>Le degre de \(D\) donne l'ordre du systeme.</li>
+                <li>La stabilite depend d'abord des poles.</li>
+              </ul>
+            </div>
+            <div class="content-block remember">
+              <h4>Lecture physique</h4>
+              <p>Un pole lent proche de l'origine domine souvent la dynamique : il impose une reponse longue. Un zero peut accelerer, freiner ou deformer la reponse selon sa position.</p>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>Exemple type TD</strong>
+            <p>Pour un reservoir de section \(S\), le bilan donne \(S\dot n(t)=q_e(t)-q_s(t)\). Si \(q_e\) est la commande et \(n\) la sortie, alors \(H(p)=N(p)/Q_e(p)=1/(Sp)\) : c'est un integrateur.</p>
+          </div>
+        </section>
+
+        <section id="auto-analyse" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 2</span>
+            <h2>Laplace, reponses temporelles et systemes elementaires</h2>
+            <p>La transformee de Laplace transforme les equations differentielles en calculs algebriques.</p>
+          </div>
+
+          <figure class="system-diagram" aria-label="Reponses temporelles d'un premier ordre et d'un second ordre">
+            <img src="assets/auto/reponses-temporelles.svg" alt="Courbes de reponse temporelle pour echelon, premier ordre et second ordre." loading="lazy">
+            <figcaption class="diagram-caption">Un premier ordre rejoint progressivement sa valeur finale ; un second ordre peu amorti peut depasser puis osciller avant de se stabiliser.</figcaption>
+          </figure>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Signaux usuels</h4>
+              <ul class="formula-list">
+                <li>Impulsion : utile pour caracteriser directement la dynamique.</li>
+                <li>Echelon : test de consigne constante, precision statique et depassement.</li>
+                <li>Rampe : test de poursuite d'une grandeur qui varie lineairement.</li>
+                <li>Sinusoide : base de l'analyse frequentielle.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Regime permanent et transitoire</h4>
+              <p>La reponse d'un systeme se separe en deux lectures : le transitoire, lie aux poles, et le permanent, lie au gain statique et au type d'entree.</p>
+              <p><span class="formula-chip">\(K_s=\lim_{p\to0}H(p)\)</span> donne le gain statique quand cette limite existe.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Premier ordre</h4>
+              <p><span class="formula-chip">\(H(p)=\frac{K}{1+Tp}\)</span></p>
+              <ul class="formula-list">
+                <li>Pole : \(p=-1/T\), stable si \(T&gt;0\).</li>
+                <li>Reponse a un echelon : pas de depassement.</li>
+                <li>Temps de reponse a 5 % : environ \(3T\).</li>
+                <li>Bode : pente de \(-20\) dB/dec apres \(\omega=1/T\).</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Integrateur et retard</h4>
+              <ul class="formula-list">
+                <li>Integrateur : \(H(p)=K/p\), gain infini a basse frequence, phase \(-90^\circ\).</li>
+                <li>Retard pur : \(H(p)=e^{-\tau p}\), module inchange mais phase diminuee de \(-\omega\tau\).</li>
+                <li>Le retard est dangereux pour la stabilite car il reduit la marge de phase.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Second ordre</h4>
+              <p><span class="formula-chip">\(H(p)=\frac{K\omega_n^2}{p^2+2\xi\omega_n p+\omega_n^2}\)</span></p>
+              <ul class="formula-list">
+                <li>\(\omega_n\) : pulsation propre non amortie.</li>
+                <li>\(\xi\) : coefficient d'amortissement.</li>
+                <li>\(\xi&lt;1\) : poles complexes, possible depassement et resonance.</li>
+                <li>\(\xi\ge1\) : reponse non oscillante, souvent plus lente.</li>
+              </ul>
+            </div>
+            <div class="content-block warning">
+              <h4>Erreur frequente</h4>
+              <p>Un systeme stable n'est pas forcement performant. Stabilite signifie que la sortie reste maitrisee ; rapidite, precision, depassement et robustesse sont des criteres supplementaires.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="auto-commande" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 3</span>
+            <h2>Analyse frequentielle, stabilite et robustesse</h2>
+            <p>Les diagrammes de Bode, Nyquist et Black servent a lire les performances et les risques d'instabilite.</p>
+          </div>
+
+          <figure class="system-diagram" aria-label="Boucle fermee avec retour unitaire et perturbation">
+            <img src="assets/auto/boucle-fermee.svg" alt="Schema de boucle fermee avec regulateur, processus, perturbation et retour unitaire." loading="lazy">
+            <figcaption class="diagram-caption">La boucle fermee corrige l'ecart entre consigne et sortie. La stabilite depend du denominateur \(1+R(p)P(p)\).</figcaption>
+          </figure>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Bode, Nyquist, Black</h4>
+              <ul class="formula-list">
+                <li><strong>Bode</strong> : module en dB et phase en fonction de la pulsation.</li>
+                <li><strong>Nyquist</strong> : lieu complexe de \(H(j\omega)\).</li>
+                <li><strong>Black-Nichols</strong> : module en fonction de la phase.</li>
+                <li>Ces representations sont equivalentes mais ne donnent pas le meme confort de lecture.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Boucle fermee</h4>
+              <p>Avec un regulateur \(R(p)\), un processus \(P(p)\) et un retour unitaire :</p>
+              <p><span class="formula-chip">\(F(p)=\frac{R(p)P(p)}{1+R(p)P(p)}\)</span></p>
+              <p>Le denominateur \(1+R(p)P(p)\) est le polynome caracteristique : c'est lui qui fixe la stabilite de la boucle fermee.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Criteres de stabilite</h4>
+              <ul class="formula-list">
+                <li><strong>Routh</strong> : methode algebrique sur le polynome caracteristique.</li>
+                <li><strong>Nyquist</strong> : methode graphique autour du point critique \(-1\).</li>
+                <li><strong>Critere du revers</strong> : forme simplifiee si la boucle ouverte n'a pas de pole instable.</li>
+              </ul>
+            </div>
+            <div class="content-block remember">
+              <h4>Point critique</h4>
+              <p>Dans Nyquist, le point critique est \(-1\). Dans Black, il correspond a \(0\) dB et \(-180^\circ\). Plus le lieu passe pres de ce point, plus la boucle fermee est fragile.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Marges de robustesse</h4>
+              <ul class="formula-list">
+                <li><strong>Marge de gain</strong> : gain que l'on peut encore ajouter avant l'instabilite.</li>
+                <li><strong>Marge de phase</strong> : retard de phase admissible avant d'atteindre \(-180^\circ\) au gain unitaire.</li>
+                <li><strong>Marge de retard</strong> : retard pur maximum acceptable.</li>
+                <li><strong>Marge de module</strong> : distance minimale au point critique.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Precision</h4>
+              <p>La precision se lit sur l'erreur \(e(t)=c(t)-y(t)\). Plus le gain basse frequence de la boucle est grand, meilleure est la precision statique, mais un gain trop grand peut degrader les marges.</p>
+            </div>
+          </div>
+
+          <figure class="system-diagram" aria-label="Marge de phase et marge de gain sur un diagramme de Bode simplifie">
+            <img src="assets/auto/marges-bode.svg" alt="Diagramme de Bode simplifie montrant marge de phase et marge de gain." loading="lazy">
+            <figcaption class="diagram-caption">Les marges indiquent combien de gain ou de retard de phase on peut encore accepter avant de s'approcher du point critique.</figcaption>
+          </figure>
+        </section>
+
+        <section id="auto-pid-rst" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 4</span>
+            <h2>Correcteurs PID et RST</h2>
+            <p>Le PID est un correcteur industriel simple ; le RST est une synthese polynomiale plus structuree.</p>
+          </div>
+
+          <figure class="system-diagram" aria-label="Structure d'un correcteur RST">
+            <img src="assets/auto/structure-rst.svg" alt="Schema de structure d un correcteur RST avec les blocs T, R, S et le processus." loading="lazy">
+            <figcaption class="diagram-caption">La synthese RST se ramene a choisir les polynomes \(R\), \(S\) et \(T\) pour imposer les poles et les proprietes de suivi/rejet.</figcaption>
+          </figure>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Correcteur PID</h4>
+              <p><span class="formula-chip">\(R(p)=K_p+\frac{K_i}{p}+K_d p\)</span></p>
+              <ul class="formula-list">
+                <li><strong>P</strong> : augmente la rapidite et reduit l'erreur, mais peut diminuer la robustesse.</li>
+                <li><strong>I</strong> : annule l'erreur statique sur consigne constante ou perturbation constante, mais ajoute du retard de phase.</li>
+                <li><strong>D</strong> : anticipe les variations et ajoute de l'amortissement, mais amplifie le bruit si non filtre.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Choix PI courant</h4>
+              <p>Dans les TD, un choix classique consiste a placer le zero du PI sur le pole lent du processus pour le compenser :</p>
+              <p><span class="formula-chip">\(R(p)=K\left(1+\frac{1}{T_i p}\right)\)</span></p>
+              <p>Ce reglage simplifie la dynamique apparente, mais il doit rester compatible avec les marges de stabilite.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Structure RST</h4>
+              <p>Le regulateur RST se decrit avec trois polynomes :</p>
+              <ul class="formula-list">
+                <li>\(R(p)\) agit sur la sortie mesuree ou l'erreur selon le schema.</li>
+                <li>\(S(p)\) agit sur la commande et intervient dans l'equation de Bezout.</li>
+                <li>\(T(p)\) filtre la consigne et fixe le gain de poursuite.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Idee de Bezout</h4>
+              <p>Si le processus s'ecrit \(H(p)=B(p)/A(p)\), la synthese RST cherche souvent :</p>
+              <p><span class="formula-chip">\(A(p)S(p)+B(p)R(p)=D(p)\)</span></p>
+              <p>Le polynome \(D(p)\) est choisi pour imposer les poles de boucle fermee : poles dominants pour la poursuite et poles de filtrage pour rendre le correcteur realisable.</p>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>Lecture pratique</strong>
+            <p>PID : rapide a regler et tres industriel. RST : plus calculatoire, mais permet d'imposer explicitement des poles, le suivi de consigne et le rejet de perturbations.</p>
+          </div>
+        </section>
+
+        <section id="auto-td" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Entrainement</span>
+            <h2>TD et exercices types</h2>
+            <p>Les TD du dossier <code>pdf/auto/TD</code> couvrent la modelisation, l'analyse de stabilite, les PID et la synthese RST.</p>
+          </div>
+
+          <div class="chapter-layout">
+            <article class="chapter-card">
+              <span class="status-pill">TD 1</span>
+              <h3>Representation des processus</h3>
+              <p>Variables, perturbations, schemas fonctionnels, mise en equation et fonction de transfert.</p>
+              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD1.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">TD 2</span>
+              <h3>Stabilite, robustesse, PID</h3>
+              <p>Routh, Nyquist, marge de gain, PI et compromis precision/robustesse.</p>
+              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD2.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">TD 3</span>
+              <h3>Asservissement de position</h3>
+              <p>Systeme mecanique, premier ordre plus integrateur, boucle fermee du second ordre.</p>
+              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD3.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">TD 4</span>
+              <h3>RST</h3>
+              <p>Synthese RST, equation de Bezout, suivi sans erreur statique et rejet de perturbations.</p>
+              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD4.pdf">Ouvrir le PDF</a></p>
+            </article>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block neutral">
+              <h4>Supports de cours</h4>
+              <ul class="formula-list">
+                <li><a href="pdf/auto/cours/AU361-poly.pdf">Poly AU361</a></li>
+                <li><a href="pdf/auto/cours/PIDcours.pdf">Support PID</a></li>
+                <li><a href="pdf/auto/cours/RSTcours.pdf">Support RST</a></li>
+              </ul>
+            </div>
+            <div class="content-block remember">
+              <h4>Ordre conseille</h4>
+              <p>Refaire TD1 pour la modelisation, TD2 pour stabilite/PID, TD3 pour les systemes mecaniques, puis TD4 pour RST.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="auto-revision" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Fiche finale</span>
+            <h2>Ce qu'il faut savoir refaire sans le cours</h2>
+            <p>Une fiche courte pour controler les automatismes avant examen.</p>
+          </div>
+
+          <div class="revision-grid">
+            <article class="checklist">
+              <h3>Modeliser</h3>
+              <p>Identifier entree, sortie, perturbation, parametres, equation differentielle et fonction de transfert.</p>
+            </article>
+            <article class="checklist">
+              <h3>Analyser</h3>
+              <p>Trouver poles, zeros, gain statique, stabilite, ordre, type et reponse a un echelon.</p>
+            </article>
+            <article class="checklist">
+              <h3>Lire Bode</h3>
+              <p>Repérer coupures, pentes, phase, resonance, bande passante et marges.</p>
+            </article>
+            <article class="checklist">
+              <h3>Stabiliser</h3>
+              <p>Former le polynome caracteristique, appliquer Routh ou raisonner via Nyquist/Black.</p>
+            </article>
+            <article class="checklist">
+              <h3>Regler PID</h3>
+              <p>Comprendre l'effet de P, I, D sur rapidite, precision, depassement, bruit et robustesse.</p>
+            </article>
+            <article class="checklist">
+              <h3>Synthetiser RST</h3>
+              <p>Choisir les poles voulus, ecrire Bezout, fixer les degres et verifier suivi/rejet.</p>
+            </article>
+          </div>
+        </section>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 270" role="img" aria-labelledby="title desc">
+  <title id="title">Marges de phase et de gain sur un diagramme de Bode simplifie</title>
+  <desc id="desc">Courbe de gain et indication des marges de phase et de gain.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#172033"/>
+    </marker>
+    <style>
+      .line{fill:none;stroke:#172033;stroke-width:2.2}
+      .muted{fill:none;stroke:#667085;stroke-dasharray:6 5;stroke-width:2}
+      .blue{fill:none;stroke:#1f5f99;stroke-width:4}
+      .green{fill:none;stroke:#23845a;stroke-width:4}
+      .orange{fill:none;stroke:#c87b16;stroke-width:4}
+      .text{fill:#172033;font-family:Inter,Segoe UI,Arial,sans-serif;font-size:15px;font-weight:700}
+      .small{fill:#667085;font-family:Inter,Segoe UI,Arial,sans-serif;font-size:12px;font-weight:700}
+    </style>
+  </defs>
+  <path d="M80 110 H820" class="line" marker-end="url(#arrow)"/>
+  <path d="M100 40 V210" class="line" marker-end="url(#arrow)"/>
+  <path d="M120 62 C260 70, 340 88, 430 110 C550 140, 655 165, 790 178" class="blue"/>
+  <path d="M430 110 V218" class="muted"/>
+  <path d="M640 70 V190" class="muted"/>
+  <path d="M640 110 V166" class="orange"/>
+  <path d="M430 172 H640" class="green"/>
+  <text x="110" y="101" class="small">0 dB</text>
+  <text x="392" y="238" class="small">omega c</text>
+  <text x="612" y="238" class="small">phase -180 deg</text>
+  <text x="650" y="142" class="text">marge de gain</text>
+  <text x="456" y="166" class="text">marge de phase</text>
+  <text x="730" y="204" class="small">omega</text>
+  <text x="36" y="52" class="small">gain / phase</text>
+</svg>

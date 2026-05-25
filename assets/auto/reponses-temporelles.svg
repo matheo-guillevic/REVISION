@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" role="img" aria-labelledby="title desc">
+  <title id="title">Reponses temporelles d'un premier ordre et d'un second ordre</title>
+  <desc id="desc">Comparaison entre un echelon, une reponse du premier ordre et une reponse du second ordre amorti.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#172033"/>
+    </marker>
+    <style>
+      .line{fill:none;stroke:#172033;stroke-width:2.2}
+      .muted{fill:none;stroke:#667085;stroke-dasharray:6 5;stroke-width:2}
+      .green{fill:none;stroke:#23845a;stroke-width:4}
+      .blue{fill:none;stroke:#1f5f99;stroke-width:4}
+      .orange{fill:none;stroke:#c87b16;stroke-width:4}
+      .text{fill:#172033;font-family:Inter,Segoe UI,Arial,sans-serif;font-size:15px;font-weight:700}
+      .small{fill:#667085;font-family:Inter,Segoe UI,Arial,sans-serif;font-size:12px;font-weight:700}
+    </style>
+  </defs>
+  <path d="M70 205 H835" class="line" marker-end="url(#arrow)"/>
+  <path d="M85 220 V40" class="line" marker-end="url(#arrow)"/>
+  <path d="M86 82 H820" class="muted"/>
+  <path d="M95 205 C160 165, 195 126, 250 105 C305 85, 360 82, 425 82" class="green"/>
+  <path d="M95 205 C140 80, 190 42, 250 78 C315 118, 360 64, 420 79 C485 96, 530 82, 590 82" class="blue"/>
+  <path d="M690 205 V82 H820" class="orange"/>
+  <text x="780" y="232" class="small">temps</text>
+  <text x="35" y="52" class="small">sortie</text>
+  <text x="436" y="114" class="text">1er ordre</text>
+  <text x="604" y="82" class="text">2e ordre amorti</text>
+  <text x="712" y="73" class="text">echelon</text>
+  <text x="104" y="72" class="small">valeur finale</text>
+  <text x="128" y="238" class="small">Le transitoire depend des poles ; le permanent depend du gain statique.</text>
+</svg>

@@ -21,7 +21,7 @@ Les contenus de cours reels ne sont pas ajoutes pour l'instant. La structure pre
 - Ajouter les notions absentes de la premiere synthese : tribu, systeme complet, continuite des probabilites, covariance, variables centrees reduites, lois geometrique et Poisson, approximation binomiale-Poisson, lois normales et sommes de normales.
 - Ajouter une section TD reliant les PDF d'exercices au parcours.
 - Diviser la source HTML en fichiers partiels pour ameliorer la lisibilite.
-- Ajouter des scripts npm pour reconstruire `index.html` depuis `src/`.
+- Ajouter des scripts npm pour reconstruire les pages HTML depuis `src/`.
 - Creer des pages corrigees pour TD1, TD2 et TD3 avec enonces reformules, corrections detaillees et rappels de formules.
 - Ajouter des tags de notions et des notes de raisonnement dans chaque correction TD.
 - Ajouter des explications par question ou sous-question dans chaque correction TD.
@@ -36,7 +36,7 @@ Les contenus de cours reels ne sont pas ajoutes pour l'instant. La structure pre
 4. Construire un vrai sujet blanc avec bareme et correction detaillee.
 5. Tester l'affichage des formules LaTeX et ajuster les contenus trop longs.
 6. Eventuellement separer le site en plusieurs pages si le volume de contenu devient important.
-7. Modifier en priorite les fichiers de `src/sections/`, puis lancer `npm run build`.
+7. Modifier en priorite les fichiers de `src/subjects/<cours>/sections/`, puis lancer `npm run build`.
 8. Relire les corrections TD avec les PDF originaux pour ajuster les conventions ou interpretations du professeur si necessaire.
 9. Ajouter, si besoin, un filtre par tags dans les pages TD.
 10. Continuer a enrichir les explications TD avec des schemas ou arbres de probabilites lorsque ce sera utile.
@@ -53,7 +53,7 @@ Les contenus de cours reels ne sont pas ajoutes pour l'instant. La structure pre
 
 ## Verification technique
 
-- Ouvrir `index.html` dans un navigateur.
+- Ouvrir `index.html`, puis la page du cours souhaitee dans un navigateur.
 - Tester la navigation laterale sur ordinateur.
 - Tester l'affichage mobile.
 - Verifier les boutons d'affichage des indices, corrections et annotations.

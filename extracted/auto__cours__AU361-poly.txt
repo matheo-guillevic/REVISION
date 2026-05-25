@@ -1,0 +1,3743 @@
+
+
+ESISAR - département Automatique 
+ 
+ 
+1 NF-30/04/2026 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        Nathalie Fulget 
+        département Automatique 
+        Grenoble INP - Esisar 
+ 
+AU361 
+Analyse et commande des systèmes linéaires  
+sous forme de représentation externe 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+2 NF-30/04/2026 
+BIBLIOGRAPHIE  
+ 
+Modélisation et identification des processus, Tomes 1 et 2 Pierre Borne et al, éditions 
+Technip, 1993 
+ 
+Analyse et régulation des procesus industriels, Tome 1 , régulation continue, Pierre 
+Borne et al, éditions Technip, 1993 
+ 
+Commande linéaire des sytèmes dynamiques, B d’Andréa Novel, éditions Masson, 1994 
+ 
+Automatique, commande des systèmes linéaires, Philippe de Larminat, éditions 
+Hermès,1994 
+ 
+La régulation industrielle, Jean Marie Flauss, éditions Hermès, 1996 
+ 
+AUTOMATIQUE Systèmes linéaires, non linéaires, à temps continu, à temps discret, 
+représentation d’état. Cours et exercices corrigés, Yves Granjon, éditions Dunod, 2
+ème
+ 
+édition, 2010 
+
+ESISAR - département Automatique 
+ 
+ 
+3 NF-30/04/2026 
+SOMMAIRE  
+ 
+I - INTRODUCTION ............................................................................................................ 5 
+II - SYSTEME ....................................................................................................................... 6 
+II.1 - Etat-Structure / Variables-Paramètres .............................................................. 6 
+II.2 - Entrées, sorties .................................................................................................. 7 
+II.3 – système à piloter - Systèmes asservis ............................................................... 7 
+II.4 - Types de représentation .................................................................................... 8 
+II.4.1 - Systèmes linéaires - systèmes non linéaires ....................................... 8 
+II.4.2 - Représentation continue - représentation discrète ............................. 9 
+II.4.3 - Représentation externe (entrée sortie) ............................................... 9 
+II.4.4 - Représentation interne (représentation d'état) .................................... 9 
+II.5 - Notions de stabilité ........................................................................................... 10 
+II.5.1 - Stabilité au sens de Lyapunov ............................................................ 10 
+II.5.2 - Stabilité asymptotique au sens de Lyapunov ..................................... 10 
+II.5.3 - Stabilité entrée bornée / sortie bornée ................................................ 11 
+II.6 - Réponse des systèmes linéaires aux entrées typiques ....................................... 11 
+II.6.1 - Réponse impulsionnelle ..................................................................... 11 
+II.6.2 - Réponse indicielle .............................................................................. 12 
+II.6.3 - Réponse à une rampe ......................................................................... 13 
+II.7 - Signal causal - système causal .......................................................................... 14 
+III - TRANSFORMEE DE LAPLACE - FONCTION DE TRANSFERT ............................ 15 
+III.1 - Définition ......................................................................................................... 15 
+III.2 - Propriétés ......................................................................................................... 15 
+III.3 - Table des transformées de Laplace des signaux usuels ................................... 16 
+III.4 - Application : fonctions de transfert ................................................................. 16 
+IV - ANALYSE ET CARACTERISTIQUES DES SYSTEMES LINEAIRES .................... 19 
+IV.1 - Régime permanent, régime transitoire ............................................................ 19 
+IV.2 - Comportement statique des systèmes linéaires (régime permanent)............... 19 
+IV.2.1 - Entrée en échelon ............................................................................. 19 
+IV.2.2 - Entrée en rampe ................................................................................ 20 
+IV.2.3 - Entrée en parabole ............................................................................ 20 
+IV.3 - Comportement dynamique des systèmes linéaires (régime transitoire) .......... 20 
+IV.4 - Analyse harmonique ........................................................................................ 21 
+IV.4.1 - Diagramme de Bode ......................................................................... 22 
+IV.4.2 - Diagramme de Nyquist ..................................................................... 23 
+IV.4.3 - Diagramme de Black - Nichols ........................................................ 24 
+V - ANALYSE ET CARACTERISTIQUES DES SYSTEMES ELEMENTAIRES ........... 26 
+V.1 - Système du premier ordre ................................................................................. 26 
+V.2 - Système intégrateur .......................................................................................... 29 
+V.3 - Système retard pur ............................................................................................ 31 
+V.4 - Système du second ordre .................................................................................. 32 
+VI – SPECIFICATIONS DE LA COMMANDE .................................................................. 37 
+VI.1 - Objectif général de la commande .................................................................... 37 
+VI.2 - Critères de stabilité des systèmes asservis ...................................................... 38 
+VI.2.1 - Critère de Routh ............................................................................... 38 
+VI.2.2 - Point critique .................................................................................... 39 
+VI.2.3 - Critère de Nyquist ............................................................................ 41 
+VI.2.4 - Forme simplifiée - Critère du revers ................................................ 42 
+
+ESISAR - département Automatique 
+ 
+ 
+4 NF-30/04/2026 
+VI.3 - Robustesse de la stabilité ................................................................................ 42 
+VI.3.1 - Marge de gain et marge de phase ..................................................... 42 
+VI.3.2 - Marge de retard ................................................................................ 45 
+VI.3.3 - Marge de module .............................................................................. 45 
+VI.4 - Précision des systèmes asservis ...................................................................... 46 
+VI.4.1 - Précision statique ............................................................................. 47 
+VI.4.2 - Précision dynamique ........................................................................ 50 
+VI.5 -Caractéristiques du système en boucle fermée déduites de l'abaque de 
+Black - Nichols .......................................................................................................... 54 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+5 NF-30/04/2026 
+I - INTRODUCTION 
+ L'automatique  est  une  discipline  scientifique  dont  l'objectif  principal  est  la  mise  en 
+oeuvre de moyens théoriques, pratiques et matériels visant à améliorer les performances d'un 
+processus   industriel.   Ses   domaines   d'application   sont   donc   très   larges   et   diversifiés 
+(armement,  aéronautique,  spatial,  automobile,  robotique,  métallurgie,  pétrochimie,  chimie, 
+biochimie,  environnement,  gestion  de  l'eau  ...).  Quelque  soit  le  domaine  d'application,  les 
+méthodologies utilisées restent les mêmes. 
+ L'automatique consiste généralement dans un premier temps à étudier et caractériser le 
+processus    industriel    concerné,    et    à    en    élaborer    une    représentation    mathématique 
+(modélisation,   identification).   En   fonction   de   la   représentation   mathématique   choisie, 
+l'automaticien  peut  alors  synthétiser  une  loi  de  commande  permettant  de  piloter  le  système 
+(régulation,  asservissement,  poursuite  de  trajectoires),  et  de  respecter  les  spécifications  de 
+commande (performances). 
+ Il  existe  de  très  nombreuses  sortes  de  représentations  mathématiques.  Elles  peuvent 
+être  classées  en  deux  catégories:  les  représentations  linéaires,  et  les  représentations  non 
+linéaires.  Certes,  de  nos  jours,  les  études  et  recherches  en  automatique  non  linéaires  se 
+développent  de  plus  en  plus.  Leur  application  est  rendue  possible  grâce  aux  avancées 
+technologiques  (puissance  des  calculateurs).  Cependant,  l'automatique  linéaire  permet  de 
+résoudre une très grande majoritée des applications industrielles. En effet, dans de nombreux 
+cas,  une  représentation  linéaire  est  suffisante  pour  caractériser  le  processus.  De  plus,  les 
+théories mathématiques utilisées (algèbre linéaire) sont suffisamment simples et générales. On 
+peut  d'ailleurs  noter  que  dans  le  monde  industriel,  de  nos  jours,  seule  une  infime  partie  des 
+théories  de  l'automatique  linéaire  sont  connues.  Si  les  nouveaux  développements  théoriques 
+de  l'automatique  linéaire  semblent  maintenant  très limités,  en  revanche,  elle  a  encore  de 
+nombreux progrès à faire en matière d'applications industrielles. 
+ Nous nous limitons dans ce cours à l'analyse et la synthèse de commande des systèmes 
+linéaires  caractérisés  par  une  représentation  externe  entrée  sortie,  ou  représentation  sous 
+forme  de  fonction  de  transfert.  Il  existe  en  effet diverses  représentations  des  systèmes 
+linéaires.  Quelques  notions  de  base  concernant  les systèmes  dynamiques  linéaires,  et  leurs 
+différentes  représentations  sont  présentées  dans  un  premier  temps.  Puis  nous  présentons  la 
+transformée de Laplace et ses principales propriétés, ce qui permet alors d'introduire la notion 
+de fonction de transfert. Les différentes caractéristiques des systèmes représentés sous forme 
+de  fonction  de  transfert  (réponse  temporelle,  réponse  fréquentielle....)  sont  décrites.  Cela 
+permet de présenter l'analyse des systèmes en boucle fermée (spécifications de commande), et 
+la synthèse de commandes de type PID et RST. 
+
+ESISAR - département Automatique 
+ 
+ 
+6 NF-30/04/2026 
+II - SYSTEME 
+Un concept très important en automatique est celui de système. Une définition générale 
+peut être donnée sous la forme suivante: 
+Un  système  est  un  ensemble  d'éléments  reliés  par  un  lien  fonctionnel  (exemple:  le 
+système solaire : les éléments sont les planètes, le lien fonctionnel est l'attraction du soleil). 
+II.1 - Etat-Structure / Variables-Paramètres 
+En automatique, il a une définition plus précise. Un système physique est une entité qui 
+évolue  au  cours  du  temps,  sous  l'effet  de  diverses influences  internes  et  externes  (flux  de 
+matière,  énergie,  information).  Son  évolution  est  caractérisée  par  un  ensemble  de  grandeurs 
+liées  entre  elles  par  des  relations  mathématiques. Deux  notions  apparaissent  alors  dans  la 
+description d'un système: l'état et la structure du système. 
+L'état  d'un  système  est  défini  par  un  ensemble  de variables (grandeurs  qui  évoluent 
+dans  le  temps)  dont  l'action  n'est  pas  nécessairement  directement  perceptible  mais  dont 
+l'évolution  régit  celle  du  processus.  L'état  d'un  système  dépend  des  entrées,  et  permet  de 
+résumer le passé du système, en vue de l'étude de son futur. 
+La structure d'un système est le lien fonctionnel (relations mathématiques) qui met en 
+relation  et  rend  non  indépendantes  les  variables  d'état  du  système.  Ces  relations  font 
+intervenir un ensemble de paramètres (qui varient pas ou peu, par rapport aux variables). 
+Les paramètres sont représentés par des flèches inclinées à 45°. 
+entrées
+sorties
+paramètres
+ 
+Figure II.1 - Représentation des systèmes paramétrés 
+ 
+Exemples 
+ 
+Moteur 
+     variables (état): vitesse, couple moteur, couples résistants... 
+     paramètres (structure): masse, inertie, rapport de réduction ... 
+ 
+Système thermique (chauffage d'un bâtiment) 
+     variables   (état):   température   intérieure,   température   des   cloisons,   débit   des 
+radiateurs... 
+     paramètres (structure): coefficients d'échange, charge thermique, volume des pièces... 
+ 
+ 
+ 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+7 NF-30/04/2026 
+II.2 - Entrées, sorties 
+Parmi  l'ensemble  des  variables  caractérisant  l'état  d'un  système,  on  s'intéresse  plus 
+particulièrement à deux catégories: les entrées et les sorties. 
+Entrées :  variables  externes  (dont  l'évolution  ne  dépend  pas  du  système) 
+susceptibles  d'influencer  l'évolution  de  l'état  du système.  Elles  sont 
+généralement notées u(t). 
+Sorties :  variables mesurables (ou perceptibles) caractéristiques de l'évolution 
+de l'état système. Elles sont généralement notées y(t). 
+II.3 – système à piloter - Systèmes asservis 
+Lorsque l'on considère un système à piloter, c'est à dire un système pour lequel on doit 
+développer une loi de commande, on fait apparaître une troisième catégorie de variables: les 
+perturbations. De plus, la définition exacte des entrées et des sorties est un peu différente. Le 
+classement des variables du système dans chacune des trois catégories n'est pas intrinsèque au 
+système, mais dépend du mode de fonctionnement, et de la stratégie de commande. 
+Les entrées  d'un  système  à  piloter  (commandes)  sont  les  entrées  (au  sens  de  la 
+définition  ci-dessus)  sur  lesquelles  on  peut  agir  volontairement,  par l'intermédiaire d'organes 
+de commande. On les appelles variables de commande, ou variables d'action. 
+Les perturbations sont les entrées sur lesquelles on ne peut agir. Elles sont subies. On 
+distingue deux types de perturbations: des signaux aléatoires non mesurés (bruits de mesure, 
+perturbation  inconnue),  des  signaux  déterministes  (entrées  secondaires)  mesurables.  Les 
+perturbations sont généralement notées δ(t). 
+Les sorties d'un système à piloter sont les sorties (au sens de la définition ci-dessus) que 
+l'on désire piloter, ou asservir. 
+ 
+Exemples 
+ 
+Moteur + charge 
+     entrée : tension d'alimentation du moteur 
+     perturbation: couple résistant 
+     sortie: vitesse de la charge 
+ 
+Système thermique (chauffage d'un bâtiment) 
+     entrée: puissance de chauffe 
+     perturbation: température extérieure (mesurable) 
+     sortie: température intérieure 
+Piloter   ou   commander   un   processus   consiste   à   déterminer   les   commandes   à 
+appliquer  en  entrée  de  ce  processus  pour  qu'il  ait un  comportement  donné,  c'est  à  dire 
+pour  que  sa  ou  ses sorties suivent un profil de consigne déterminé, malgré la présence de 
+perturbations. 
+
+ESISAR - département Automatique 
+ 
+ 
+8 NF-30/04/2026 
+Dans la quasi totalité des systèmes de commande, la variable d'action est déterminée en 
+fonction de la consigne et de la mesure de la sortie. C'est à dire qu'il y a une boucle de retour.  
+On appelle  Système asservi le système avec boucle de retour, et régulateur. 
+ 
+régulateur
+processus
+à piloter
+actionneur
+capteur
+capteur
+δ
+Consigne
+m
+δ
+uy
+ 
+ 
+Figure II.2 - Système asservi 
+II.4 - Types de représentation 
+Avant  de  présenter  les  différents  types  de  représentation  des  systèmes  dynamiques, 
+donnons  quelques  définitions.  L'objet  de  ce  cours  est  l'analyse  des  systèmes  dynamiques 
+linéaires  continus  sous  forme  de  représentation  externe  entrée  sortie.  Nous  définissons  donc 
+ce  qu'est  un  système  linéaire,  et  ce  qu'est  un  système  continu,  et  enfin,  nous  présentons  les 
+différentes représentations des systèmes linéaires continus. 
+  II.4.1 - Systèmes linéaires - systèmes non linéaires 
+*  Un  système  est  dit linéaire  si  l'opérateur  mathématique  qui  lui  est  associé  est  lui 
+même linéaire. Cela se traduit par la propriété suivante: 
+ 
+  
+entrée u
+1
+  →  sortie y
+1
+entrée u
+2
+  →  sortie y
+2
+           u
+1
+ + k u
+2
+  →  y
+1
+ + k y
+2
+ 
+ 
+*  Un  système  qui  ne  vérifie  pas  la  propriété  ci  dessus  est  un système  non  linéaire.  Il 
+existe  de  très  nombreux  types  de  non  linéarité  dans  les  systèmes  physiques.  Les  cinq 
+principaux sont présentés sur la figure II.3. L'ensemble des non linéarités rencontrées peut être 
+représenté  par  une  combinaison  de  ces  principales  caractéristiques.  D'autres  non  linéarités 
+analytiques sont représentées par des fonctions quelconques f(u, t). 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+9 NF-30/04/2026 
+C o u rb u reS e u il
+s
+u
+s
+u
+S a tu ra tio nH y s té ré s is
+s
+u
+R e la is , p lu s  o u  m o in s
+s
+u
+s
+u
+s
+u
+s
+u
+s
+u
+s
+u
+ 
+Figure II.3 - Non linéarités 
+ 
+  II.4.2 - Représentation continue - représentation discrète 
+* La représentation d'un sytème est dite continue  (à temps continu) si les grandeurs qui 
+le  caractérisent  sont  définies  pour  toute  valeur  réelle  du  temps.  Cela  correspond  aux  cas  où 
+l’on dispose de capteurs analogiques. 
+* la Représentation  d'un  système  est  dite  discrète  (à  temps  discret) ou échantillonnée 
+lorsque l'observation des variables caractéristiques n'est faite qu'à des instants particuliers du 
+temps. C'est le cas lorsque l'on dispose de capteurs numériques.  
+  II.4.3 - Représentation externe (entrée sortie) 
+L'évolution  d'un  système  dynamique  est  caractérisée  par  un  ensemble  d'équations 
+différentielles  liant  les  entrées,  et  leurs  dérivées,  et  les  sorties  et  leurs  dérivées.  On peut les 
+exprimer sous la forme générale suivante: 
+ 
+F  y  t
+d y
+dt
+t
+d  y
+dt
+t   u  t
+d  u
+dt
+t
+d   u
+dt
+t
+i
+i
+n
+n
+j
+j
+m
+m
+(   (  ),...,(  ),...(  ),   (  ),...,(  ),...(  ))=0  
+ 
+Dans  le  cadre  de  ce  cours,  nous  nous  limitons  à  l'analyse  des  systèmes  pouvant  être 
+caractérisés par des équations différentielles de la forme suivante: 
+ 
+d  y
+dt
+ta
+dy
+dt
+ta  y  tb
+d   u
+dt
+tb  u  t
+n
+n
+n
+n
+n
+m
+m
+m
+(  )(  )   ...(  )(  )   ...(  )+++=++
+−
+−
+−
+1
+1
+1
+00
+ 
+ 
+les a
+i
+ et b
+i
+ étant des coefficients réels constants. Les systèmes caractérisés par ce genre 
+d'équations sont les 
+systèmes linéaires à coefficients constants.  
+ 
+Cette représentation est notée représentation externe ou représentation entrée sortie 
+du système dynamique. 
+Pour les systèmes continus linéaires, la représentation entrée sortie peut aussi être mise 
+sous forme de produit de convolution: 
+ y  tuh td(  )(  )  ()=−
+−∞
++∞
+
+ττ    τ  où h(t) est la réponse impulsionnelle du système. 
+ 
+  II.4.4 - Représentation interne (représentation d'état) 
+
+ESISAR - département Automatique 
+ 
+ 
+10 NF-30/04/2026 
+Un  système  dynamique  peut  aussi  être  représenté  par  un  système  de  n  équations 
+différentielles  du  premier  ordre.  L'expression  des sorties  est  alors  obtenue  par  une  relation 
+statique  entre  les  états  et  les  entrées.  Cette  représentation  correspond  à  une représentation 
+d'état ou représentation  interne.  La  dimension  de  l'état  du  système  est  égale  au  nombre 
+d'équations différentielles n. 
+  
+ t)(t), u(t), f(x(t) = )(δt
+dt
+dx
+  x 
+∈ R
+n
+, états n : dimension de l'état 
+   u ∈ R
+n
+u, entrées n
+u
+ : nombre d'entrées 
+ 
+y(t) = g (x(t), u(t), δ(t), t)  y ∈ R
+n
+s, sorties n
+s
+ : nombre de sorties 
+       δ ∈ R
+n
+p, perturbations   n
+p
+: nombre de perturbations 
+ 
+Lorsque le système continu est linéaire, la représentation sous forme d'
+équations d'état 
+continues peut être mise sous la forme suivante: 
+ 
+dx
+dt
+t(  )   =  A(t) .  x(t)  +  B(t).  u(t) 
+ 
+y(t) = C(t) . x(t) + D(t) . u(t)
+ 
+avec :     A : matrice d'évolution 
+ B : matrice de commande 
+ C : matrice d'observation 
+ D : matrice de commande directe 
+Si A, B, C, D ne dépendent pas du temps, alors le système linéaire est dit 
+stationnaire. 
+Sinon, il est dit non stationnaire, ou à paramètres variant dans le temps. 
+ 
+II.5 - Notions de stabilité 
+  II.5.1 - Stabilité au sens de Lyapunov 
+Considérons  un  système  décrit  sous  forme  de  représentation  interne  par  l'équation 
+différentielle 
+&
+(,)xfxt=  tel  que  0  soit  un  point  d'équilibre.  Ce  système  est  stable  au  sens  de 
+Lyapunov (ou L-stable) si et seulement si 
+∀≥∀>∃>t
+0
+000,,εη tel que x  tx  ttt (    )(  ),
+00
+<<∀  >ηε 
+Autrement  dit,  un  système  est  L-stable  si  une  faible  perturbation  dans  les  conditions 
+initiales entraîne une faible perturbation sur l'évolution ultérieure. 
+  II.5.2 - Stabilité asymptotique au sens de Lyapunov 
+Une  notion  de  stabilité  plus  forte  consiste  à  exiger  en  plus  que  le  système  retrouve 
+asymptotiquement  sa  trajectoire  initiale.  On  parle alors  de  stabilité  asymptotique  au  sens  de 
+Lyapunov. 
+
+ESISAR - département Automatique 
+ 
+ 
+11 NF-30/04/2026 
+Soit  le  système  décrit  par  l'équation  différentielle 
+&
+(,)xfxt=  tel  que  0  soit  un  point 
+d'équilibre. Ce système est asymptotiquement stable au sens de Lyapunov (ou La-stable) si et 
+seulement si et seulement s'il est L stable, et ∃>η0 tel que x  tx  t
+t
+(    )
+lim
+(  )
+0
+0<=
+→∞
+η 
+ 
+ 
+  II.5.3 - Stabilité entrée bornée / sortie bornée 
+Pour un système défini sous forme de représentation entrée sortie, on définit la stabilité 
+entrée bornée / sortie bornée, encore appelée stabilité EB/SB par 
+∀≥∀>∃>∃>tT
+0
+0000,,,εη tel que u  ttty  tttT(  ),(  ),<∀><∀>+ηε
+00
+ 
+Autrement  dit,  un  système  est  EB/SB  stable  si  et  seulement  si  une  entrée  de  faible 
+amplitude conduit à une sortie de faible amplitude. 
+II.6 - Réponse des systèmes linéaires aux entrées typiques  
+  II.6.1 - Réponse impulsionnelle 
+Un  système  linéaire  est  complètement  caractérisé  par  sa  réponse  impulsionnelle.  En 
+effet, la sortie y(t) d'un système linéaire s'exprime sous forme du produit de convolution entre 
+l'entrée u(t) et la réponse impulsionnelle h(t) selon l'expression suivante: 
+y  tuh td(  )(  )  ()=−
+−∞
++∞
+
+ττ    τ  
+Une  impulsion  est  une  fonction  du  temps,  de  durée  très  brève,  mais  d'amplitude 
+suffisante.  On  représente  ci-dessous  diverses  impulsions  d'énergie  A  égale  à  l'aire  de 
+l'impulsion. 
+A/a
+a
+A/a
+a
+A/a
+a
+ 
+Figure II.4 - Impulsions 
+On note fonction de Dirac, la fonction δ(t) telle que : 
+ δ(t) = 0 ∀ t < 0 
+ δ(t) = 0 ∀ t > 0  et          
+δ(t) = 1        pour tout a, b positifs
+-a
++b
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+12 NF-30/04/2026 
+La fonction de Dirac est une impulsion unitaire. C'est la limite, lorsque a tend vers zéro, 
+des impulsions décrites ci-dessus, pour A = 1. Elle est représentée par une flèche d'amplitude 
+1, à l'instant t = 0. 
+La réponse impulsionnelle d'un système est en fait la réponse de ce système à une entrée 
+sous forme de fonction de Dirac. 
+Notons  que  la  réponse  impulsionnelle  d'un  système  asymptotiquement  stable  tend 
+vers 0 lorsque t tend vers l'infini. 
+0246810
+0
+0.2
+0.4
+0.6
+temps
+ 
+Figure II.5 - Réponse impulsionnelle 
+  II.6.2 - Réponse indicielle  
+La fonction Γ(t), ou échelon de Heaviside est définie par 
+     Γ(t)= 0  ∀ t < 0 et Γ(t)= 1  ∀ t ≥ 0. 
+On  note  réponse  indicielle,  la  réponse  d'un  système  à  une  entrée  u(t)  = Γ(t).  La  sortie, 
+aussi appelée réponse unitaire est notée q(t). 
+Si u(t) = a Γ(t)  alors  y(t) = a q(t) 
+0246810
+0
+0.5
+1
+1.5
+temps
+sortie
+0246810
+0
+0.5
+1
+entrée échelon
+ 
+Figure II.6 - Réponse indicielle 
+Notons que la fonction de Dirac est la dérivée de la fonction de Heaviside. 
+δ
+(t) = 
+d
+dt
+ Γ(t)
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+13 NF-30/04/2026 
+On en déduit donc que la réponse impulsionnelle est la dérivée de la réponse indicielle, 
+et réciproquement que la réponse indicielle est l'intégrale de la réponse impulsionnelle. 
+h(t) = 
+d
+dt
+ q(t)
+ 
+Essai  de  lâcher:  C'est  la  réponse  du  système  a  l'entrée  u(t)  =    1- Γ(t).  Elle  est  aussi 
+appelée réponse  libre.  Elle  correspond  à  l'évolution  du  système  soumis  a  un  signal  nul  en 
+entrée et partant de conditions initiales non nulles. 
+De  même,  définissons  la  notion  de 
+réponse  forcée.  Elle  correspond  à  l'évolution  du 
+système soumis à un signal d'entrée donné, à partir de conditions initiales nulles. 
+Enonçons le principe de superposition: 
+La  réponse  d'un  système  linéaire  à  un  signal  d'entrée  quelconque,  à  partir  de 
+conditions initiales quelconques peut toujours se décomposer sous la somme de la réponse 
+libre et de la réponse forcée du système.
+ 
+012345
+0
+0.5
+1
+entrée 
+012345
+0
+0.5
+1
+temps
+sortie 
+ 
+Figure II.7 - Réponse libre 
+ 
+II.6.3 - Réponse à une rampe 
+On la note aussi, réponse à un échelon de vitesse. L'entrée est sous la forme : 
+ u(t) = t . Γ(t) 
+On a l'égalité suivante : 
+ 
+Γ(τ) dτ = t . Γ(t)
+0
+t
+ 
+La réponse à une rampe est donc égale à l'intégrale de la réponse indicielle : 
+
+ESISAR - département Automatique 
+ 
+ 
+14 NF-30/04/2026 
+ 
+y(t) =q(
+τ
+) d
+τ
+0
+t
+ 
+0246810
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+temps
+entrée (-) sortie(--)
+ 
+Figure II.8 - Réponse à une rampe 
+II.7 - Signal causal - système causal 
+ 
+Un signal x(t) est dit causal s'il vérifie x(t) = 0, ∀t<0. 
+ 
+Il est dit strictement causal s'il vérifie x(t) = 0, 
+∀≤t0 
+ 
+Un système est dit causal si sa réponse impulsionnelle est un signal causal. Il est strictement 
+causal si sa réponse impulsionnelle est un signal strictement causal.  
+ 
+Les systèmes réalisables physiquement sont des systèmes causaux. 
+
+ESISAR - département Automatique 
+ 
+ 
+15 NF-30/04/2026 
+III - TRANSFORMEE DE LAPLACE - FONCTION DE TRANSFERT 
+III.1 - Définition 
+Soit un signal x(t) causal, 
+ 
+s'il existe σ ∈ R tel que   x(t) e
+-σt
+   dt < ∞
+-∞
++∞
+ 
+alors, il admet une transformée de Laplace : 
+ 
+L(x(t)) = X(p) = x(t) e
+-pt
+ dt  ,                  p = σ + jω
+0
+∞
+ 
+            σ ≥ 0 
+La  transformée  de  Laplace  est  une  transformation  bijective,  on  peut  alors  définir sa 
+transformée inverse : 
+ 
+x(t) = L
+-1
+(X(p)) = 
+1
+2πj
+ X(p) e
+pt
+ dt  ,   p = σ + jω
+σ-j∞
+σ+j∞
+ 
+σ assurant la convergence de l'intégrale. 
+ 
+III.2 - Propriétés 
+On énonce ici quelques propriétés de la transformée de Laplace qui sont utilisées dans la 
+suite. 
+- Linéarité : L(x(t) + a . y(t)) = L(x(t)) + a . L(y(t)) = X(p) + a . Y(p) 
+- 
+Dérivation : L
+dx
+dt
+ (t)  = p . L(x(t)) - x(0
++
+) = p . X(p) - x( 0
++
+)
+ 
+       
+L
+d
+(k)
+x
+dt
+k
+(t)  = p
+k
+ . L(x(t)) - p
+k-1
+ x(0
++
+) - p
+k-2
+ . 
+dx
+dt
+(0
++
+) ... - 
+d
+(k-1)
+x
+dt
+(k-1)
+(0
++
+)
+ 
+                          
+= p
+k
+ . X(p) -  p
+k-1
+ . x(0
++
+) - p
+k-2
+ . 
+dx
+dt
+(0
++
+) ... - 
+d
+(k-1)
+x
+dt
+(k-1)
+(0
++
+)
+ 
+ 
+- Intégration : 
+()
+Lx
+t
+(  )ττ d      =  
+L(x(t))
+p
+  =  
+X(p)
+p
+0
+
+ 
+- 
+Théorème de la valeur initiale : 
+
+ESISAR - département Automatique 
+ 
+ 
+16 NF-30/04/2026 
+ 
+lim       p . X(p) = x(0
++
+)
+p→∞
+ 
+- Théorème de la valeur finale : 
+ 
+lim()lim()
+p
+pXp
+t
+xt
+→
+=
+→ ∞0
+       si les limites existent. 
+- 
+Retard : 
+ L(x(t-T)) = e
+-pT
+ X(p) 
+- Produit de convolution : 
+ 
+si  z(t) = x(τ) y(t-τ) dτ
+0
+∞
+     
+alors 
+   
+Z(p) = X(p) . Y(p)
+ 
+ 
+III.3 - Table des transformées de Laplace des signaux usuels 
+Nous indiquons ici les transformées de Laplace des signaux de base (nuls pour t < 0). 
+L'impulsion de Dirac :  f(t) = δ(t)     F(p) = 1 
+ 
+L'échelon : f(t) = 1      t 
+≥ 0    F p(  )= 
+1
+p
+ 
+ 
+La rampe : f(t) = t      t ≥ 0    F p(  )= 
+1
+p
+2
+ 
+La sinusoïde : f(t) = sin(ωt) t ≥ 0  F p(  )= 
+p
+ + 
+2
+2
+ω
+ω
+ 
+L'exponentielle : f(t) = e
+-at
+ t ≥ 0  F p
+p 
+(  )=
++
+ 
+ a
+1
+ 
+Une table plus complète est présentée en annexe. 
+ 
+III.4 - Application : fonctions de transfert 
+Notons  h(t-τ)  la  sortie  d'un  système  linéaire  soumis  à  une  impulsion  de  Dirac δ(t-τ)  à 
+l'instant τ, et y(t) la sortie du même système au signal u(t). 
+Par définition, 
+
+ESISAR - département Automatique 
+ 
+ 
+17 NF-30/04/2026 
+ 
+u(t) = u(τ) δ(t-τ) dτ
+0
+∞
+ 
+Le système étant linéaire, on a : 
+ 
+y  tuh td(  )(  )  ()=−
++∞
+
+ττ    τ
+0
+ 
+On a donc : 
+ Y(p) = H(p) . U(p) 
+ 
+On note 
+H  p
+Yp
+U  p
+Np
+D  p
+(   )
+()
+(   )
+()
+(   )
+== la fonction de transfert du système. C'est la transformée 
+de Laplace de la réponse impulsionnelle du système. 
+Pour déterminer la fonction de transfert d'un système, on procède rarement par calcul de 
+la transformée de Laplace de la réponse impulsionnelle. En effet, un système est plus souvent 
+décrit par son équation différentielle que par l'expression de sa réponse impulsionnelle. Nous 
+montrons  ci-dessous  comment  déterminer  la  fonction de  transfert  à  partir  de  l'équation 
+différentielle.  Un  système  linéaire  à  coefficients constants  est  décrit  par  une  équation 
+différentielle de la forme suivante:
+ 
+y(t) + a
+1
+ 
+dy
+dt
+(t) + ... +  a
+n
+ 
+d
+n
+y
+dt
+n
+(t) = b
+0
+ u(t) + ... +  b
+m
+ 
+d
+m
+u
+dt
+m
+(t)
+ 
+En appliquant la transformée de Laplace, et en supposant les conditions initiales nulles 
+sur les signaux, on obtient: 
+ 
+Y(p)
+U(p)
+ = 
+b
+0
+ + b
+1
+ p + ... + b
+m
+ p
+m
+1 + a
+1
+ p + ... +  a
+n
+ p
+n
+ 
+Une fonction de transfert est une fraction rationnelle en p. 
+ 
+H  p
+Yp
+U  p
+Np
+D  p
+(   )
+()
+(   )
+()
+(   )
+== 
+le  numérateur  N(p)  et  le  dénominateur  D(p)  sont  des  polynômes  de  p,  à  paramètres 
+réels.  Les  racines  du  numérateur  sont  appelées  les 
+zéros  du  système.  Les  racines  du 
+dénominateur  sont  appelées  les pôles  du  système.  Les  pôles  et  les  zéros  du  système 
+appartiennent  au  plan  complexe.  Ils  sont  asymptotiquement  stables  si  leur  partie  réelle  est 
+négative. On dit qu'ils sont juste stables (en limite de stabilité) si leur partie réelle est nulle. 
+Un  système  est  asymptotiquement  stable  si  tous  ses pôles  sont  asymptotiquement 
+stables. 
+
+ESISAR - département Automatique 
+ 
+ 
+18 NF-30/04/2026 
+stable
+I
+m
+(pôles)
+instable
+(pôles)
+R
+e
+ 
+Figure III.1 - Lieu des pôles stables 
+Propriétés des fonctions de transfert : 
+- Série 
+u
+F
+1
+F
+2
+y
+F
+1
+(p) . F
+2
+(p)
+(p)
+(p)
+u
+y
+ 
+- Parallèle 
+u
+y
+u
+F
+1
+F
+2
+y
+F
+1
+(p)  + F
+2
+(p)
+(p)
+(p)
+ 
+- Boucle fermée 
+u
+y
+F
+1
+F
+2
++
+-
+u
+y
+F
+1
+(p)
+1 + F
+1
+(p) F
+2
+(p)
+(p)
+(p)
+⊗
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+19 NF-30/04/2026 
+IV - ANALYSE ET CARACTERISTIQUES DES SYSTEMES LINEAIRES 
+ 
+ Nous abordons dans ce chapitre les différentes caractéristiques des systèmes linéaires 
+décrits  sous  forme  de  représentation  externe  entrée  sortie.  Elles  concernent  les  réponses 
+temporelles  et  harmoniques  des  systèmes.  Ces  caractéristiques  sont  très  importantes  pour  la 
+suite car elles permettent de définir les spécifications de commande. 
+IV.1 - Régime permanent, régime transitoire  
+ 
+Dans  l'analyse  temporelle  des  systèmes  dynamiques, deux  notions  apparaissent:  le  régime 
+transitoire et le régime permanent. Leur définition est basée sur la notion de signal permanent. 
+Signal permanent: Un signal permanent est une fonction polynomiale ou périodique du 
+temps (signal dont la transformée de Laplace a des pôles imaginaires purs 
+1
+p
+n
+ ; 
+1
+p
+2
+ + ω
+2
+ , ...   .
+ 
+Lorsqu'un  système  stable  est  soumis  à  une  entrée  permanente,  sa  sortie  finit  par  être, 
+après un certain temps, sous forme polynomiale ou périodique. On dit alors que le système est 
+en 
+régime  permanent  ou  en  régime  définitif.  Le  temps  mis  pour  atteindre  ce  régime 
+permanent est appelé régime transitoire. 
+IV.2 - Comportement statique des systèmes linéaires (régime permanent) 
+Le  comportement  statique  d'un  système  dynamique  correspond  à  l'analyse  du  régime 
+permanent.  On  s'intéresse  ici  au  comportement  de  la  sortie  lorsque  t  tend  vers  l'infini 
+(comportement asymptotique) en réponse à des entrées polynomiales du temps. Les entrées de 
+type sinusoïdal sont traitées dans l'analyse harmonique. 
+ 
+ IV.2.1 - Entrée en échelon 
+Soit  un  système  représenté  par  la  fonction  de  transfert  H(p).  Si  le  système  n'est  pas 
+intégrateur, on note K = H(p=0), le gain statique. Si le système est intégrateur, on note alors: 
+    
+K =  lim    p
+ H(p)
+       p → 0
+n
+i
+     ,  n
+i 
+est le nombre d'intégrateurs
+ 
+Si n
+i
+ = 1, K est appelé le gain en vitesse. 
+Si  le  système  ne  comporte  pas  d'intégrateur,  la  sortie  y(t)  en  réponse  à  un  échelon 
+unitaire tend vers la valeur du gain lorsque t tend vers l'infini. 
+ 
+t → ∞p → 0p → 0p → 0
+lim    y(t) = lim    p . Y(p) = lim    p . U(p) . H(p) = lim   H(p) = K
+ 
+Sinon, elle tend vers l'infini de façon équivalente à K/n
+i
+ ! . t
+n
+i
+. 
+La réponse indicielle d'un système ayant un intégrateur est asymptotiquement en rampe. 
+ 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+20 NF-30/04/2026 
+  IV.2.2 - Entrée en rampe 
+L'entrée est sous la forme : 
+ u(t) = a . t . Γ(t) 
+Sa transformée de Laplace est donnée par  
+ 
+U(p) = 
+a
+p
+2
+ 
+La transformée de Laplace de la sortie est donnée par: 
+ 
+Y  p
+a
+p
+H  p(   )(   )=
+2
+ 
+Si  le  système  ne  comporte  pas  d'intégrateur,  la  sortie  y(t)  en  réponse  à  une  rampe 
+unitaire  (a  =  1),  se  comporte  asymptotiquement  comme  Kt  à  l'infini.  Sinon,  elle  tend  vers 
+l'infini de façon équivalente à 
+K/ n
+i
+ + 1  ! t
+n
+i
+ + 1
+.
+ 
+La réponse à une rampe d'un système ayant
+ 
+un 
+intégrateur est en parabole. 
+ 
+  IV.2.3 - Entrée en parabole 
+L'entrée est sous la forme : 
+ 
+u(t) = 
+1
+2
+ a t
+2
+ Γ(t)
+ 
+Sa transformée de Laplace est donnée par : 
+ 
+U(p) = 
+a
+p
+3
+ 
+La transformée de Laplace du signal de sortie est donnée par : 
+ 
+Y  p
+a
+p
+H  p(   )(   )=
+3
+ 
+Si le système n'a pas d'intégrateur, sa réponse à une entrée en parabole est en parabole, 
+et est équivalent à l'infini a Kt
+2
+ (pour une entrée u(t) = t
+2
+). 
+ 
+IV.3 - Comportement dynamique des systèmes linéaires (régime transitoire) 
+Le  comportement  dynamique  correspond  à  l'analyse  du  régime  transitoire.  Celui-ci  est 
+principalement  caractérisé  par  un temps  de  réponse  et  un dépassement.  L'analyse  se  limite 
+généralement à la réponse indicielle. 
+- Temps de réponse à x % :    Il  s'agit  du  temps  mis  par  le  système  pour  atteindre  sa 
+valeur  finale  (régime  permanent)  a  plus  ou  moins  x % 
+
+ESISAR - département Automatique 
+ 
+ 
+21 NF-30/04/2026 
+près. Les valeurs les plus couramment utilisées sont T
+R5%
+ 
+et T
+R2%
+. 
+  Par  abus  de  langage,  le  temps  de  réponse  à  5%  (ou  2%) 
+est souvent noté T
+R95%
+ (ou T
+R98%
+). 
+- Dépassement : Il  caractérise  le  dépassement  par  rapport  à  la  valeur  de  la 
+sortie en régime permanent. 
+     Il est exprimé en pourcentage, et est donné par : 
+     D
+yyt
+y  t
+%
+max
+()
+()
+*=
+−→∞
+→ ∞
+100  
+1,05 K 
+K 
+0,95.K
+y(t)
+t
+D
+TR
+95%
+ 
+Figure IV.1 - Régime transitoire 
+IV.4 - Analyse harmonique 
+L'analyse   harmonique   consiste   à   étudier   la   réponse d'un   système   à   des   entrées 
+sinusoïdales. 
+     u(t) = a . Γ(t) sin(ωt + φ) 
+      ω : pulsation (rd/s) 
+ 
+      
+f = 
+ω
+2π
+ : fréquence (Hz)
+ 
+ 
+      
+T = 
+1
+f
+ : période (s)
+ 
+La réponse à une entrée sinusoïdale est la somme d'un régime transitoire et d'un régime 
+permanent,  périodique,  de  même  période  que  l'entrée.  Pour  un  système  asymptotiquement 
+stable,  le  régime  transitoire  tend  vers  zéro  lorsque  t  tend  vers  l'infini.  Lors  d'un  essai 
+harmonique,  on  s'intéresse  seulement  au  régime  permanent,  et  on  définit  l'amplitude  et  le 
+déphasage entre l'entrée et la sortie. Ils dépendent de la pulsation ω. 
+La 
+réponse  en  fréquence  d'un  système  correspond  à  des  essais  harmoniques  pour 
+différentes valeurs de pulsations ω. 
+
+ESISAR - département Automatique 
+ 
+ 
+22 NF-30/04/2026 
+5101520
+-1
+-0.8
+-0.6
+-0.4
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+entrée (-), sortie (--)
+ 
+Figure IV.2 - Réponse harmonique (régime permanent) 
+ 
+La réponse permanente d'un système linéaire à une entrée sinusoïdale u(t) = sin(ωt) est 
+sous la forme : 
+ y(t) = G(ω) . sin(ωt + φ(ω)) 
+En effet, un système linéaire ne modifie pas la fréquence des signaux. 
+G(ω) est l'amplitude, et φ(ω) est la phase du système. Ils sont fonction de la pulsation 
+ω et sont égaux respectivement au module et a l'argument de la fonction de transfert exprimée 
+pour p = jw. 
+ H(p = jω) = A(ω) + j . B(ω) 
+ 
+ 
+G(ω) =    A
+2
+(ω) + B
+2
+(ω)
+    
+ 
+ φωωω(   )(   (   ) /    (   ))=arctg  BA      si A(ω)≥ 0 
+ φωπωω(   )(   (   ) /    (   ))=−−arctg  BA    si A(ω)<0 
+ 
+L'analyse harmonique d'un système revient donc à l'analyse de la fonction complexe H(p 
+= jω). Il existe différentes façons de représenter les réponses fréquentielles d'un système. Elles 
+sont présentées ci dessous. 
+  IV.4.1 - Diagramme de Bode 
+Le  diagramme  de  Bode  est  composé  de  deux  courbes  : une  courbe  d'amplitude  qui 
+représente G en fonction de ω, et une courbe de phase qui représente φ en fonction de ω. La 
+pulsation ω  est  représentée  en  coordonnées  logarithmiques.  L'amplitude  est  représentée  en 
+décibel (20 log
+10
+ (G)) et la phase est exprimée en degré. 
+Notons les valeurs en décibel de quelques gains :     G = 1         →    0 dB. 
+ 
+G = 2 → 3 dB. G = 1/2 → -3 dB. 
+     G = 2 
+→ 6 dB. G = 1/2 → -6 dB. 
+
+ESISAR - département Automatique 
+ 
+ 
+23 NF-30/04/2026 
+     G = 10 →   20 dB. G = 1/10 →    -20 dB. 
+G(dB)
+ω
+ω
+R
+0 
+- 3
+ω
+0
+φ(°)
+(log)
+(log)
+ω
+C
+Gmax
+ 
+Figure IV.3 - Diagramme de Bode 
+Sur un diagramme de Bode, on peut déterminer aisément la pulsation de coupure ω
+C
+ à 
+-3  dB  ou  -6  dB  et  la pulsation  de  résonance ω
+R
+  qui  correspond  à  la  valeur  maximale  de 
+l'amplitude Gmax. Le gain Gmax est noté facteur de résonance. 
+Généralement,  si  le  gain  statique  du  système  (K  =  G(ω  =  0))  n'est  pas  unitaire,  la 
+pulsation de coupure correspond au gain statique auquel on enlève 3 (ou 6) dB. C'est donc la 
+pulsation pour laquelle 
+Gω
+C
+ = Gω = 0 /   2 (ou Gω = 0  / 2).
+ 
+Sur la courbe en amplitude, la pente asymptotique aux haute fréquences est de -6. (n-m) 
+dB/octave  (-20.(n-m)  dB/décade),  où  n  est  le  degré du  dénominateur  et  m  le  degré  du 
+numérateur de la fonction de transfert. 
+La phase aux hautes fréquences tend asymptotiquement vers (n-m) . (-90°). 
+ 
+  IV.4.2 - Diagramme de Nyquist 
+Le diagramme de Nyquist représente H(jω) dans le plan complexe, c'est-à-dire la partie 
+imaginaire  B(ω),  en  fonction  de  la  partie  réelle  A(ω).  La  courbe  obtenue  est  graduée  en 
+pulsation ω.  Cette  graduation  est  indispensable  pour  la  compréhension  et  l'analyse  d'un 
+diagramme de Nyquist. 
+
+ESISAR - département Automatique 
+ 
+ 
+24 NF-30/04/2026 
+0
+ω : +∞
+Im(H(jω))
+ω
+C
+-1
+ω = 0
+Re(H(jω))
+ω
+R
+ 
+Figure IV.4 - Diagramme de Nyquist 
+Sur  un  diagramme  de  Nyquist,  on  détermine  le  facteur  de  résonance  par  la  distance 
+maximale  des  points  de  la  courbe  par  rapport  à  l'origine.  La  pulsation  correspondante  est  la 
+pulsation  de  résonance ω
+R
+.  Pour  déterminer  la  pulsation  de  coupure,  il  faut analyser 
+l'intersection du diagramme de Nyquist avec le cercle centré en 0, de rayon K / 2 ou K / 2.
+ 
+L'écart   entre   le   degré   du   dénominateur   et   du   numérateur   détermine   l'allure   du 
+diagramme  de  Nyquist  à  l'origine  (ω → ∞)  selon  les  figures  suivantes  (n:  degré  du 
+dénominateur, m: degré du numérateur). 
+n - m = 1n - m = 2n - m = 3n - m = 4
+ 
+Figure IV.5 - Comportement asymptotique aux hautes fréquences 
+sur un diagramme de Nyquist 
+ 
+  IV.4.3 - Diagramme de Black - Nichols 
+Une  autre  façon  de  représenter  la  réponse  fréquentielle  d'un  système  est  le  diagramme 
+de  Black  (ou  Black  -  Nichols).  Il  consiste  à  tracer  l'amplitude  G(ω)  en  fonction  de  la  phase 
+φ(ω). La courbe obtenue doit être graduée en pulsation. L'amplitude est représentée en dB, la 
+phase en degré. 
+On   peut   lire   le   facteur   de   résonance   Gmax,   et   la   pulsation   de   résonance ω
+R
+ 
+correspondant au point le plus haut de la courbe ; la pulsation de coupure ω
+C
+, à l'intersection 
+avec la droite horizontale à -3 dB (ou -6 dB). 
+Lorsque 
+ω tend vers l'infini, la courbe tend vers une asymptote verticale correspondant à 
+φ = (-90°) . (n-m) où m et n sont les degrés du numérateur et du dénominateur. 
+
+ESISAR - département Automatique 
+ 
+ 
+25 NF-30/04/2026 
+      
+G(dB)
+ω
+R
+-180°
+ω = 0
+ω
+C
+ω = ∞
+φ
+(°)
+G
+max
+-3 dB
+ 
+Figure IV.6 - Diagramme de Black 
+
+ESISAR - département Automatique 
+ 
+ 
+26 NF-30/04/2026 
+V - ANALYSE ET CARACTERISTIQUES DES SYSTEMES ELEMENTAIRES 
+V.1 - Système du premier ordre 
+Les systèmes du premier ordre sont les systèmes régis par une équation différentielle du 
+premier  ordre.  Le  système  est  dit  du  premier  ordre simple  si  l'équation  différentielle  peut  se 
+mettre sous la forme 
+ 
+y  tT
+dy
+dt
+tKu  t(  )(  )(  )+= 
+La fonction de transfert correspondant à ce système est : 
+ 
+F(p) = 
+Y(p)
+U(p)
+ = 
+K
+1 + Tp
+ 
+où 
+K est le gain statique et T est la constante de temps. 
+Un système caractérisé par une équation différentielle sous la forme 
+ y  tT
+dy
+dt
+tK  u  tT
+du
+dt
+t(  )(  )(   (  )(  ))+=+
+1
+ 
+est dit du premier ordre généralisé. Sa fonction de transfert est: 
+ 
+F(p) = 
+K(1 + T
+1
+ p)
+1 + Tp
+ 
+Le numérateur est de degré 1. Le système admet donc un zéro égal à -1/T
+1
+. 
+Tout  système  du  premier  ordre  a  un  dénominateur  de degré  1.  Il  admet  donc  un  seul 
+pôle réel
+ 
+1
+p
+ = - 
+1
+T
+ 
+si T > 0 alors le système est asymptotiquement stable. 
+-1/T
+Re
+I
+m
+X
+ 
+ 
+Figure V.1 - lieu des pôles d'un premier ordre stable 
+- Analyse temporelle: 
+La réponse indicielle d'un système du premier ordre simple est sous la forme 
+ 
+ y(t) = K(1 - e
+-t/τ
+) 
+
+ESISAR - département Automatique 
+ 
+ 
+27 NF-30/04/2026 
+y(t)
+t
+τ
+3τ
+K
+ 
+Figure V.2 - Réponse indicielle d'un premier ordre 
+Les caractéristiques principales de la réponse indicielle sont: 
+-   TR
+63%
+ = τ TR
+95%
+ = 3τ   TR
+98%
+ = 4τ 
+     Tangente à l'origine : 
+K
+τ
+  
+-   Le gain K caractérise la réponse statique (régime permanent). 
+-   La constante de temps T caractérise le régime transitoire. 
+-   Pour un premier ordre stable, il n'y a pas de dépassement en régime transitoire. 
+y(t)
+stable rapide 
+0 <        petit
+τ
+y(t)
+stable lent 
+0 <<        grand
+τ
+y(t)
+    < 0 
+(instable)
+τ
+Im
+12
+3
+Re
+pôles
+321
+ 
+Figure V.3 - Réponses indicielles en fonction de la position du pôle 
+La réponse à une rampe est sous la forme: 
+ y(t) = K(t - τ + τ  e
+-t/τ
+) 
+
+ESISAR - département Automatique 
+ 
+ 
+28 NF-30/04/2026 
+y(t)
+t
+τ
+t
+K = 1
+y(t)
+t
+t
+K 
+    
+1   (K < 1)
+≠
+τ
+ 
+Figure V.4 - Réponse d'un système du premier ordre à une rampe 
+ 
+Si K ≠ 1, la sortie ne suit pas l'entrée, l'écart entre l'entrée et la sortie tend vers l'infini. 
+Si K = 1, la sortie est parallèle à l'entrée, l'écart entre l'entrée et la sortie tend vers une 
+constante, égale à τ. 
+- Analyse harmonique: 
+La  réponse  d'un  système  du  premier  ordre  à  une  entrée  sinusoïdale  u(t)  =  sin(ωt)  de 
+pulsation ω est en régime permanent sous la forme : 
+ y(t) = G(ω) sin(ωt + φ(ω)) avec : 
+G(ω) = 
+K
+1 + τ
+2
+ ω
+2
+  et  φ(ω) = -arctg(ωτ)
+ 
+On a donc les diagrammes fréquentiels donnés en figures V.5 à V.7 pour un système du 
+premier ordre simple. 
+G  (dB)
+ω
+20 log(K) 
+-3 dB 
+-20 dB/décade
+τ1/
+(°)
+ω
+φ
+0 
+ 
+-45° 
+ 
+-90°
+τ1/
+ 
+Figure V.5 - Diagramme de Bode d'un système du premier ordre 
+Une  variation  du  gain  d'un  système  du  premier  ordre  se  traduit  par  une  translation 
+verticale de la courbe des amplitudes sur le diagramme de Bode. 
+
+ESISAR - département Automatique 
+ 
+ 
+29 NF-30/04/2026 
+             
+Im
+Re
+ω = +∞ω = 0
+K
+K/2
+ω = 
+1
+T
+ 
+Figure V.6 - Diagramme de Nyquist d'un système du premier ordre 
+Le lieu de Nyquist est un demi cercle partant du point d'affixe K pour ω = 0, et arrivant 
+à l'origine pour ω = +
+∞
+. Il se situe dans le cadran des phases comprises, entre 0 et   -
+π
+2
+  rd. 
+G(dB)
+-90°
+φ(°)
+20 log K
+ 
+Figure V.7 - Diagramme de Black d'un système du premier ordre 
+V.2 - Système intégrateur 
+C'est  un  cas  particulier  de  système  du  premier  ordre.  Il  est  caractérisé  par  l'équation 
+différentielle: 
+ 
+dy
+dt
+ (t) = K . u(t)
+ 
+Sa fonction de transfert est : 
+ 
+F(p) = 
+Y(p)
+U(p)
+ = 
+1
+p
+ 
+Un  système  intégrateur  a  donc  un  pôle  nul.  C'est  un  système  juste  stable,  mais  non 
+asymptotiquement stable. 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+30 NF-30/04/2026 
+Re
+I
+m
+p = 0
+ 
+Figure V.8 - Pôle d'un système intégrateur 
+ 
+- Analyse temporelle: 
+Sa réponse indicielle est y(t) = Kt.
+ 
+       
+y(t)
+t
+ 
+Figure V.9 - Réponse indicielle d'un système intégrateur 
+Sa réponse à une entrée en rampe est une parabole y  t
+K
+t(  )=
+2
+2
+ 
+ 
+  
+y(t)
+t
+ 
+Figure V.10 - Réponse d'un système intégrateur à une rampe 
+- Analyse harmonique: 
+La réponse harmonique d'un système intégrateur est présentée ci-après. 
+     L'amplitude est égale à 
+K
+ω
+ . La phase est constante à -90°. 
+
+ESISAR - département Automatique 
+ 
+ 
+31 NF-30/04/2026 
+      
+ω
+ 
+-20 dB/décade
+(°)
+ω
+φ
+0 
+ 
+-45° 
+ 
+-90°
+K
+0 
+G (dB)
+ 
+Figure V.11 - Diagramme de Bode d'un système intégrateur 
+ 
+ 
+Im
+Re
+ω = ∞
+ω = 0
+ 
+Figure V.12 - Diagramme de Nyquist d'un système intégrateur 
+ 
+V.3 - Système retard pur 
+Il est caractérisé par l'équation : 
+ y(t) = u(t - T),           où T est la valeur du retard 
+Sa fonction de transfert est : 
+ 
+F(p) = 
+Y(p)
+U(p)
+ = e
+- pT
+ 
+- Analyse temporelle: 
+Sa réponse indicielle est Γ(t-T). 
+
+ESISAR - département Automatique 
+ 
+ 
+32 NF-30/04/2026 
+ 
+  
+y(t)
+t
+τ
+ 
+Figure V.13 - Réponse indicielle d'un retard pur 
+Le gain statique est unitaire. 
+La  réponse  à  une  rampe  est  y(t)=t-T.  Elle  correspond  à  la  réponse  asymptotique  d'un 
+système du premier ordre de gain K=1 et de constante de temps T. 
+ 
+  
+y(t)
+t
+T
+ 
+Figure V.14 - Réponse d'un retard pur à une rampe 
+- Analyse harmonique: 
+Le gain ne dépend pas de la phase  : G(ω)    = 1 
+        = 0 dB 
+La phase est proportionnelle à ω : φ = -τ ω 
+Im
+Re
+0
+-1
+1
+ω  = 
+2 k
+π
+T
+ 
+Figure V.15 - Diagramme de Nyquist d'un retard pur 
+V.4 - Système du second ordre 
+Un système du second ordre est régi par une équation différentielle du second ordre. On 
+se  limite  à  l'étude  des  systèmes  du  second  ordre  régis  par  une  équation  différentielle  de  la 
+forme suivante, avec b
+2
+ et b
+0
+ de même signe. 
+ 
+b
+2
+ 
+d
+2
+ y(t)
+dt
+2
+ + b
+1
+ 
+dy
+dt
+ (t) + b
+0
+ y(t) = a
+0
+ u(t)
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+33 NF-30/04/2026 
+La fonction de transfert est alors sous la forme : 
+ 
+F(p) = 
+K
+1 + 2 ξ/ω
+n
+ p + p
+2
+/ω
+n
+2
+ 
+ 
+K = 
+a
+0
+b
+0 
+est le gain statique
+ 
+ 
+ω
+n
+ = b
+0
+/b
+2 
+est la fréquence propre non amortie
+ 
+ 
+ξ = 
+b
+1
+2 b
+0
+ b
+2 
+est l'amortissement réduit ou facteur d'amortissement
+ 
+Si ξ ≥ 1, on a un système hyper amorti, avec deux pôles réels stables:  
+ 
+p
+1
+ = ω
+n
+ 
+- ξ - ξ
+2
+ - 1
+ 
+    et    p
+2
+ = ω
+n
+ 
+- ξ + ξ
+2
+ - 1
+ 
+ 
+Il  peut  alors  se  mettre  sous  la  forme  du  produit  de  deux  systèmes  du  premier  ordre:
+ 
+K
+(1 + T
+1
+ p) (1 + T
+2
+ p)
+            avec T
+1
+ =-1/p
+1
+ et T
+2
+ = -1/p
+2
+ 
+Si  ξ = 1    p
+1
+ = p
+2
+ = -ω
+n
+ , le système hyper amorti a un pôle double.  
+ 
+Re
+I
+m
+p
+1
+p
+2
+Re
+I
+m
+−ω
+ξ
+> 1
+ξ
+= 1
+n
+X    XX
+ 
+Figure V.16 - Pôles d'un système du second ordre hyper amorti 
+ 
+Si 0 < ξ < 1, le système est oscillant, et a deux pôles complexes conjugués stables: 
+ 
+()
+ωξξ
+n
+j−    ±−1
+2
+             
+ 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+34 NF-30/04/2026 
+φ
+Re
+I
+m
+ω
+n
+sin (
+φ
+) =
+ξ
+-
+ξ ω
+n
+p
+2
+p
+1
+0 <
+ξ
+ < 1
+n
+ω
+ξ
+1   -  
+2
+ 
+Figure V.17 - Pôles d'un système du second ordre oscillant stable 
+ 
+Si -1 < ξ < 0, le système est oscillant, et a deux pôles complexes conjugués instables: 
+ 
+()
+ωξξ
+n
+j−    ±−1
+2
+ 
+Si ξ < -1, on a un système avec deux pôles réels instables: 
+ 
+p
+1
+ = ω
+n
+ 
+- ξ - ξ
+2
+ - 1
+ 
+    et    p
+2
+ = ω
+n
+ 
+- ξ + ξ
+2
+ - 1
+ 
+ 
+ 
+ 
+- Analyse temporelle: 
+La réponse indicielle d'un système du second ordre dépend de la valeur de ξ. 
+Si ξ ≥ 1, le système est hyper amorti. Il n'y a pas de dépassement. 
+y  tKetet
+nn
+t
+n
+t
+(  )().   (  )=−−
+−−
+1
+ωω
+ωΓ  si | ξ|=1 
+y  tKeet
+nn
+tt
+(  )(()).   (  )=+
+−
+−
+−−
+1
+1
+12
+21
+12
+λλ
+λλ
+λ  ωλ ω
+Γ
+ si | ξ|>1 
+λξξ
+1
+2
+1=    −−λξξ
+2
+2
+1=    +− 
+ 
+Si ξ < 1, la réponse indicielle  
+y  tK
+e
+tt
+n
+t
+p
+(  )(sin()).   (  )=−
+−
++
+−
+1
+1
+2
+ξω
+ξ
+ω
+ΦΓ 
+présente  un  dépassement  en  régime  transitoire,  et  un  comportement  plus  ou  moins 
+oscillant  selon  la  valeur  de ξ.  Pour ξ  =  0,  on  a  une  oscillation  non  amortie.  Le  régime 
+transitoire est oscillant, avec une pulsation propre amortie :  
+
+ESISAR - département Automatique 
+ 
+ 
+35 NF-30/04/2026 
+ω
+p
+ = ω
+n
+     1 - ξ
+2
+ 
+Le dépassement vaut e
+−
+−
+ξπ
+ξ1
+2
+ 
+ 
+051015
+0
+0.2
+0.4
+0.6
+0.8
+1
+Time (secs)
+Amplitude
+010203040
+0
+0.5
+1
+1.5
+2
+Time (secs)
+Amplitude
+ 
+ξ≥1                                         ξ<1 
+Figure V.18 - Réponses indicielles d'un système du second ordre 
+- Analyse harmonique: 
+Le gain est fonction de la pulsation : 
+ G
+K
+nn
+(   )
+()()
+ω
+ω
+ω
+ξ
+ω
+ω
+=
+−+12
+22
+ 
+Pour ξ < 0.7, il présente une surtension (résonance) égale à : 
+ 
+G
+max
+ = 
+K
+2 ξ     1 - ξ
+2
+ 
+pour la pulsation de résonance
+ 
+ω
+R
+ = ω
+n
+     1 - 2 ξ
+2
+.  
+20log(K)
+w(log)
+w(log)
+φ(°)
+n
+w
+-180
+-90
+ξ>0.7
+ 
+20log(K)
+w(log)
+w(log)
+φ(°)
+n
+w
+-180
+-90
+ξ<0.7
+20log(Gmax)
+w
+r
+ 
+Figure V.19- Diagramme de Bode d'un système du second ordre 
+
+ESISAR - département Automatique 
+ 
+ 
+36 NF-30/04/2026 
+Re
+Im
+ω
+ω
+R
+K
+G
+C
+max
+ 
+Figure V.20 - Diagramme de Nyquist d'un système du second ordre 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+37 NF-30/04/2026 
+VI – SPECIFICATIONS DE LA COMMANDE 
+VI.1 - Objectif général de la commande 
+Piloter  ou  commander  un  système  consiste  à  faire  en  sorte  que  le  transfert  entre  un 
+signal  de  consigne  et  la  sortie  du  système  ait  des caractéristiques  données.  Cela  revient  à  ce 
+que  la  sortie    du  système  suive  au  mieux  la  consigne  (temps  de  réponse  court,  dépassement 
+limité, ou nul...). 
+Cela peut, dans certains cas, être réalisé par une 
+commande en boucle ouverte, c'est à dire en 
+déterminant un système de commande qui calcule l'action à appliquer au système en fonction 
+seulement du signal de consigne (figure VI.1). Si le système défini par sa fonction de transfert 
+P(p) est parfaitement connu, on peut en effet, sus certaines conditions déterminer le transfert 
+R(p)  pour  que  le  transfert  R(p).P(p)  ait  les  caractéristiques  désirées.  Les  possibilités  de 
+commande en boucle ouverte sont cependant très limitées. Seule une stratégie de 
+commande 
+en   boucle   fermée   permet   de   stabiliser   un   système   instable,   ou   de   rejeter   l'effet   de 
+perturbations d'état ou de structure. Les perturbations d'état sont des signaux externes venant 
+perturber  le  système  (bruit  de  mesure,  entrée  secondaire).  Les  perturbations  de  structure 
+correspondent à des variations internes du système (variations des paramètres de P(p)). 
+    
+R(p)P(p)
+cuy
+ 
+Figure VI.1 - Système en boucle ouverte 
+Il  existe  de  nombreuses  stratégies  de  commande  en  boucle  fermée.  Elles  consistent 
+toutes  à  déterminer  l'action  à  appliquer  au  système  en  fonction  de  la  consigne  et  de  signaux 
+provenant du système (mesure de la sortie, mais aussi mesure de certaines perturbations ou de 
+signaux  internes.  Nous  nous  limitons  dans  ce  cours à  des  stratégies  pour  lesquelles  la 
+commande  est  calculée  en  fonction  de  la  consigne  et  de  la  mesure  de  la  sortie  du  système  à 
+piloter. Un exemple de système asservi est représenté sur la figure VI.2 ou des perturbations 
+sont considérées en entrée et en sortie du système. 
+R(p)
++
+-
+c
++
++
+δ
+2
+P(p)
++
++
+δ
+1
+y
+ 
+Figure VI.2 - Système asservi 
+A partir du schéma de la figure 2, On peut exprimer les relations entre les transformées 
+de  Laplace  des  signaux.  La  transformée  de  Laplace  de  la  sortie  Y(p)  s'écrit  en  fonction  de 
+celles de la consigne C(p) et des perturbations non mesurées 
+∆
+1
+(p) et 
+∆
+ 2
+(p) : 
+ 
+1 + R(p) . P(p)
+R(p) . P(p)
+1 + R(p) . P(p)1 + R(p) . P(p)
+Y(p) = . C(p) +
+1
+ .
+∆
+1
+(p) +
+P
+ .
+∆
+2
+(p)
+ 
+expression de la forme : 
+
+ESISAR - département Automatique 
+ 
+ 
+38 NF-30/04/2026 
+ Y(p) = T(p) . C(p) + T
+1
+(p) . ∆
+ 1
+(p) + T
+2
+(p) . ∆
+ 2
+(p) 
+L'objectif  d'un  système  asservi  est  de  suivre  la  consigne  et  de  rejeter  les  perturbations. 
+Ainsi le choix du régulateur revient à déterminer les caractéristiques des fonctions de transfert 
+T(p), T
+1
+(p) et T
+2
+(p). 
+L'idéal serait donc que le transfert 
+RP
+1 + RP
+ 
+soit de gain unitaire dans une large zone de fréquence et que le transfert
+  
+1
+1 + RP 
+soit de gain nul dans une très large zone de fréquence, 
+ce qui pourrait s'obtenir en choisissant R(p) tel que |R(p)P(p)| >> 1, c'est à dire en choisissant 
+un régulateur de gain très important. Toutefois, un compromis s'impose. En effet 
+•   un gain trop grand peut entraîner une déstabilisation du système ; 
+•   une  dynamique  trop  rapide  peut  mettre  en  oeuvre  une  puissance  de  la  commande 
+irréaliste ou préjudiciable au processus ; 
+•   l'inertie ou la saturation des systèmes physiques limite naturellement le niveau de la 
+commande. 
+Le 
+transfert de boucle (produit de tous les transferts rencontrés en parcourant la boucle) 
+du système asservi est donné par : 
+ 
+FpR  p  P  p
+Y  p
+p
+BO
+(   )(   )   (   )
+(   )
+(   )
+==
+ε
+ 
+La  fonction  de transfert  en  boucle  fermée  (transfert  entre  la  consigne  et  la  sortie  du 
+processus) est donné par : 
+ 
+Fp
+R  p  P  p
+R  p  P  p
+Fp
+Fp
+Y  p
+C  p
+BF
+BO
+BO
+(   )
+(   )   (   )
+(   )   (   )
+(   )
+(   )
+(   )
+(   )
+=
++
+=
++
+=
+11
+ 
+La 
+fonction  de  sensibilité  (transfert  entre  la  perturbation  additive  en  sortie δ
+1
+(t)  et  la 
+sortie) est donnée par  
+ 
+T   p
+R  p  P  pFp
+Y  p
+p
+BO
+1
+1
+1
+1
+1
+1
+(   )
+(   )   (   )(   )
+(   )
+(   )
+=
++
+=
++
+=
+∆
+ 
+VI.2 - Critères de stabilité des systèmes asservis 
+La première condition indispensable au bon fonctionnement d'un asservissement est que 
+le  système  en  boucle  fermée  soit  stable.  Nous  énonçons  ici  un  certain  nombre  de  critères 
+permettant d’analyser la stabilité des systèmes asservis. 
+ 
+  VI.2.1 - Critère de Routh 
+
+ESISAR - département Automatique 
+ 
+ 
+39 NF-30/04/2026 
+ 
+Le critère de Routh est une méthode algébrique qui permet de déterminer le nombre de 
+racines à partie réelle positive pour un polynome de degré n quelconque 
+ 
+D  pa  papa  pa
+n
+n
+n
+n
+(   )...=+++
+−
+−
+1
+1
+10
+ 
+ 
+L’application de ce critère nécessite la construction de la table de Routh définie comme 
+suit : 
+ 
+aaaa
+aaaa
+bbbb
+cccc
+nnnn
+nnnn
+−−−
+−−−−
+246
+1357
+1234
+1234
+   
+ 
+où les a
+i 
+sont les coefficients du polynôme D(p). Les b
+i
+ et les c
+i
+ sont obtenus par : 
+b
+aaa  a
+a
+i
+nninni
+n
+=
+−
+−−−    −
+−
+122    1
+1
+     et  
+c
+b ab   a
+b
+i
+niin
+=
+−
+−    −+−12    111
+1
+ 
+La table de Routh se construit ainsi horizontalement et verticalement jusqu'à avoir des zéros. 
+ 
+Théorème de Routh : Le polynôme D(p) a autant de racines à partie réelle positive 
+qu’il y a de changement de signe dans la première colonne de la table de Routh 
+associée. 
+ 
+Critère de Routh : Un système linéaire invariant est stable si et seulement si tous les 
+éléments de la première colonne de la table de Routh associée au dénominateur de sa 
+fonction de transfert sont de même signe. 
+ 
+  
+  VI.2.2 - Point critique 
+Soit  le  système  asservi  composé  du  processus  P(p)  et  du  régulateur  R(p)  de  la  figure 
+VI.3.  
+R(p)
++
+-
+c
+P(p)
+y
+⊗
+ε
+k
+ 
+Figure VI.3 - Système asservi 
+On  suppose  que  ce  système  asservi  puisse  être  mis  en  oscillations  entretenues  (  à  la 
+pulsation ω
+osc
+  )  en  agissant  sur  le  gain  k.  Cela  se  traduit  par  le  fait  que  j. ω
+osc 
+est  racine  du 
+dénominateur  du  transfert  en  boucle  fermée.  Cela  impose  que,  à cette pulsation , le transfert 
+de boucle est un inverseur. L'entrée du régulateur et la sortie du processus sont en opposition 
+de phase. 
+
+ESISAR - département Automatique 
+ 
+ 
+40 NF-30/04/2026 
+Cette  situation  correspond  au  lieu  de  Bode  de  la  figure  VI.4  :  à  la  pulsation  des 
+oscillations ω
+osc
+, le gain du transfert de boucle est unitaire et le déphasage φ vaut -π rd. 
+ω
+G       dB
+20 log k
+0
+ω
+φ
+0
+rd
+− π
+ω
+osc
+ 
+Figure VI.4 - Lieu de Bode du transfert de boucle R(p) . P(p) 
+Dans un diagramme harmonique, ce point, où le gain est unitaire et la phase vaut -π rd, 
+est appelé point critique. Ce point représente le régime limite des oscillations entretenues en 
+boucle fermée. 
+En effet, si le transfert de boucle passe par ce point critique, c’est à dire s’il existe une 
+pulsation 
+ω
+osc
+  telle  que  le  transfert  de  boucle R(j. ω
+osc
+)*P(j. ω
+osc
+)  =  -1,  alors  le  système  en 
+boucle fermée sera en limite de stabilité et oscillera à cette pulsation. 
+Dans le plan de Nyquist, le point critique est le nombre réel -1 puisque -1 est le nombre 
+complexe de coordonnées polaires (1, -π). 
+Re
+Im
+-1
+ω
+ 
+Figure 5 - Point critique dans le plan de Nyquist 
+Dans le plan de Black, le point critique est A, de coordonnées G = 0 dB et φ = -180°. 
+
+ESISAR - département Automatique 
+ 
+ 
+41 NF-30/04/2026 
+φ
+-270°-180°
+A
+-90°
+ω
+0 dB
+G      dB
+°
+ 
+Figure6 - Point critique dans le plan de Black 
+Il  existe  différents  critères  permettant  d'étudier les  propriétés  de  stabilité  des  systèmes 
+asservis. Nous en présenterons deux ci-après. 
+ 
+  VI.2.3 - Critère de Nyquist 
+C'est un critère géométrique fondé sur la connaissance des pôles à partie réelle positive 
+de  la  fonction  de  transfert  en  boucle  ouverte.  Il  permet  de  déterminer  le  nombre  de  pôles 
+instables (pôles à partie réelle positive) de la fonction de transfert de la boucle fermée. 
+La condition nécessaire et suffisante de stabilité en boucle fermée d'un système asservi 
+linéaire  est  que  son  lieu  de  Nyquist,  en  boucle  ouverte  (de 
+ω=−∞  àω=+∞) fasse,  autour 
+du point critique -1, un nombre de tours égal au nombre de pôles à partie réelle positive de sa 
+fonction de transfert en boucle ouverte. 
+Mise en oeuvre : 
+-   Tracer  le  lieu  de  Nyquist  du  transfert  en  boucle ouverte  (R(jω)  .  P(jω)  pour 
+ω=+∞[,[0, compléter ce lieu par symétrie par rapport à l'axe réel. 
+-   Compter dans le sens trigonométrique le nombre de tours T autour du point critique     
+-1,  en  parcourant  le  lieu  pour ω=−∞  àω=+∞. Si  T  est  égal  au  nombre  de  pôles 
+instables de RP, le système est stable en boucle fermée. 
+     Cas  particulier  pour  les  systèmes  stables  en  boucle  ouverte  :  il  suffit  que  le  lieu  de 
+Nyquist  n'entoure  pas  le  point  critique  -1  pour  conclure  à  la  stabilité  de  la  boucle 
+fermée. 
+     Le  nombre  de  pôles  instables  de  la  boucle  fermée  est  égal  au  nombre  de  pôles 
+instables de la boucle ouverte diminué du nombre de tours du lieu de Nyquist de la 
+boucle ouverte, autour du point critique. 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+42 NF-30/04/2026 
+ω=−∞
+ω=+∞
+ω=
+−
+0
+ω=
++
+0
+ 
+Figure 7 - Diagramme de Nyquist de la boucle ouverte
+ 
+RP = 
+k
+p 1 + 
+τ
+p
+    k > 0 et 
+τ
+ > 0
+ 
+ 
+  VI.2.4 - Forme simplifiée - Critère du revers 
+Soit un système en boucle ouverte sans pôle ni zéro instable, la condition de stabilité en 
+boucle  fermée  exprime  que  le  lieu  de  Nyquist  du  transfert  de  boucle  ne  doit  pas  entourer  le 
+point critique -1 lorsqu’il est parcouru de 
+ω=−∞ àω=+∞. C’est à dire que, parcourant le 
+lieu  de  Black  dans  le  sens  desω  croissants  (  de  0  à+∞), on  doit  laisser  le  point  critique  (0 
+dB, -180°) à droite. Si l'on parcourt le lieu de Nyquist, il faut laisser le point -1 à gauche.  
+Cela  se  traduit  par  le  fait  que,  pour  la  pulsation ω
+0
+  telle  que  |  RP(jω
+0
+)  |  =  1,  le 
+déphasage  doit  être  supérieur  à  -180°.  Ou  encore  par  le  fait  que  ,  pour  la  pulsation ω
+1 
+telle 
+que la phase du transfert de boucle est à -180°, le module | RP(jω
+1
+) | doit être inférieur à 1. 
+VI.3 - Robustesse de la stabilité 
+ 
+  VI.3.1 - Marge de gain et marge de phase 
+Le  critère  de  Nyquist,  énoncé  précédemment,  permet d'affirmer  qu'un  système  asservi 
+est  stable  ou  non,  sans  préciser  le  degré  (ou  la  robustesse)  de  la  stabilité.  C'est  pourquoi  on 
+définit la notion de marge de gain et de marge de phase afin d'apprécier si le système est très 
+stable ou, au contraire, à la limite de l'instabilité. 
+Cette  notion  présente  l'intérêt  de  permettre  une  estimation  de  la  capacité  du  système  à 
+s'adapter à des perturbations et à faire face aux erreurs de réglage du fait d'une identification 
+incorrecte  (ce  qui  est  inévitable,  sur  le  terrain) et,  d'une  manière  générale,  de  la  non 
+concordance entre le processus et son modèle. 
+
+ESISAR - département Automatique 
+ 
+ 
+43 NF-30/04/2026 
+La   marge   de   gain   m
+g
+   est   l'écart   de   gain   par   rapport   au   gain   unitaire   (0   dB) 
+correspondant au déphasage de -180° du transfert de boucle T(p) = R(p) . P(p). 
+ m
+g
+ = -20 log | T(jω
+1
+) |   (exprimée en dB) 
+avec : 
+ arg T(jω
+1
+) = -π 
+La  marge  de  phase  m
+φ
+  est  l'écart  de  phase  par  rapport  à  -π  correspondant  au  gain 
+unitaire (0 dB). 
+ m
+φ
+ = π + φ
+0
+                  (φ
+0
+ étant exprimé en radian) 
+avec: 
+ φ
+0
+ = arg T(jω
+0
+)     pour | T(jω
+0
+) | = 1 
+Les  figures  8,  9  et  10  donnent  une  représentation  des  marges  de  gain  et  de  phase  dans 
+les lieux de Bode, Nyquist et Black, respectivement. 
+Remarque :   1)   La marge de gain s'exprime aussi en valeur réelle au lieu de dB: 
+    
+m
+g
+ = 
+1
+ T jω
+1
+ 
+ 
+   ou encore m
+g
+ = 1/a en se référant au lieu de Nyquist de la figure  9. 
+ 
+  2)   La marge de gain représente le gain maximum que l'on peut ajouter au 
+système en boucle ouverte pour obtenir les oscillations entretenues de 
+la  boucle  fermée.  Une  multiplication  du  gain  statique  k  de  la  boucle 
+ouverte  R(p)  .  P(p)  par  m
+g
+  (exprimé  en  valeur  réelle)  fait  passer  la 
+courbe harmonique qui en résulte par le point critique. 
+  3)   Un  système  en  boucle  ouverte  du  premier  ordre (déphasage  au  plus 
+égal à -π/2) ou du second ordre (déphasage au plus de -π) ne peut être 
+instable en boucle fermée. 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+44 NF-30/04/2026 
+G       dB
+ω
+0 dB
+ω
+φ
+0
+rd
+− π
+m
+g
+m
+φ
+ω
+0
+ω
+1
+ 
+Figure 8 - Marges de gain et de phase dans le lieu de Bode du transfert de boucle 
+Re
+Im
+-1
+ω
+1
+a
+m
+φ
+m   = -20 log a
+g
+ 
+Figure 9 - Marges de gain et de phase dans le lieu de Nyquist du transfert de boucle 
+φ
+-180°-90°
+ω
+0
+G      dB
+°
+m
+φ
+m
+g
+0 dB
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+45 NF-30/04/2026 
+Figure 10 - Marges de gain et de phase dans le lieu de Black du transfert de boucle 
+ 
+  VI.3.2 - Marge de retard 
+Le  phénomène  de  retard  pur  (dont  l'expression,  en  variable  de  Laplace  est  e
+-rp
+,  avec 
+r = valeur  du retard pur) introduit un déphasage qui tend vers l'infini avec la pulsation ω. Le 
+retard  pur  réduit  donc  la  marge  de  phase.  C'est  ainsi  qu'un  système  en  boucle  ouverte  du 
+premier ordre a une marge de phase de π rd, alors que le même premier ordre avec retard voit 
+sa  marge  de  phase  dépendre  de  ce  retard  et  être  d'autant  plus  réduite  que  le  retard  est  grand 
+(pour une constante de temps donnée). 
+Pour estimer le retard maximum admissible sans déstabiliser le système asservi, on fait 
+appel  à  la  notion  de  marge  de  retard.  Si ω
+0
+  représente  la  pulsation  de  calcul  de  la  marge  de 
+phase, on écrit que le produit de la marge de retard m
+r
+ par ω
+0
+ est égal à la marge de phase. 
+On a donc : 
+ ω
+0
+ . m
+r
+ = π + φ
+0
+ 
+où :
+ 
+m
+r
+ = 
+π + φ
+0
+ω
+0 
+avec : 
+ φ
+0
+ = arg T(jω
+0
+)      pour | T(jω
+0
+) | = 1 
+ φ
+0
+ en radian 
+ ω
+0
+ en rd/s 
+ m
+r
+ en seconde 
+  VI.3.3 - Marge de module 
+ 
+Une bonne marge de gain et une bonne marge de phase (ou de retard) ne garantissent pas que 
+le lieu de Nyquist  du transfert de boucle est loin du point critique car elles ne représentent la 
+distance par rapport au point critique que selon deux directions privilégiées. Il est donc plus 
+intéressant de définir une autre marge, appelée 
+marge de module , et définie par la distance 
+(dans le plan) entre le point critique et le lieu de Nyquist du transfert de boucle, c’est à dire : 
+ 
+]
+[
+MMR  jP  j=
+∈+∞
++
+inf
+,
+().   ()
+ω
+ωω
+0
+1   
+ 
+On a alors 
+  
+]
+[
+MM
+R  jP  j
+=
+∈+∞
++
+1
+0
+1
+1
+max
+,
+().   ()
+ω
+ωω
+ 
+ 
+La marge de module se lit donc sur le lieu de Nyquist du transfert de boucle ou sur le lieu de 
+Bode (ou de Black) de la fonction de sensibilité.  Le maximum du gain de la fonction de 
+sensibilité est égal à l’opposé de la marge de module (en dB). 
+
+ESISAR - département Automatique 
+ 
+ 
+46 NF-30/04/2026 
+  
+-1
+M M
+R e
+Im
+ 
+Figure 11 - Marge de module dans le lieu de Nyquist du transfert de boucle 
+- 2 0 l o g ( M M )
+w
+d B
+ 
+Figure 12 - Marge de module dans le lieu de Bode de la fonction de sensibilité 
+  
+VI.4 - Précision des systèmes asservis 
+Une  fois  la  stabilité  assurée,  le  but  du  régulateur  est  de  minimiser  l'erreur  entre  la 
+consigne c et la sortie y du processus. 
+R(p)
+c
+P(p)
+y
+-
++
+e
+-
++
+ 
+Figure 13 - Système asservi 
+La précision statique exprime l'erreur au bout d'un temps infini pour une entrée donnée ; 
+c'est l'erreur en régime permanent. 
+
+ESISAR - département Automatique 
+ 
+ 
+47 NF-30/04/2026 
+La précision dynamique exprime la variation de e en régime transitoire, pour une entrée 
+donnée. 
+ 
+  VI.4.1 - Précision statique 
+ 
+- Erreur statique due à la consigne 
+En pratique, pour la détermination de l'erreur statique, on ne s'intéresse qu'à 3 types de 
+consignes : échelon, rampe et parabole, ce qui conduit respectivement aux erreurs de position, 
+de vitesse et d'accélération. 
+L'expression temporelle de l'erreur est donnée par e(t) = c(t) - y(t) et sa limite, lorsque t 
+tend vers l'infini, s'écrit : 
+ 
+lim
+(  )
+lim
+(   )
+t
+e t
+p
+pE  p
+→ ∞
+=
+→0
+ (propriété des transformées de Laplace) 
+  
+Avec les notations de la figure 13 : 
+ 
+E(p) = C(p) - Y(p) = 
+1
+1 + R(p) . P(p)
+ . C(p)
+ 
+On suppose que R(p) . P(p) peut se mettre sous la forme fractionnelle : 
+ 
+R(p) . P(p) = 
+k
+p
+n
+ . 
+N(p)
+D(p)
+             avec  
+n entier
+N 0
+D 0
+ = 1
+ 
+- Erreur de position : e
+p  (consigne échelon   C(p)=1/p)
+ 
+ 
+si ne
+p
+R  p  P  pk
+p
+   (transfert non intégrateur)     ==
+→
++
+=
++
+0
+0
+1
+1
+1
+1
+lim
+(   )   (   )
+  
+ 
+si ne
+p
+  (transfert ayant au moins un pole  intégrateur)   ≥=10
+ 
+- Erreur de vitesse : e
+v  (consigne rampe   C(p)=1/p²)
+ 
+ 
+si ne
+v
+  (transfert non intégrateur)   ==∞0 
+ 
+si ne
+p
+pR  p  P  pk
+v
+   (transfert ayant un pole intégrateur)     ==
+→
+=1
+0
+11
+lim
+(   )   (   )
+ 
+ 
+si ne
+v
+   (transfert ayant au moins 2 poles intégrateurs)     ≥=20  
+- Erreur d’accélération : e
+a  (consigne parabole   C(p)=1/p
+3
+)
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+48 NF-30/04/2026 
+ 
+si ne
+a
+  (transfert ayant au plus un intégrateur)   ≤=∞1 
+ 
+si ne
+p
+p  R  p  P  p
+k
+a
+   (transfert ayant 2 poles intégrateurs)     ==
+→
+=2
+0
+11
+2
+lim
+(   )   (   )
+ 
+ 
+si ne
+a
+   (transfert ayant au moins 3 poles intégrateurs)     ≥=30  
+De  manière  générale,  on  constate  donc  que  si  le  système  en  boucle  ouverte  R(p).P(p) 
+comporte n intégrateurs, alors l'erreur statique : 
+•   est nulle pour une consigne polynomiale de degré n-1 en fonction du temps ; 
+•   est   fonction   décroissante   du   gain   statique   de   R(p).P(p)   pour   une   consigne 
+polynomiale  de  degré  n  en  fonction  du  temps  (sous  réserve  que  la  stabilité  du 
+système soit maintenue). 
+Ces résultats sont résumés dans le tableau suivant : 
+ 
+nombre d'intégrateurs dans 
+R(p) . P(p) 
+0 1 2 
+≥ 3
+ 
+erreur de position e
+p
+ 
+1
+1+k
+ 
+0 0 0 
+erreur de vitesse e
+v
+ 
+∞
+ 
+1
+k
+ 
+0 0 
+erreur d'accélération e
+a
+ 
+∞
+ 
+∞
+ 
+1
+k
+ 
+0 
+Tableau 1 - Erreurs statiques 
+ 
+- Erreur statique due à la perturbation 
+Soit le système asservi de la figure 14 dans lequel δ est une perturbation agissant sur la 
+sortie via la fonction de transfert F(p). 
+R(p)
+c
+P(p)
+y
+F(p)
+δ
++
++
++
+-
+ 
+Figure 14 - Système asservi 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+49 NF-30/04/2026 
+L'erreur entre la consigne et la sortie est : 
+ E(p) = C(p) - Y(p) 
+ 
+E(p) =
+1
+1 + R(p) . P(p)
+ . C(p) -
+F(p)
+1 + R(p) . P(p)
+ . ∆(p)
+ 
+La contribution de la perturbation δ dans l'erreur s'écrit : 
+ 
+1 + R(p) . P(p)
+(p) = -
+F(p)
+E
+p
+ . ∆(p)
+ 
+On suppose comme précédemment, que F(p) peut se mettre sous la forme fractionnelle : 
+ 
+F(p) = - 
+k
+p
+p
+m
+ . 
+N
+p
+(p)
+D
+p
+(p)
+            avec  
+m entier
+N
+p
+(0)
+D
+p
+(0)
+ = 1
+ 
+Pour une perturbation 
+∆(p) = 
+[]
+1
+p
+ i   1,  3
+i
+∈, 
+l'erreur statique due à la perturbation, notée ε devient : 
+ 
+ε = 
+lim
+p 
+→ 0
+p .  E
+1
+(p)   = 
+lim
+p 
+→ 0
+- 
+k
+p
+ .  p
+n-m-i+1
+k + p
+n
+ 
+• Cas particulier où n = 0 : 
+lim
+p → 0
+p
+n
+ = 1
+ 
+ si m =
+k
+k
+p
+0
+1
+              
+pva
+εεε= −
++
+= ∞= ∞ 
+ si m ≥=∞=∞=∞1             
+pva
+εεε 
+• Autres cas où n ≥ 1 
+ 
+si n    m =
+k
+k
+p
+−= −= ∞= ∞0              
+pva
+εεε 
+ si n    m =
+k
+k
+p
+−== −= ∞10              
+pva
+εεε 
+ si n    m =
+k
+k
+p
+−=== −200              
+pva
+εεε
+  
+ 
+Comme dans le paragraphe précédent relatif à la consigne, on réduit l'erreur statique en 
+augmentant  le  nombre  d'intégrateurs  (en  amont  de  la  perturbation)  ou  la  valeur  du  gain 
+statique k (à condition que la stabilité soit préservée). 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+50 NF-30/04/2026 
+ 
+  VI.4.2 - Précision dynamique 
+Comme celui de tout processus, le comportement dynamique d'un système asservi peut 
+être caractérisé par sa réponse indicielle ou ses lieux de Bode, Nyquist ou Black. Son analyse 
+est fonction de la structure du transfert de boucle. 
+L'étude  se  limite  aux systèmes dont le transfert de boucle est du premier ou du second 
+ordre. On les considère comme des systèmes de référence  auxquels on essaie de se ramener 
+lorsque les systèmes sont plus complexes. 
+ 
+- Transfert de boucle du premier ordre 
+ 
+ - On suppose que le transfert de boucle est non intégrateur sous la forme : 
+  
+FpR  p   P  p
+k
+p
+BO
+(   )(   ).   (   )==
++1τ
+ 
+ La fonction de transfert en boucle fermée est alors sous la forme : 
+  Fp
+R  p   P  p
+R  p   P  p
+k
+p
+BF
+f
+f
+(   )
+(   ).   (   )
+(   ).   (   )
+=
++
+=
++
+11τ
+ 
+  avec k
+k
+k
+f
+=
++
+1
+      et      τ
+τ
+f
+k
+=
++
+1
+ 
+ - On suppose que le transfert de boucle est  intégrateur sous la forme : 
+  FpR  p   P  p
+k
+p
+BO
+(   )(   ).   (   )== 
+ on a alors : 
+  Fp
+p
+BF
+f
+(   )=
++
+1
+1τ
+                          avec τ
+f
+k
+=
+1
+ 
+Dans les deux cas, Fp
+BF
+(   ) est une fonction du 1er ordre. 
+ 
+- Erreur indicielle
+ 
+On a vu lors de l'étude du comportement temporel des processus du 1er ordre que leur 
+réponse indicielle est         
+y(t) = k
+f
+  1 - e
+- t
+τ
+f 
+L'erreur indicielle e(t) = 
+Γ(t) - y(t), où Γ(t) est l'échelon unitaire, s'écrit donc : 
+
+ESISAR - département Automatique 
+ 
+ 
+51 NF-30/04/2026 
+        
+e(t) = 1 - k
+f
+  1 - e
+- t
+τ
+f 
+e(t)
+1 - k
+f
+t
+τ
+f
+ 
+Figure 15 - Erreur indicielle en boucle fermée  
+pour un transfert de boucle du premier ordre 
+L'erreur indicielle de la boucle fermée est donc une fonction monotone décroissante du 
+temps. Le temps de réponse à 5% est égal à 3 τ
+f
+. 
+On  vérifie  que  la  limite  asymptotique  de  cette  erreur  est  nulle  lorsque  le  transfert  de 
+boucle comporte un intégrateur (k
+f
+ = 1). 
+ 
+- Comportement fréquentiel 
+Dans  le  domaine  fréquentiel, un processus du 1er ordre est caractérisé par sa pulsation 
+de coupure 
+ω
+c
+ pour une atténuation du gain égale à -3 dB ou -6 dB. La pulsation de coupure à 
+-3 dB est égale à 1/ τ
+f
+. 
+G      dB
+ω
+τ
+f
+1
+ω
+c
+20 log k
+f
+-6 dB
+pente de -6 dB par octave 
+(1 octave = doublement 
+de la fréquence)
+        rad
+ω
+τ
+f
+1
+0
+φ
+- 
+π
+4
+- 
+π
+2
+ 
+Figure 16 - Lieu de Bode de la boucle fermée 
+pour un transfert de boucle du premier ordre 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+52 NF-30/04/2026 
+ 
+ - Transfert de boucle du second ordre 
+ 
+Pour simplifier l'étude, on se limite au cas où le transfert de boucle est intégrateur soit : 
+ 
+FpR  p   P  p
+k
+pp
+BO
+(   )(   ).   (   )
+()
+==
++1τ
+ 
+La fonction de transfert en boucle fermée est alors :  
+ 
+Fp
+R  p   P  p
+R  p   P  p
+k
+kpppp
+BF
+nn
+(   )
+(   ).   (   )
+(   ).   (   )
+//
+=
++
+=
+++
+=
+++
+1
+1
+1   2
+2
+2
+2
+τξ   ωω
+ 
+avec : 
+ 
+ω
+n
+ = 
+k
+τ
+         ω
+n
+ = pulsation naturelle ou propre non amortie du système
+ξ = 
+1
+2 kτ
+ξ = coefficient d'amortissement
+ 
+ 
+- Erreur indicielle 
+La figure 17 rappelle l'allure générale de la réponse indicielle d'une fonction du second 
+ordre. Cette réponse est oscillante pour ξ ∈ ] 0, 1 [ et apériodique pour ξ ≥ 1. 
+y(t)
+1
+ξ < 0,7
+0,7   ξ < 1
+ξ = 1
+≤
+ 
+Figure 17 - Réponse indicielle d'un second ordre 
+Pour ξ ≥  1,  les  pôles  de  F
+BF
+(p)  sont  des  réels  négatifs  et  la  fonction  de  transfert  se 
+décompose donc en 2 éléments du premier ordre, cas précédemment étudié. 
+Pour 0<
+ξ < 1, l'erreur indicielle e(t) = Γ(t) - y(t), où Γ(t) est l'échelon unitaire, est de la 
+forme : 
+ 
+e(t) = A . e
+-ξ . ω
+n
+ t
+ . sin ω
+p
+ . t + φ
+ 
+avec : 
+
+ESISAR - département Automatique 
+ 
+ 
+53 NF-30/04/2026 
+ 
+A = 
+1
+1 + ξ
+2
+  
+tgφ = 
+1 + ξ
+2
+ξ
+  
+ 
+ω
+p
+ = ω
+n
+ . 1 - ξ
+2
+ 
+e(t)
+1
+t
+D
+ 
+Figure 18 - Erreur indicielle d'un second ordre pour 
+ξ
+ < 1 
+Rappel :  
+On  montre  que,  à ω
+n
+  donné,  le  temps  de  réponse  à  95%  est  le  plus  court  pour 
+ξ=2   2/    . Le
+ 
+dépassement D vaut alors 4%. 
+Remarque : Si le gain statique k du système en boucle ouverte R(p) . P(p) augmente, 
+le coefficient d'amortissement ξ diminue et le dépassement D croît. 
+  Donc  si  une  augmentation  de  k  se  traduit  par  une meilleure  précision 
+statique,  elle  entraîne  une  augmentation du dépassement D qui peut être 
+inadmissible du point de vue des spécifications de la commande. 
+ 
+-
+ Comportement fréquentiel 
+La figure 19 rappelle le comportement fréquentiel d'un second ordre. Pour
+ 
+ξ ∈ ] 0, 
+2
+2
+ ]
+,
+ 
+on définit un facteur de résonance Q (ou facteur de qualité) :
+ 
+ 
+Q = 
+1
+2ξ     1 - ξ
+2
+ 
+correspondant à la pulsation de résonance : 
+ 
+ω
+R
+ = ω
+n
+ . 1 - 2ξ
+2
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+54 NF-30/04/2026 
+G      dB
+ω
+ω
+20 log Q
+pente de -12 dB 
+par octave
+R
+ω
+n
+ξ < 
+2
+2
+ξ
+ > 
+2
+2
+ 
+Figure 19 - Variation fréquentielle du gain de la boucle fermée dont 
+la boucle ouverte est 
+k
+p(1 + 
+τ
+p)
+ 
+ 
+VI.5 -Caractéristiques du système en boucle fermée déduites de l'abaque de Black 
+- Nichols 
+On considère le système asservi de la figure 20. 
+ 
+F   (p)
+BO
+  
+Figure 20 - Système asservi 
+La fonction de transfert du système bouclé s'écrit : 
+ 
+Fp
+Fp
+Fp
+BF
+BO
+BO
+(   )
+(   )
+(   )
+=
++1
+ 
+L'abaque de Black donne, point par point, F
+BF
+(jω) à partir de F
+BO
+(jω). 
+
+ESISAR - département Automatique 
+ 
+ 
+55 NF-30/04/2026 
+ ω
+| T(j   ) |
+ ω
+dB
+-180°
+contours isomodule 
+de F   (j   )
+BF
+-270°
+-90°
+courbes isophase 
+de F   (j   )
+BF
+ω
+ω
+i
+ω
+2
+ω
+1
+ω = 0
+arg(T(jω))
+0°
+ 
+Figure 21 - Abaque de Black-Nichols 
+Dans le plan de Black, on trace le lieu de Black de T(p) (représenté par la courbe en trait 
+pointillé de la figure 21) en graduant le lieu par différentes valeurs ω
+i
+ de ω. 
+On lit les valeurs correspondantes de | F
+BF
+(jω
+i
+) | et arg(F
+BF
+(jω
+i
+)) à l'intersection du lieu 
+de Black avec les courbes isomodule et isophase de l'abaque de Black. 
+Deux  informations  essentielles  peuvent  être  ainsi  lues  directement  sur  l'abaque  de 
+Black,  sans  tracer  le  lieu  de  Black  du  système  bouclé.  Il  s'agit  de  la  bande  passante  et  du 
+facteur de résonance. 
+| T(j   ) |
+ ω
+dB
+-180°
+-90°
+ω
+ω
+c
+ω
+R
+arg(T(jω))
+0°
+Q + G
+BF
+(0)
+ 
+Figure 22 - Caractéristiques du système bouclé 
+ 
+ 
+
+ESISAR - département Automatique 
+ 
+ 
+56 NF-30/04/2026 
+Bande passante 
+Si G
+BF
+(ω) représente le gain en dB de la boucle fermée à la pulsation ω, la pulsation de 
+coupure ω
+c
+ à α dB est donnée par : 
+ G
+BF
+(ω
+c
+) - G
+BF
+(0) = α 
+En pratique, on retient α = -3 ou -6 dB. 
+La valeur ω
+c
+ est obtenue au point d'intersection du lieu de Black de T(jω), gradué en ω, 
+avec la courbe isomodule de valeur G
+BF
+(0) + α de l'abaque. 
+Facteur de résonance 
+Lors  de  l'étude  du  comportement  fréquentiel  d'un  système  du  second  ordre,  on  a 
+introduit le facteur de résonance Q : 
+ 
+Q = 
+F
+BF
+(jω
+R
+)
+F
+BF
+(0)
+ 
+Il représente le gain maximum du système bouclé à la pulsation de résonance ω
+R
+. 
+Si on l'exprime en dB : 
+ Q = G
+BF
+(ω
+R
+) - G
+BF
+(0) 
+Sur l'abaque de Black, G
+BF
+(ω
+R
+) est donnée par la courbe isomodule tangente au lieu de 
+Black de T(jω). Connaissant G
+BF
+(0), on en déduit Q. 
+Remarque : 
+Si la boucle de retour comporte une fonction de transfert différente de l'unité (cas de la 
+figure 23), la transmittance du système bouclé devient : 
+ 
+F
+BF
+(p) = 
+T(p)
+1 + T(p) . H(p)
+ 
+ou encore : 
+ 
+F
+BF
+(p) = 
+TH
+1 + TH
+ . 
+1
+H 
+T(p)
++
+-
+c
+H(p)
+y
+ε
+ 
+Figure 23 - Système asservi avec retour non unitaire 
+Dans ce cas, la transmittance de F
+BF
+ s'obtient en 2 étapes : 
+
+ESISAR - département Automatique 
+ 
+ 
+57 NF-30/04/2026 
+•   abaque de Black appliqué à la boucle ouverte T(p) . H(p) ; 
+•   multiplier le résultat ainsi obtenu par 1/H(p). 
+ 
+ 
+ 

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" role="img" aria-labelledby="title desc">
+  <title id="title">Passage de l'equation physique a la fonction de transfert</title>
+  <desc id="desc">Loi physique, transformee de Laplace et fonction de transfert H(p).</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#172033"/>
+    </marker>
+    <style>
+      .box{fill:#eef6ff;stroke:#1f5f99;stroke-width:2}
+      .alt{fill:#f2fbf6;stroke:#23845a}
+      .warn{fill:#fff7ed;stroke:#c87b16}
+      .line{fill:none;stroke:#172033;stroke-width:2.2}
+      .muted{fill:none;stroke:#667085;stroke-dasharray:6 5;stroke-width:2}
+      .text{fill:#172033;font-family:Inter,Segoe UI,Arial,sans-serif;font-size:15px;font-weight:700}
+      .small{fill:#667085;font-family:Inter,Segoe UI,Arial,sans-serif;font-size:12px;font-weight:700}
+    </style>
+  </defs>
+  <rect x="50" y="72" width="180" height="82" rx="8" class="box alt"/>
+  <rect x="360" y="72" width="180" height="82" rx="8" class="box"/>
+  <rect x="670" y="72" width="180" height="82" rx="8" class="box warn"/>
+  <path d="M230 113 H350" class="line" marker-end="url(#arrow)"/>
+  <path d="M540 113 H660" class="line" marker-end="url(#arrow)"/>
+  <text x="140" y="102" text-anchor="middle" class="text">Loi physique</text>
+  <text x="140" y="128" text-anchor="middle" class="small">bilan, Newton, thermique</text>
+  <text x="450" y="102" text-anchor="middle" class="text">Laplace</text>
+  <text x="450" y="128" text-anchor="middle" class="small">conditions initiales nulles</text>
+  <text x="760" y="101" text-anchor="middle" class="text">H(p)=Y(p)/U(p)</text>
+  <text x="760" y="128" text-anchor="middle" class="small">poles, zeros, gain</text>
+  <path d="M80 186 H820" class="muted"/>
+  <text x="86" y="208" class="small">Exemple reservoir : S n'(t)=qe(t)-qs(t) -> N(p)/Qe(p)=1/(Sp)</text>
+</svg>

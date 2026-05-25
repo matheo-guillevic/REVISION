@@ -2,26 +2,28 @@
 
 ## Fichiers principaux
 
-- `index.html` : structure HTML du site et contenu de maquette.
+- `index.html` : page d'accueil avec les liens vers les cours.
+- `math.html` : page dediee au cours de mathematiques/probabilites.
+- `auto.html` : page dediee au cours d'automatique AU361.
 - `styles.css` : design responsive, mise en page, couleurs pedagogiques et composants visuels.
 - `script.js` : interactions de navigation, boutons d'affichage, progression et etats des exercices.
 - `tools/extract-pdfs.js` : script local utilise pour extraire le texte des PDF.
-- `tools/split-html.js` : script utilise pour decouper `index.html` en fichiers partiels.
-- `tools/build-html.js` : script utilise pour reconstruire `index.html` depuis les fichiers partiels.
+- `tools/split-html.js` : script utilise pour redecouper `math.html` en fragments de cours de math.
+- `tools/build-html.js` : script utilise pour reconstruire `index.html`, `math.html` et `auto.html`.
 - `tools/enrich-td-pages.js` : script utilise pour ajouter les tags de notions et notes de raisonnement dans les pages TD.
 - `tools/add-td-question-notes.js` : script utilise pour ajouter les explications question par question dans les corrections TD.
 - `tools/add-td-question-blocks.js` : script utilise pour ajouter les blocs Questions et transformer les corrections en blocs Reponse.
 - `tools/restructure-td-answers.js` : script utilise pour separer les reponses TD par question avec raisonnement et solution independants.
 - `tools/fill-td-question-answers.js` : script utilise pour reinjecter les raisonnements et solutions explicites dans chaque sous-question TD.
-- `src/layout/start.html` : debut du document HTML, incluant l'en-tete, la navigation et l'ouverture du contenu principal.
-- `src/layout/end.html` : fin du document HTML, incluant la fermeture du contenu principal et le bouton des annotations.
-- `src/sections/` : sections HTML separees du site, rangees dans l'ordre de navigation.
+- `src/subjects/probabilites/sections/` : fragments HTML du cours de mathematiques.
+- `src/subjects/auto/sections/` : fragments HTML du cours d'automatique.
 - `td1.html` : page corrigee du TD 1 de denombrement.
 - `td2.html` : page corrigee du TD 2 d'espaces probabilises.
 - `td3.html` : page corrigee du TD 3 de variables aleatoires.
 - `extracted/` : textes extraits automatiquement des PDF pour aider a construire le contenu du site.
-- `pdf/cours/` : PDF des cours.
-- `pdf/TD/` : PDF des TD et corriges disponibles.
+- `pdf/math/cours/` : PDF des cours de mathematiques.
+- `pdf/math/TD/` : PDF des TD et corriges de mathematiques.
+- `pdf/auto/` : PDF du cours d'automatique et des TD.
 - `package.json` et `package-lock.json` : dependance locale `pdf-parse` utilisee pour l'extraction PDF.
 - `prompt.txt` : cahier des charges initial.
 - `planning.md` : feuille de route des actions realisees et a faire.
@@ -30,10 +32,10 @@
 
 ## Organisation de la page
 
-Le site est construit comme une application statique en une seule page pour faciliter le demarrage.
-Le fichier `index.html` est reconstruit a partir des fichiers source dans `src/`.
+Le site est construit comme une application statique multi-pages simple.
+Le fichier `index.html` sert d'accueil, `math.html` contient le cours de mathematiques, et `auto.html` contient le cours d'automatique.
 
-Sections prevues :
+Sections de `math.html` :
 
 - Accueil
 - Programme du semestre
@@ -85,7 +87,7 @@ Sections prevues :
 
 Pour enrichir un chapitre :
 
-1. Aller dans la section correspondante : `chap1`, `chap2`, `chap3` ou `chap4`.
+1. Aller dans la section correspondante sous `src/subjects/probabilites/sections/`.
 2. Ajuster les objectifs et la liste "ce qui est exigible".
 3. Completer les blocs `content-block` avec les definitions, theoremes, methodes et points d'attention.
 4. Ajouter ou remplacer les `exercise-card` avec les exercices du cours.
@@ -96,7 +98,6 @@ Pour enrichir un chapitre :
 
 Si le site grossit, il sera pertinent de creer :
 
-- `pages/` pour separer les pages principales.
 - `data/chapters.js` pour stocker les chapitres.
 - `data/exercises.js` pour stocker les exercices.
 - `components/` si le projet passe vers React, Vue ou Astro.
@@ -113,19 +114,19 @@ Les fichiers extraits sont stockes dans `extracted/`. Ils servent de support de 
 
 ## Reconstruction du HTML
 
-Apres modification d'un fichier dans `src/layout` ou `src/sections`, reconstruire le site avec :
+Apres modification d'un fichier dans `src/subjects`, reconstruire le site avec :
 
 ```powershell
 npm run build
 ```
 
-Pour recreer les fichiers partiels a partir de `index.html` :
+Pour recreer les fragments de math a partir de `math.html` :
 
 ```powershell
 npm run split
 ```
 
-Les pages `td1.html`, `td2.html` et `td3.html` sont des pages statiques independantes. Elles ne sont pas reconstruites par `npm run build`.
+Les pages `td1.html`, `td2.html` et `td3.html` sont des pages statiques independantes. Elles ne sont pas reconstruites par `npm run build`, mais leurs liens de retour pointent vers `math.html#probabilites-td`.
 
 Pour reappliquer les tags et notes de raisonnement des pages TD :
 

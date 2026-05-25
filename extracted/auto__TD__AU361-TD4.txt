@@ -1,0 +1,259 @@
+
+
+ESISAR- Département Automatique 
+1/4 NF - 30/04/2026 
+          
+              
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+AU361 – TD4 
+Analyse et Commande des systèmes linéaires 
+sous forme de représentation externe 
+ 
+ 
+         
+ Nathalie Fulget 
+ Département Automatique 
+ Grenoble INP Esisar 
+ 
+ 
+___________________________________________________________________________  
+Exercices portant sur la partie: régulateur RST 
+___________________________________________________________________________  
+Exercice 1: On veut synthétiser un régulateur RST pour un système du premier ordre de gain 
+statique unitaire et de constante de temps égale à 1. 
+On  souhaite  obtenir  un  gain  statique  unitaire  en  boucle  fermée,  et  un  rejet  asymptotique  des 
+perturbations constantes en sortie. 
+On place le pôle de poursuite en -4 et les pôles de filtrage en -2. 
+Exprimer les polynômes R, S et T. 
+En déduire le transfert en boucle fermée et la fonction de sensibilité. 
+ 
+___________________________________________________________________________  
+Exercice  2 :  Le  système  à  piloter  est  un  système  du  second  ordre,  de  gain  statique  K,  de 
+pulsation naturelle ω
+n
+, et de coefficient d'amortissement ζ.  
+On  souhaite  synthétiser  un  régulateur  RST  permettant  d'avoir  un  gain  statique  en  boucle 
+fermée unitaire et un rejet des perturbations de pulsation ω = 1rd/s. 
+Préciser  la  structure  du  correcteur  (degré  des  polynômes,  ...)  sans  chercher  à  résoudre  le 
+système issu de l'équation de Bezout. 
+ 
+___________________________________________________________________________  
+
+ESISAR- Département Automatique 
+2/4 NF - 30/04/2026 
+Exercice 3 : Soit un moteur représenté par le modèle linéaire suivant où Γ représente le 
+couple, v la vitesse et y la position: 
+ 
+ 
+K
+1+Ts
+1
+s
+Γ
+vy
+ 
+ 
+On souhaite piloter ce système avec un régulateur RST. 
+1: Donner le schéma fonctionnel du système asservi. 
+2: Synthétiser un correcteur RST de degré minimal permettant de suivre sans erreur statique 
+des consignes de position constantes, et de rejeter asymptotiquement des perturbations 
+constantes additives sur la mesure de position. 
+3: On souhaite de plus que les perturbations constantes de couple soient rejetées 
+asymptotiquement. Qu'est ce que cela implique sur le régulateur, et sur les degrés de ses 
+polynômes? 
+ 
+___________________________________________________________________________  
+Exercice 4 : Le système à piloter a pour fonction de transfert H(p). 
+  H  p
+G
+pTp
+(   )
+()
+=
++1
+ 
+d2 est une perturbation additive sur l'entrée du système à piloter. d1 est une perturbation 
+agissant sur la sortie y par l'intermédiaire du transfert Hd(p). 
+  
+Hd  p
+Tp
+(   )
+()
+=
++
+1
+1
+ 
+Représenter le schéma fonctionnel du système asservi. 
+Synthétiser un correcteur RST strictement causal, d’ordre minimal permettant 
+- le suivi de consignes échelon sans erreur statique 
+- le rejet asymptotique des perturbations constantes d1 et sur d2 
+- un comportement en boucle fermée du second ordre avec une pulsation naturelle 
+de 1rd/s et un coefficient d’amortissement de 0.7. 
+- les poles de filtrages sont pris égaux à –1. 
+Calculer les polynomes R, S et T. 
+___________________________________________________________________________ 
+
+ESISAR- Département Automatique 
+3/4 NF - 30/04/2026 
+Exercices portant sur l’ensemble du cours 
+___________________________________________________________________________  
+Exercice 5 : Régulation de température d'une enceinte thermique 
+ 
+On considère le problème de la régulation de température au sein d'une enceinte thermique. 
+Celle ci est assurée par une résistance électrique passant à l'intérieur de la paroi. Cette paroi 
+est isolée sur sa partie extérieure pour minimiser au maximum les pertes thermiques. On note 
+Tint(t) la température dans l'enceinte thermique, Text(t) la température extérieure, et Tpar(t) la 
+température dans la paroi. La puissance de chauffe (aux bornes de la résistance) est notée 
+Puis(t). 
+             
+Tint
+Text
+Tpar
+Puis
+ 
+ 
+ Figure 1: Enceinte thermique 
+ 
+Les équations différentielles caractérisant l'évolution thermique de ce système sont: 
+ 
+d
+dt
+Tpar ( t ).( Tint ( t )    Tpar ( t )). ( Text( t )    Tpar ( t ))    Puis( t )
+d
+dt
+Tint( t ). ( Tpar ( t )    Tint ( t ))
+2
+3
+=−+−+
+=−
+αα
+α
+1
+ 
+ α
+1
+, α
+2
+,et α
+3
+ sont des constantes positives. 
+ 
+1: Détermination du système à piloter 
+1.a: Donner la liste des variables, et la liste des paramètres de ce système. 
+1.b: Parmi les variables, indiquer la variable de commande, la variable à piloter, et la 
+perturbation. 
+ 
+2: Représentation externe 
+ 2.a: Exprimer les deux fonctions de transfert suivantes en fonction de α
+1
+, α
+2
+,et α
+3
+: 
+ - H(p) entre Puis(t) et Tint(t) 
+ - Hd(p)  entre Text(t) et Tint(t). 
+ 2.b: Que vaut le gain statique de la fonction de transfert Hd(p)? 
+ 
+3: Enceinte parfaitement isolée asservie par un régulateur proportionnel de gain K 
+Dans toute cette partie, on suppose que l'enceinte est parfaitement isolée (échanges thermiques 
+avec l'extérieur inexistants )  
+ 3.a: Que peut on conclure sur la fonction de transfert Hd(p)? 
+ 3.b: Montrer que la fonction de transfert H(p) se met sous la forme: 
+ H  p
+G
+pTp
+(   )
+()
+=
++1
+ 
+ 
+Donner l'expression de G et T en fonction des paramètres du système. 
+ 3.c: Exprimer et tracer la réponse indicielle de H(p). 
+
+ESISAR- Département Automatique 
+4/4 NF - 30/04/2026 
+ 3.d:  Exprimer  la  fonction  de  transfert  en  boucle  fermée  en  fonction  de  K  et  des 
+paramètres du sytème. 
+ 3.e: Que vaut l'erreur statique en suivi de consigne échelon? 
+ 3.f: On souhaite que la réponse en boucle fermée à une consigne échelon se fasse le 
+plus rapidement possible, mais sans dépassement. Exprimer K en fonction des paramètres du 
+système.  
+ 3.g: Pour quelle valeur de K a-t-on une marge de phase de 45 degrés? Exprimer K en 
+fonction des paramètres du sytème. 
+ 
+4: Enceinte avec pertes thermiques - Système asservi par un régulateur RST 
+On  suppose  maintenant  que  les  pertes  thermiques  de l'enceinte  ne  sont  pas  négligeables.  On 
+considère les valeurs numériques suivantes pour les paramètres du système: 
+α
+1
+ =0.9, α
+2
+ =0.01, et α
+3
+ =0.1  
+ 4.a:  A  partir  de  leur  réponse  indicielle  (figure  2),  Montrer  que  les  fonctions  de 
+transfert  H(p)  et  Hd(p)  peuvent  être  approximées  par  des  fonctions  de  transfert  du  premier 
+ordre  dont  on  donnera  le  gain  statique  et  la  constante  de  temps.  Remarquer  d'après  leur 
+expression, que les deux fonctions de transfert ont la même constante de temps. 
+01000200030004000
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+Time (secs)
+Amplitude
+réponse indicielle de H(p)
+01000200030004000
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+Time (secs)
+Amplitude
+réponse indicielle de Hd(p)
+ Figure 2: Réponses indicielles du système avec pertes thermiques 
+ 
+ 4.b:  Donner  le  schéma  fonctionnel  du  système  aservi  par  un  régulateur  RST,  en 
+indiquant les signaux Puis(t), Text(t), Tint(t), et sa consigne ConsTint(t). 
+ 4.c: A partir des modèles obtenus à la question 4.a, synthétiser un régulateur RST de 
+degré minimal vérifiant les conditions suivantes: 
+ R/S strictement causal 
+ transfert en boucle fermée équivalent à un premier ordre de gain unitaire, et de temps 
+de réponse à 95% égal à 900. 
+ rejet asymptotique des perturbations constantes (échelon de Text) 
+ tous les pôles en boucle fermée (filtrage et poursuite) égaux. 
+ 4.d: Tracer alors le diagramme de Bode asymptotique de la fonction de sensibilité. 
+ 
+___________________________________________________________________________  
+ 
+ 
+ 

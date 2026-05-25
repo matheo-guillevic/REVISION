@@ -1,0 +1,297 @@
+
+
+ESISAR- Département Automatique 
+1/4 NF - 18/03/2025 
+          
+          
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+AU361 – TD 2 
+Analyse et Commande des systèmes linéaires continus 
+Invariants causaux à temps continu et à temps discret 
+ 
+ 
+     
+ Nathalie Fulget 
+ Département Automatique 
+ Grenoble INP Esisar 
+ 
+Exercices portant sur la partie Analyse des systèmes asservis 
+Points abordés:  Stabilité et robustesse des systèmes asservis  
+ Précision, dynamique et robustesse des systèmes asservis, PID 
+ 
+__________________________________________________________________________  
+ Soit le système de fonction de transfert F(p). En utilisant le théorème de Routh, déterminer 
+pour quelles valeurs de K, le système décrit en figure 1 est stable. 
+                        
+F
+p
+p
+p
+p
+(
+)
+(
+)
+=
++
++
+1
+5
+6
+2
+ 
+ 
+                               
+KF(p)
++
+-
+ 
+Figure 1 
+ 
+Utiliser le critère de Nyquist pour retrouver le résultat de la question précédente. 
+Que vaut la marge de gain pour K = 15. 
+___________________________________________________________________________  
+Soit le système décrit par la fonction de transfert F(p) dont on désire asservir la sortie à l'aide 
+d'un régulateur PI de fonction de transfert R(p) (figure 2). Le temps d'intégration T
+i
+ du 
+régulateur est choisi de sorte que le zéro du régulateur soit égal au pôle le plus lent du 
+processus. 
+
+ESISAR- Département Automatique 
+2/4 NF - 18/03/2025 
+                  
+R(p)
+F(p)
++
+-
+ 
+ 
+Figure 2 
+ 
+                    
+F
+p
+p
+p
+p
+(
+)
+(
+)
+(
+)
+=
+−
++
++
+1
+2
+1
+1
+5
+ 
+R
+p
+K
+T
+p
+i
+(
+)
+(
+)
+=
++
+1
+1
+ 
+ 
+1 :Exprimer la fonction de transfert en boucle ouverte FBO(p) (transfert de boucle) en 
+fonction de K. 
+2 : Tracer asymptotiquement son diagramme de Bode (gain et phase) pour K=1. 
+3 : Pour quelle valeur de K a-t-on une marge de gain de 6 dB? 
+___________________________________________________________________________  
+Soit un système de fonction de transfert  
+ 
+ 
+F
+p
+A
+Tp
+(
+)
+(
+)
+=
++
+1
+3
+ 
+ piloté par un régulateur proportionnel de gain k. 
+ 
+1: Tracer le diagramme de Bode et le diagramme de Black du transfert de boucle. 
+2: Donner la valeur de k pour laquelle le système en boucle fermée est en limite de stabilité. 
+3: Exprimer la marge de gain et la marge de phase en fonction de k, A et T. 
+4:  Exprimer  la  fonction  de  transfert  en  boucle  fermée  en  fonction  de  k,  A  et  T.  Analyser  le 
+gain  statique  et  les  pôles  de  ce  transfert.  Conclure  sur  les  performances  en  précision, 
+dynamique et stabilité. 
+5: Tracer le diagramme de Bode du transfert en boucle fermée pour k = 1/A. 
+6: Tracer le diagramme de Bode de la fonction de sensibilité pour k = 1/A. 
+7: Calculer et tracer la réponse du système en boucle fermée à un échelon de consigne pour k= 
+8/A. 
+ 
+___________________________________________________________________________  
+On considère le système asservi de la figure ci-dessous. Le système à piloter a pour fonction 
+de transfert 
+H
+p
+G
+p
+Tp
+(
+)
+(
+)
+=
++
+1
+. Le régulateur a pour fonction de transfert R(p). c est la 
+consigne à suivre, y est la variable à piloter, d2 est une perturbation additive sur l'entrée du 
+système à piloter. d1 est une perturbation agissant sur la sortie y par l'intermédiaire du 
+transfert 
+Hdp
+Tp
+()
+()
+=
++
+1
+1
+ 
+ 
+ 
+
+ESISAR- Département Automatique 
+3/4 NF - 18/03/2025 
+ 
+R(p)
+H(p)
+Hd(p)
++
++
+-
++
+d1
+d2
+c
+y
+ 
+ 
+ 
+I: Régulateur proportionnel: Dans toute cette partie, le régulateur est supposé proportionnel 
+de gain K. 
+ 
+I.1: Suivi de consigne échelon: (On suppose que les perturbations d1 et d2 sont nulles.) 
+ I.1.a: Quelle est la valeur de l'erreur statique en suivi de consigne échelon? 
+ I.1.b:  Quelle  est  la  valeur  maximale  de  K  pour  laquelle  la  réponse  à une  consigne 
+échelon ne présente pas de dépassement? Exprimer K en fonction de G et T. 
+ 
+I.2: Suivi de consignes sinusoïdales 
+ I.2.a: Le suivi de consigne doit se faire avec la plus grande bande passante possible, 
+mais sans résonance. Quelle est la valeur de K? Exprimer K en fonction de G et T. 
+ I.2.b:  Tracer  alors  le  diagramme  de  Bode  du  transfert  en  boucle  fermée  (gain  et 
+phase). 
+ 
+I.3: Rejet des perturbations constantes (la consigne c est supposée nulle) 
+ 
+ I.3.a:  On  suppose  que  d1  est  nulle  et  que  d2  est un  échelon  unitaire.  Donner 
+l'expression de l'erreur statique. 
+ I.3.b: On suppose que d2 est nulle et que d1 est un échelon unitaire. Que vaut l'erreur 
+statique?  
+ I.3.c:  On  suppose  que  d2  est  nulle  et  que  d1  est  en  rampe  (d1(t)=t.(t)).  Donner 
+l'expression de la valeur de la sortie en régime permanent? 
+ I.3.d:  On  suppose  que  d2  est  nulle  et  que  d1  est  en  rampe  (d1(t)=t.(t)).  Donner  la 
+valeur  de  K  qui  minimise  l'erreur  en  régime  permanent,  et  pour  laquelle  la  sortie  y(t)  ne 
+présente pas de dépassement. 
+ 
+II: Régulateur Proportionnel Intégral: Dans toute cette partie, le régulateur est supposé être 
+un PI de gain K, et de temps d'action intégrale Ti. 
+ 
+II.1: Donner l'expression de la fonction de transfert R(p). 
+II.2: On fixe le temps d'action intégrale égal à T. 
+ II.2.a: Tracer le diagramme de Black du transfert de boucle. 
+ II.2.b:  Que peut-on en conclure sur le système en boucle fermée? 
+II.3: Tracer le diagramme asymptotique de Bode du transfert de boucle pour Ti = 2.T. 
+ 
+II.4:  On  garde Ti  =  2.T.  On  suppose  que  la  consigne  c  est  nulle,  que  la  perturbation  d1  est 
+nulle,   et   que   la   perturbation   d2   est   un   échelon   unitaire.   que   vaut   l'erreur   statique? 
+___________________________________________________________________________  
+
+ESISAR- Département Automatique 
+4/4 NF - 18/03/2025 
+___________________________________________________________________________  
+On désire réaliser l'asservissement de la position pos d'un système mécanique. On suppose 
+que la fonction de transfert du système entre l'entrée de commande u et la vitesse vit est du 
+premier ordre de gain statique G = 5, de constante de temps  = 0.1 s. 
+ 
+I: Analyse du processus à piloter 
+ 
+I.1. Donner l'expression de la fonction de transfert H(p) du processus à piloter ayant pour 
+entrée la variable de commande u, et pour sortie la variable à piloter. 
+I.2. Donner la valeur des pôles du processus à piloter. 
+I.3. Ce système est-il asymptotiquement stable? 
+I.4.Donner l'expression temporelle des réponses indicielles du processus en vitesse et en 
+position. Elles seront notées respectivement vit(t) et pos(t). Les représenter graphiquement. On 
+suppose que vit(0)=pos(0)=0. 
+ 
+II: Analyse du système asservi 
+ 
+II.1. L'asservissement est réalisé par un régulateur proportionnel de gain K. Donner 
+l'expression de la fonction de transfert du régulateur R(p). 
+ 
+ 
+H(p)
+R(p)
+cons
+u
+pos
++
+-
+
++
++
+ 
+ 
+II.2. Montrer que la fonction de transfert du système en boucle fermée est du second ordre. 
+Exprimer le coefficient d'amortissement  et la pulsation propre non amortie 
+n
+ en fonction de 
+K 
+II.3. On suppose que la perturbation  est nulle. Quelle est la valeur de la position en régime 
+permanent en réponse à un échelon de consigne unitaire? 
+II.4.On suppose que la consigne est nulle, et que la perturbation  est un échelon unitaire. 
+Exprimer la valeur de la position en régime permanent en fonction de K. Elle est appelée 
+erreur statique due à la perturbation . 
+II.5. On désire minimiser l'erreur statique due à la perturbation , tout en garantissant un suivi 
+de consigne échelon sans dépassement. Quelle valeur de K faut il choisir? Quelle est alors la 
+valeur de l'erreur statique due à une perturbation échelon unitaire. 
+II.6. Tracer le diagramme de Bode de la fonction de transfert entre la perturbation  et la 
+position pos en boucle fermée pour K = 2 . Donner la valeur de la pulsation de résonance 
+r
+. 
+II.7. On suppose que la perturbation  est sinusoïdale, de fréquence 50 Hz, d'amplitude 0.1 et 
+que la consigne est nulle. Quelle est l'allure de la position en régime permanent. Donner 
+l'expression de l'amplitude de ses variations en fonction de K. 
