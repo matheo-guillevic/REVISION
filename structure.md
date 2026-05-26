@@ -8,27 +8,24 @@
 - `styles.css` : design responsive, mise en page, couleurs pedagogiques et composants visuels.
 - `script.js` : interactions de navigation, boutons d'affichage, progression et etats des exercices.
 - `tools/extract-pdfs.js` : script local utilise pour extraire le texte des PDF.
-- `tools/split-html.js` : script utilise pour redecouper `math.html` en fragments de cours de math.
+- `tools/split-html.js` : script utilise pour resynchroniser la source unique du cours de math depuis `math.html`.
 - `tools/build-html.js` : script utilise pour reconstruire `index.html`, `math.html` et `auto.html`.
 - `tools/enrich-td-pages.js` : script utilise pour ajouter les tags de notions et notes de raisonnement dans les pages TD.
 - `tools/add-td-question-notes.js` : script utilise pour ajouter les explications question par question dans les corrections TD.
 - `tools/add-td-question-blocks.js` : script utilise pour ajouter les blocs Questions et transformer les corrections en blocs Reponse.
 - `tools/restructure-td-answers.js` : script utilise pour separer les reponses TD par question avec raisonnement et solution independants.
 - `tools/fill-td-question-answers.js` : script utilise pour reinjecter les raisonnements et solutions explicites dans chaque sous-question TD.
-- `src/subjects/probabilites/sections/` : fragments HTML du cours de mathematiques.
-- `src/subjects/auto/sections/` : fragments HTML du cours d'automatique.
-- `td1.html` : page corrigee du TD 1 de denombrement.
-- `td2.html` : page corrigee du TD 2 d'espaces probabilises.
-- `td3.html` : page corrigee du TD 3 de variables aleatoires.
-- `extracted/` : textes extraits automatiquement des PDF pour aider a construire le contenu du site.
+- `src/subjects/probabilites/cours.html` : source HTML unique du cours de mathematiques/probabilites.
+- `src/subjects/probabilites/td/` : sources HTML des pages corrigees TD de probabilites.
+- `src/subjects/auto/cours.html` : source HTML unique du cours d'automatique.
+- `td1.html` : page generee du TD 1 de denombrement.
+- `td2.html` : page generee du TD 2 d'espaces probabilises.
+- `td3.html` : page generee du TD 3 de variables aleatoires.
 - `pdf/math/cours/` : PDF des cours de mathematiques.
 - `pdf/math/TD/` : PDF des TD et corriges de mathematiques.
 - `pdf/auto/` : PDF du cours d'automatique et des TD.
 - `package.json` et `package-lock.json` : dependance locale `pdf-parse` utilisee pour l'extraction PDF.
-- `prompt.txt` : cahier des charges initial.
-- `planning.md` : feuille de route des actions realisees et a faire.
 - `structure.md` : description de l'organisation du code.
-- `loggerIA.txt` : journal des actions importantes effectuees par l'IA.
 
 ## Organisation de la page
 
@@ -87,12 +84,14 @@ Sections de `math.html` :
 
 Pour enrichir un chapitre :
 
-1. Aller dans la section correspondante sous `src/subjects/probabilites/sections/`.
+1. Modifier la section correspondante dans `src/subjects/probabilites/cours.html`.
 2. Ajuster les objectifs et la liste "ce qui est exigible".
 3. Completer les blocs `content-block` avec les definitions, theoremes, methodes et points d'attention.
 4. Ajouter ou remplacer les `exercise-card` avec les exercices du cours.
 5. Ajouter les annotations pedagogiques avec l'attribut `data-annotation`.
 6. Verifier les formules LaTeX entre `\\(` et `\\)` ou entre `\\[` et `\\]`.
+
+Pour enrichir le cours d'automatique, modifier directement `src/subjects/auto/cours.html`.
 
 ## Evolution possible
 
@@ -110,7 +109,7 @@ Le texte des PDF a ete extrait avec :
 node tools/extract-pdfs.js
 ```
 
-Les fichiers extraits sont stockes dans `extracted/`. Ils servent de support de travail, mais le site ne les charge pas directement.
+Les fichiers extraits sont stockes dans `extracted/` quand la commande est lancee. Ce dossier est un support de travail regenerable, et le site ne le charge pas directement.
 
 ## Reconstruction du HTML
 
@@ -120,13 +119,13 @@ Apres modification d'un fichier dans `src/subjects`, reconstruire le site avec :
 npm run build
 ```
 
-Pour recreer les fragments de math a partir de `math.html` :
+Pour recreer la source unique du cours de math a partir de `math.html` :
 
 ```powershell
 npm run split
 ```
 
-Les pages `td1.html`, `td2.html` et `td3.html` sont des pages statiques independantes. Elles ne sont pas reconstruites par `npm run build`, mais leurs liens de retour pointent vers `math.html#probabilites-td`.
+Les sources des pages TD sont dans `src/subjects/probabilites/td/`. `npm run build` recopie ensuite `td1.html`, `td2.html` et `td3.html` a la racine pour garder des URLs simples. Leurs liens de retour pointent vers `math.html#probabilites-td`.
 
 Pour reappliquer les tags et notes de raisonnement des pages TD :
 

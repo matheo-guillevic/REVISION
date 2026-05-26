@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
+const tdDir = path.join(process.cwd(), "src", "subjects", "probabilites", "td");
+
 const notes = {
   "td1.html": {
     "td1-e1": [
@@ -181,7 +183,7 @@ function notesHtml(id, items) {
 }
 
 for (const [file, pageNotes] of Object.entries(notes)) {
-  const filePath = path.join(process.cwd(), file);
+  const filePath = path.join(tdDir, file);
   let html = fs.readFileSync(filePath, "utf8");
 
   for (const [id, items] of Object.entries(pageNotes)) {

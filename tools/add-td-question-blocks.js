@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
+const tdDir = path.join(process.cwd(), "src", "subjects", "probabilites", "td");
+
 const questionBlocks = {
   "td1.html": {
     "td1-e1": [
@@ -203,7 +205,7 @@ function blockHtml(id, questions) {
 }
 
 for (const [file, pageQuestions] of Object.entries(questionBlocks)) {
-  const filePath = path.join(process.cwd(), file);
+  const filePath = path.join(tdDir, file);
   let html = fs.readFileSync(filePath, "utf8");
 
   for (const [id, questions] of Object.entries(pageQuestions)) {

@@ -66,3 +66,11 @@
 2026-05-25 18:06 - Correction structurelle : les blocs de reponse sont visibles directement, seuls le raisonnement et la solution restent masques separement.
 2026-05-25 18:10 - Ajout de tools/fill-td-question-answers.js pour reinjecter des raisonnements et solutions explicites dans les 118 sous-questions.
 2026-05-25 18:11 - Verification : 118 cartes question-reponse, 118 panneaux raisonnement, 118 panneaux solution, aucun texte generique restant, script.js valide.
+2026-05-26 20:45 - Regroupement des pages TD de probabilites dans src/subjects/probabilites/td et adaptation des scripts TD pour utiliser ce dossier source.
+2026-05-26 20:46 - Mise a jour de tools/build-html.js pour recopier td1.html, td2.html et td3.html depuis les sources TD lors de npm run build.
+2026-05-26 20:52 - Regroupement des fragments du cours de probabilites dans src/subjects/probabilites/cours.html et suppression de src/subjects/probabilites/sections.
+2026-05-26 20:53 - Adaptation de tools/build-html.js et tools/split-html.js pour utiliser la source unique du cours de probabilites.
+2026-05-26 20:58 - Deplacement du cours d'automatique dans src/subjects/auto/cours.html et suppression de src/subjects/auto/sections.
+2026-05-26 20:59 - Adaptation de tools/build-html.js pour generer auto.html depuis la source unique du cours d'automatique.
+2026-05-26 21:05 - Nettoyage du projet : suppression de extracted, node_modules, prompt.txt et planning.md, puis mise a jour de .gitignore et structure.md.
+2026-05-26 21:06 - Verification apres nettoyage : npm run build reconstruit index.html, math.html, auto.html et les trois pages TD.

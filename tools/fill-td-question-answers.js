@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
+const tdDir = path.join(process.cwd(), "src", "subjects", "probabilites", "td");
+
 const data = {
   "td1-e1": [
     ["Tirage simultane : on choisit 5 cartes parmi les 16 cartes noires.", "\\(\\binom{16}{5}\\)."],
@@ -194,7 +196,7 @@ const data = {
 
 for (const [id, answers] of Object.entries(data)) {
   const file = id.startsWith("td1") ? "td1.html" : id.startsWith("td2") ? "td2.html" : "td3.html";
-  const filePath = path.join(process.cwd(), file);
+  const filePath = path.join(tdDir, file);
   let html = fs.readFileSync(filePath, "utf8");
 
   answers.forEach(([reasoning, solution], index) => {

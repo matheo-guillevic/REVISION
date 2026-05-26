@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
+const tdDir = path.join(process.cwd(), "src", "subjects", "probabilites", "td");
+
 const pages = {
   "td1.html": [
     ["td1-e1", ["combinaison", "cartes", "cas contraints"], "Comme le tirage est simultane, on compte des ensembles de cartes : la combinaison est l'outil naturel. Quand plusieurs contraintes se croisent, on separe les cas pour eviter les doubles comptes."],
@@ -52,7 +54,7 @@ function tagHtml(tags) {
 }
 
 for (const [file, items] of Object.entries(pages)) {
-  const filePath = path.join(process.cwd(), file);
+  const filePath = path.join(tdDir, file);
   let html = fs.readFileSync(filePath, "utf8");
 
   for (const [id, tags, note] of items) {

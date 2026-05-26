@@ -1,0 +1,823 @@
+﻿<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TD 2 corrige - Espaces probabilises</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="math.html#probabilites-td">Retour aux TD</a>
+        <div>
+          <span class="eyebrow">TD 2</span>
+          <h1>Espaces probabilises - enonces reecrits et corrections</h1>
+          <p>Objectif : poser les evenements, conditionner proprement, puis justifier les formules.</p>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 1</span><h3>Ecriture illisible</h3></div></header>
+          <div data-tags-for="td2-e1" class="topic-tags">
+            <span class="topic-tag">probabilites totales</span>
+            <span class="topic-tag">Bayes</span>
+            <span class="topic-tag">conditionnement</span>
+          </div>
+          <p class="statement">Une population contient 8% de medecins, 15% de professeurs de mathematiques et 77% d'autres personnes. Les probabilites d'ecrire illisiblement sont 70%, 50% et 30%. Calculer la probabilite qu'un mot soit illisible, puis la probabilite que son auteur soit professeur de mathematiques sachant qu'il est illisible.</p>
+          <div class="annotation" data-annotation><strong>Formule</strong><p>On utilise les probabilites totales, puis Bayes.</p></div>
+          <div class="question-block" data-question-block-for="td2-e1">
+            <h4>Questions</h4>
+            <ol>
+              <li>Calculer la probabilite qu'un mot choisi au hasard soit illisible.</li>
+              <li>Sachant que le mot est illisible, calculer la probabilite qu'il ait ete ecrit par un professeur de mathematiques.</li>
+            </ol>
+          </div>
+          <div id="td2-e1" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Calculer la probabilite qu'un mot choisi au hasard soit illisible.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e1-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e1-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e1-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On additionne les contributions de chaque categorie.</p>
+                </div>
+                <div id="td2-e1-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(I)=0,08\cdot0,70+0,15\cdot0,50+0,77\cdot0,30=0,362\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Sachant que le mot est illisible, calculer la probabilite qu'il ait ete ecrit par un professeur de mathematiques.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e1-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e1-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e1-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On inverse la condition avec Bayes.</p>
+                </div>
+                <div id="td2-e1-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(P\mid I)=\frac{0,15\cdot0,50}{0,362}\approx0,207\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 2</span><h3>Formule du produit et urne bicolore</h3></div></header>
+          <div data-tags-for="td2-e2" class="topic-tags">
+            <span class="topic-tag">formule du produit</span>
+            <span class="topic-tag">conditionnement</span>
+            <span class="topic-tag">urne</span>
+          </div>
+          <p class="statement">Demontrer la formule du produit pour \(P(A_1\cap\cdots\cap A_n)\), puis l'appliquer a une urne contenant \(n\) noires et \(n\) blanches, tirees deux par deux sans remise. Calculer la probabilite d'obtenir a chaque tirage une boule de chaque couleur.</p>
+          <div class="question-block" data-question-block-for="td2-e2">
+            <h4>Questions</h4>
+            <ol>
+              <li>Demontrer la formule du produit pour (P(A_1capcdotscap A_n)).</li>
+              <li>Appliquer cette formule a l'urne contenant (n) boules noires et (n) boules blanches tirees deux par deux.</li>
+              <li>Calculer la probabilite d'obtenir deux boules de couleurs differentes a chaque tirage.</li>
+            </ol>
+          </div>
+          <div id="td2-e2" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Demontrer la formule du produit pour (P(A_1capcdotscap A_n)).</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e2-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e2-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e2-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On reecrit chaque intersection avec la definition du conditionnement.</p>
+                </div>
+                <div id="td2-e2-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(A_1\cap\cdots\cap A_n)=P(A_1)\prod_{k=2}^nP(A_k\mid A_1\cap\cdots\cap A_{k-1})\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Appliquer cette formule a l'urne contenant (n) boules noires et (n) boules blanches tirees deux par deux.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e2-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e2-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e2-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>A chaque paire, l'urne a change : on conditionne par les tirages precedents.</p>
+                </div>
+                <div id="td2-e2-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>Au stade ou il reste (m) noires et (m) blanches, la probabilite d'avoir deux couleurs differentes vaut \(\frac{m}{2m-1}\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 3</span>
+                  <p>Calculer la probabilite d'obtenir deux boules de couleurs differentes a chaque tirage.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e2-q3-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e2-q3-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e2-q3-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On multiplie ces probabilites conditionnelles.</p>
+                </div>
+                <div id="td2-e2-q3-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(\prod_{m=1}^n\frac{m}{2m-1}\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 3</span><h3>Rigour ou rigor</h3></div></header>
+          <div data-tags-for="td2-e3" class="topic-tags">
+            <span class="topic-tag">Bayes</span>
+            <span class="topic-tag">probabilites totales</span>
+            <span class="topic-tag">voyelles</span>
+          </div>
+          <p class="statement">Un papier contient le mot anglais rigour ou americain rigor. 40% des anglophones sont Anglais et 60% Americains. Une lettre choisie au hasard dans le mot est une voyelle. Calculer la probabilite que l'auteur soit Anglais.</p>
+          <div class="question-block" data-question-block-for="td2-e3">
+            <h4>Questions</h4>
+            <ol>
+              <li>Calculer la probabilite de tirer une voyelle si l'auteur est anglais.</li>
+              <li>Calculer la probabilite de tirer une voyelle si l'auteur est americain.</li>
+              <li>Sachant que la lettre tiree est une voyelle, calculer la probabilite que l'auteur soit anglais.</li>
+            </ol>
+          </div>
+          <div id="td2-e3" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Calculer la probabilite de tirer une voyelle si l'auteur est anglais.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e3-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e3-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e3-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Dans rigour, il y a 3 voyelles sur 6.</p>
+                </div>
+                <div id="td2-e3-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(V\mid A)=1/2\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Calculer la probabilite de tirer une voyelle si l'auteur est americain.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e3-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e3-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e3-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Dans rigor, il y a 2 voyelles sur 5.</p>
+                </div>
+                <div id="td2-e3-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(V\mid U)=2/5\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 3</span>
+                  <p>Sachant que la lettre tiree est une voyelle, calculer la probabilite que l'auteur soit anglais.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e3-q3-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e3-q3-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e3-q3-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On applique Bayes avec (P(A)=0,4) et (P(U)=0,6).</p>
+                </div>
+                <div id="td2-e3-q3-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(A\mid V)=\frac{0,4\cdot1/2}{0,4\cdot1/2+0,6\cdot2/5}=5/11\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 4</span><h3>Familles et independance</h3></div></header>
+          <div data-tags-for="td2-e4" class="topic-tags">
+            <span class="topic-tag">independance</span>
+            <span class="topic-tag">equiprobabilite</span>
+            <span class="topic-tag">familles</span>
+          </div>
+          <p class="statement">Soit \(A\) : "la famille a des enfants des deux sexes" et \(B\) : "la famille a au plus un garcon". Tester l'independance pour 3 enfants puis pour 2 enfants.</p>
+          <div class="question-block" data-question-block-for="td2-e4">
+            <h4>Questions</h4>
+            <ol>
+              <li>Pour une famille de trois enfants, calculer (P(A)), (P(B)), (P(Acap B)) et conclure sur l'independance.</li>
+              <li>Refaire le meme test pour une famille de deux enfants.</li>
+            </ol>
+          </div>
+          <div id="td2-e4" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Pour une famille de trois enfants, calculer (P(A)), (P(B)), (P(Acap B)) et conclure sur l'independance.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e4-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e4-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e4-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Avec 3 enfants, les 8 issues sont equiprobables.</p>
+                </div>
+                <div id="td2-e4-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(A)=3/4\), \(P(B)=1/2\), \(P(A\cap B)=3/8=P(A)P(B)\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Refaire le meme test pour une famille de deux enfants.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e4-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e4-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e4-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Avec 2 enfants, on refait le meme test.</p>
+                </div>
+                <div id="td2-e4-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(A)=1/2\), \(P(B)=3/4\), \(P(A\cap B)=1/2\ne3/8\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 5</span><h3>Penaltys</h3></div></header>
+          <div data-tags-for="td2-e5" class="topic-tags">
+            <span class="topic-tag">loi binomiale</span>
+            <span class="topic-tag">independance</span>
+            <span class="topic-tag">succes</span>
+          </div>
+          <p class="statement">Un joueur tire \(n\) penaltys independants avec probabilite de reussite \(p\). Calculer la probabilite d'en reussir exactement \(k\).</p>
+          <div class="question-block" data-question-block-for="td2-e5">
+            <h4>Questions</h4>
+            <ol>
+              <li>Identifier la variable aleatoire qui compte le nombre de penaltys reussis.</li>
+              <li>Donner sa loi.</li>
+              <li>Calculer la probabilite de reussir exactement (k) penaltys.</li>
+            </ol>
+          </div>
+          <div id="td2-e5" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Identifier la variable aleatoire qui compte le nombre de penaltys reussis.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e5-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e5-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e5-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>La variable compte les succes.</p>
+                </div>
+                <div id="td2-e5-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>Soit (X) le nombre de penaltys reussis.</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Donner sa loi.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e5-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e5-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e5-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Les tirs sont independants et de meme probabilite (p).</p>
+                </div>
+                <div id="td2-e5-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(X\sim\mathcal B(n,p)\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 3</span>
+                  <p>Calculer la probabilite de reussir exactement (k) penaltys.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e5-q3-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e5-q3-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e5-q3-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On applique la formule binomiale.</p>
+                </div>
+                <div id="td2-e5-q3-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(X=k)=\binom nkp^k(1-p)^{n-k}\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 6</span><h3>Jeu truque avec deux dames de coeur</h3></div></header>
+          <div data-tags-for="td2-e6" class="topic-tags">
+            <span class="topic-tag">combinaison</span>
+            <span class="topic-tag">probabilite contraire</span>
+            <span class="topic-tag">repetition</span>
+          </div>
+          <p class="statement">Un jeu contient 33 cartes car la dame de coeur est en double. On tire \(n\) cartes. Calculer la probabilite de detecter la fraude, puis pour \(n=4\), trouver le nombre d'experiences necessaires pour detecter la fraude avec probabilite 0,95.</p>
+          <div class="question-block" data-question-block-for="td2-e6">
+            <h4>Questions</h4>
+            <ol>
+              <li>Pour un tirage de (n) cartes, calculer la probabilite de detecter que le jeu est truque.</li>
+              <li>Dans le cas (n=4), calculer la probabilite de detection lors d'une experience.</li>
+              <li>Determiner le nombre minimal d'experiences pour que la detection ait une probabilite au moins 0,95.</li>
+            </ol>
+          </div>
+          <div id="td2-e6" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Pour un tirage de (n) cartes, calculer la probabilite de detecter que le jeu est truque.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e6-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e6-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e6-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Detecter la fraude signifie tirer les deux dames de coeur.</p>
+                </div>
+                <div id="td2-e6-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(D)=\frac{\binom{31}{n-2}}{\binom{33}{n}}\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Dans le cas (n=4), calculer la probabilite de detection lors d'une experience.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e6-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e6-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e6-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Pour (n=4), on remplace dans la formule.</p>
+                </div>
+                <div id="td2-e6-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(q=\frac{\binom{31}{2}}{\binom{33}{4}}\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 3</span>
+                  <p>Determiner le nombre minimal d'experiences pour que la detection ait une probabilite au moins 0,95.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e6-q3-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e6-q3-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e6-q3-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Sur (r) experiences independantes, on passe par le contraire jamais detecte.</p>
+                </div>
+                <div id="td2-e6-q3-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(1-(1-q)^r\ge0,95\), donc \(r\ge\frac{\ln(0,05)}{\ln(1-q)}\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 7</span><h3>Vaccination</h3></div></header>
+          <div data-tags-for="td2-e7" class="topic-tags">
+            <span class="topic-tag">Bayes</span>
+            <span class="topic-tag">rapport</span>
+            <span class="topic-tag">conditionnement</span>
+          </div>
+          <p class="statement">Un quart de la population est vaccine. Un vaccine tombe malade avec probabilite \(1/20\). Parmi les malades, il y a 4 non-vaccines pour 1 vaccine. Calculer la probabilite qu'un non-vaccine tombe malade.</p>
+          <div class="question-block" data-question-block-for="td2-e7">
+            <h4>Questions</h4>
+            <ol>
+              <li>Traduire l'information '4 non-vaccines pour 1 vaccine parmi les malades' en probabilites d'intersection.</li>
+              <li>Calculer la probabilite qu'un non-vaccine tombe malade.</li>
+            </ol>
+          </div>
+          <div id="td2-e7" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Traduire l'information '4 non-vaccines pour 1 vaccine parmi les malades' en probabilites d'intersection.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e7-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e7-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e7-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Le rapport 4 pour 1 donne (P(\overline V\cap M)=4P(V\cap M)).</p>
+                </div>
+                <div id="td2-e7-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(V\cap M)=\frac14\cdot\frac1{20}=\frac1{80}\), donc (P(\overline V\cap M)=\frac1{20}\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Calculer la probabilite qu'un non-vaccine tombe malade.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e7-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e7-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e7-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On conditionne par le fait de ne pas etre vaccine.</p>
+                </div>
+                <div id="td2-e7-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(M\mid\overline V)=\frac{1/20}{3/4}=1/15\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 8</span><h3>Depistage et traitement</h3></div></header>
+          <div data-tags-for="td2-e8" class="topic-tags">
+            <span class="topic-tag">arbre de probabilites</span>
+            <span class="topic-tag">depistage</span>
+            <span class="topic-tag">probabilites totales</span>
+          </div>
+          <p class="statement">Une maladie touche 1% de la population. Sans traitement, un malade meurt avec probabilite 0,5. Le test detecte 80% des malades et declare a tort 3% des sains. Les personnes positives sont traitees : un malade traite meurt avec probabilite 0,1 ; une personne saine traitee meurt avec probabilite 0,02. Comparer sans test et avec depistage generalise.</p>
+          <div class="question-block" data-question-block-for="td2-e8">
+            <h4>Questions</h4>
+            <ol>
+              <li>Sans depistage, calculer la probabilite de mourir de la maladie.</li>
+              <li>Avec depistage generalise, separer les cas : malade positif, malade negatif, sain positif, sain negatif.</li>
+              <li>Additionner les contributions qui menent a un deces.</li>
+            </ol>
+          </div>
+          <div id="td2-e8" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Sans depistage, calculer la probabilite de mourir de la maladie.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e8-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e8-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e8-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Sans test, il faut etre malade puis mourir.</p>
+                </div>
+                <div id="td2-e8-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(0,01\cdot0,5=0,005\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Avec depistage generalise, separer les cas : malade positif, malade negatif, sain positif, sain negatif.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e8-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e8-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e8-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On separe vrais positifs, faux negatifs et faux positifs.</p>
+                </div>
+                <div id="td2-e8-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>Contributions : (0,01\cdot0,8\cdot0,1), (0,01\cdot0,2\cdot0,5), (0,99\cdot0,03\cdot0,02).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 3</span>
+                  <p>Additionner les contributions qui menent a un deces.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e8-q3-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e8-q3-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e8-q3-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On additionne les cas de deces.</p>
+                </div>
+                <div id="td2-e8-q3-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(0,0008+0,001+0,000594=0,002394\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 9</span><h3>Choix de quatre femmes</h3></div></header>
+          <div data-tags-for="td2-e9" class="topic-tags">
+            <span class="topic-tag">combinaison</span>
+            <span class="topic-tag">equiprobabilite</span>
+          </div>
+          <p class="statement">Dans un groupe de 5 hommes et 4 femmes, on choisit 4 personnes au hasard. Calculer la probabilite que les quatre femmes soient choisies.</p>
+          <div class="question-block" data-question-block-for="td2-e9">
+            <h4>Questions</h4>
+            <ol>
+              <li>Decrire l'univers du tirage de 4 personnes parmi 9.</li>
+              <li>Calculer la probabilite que les 4 femmes soient choisies.</li>
+            </ol>
+          </div>
+          <div id="td2-e9" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Decrire l'univers du tirage de 4 personnes parmi 9.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e9-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e9-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e9-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Le tirage est un groupe de 4 parmi 9.</p>
+                </div>
+                <div id="td2-e9-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>Total \(\binom94\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Calculer la probabilite que les 4 femmes soient choisies.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e9-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e9-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e9-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Le cas favorable est de choisir les 4 femmes.</p>
+                </div>
+                <div id="td2-e9-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P=1/\binom94=1/126\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 10</span><h3>Alliance perdue</h3></div></header>
+          <div data-tags-for="td2-e10" class="topic-tags">
+            <span class="topic-tag">Bayes</span>
+            <span class="topic-tag">a posteriori</span>
+            <span class="topic-tag">fouille imparfaite</span>
+          </div>
+          <p class="statement">Une plage est divisee en trois secteurs equiprobables. On fouille le secteur 1 sans rien trouver. Si l'alliance est dans le secteur fouille, la fouille echoue avec probabilite \(p\). Calculer les probabilites a posteriori pour chaque secteur.</p>
+          <div class="question-block" data-question-block-for="td2-e10">
+            <h4>Questions</h4>
+            <ol>
+              <li>Definir les evenements : alliance dans chaque secteur et fouille infructueuse.</li>
+              <li>Calculer la probabilite de ne rien trouver.</li>
+              <li>Calculer les probabilites a posteriori pour les trois secteurs.</li>
+            </ol>
+          </div>
+          <div id="td2-e10" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Definir les evenements : alliance dans chaque secteur et fouille infructueuse.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e10-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e10-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e10-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On pose (S_i) : alliance dans le secteur (i), et (E) : rien trouve.</p>
+                </div>
+                <div id="td2-e10-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(S_i)=1/3\), (P(E\mid S_1)=p\), (P(E\mid S_2)=P(E\mid S_3)=1\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Calculer la probabilite de ne rien trouver.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e10-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e10-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e10-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On utilise les probabilites totales.</p>
+                </div>
+                <div id="td2-e10-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(E)=(p+2)/3\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 3</span>
+                  <p>Calculer les probabilites a posteriori pour les trois secteurs.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e10-q3-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e10-q3-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e10-q3-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Bayes donne les probabilites mises a jour.</p>
+                </div>
+                <div id="td2-e10-q3-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(P(S_1\mid E)=p/(p+2)\), \(P(S_2\mid E)=P(S_3\mid E)=1/(p+2)\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <header><div><span class="status-pill">Exercice 11</span><h3>Titre boursier a trois etats</h3></div></header>
+          <div data-tags-for="td2-e11" class="topic-tags">
+            <span class="topic-tag">chaine de Markov</span>
+            <span class="topic-tag">recurrence</span>
+            <span class="topic-tag">limite</span>
+          </div>
+          <p class="statement">Un titre peut monter, rester stable ou baisser. Les transitions dependent de l'etat courant, avec probabilites \(1-2a\) pour rester dans la meme tendance et \(a\) pour chaque autre etat. Le premier jour est stable. Determiner les suites \(p_n=P(M_n)\), \(q_n=P(S_n)\), \(r_n=P(B_n)\).</p>
+          <div class="question-block" data-question-block-for="td2-e11">
+            <h4>Questions</h4>
+            <ol>
+              <li>Exprimer (p_{n+1}) et (q_{n+1}) en fonction de (p_n,q_n,r_n).</li>
+              <li>Utiliser (p_n+q_n+r_n=1) pour eliminer (r_n).</li>
+              <li>Montrer que (p_n) et (q_n) sont arithmetico-geometriques.</li>
+              <li>Resoudre les suites et interpreter leur limite.</li>
+            </ol>
+          </div>
+          <div id="td2-e11" class="answer-block">
+            <div class="per-question-answers">
+              <h4>Reponses par question</h4>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 1</span>
+                  <p>Exprimer (p_{n+1}) et (q_{n+1}) en fonction de (p_n,q_n,r_n).</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e11-q1-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e11-q1-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e11-q1-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On decompose selon l'etat courant.</p>
+                </div>
+                <div id="td2-e11-q1-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(p_{n+1}=(1-2a)p_n+aq_n+ar_n\), \(q_{n+1}=ap_n+(1-2a)q_n+ar_n\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 2</span>
+                  <p>Utiliser (p_n+q_n+r_n=1) pour eliminer (r_n).</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e11-q2-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e11-q2-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e11-q2-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Les trois etats forment un systeme complet.</p>
+                </div>
+                <div id="td2-e11-q2-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(p_n+q_n+r_n=1\), donc \(r_n=1-p_n-q_n\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 3</span>
+                  <p>Montrer que (p_n) et (q_n) sont arithmetico-geometriques.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e11-q3-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e11-q3-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e11-q3-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>On remplace (r_n).</p>
+                </div>
+                <div id="td2-e11-q3-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(p_{n+1}=a+(1-3a)p_n\), \(q_{n+1}=a+(1-3a)q_n\).</p>
+                </div>
+              </div>
+              <div class="question-answer-card">
+                <div class="question-answer-heading">
+                  <span>Question 4</span>
+                  <p>Resoudre les suites et interpreter leur limite.</p>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-toggle="td2-e11-q4-reasoning">Afficher le raisonnement</button>
+                  <button type="button" data-toggle="td2-e11-q4-solution">Afficher la solution</button>
+                </div>
+                <div id="td2-e11-q4-reasoning" class="hidden-panel reasoning-panel">
+                  <strong>Raisonnement</strong>
+                  <p>Le point fixe est (1/3).</p>
+                </div>
+                <div id="td2-e11-q4-solution" class="hidden-panel solution-panel">
+                  <strong>Solution</strong>
+                  <p>\(p_n=\frac13-\frac13(1-3a)^{n-1}\), \(q_n=\frac13+\frac23(1-3a)^{n-1}\), \(r_n=\frac13-\frac13(1-3a)^{n-1}\).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
+
+

@@ -2,8 +2,9 @@ const fs = require("fs");
 const path = require("path");
 
 const root = process.cwd();
-const mathSectionsDir = path.join(root, "src", "subjects", "probabilites", "sections");
-const autoSectionsDir = path.join(root, "src", "subjects", "auto", "sections");
+const mathCoursePath = path.join(root, "src", "subjects", "probabilites", "cours.html");
+const mathTdDir = path.join(root, "src", "subjects", "probabilites", "td");
+const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
 
 const pages = {
   home: path.join(root, "index.html"),
@@ -141,12 +142,7 @@ function renderHome() {
 }
 
 function renderMath() {
-  const sectionFiles = fs
-    .readdirSync(mathSectionsDir)
-    .filter((file) => file.endsWith(".html"))
-    .sort();
-
-  const sections = sectionFiles.map((file) => read(path.join(mathSectionsDir, file))).join("\n\n");
+  const course = read(mathCoursePath);
   const nav = renderNav([["index.html", "Accueil"], ...mathNav], "math.html#probabilites");
 
   return renderShell({
@@ -158,18 +154,13 @@ function renderMath() {
     eyebrow: "Mathematiques",
     heading: "Cours de probabilites",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
-    body: sections,
+    body: course,
     showAnnotations: true,
   });
 }
 
 function renderAutoCourse() {
-  const sectionFiles = fs
-    .readdirSync(autoSectionsDir)
-    .filter((file) => file.endsWith(".html"))
-    .sort();
-
-  const sections = sectionFiles.map((file) => read(path.join(autoSectionsDir, file))).join("\n\n");
+  const course = read(autoCoursePath);
   const nav = renderNav(
     [
       ["index.html", "Accueil"],
@@ -194,7 +185,7 @@ function renderAutoCourse() {
     eyebrow: "Automatique",
     heading: "Analyse et commande des systemes lineaires",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
-    body: sections,
+    body: course,
     showAnnotations: true,
   });
 }
@@ -203,4 +194,8 @@ write(pages.home, renderHome());
 write(pages.math, renderMath());
 write(pages.auto, renderAutoCourse());
 
-console.log("Pages reconstruites : index.html, math.html, auto.html.");
+for (const file of ["td1.html", "td2.html", "td3.html"]) {
+  fs.copyFileSync(path.join(mathTdDir, file), path.join(root, file));
+}
+
+console.log("Pages reconstruites : index.html, math.html, auto.html, td1.html, td2.html, td3.html.");

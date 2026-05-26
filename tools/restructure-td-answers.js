@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
+const tdDir = path.join(process.cwd(), "src", "subjects", "probabilites", "td");
 const files = ["td1.html", "td2.html", "td3.html"];
 
 function getListItems(html, className) {
@@ -83,7 +84,7 @@ ${cards}
 }
 
 for (const file of files) {
-  const filePath = path.join(process.cwd(), file);
+  const filePath = path.join(tdDir, file);
   let html = fs.readFileSync(filePath, "utf8");
 
   html = html.replace(/<article class="exercise-card">[\s\S]*?<\/article>/g, (article) => {
