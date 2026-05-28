@@ -708,10 +708,43 @@ button:hover,
   background: #f9fafb;
 }
 
+.answer-block {
+  display: grid;
+  gap: 12px;
+}
+
 .question-block h4,
 .answer-block h4 {
   margin: 0 0 10px;
   font-size: 1rem;
+}
+
+.td-step-block {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #ffffff;
+}
+
+.td-step-block strong {
+  color: var(--text);
+}
+
+.td-step-block p {
+  margin: 0;
+}
+
+.td-reasoning-block {
+  border-left-color: var(--primary);
+  background: #eef6ff;
+}
+
+.td-solution-block {
+  border-left-color: #23845a;
+  background: #f2fbf6;
 }
 
 .question-block ol {

@@ -7,7 +7,8 @@
     "explain-td": "node tools/add-td-question-notes.js",
     "questions-td": "node tools/add-td-question-blocks.js",
     "restructure-td": "node tools/restructure-td-answers.js",
-    "fill-td": "node tools/fill-td-question-answers.js"
+    "fill-td": "node tools/fill-td-question-answers.js",
+    "rebuild-math-td": "node tools/rebuild-math-td-from-latex.js"
   },
   "dependencies": {
     "pdf-parse": "^1.1.1"

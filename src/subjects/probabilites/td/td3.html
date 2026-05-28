@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8">
@@ -20,1049 +20,477 @@
         <a class="back-link" href="math.html#probabilites-td">Retour aux TD</a>
         <div>
           <span class="eyebrow">TD 3</span>
-          <h1>Variables aleatoires - enonces reecrits et corrections</h1>
-          <p>Objectif : identifier la loi, calculer les moments et interpreter le resultat.</p>
+          <h1>Variables aleatoires</h1>
+          <p>Corrige reconstruit depuis le fichier LaTeX correspondant.</p>
         </div>
       </header>
 
       <section class="page-section">
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 1</span><h3>Chuck-a-luck</h3></div></header>
-          <div data-tags-for="td3-e1" class="topic-tags">
-            <span class="topic-tag">loi binomiale</span>
-            <span class="topic-tag">esperance</span>
-            <span class="topic-tag">jeu</span>
-          </div>
-          <p class="statement">On choisit un numero entre 1 et 6, puis on lance 3 des. Le gain vaut 3, 2, 1 dollars si le numero sort 3, 2, 1 fois, et vaut -1 sinon. Determiner la loi du gain \(X\), puis son esperance.</p>
-          <div class="question-block" data-question-block-for="td3-e1">
-            <h4>Questions</h4>
-            <ol>
-              <li>Determiner la loi du nombre d'apparitions du numero choisi.</li>
-              <li>En deduire la loi du gain (X).</li>
-              <li>Calculer le gain moyen (E(X)).</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1</span>
+              <h3>Exercice 1</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td3-e1" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Determiner la loi du nombre d'apparitions du numero choisi.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e1-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e1-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e1-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Le nombre d'apparitions du numero choisi est binomial.</p>
-                </div>
-                <div id="td3-e1-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(N\sim\mathcal B(3,1/6)\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>En deduire la loi du gain (X).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e1-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e1-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e1-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Le gain est une fonction de (N).</p>
-                </div>
-                <div id="td3-e1-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(X=-1,1,2,3\) selon que (N=0,1,2,3\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Calculer le gain moyen (E(X)).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e1-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e1-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e1-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On calcule la moyenne ponderee.</p>
-                </div>
-                <div id="td3-e1-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(E(X)=-\frac{125}{216}+\frac{75}{216}+\frac{30}{216}+\frac3{216}=-\frac{17}{216}\).</p>
-                </div>
-              </div>
-            </div>
+          <p>Le jeu Chuck a Luck consiste à lancer 3 dés. On parie sur un chiffre (disons le 6). Les lancers sont indépendants. Soit \(N\) la variable aléatoire désignant le nombre d'apparitions de notre chiffre. La probabilité qu'un dé tombe sur le chiffre choisi est \(p = 1/6\). Ainsi, \(N\) suit une loi binomiale \(\mathcal{B}(3, 1/6)\). Le gain \(X\) dépend de la valeur de \(N\) :</p>
+          <ul class="formula-list">
+            <li>Si \(N=3\), \(X=3\)</li>
+            <li>Si \(N=2\), \(X=2\)</li>
+            <li>Si \(N=1\), \(X=1\)</li>
+            <li>Si \(N=0\), \(X=-1\)</li>
+          </ul>
+          <h4>1. Loi de \(X\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On calcule la probabilité de chaque issue de \(N\) via la formule de la loi binomiale : \(P(N=k) = \binom{3}{k}(1/6)^k(5/6)^{3-k}\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(X=3) = P(N=3) = \binom{3}{3}(1/6)^3(5/6)^0 = \frac{1}{216}\) \(P(X=2) = P(N=2) = \binom{3}{2}(1/6)^2(5/6)^1 = \frac{15}{216}\) \(P(X=1) = P(N=1) = \binom{3}{1}(1/6)^1(5/6)^2 = \frac{75}{216}\) \(P(X=-1) = P(N=0) = \binom{3}{0}(1/6)^0(5/6)^3 = \frac{125}{216}\)</p>
+          </div>
+          <h4>2. Espérance de gain</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>L'espérance \(\mathbb{E}(X)\) se calcule par \(\sum x_i P(X=x_i)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\mathbb{E}(X) = 3\left(\frac{1}{216}\right) + 2\left(\frac{15}{216}\right) + 1\left(\frac{75}{216}\right) - 1\left(\frac{125}{216}\right) = \frac{3 + 30 + 75 - 125}{216} = \frac{-17}{216} \approx -0.0787\$\). En moyenne, on perd près de 8 cents par partie.</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 2</span><h3>Quartet de bits</h3></div></header>
-          <div data-tags-for="td3-e2" class="topic-tags">
-            <span class="topic-tag">Bernoulli</span>
-            <span class="topic-tag">esperance</span>
-            <span class="topic-tag">variance</span>
-          </div>
-          <p class="statement">Un quartet est forme de 4 bits independants, chaque bit valant 1 avec probabilite \(p\). Le quartet code un entier \(Z\) en base 2. Calculer \(E(Z)\), \(V(Z)\), \(P(Z\text{ pair})\), puis \(P(Z>3)\).</p>
-          <div class="question-block" data-question-block-for="td3-e2">
-            <h4>Questions</h4>
-            <ol>
-              <li>Ecrire (Z) comme combinaison lineaire des 4 bits.</li>
-              <li>Calculer (E(Z)) et (V(Z)).</li>
-              <li>Calculer la probabilite que (Z) soit pair.</li>
-              <li>Calculer (P(Z>3)).</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2</span>
+              <h3>Exercice 2</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td3-e2" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Ecrire (Z) comme combinaison lineaire des 4 bits.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e2-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e2-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e2-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On decompose l'entier en bits.</p>
-                </div>
-                <div id="td3-e2-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(Z=8B_3+4B_2+2B_1+B_0\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer (E(Z)) et (V(Z)).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e2-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e2-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e2-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Lineairite et independance.</p>
-                </div>
-                <div id="td3-e2-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(E(Z)=15p\), \(V(Z)=85p(1-p)\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Calculer la probabilite que (Z) soit pair.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e2-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e2-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e2-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>La parite depend du dernier bit.</p>
-                </div>
-                <div id="td3-e2-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(Z\text{ pair})=1-p\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Calculer (P(Z>3)).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e2-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e2-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e2-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Avoir (Z>3) signifie qu'un des deux bits de poids fort vaut 1.</p>
-                </div>
-                <div id="td3-e2-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(Z>3)=1-(1-p)^2\).</p>
-                </div>
-              </div>
-            </div>
+          <p>Un quartet \(Q\) est composé de 4 bits. Soit \(X_0, X_1, X_2, X_3\) les 4 bits, valant 1 avec probabilité \(p\) et 0 avec probabilité \(1-p\). Les variables \(X_i\) sont indépendantes et suivent des lois de Bernoulli \(\mathcal{B}(p)\). Le nombre \(Z\) vaut \(Z = X_0 + 2X_1 + 4X_2 + 8X_3\) (attention, l'énoncé peut sous-entendre l'ordre inverse, on suppose ici \(X_0\) le bit de poids faible).</p>
+          <h4>1. Espérance et variance de \(Z\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Par linéarité de l'espérance : \(\mathbb{E}(Z) = \mathbb{E}(X_0) + 2\mathbb{E}(X_1) + 4\mathbb{E}(X_2) + 8\mathbb{E}(X_3)\). Comme \(\mathbb{E}(X_i) = p\), on a \(\mathbb{E}(Z) = p + 2p + 4p + 8p = 15p\). Les \(X_i\) étant indépendantes, la variance de la somme est la somme des variances : \(\mathbb{V}(aX) = a^2\mathbb{V}(X)\). Or \(\mathbb{V}(X_i) = p(1-p)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\mathbb{E}(Z) = 15p\) \(\mathbb{V}(Z) = \mathbb{V}(X_0) + 4\mathbb{V}(X_1) + 16\mathbb{V}(X_2) + 64\mathbb{V}(X_3) = (1+4+16+64)p(1-p) = 85p(1-p)\).</p>
+          </div>
+          <h4>2. Probabilité que \(Z\) soit pair</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>\(Z\) est pair si et seulement si son bit de poids faible \(X_0\) vaut 0.</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(Z \text{ pair}) = P(X_0 = 0) = 1-p\).</p>
+          </div>
+          <h4>3. Probabilité \(P(Z>3)\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>\(Z\) prend ses valeurs de 0 à 15. On passe par l'événement complémentaire : \(P(Z \le 3)\). \(Z \le 3 \iff X_3 = 0 \text{ et } X_2 = 0\). Donc \(Z > 3 \iff X_3 = 1 \text{ ou } X_2 = 1\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>En utilisant l'indépendance, \(P(Z>3) = 1 - P(X_3=0 \cap X_2=0) = 1 - (1-p)^2\).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 3</span><h3>Appareils electroniques</h3></div></header>
-          <div data-tags-for="td3-e3" class="topic-tags">
-            <span class="topic-tag">loi binomiale</span>
-            <span class="topic-tag">complementaire</span>
-            <span class="topic-tag">esperance</span>
-          </div>
-          <p class="statement">Un appareil comporte 20 composants, chacun ayant probabilite 0,0015 de ne pas fonctionner. Calculer la probabilite que l'appareil soit defectueux, puis traiter 10 et 100 appareils.</p>
-          <div class="question-block" data-question-block-for="td3-e3">
-            <h4>Questions</h4>
-            <ol>
-              <li>Calculer la probabilite qu'un appareil soit defectueux.</li>
-              <li>Pour 10 appareils, donner la loi du nombre d'appareils defectueux.</li>
-              <li>Calculer la probabilite d'avoir au moins 7 bons appareils.</li>
-              <li>Pour 100 appareils, calculer le nombre moyen d'appareils defectueux.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 3</span>
+              <h3>Exercice 3</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td3-e3" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Calculer la probabilite qu'un appareil soit defectueux.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e3-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e3-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e3-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>L'appareil est bon si tous les composants sont bons.</p>
-                </div>
-                <div id="td3-e3-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(q=P(\text{defectueux})=1-(0,9985)^{20}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Pour 10 appareils, donner la loi du nombre d'appareils defectueux.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e3-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e3-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e3-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Pour 10 appareils, on compte les defectueux.</p>
-                </div>
-                <div id="td3-e3-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(X\sim\mathcal B(10,q)\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Calculer la probabilite d'avoir au moins 7 bons appareils.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e3-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e3-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e3-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Au moins 7 bons signifie au plus 3 defectueux.</p>
-                </div>
-                <div id="td3-e3-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(X\le3)=\sum_{k=0}^3\binom{10}{k}q^k(1-q)^{10-k}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Pour 100 appareils, calculer le nombre moyen d'appareils defectueux.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e3-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e3-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e3-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>L'esperance d'une binomiale vaut (np).</p>
-                </div>
-                <div id="td3-e3-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Nombre moyen pour 100 appareils : \(100q\).</p>
-                </div>
-              </div>
-            </div>
+          <h4>1. Probabilité de non-fonctionnement de l'appareil</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>L'appareil de 20 composants fonctionne si TOUS ses composants fonctionnent.  La probabilité qu'un composant fonctionne est \(1 - 0.0015 = 0.9985\). On suppose les pannes indépendantes. La probabilité que l'appareil fonctionne est \((0.9985)^{20}\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>La probabilité de non-fonctionnement est \(p_{app} = 1 - (0.9985)^{20} \approx 1 - 0.9704 = 0.0296\) (soit environ 3\%).</p>
+          </div>
+          <h4>2. Loi de \(X\) (10 appareils) et \(P(\text{au moins 7 bons})\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Soit \(X\) le nombre d'appareils défectueux sur 10. \(X\) suit une loi binomiale \(\mathcal{B}(n=10, p=0.0296)\).  (Note : la correction manuscrite arrondit p à 0.03, nous utiliserons 0.03 pour suivre le corrigé) . Avoir au moins 7 bons appareils signifie avoir au maximum 3 appareils défectueux, donc \(X \le 3\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(X \sim \mathcal{B}(10, 0.03)\). \(P(X \le 3) = P(X=0) + P(X=1) + P(X=2) + P(X=3)\). \(P(X \le 3) = (1-p)^{10} + 10p(1-p)^9 + 45p^2(1-p)^8 + 120p^3(1-p)^7\). En prenant \(p \approx 0.03\), \(P(X \le 3) \approx 0.7374 + 0.2281 + 0.0317 + 0.0026 \approx 0.9998\).</p>
+          </div>
+          <h4>3. Nombre moyen (100 appareils)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Pour 100 appareils, le nombre de défectueux \(Z \sim \mathcal{B}(100, 0.03)\). L'espérance est \(np\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\mathbb{E}(Z) = 100 \times 0.03 = 3\) appareils.</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 4</span><h3>Message binaire</h3></div></header>
-          <div data-tags-for="td3-e4" class="topic-tags">
-            <span class="topic-tag">loi binomiale</span>
-            <span class="topic-tag">erreurs</span>
-            <span class="topic-tag">esperance</span>
-          </div>
-          <p class="statement">Un message de 32 bits a une probabilite d'erreur \(10^{-5}\) par bit. Soit \(X\) le nombre d'erreurs. Determiner sa loi, puis les probabilites d'une erreur, de quatre erreurs, d'au moins une erreur, et son esperance.</p>
-          <div class="question-block" data-question-block-for="td3-e4">
-            <h4>Questions</h4>
-            <ol>
-              <li>Identifier la loi du nombre d'erreurs dans le message.</li>
-              <li>Calculer la probabilite d'une unique erreur.</li>
-              <li>Calculer la probabilite d'exactement quatre erreurs.</li>
-              <li>Calculer la probabilite d'au moins une erreur.</li>
-              <li>Calculer le nombre moyen d'erreurs.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 4</span>
+              <h3>Exercice 4</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td3-e4" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Identifier la loi du nombre d'erreurs dans le message.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e4-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e4-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e4-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Chaque bit est un essai erreur/succes.</p>
-                </div>
-                <div id="td3-e4-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(X\sim\mathcal B(32,10^{-5})\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer la probabilite d'une unique erreur.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e4-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e4-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e4-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Une unique erreur.</p>
-                </div>
-                <div id="td3-e4-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom{32}{1}10^{-5}(1-10^{-5})^{31}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Calculer la probabilite d'exactement quatre erreurs.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e4-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e4-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e4-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Quatre erreurs.</p>
-                </div>
-                <div id="td3-e4-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom{32}{4}(10^{-5})^4(1-10^{-5})^{28}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Calculer la probabilite d'au moins une erreur.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e4-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e4-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e4-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Au moins une erreur : complement de zero erreur.</p>
-                </div>
-                <div id="td3-e4-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(1-(1-10^{-5})^{32}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 5</span>
-                  <p>Calculer le nombre moyen d'erreurs.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e4-q5-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e4-q5-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e4-q5-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Esperance binomiale.</p>
-                </div>
-                <div id="td3-e4-q5-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(E(X)=32\cdot10^{-5}\).</p>
-                </div>
-              </div>
-            </div>
+          <h4>1. Loi de \(X\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Le message comporte \(n=32\) bits. La probabilité d'erreur par bit est \(p=10^{-5}\). On suppose les erreurs indépendantes. C'est une répétition d'épreuves de Bernoulli.</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(X\) suit une loi binomiale \(\mathcal{B}(32, 10^{-5})\).</p>
+          </div>
+          <h4>2. Exactement une erreur</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Formule de la loi binomiale \(P(X=1)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(X=1) = \binom{32}{1}(10^{-5})^1(1-10^{-5})^{31} \approx 32 \times 10^{-5} \approx 0.00032\).</p>
+          </div>
+          <h4>3. Exactement quatre erreurs</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>\(P(X=4)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(X=4) = \binom{32}{4}(10^{-5})^4(1-10^{-5})^{28} \approx 35960 \times 10^{-20} \approx 3.6 \times 10^{-16}\).</p>
+          </div>
+          <h4>4. Au moins une erreur</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>\(P(X \ge 1) = 1 - P(X=0)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(X \ge 1) = 1 - (1-10^{-5})^{32} \approx 1 - (1 - 32 \times 10^{-5}) \approx 3.2 \times 10^{-4}\).</p>
+          </div>
+          <h4>5. Nombre moyen d'erreurs</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>L'espérance d'une loi binomiale est \(np\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\mathbb{E}(X) = 32 \times 10^{-5} = 3.2 \times 10^{-4}\).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 5</span><h3>Centenaires</h3></div></header>
-          <div data-tags-for="td3-e5" class="topic-tags">
-            <span class="topic-tag">loi binomiale</span>
-            <span class="topic-tag">probabilite contraire</span>
-          </div>
-          <p class="statement">Dans une population, une personne sur cent est centenaire. Calculer la probabilite d'avoir au moins un centenaire parmi 100 personnes, puis parmi 200.</p>
-          <div class="question-block" data-question-block-for="td3-e5">
-            <h4>Questions</h4>
-            <ol>
-              <li>Modeliser le nombre de centenaires dans un groupe de (n) personnes.</li>
-              <li>Calculer la probabilite d'au moins un centenaire parmi 100 personnes.</li>
-              <li>Calculer la probabilite d'au moins un centenaire parmi 200 personnes.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 5</span>
+              <h3>Exercice 5</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td3-e5" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Modeliser le nombre de centenaires dans un groupe de (n) personnes.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e5-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e5-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e5-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Le nombre de centenaires suit une binomiale.</p>
-                </div>
-                <div id="td3-e5-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(X_n\sim\mathcal B(n,0,01)\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer la probabilite d'au moins un centenaire parmi 100 personnes.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e5-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e5-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e5-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Au moins un parmi 100.</p>
-                </div>
-                <div id="td3-e5-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(1-0,99^{100}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Calculer la probabilite d'au moins un centenaire parmi 200 personnes.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e5-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e5-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e5-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Au moins un parmi 200.</p>
-                </div>
-                <div id="td3-e5-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(1-0,99^{200}\).</p>
-                </div>
-              </div>
-            </div>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La probabilité qu'une personne soit centenaire est \(p = 0.01\). Le nombre de centenaires dans un échantillon de \(n\) personnes suit une loi binomiale \(\mathcal{B}(n, 0.01)\) (en supposant le tirage avec remise ou une très grande population pour l'indépendance). On cherche \(P(X \ge 1) = 1 - P(X=0) = 1 - (1-p)^n\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse pour 100 personnes</strong>
+            <p>\(P(X \ge 1) = 1 - (1-0.01)^{100} = 1 - 0.99^{100} \approx 1 - 0.366 \approx 0.634\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse pour 200 personnes</strong>
+            <p>\(P(X \ge 1) = 1 - 0.99^{200} \approx 1 - 0.134 \approx 0.866\).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 6</span><h3>Poisson et gene A</h3></div></header>
-          <div data-tags-for="td3-e6" class="topic-tags">
-            <span class="topic-tag">Poisson</span>
-            <span class="topic-tag">conditionnement</span>
-            <span class="topic-tag">independance</span>
-          </div>
-          <p class="statement">Le nombre \(N\) d'enfants suit \(\mathcal P(\lambda)\). Chaque enfant a le gene A avec probabilite \(p\). Soit \(X\) le nombre d'enfants avec le gene et \(Y\) sans le gene. Determiner les lois de \(X\), \(Y\), leur independance, puis traiter \(\lambda=2,p=0,4\).</p>
-          <div class="question-block" data-question-block-for="td3-e6">
-            <h4>Questions</h4>
-            <ol>
-              <li>Donner la relation entre (N), (X) et (Y).</li>
-              <li>Calculer (P(X=kmid N=n)), puis la loi de (X).</li>
-              <li>Determiner la loi de (Y).</li>
-              <li>Montrer que (X) et (Y) sont independantes.</li>
-              <li>Appliquer avec (lambda=2) et (p=0,4).</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 6</span>
+              <h3>Exercice 6</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td3-e6" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Donner la relation entre (N), (X) et (Y).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e6-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e6-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e6-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Chaque enfant est soit avec gene, soit sans gene.</p>
-                </div>
-                <div id="td3-e6-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(N=X+Y\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer (P(X=kmid N=n)), puis la loi de (X).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e6-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e6-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e6-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Sachant (N=n), (X) est binomial.</p>
-                </div>
-                <div id="td3-e6-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(X=k\mid N=n)=\binom nkp^k(1-p)^{n-k}\), puis \(X\sim\mathcal P(\lambda p)\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Determiner la loi de (Y).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e6-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e6-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e6-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Par symetrie.</p>
-                </div>
-                <div id="td3-e6-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(Y\sim\mathcal P(\lambda(1-p))\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Montrer que (X) et (Y) sont independantes.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e6-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e6-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e6-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>La loi jointe se factorise.</p>
-                </div>
-                <div id="td3-e6-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(X=k,Y=l)=P(X=k)P(Y=l)\), donc independance.</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 5</span>
-                  <p>Appliquer avec (lambda=2) et (p=0,4).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e6-q5-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e6-q5-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e6-q5-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On applique avec (lambda p=0,8) et (lambda(1-p)=1,2).</p>
-                </div>
-                <div id="td3-e6-q5-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(X=3,Y=2)=e^{-2}\frac{0,8^3}{3!}\frac{1,2^2}{2!}\).</p>
-                </div>
-              </div>
-            </div>
+          <h4>1. Relation entre \(N, X, Y\)</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(N\) est le nombre total d'enfants, donc \(N = X + Y\).</p>
+          </div>
+          <h4>2. Loi de \(X\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Sachant que la famille a \(n\) enfants (\(N=n\)), le nombre d'enfants ayant le gène \(A\) suit une loi binomiale \(\mathcal{B}(n, p)\).  Donc \(P(X=k | N=n) = \binom{n}{k}p^k(1-p)^{n-k}\) pour \(0 \le k \le n\) et 0 sinon. Pour trouver la loi marginale de \(X\), on utilise la formule des probabilités totales avec le SCE \((N=n)\) : \(P(X=k) = \sum_{n=k}^{\infty} P(X=k | N=n)P(N=n)\). Or \(N \sim \mathcal{P}(\lambda)\), donc \(P(N=n) = e^{-\lambda}\frac{\lambda^n}{n!}\). \(P(X=k) = \sum_{n=k}^{\infty} \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k} e^{-\lambda}\frac{\lambda^n}{n!}\). En simplifiant \(n!\) et en posant \(j = n-k\) : \(P(X=k) = e^{-\lambda} \frac{(\lambda p)^k}{k!} \sum_{j=0}^{\infty} \frac{(\lambda(1-p))^j}{j!} = e^{-\lambda} \frac{(\lambda p)^k}{k!} e^{\lambda(1-p)} = e^{-\lambda p} \frac{(\lambda p)^k}{k!}\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(X\) suit une loi de Poisson de paramètre \(\lambda p\) : \(X \sim \mathcal{P}(\lambda p)\).</p>
+          </div>
+          <h4>3. Loi de \(Y\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Le raisonnement est symétrique pour \(Y\), l'enfant n'ayant pas le gène avec la probabilité \(1-p\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(Y\) suit une loi de Poisson de paramètre \(\lambda(1-p)\).</p>
+          </div>
+          <h4>4. Indépendance de \(X\) et \(Y\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On calcule la probabilité jointe \(P(X=k \cap Y=j)\). Comme \(N = X + Y\), l'événement \((X=k \cap Y=j)\) est équivalent à \((X=k \cap N=k+j)\). \(P(X=k \cap N=k+j) = P(N=k+j) \times P(X=k | N=k+j) = e^{-\lambda}\frac{\lambda^{k+j}}{(k+j)!} \times \binom{k+j}{k}p^k(1-p)^j\). En simplifiant : \(P(X=k \cap Y=j) = e^{-\lambda}\frac{\lambda^k\lambda^j}{k!j!}p^k(1-p)^j = \left(e^{-\lambda p}\frac{(\lambda p)^k}{k!}\right) \times \left(e^{-\lambda(1-p)}\frac{(\lambda(1-p))^j}{j!}\right)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Comme \(P(X=k \cap Y=j) = P(X=k)P(Y=j)\), \(X\) et \(Y\) sont indépendantes.</p>
+          </div>
+          <h4>5. Application numérique</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On a \(\lambda=2, p=0.4\). On cherche \(P(X=3 \cap Y=2)\). Par indépendance, c'est \(P(X=3) \times P(Y=2)\).  Les paramètres sont \(\lambda p = 0.8\) et \(\lambda(1-p) = 1.2\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(X=3 \cap Y=2) = \left(e^{-0.8}\frac{0.8^3}{3!}\right) \left(e^{-1.2}\frac{1.2^2}{2!}\right) = e^{-2} \frac{0.512 \times 1.44}{6 \times 2} \approx 0.1353 \times 0.06144 \approx 0.0083\).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 7</span><h3>Jeu avec urne evolutive</h3></div></header>
-          <div data-tags-for="td3-e7" class="topic-tags">
-            <span class="topic-tag">loi discrete</span>
-            <span class="topic-tag">serie</span>
-            <span class="topic-tag">esperance</span>
-          </div>
-          <p class="statement">Le jeu continue tant qu'une boule blanche est tiree ; apres chaque blanche, on remet la blanche et on ajoute une noire. Au depart, il y a une boule blanche. Determiner la loi du nombre \(X\) de parties jouees, puis son esperance. Le gain \(Y\) depend des bonnes reponses, chacune reussie avec probabilite \(1/2\).</p>
-          <div class="question-block" data-question-block-for="td3-e7">
-            <h4>Questions</h4>
-            <ol>
-              <li>Determiner la loi de (X), le nombre de parties jouees.</li>
-              <li>Calculer (E(X)).</li>
-              <li>Determiner la loi du gain (Y).</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 7</span>
+              <h3>Exercice 7</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td3-e7" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Determiner la loi de (X), le nombre de parties jouees.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e7-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e7-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e7-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>La probabilite de continuer change avec le nombre de noires ajoutees.</p>
-                </div>
-                <div id="td3-e7-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Pour (n\ge2), \(P(X=n)=\frac{n-1}{n!}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer (E(X)).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e7-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e7-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e7-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On somme (nP(X=n)).</p>
-                </div>
-                <div id="td3-e7-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(E(X)=\sum_{n=2}^{\infty}n\frac{n-1}{n!}=e\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Determiner la loi du gain (Y).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e7-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e7-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e7-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Sachant le nombre de parties, les bonnes reponses suivent une binomiale.</p>
-                </div>
-                <div id="td3-e7-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(Y=1000k)=\sum_{n\ge k}P(X=n)\binom nk2^{-n}\).</p>
-                </div>
-              </div>
-            </div>
+          <p>Urne de départ : 1 Blanche. À chaque étape \(k\) : si on tire Blanche, on la remet et on ajoute une Noire. Donc à l'étape \(k\), il y a 1 Blanche et \(k-1\) Noires (total \(k\) boules). Le jeu s'arrête au tirage d'une Noire. \(X\) est le nombre de parties jouées (l'arrêt se produit à la partie \(X\)).</p>
+          <h4>1. Loi et espérance de \(X\)</h4>
+          <p><strong>(a) Loi de \(X\) :</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Le jeu ne peut pas s'arrêter à la 1ère partie car il n'y a pas de boule Noire. Donc \(P(X=1) = 0\). Le jeu s'arrête à l'étape \(n \ge 2\) si on a tiré Blanche aux étapes 1 à \(n-1\) et Noire à l'étape \(n\). Probabilité de tirer B à l'étape \(k\) : \(\frac{1}{k}\). Donc \(P(X=n) = \left(\frac{1}{1} \times \frac{1}{2} \times \frac{1}{3} \dots \times \frac{1}{n-1}\right) \times P(\text{N à l'étape } n)\). À l'étape \(n\), il y a 1 Blanche et \(n-1\) Noires, soit \(n\) boules. \(P(\text{N}) = \frac{n-1}{n}\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(X=n) = \frac{1}{(n-1)!} \times \frac{n-1}{n} = \frac{n-1}{n!}\) pour \(n \ge 2\). (On remarque que \(\sum_{n=2}^{\infty} \frac{n-1}{n!} = \sum \frac{n}{n!} - \sum \frac{1}{n!} = e - (e-1) = 1\), le jeu s'arrête presque sûrement, donc la convention \(X=-1\) a une probabilité 0).</p>
+          </div>
+          <p><strong>(b) Espérance de \(X\) :</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>\(\mathbb{E}(X) = \sum_{n=2}^{\infty} n P(X=n) = \sum_{n=2}^{\infty} n \frac{n-1}{n!} = \sum_{n=2}^{\infty} \frac{1}{(n-2)!}\). On pose \(k = n-2\) : \(\mathbb{E}(X) = \sum_{k=0}^{\infty} \frac{1}{k!} = e\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\mathbb{E}(X) = e \approx 2.718\) parties.</p>
+          </div>
+          <h4>2. Loi de \(Y\) (gain)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>À chaque partie, le candidat gagne 1000 euros s'il donne la bonne réponse (probabilité 1/2) et 0 sinon. Sachant que le jeu dure \(n\) parties (\(X=n\)), le candidat répond à \(n\) questions. Le nombre de bonnes réponses \(R\) suit une binomiale \(\mathcal{B}(n, 1/2)\). Son gain est \(Y = 1000 \times R\). Pour exprimer la loi marginale de \(Y\) (qui prend les valeurs \(1000 \times k\) pour \(k \ge 0\)) : \(P(Y = 1000k) = \sum_{n=\max(2, k)}^{\infty} P(R=k | X=n)P(X=n)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(Y = 1000k) = \sum_{n=\max(2, k)}^{\infty} \binom{n}{k} \left(\frac{1}{2}\right)^n \frac{n-1}{n!}\).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 8</span><h3>Longueur de codage</h3></div></header>
-          <div data-tags-for="td3-e8" class="topic-tags">
-            <span class="topic-tag">esperance</span>
-            <span class="topic-tag">variance</span>
-            <span class="topic-tag">entropie</span>
-          </div>
-          <p class="statement">Une variable prend \(a,b,c,d\) avec probabilites \(0,5\), \(0,25\), \(0,125\), \(0,125\). Comparer le code fixe \(00,01,10,11\) et le code variable \(0,10,110,111\), puis calculer l'entropie.</p>
-          <div class="question-block" data-question-block-for="td3-e8">
-            <h4>Questions</h4>
-            <ol>
-              <li>Determiner la loi de la longueur du code (C_1).</li>
-              <li>Calculer la longueur moyenne et l'ecart-type pour (C_1).</li>
-              <li>Reprendre les calculs pour le code (C_2).</li>
-              <li>Choisir le code le plus efficace.</li>
-              <li>Calculer l'entropie (H(X)).</li>
-              <li>Comparer les codes a la borne d'entropie.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 8</span>
+              <h3>Exercice 8</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td3-e8" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Determiner la loi de la longueur du code (C_1).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e8-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e8-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e8-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Le code fixe utilise toujours 2 bits.</p>
-                </div>
-                <div id="td3-e8-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(L_1=2\) presque surement.</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer la longueur moyenne et l'ecart-type pour (C_1).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e8-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e8-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e8-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Longueur constante.</p>
-                </div>
-                <div id="td3-e8-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(E(L_1)=2\), \(V(L_1)=0\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Reprendre les calculs pour le code (C_2).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e8-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e8-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e8-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Le code variable a longueurs 1,2,3,3.</p>
-                </div>
-                <div id="td3-e8-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(E(L_2)=7/4\), \(V(L_2)=11/16\), \(\sigma=\sqrt{11}/4\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Choisir le code le plus efficace.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e8-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e8-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e8-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On choisit le code de plus petite longueur moyenne.</p>
-                </div>
-                <div id="td3-e8-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Le code (C_2) est meilleur en moyenne.</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 5</span>
-                  <p>Calculer l'entropie (H(X)).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e8-q5-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e8-q5-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e8-q5-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Entropie de la loi.</p>
-                </div>
-                <div id="td3-e8-q5-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(H(X)=7/4\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 6</span>
-                  <p>Comparer les codes a la borne d'entropie.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e8-q6-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e8-q6-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e8-q6-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Comparaison a la borne theorique.</p>
-                </div>
-                <div id="td3-e8-q6-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Le code (C_2) atteint l'entropie : il est optimal en longueur moyenne.</p>
-                </div>
-              </div>
-            </div>
+          <p>Les probabilités sont : \(p_a = 0.5\), \(p_b = 0.25\), \(p_c = 0.125\), \(p_d = 0.125\).</p>
+          <h4>1 et 2. Codage \(C_1\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Le code \(C_1\) utilise 2 bits pour chaque lettre.</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse 1</strong>
+            <p>La variable "longueur" \(L_1\) prend la valeur constante 2.</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse 2</strong>
+            <p>La longueur moyenne est \(\mathbb{E}(L_1) = 2\) bits. L'écart-type est 0.</p>
+          </div>
+          <h4>3. Codage \(C_2\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Longueurs \(L_2\) : \(l_a = 1\), \(l_b = 2\), \(l_c = 3\), \(l_d = 3\). La loi de \(L_2\) est : \(P(L_2 = 1) = 0.5\) \(P(L_2 = 2) = 0.25\) \(P(L_2 = 3) = P(c) + P(d) = 0.125 + 0.125 = 0.25\). Espérance : \(\mathbb{E}(L_2) = 1(0.5) + 2(0.25) + 3(0.25) = 0.5 + 0.5 + 0.75 = 1.75\) bits. Variance : \(\mathbb{E}(L_2^2) = 1^2(0.5) + 2^2(0.25) + 3^2(0.25) = 0.5 + 1 + 2.25 = 3.75\). \(\mathbb{V}(L_2) = 3.75 - (1.75)^2 = 3.75 - 3.0625 = 0.6875\). Écart-type \(\approx 0.829\).</p>
+          </div>
+          <h4>4. Choix du code</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>On choisit \(C_2\) car sa longueur moyenne est plus faible (compression des données).</p>
+          </div>
+          <h4>5. Entropie \(H(X)\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>\(H(X) = - (0.5 \log_2(0.5) + 0.25 \log_2(0.25) + 0.125 \log_2(0.125) + 0.125 \log_2(0.125))\). Sachant que \(\log_2(0.5) = -1\), \(\log_2(0.25) = -2\), \(\log_2(0.125) = -3\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(H(X) = - (0.5(-1) + 0.25(-2) + 2 \times 0.125(-3)) = 0.5 + 0.5 + 0.75 = 1.75\) bits.</p>
+          </div>
+          <h4>6. Conclusion</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Le code \(C_2\) a une longueur moyenne exactement égale à l'entropie de \(X\). C'est un code optimal (c'est le code de Huffman pour cette distribution).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 9</span><h3>Paradoxe de Saint-Petersbourg</h3></div></header>
-          <div data-tags-for="td3-e9" class="topic-tags">
-            <span class="topic-tag">esperance infinie</span>
-            <span class="topic-tag">serie</span>
-            <span class="topic-tag">paradoxe</span>
-          </div>
-          <p class="statement">On lance une piece jusqu'au premier face. Si face apparait au \(n\)-ieme lancer, la banque paie \(2^n\) euros. Determiner la loi du gain \(X\), discuter des mises 150 et 5 euros, puis calculer \(E(X)\).</p>
-          <div class="question-block" data-question-block-for="td3-e9">
-            <h4>Questions</h4>
-            <ol>
-              <li>Calculer le paiement si le premier face apparait au 16e lancer.</li>
-              <li>Determiner la loi du gain (X).</li>
-              <li>Discuter une mise initiale de 150 euros.</li>
-              <li>Discuter une mise initiale de 5 euros.</li>
-              <li>Calculer (E(X)).</li>
-              <li>Expliquer ce que montre le paradoxe.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 9</span>
+              <h3>Exercice 9</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td3-e9" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Calculer le paiement si le premier face apparait au 16e lancer.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e9-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e9-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e9-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Le paiement double a chaque echec supplementaire.</p>
-                </div>
-                <div id="td3-e9-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(2^{16}=65536\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Determiner la loi du gain (X).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e9-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e9-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e9-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Premier face au rang (n).</p>
-                </div>
-                <div id="td3-e9-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(X=2^n)=2^{-n}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Discuter une mise initiale de 150 euros.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e9-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e9-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e9-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>L'esperance mathematique est infinie, mais le risque est enorme.</p>
-                </div>
-                <div id="td3-e9-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Selon le critere d'esperance pure, toute mise finie serait acceptable.</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Discuter une mise initiale de 5 euros.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e9-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e9-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e9-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Meme remarque pour 5 euros.</p>
-                </div>
-                <div id="td3-e9-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>L'esperance pure dit oui, mais ce critere est discutable.</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 5</span>
-                  <p>Calculer (E(X)).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e9-q5-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e9-q5-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e9-q5-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Chaque terme de l'esperance vaut 1.</p>
-                </div>
-                <div id="td3-e9-q5-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(E(X)=\sum_{n\ge1}2^n2^{-n}=+\infty\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 6</span>
-                  <p>Expliquer ce que montre le paradoxe.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e9-q6-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e9-q6-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e9-q6-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Le paradoxe critique l'usage naif de l'esperance.</p>
-                </div>
-                <div id="td3-e9-q6-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Il faut tenir compte du risque, de la richesse et de l'utilite.</p>
-                </div>
-              </div>
-            </div>
+          <h4>1. Paiement au 16ème lancer</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Si Face apparaît au 1er lancer : 2 euros (\(2^1\)). Au 2ème : 4 euros (\(2^2\)). Au \(n\)-ième : \(2^n\) euros.</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Au 16ème lancer, le gain est \(2^{16} = 65536\) euros.</p>
+          </div>
+          <h4>2. Loi de \(X\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La banque paie \(2^n\) euros si Face apparait pour la 1ère fois au lancer \(n\). Cela correspond à \(n-1\) fois Pile, puis 1 fois Face. La probabilité est \((1/2)^{n-1} \times (1/2) = (1/2)^n\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(X = 2^n) = \frac{1}{2^n}\) pour tout \(n \ge 1\).</p>
+          </div>
+          <h4>3 et 4. Mises initiales (Approche subjective)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Une mise de 150 euros est très élevée compte tenu qu'on a \(1/2\) chance de ne gagner que 2 euros, et \(3/4\) de gagner \(\le 4\) euros. La plupart des gens refusent 150 euros. Pour 5 euros, la réponse est plus mitigée (1/8 de chance de gagner \(\ge 8\) euros, soit de faire du profit).</p>
+          </div>
+          <h4>5. Espérance mathématique</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>\(\mathbb{E}(X) = \sum_{n=1}^{\infty} x_n P(X=x_n) = \sum_{n=1}^{\infty} 2^n \times \frac{1}{2^n} = \sum_{n=1}^{\infty} 1 = +\infty\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>L'espérance de gain est infinie. Un joueur rationnel (au sens strict de l'espérance) devrait accepter de payer n'importe quelle somme finie (même 1 million d'euros) pour jouer. Or, personne ne le ferait en réalité.</p>
+          </div>
+          <h4>6. Illustration</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Ce paradoxe illustre les limites de l'utilisation de la seule espérance mathématique pour modéliser le comportement humain rationnel. Il introduit l'idée d'aversion au risque et la théorie de l'utilité (Bernoulli a proposé que l'utilité marginale de l'argent décroît, ce qui rend la valeur "réelle" du jeu finie).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 10</span><h3>Surbooking</h3></div></header>
-          <div data-tags-for="td3-e10" class="topic-tags">
-            <span class="topic-tag">loi binomiale</span>
-            <span class="topic-tag">approximation de Poisson</span>
-            <span class="topic-tag">surbooking</span>
-          </div>
-          <p class="statement">Un avion a 205 places et 210 reservations. Chaque passager annule ou ne vient pas avec probabilite \(1/70\). Soit \(X\) le nombre d'absents. Determiner sa loi, comparer avec une loi de Poisson de parametre 3, puis calculer la probabilite de surbooking effectif.</p>
-          <div class="question-block" data-question-block-for="td3-e10">
-            <h4>Questions</h4>
-            <ol>
-              <li>Determiner la loi du nombre (X) de passagers absents.</li>
-              <li>Calculer (P(X=0)) et (P(X=1)).</li>
-              <li>Comparer avec une variable de Poisson de parametre 3.</li>
-              <li>Calculer (P(X'=0)) et (P(X'=1)).</li>
-              <li>Calculer la probabilite qu'il y ait plus de passagers que de places.</li>
-            </ol>
-          </div>
-          <div id="td3-e10" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Determiner la loi du nombre (X) de passagers absents.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e10-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e10-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e10-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On compte les absents parmi 210 passagers.</p>
-                </div>
-                <div id="td3-e10-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(X\sim\mathcal B(210,1/70)\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer (P(X=0)) et (P(X=1)).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e10-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e10-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e10-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Probabilites ponctuelles binomiales.</p>
-                </div>
-                <div id="td3-e10-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(X=0)=(69/70)^{210}\), \(P(X=1)=210\frac1{70}(69/70)^{209}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Comparer avec une variable de Poisson de parametre 3.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e10-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e10-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e10-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Comme (np=3), une approximation de Poisson est naturelle.</p>
-                </div>
-                <div id="td3-e10-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(X'\sim\mathcal P(3)\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Calculer (P(X'=0)) et (P(X'=1)).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e10-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e10-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e10-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Probabilites ponctuelles de Poisson.</p>
-                </div>
-                <div id="td3-e10-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(X'=0)=e^{-3}\), \(P(X'=1)=3e^{-3}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 5</span>
-                  <p>Calculer la probabilite qu'il y ait plus de passagers que de places.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td3-e10-q5-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td3-e10-q5-solution">Afficher la solution</button>
-                </div>
-                <div id="td3-e10-q5-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Il y a trop de passagers si moins de 5 personnes sont absentes.</p>
-                </div>
-                <div id="td3-e10-q5-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(X\le4)=\sum_{k=0}^4\binom{210}{k}(1/70)^k(69/70)^{210-k}\).</p>
-                </div>
-              </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 10</span>
+              <h3>Exercice 10</h3>
             </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td3-e10" class="answer-block">
+          <p>Capacité = 205. Réservations \(n=210\). Probabilité de non-présentation \(p = 1/70\). \(X\) = nombre de non-présentations.</p>
+          <h4>1. Loi de \(X\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il y a 210 passagers qui se présentent ou non de façon indépendante, avec une probabilité fixe \(p = 1/70\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(X\) suit une loi binomiale \(\mathcal{B}(210, 1/70)\).</p>
+          </div>
+          <h4>2. \(P(X=0)\) et \(P(X=1)\)</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>\(P(X=0) = (1 - 1/70)^{210} = (69/70)^{210} \approx 0.0483\). \(P(X=1) = 210 (1/70) (69/70)^{209} = 3 \times (69/70)^{209} \approx 0.1471\).</p>
+          </div>
+          <h4>3 et 4. Approximation par loi de Poisson</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Comme \(n\) est grand et \(p\) petit, la loi de \(X\) peut être approchée par une loi de Poisson de paramètre \(\lambda = np = 210 \times \frac{1}{70} = 3\). Donc \(X' \sim \mathcal{P}(3)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(X'=0) = e^{-3} \frac{3^0}{0!} = e^{-3} \approx 0.0498\). \(P(X'=1) = e^{-3} \frac{3^1}{1!} = 3e^{-3} \approx 0.1494\). Les résultats sont très proches de la loi binomiale, justifiant l'approximation.</p>
+          </div>
+          <h4>5. Probabilité de surbooking</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il y a plus de passagers que de places si le nombre de passagers se présentant est strictement supérieur à 205. Soit \(Y\) le nombre de passagers présents : \(Y = 210 - X\). On cherche \(P(Y > 205) \iff P(210 - X > 205) \iff P(X < 5) \iff P(X \le 4)\). On utilise l'approximation par Poisson \(X' \sim \mathcal{P}(3)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(P(X \le 4) \approx P(X' \le 4) = P(X'=0) + P(X'=1) + P(X'=2) + P(X'=3) + P(X'=4)\). \(P(X' \le 4) = e^{-3} \left(1 + 3 + \frac{9}{2} + \frac{27}{6} + \frac{81}{24}\right) = e^{-3} (1 + 3 + 4.5 + 4.5 + 3.375) = 16.375 \times e^{-3} \approx 16.375 \times 0.049787 \approx 0.815\). Il y a environ 81.5\% de chances qu'il y ait surbooking et que des passagers soient refusés.</p>
+          </div>
           </div>
         </article>
       </section>
     </main>
   </body>
 </html>
-
-

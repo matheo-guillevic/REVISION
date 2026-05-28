@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TD 1 corrige - Denombrement</title>
+    <title>TD 1 corrige - Denombrement et probabilites</title>
     <link rel="stylesheet" href="styles.css">
     <script>
       window.MathJax = {
@@ -20,1131 +20,486 @@
         <a class="back-link" href="math.html#probabilites-td">Retour aux TD</a>
         <div>
           <span class="eyebrow">TD 1</span>
-          <h1>Denombrement - enonces reecrits et corrections</h1>
-          <p>Objectif : choisir le bon modele de comptage avant d'ecrire la formule.</p>
+          <h1>Denombrement et probabilites</h1>
+          <p>Corrige reconstruit depuis le fichier LaTeX correspondant.</p>
         </div>
       </header>
 
       <section class="page-section">
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 1</span><h3>Mains de 5 cartes dans un jeu de 32</h3></div></header>
-          <div data-tags-for="td1-e1" class="topic-tags">
-            <span class="topic-tag">combinaison</span>
-            <span class="topic-tag">cartes</span>
-            <span class="topic-tag">cas contraints</span>
-          </div>
-          <p class="statement">On tire simultanement 5 cartes. Compter les mains avec seulement des cartes noires, seulement des figures, 4 as, 5 figures dont 3 noires, puis 3 as, 2 dames et exactement 1 carreau.</p>
-          <div class="annotation" data-annotation><strong>Formule</strong><p>Tirage simultane : l'ordre ne compte pas, donc on utilise des combinaisons.</p></div>
-          <div class="question-block" data-question-block-for="td1-e1">
-            <h4>Questions</h4>
-            <ol>
-              <li>Calculer le nombre de mains composees seulement de cartes noires.</li>
-              <li>Calculer le nombre de mains composees seulement de figures.</li>
-              <li>Calculer le nombre de mains contenant exactement les 4 as.</li>
-              <li>Calculer le nombre de mains contenant 5 figures, dont exactement 3 noires.</li>
-              <li>Calculer le nombre de mains contenant 3 as, 2 dames et exactement 1 carreau.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1</span>
+              <h3>Exercice 1</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e1" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Calculer le nombre de mains composees seulement de cartes noires.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e1-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e1-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e1-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Tirage simultane : on choisit 5 cartes parmi les 16 cartes noires.</p>
-                </div>
-                <div id="td1-e1-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom{16}{5}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer le nombre de mains composees seulement de figures.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e1-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e1-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e1-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Les figures du TD sont valet, dame, roi et as : 4 valeurs dans 4 couleurs, donc 16 cartes.</p>
-                </div>
-                <div id="td1-e1-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom{16}{5}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Calculer le nombre de mains contenant exactement les 4 as.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e1-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e1-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e1-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Les 4 as sont imposes ; la cinquieme carte doit etre choisie parmi les 28 non-as.</p>
-                </div>
-                <div id="td1-e1-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom44\binom{28}{1}=28\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Calculer le nombre de mains contenant 5 figures, dont exactement 3 noires.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e1-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e1-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e1-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On separe les figures noires et rouges pour respecter exactement 3 noires.</p>
-                </div>
-                <div id="td1-e1-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom83\binom82\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 5</span>
-                  <p>Calculer le nombre de mains contenant 3 as, 2 dames et exactement 1 carreau.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e1-q5-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e1-q5-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e1-q5-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Les contraintes as/dames/carreau se recoupent ; on compte les cas ou l'unique carreau est l'as de carreau ou la dame de carreau.</p>
-                </div>
-                <div id="td1-e1-q5-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom31\binom31+\binom31\binom31=18\).</p>
-                </div>
-              </div>
-            </div>
+          <p>Le tirage se fait simultanément, l'ordre n'a donc pas d'importance. Il s'agit de combinaisons. On choisit 5 cartes parmi 32. Le nombre total d'issues possibles est \(\binom{32}{5} = 201376\).</p>
+          <h4>1. Seulement des cartes noires</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Un jeu de 32 cartes contient 16 cartes noires (8 trèfles et 8 piques). Il faut choisir 5 cartes parmi ces 16.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\binom{16}{5} = \frac{16!}{5!11!} = 4368\) façons.</p>
+          </div>
+          <h4>2. Seulement des figures ou as</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Les "figures" précisées ici sont au nombre de 4 par couleur (valet, dame, roi, as), soit \(4 \times 4 = 16\) cartes au total. On en choisit 5 parmi 16.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\binom{16}{5} = 4368\) façons.</p>
+          </div>
+          <h4>3. Quatre as</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il faut choisir les 4 as parmi les 4 disponibles, puis choisir la dernière carte parmi les 28 cartes restantes du jeu.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\binom{4}{4} \times \binom{28}{1} = 1 \times 28 = 28\) façons.</p>
+          </div>
+          <h4>4. Cinq figures, dont 3 noires</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il y a 8 figures noires et 8 figures rouges. Il faut choisir 3 figures parmi les 8 noires, et les 2 autres cartes doivent être des figures rouges (choisies parmi les 8) pour avoir exactement 5 figures dont 3 noires.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\binom{8}{3} \times \binom{8}{2} = 56 \times 28 = 1568\) façons.</p>
+          </div>
+          <h4>5. Trois as, 2 dames et 1 seul carreau</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On tire 5 cartes au total (3 as + 2 dames). L'unique carreau de la main doit obligatoirement être soit un as, soit une dame. On sépare en deux cas disjoints :</p>
+          </div>
+          <ul class="formula-list">
+            <li><strong>Cas 1 : Le carreau est un as.</strong> On choisit l'as de carreau (1 choix). Les 2 autres as sont choisis parmi les 3 as restants (non-carreau). Les 2 dames sont choisies parmi les 3 dames restantes (non-carreau). Soit \(\binom{1}{1} \times \binom{3}{2} \times \binom{3}{2} = 1 \times 3 \times 3 = 9\).</li>
+            <li><strong>Cas 2 : Le carreau est une dame.</strong> On choisit la dame de carreau (1 choix). L'autre dame est choisie parmi les 3 restantes (non-carreau). Les 3 as sont choisis parmi les 3 as non-carreau. Soit \(\binom{1}{1} \times \binom{3}{1} \times \binom{3}{3} = 1 \times 3 \times 1 = 3\).</li>
+          </ul>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(9 + 3 = 12\) façons.</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 2</span><h3>Comites et bureau</h3></div></header>
-          <div data-tags-for="td1-e2" class="topic-tags">
-            <span class="topic-tag">combinaison</span>
-            <span class="topic-tag">parite</span>
-            <span class="topic-tag">arrangement</span>
-          </div>
-          <p class="statement">Avec 12 hommes et 15 femmes, former un comite de 6, puis un comite paritaire, puis un comite paritaire ou Madame A refuse Monsieur B, puis un bureau president/secretaire/tresorier parmi les 6 elus.</p>
-          <div class="question-block" data-question-block-for="td1-e2">
-            <h4>Questions</h4>
-            <ol>
-              <li>Combien de comites de 6 membres peut-on constituer ?</li>
-              <li>Combien de comites paritaires, avec autant d'hommes que de femmes, peut-on constituer ?</li>
-              <li>Combien de comites paritaires peut-on constituer si Madame A refuse de sieger avec Monsieur B ?</li>
-              <li>Une fois le comite elu, combien de bureaux president/secretaire/tresorier peut-on former ?</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2</span>
+              <h3>Exercice 2</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e2" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Combien de comites de 6 membres peut-on constituer ?</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e2-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e2-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e2-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Un comite est un groupe sans ordre.</p>
-                </div>
-                <div id="td1-e2-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom{27}{6}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Combien de comites paritaires, avec autant d'hommes que de femmes, peut-on constituer ?</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e2-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e2-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e2-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Parite : choisir 3 hommes parmi 12 et 3 femmes parmi 15.</p>
-                </div>
-                <div id="td1-e2-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom{12}{3}\binom{15}{3}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Combien de comites paritaires peut-on constituer si Madame A refuse de sieger avec Monsieur B ?</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e2-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e2-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e2-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On retire les comites paritaires contenant simultanement Madame A et Monsieur B.</p>
-                </div>
-                <div id="td1-e2-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom{12}{3}\binom{15}{3}-\binom{11}{2}\binom{14}{2}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Une fois le comite elu, combien de bureaux president/secretaire/tresorier peut-on former ?</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e2-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e2-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e2-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Les postes sont distincts : l'ordre des trois personnes choisies compte.</p>
-                </div>
-                <div id="td1-e2-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(A_6^3=6\times5\times4=120\).</p>
-                </div>
-              </div>
-            </div>
+          <h4>1. Nombre total de comités</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il y a au total \(12 + 15 = 27\) personnes. On choisit 6 membres sans distinction d'ordre.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\binom{27}{6} = 296010\) comités possibles.</p>
+          </div>
+          <h4>2. Comités respectant la parité</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La parité signifie 3 hommes et 3 femmes. On choisit 3 hommes parmi 12, et 3 femmes parmi 15.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\binom{12}{3} \times \binom{15}{3} = 220 \times 455 = 100100\) comités.</p>
+          </div>
+          <h4>3. Condition de refus entre A et B</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Madame A et Monsieur B ne doivent pas siéger ensemble. On compte le nombre de comités paritaires où ils siègent <em>tous les deux</em>, et on le soustrait au total paritaire calculé précédemment. S'ils y sont tous les deux, il reste à choisir 2 femmes parmi 14 (pour compléter avec Mme A) et 2 hommes parmi 11 (pour compléter avec M B).<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(100100 - \left( \binom{14}{2} \times \binom{11}{2} \right) = 100100 - (91 \times 55) = 100100 - 5005 = 95095\) comités.</p>
+          </div>
+          <h4>4. Désignation du bureau</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Parmi les 6 membres, on désigne un président, un secrétaire et un trésorier (3 postes distincts). L'ordre compte, c'est un arrangement de 3 personnes parmi 6.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(A_6^3 = \frac{6!}{(6-3)!} = 6 \times 5 \times 4 = 120\) bureaux possibles.</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 3</span><h3>Anniversaires</h3></div></header>
-          <div data-tags-for="td1-e3" class="topic-tags">
-            <span class="topic-tag">probabilite contraire</span>
-            <span class="topic-tag">anniversaires</span>
-            <span class="topic-tag">p-listes</span>
-          </div>
-          <p class="statement">Dans un groupe de \(n\) personnes, calculer la probabilite qu'au moins deux personnes aient le meme anniversaire, sans annee bissextile.</p>
-          <div class="question-block" data-question-block-for="td1-e3">
-            <h4>Questions</h4>
-            <ol>
-              <li>Pour un groupe de (n) personnes, exprimer la probabilite qu'au moins deux personnes aient le meme anniversaire.</li>
-              <li>Preciser le cas (n>365).</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 3</span>
+              <h3>Exercice 3</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e3" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Pour un groupe de (n) personnes, exprimer la probabilite qu'au moins deux personnes aient le meme anniversaire.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e3-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e3-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e3-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On passe par le contraire : tous les anniversaires sont distincts.</p>
-                </div>
-                <div id="td1-e3-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Si (n\le365), (P=1-\frac{A_{365}^n}{365^n}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Preciser le cas (n>365).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e3-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e3-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e3-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Avec plus de personnes que de jours, le principe des tiroirs impose une coincidence.</p>
-                </div>
-                <div id="td1-e3-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Si (n>365), la probabilite vaut 1.</p>
-                </div>
-              </div>
-            </div>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On utilise l'événement contraire : "les \(n\) personnes ont toutes des jours d'anniversaire différents". Il y a \(365^n\) cas possibles au total (nombre d'applications de l'ensemble des personnes vers les jours de l'année, sans années bissextiles). Le nombre de cas favorables à l'événement contraire est le nombre d'arrangements de \(n\) jours parmi 365, soit \(A_{365}^n\).<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>La probabilité est \(P = 1 - \frac{A_{365}^n}{365^n}\).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 4</span><h3>Rangement de livres</h3></div></header>
-          <div data-tags-for="td1-e4" class="topic-tags">
-            <span class="topic-tag">permutation</span>
-            <span class="topic-tag">blocs</span>
-            <span class="topic-tag">factorielle</span>
-          </div>
-          <p class="statement">Un savant range 12 livres de maths et 10 livres de physique. Compter les rangements si les deux matieres sont chacune groupees, puis si seuls les livres de maths doivent etre groupes.</p>
-          <div class="question-block" data-question-block-for="td1-e4">
-            <h4>Questions</h4>
-            <ol>
-              <li>Compter les rangements si les livres de maths sont tous groupes et les livres de physique aussi.</li>
-              <li>Compter les rangements si seule la contrainte 'les livres de maths sont groupes' est imposee.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 4</span>
+              <h3>Exercice 4</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e4" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Compter les rangements si les livres de maths sont tous groupes et les livres de physique aussi.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e4-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e4-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e4-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On cree deux blocs, Maths et Physique, puis on range l'interieur des blocs.</p>
-                </div>
-                <div id="td1-e4-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(2!\,12!\,10!\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Compter les rangements si seule la contrainte 'les livres de maths sont groupes' est imposee.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e4-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e4-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e4-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Le bloc Maths compte comme un objet avec les 10 livres de physique.</p>
-                </div>
-                <div id="td1-e4-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(11!\,12!\).</p>
-                </div>
-              </div>
-            </div>
+          <h4>1. Maths groupés et Physique groupés</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il y a 2 "blocs" à ordonner : le bloc Maths et le bloc Physique (2! façons de les disposer). À l'intérieur du bloc Maths, il y a 12! façons de ranger les livres. À l'intérieur du bloc Physique, il y a 10! façons.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(2! \times 12! \times 10!\) rangements possibles.</p>
+          </div>
+          <h4>2. Seulement les Maths groupés</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On considère les 12 livres de maths comme un seul gros bloc. Ce bloc s'ajoute aux 10 livres de physique, soit 11 éléments à permuter (\(11!\) façons). À l'intérieur du bloc des maths, les 12 livres peuvent être permutés de \(12!\) façons.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(11! \times 12!\) rangements possibles.</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 5</span><h3>Gants au hasard</h3></div></header>
-          <div data-tags-for="td1-e5" class="topic-tags">
-            <span class="topic-tag">combinaison</span>
-            <span class="topic-tag">contraire</span>
-            <span class="topic-tag">paires</span>
-          </div>
-          <p class="statement">On choisit 4 gants parmi 10 paires distinctes. Calculer la probabilite d'obtenir deux paires, au moins une paire, puis exactement une paire.</p>
-          <div class="question-block" data-question-block-for="td1-e5">
-            <h4>Questions</h4>
-            <ol>
-              <li>Calculer la probabilite d'obtenir deux paires assorties.</li>
-              <li>Calculer la probabilite d'obtenir au moins une paire assortie.</li>
-              <li>Calculer la probabilite d'obtenir exactement une paire assortie.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 5</span>
+              <h3>Exercice 5</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e5" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Calculer la probabilite d'obtenir deux paires assorties.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e5-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e5-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e5-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Deux paires assorties : choisir directement les 2 paires completes.</p>
-                </div>
-                <div id="td1-e5-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{\binom{10}{2}}{\binom{20}{4}}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer la probabilite d'obtenir au moins une paire assortie.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e5-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e5-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e5-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Au moins une paire : on retire le cas ou les 4 gants viennent de 4 paires differentes.</p>
-                </div>
-                <div id="td1-e5-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(1-\frac{\binom{10}{4}2^4}{\binom{20}{4}}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Calculer la probabilite d'obtenir exactement une paire assortie.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e5-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e5-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e5-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Exactement une paire : choisir la paire complete, puis deux paires differentes dont on prend un seul gant.</p>
-                </div>
-                <div id="td1-e5-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{10\binom92 2^2}{\binom{20}{4}}\).</p>
-                </div>
-              </div>
-            </div>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement global</strong>
+            <p>L'armoire contient 20 gants au total (10 paires distinctes). Le nombre de tirages possibles de 4 gants est \(\binom{20}{4} = 4845\).</p>
+          </div>
+          <h4>(i) Deux paires assorties</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il faut tirer 2 paires complètes. Il suffit de choisir 2 paires parmi les 10 paires disponibles.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Nombre de cas favorables : \(\binom{10}{2} = 45\). Probabilité = \(\frac{45}{4845} = \frac{3}{323}\).</p>
+          </div>
+          <h4>(iii) Une paire et une seule</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On choisit la paire assortie parmi 10 (\(\binom{10}{1}\)). Pour les 2 autres gants, il faut qu'ils proviennent de 2 paires différentes. On choisit 2 paires parmi les 9 restantes (\(\binom{9}{2}\)) et pour chacune de ces deux paires, on choisit le gant gauche ou droit (\(2^2\) choix).<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Nombre de cas = \(10 \times 36 \times 4 = 1440\). Probabilité = \(\frac{1440}{4845} = \frac{96}{323}\).</p>
+          </div>
+          <h4>(ii) Au moins une paire</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>"Au moins une paire" signifie soit "une paire exacte", soit "deux paires". Les deux événements sont incompatibles, on additionne leurs probabilités.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Probabilité = \(\frac{45}{4845} + \frac{1440}{4845} = \frac{1485}{4845} = \frac{99}{323}\).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 6</span><h3>Tirage hypergeometrique</h3></div></header>
-          <div data-tags-for="td1-e6" class="topic-tags">
-            <span class="topic-tag">hypergeometrique</span>
-            <span class="topic-tag">tirage sans remise</span>
-            <span class="topic-tag">combinaison</span>
-          </div>
-          <p class="statement">Une urne contient \(n\) boules dont \(m\) noires. On tire sans remise \(r\) boules. Calculer la probabilite d'obtenir \(k\) noires.</p>
-          <div class="question-block" data-question-block-for="td1-e6">
-            <h4>Questions</h4>
-            <ol>
-              <li>Modeliser le tirage sans remise de (r) boules parmi (n).</li>
-              <li>Calculer la probabilite d'obtenir exactement (k) boules noires.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 6</span>
+              <h3>Exercice 6</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e6" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Modeliser le tirage sans remise de (r) boules parmi (n).</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e6-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e6-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e6-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Sans remise et sans ordre : le total est un choix de (r) boules parmi (n).</p>
-                </div>
-                <div id="td1-e6-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Total : \(\binom nr\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer la probabilite d'obtenir exactement (k) boules noires.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e6-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e6-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e6-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On choisit les (k) noires puis les (r-k) blanches.</p>
-                </div>
-                <div id="td1-e6-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{\binom mk\binom{n-m}{r-k}}{\binom nr}\).</p>
-                </div>
-              </div>
-            </div>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>C'est un tirage simultané (ou sans remise) de \(r\) boules parmi \(n\). Le nombre total de tirages est \(\binom{n}{r}\). Pour obtenir exactement \(k\) boules noires, on doit choisir \(k\) boules parmi les \(m\) noires, et les \(r-k\) boules restantes parmi les \(n-m\) boules blanches.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>La probabilité est \(P = \frac{\binom{m}{k} \times \binom{n-m}{r-k}}{\binom{n}{r}}\) (Loi hypergéométrique).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 7</span><h3>Mains de poker avec 32 cartes</h3></div></header>
-          <div data-tags-for="td1-e7" class="topic-tags">
-            <span class="topic-tag">poker</span>
-            <span class="topic-tag">combinaison</span>
-            <span class="topic-tag">cas exclusifs</span>
-          </div>
-          <p class="statement">Avec une main de 5 cartes, calculer les probabilites d'une seule paire, deux paires, un brelan, un carre.</p>
-          <div class="question-block" data-question-block-for="td1-e7">
-            <h4>Questions</h4>
-            <ol>
-              <li>Calculer la probabilite d'obtenir une seule paire.</li>
-              <li>Calculer la probabilite d'obtenir deux paires.</li>
-              <li>Calculer la probabilite d'obtenir un brelan.</li>
-              <li>Calculer la probabilite d'obtenir un carre.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 7</span>
+              <h3>Exercice 7</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e7" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Calculer la probabilite d'obtenir une seule paire.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e7-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e7-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e7-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Une seule paire : une hauteur double, puis trois hauteurs simples distinctes.</p>
-                </div>
-                <div id="td1-e7-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{8\binom42\binom73 4^3}{\binom{32}{5}}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer la probabilite d'obtenir deux paires.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e7-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e7-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e7-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Deux paires : deux hauteurs doubles et une carte d'une autre hauteur.</p>
-                </div>
-                <div id="td1-e7-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{\binom82\binom42^2\cdot 6\cdot4}{\binom{32}{5}}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Calculer la probabilite d'obtenir un brelan.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e7-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e7-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e7-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Brelan : une hauteur triple et deux cartes simples de hauteurs differentes.</p>
-                </div>
-                <div id="td1-e7-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{8\binom43\binom72 4^2}{\binom{32}{5}}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Calculer la probabilite d'obtenir un carre.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e7-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e7-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e7-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Carre : les 4 couleurs d'une hauteur, puis une cinquieme carte hors de cette hauteur.</p>
-                </div>
-                <div id="td1-e7-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{8\cdot28}{\binom{32}{5}}\).</p>
-                </div>
-              </div>
-            </div>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement global</strong>
+            <p>Nombre total de mains de 5 cartes parmi 32 : \(\binom{32}{5} = 201376\). Un jeu de 32 a 8 hauteurs distinctes.</p>
+          </div>
+          <ul class="formula-list">
+            <li><strong>(i) Une seule paire :</strong> On choisit la hauteur de la paire (\(\binom{8}{1}\)), puis 2 cartes de cette hauteur (\(\binom{4}{2}\)). On choisit ensuite 3 hauteurs distinctes parmi les 7 restantes (\(\binom{7}{3}\)), puis 1 carte pour chacune d'elles (\(4^3\)).<br> <strong>Probabilité :</strong> \(\frac{\binom{8}{1}\binom{4}{2}\binom{7}{3} \times 4^3}{201376} = \frac{107520}{201376} \approx 0.5339\).</li>
+            <li><strong>(ii) Deux paires :</strong> On choisit 2 hauteurs pour les paires (\(\binom{8}{2}\)), 2 cartes par hauteur (\(\binom{4}{2}^2\)). La cinquième carte est d'une autre hauteur (\(\binom{6}{1} \times \binom{4}{1}\)).<br> <strong>Probabilité :</strong> \(\frac{\binom{8}{2}\binom{4}{2}^2 \times 6 \times 4}{201376} = \frac{24192}{201376} \approx 0.1201\).</li>
+            <li><strong>(iii) Un brelan :</strong> On choisit la hauteur du brelan (\(\binom{8}{1}\)) et 3 cartes (\(\binom{4}{3}\)). Pour éviter un full, on prend 2 hauteurs distinctes pour les 2 cartes restantes (\(\binom{7}{2}\)) et 1 carte de chaque (\(4^2\)).<br> <strong>Probabilité :</strong> \(\frac{\binom{8}{1}\binom{4}{3}\binom{7}{2} \times 4^2}{201376} = \frac{10752}{201376} \approx 0.0534\).</li>
+            <li><strong>(iv) Un carré :</strong> On choisit la hauteur du carré (\(\binom{8}{1}\)), on prend les 4 cartes (\(\binom{4}{4} = 1\)), et 1 carte parmi les 28 autres.<br> <strong>Probabilité :</strong> \(\frac{\binom{8}{1} \times 1 \times 28}{201376} = \frac{224}{201376} \approx 0.0011\).</li>
+          </ul>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 8</span><h3>Anagrammes de ANNIVERSAIRE</h3></div></header>
-          <div data-tags-for="td1-e8" class="topic-tags">
-            <span class="topic-tag">anagrammes</span>
-            <span class="topic-tag">permutations avec repetitions</span>
-            <span class="topic-tag">blocs</span>
-          </div>
-          <p class="statement">Compter les anagrammes du mot ANNIVERSAIRE, ceux qui commencent et finissent par une voyelle, puis ceux ou toutes les voyelles sont groupees.</p>
-          <div class="question-block" data-question-block-for="td1-e8">
-            <h4>Questions</h4>
-            <ol>
-              <li>Compter tous les anagrammes du mot ANNIVERSAIRE.</li>
-              <li>Compter les anagrammes qui commencent et finissent par une voyelle.</li>
-              <li>Compter les anagrammes dans lesquels toutes les voyelles sont groupees.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 8</span>
+              <h3>Exercice 8</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e8" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Compter tous les anagrammes du mot ANNIVERSAIRE.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e8-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e8-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e8-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On permute 12 lettres avec repetitions : (A,N,I,E,R) apparaissent deux fois.</p>
-                </div>
-                <div id="td1-e8-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{12!}{(2!)^5}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Compter les anagrammes qui commencent et finissent par une voyelle.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e8-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e8-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e8-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On traite les voyelles placees aux extremites par cas, selon qu'elles sont de meme type ou non.</p>
-                </div>
-                <div id="td1-e8-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(9\frac{10!}{(2!)^4}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Compter les anagrammes dans lesquels toutes les voyelles sont groupees.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e8-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e8-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e8-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On remplace toutes les voyelles par un bloc, puis on arrange le bloc et les consonnes.</p>
-                </div>
-                <div id="td1-e8-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{7!}{2!2!}\frac{6!}{2!2!2!}\).</p>
-                </div>
-              </div>
-            </div>
+          <p>Composition de ANNIVERSAIRE (12 lettres) : A(2), N(2), I(2), V(1), E(2), R(2), S(1).</p>
+          <h4>1. Nombre d'anagrammes</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il y a 12 lettres avec des répétitions (5 paires de lettres identiques). C'est une permutation avec répétition.<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\frac{12!}{2!2!2!2!2!} = \frac{12!}{32} = 14968800\) mots.</p>
+          </div>
+          <h4>2. Commençant et finissant par une voyelle</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Les voyelles sont A, I, E (chacune 2 fois, soit 6 voyelles). Il y a deux cas pour le choix des lettres aux extrémités :</p>
+          </div>
+          <ul class="formula-list">
+            <li>Même voyelle aux deux bouts (ex: A...A) : 3 choix pour la voyelle. Les 10 lettres restantes ont 4 paires. Permutations : \(3 \times \frac{10!}{2!2!2!2!} = 3 \times 226800 = 680400\).</li>
+            <li>Voyelles différentes aux bouts (ex: A...E) : \(A_3^2 = 6\) choix pour le couple ordonné. Les 10 lettres restantes conservent 5 paires. Permutations : \(6 \times \frac{10!}{2!2!2!2!2!} = 6 \times 113400 = 680400\).</li>
+          </ul>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(680400 + 680400 = 1360800\) mots.</p>
+          </div>
+          <h4>3. Toutes les voyelles groupées</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On lie les 6 voyelles en 1 seul bloc. Ce bloc + les 6 consonnes forment 7 éléments à permuter, avec les paires de N et R (\(\frac{7!}{2!2!}\)). À l'intérieur du bloc voyelles, on permute les 6 lettres avec les paires de A, I, E (\(\frac{6!}{2!2!2!}\)).<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\frac{7!}{4} \times \frac{6!}{8} = 1260 \times 90 = 113400\) mots.</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 9</span><h3>Urne avec boules discernables</h3></div></header>
-          <div data-tags-for="td1-e9" class="topic-tags">
-            <span class="topic-tag">urne</span>
-            <span class="topic-tag">ordre</span>
-            <span class="topic-tag">remise</span>
-          </div>
-          <p class="statement">Une urne contient 10 noires et 6 blanches discernables. Comparer tirage simultane, successif sans remise, et successif avec remise.</p>
-          <div class="question-block" data-question-block-for="td1-e9">
-            <h4>Questions</h4>
-            <ol>
-              <li>Pour un tirage simultane de 5 boules, decrire l'univers et calculer la probabilite de tirer 2 blanches et 3 noires.</li>
-              <li>Pour deux tirages successifs sans remise avec ordre, decrire l'univers et calculer la probabilite de tirer une blanche puis une noire.</li>
-              <li>Reprendre la question precedente sans tenir compte de l'ordre.</li>
-              <li>Pour deux tirages avec remise avec ordre, decrire l'univers et calculer la probabilite de tirer une blanche puis une noire.</li>
-              <li>Reprendre le cas avec remise sans tenir compte de l'ordre.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 9</span>
+              <h3>Exercice 9</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e9" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Pour un tirage simultane de 5 boules, decrire l'univers et calculer la probabilite de tirer 2 blanches et 3 noires.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e9-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e9-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e9-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Tirage simultane : l'univers est l'ensemble des parties de 5 boules parmi 16.</p>
-                </div>
-                <div id="td1-e9-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P=\frac{\binom62\binom{10}{3}}{\binom{16}{5}}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Pour deux tirages successifs sans remise avec ordre, decrire l'univers et calculer la probabilite de tirer une blanche puis une noire.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e9-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e9-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e9-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Successif sans remise avec ordre : les issues sont les couples ordonnes de boules distinctes.</p>
-                </div>
-                <div id="td1-e9-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P=\frac6{16}\frac{10}{15}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Reprendre la question precedente sans tenir compte de l'ordre.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e9-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e9-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e9-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Sans ordre : l'univers est l'ensemble des paires non ordonnees.</p>
-                </div>
-                <div id="td1-e9-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P=\frac{\binom61\binom{10}{1}}{\binom{16}{2}}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 4</span>
-                  <p>Pour deux tirages avec remise avec ordre, decrire l'univers et calculer la probabilite de tirer une blanche puis une noire.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e9-q4-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e9-q4-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e9-q4-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Avec remise et ordre : les deux tirages sont independants.</p>
-                </div>
-                <div id="td1-e9-q4-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P=\frac6{16}\frac{10}{16}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 5</span>
-                  <p>Reprendre le cas avec remise sans tenir compte de l'ordre.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e9-q5-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e9-q5-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e9-q5-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Avec remise sans ordre : on revient aux issues ordonnees car les paires non ordonnees ne sont pas equiprobables.</p>
-                </div>
-                <div id="td1-e9-q5-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P=2\frac6{16}\frac{10}{16}\).</p>
-                </div>
-              </div>
-            </div>
+          <h4>1. Tirage simultané de 5 boules</h4>
+          <p><strong>(a)</strong> \(\Omega\) est l'ensemble des combinaisons de 5 boules parmi 16 (les boules étant discernables). \(\text{Card}(\Omega) = \binom{16}{5} = 4368\).<br> <strong>(b)</strong> \(P(2B, 3N) = \frac{\binom{6}{2} \times \binom{10}{3}}{\binom{16}{5}}\).</p>
+          <h4>2. Tirage successif de 2 boules, sans remise</h4>
+          <p><strong>(a) Classé :</strong> \(\Omega\) est l'ensemble des arrangements de 2 boules parmi 16. \(\text{Card}(\Omega) = A_{16}^2 = 16 \times 15 = 240\).<br> <strong>(b)</strong> \(P(\text{1B puis 1N}) = \frac{6 \times 10}{240} = \frac{1}{4}\).<br> <strong>(c) Non classé :</strong> \(\Omega\) est l'ensemble des combinaisons. \(\text{Card}(\Omega) = \binom{16}{2} = 120\). \(P(\text{1B et 1N}) = \frac{\binom{6}{1} \binom{10}{1}}{120} = \frac{60}{120} = \frac{1}{2}\).</p>
+          <h4>3. Tirage avec remise de 2 boules</h4>
+          <p><strong>(a) Classé :</strong> \(\Omega\) est l'ensemble des listes de 2 boules parmi 16. \(\text{Card}(\Omega) = 16^2 = 256\).<br> <strong>(b)</strong> \(P(\text{1B puis 1N}) = \frac{6 \times 10}{256} = \frac{60}{256} = \frac{15}{64}\).<br> <strong>(c) Non classé :</strong> Il n'y a plus d'ordre imposé (la boule noire peut être la première ou la deuxième). On a donc \(P = 2 \times P(\text{1B puis 1N}) = 2 \times \frac{15}{64} = \frac{15}{32}\).</p>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 10</span><h3>Chevalier de Mere</h3></div></header>
-          <div data-tags-for="td1-e10" class="topic-tags">
-            <span class="topic-tag">probabilite contraire</span>
-            <span class="topic-tag">independance</span>
-            <span class="topic-tag">des</span>
-          </div>
-          <p class="statement">Comparer la probabilite d'obtenir au moins un 6 en 4 lancers d'un de, et au moins un double 6 en 24 lancers de deux des.</p>
-          <div class="question-block" data-question-block-for="td1-e10">
-            <h4>Questions</h4>
-            <ol>
-              <li>Calculer la probabilite d'obtenir au moins un 6 en lancant 4 fois un de.</li>
-              <li>Calculer la probabilite d'obtenir au moins un double 6 en lancant 24 fois deux des.</li>
-              <li>Dire quel pari est le plus favorable.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 10</span>
+              <h3>Exercice 10</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e10" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Calculer la probabilite d'obtenir au moins un 6 en lancant 4 fois un de.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e10-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e10-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e10-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On utilise le contraire : aucun 6 en 4 lancers.</p>
-                </div>
-                <div id="td1-e10-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(1-(5/6)^4\approx0,5177\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer la probabilite d'obtenir au moins un double 6 en lancant 24 fois deux des.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e10-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e10-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e10-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Un double 6 a probabilite (1/36), donc son contraire a probabilite (35/36).</p>
-                </div>
-                <div id="td1-e10-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(1-(35/36)^{24}\approx0,4914\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Dire quel pari est le plus favorable.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e10-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e10-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e10-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On compare les deux probabilites obtenues.</p>
-                </div>
-                <div id="td1-e10-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Le premier pari est plus favorable.</p>
-                </div>
-              </div>
-            </div>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On calcule la probabilité de l'événement contraire pour chaque scénario.</p>
+          </div>
+          <ul class="formula-list">
+            <li>Au moins un 6 en 4 lancers : \(P_1 = 1 - \left(\frac{5}{6}\right)^4 \approx 1 - 0.482 = 0.518\).</li>
+            <li>Au moins un double 6 en 24 lancers de 2 dés : La probabilité de ne pas faire un double 6 est de 35/36. Donc \(P_2 = 1 - \left(\frac{35}{36}\right)^{24} \approx 1 - 0.509 = 0.491\).</li>
+          </ul>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Il est plus probable d'obtenir au moins un 6 en lançant 4 fois de suite un dé.</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 11</span><h3>Partage de la mise</h3></div></header>
-          <div data-tags-for="td1-e11" class="topic-tags">
-            <span class="topic-tag">probabilites conditionnelles</span>
-            <span class="topic-tag">jeu interrompu</span>
-            <span class="topic-tag">esperance de gain</span>
-          </div>
-          <p class="statement">Deux joueurs jouent au premier qui atteint 3 victoires. Le jeu s'arrete a 2 victoires contre 1. Repartir equitablement la mise.</p>
-          <div class="question-block" data-question-block-for="td1-e11">
-            <h4>Questions</h4>
-            <ol>
-              <li>Lister les issues possibles si le jeu continue apres l'interruption.</li>
-              <li>Calculer les probabilites finales de victoire de chaque joueur.</li>
-              <li>En deduire la repartition equitable de la mise.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 11</span>
+              <h3>Exercice 11</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e11" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Lister les issues possibles si le jeu continue apres l'interruption.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e11-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e11-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e11-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Le premier joueur A mene 2 a 1 : A doit gagner une partie, B doit en gagner deux.</p>
-                </div>
-                <div id="td1-e11-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Issues utiles : A ; puis BA ; puis BB.</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer les probabilites finales de victoire de chaque joueur.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e11-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e11-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e11-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Les parties sont supposees equitables.</p>
-                </div>
-                <div id="td1-e11-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(A\text{ gagne})=1/2+1/4=3/4\), \(P(B\text{ gagne})=1/4\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>En deduire la repartition equitable de la mise.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e11-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e11-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e11-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>La mise se partage selon les probabilites finales de victoire.</p>
-                </div>
-                <div id="td1-e11-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Rapport \(3:1\), donc 75% pour A et 25% pour B.</p>
-                </div>
-              </div>
-            </div>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Pour gagner, le joueur 2 doit remporter les 2 parties suivantes (probabilité de \(\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}\)). Dans tous les autres cas (le joueur 1 gagne la partie 4, ou le joueur 2 gagne la 4 et le joueur 1 gagne la 5), le joueur 1 emporte la mise (probabilité de \(1 - \frac{1}{4} = \frac{3}{4}\)).<br></p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>La mise doit être répartie proportionnellement à leurs chances de victoire : \(\frac{3}{4}\) de la mise pour le premier joueur et \(\frac{1}{4}\) pour le second.</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 12</span><h3>Voitures en panne</h3></div></header>
-          <div data-tags-for="td1-e12" class="topic-tags">
-            <span class="topic-tag">combinaison</span>
-            <span class="topic-tag">contraire</span>
-            <span class="topic-tag">hypergeometrique</span>
-          </div>
-          <p class="statement">Parmi 20 voitures, 5 sont en panne. On en choisit 4. Calculer le nombre de choix, la probabilite d'au moins une panne, puis exactement deux pannes.</p>
-          <div class="question-block" data-question-block-for="td1-e12">
-            <h4>Questions</h4>
-            <ol>
-              <li>Combien de choix de 4 voitures peut-on faire parmi 20 ?</li>
-              <li>Calculer de deux manieres la probabilite d'avoir au moins une voiture en panne.</li>
-              <li>Calculer la probabilite d'avoir exactement deux voitures en panne.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 12</span>
+              <h3>Exercice 12</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e12" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Combien de choix de 4 voitures peut-on faire parmi 20 ?</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e12-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e12-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e12-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On choisit un groupe de 4 voitures sans ordre.</p>
-                </div>
-                <div id="td1-e12-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\binom{20}{4}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Calculer de deux manieres la probabilite d'avoir au moins une voiture en panne.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e12-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e12-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e12-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Methode 1 : contraire aucune panne. Methode 2 : somme des cas 1,2,3,4 pannes.</p>
-                </div>
-                <div id="td1-e12-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(1-\frac{\binom{15}{4}}{\binom{20}{4}}\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Calculer la probabilite d'avoir exactement deux voitures en panne.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e12-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e12-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e12-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Exactement deux pannes : choisir 2 voitures parmi les 5 en panne et 2 parmi les 15 bonnes.</p>
-                </div>
-                <div id="td1-e12-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\frac{\binom52\binom{15}{2}}{\binom{20}{4}}\).</p>
-                </div>
-              </div>
-            </div>
+          <h4>1. Choix possibles</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Il faut choisir 4 voitures parmi 20, soit \(\binom{20}{4} = 4845\) choix.</p>
+          </div>
+          <h4>2. Au moins une voiture en panne</h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il y a 5 voitures en panne et 15 qui fonctionnent.</p>
+          </div>
+          <ul class="formula-list">
+            <li><strong>Façon 1 (Événement contraire) :</strong> \(1 - P(\text{0 panne}) = 1 - \frac{\binom{15}{4}}{\binom{20}{4}} = 1 - \frac{1365}{4845} \approx 0.718\).</li>
+            <li><strong>Façon 2 (Somme directe) :</strong> \(\frac{\binom{5}{1}\binom{15}{3} + \binom{5}{2}\binom{15}{2} + \binom{5}{3}\binom{15}{1} + \binom{5}{4}\binom{15}{0}}{\binom{20}{4}}\).</li>
+          </ul>
+          <h4>3. Exactement 2 voitures en panne</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>On choisit 2 en panne parmi 5, et 2 qui fonctionnent parmi 15 : \(\frac{\binom{5}{2} \times \binom{15}{2}}{\binom{20}{4}} = \frac{10 \times 105}{4845} = \frac{1050}{4845} \approx 0.217\).</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 13</span><h3>Classements avec ex-aequo</h3></div></header>
-          <div data-tags-for="td1-e13" class="topic-tags">
-            <span class="topic-tag">partitions</span>
-            <span class="topic-tag">classements</span>
-            <span class="topic-tag">ex-aequo</span>
-          </div>
-          <p class="statement">Quatre personnes font une course. Compter les classements possibles si les ex-aequo sont autorises.</p>
-          <div class="question-block" data-question-block-for="td1-e13">
-            <h4>Questions</h4>
-            <ol>
-              <li>Representer un classement avec ex-aequo comme des groupes de meme rang.</li>
-              <li>Compter tous les classements possibles pour quatre personnes.</li>
-            </ol>
-          </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 13</span>
+              <h3>Exercice 13</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
           <div id="td1-e13" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Representer un classement avec ex-aequo comme des groupes de meme rang.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e13-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e13-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e13-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Un classement avec ex-aequo est une partition des coureurs en groupes de meme rang.</p>
-                </div>
-                <div id="td1-e13-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>On utilise les nombres de Stirling \(S(4,k)\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Compter tous les classements possibles pour quatre personnes.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e13-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e13-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e13-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>On ordonne ensuite les groupes de rang.</p>
-                </div>
-                <div id="td1-e13-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(\sum_{k=1}^4 k!S(4,k)=1+14+36+24=75\).</p>
-                </div>
-              </div>
-            </div>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>C'est le nombre de partitions ordonnées d'un ensemble de 4 personnes (les nombres de Fubini). On sépare selon le nombre \(k\) de places distinctes à l'arrivée (les ex-aequo forment des "blocs"):</p>
+          </div>
+          <ul class="formula-list">
+            <li>1 bloc (tous 1er ex-aequo) : 1 façon.</li>
+            <li>2 blocs : Les partitions possibles sont du type "3 et 1" (4 façons) ou "2 et 2" (3 façons), total 7 partitions. Pour chacune, 2! ordres possibles d'arrivée. \(7 \times 2 = 14\) façons.</li>
+            <li>3 blocs : Partitions "2, 1 et 1" (6 partitions). Ordonnées : \(6 \times 3! = 36\) façons.</li>
+            <li>4 blocs (aucun ex-aequo) : \(4! = 24\) façons.</li>
+          </ul>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(1 + 14 + 36 + 24 = 75\) classements possibles.</p>
+          </div>
           </div>
         </article>
 
-        <article class="exercise-card">
-          <header><div><span class="status-pill">Exercice 14</span><h3>Question du prince de Toscane</h3></div></header>
-          <div data-tags-for="td1-e14" class="topic-tags">
-            <span class="topic-tag">des</span>
-            <span class="topic-tag">issues ordonnees</span>
-            <span class="topic-tag">equiprobabilite</span>
-          </div>
-          <p class="statement">Expliquer pourquoi avec trois des on obtient plus souvent 10 que 9, meme si les decompositions non ordonnees semblent aussi nombreuses.</p>
-          <div class="question-block" data-question-block-for="td1-e14">
-            <h4>Questions</h4>
-            <ol>
-              <li>Lister les decompositions non ordonnees donnant 9 et 10 avec trois des.</li>
-              <li>Compter le nombre de triples ordonnes correspondant a chaque somme.</li>
-              <li>Expliquer pourquoi 10 sort plus souvent que 9.</li>
-            </ol>
-          </div>
-          <div id="td1-e14" class="answer-block">
-            <div class="per-question-answers">
-              <h4>Reponses par question</h4>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 1</span>
-                  <p>Lister les decompositions non ordonnees donnant 9 et 10 avec trois des.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e14-q1-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e14-q1-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e14-q1-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Les decompositions non ordonnees sont aussi nombreuses, mais pas equiprobables.</p>
-                </div>
-                <div id="td1-e14-q1-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Il faut compter les permutations de chaque decomposition.</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 2</span>
-                  <p>Compter le nombre de triples ordonnes correspondant a chaque somme.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e14-q2-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e14-q2-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e14-q2-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>Somme 9 donne 25 triples ordonnes ; somme 10 donne 27 triples ordonnes.</p>
-                </div>
-                <div id="td1-e14-q2-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>\(P(9)=25/216\), \(P(10)=27/216\).</p>
-                </div>
-              </div>
-              <div class="question-answer-card">
-                <div class="question-answer-heading">
-                  <span>Question 3</span>
-                  <p>Expliquer pourquoi 10 sort plus souvent que 9.</p>
-                </div>
-                <div class="button-row">
-                  <button type="button" data-toggle="td1-e14-q3-reasoning">Afficher le raisonnement</button>
-                  <button type="button" data-toggle="td1-e14-q3-solution">Afficher la solution</button>
-                </div>
-                <div id="td1-e14-q3-reasoning" class="hidden-panel reasoning-panel">
-                  <strong>Raisonnement</strong>
-                  <p>La somme 10 correspond a plus d'issues elementaires ordonnees.</p>
-                </div>
-                <div id="td1-e14-q3-solution" class="hidden-panel solution-panel">
-                  <strong>Solution</strong>
-                  <p>Donc 10 sort plus souvent que 9.</p>
-                </div>
-              </div>
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 14</span>
+              <h3>Exercice 14</h3>
             </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td1-e14" class="answer-block">
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Bien qu'il y ait autant de combinaisons brutes donnant une somme de 9 (126, 135, 144, 225, 234, 333) que donnant 10 (136, 145, 226, 235, 244, 334), il faut tenir compte des permutations, les dés étant physiquement distincts.</p>
+          </div>
+          <ul class="formula-list">
+            <li>Pour la somme de 9, les permutations donnent : \(6 + 6 + 3 + 3 + 6 + 1 = 25\) façons.</li>
+            <li>Pour la somme de 10, les permutations donnent : \(6 + 6 + 3 + 6 + 3 + 3 = 27\) façons.</li>
+          </ul>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>Il y a 27 cas favorables pour obtenir 10 contre 25 cas pour obtenir 9. Le total de 10 est donc plus probable.</p>
+          </div>
           </div>
         </article>
       </section>
     </main>
   </body>
 </html>
-
-

@@ -2,14 +2,15 @@ const fs = require("fs");
 const path = require("path");
 
 const root = process.cwd();
+const outDir = path.join(root, "out");
 const mathCoursePath = path.join(root, "src", "subjects", "probabilites", "cours.html");
 const mathTdDir = path.join(root, "src", "subjects", "probabilites", "td");
 const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
 
 const pages = {
-  home: path.join(root, "index.html"),
-  math: path.join(root, "math.html"),
-  auto: path.join(root, "auto.html"),
+  home: path.join(outDir, "index.html"),
+  math: path.join(outDir, "math.html"),
+  auto: path.join(outDir, "auto.html"),
 };
 
 const mathNav = [
@@ -31,6 +32,11 @@ function read(filePath) {
 
 function write(filePath, html) {
   fs.writeFileSync(filePath, `${html.trimEnd()}\n`, "utf8");
+}
+
+function copyIfExists(source, target) {
+  if (!fs.existsSync(source)) return;
+  fs.cpSync(source, target, { recursive: true });
 }
 
 function renderNav(items, activeHref) {
@@ -190,12 +196,20 @@ function renderAutoCourse() {
   });
 }
 
+fs.rmSync(outDir, { recursive: true, force: true });
+fs.mkdirSync(outDir, { recursive: true });
+
+copyIfExists(path.join(root, "styles.css"), path.join(outDir, "styles.css"));
+copyIfExists(path.join(root, "script.js"), path.join(outDir, "script.js"));
+copyIfExists(path.join(root, "assets"), path.join(outDir, "assets"));
+copyIfExists(path.join(root, "pdf"), path.join(outDir, "pdf"));
+
 write(pages.home, renderHome());
 write(pages.math, renderMath());
 write(pages.auto, renderAutoCourse());
 
 for (const file of ["td1.html", "td2.html", "td3.html"]) {
-  fs.copyFileSync(path.join(mathTdDir, file), path.join(root, file));
+  fs.copyFileSync(path.join(mathTdDir, file), path.join(outDir, file));
 }
 
-console.log("Pages reconstruites : index.html, math.html, auto.html, td1.html, td2.html, td3.html.");
+console.log("Application construite dans out/ : index.html, math.html, auto.html, td1.html, td2.html, td3.html.");
