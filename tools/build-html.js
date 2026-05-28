@@ -7,11 +7,13 @@ const mathCoursePath = path.join(root, "src", "subjects", "probabilites", "cours
 const mathTdDir = path.join(root, "src", "subjects", "probabilites", "td");
 const mathExamDir = path.join(root, "src", "subjects", "probabilites", "exam");
 const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
+const javaCoursePath = path.join(root, "src", "subjects", "java", "cours.html");
 
 const pages = {
   home: path.join(outDir, "index.html"),
   math: path.join(outDir, "math.html"),
   auto: path.join(outDir, "auto.html"),
+  java: path.join(outDir, "java.html"),
 };
 
 const mathNav = [
@@ -25,6 +27,16 @@ const mathNav = [
   ["math.html#probabilites-td", "TD"],
   ["math.html#probabilites-sujets", "Sujet type"],
   ["math.html#probabilites-revision", "Revision finale"],
+];
+
+const javaNav = [
+  ["java.html#java-intro", "Accueil"],
+  ["java.html#java-bases", "1. Bases"],
+  ["java.html#java-collections", "2. Collections"],
+  ["java.html#java-objet", "3. Objet"],
+  ["java.html#java-heritage", "4. Heritage"],
+  ["java.html#java-interfaces", "5. Interfaces"],
+  ["java.html#java-exceptions", "6. Exceptions"],
 ];
 
 function read(filePath) {
@@ -61,6 +73,7 @@ function renderShell({ title, brandMark, brandTitle, brandSubtitle, nav, eyebrow
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${title}</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
     <script>
       window.MathJax = {
         tex: { inlineMath: [["\\\\(", "\\\\)"], ["$", "$"]], displayMath: [["\\\\[", "\\\\]"]] },
@@ -68,6 +81,8 @@ function renderShell({ title, brandMark, brandTitle, brandSubtitle, nav, eyebrow
       };
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
     <script defer src="script.js"></script>
   </head>
   <body>
@@ -108,6 +123,7 @@ function renderHome() {
       ["index.html", "Accueil"],
       ["math.html", "Cours de math"],
       ["auto.html", "Automatique"],
+      ["java.html", "Java"],
     ],
     "index.html"
   );
@@ -131,6 +147,12 @@ function renderHome() {
               <h3>Automatique</h3>
               <p>Cours AU361 construit a partir du poly, des supports PID/RST et des TD.</p>
               <p class="secondary-link"><a href="auto.html">Ouvrir le cours</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">Disponible</span>
+              <h3>Java</h3>
+              <p>Bases du langage, collections, approche objet, heritage, interfaces et exceptions.</p>
+              <p class="secondary-link"><a href="java.html">Ouvrir le cours</a></p>
             </article>
           </div>
         </section>`;
@@ -172,6 +194,7 @@ function renderAutoCourse() {
     [
       ["index.html", "Accueil"],
       ["math.html", "Cours de math"],
+      ["java.html", "Java"],
       ["#auto-intro", "Automatique"],
       ["#auto-modelisation", "Modelisation"],
       ["#auto-analyse", "Analyse"],
@@ -197,6 +220,23 @@ function renderAutoCourse() {
   });
 }
 
+function renderJavaCourse() {
+  const course = read(javaCoursePath);
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ...javaNav], "java.html#java-intro");
+
+  return renderShell({
+    title: "Java - Revision ESISAR",
+    brandMark: "J",
+    brandTitle: "Java",
+    brandSubtitle: "Programmation objet",
+    nav,
+    eyebrow: "Java",
+    heading: "Langage Java et programmation objet",
+    cta: '<a class="primary-button" href="index.html">Accueil</a>',
+    body: course,
+  });
+}
+
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -208,6 +248,7 @@ copyIfExists(path.join(root, "pdf"), path.join(outDir, "pdf"));
 write(pages.home, renderHome());
 write(pages.math, renderMath());
 write(pages.auto, renderAutoCourse());
+write(pages.java, renderJavaCourse());
 
 for (const file of ["td1.html", "td2.html", "td3.html"]) {
   fs.copyFileSync(path.join(mathTdDir, file), path.join(outDir, file));

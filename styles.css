@@ -405,6 +405,31 @@ button:hover,
   font-weight: 800;
 }
 
+.code-block {
+  overflow-x: auto;
+  margin: 12px 0 0;
+  border: 1px solid #d7e0ea;
+  border-radius: 8px;
+  padding: 14px;
+  background: #111827;
+  color: #e5edf6;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.code-block code {
+  color: inherit;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.code-block .token.annotation {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  color: #e4ff4d;
+}
+
 .content-block.definition {
   background: var(--definition);
   border-color: #bdd9f3;

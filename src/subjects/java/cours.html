@@ -1,0 +1,435 @@
+        <section id="java-intro" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Java</span>
+            <h2>Comprendre les concepts avant les automatismes</h2>
+            <p>Ce cours est organise autour des bases du langage, des collections, puis de la programmation orientee objet en Java.</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="priority-card">
+              <span class="card-kicker">Objectif</span>
+              <p>Savoir lire, ecrire et expliquer un programme Java simple, puis structurer le code avec classes, objets, heritage, interfaces et exceptions.</p>
+            </article>
+            <article class="priority-card">
+              <span class="card-kicker">Reflexe</span>
+              <p>Java est fortement type : avant d'ecrire une instruction, on se demande toujours quel est le type manipule, qui possede l'etat, et quelle methode exprime l'action.</p>
+            </article>
+          </div>
+
+          <div class="quick-grid">
+            <a class="quick-link" href="#java-bases">Bases</a>
+            <a class="quick-link" href="#java-collections">Collections</a>
+            <a class="quick-link" href="#java-objet">Objet</a>
+            <a class="quick-link" href="#java-exceptions">Exceptions</a>
+          </div>
+        </section>
+
+        <section id="java-bases" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 1</span>
+            <h2>Les bases du langage Java</h2>
+            <p>Un programme Java est compose de classes. Le point d'entree classique est une methode <code>main</code>.</p>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Structure minimale</h4>
+              <p>Le nom du fichier doit correspondre au nom de la classe publique. Dans <code>Main.java</code>, on declare donc <code>public class Main</code>.</p>
+              <pre class="code-block language-java"><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        System.out.println("Bonjour Java");
+    }
+}</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>Compilation et execution</h4>
+              <ul class="formula-list">
+                <li><code>javac Main.java</code> compile le fichier source en bytecode.</li>
+                <li><code>java Main</code> lance la classe compilee.</li>
+                <li>La JVM execute le bytecode, ce qui rend Java portable entre machines.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Types primitifs et references</h4>
+              <p>Les types primitifs stockent directement une valeur. Les types reference stockent une reference vers un objet.</p>
+              <pre class="code-block language-java"><code class="language-java">int age = 20;
+double moyenne = 14.5;
+boolean valide = true;
+char initiale = 'A';
+
+String nom = "Ada"; // String est un objet</code></pre>
+            </div>
+            <div class="content-block warning">
+              <h4>Difference importante</h4>
+              <p><code>==</code> compare les valeurs primitives, mais compare les references pour les objets. Pour comparer deux chaines, on utilise <code>equals</code>.</p>
+              <pre class="code-block language-java"><code class="language-java">String a = "java";
+String b = new String("java");
+
+System.out.println(a == b);      // false : references differentes
+System.out.println(a.equals(b)); // true : contenu identique</code></pre>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block theorem">
+              <h4>Conditions</h4>
+              <p>Une condition choisit un chemin d'execution selon une expression booleenne.</p>
+              <pre class="code-block language-java"><code class="language-java">int note = 12;
+
+if (note &gt;= 10) {
+    System.out.println("Valide");
+} else {
+    System.out.println("A retravailler");
+}</code></pre>
+            </div>
+            <div class="content-block theorem">
+              <h4>Boucles</h4>
+              <p>On utilise <code>for</code> quand le nombre d'iterations est connu, et <code>while</code> quand il depend d'une condition.</p>
+              <pre class="code-block language-java"><code class="language-java">for (int i = 0; i &lt; 3; i++) {
+    System.out.println(i);
+}
+
+int n = 3;
+while (n &gt; 0) {
+    n--;
+}</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>Methodes</h4>
+              <p>Une methode isole une action nommee. Elle peut recevoir des parametres et retourner une valeur.</p>
+              <pre class="code-block language-java"><code class="language-java">static int carre(int x) {
+    return x * x;
+}
+
+int resultat = carre(5); // 25</code></pre>
+            </div>
+            <div class="content-block remember">
+              <h4>A retenir</h4>
+              <p>Une variable a un type, une portee et une duree de vie. Une methode doit avoir une responsabilite claire.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="java-collections" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 2</span>
+            <h2>La gestion des collections</h2>
+            <p>Les collections servent a stocker plusieurs objets dans une structure adaptee au besoin : liste, ensemble ou association cle/valeur.</p>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>List</h4>
+              <p>Une <code>List</code> garde l'ordre d'insertion et accepte les doublons. <code>ArrayList</code> est le choix courant pour parcourir et acceder par indice.</p>
+              <pre class="code-block language-java"><code class="language-java">import java.util.ArrayList;
+import java.util.List;
+
+List&lt;String&gt; noms = new ArrayList&lt;&gt;();
+noms.add("Ada");
+noms.add("Linus");
+noms.add("Ada");
+
+System.out.println(noms.get(0)); // Ada</code></pre>
+            </div>
+            <div class="content-block definition">
+              <h4>Set</h4>
+              <p>Un <code>Set</code> represente un ensemble : il evite les doublons. <code>HashSet</code> ne garantit pas l'ordre.</p>
+              <pre class="code-block language-java"><code class="language-java">import java.util.HashSet;
+import java.util.Set;
+
+Set&lt;String&gt; langages = new HashSet&lt;&gt;();
+langages.add("Java");
+langages.add("Python");
+langages.add("Java");
+
+System.out.println(langages.size()); // 2</code></pre>
+            </div>
+            <div class="content-block definition">
+              <h4>Map</h4>
+              <p>Une <code>Map</code> associe une cle a une valeur. Elle est utile pour chercher rapidement une information par identifiant.</p>
+              <pre class="code-block language-java"><code class="language-java">import java.util.HashMap;
+import java.util.Map;
+
+Map&lt;String, Integer&gt; notes = new HashMap&lt;&gt;();
+notes.put("Ada", 18);
+notes.put("Linus", 16);
+
+int noteAda = notes.get("Ada");</code></pre>
+            </div>
+            <div class="content-block warning">
+              <h4>Generics</h4>
+              <p>Les chevrons indiquent le type contenu dans la collection. Ils evitent les conversions fragiles et rendent les erreurs visibles a la compilation.</p>
+              <pre class="code-block language-java"><code class="language-java">List&lt;Integer&gt; nombres = new ArrayList&lt;&gt;();
+nombres.add(10);
+// nombres.add("dix"); // erreur de compilation</code></pre>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block method">
+              <h4>Parcourir une collection</h4>
+              <p>La boucle for-each lit les elements sans manipuler d'indice.</p>
+              <pre class="code-block language-java"><code class="language-java">for (String nom : noms) {
+    System.out.println(nom.toUpperCase());
+}</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>Choisir la bonne collection</h4>
+              <ul class="formula-list">
+                <li><strong>Besoin d'ordre et d'indices</strong> : <code>List</code>.</li>
+                <li><strong>Besoin d'unicite</strong> : <code>Set</code>.</li>
+                <li><strong>Besoin de retrouver par cle</strong> : <code>Map</code>.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="java-objet" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitres 3 et 4</span>
+            <h2>Les bases de l'approche objet et de la programmation objet Java</h2>
+            <p>L'approche objet consiste a modeliser un probleme avec des objets qui possedent un etat et exposent des comportements.</p>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Classe et objet</h4>
+              <p>Une classe est un modele. Un objet est une instance concrete de cette classe.</p>
+              <pre class="code-block language-java"><code class="language-java">class Compte {
+    private String titulaire;
+    private double solde;
+
+    Compte(String titulaire, double soldeInitial) {
+        this.titulaire = titulaire;
+        this.solde = soldeInitial;
+    }
+
+    void deposer(double montant) {
+        solde += montant;
+    }
+
+    double getSolde() {
+        return solde;
+    }
+}</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>Utiliser un objet</h4>
+              <p>On construit un objet avec <code>new</code>, puis on appelle ses methodes avec le point.</p>
+              <pre class="code-block language-java"><code class="language-java">Compte compte = new Compte("Ada", 100.0);
+compte.deposer(50.0);
+
+System.out.println(compte.getSolde()); // 150.0</code></pre>
+            </div>
+            <div class="content-block theorem">
+              <h4>Encapsulation</h4>
+              <p>Les attributs sont souvent <code>private</code> pour proteger l'etat interne. On expose seulement les operations utiles.</p>
+              <pre class="code-block language-java"><code class="language-java">public void retirer(double montant) {
+    if (montant &lt;= 0) {
+        return;
+    }
+    if (montant &lt;= solde) {
+        solde -= montant;
+    }
+}</code></pre>
+            </div>
+            <div class="content-block remember">
+              <h4>Constructeur et this</h4>
+              <p>Le constructeur initialise un objet coherent. <code>this</code> designe l'objet courant, utile quand un parametre porte le meme nom qu'un attribut.</p>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block warning">
+              <h4>Static ou instance ?</h4>
+              <p>Un membre <code>static</code> appartient a la classe. Un membre non static appartient a chaque objet.</p>
+              <pre class="code-block language-java"><code class="language-java">class Etudiant {
+    static int compteur = 0;
+    private String nom;
+
+    Etudiant(String nom) {
+        this.nom = nom;
+        compteur++;
+    }
+}</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>Redefinir toString</h4>
+              <p><code>toString</code> donne une representation textuelle utile pour l'affichage et le debug.</p>
+              <pre class="code-block language-java"><code class="language-java">@Override
+public String toString() {
+    return titulaire + " : " + solde + " euros";
+}</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section id="java-heritage" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 5</span>
+            <h2>L'heritage</h2>
+            <p>L'heritage permet de specialiser une classe existante. La classe fille recupere les comportements de la classe mere et peut les adapter.</p>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>extends</h4>
+              <p>Une classe fille declare son parent avec <code>extends</code>. En Java, une classe ne peut heriter que d'une seule classe.</p>
+              <pre class="code-block language-java"><code class="language-java">class Animal {
+    void parler() {
+        System.out.println("...");
+    }
+}
+
+class Chien extends Animal {
+    @Override
+    void parler() {
+        System.out.println("Wouf");
+    }
+}</code></pre>
+            </div>
+            <div class="content-block theorem">
+              <h4>Polymorphisme</h4>
+              <p>Une variable du type parent peut referencer un objet enfant. La methode executee est celle de l'objet reel.</p>
+              <pre class="code-block language-java"><code class="language-java">Animal animal = new Chien();
+animal.parler(); // Wouf</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>super</h4>
+              <p><code>super</code> permet d'appeler le constructeur ou une methode de la classe mere.</p>
+              <pre class="code-block language-java"><code class="language-java">class Personne {
+    protected String nom;
+
+    Personne(String nom) {
+        this.nom = nom;
+    }
+}
+
+class Enseignant extends Personne {
+    Enseignant(String nom) {
+        super(nom);
+    }
+}</code></pre>
+            </div>
+            <div class="content-block warning">
+              <h4>Quand eviter l'heritage</h4>
+              <p>On n'herite pas pour reutiliser quelques lignes. On herite quand il existe une vraie relation "est un". Sinon, on prefere contenir un objet comme attribut.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="java-interfaces" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 6</span>
+            <h2>Les interfaces</h2>
+            <p>Une interface decrit un contrat : les methodes qu'une classe promet de fournir.</p>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>Contrat de comportement</h4>
+              <p>Une classe utilise <code>implements</code> pour respecter une interface. Contrairement a l'heritage de classe, une classe peut implementer plusieurs interfaces.</p>
+              <pre class="code-block language-java"><code class="language-java">interface Exportable {
+    String exporter();
+}
+
+class Facture implements Exportable {
+    private final int numero;
+
+    Facture(int numero) {
+        this.numero = numero;
+    }
+
+    @Override
+    public String exporter() {
+        return "Facture #" + numero;
+    }
+}</code></pre>
+            </div>
+            <div class="content-block theorem">
+              <h4>Programmer contre une interface</h4>
+              <p>Le code devient plus souple : il depend du contrat, pas d'une implementation precise.</p>
+              <pre class="code-block language-java"><code class="language-java">void imprimer(Exportable document) {
+    System.out.println(document.exporter());
+}</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>Exemple standard : Comparable</h4>
+              <p><code>Comparable</code> permet de definir l'ordre naturel d'un objet.</p>
+              <pre class="code-block language-java"><code class="language-java">class Note implements Comparable&lt;Note&gt; {
+    private final int valeur;
+
+    Note(int valeur) {
+        this.valeur = valeur;
+    }
+
+    @Override
+    public int compareTo(Note autre) {
+        return Integer.compare(this.valeur, autre.valeur);
+    }
+}</code></pre>
+            </div>
+            <div class="content-block remember">
+              <h4>Interface vs classe abstraite</h4>
+              <p>Une interface exprime surtout une capacite. Une classe abstraite factorise une base commune avec eventuellement de l'etat partage.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="java-exceptions" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 7</span>
+            <h2>La gestion des exceptions</h2>
+            <p>Une exception signale une situation anormale. Elle permet de separer le code nominal du code de traitement d'erreur.</p>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-block definition">
+              <h4>try, catch, finally</h4>
+              <p>On place le code risqué dans <code>try</code>, le traitement dans <code>catch</code>, et le nettoyage dans <code>finally</code> si necessaire.</p>
+              <pre class="code-block language-java"><code class="language-java">try {
+    int valeur = Integer.parseInt("42");
+    System.out.println(valeur);
+} catch (NumberFormatException e) {
+    System.out.println("Nombre invalide");
+} finally {
+    System.out.println("Fin du traitement");
+}</code></pre>
+            </div>
+            <div class="content-block theorem">
+              <h4>Checked et unchecked</h4>
+              <ul class="formula-list">
+                <li><strong>Checked exception</strong> : le compilateur oblige a la traiter ou a la declarer avec <code>throws</code>.</li>
+                <li><strong>Unchecked exception</strong> : herite de <code>RuntimeException</code>, souvent liee a une erreur de programmation.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Lancer une exception</h4>
+              <p>On lance une exception quand une methode ne peut pas respecter son contrat.</p>
+              <pre class="code-block language-java"><code class="language-java">void retirer(double montant) {
+    if (montant &lt;= 0) {
+        throw new IllegalArgumentException("Montant invalide");
+    }
+    if (montant &gt; solde) {
+        throw new IllegalStateException("Solde insuffisant");
+    }
+    solde -= montant;
+}</code></pre>
+            </div>
+            <div class="content-block warning">
+              <h4>Bonne pratique</h4>
+              <p>Ne capture pas une exception pour l'ignorer. Soit tu sais corriger la situation, soit tu laisses l'appelant decider.</p>
+            </div>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Synthese</h4>
+            <ul class="formula-list">
+              <li>Le langage Java impose de penser en types.</li>
+              <li>Les collections structurent les groupes d'objets.</li>
+              <li>L'objet regroupe etat et comportements.</li>
+              <li>L'heritage specialise ; l'interface contractualise.</li>
+              <li>Les exceptions rendent les erreurs explicites.</li>
+            </ul>
+          </div>
+        </section>
