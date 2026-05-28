@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Partiel corrige 3 - Probabilites</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="math.html#probabilites-sujets">Retour aux examens</a>
+        <div>
+          <span class="eyebrow">Partiel 3</span>
+          <h1>Corrige de partiel</h1>
+          <p>Page reconstruite depuis le sujet/corrige LaTeX du dossier PDF.</p>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1</span>
+              <h3>Exercice 1 : QCM (5 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p><strong>1. Soient X et Y deux variables aléatoires indépendantes telles que X suit une loi exponentielle de paramètre \(\alpha\) et Y suit une loi exponentielle de paramètre \(\beta\). \(P(X<Y)\) est égale à :</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>C'est une propriété classique des lois exponentielles indépendantes : la probabilité que la première soit inférieure à la seconde est le ratio de son propre paramètre sur la somme des deux paramètres.</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\frac{\alpha}{\alpha+\beta}\)</p>
+          </div>
+          <p><strong>2. Énoncé du théorème de transfert :</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Le théorème de transfert permet de calculer l'espérance d'une fonction d'une variable aléatoire directement à partir de la densité de cette dernière, sans avoir besoin de déterminer la loi de \(\varphi(X)\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(\mathbb{E}(\varphi(X)) = \int_{-\infty}^{+\infty} \varphi(t)f(t)dt\)</p>
+          </div>
+          <p><strong>3. Soit X une variable aléatoire qui suit une loi exponentielle de paramètre \(\lambda\). Alors, la variance de X est égale à :</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>C'est un résultat de cours : pour une loi exponentielle \(\mathcal{E}(\lambda)\), l'espérance est \(1/\lambda\) et la variance est \(1/\lambda^2\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(V(X) = \frac{1}{\lambda^2}\)</p>
+          </div>
+          <p><strong>4. Soit X une variable aléatoire qui suit une loi normale de moyenne m et d'écart-type \(\sigma\), \(X \sim \mathcal{N}(m,\sigma)\). La densité de X est :</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>L'énoncé précise explicitement que le second paramètre de la notation est l'écart-type \(\sigma\). La formule classique de la densité de la loi normale comporte \(\sigma\) en dehors de l'exponentielle et \(2\sigma^2\) au dénominateur dans l'exponentielle.</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-(x-m)^2/(2\sigma^2)}\)</p>
+          </div>
+          <p><strong>5. Soient X et Y deux variables indépendantes telles que \(X \sim \mathcal{N}(50;3)\) et \(Y \sim \mathcal{N}(60;4)\). Alors :</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Puisque la notation de l'énoncé précédent est \(\mathcal{N}(m, \sigma)\), les écart-types sont 3 et 4. Les variances s'additionnent par indépendance : \(V(X+Y) = 3^2 + 4^2 = 9 + 16 = 25\). L'écart-type de la somme est donc \(\sqrt{25} = 5\). La moyenne est \(50 + 60 = 110\).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(X+Y \sim \mathcal{N}(110;5)\)</p>
+          </div>
+          <p><strong>6. Soit X une variable aléatoire qui suit une loi exponentielle de paramètre \(\lambda\), et soit \(Y=X^2\). La densité de Y est :</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La fonction de répartition de Y est \(P(Y \le y) = P(X \le \sqrt{y}) = 1 - e^{-\lambda\sqrt{y}}\). En dérivant cette fonction par rapport à y pour obtenir la densité, on applique la règle de la chaîne, ce qui fait apparaître le facteur \(1/(2\sqrt{y})\). (Note : l'énoncé utilise la variable muette \(x\) dans les propositions, le principe reste le même).</p>
+          </div>
+          <div class="td-step-block td-solution-block">
+            <strong>Réponse</strong>
+            <p>\(f(x) = \frac{\lambda}{2\sqrt{x}} e^{-\lambda\sqrt{x}}\) si \(x>0\)</p>
+          </div>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2</span>
+              <h3>Exercice 2 (6 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Soit \(f(x) = 6(a-x^2)\) pour \(x \in [-\sqrt{a}, \sqrt{a}]\), et 0 sinon.</p>
+          <p><strong>1. Déterminer la valeur de a pour que f soit une densité.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>L'intégrale de la densité sur son domaine de définition doit être égale à 1.</p>
+          </div>
+          <p>\(\begin{align*} \int_{-\sqrt{a}}^{\sqrt{a}} 6(a-x^2) dx &= 6 \left[ ax - \frac{x^3}{3} \right]_{-\sqrt{a}}^{\sqrt{a}} \\ &= 6 \left( \left(a\sqrt{a} - \frac{a\sqrt{a}}{3}\right) - \left(-a\sqrt{a} + \frac{a\sqrt{a}}{3}\right) \right) \\ &= 6 \left( \frac{2}{3}a\sqrt{a} - \left(-\frac{2}{3}a\sqrt{a}\right) \right) = 6 \left( \frac{4}{3}a\sqrt{a} \right) = 8a\sqrt{a} \end{align*}\)</p>
+          <p>On résout \(8a^{3/2} = 1\), ce qui donne \(a^{3/2} = 1/8\), soit \(\mathbf{a = 1/4}\). Le domaine est donc \([-1/2, 1/2]\).</p>
+          <p><strong>2. Calculer l'espérance et la variance de X.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La fonction de densité est paire et son intervalle d'intégration est symétrique par rapport à 0, l'espérance est donc nulle.</p>
+          </div>
+          <p>\[\mathbb{E}(X) = \int_{-1/2}^{1/2} x \cdot 6\left(\frac{1}{4}-x^2\right) dx = \mathbf{0}\]</p>
+          <p>Pour la variance : \(V(X) = \mathbb{E}(X^2) - (\mathbb{E}(X))^2\).</p>
+          <p>\(\begin{align*} V(X) &= \int_{-1/2}^{1/2} x^2 \cdot 6\left(\frac{1}{4}-x^2\right) dx = 6 \int_{-1/2}^{1/2} \left(\frac{x^2}{4} - x^4\right) dx \\ &= 6 \left[ \frac{x^3}{12} - \frac{x^5}{5} \right]_{-1/2}^{1/2} = 12 \left( \frac{1/8}{12} - \frac{1/32}{5} \right) \\ &= 12 \left( \frac{1}{96} - \frac{1}{160} \right) = 12 \left( \frac{5 - 3}{480} \right) = \frac{24}{480} = \mathbf{\frac{1}{20}} \end{align*}\)</p>
+          <p><strong>3. Soit \(Y=X^2\), déterminer la loi de Y.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On passe par la fonction de répartition de Y. Puisque \(X \in [-1/2, 1/2]\), \(Y \in [0, 1/4]\).</p>
+          </div>
+          <p>Pour \(y \in [0, 1/4]\) :</p>
+          <p>\(\begin{align*} F_Y(y) &= P(X^2 \le y) = P(-\sqrt{y} \le X \le \sqrt{y}) = \int_{-\sqrt{y}}^{\sqrt{y}} 6\left(\frac{1}{4}-x^2\right) dx \\ &= 12 \left[ \frac{x}{4} - \frac{x^3}{3} \right]_0^{\sqrt{y}} = 3\sqrt{y} - 4y\sqrt{y} = 3y^{1/2} - 4y^{3/2} \end{align*}\)</p>
+          <p>La densité de \(Y\) s'obtient en dérivant \(F_Y(y)\) : \[f_Y(y) = \mathbf{\frac{3}{2\sqrt{y}} - 6\sqrt{y}} \quad \text{si } y \in \left]0, \frac{1}{4}\right[ \text{ et } 0 \text{ sinon.}\]</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 3</span>
+              <h3>Exercice 3 (6 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Densité jointe : \(f(x,y) = k\left(\frac{1}{x^2} + y^2\right)\) pour \(x \in [1, 5]\) et \(y \in [-1, 1]\).</p>
+          <p><strong>1. Pour quelle valeur de k la fonction f est-elle une densité ?</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>L'intégrale double sur le domaine doit valoir 1.</p>
+          </div>
+          <p>\(\begin{align*} \iint f(x,y) dx dy &= \int_1^5 \left( \int_{-1}^1 k(x^{-2} + y^2) dy \right) dx = k \int_1^5 \left[ \frac{y}{x^2} + \frac{y^3}{3} \right]_{-1}^1 dx \\ &= k \int_1^5 \left( \frac{2}{x^2} + \frac{2}{3} \right) dx = k \left[ -\frac{2}{x} + \frac{2x}{3} \right]_1^5 \\ &= k \left( \left(-\frac{2}{5} + \frac{10}{3}\right) - \left(-2 + \frac{2}{3}\right) \right) = k \left( \frac{-6+50}{15} - \frac{-6+2}{3} \right) \\ &= k \left( \frac{44}{15} + \frac{4}{3} \right) = k \left( \frac{44}{15} + \frac{20}{15} \right) = k \frac{64}{15} \end{align*}\)</p>
+          <p>On obtient \(\mathbf{k = \frac{15}{64}}\).</p>
+          <p><strong>2. Déterminer les lois marginales de X et de Y.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On intègre la densité jointe par rapport à l'autre variable.</p>
+          </div>
+          <p>Pour \(x \in [1, 5]\) : \[f_X(x) = \int_{-1}^1 \frac{15}{64} \left( \frac{1}{x^2} + y^2 \right) dy = \mathbf{\frac{15}{32x^2} + \frac{5}{32}}\] Pour \(y \in [-1, 1]\) : \[f_Y(y) = \int_1^5 \frac{15}{64} \left( \frac{1}{x^2} + y^2 \right) dx = \frac{15}{64} \left[ -\frac{1}{x} + xy^2 \right]_1^5 = \mathbf{\frac{3}{16} + \frac{15}{16}y^2}\]</p>
+          <p><strong>3. Les variables X et Y sont-elles indépendantes ?</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Pour qu'elles le soient, il faut que \(f(x,y) = f_X(x)f_Y(y)\).</p>
+          </div>
+          <p>Le produit des marginales donne des termes croisés (comme du \(1/x^2\) et du \(y^2\) et des constantes) qui ne se factorisent pas de manière identique à \(f(x,y)\). <strong>Non</strong>, elles ne sont pas indépendantes.</p>
+          <p><strong>4. Calculer la covariance de X et Y.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On sait que \(cov(X,Y) = \mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)\). Observons les parités par rapport à y.</p>
+          </div>
+          <p>La densité marginale \(f_Y(y)\) est paire sur \([-1, 1]\), donc \(\mathbb{E}(Y) = 0\). De plus, \(\mathbb{E}(XY) = \int_1^5 \int_{-1}^1 xy f(x,y) dy dx\). L'intégrande est impair par rapport à y sur un intervalle symétrique, donc l'intégrale interne vaut 0, d'où \(\mathbb{E}(XY) = 0\). Ainsi, \(\mathbf{cov(X,Y) = 0}\).</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 4</span>
+              <h3>Exercice 4 (4 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Soient \(X, Y, Z \sim \mathcal{N}(0,1)\) indépendantes. \(U = X^2 + Y^2 + Z^2\).</p>
+          <p><strong>1. Quelle est la loi de U ? Espérance et variance.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>C'est une définition classique : la somme des carrés de n lois normales centrées réduites indépendantes suit une loi du Khi-deux à n degrés de liberté.</p>
+          </div>
+          <p>U suit une <strong>loi du \(\chi^2\) à 3 degrés de liberté</strong> (\(\chi^2_3\)). Ses caractéristiques sont : \(\mathbf{\mathbb{E}(U) = 3}\) et \(\mathbf{V(U) = 6}\).</p>
+          <p><strong>2. Fonction de répartition et densité de U.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On utilise l'indication de l'énoncé sur les coordonnées sphériques. L'événement \((U \le u)\) correspond à la boule de rayon \(\sqrt{u}\) centrée à l'origine.</p>
+          </div>
+          <p>La densité jointe est \(f(x,y,z) = \frac{1}{(2\pi)^{3/2}} e^{-(x^2+y^2+z^2)/2}\).</p>
+          <p>\(\begin{align*} F_U(u) &= \iiint_{x^2+y^2+z^2 \le u} \frac{1}{(2\pi)^{3/2}} e^{-(x^2+y^2+z^2)/2} dx dy dz \\ &= \int_0^{\sqrt{u}} \int_0^{2\pi} \int_0^\pi \frac{1}{(2\pi)^{3/2}} e^{-\rho^2/2} \rho^2 \sin(\varphi) d\varphi d\theta d\rho \end{align*}\)</p>
+          <p>L'intégration angulaire donne \(\int_0^{2\pi} d\theta \int_0^\pi \sin(\varphi) d\varphi = 2\pi \times 2 = 4\pi\). Donc \(F_U(u) = \frac{4\pi}{(2\pi)^{3/2}} \int_0^{\sqrt{u}} \rho^2 e^{-\rho^2/2} d\rho = \mathbf{\sqrt{\frac{2}{\pi}} \int_0^{\sqrt{u}} \rho^2 e^{-\rho^2/2} d\rho}\).</p>
+          <p>En dérivant selon \(u\) avec le théorème fondamental de l'analyse et la règle de composition (dérivée de la borne \(\sqrt{u}\) qui est \(1/(2\sqrt{u})\)) : \[f_U(u) = F_U'(u) = \sqrt{\frac{2}{\pi}} (\sqrt{u})^2 e^{-(\sqrt{u})^2/2} \cdot \frac{1}{2\sqrt{u}} = \mathbf{\frac{1}{\sqrt{2\pi}} \sqrt{u} e^{-u/2}} \quad \text{pour } u>0.\]</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 5</span>
+              <h3>Exercice 5 (3 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Densité \(f(x) = \frac{1}{2\theta\sqrt{x}} e^{-\sqrt{x}/\theta}\) pour \(x>0\). Estimation de \(\theta\) par le maximum de vraisemblance.</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On écrit la fonction de vraisemblance (produit des densités), on passe au logarithme pour simplifier le produit en somme, on dérive par rapport à \(\theta\) et on cherche le zéro de cette dérivée.</p>
+          </div>
+          <p>Fonction de vraisemblance : \[L(\theta) = \prod_{i=1}^n \frac{1}{2\theta\sqrt{x_i}} e^{-\sqrt{x_i}/\theta} = \frac{1}{(2\theta)^n \prod_{i=1}^n \sqrt{x_i}} \exp\left(-\frac{1}{\theta}\sum_{i=1}^n \sqrt{x_i}\right)\] Log-vraisemblance : \[\ln L(\theta) = -n\ln(2) - n\ln(\theta) - \sum_{i=1}^n \ln(\sqrt{x_i}) - \frac{1}{\theta} \sum_{i=1}^n \sqrt{x_i}\] Dérivée par rapport à \(\theta\) : \[\frac{\partial \ln L}{\partial \theta} = -\frac{n}{\theta} + \frac{1}{\theta^2} \sum_{i=1}^n \sqrt{x_i}\] On annule la dérivée : \[-\frac{n}{\theta} + \frac{1}{\theta^2} \sum_{i=1}^n \sqrt{x_i} = 0 \iff \frac{n}{\theta} = \frac{1}{\theta^2} \sum_{i=1}^n \sqrt{x_i} \iff n\theta = \sum_{i=1}^n \sqrt{x_i}\] L'estimateur est donc : \(\mathbf{\hat{\theta} = \frac{1}{n} \sum_{i=1}^n \sqrt{x_i}}\).</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 6</span>
+              <h3>Exercice 6 (8 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p><strong>1(a). Calculer la probabilité de l'événement « Robert tombe sur la piste qu'il a choisie ».</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On applique la formule des probabilités totales. Soient B, R, N les choix des pistes (Bleue, Rouge, Noire) et T l'événement "tomber".</p>
+          </div>
+          <p>\(\begin{align*} P(T) &= P(T|B)P(B) + P(T|R)P(R) + P(T|N)P(N) \\ &= \left(\frac{1}{10} \times \frac{1}{4}\right) + \left(\frac{1}{6} \times \frac{1}{2}\right) + \left(\frac{2}{5} \times \frac{1}{4}\right) \\ &= \frac{1}{40} + \frac{1}{12} + \frac{1}{10} = \frac{3 + 10 + 12}{120} = \mathbf{\frac{5}{24}} \end{align*}\)</p>
+          <p><strong>1(b). Quelle est la probabilité que Robert ait choisi la piste noire sachant qu'il est tombé ?</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>C'est une probabilité conditionnelle inverse (théorème de Bayes).</p>
+          </div>
+          <p>\[P(N|T) = \frac{P(T|N)P(N)}{P(T)} = \frac{\frac{2}{5} \times \frac{1}{4}}{\frac{5}{24}} = \frac{1/10}{5/24} = \frac{24}{50} = \mathbf{0.48}\]</p>
+          <p><strong>2(a). Loi de \(Z = X+Y\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On calcule le produit de convolution entre \(X \sim \mathcal{E}(1/5)\) et \(Y \sim \mathcal{U}[10; 15]\).</p>
+          </div>
+          <p>\(f_Z(z) = \int_{10}^{15} f_X(z-y)f_Y(y) dy\). Trois cas se présentent pour le support de X :</p>
+          <ul class="formula-list">
+            <li>Si \(z < 10\) : \(\mathbf{f_Z(z) = 0}\).</li>
+            <li>Si \(10 \le z \le 15\) : on intègre de 10 à z. \(f_Z(z) = \frac{1}{25} e^{-z/5} \int_{10}^z e^{y/5} dy = \mathbf{\frac{1}{5} \left( 1 - e^{-(z-10)/5} \right)}\).</li>
+            <li>Si \(z > 15\) : on intègre de 10 à 15. \(f_Z(z) = \frac{1}{25} e^{-z/5} \int_{10}^{15} e^{y/5} dy = \mathbf{\frac{1}{5} e^{-z/5} \left( e^3 - e^2 \right)}\).</li>
+          </ul>
+          <p><strong>2(b). Probabilité qu'il ne soit pas en retard.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il a 15 minutes devant lui. L'événement est \(Z \le 15\).</p>
+          </div>
+          <p>\(\begin{align*} P(Z \le 15) &= \int_{10}^{15} \frac{1}{5} \left( 1 - e^{-(z-10)/5} \right) dz = \left[ \frac{z}{5} + e^{-(z-10)/5} \right]_{10}^{15} \\ &= \left( 3 + e^{-1} \right) - (2 + 1) = \mathbf{e^{-1}} \approx 0.368 \end{align*}\)</p>
+          <p><strong>2(c). Probabilité que Stéphanie arrive avant Robert.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Les variables sont \(T_1 \sim \mathcal{U}[55; 85]\) (Robert) et \(T_2 \sim \mathcal{U}[65; 75]\) (Stéphanie). On cherche \(P(T_2 < T_1)\).</p>
+          </div>
+          <p>L'aire totale du domaine (rectangle) est \(30 \times 10 = 300\). Le sous-domaine favorable correspond à \(t_2 < t_1\). Ce domaine se découpe en deux : - Un triangle pour \(t_1 \in [65; 75]\), dont l'aire est \(\frac{10 \times 10}{2} = 50\). - Un rectangle plein pour \(t_1 \in [75; 85]\), d'aire \(10 \times 10 = 100\). L'aire favorable totale est \(150\). La probabilité est donc \(\frac{150}{300} = \mathbf{\frac{1}{2}}\).</p>
+          <p><strong>3(a). Loi exacte de \(S_n\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On répète n expériences indépendantes avec deux issues (succès = skis Castafiore).</p>
+          </div>
+          <p>\(S_n\) suit une <strong>loi binomiale</strong> de paramètres \(n\) et \(p\) : \(\mathcal{B}(n, p)\).</p>
+          <p><strong>3(b). Valeur de n pour déterminer p à \(10^{-2}\) près avec risque \(0.05\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La demi-largeur de l'intervalle de confiance est fixée à 0.01. Sans information sur p, on se place dans le cas défavorable où \(p=0.5\) maximisant la variance.</p>
+          </div>
+          <p>\[1.96 \sqrt{\frac{0.5 \times 0.5}{n}} \le 0.01 \iff \sqrt{n} \ge \frac{1.96 \times 0.5}{0.01} = 98\] Soit \(n \ge 98^2 = \mathbf{9604}\) skieurs.</p>
+          <p><strong>3(c). Intervalle de confiance avec 1200 skieurs et 250 skis Castafiore.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On applique la formule classique de l'intervalle de confiance pour une proportion.</p>
+          </div>
+          <p>Fréquence estimée : \(\hat{p} = \frac{250}{1200} = \frac{5}{24} \approx 0.208\). La marge d'erreur \(E\) vaut \(1.96 \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} = 1.96 \sqrt{\frac{(5/24) \times (19/24)}{1200}} \approx 1.96 \times 0.0117 \approx 0.023\). L'intervalle de confiance au risque 5\% est donc \(\approx [0.208 - 0.023, 0.208 + 0.023] = \mathbf{[0.185 ; 0.231]}\).</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

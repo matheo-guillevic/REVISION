@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Partiel corrige 2 - Probabilites</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="math.html#probabilites-sujets">Retour aux examens</a>
+        <div>
+          <span class="eyebrow">Partiel 2</span>
+          <h1>Corrige de partiel</h1>
+          <p>Page reconstruite depuis le sujet/corrige LaTeX du dossier PDF.</p>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1</span>
+              <h3>Exercice 1 (4 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Soit \(X \sim \mathcal{N}(75, 4^2)\). On pose \(Z = \frac{X-75}{4}\) la variable centrée réduite associée, avec \(Z \sim \mathcal{N}(0,1)\). On note \(\Phi\) la fonction de répartition de la loi normale centrée réduite.</p>
+          <p><strong>1. Calculer \(\mathbb{P}(X>80)\) et \(\mathbb{P}(65<X<85)\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On passe à la variable centrée réduite \(Z\) pour pouvoir lire les probabilités dans la table de la loi normale.</p>
+          </div>
+          <p>\(\begin{align*} \mathbb{P}(X > 80) &= \mathbb{P}\left(Z > \frac{80-75}{4}\right) = \mathbb{P}(Z > 1.25) \\ &= 1 - \Phi(1.25) \approx 1 - 0.8944 = \mathbf{0.1056} \\ \mathbb{P}(65 < X < 85) &= \mathbb{P}\left(\frac{65-75}{4} < Z < \frac{85-75}{4}\right) = \mathbb{P}(-2.5 < Z < 2.5) \\ &= 2\Phi(2.5) - 1 \approx 2(0.9938) - 1 = \mathbf{0.9876} \end{align*}\)</p>
+          <p><strong>2. Déterminer la loi de \(S\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La somme de \(n\) variables aléatoires indépendantes suivant des lois normales suit elle-même une loi normale. L'espérance de la somme est la somme des espérances, et par indépendance, la variance de la somme est la somme des variances.</p>
+          </div>
+          <p>On a \(S = \sum_{i=1}^n X_i\). \[\mathbb{E}(S) = \sum_{i=1}^n \mathbb{E}(X_i) = n \times 75 = 75n\] \[\mathbb{V}(S) = \sum_{i=1}^n \mathbb{V}(X_i) = n \times 4^2 = 16n\] Donc, <strong>\(S\) suit une loi normale \(\mathcal{N}(75n, 16n)\)</strong> (d'écart-type \(4\sqrt{n}\)).</p>
+          <p><strong>3. Nombre maximum de personnes pour un risque de surcharge \(\le 10^{-3}\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On cherche le plus grand entier \(n\) tel que \(\mathbb{P}(S > 500) \le 10^{-3}\). On utilise à nouveau le centrage et la réduction, appliqués cette fois à \(S\).</p>
+          </div>
+          <p>\(\begin{align*} \mathbb{P}(S > 500) \le 0.001 &\iff \mathbb{P}\left(\frac{S - 75n}{4\sqrt{n}} > \frac{500 - 75n}{4\sqrt{n}}\right) \le 0.001 \\ &\iff 1 - \Phi\left(\frac{500 - 75n}{4\sqrt{n}}\right) \le 0.001 \\ &\iff \Phi\left(\frac{500 - 75n}{4\sqrt{n}}\right) \ge 0.999 \end{align*}\)</p>
+          <p>D'après la table de la loi normale, \(\Phi(3.09) \approx 0.999\). Il faut donc : \[\frac{500 - 75n}{4\sqrt{n}} \ge 3.09\] Testons les valeurs de \(n\) :</p>
+          <ul class="formula-list">
+            <li>Si \(n=6\), \(\mu = 450\) et \(\sigma = 4\sqrt{6} \approx 9.798\). On a \(z = \frac{50}{9.798} \approx 5.10 \ge 3.09\). Le risque est largement inférieur à \(10^{-3}\).</li>
+            <li>Si \(n=7\), \(\mu = 525\). L'espérance dépasse la charge limite, le risque de surcharge sera supérieur à \(50\%\).</li>
+          </ul>
+          <p>Le nombre maximum de personnes autorisées est donc de <strong>6 personnes</strong>.</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2</span>
+              <h3>Exercice 2 (4 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Soit \(f(x,y) = 4y(1-x)\mathbb{I}_{[0;1]}(x)\mathbb{I}_{[0;1]}(y)\).</p>
+          <p><strong>1. Montrer que \(f\) est une densité de probabilité.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il faut vérifier deux conditions : \(f\) doit être positive ou nulle sur \(\mathbb{R}^2\), et l'intégrale double de \(f\) sur \(\mathbb{R}^2\) doit être égale à 1.</p>
+          </div>
+          <ul class="formula-list">
+            <li>Pour tout \((x,y) \in [0,1]^2\), \(y \ge 0\) et \(1-x \ge 0\), donc \(f(x,y) \ge 0\). Ailleurs, \(f(x,y) = 0\).</li>
+            <li>Calculons l'intégrale sur \(\mathbb{R}^2\) : \[\iint_{\mathbb{R}^2} f(x,y) dx dy = \int_0^1 \int_0^1 4y(1-x) dx dy = 4 \left( \int_0^1 (1-x) dx \right) \left( \int_0^1 y dy \right)\] \[= 4 \left[ x - \frac{x^2}{2} \right]_0^1 \left[ \frac{y^2}{2} \right]_0^1 = 4 \times \frac{1}{2} \times \frac{1}{2} = 1\]</li>
+          </ul>
+          <p>\(f\) est bien une densité de probabilité.</p>
+          <p><strong>2. Calculer \(\mathbb{P}(X < Y)\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Il s'agit d'intégrer la densité sur le domaine défini par \(0 \le x < y \le 1\).</p>
+          </div>
+          <p>\(\begin{align*} \mathbb{P}(X < Y) &= \int_0^1 \left( \int_0^y 4y(1-x) dx \right) dy \\ &= \int_0^1 4y \left[ x - \frac{x^2}{2} \right]_0^y dy \\ &= \int_0^1 4y \left( y - \frac{y^2}{2} \right) dy = \int_0^1 (4y^2 - 2y^3) dy \\ &= \left[ \frac{4y^3}{3} - \frac{2y^4}{4} \right]_0^1 = \frac{4}{3} - \frac{1}{2} = \mathbf{\frac{5}{6}} \end{align*}\)</p>
+          <p><strong>3. Déterminer les lois de X et de Y.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Pour obtenir les densités marginales, on intègre la densité conjointe par rapport à l'autre variable sur son domaine de définition.</p>
+          </div>
+          <p>\(\begin{align*} f_X(x) &= \int_{-\infty}^{+\infty} f(x,y) dy = \left( \int_0^1 4y(1-x) dy \right) \mathbb{I}_{[0;1]}(x) = 4(1-x) \left[ \frac{y^2}{2} \right]_0^1 \mathbb{I}_{[0;1]}(x) = \mathbf{2(1-x) \mathbb{I}_{[0;1]}(x)} \\ f_Y(y) &= \int_{-\infty}^{+\infty} f(x,y) dx = \left( \int_0^1 4y(1-x) dx \right) \mathbb{I}_{[0;1]}(y) = 4y \left[ x - \frac{x^2}{2} \right]_0^1 \mathbb{I}_{[0;1]}(y) = \mathbf{2y \mathbb{I}_{[0;1]}(y)} \end{align*}\)</p>
+          <p><strong>4. Les variables aléatoires X et Y sont-elles indépendantes ?</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Deux variables à densité sont indépendantes si et seulement si leur densité conjointe est le produit de leurs densités marginales presque partout.</p>
+          </div>
+          <p>On vérifie si \(f(x,y) = f_X(x) f_Y(y)\) : \[f_X(x) \times f_Y(y) = 2(1-x)\mathbb{I}_{[0;1]}(x) \times 2y\mathbb{I}_{[0;1]}(y) = 4y(1-x)\mathbb{I}_{[0;1]}(x)\mathbb{I}_{[0;1]}(y) = f(x,y)\] Oui, <strong>\(X\) et \(Y\) sont indépendantes</strong>.</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 3</span>
+              <h3>Exercice 3 (6 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Pour la pièce A, on définit le "succès" comme l'obtention de "face", de probabilité \(1-a\). Pour la pièce B, le succès est "face" avec probabilité \(1-b\).</p>
+          <p><strong>1. Quelles sont les lois de probabilités de X et de Y ? Donner \(\mathbb{E}(X)\) et \(\mathbb{E}(Y)\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>X et Y représentent le nombre d'essais nécessaires pour obtenir le premier succès lors d'une succession d'épreuves de Bernoulli indépendantes. Elles suivent donc des lois géométriques.</p>
+          </div>
+          <p><strong>\(X \sim \mathcal{G}(1-a)\)</strong> et <strong>\(Y \sim \mathcal{G}(1-b)\)</strong>. Pour tout \(k \in \mathbb{N}^*\), \(\mathbb{P}(X=k) = a^{k-1}(1-a)\) et \(\mathbb{P}(Y=k) = b^{k-1}(1-b)\). <br> Les espérances sont : \(\mathbb{E}(X) = \mathbf{\frac{1}{1-a}}\) et \(\mathbb{E}(Y) = \mathbf{\frac{1}{1-b}}\).</p>
+          <p><strong>2. Calculer la probabilité de l'évènement \((X=Y)\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Les lancers des deux pièces étant indépendants, les variables \(X\) et \(Y\) le sont aussi. On somme sur tous les cas possibles \(k\).</p>
+          </div>
+          <p>\(\begin{align*} \mathbb{P}(X=Y) &= \sum_{k=1}^{+\infty} \mathbb{P}(X=k \cap Y=k) = \sum_{k=1}^{+\infty} \mathbb{P}(X=k)\mathbb{P}(Y=k) \\ &= \sum_{k=1}^{+\infty} a^{k-1}(1-a) b^{k-1}(1-b) = (1-a)(1-b) \sum_{k=1}^{+\infty} (ab)^{k-1} \\ &= (1-a)(1-b) \sum_{j=0}^{+\infty} (ab)^{j} = \mathbf{\frac{(1-a)(1-b)}{1-ab}} \end{align*}\)</p>
+          <p><strong>3. Trouver, pour \(k \in \mathbb{N}\), la valeur de \(\mathbb{P}(X>k)\). En déduire \(\mathbb{P}(X>Y)\) et \(\mathbb{P}(X \ge Y)\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Dire que l'on a besoin de plus de \(k\) lancers pour obtenir le premier "face" revient à dire que les \(k\) premiers lancers ont tous donné "pile".</p>
+          </div>
+          <p>\[\mathbb{P}(X>k) = \mathbf{a^k}\] Pour \(\mathbb{P}(X>Y)\), on utilise la formule des probabilités totales en fixant la valeur de \(Y\) :</p>
+          <p>\(\begin{align*} \mathbb{P}(X>Y) &= \sum_{k=1}^{+\infty} \mathbb{P}(Y=k) \mathbb{P}(X>k) = \sum_{k=1}^{+\infty} b^{k-1}(1-b) a^k = a(1-b) \sum_{k=1}^{+\infty} (ab)^{k-1} = \mathbf{\frac{a(1-b)}{1-ab}} \end{align*}\)</p>
+          <p>Pour \(\mathbb{P}(X \ge Y)\) : \[\mathbb{P}(X \ge Y) = \mathbb{P}(X>Y) + \mathbb{P}(X=Y) = \frac{a(1-b) + (1-a)(1-b)}{1-ab} = \frac{(1-b)(a + 1 - a)}{1-ab} = \mathbf{\frac{1-b}{1-ab}}\]</p>
+          <p><strong>4. Calculer la probabilité \(\mathbb{P}(M \ge k)\). En déduire la loi de M.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Le minimum de deux variables est supérieur ou égal à \(k\) si et seulement si les deux variables sont simultanément supérieures ou égales à \(k\).</p>
+          </div>
+          <p>Pour \(k \in \mathbb{N}^*\), \(\mathbb{P}(M \ge k) = \mathbb{P}(X \ge k \cap Y \ge k) = \mathbb{P}(X \ge k)\mathbb{P}(Y \ge k)\) par indépendance. Or \(\mathbb{P}(X \ge k) = \mathbb{P}(X > k-1) = a^{k-1}\). Donc : \[\mathbb{P}(M \ge k) = a^{k-1}b^{k-1} = \mathbf{(ab)^{k-1}}\] On en déduit la loi ponctuelle de \(M\) : \[\mathbb{P}(M=k) = \mathbb{P}(M \ge k) - \mathbb{P}(M \ge k+1) = (ab)^{k-1} - (ab)^k = \mathbf{(ab)^{k-1}(1-ab)}\] On reconnaît la formule d'une <strong>loi géométrique de paramètre \(1-ab\)</strong> : \(M \sim \mathcal{G}(1-ab)\).</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 4</span>
+              <h3>Exercice 4 (16 points - note: barème original)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p><strong>1(a). Calculer la probabilité de l'évènement "Robert tombe sur la piste qu'il a choisie".</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On note \(B, R, N\) les évènements de choix de piste et \(T\) l'évènement "tomber". On applique la formule des probabilités totales formant un système complet d'évènements.</p>
+          </div>
+          <p>Données : \(\mathbb{P}(B)=1/4\), \(\mathbb{P}(R)=1/2\), \(\mathbb{P}(N)=1/4\). Et \(\mathbb{P}(T|B)=1/10\), \(\mathbb{P}(T|R)=1/6\), \(\mathbb{P}(T|N)=2/5\).</p>
+          <p>\(\begin{align*} \mathbb{P}(T) &= \mathbb{P}(T|B)\mathbb{P}(B) + \mathbb{P}(T|R)\mathbb{P}(R) + \mathbb{P}(T|N)\mathbb{P}(N) \\ &= \left(\frac{1}{10} \times \frac{1}{4}\right) + \left(\frac{1}{6} \times \frac{1}{2}\right) + \left(\frac{2}{5} \times \frac{1}{4}\right) = \frac{1}{40} + \frac{1}{12} + \frac{1}{10} \\ &= \frac{3 + 10 + 12}{120} = \frac{25}{120} = \mathbf{\frac{5}{24}} \end{align*}\)</p>
+          <p><strong>1(b). Sachant cela, quelle est la probabilité que Robert ait choisi la piste noire ?</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>C'est une inversion de probabilité classique, on utilise la formule de Bayes.</p>
+          </div>
+          <p>\[\mathbb{P}(N|T) = \frac{\mathbb{P}(T|N)\mathbb{P}(N)}{\mathbb{P}(T)} = \frac{\frac{2}{5} \times \frac{1}{4}}{\frac{5}{24}} = \frac{\frac{1}{10}}{\frac{5}{24}} = \frac{1}{10} \times \frac{24}{5} = \frac{24}{50} = \mathbf{\frac{12}{25}} = 0.48\]</p>
+          <p><strong>2(a). Soit \(Z=X+Y\), déterminer la loi de Z.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La loi de la somme de deux variables aléatoires indépendantes continues s'obtient par le produit de convolution de leurs densités : \(f_Z(z) = \int_{-\infty}^{+\infty} f_X(z-y)f_Y(y) dy\).</p>
+          </div>
+          <p>On a \(X \sim \mathcal{E}(1/5)\) et \(Y \sim \mathcal{U}[10; 15]\).</p>
+          <p>\(\begin{align*} f_Z(z) &= \int_{10}^{15} \frac{1}{5}e^{-\frac{1}{5}(z-y)} \mathbb{I}_{\{z-y \ge 0\}} \times \frac{1}{5} dy = \frac{1}{25}e^{-\frac{z}{5}} \int_{10}^{15} e^{\frac{y}{5}} \mathbb{I}_{\{y \le z\}} dy \end{align*}\)</p>
+          <p>Trois cas se présentent :</p>
+          <ul class="formula-list">
+            <li>Si \(z < 10\) : l'intervalle d'intégration est vide, \(\mathbf{f_Z(z) = 0}\).</li>
+            <li>Si \(10 \le z \le 15\) : on intègre \(y\) de 10 à \(z\). \[f_Z(z) = \frac{1}{25}e^{-\frac{z}{5}} \left[ 5e^{\frac{y}{5}} \right]_{10}^z = \frac{1}{5}e^{-\frac{z}{5}} \left( e^{\frac{z}{5}} - e^2 \right) = \mathbf{\frac{1}{5} \left( 1 - e^{-\frac{z-10}{5}} \right)}\]</li>
+            <li>Si \(z > 15\) : on intègre \(y\) de 10 à 15. \[f_Z(z) = \frac{1}{25}e^{-\frac{z}{5}} \left[ 5e^{\frac{y}{5}} \right]_{10}^{15} = \mathbf{\frac{1}{5} \left( e^3 - e^2 \right) e^{-\frac{z}{5}}}\]</li>
+          </ul>
+          <p><strong>2(b). Déterminer la probabilité que Robert ne soit pas en retard.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Entre 10h45 et 11h, Robert dispose de 15 minutes. Il ne sera pas en retard si \(Z \le 15\).</p>
+          </div>
+          <p>\(\begin{align*} \mathbb{P}(Z \le 15) &= \int_{10}^{15} f_Z(z) dz = \int_{10}^{15} \frac{1}{5} \left( 1 - e^{-\frac{z-10}{5}} \right) dz \\ &= \left[ \frac{z}{5} + e^{-\frac{z-10}{5}} \right]_{10}^{15} = (3 + e^{-1}) - (2 + 1) = \mathbf{e^{-1}} \approx 0.368 \end{align*}\)</p>
+          <p><strong>2(c). Probabilité que Stéphanie arrive avant Robert.</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On cherche \(\mathbb{P}(T_2 < T_1)\). L'aire totale de la zone des temps possibles est l'aire du rectangle \([55;85] \times [65;75]\), soit \(30 \times 10 = 300\). On calcule géométriquement l'aire du sous-domaine où \(t_2 < t_1\).</p>
+          </div>
+          <p>Le domaine où \(t_2 < t_1\) dans le rectangle est composé d'un triangle pour \(t_1 \in [65;75]\) (aire = \(10 \times 10 / 2 = 50\)) et d'un rectangle complet pour \(t_1 \in [75;85]\) (aire = \(10 \times 10 = 100\)). Aire totale favorable = 150. \[\mathbb{P}(T_2 < T_1) = \frac{150}{300} = \mathbf{\frac{1}{2}}\]</p>
+          <p><strong>3(a). Quelle est la loi exacte de \(S_n\) ?</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>On compte le nombre de succès (skis Castafiore de probabilité \(p\)) parmi \(n\) skieurs indépendants.</p>
+          </div>
+          <p><strong>\(S_n\) suit une loi binomiale \(\mathcal{B}(n, p)\)</strong>.</p>
+          <p><strong>3(b). Déterminer \(n\) pour une précision à \(10^{-2}\) près au risque \(0.05\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La longueur de la demi-amplitude de l'intervalle de confiance asymptotique est \(1.96 \sqrt{\frac{p(1-p)}{n}}\). Pour garantir cette marge d'erreur sans connaître \(p\), on se place dans le cas le plus défavorable : \(p=0.5\).</p>
+          </div>
+          <p>\[1.96 \sqrt{\frac{0.5 \times 0.5}{n}} \le 0.01 \iff \frac{1.96}{2\sqrt{n}} \le 0.01 \iff \sqrt{n} \ge \frac{0.98}{0.01} = 98\] En élevant au carré : \(n \ge 98^2 = 9604\). Il faut donc au minimum <strong>9604 skieurs</strong>.</p>
+          <p><strong>3(c). Intervalle de confiance de \(p\) au risque \(5\%\).</strong></p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>L'estimation ponctuelle est \(\hat{p} = \frac{2500}{8500}\). On applique la formule de l'intervalle de confiance usuel pour les proportions.</p>
+          </div>
+          <p>\(\hat{p} = \frac{25}{85} = \frac{5}{17} \approx 0.2941\). La marge d'erreur \(E\) est \(1.96 \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} = 1.96 \sqrt{\frac{\frac{5}{17} \times \frac{12}{17}}{8500}} \approx 1.96 \times 0.00494 \approx 0.0097\). L'intervalle de confiance est donc : \[IC_{95\%} = [\hat{p} - E ; \hat{p} + E] = [0.2941 - 0.0097 ; 0.2941 + 0.0097] = \mathbf{[0.284 ; 0.304]}\]</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

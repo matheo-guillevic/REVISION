@@ -5,6 +5,7 @@ const root = process.cwd();
 const outDir = path.join(root, "out");
 const mathCoursePath = path.join(root, "src", "subjects", "probabilites", "cours.html");
 const mathTdDir = path.join(root, "src", "subjects", "probabilites", "td");
+const mathExamDir = path.join(root, "src", "subjects", "probabilites", "exam");
 const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
 
 const pages = {
@@ -212,4 +213,10 @@ for (const file of ["td1.html", "td2.html", "td3.html"]) {
   fs.copyFileSync(path.join(mathTdDir, file), path.join(outDir, file));
 }
 
-console.log("Application construite dans out/ : index.html, math.html, auto.html, td1.html, td2.html, td3.html.");
+if (fs.existsSync(mathExamDir)) {
+  for (const file of fs.readdirSync(mathExamDir).filter((entry) => entry.endsWith(".html"))) {
+    fs.copyFileSync(path.join(mathExamDir, file), path.join(outDir, file));
+  }
+}
+
+console.log("Application construite dans out/.");
