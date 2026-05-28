@@ -1,0 +1,191 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{xcolor}
+\geometry{hmargin=2cm, vmargin=2cm}
+
+% Macro pour le formatage des explications
+\newcommand{\explication}[1]{
+    \vspace{0.2cm}
+    \noindent\textcolor{blue!80!black}{
+        \textbf{\textit{Raisonnement : }} \textit{#1}
+    }
+    \vspace{0.2cm}
+}
+
+\begin{document}
+
+\begin{center}
+    \textbf{GRENOBLE INP Esisar UGA, VALENCE} \\
+    \textbf{MA337 Interro. 2 -- lundi 23 mai 2022 - 30'} \\
+    \textbf{MA337 2021-2022} \\
+    Prénom NOM: ...................................
+\end{center}
+
+\vspace{0.5cm}
+
+\section*{Exercice 1 (8 points) Cours}
+Soit $(\Omega,\mathcal{P}(\Omega),\mathbb{P})$ un espace probabilisé, $X$ et $Y$ deux variables aléatoires discrètes sur $\Omega$.
+
+\subsection*{1. Compléter ces propriétés de l'espérance}
+\begin{enumerate}
+    \item[(a)] Linéarité : $\mathbb{E}(X+Y) = \mathbf{\mathbb{E}(X) + \mathbb{E}(Y)}$ \\
+    et pour tout réel $a$, $\mathbb{E}(aX) = \mathbf{a\mathbb{E}(X)}$
+    \item[(b)] Produit : Si \textbf{$X$ et $Y$ sont indépendantes} alors $\mathbb{E}(XY) = \mathbf{\mathbb{E}(X)\mathbb{E}(Y)}$
+\end{enumerate}
+
+\subsection*{2. Variance et écart-type}
+\begin{enumerate}
+    \item[(a)] Rappeler la définition de la variance et de l'écart-type : \\
+    $\mathbb{V}(X) = \mathbf{\mathbb{E}\left((X - \mathbb{E}(X))^2\right)}$ \\
+    $\sigma(X) = \mathbf{\sqrt{\mathbb{V}(X)}}$
+    
+    \item[(b)] Rappeler la formule donnant $\mathbb{V}(X)$ en fonction de $\mathbb{E}(X^2)$ et de $\mathbb{E}(X)^2$ (Théorème de Koenig-Huygens) : \\
+    $\mathbb{V}(X) = \mathbf{\mathbb{E}(X^2) - (\mathbb{E}(X))^2}$
+    
+    \item[(c)] Démontrer la formule précédente.
+    \begin{align*}
+        \mathbb{V}(X) &= \mathbb{E}\left(X^2 - 2X\mathbb{E}(X) + (\mathbb{E}(X))^2\right) \\
+        &= \mathbb{E}(X^2) - 2\mathbb{E}(X)\mathbb{E}(X) + (\mathbb{E}(X))^2 \quad \text{(par linéarité de l'espérance)} \\
+        &= \mathbb{E}(X^2) - 2(\mathbb{E}(X))^2 + (\mathbb{E}(X))^2 \\
+        &= \mathbb{E}(X^2) - (\mathbb{E}(X))^2
+    \end{align*}
+    
+    \item[(d)] Rappeler la définition de $cov(X,Y)$ : \\
+    $cov(X,Y) = \mathbf{\mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)}$
+    
+    \item[(e)] Compléter ces formules du cours : \\
+    $\mathbb{V}(X+Y) = \mathbf{\mathbb{V}(X) + \mathbb{V}(Y) + 2cov(X,Y)}$ \\
+    pour tout réel $a$, $\mathbb{V}(aX) = \mathbf{a^2\mathbb{V}(X)}$ \\
+    et $\sigma(aX) = \mathbf{|a|\sigma(X)}$
+    
+    \item[(f)] Démontrer la première formule de l'item précédent.
+    \begin{align*}
+        \mathbb{V}(X+Y) &= \mathbb{E}\left((X+Y)^2\right) - (\mathbb{E}(X+Y))^2 \\
+        &= \mathbb{E}(X^2 + 2XY + Y^2) - (\mathbb{E}(X) + \mathbb{E}(Y))^2 \\
+        &= \mathbb{E}(X^2) + 2\mathbb{E}(XY) + \mathbb{E}(Y^2) - \left((\mathbb{E}(X))^2 + 2\mathbb{E}(X)\mathbb{E}(Y) + (\mathbb{E}(Y))^2\right) \\
+        &= \left(\mathbb{E}(X^2) - (\mathbb{E}(X))^2\right) + \left(\mathbb{E}(Y^2) - (\mathbb{E}(Y))^2\right) + 2\left(\mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)\right) \\
+        &= \mathbb{V}(X) + \mathbb{V}(Y) + 2cov(X,Y)
+    \end{align*}
+\end{enumerate}
+
+\subsection*{3. Lois de référence}
+\begin{enumerate}
+    \item[(a)] Si $X$ suit la loi de Bernoulli de paramètre $p$, alors $\mathbb{E}(X) = \mathbf{p}$ et $\mathbb{V}(X) = \mathbf{p(1-p)}$.
+    \item[(b)] Si $X$ suit la loi binomiale de paramètres $n$ et $p$, alors $\mathbb{E}(X) = \mathbf{np}$ et $\mathbb{V}(X) = \mathbf{np(1-p)}$.
+    \item[(c)] Si $X$ suit la loi géométrique de paramètre $p$, alors pour $k \in \mathbb{N}^*$, \\ $\mathbb{P}(X=k) = \mathbf{(1-p)^{k-1}p}$ et $\mathbb{E}(X) = \mathbf{\frac{1}{p}}$.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Exercice 2 (4 points)}
+Une urne contient $n$ boules numérotées de $1$ à $n$. On en tire une au hasard, et on considère les événements :
+\begin{itemize}
+    \item $A$ : "la boule tirée porte un numéro pair"
+    \item $B$ : "la boule tirée porte un numéro multiple de 3"
+\end{itemize}
+
+\subsection*{1. On suppose que $n=6$. Montrer que les événements $A$ et $B$ sont indépendants.}
+
+\explication{Pour prouver l'indépendance de deux événements $A$ et $B$, il faut vérifier l'égalité fondamentale : $\mathbb{P}(A \cap B) = \mathbb{P}(A) \times \mathbb{P}(B)$. L'univers est ici $\Omega = \{1, 2, 3, 4, 5, 6\}$ et la probabilité est équirépartie (tirage au hasard).}
+
+On a $\Omega = \{1,2,3,4,5,6\}$ et la probabilité est équirépartie.
+\begin{itemize}
+    \item $A = \{2, 4, 6\}$ donc $\mathbb{P}(A) = \frac{|A|}{|\Omega|} = \frac{3}{6} = \frac{1}{2}$.
+    \item $B = \{3, 6\}$ donc $\mathbb{P}(B) = \frac{|B|}{|\Omega|} = \frac{2}{6} = \frac{1}{3}$.
+    \item $A \cap B = \{6\}$ (les multiples de 2 et de 3) donc $\mathbb{P}(A \cap B) = \frac{1}{6}$.
+\end{itemize}
+On remarque que $\mathbb{P}(A) \times \mathbb{P}(B) = \frac{1}{2} \times \frac{1}{3} = \frac{1}{6}$. \\
+Donc $\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)$, ce qui prouve que $A$ et $B$ sont bien indépendants.
+
+\subsection*{2. Donner une valeur de $n$ pour laquelle $A$ et $B$ ne sont pas indépendants. Justifier.}
+
+\explication{L'indépendance dépend de la proportion des nombres. Si l'on choisit un $n$ qui coupe court aux multiples communs, on peut facilement créer une dépendance. Testons avec $n=3$.}
+
+Pour $n=3$, l'univers est $\Omega = \{1,2,3\}$.
+\begin{itemize}
+    \item $A = \{2\}$ donc $\mathbb{P}(A) = \frac{1}{3}$.
+    \item $B = \{3\}$ donc $\mathbb{P}(B) = \frac{1}{3}$.
+    \item $A \cap B = \emptyset$ donc $\mathbb{P}(A \cap B) = 0$.
+\end{itemize}
+On a $\mathbb{P}(A) \times \mathbb{P}(B) = \frac{1}{3} \times \frac{1}{3} = \frac{1}{9} \neq 0$. \\
+Donc $\mathbb{P}(A \cap B) \neq \mathbb{P}(A)\mathbb{P}(B)$. Les événements $A$ et $B$ ne sont pas indépendants.
+
+\vspace{0.5cm}
+
+\section*{Exercice 3 (4 points)}
+On dispose de 100 dés dont 25 sont pipés. Pour chaque dé pipé, la probabilité d'obtenir le chiffre 6 lors d'un lancer vaut $\frac{1}{2}$.
+
+\subsection*{1. On tire un dé au hasard parmi les 100 dés. On lance ce dé et on obtient 6. Quelle est la probabilité que ce dé soit pipé ?}
+
+\explication{Il s'agit d'un problème typique d'inversion des probabilités (Formule de Bayes). On connaît l'issue (le chiffre 6 est obtenu), et on cherche la cause (le dé est-il pipé ?). On pose d'abord nos événements et leurs probabilités a priori.}
+
+Soit $S$ : "on obtient 6" et $T$ : "le dé est pipé".
+La proportion de dés pipés est de $25/100 = 0.25$ donc $\mathbb{P}(T) = 0.25$ et $\mathbb{P}(\overline{T}) = 0.75$. \\
+On cherche $\mathbb{P}_S(T)$ (probabilité que le dé soit pipé sachant qu'on a obtenu un 6).
+
+D'après la formule de Bayes, comme $\{T, \overline{T}\}$ forme un système complet d'événements :
+\begin{align*}
+    \mathbb{P}_S(T) &= \frac{\mathbb{P}(S \cap T)}{\mathbb{P}(S)} \\
+    &= \frac{\mathbb{P}(T)\mathbb{P}_T(S)}{\mathbb{P}(T \cap S) + \mathbb{P}(\overline{T} \cap S)} \\
+    &= \frac{0.25 \times \frac{1}{2}}{0.25 \times \frac{1}{2} + 0.75 \times \frac{1}{6}} \\
+    &= \frac{\frac{1}{4} \times \frac{1}{2}}{\frac{1}{4} \times \frac{1}{2} + \frac{3}{4} \times \frac{1}{6}} = \frac{\frac{1}{8}}{\frac{1}{8} + \frac{1}{8}} = \frac{\frac{1}{8}}{\frac{2}{8}} = \frac{1}{2}
+\end{align*}
+La probabilité que ce dé soit pipé est donc de $\frac{1}{2}$.
+
+\subsection*{2. Soit $n \in \mathbb{N}^*$. On tire un dé au hasard parmi 100 dés. On lance ce dé $n$ fois et on obtient $n$ fois le chiffre 6. Quelle est la probabilité $p_n$ pour que ce dé soit pipé ?}
+
+\explication{Le raisonnement est identique, mais l'événement $S$ devient $S_n$ : "obtenir $n$ fois un 6". L'expérience consiste en $n$ tirages indépendants, d'où l'élévation des probabilités à la puissance $n$.}
+
+On reprend le même raisonnement en notant $S_n$ : "on obtient 6 aux $n$ lancers".
+\begin{align*}
+    p_n &= \mathbb{P}_{S_n}(T) = \frac{\mathbb{P}(T \cap S_n)}{\mathbb{P}(T \cap S_n) + \mathbb{P}(\overline{T} \cap S_n)} \\
+    &= \frac{0.25 \times \left(\frac{1}{2}\right)^n}{0.25 \times \left(\frac{1}{2}\right)^n + 0.75 \times \left(\frac{1}{6}\right)^n}
+\end{align*}
+En divisant le numérateur et le dénominateur par $0.25 \times \left(\frac{1}{2}\right)^n$, on obtient :
+\begin{align*}
+    p_n &= \frac{1}{1 + 3 \times \frac{\left(\frac{1}{6}\right)^n}{\left(\frac{1}{2}\right)^n}} = \frac{1}{1 + 3 \times \left(\frac{1}{3}\right)^n}
+\end{align*}
+\explication{On observe que $\lim_{n \to +\infty} p_n = 1$. Ce qui est logique intuitivement : plus on obtient de "6" consécutifs, plus on est certain que le dé utilisé est pipé.}
+
+\vspace{0.5cm}
+
+\section*{Exercice 4 (4 points)}
+Une entreprise pharmaceutique décide d'affranchir, au hasard, une proportion de 3 lettres sur 5 au tarif urgent, les autres au tarif normal.
+
+\subsection*{1. Quatre lettres sont envoyées dans un cabinet médical de quatre médecins : quelle est la probabilité des événements $A$ et $B$ ?}
+\begin{itemize}
+    \item $A$ : "Au moins l'un d'entre eux reçoit une lettre au tarif urgent".
+    \item $B$ : "Exactement 2 médecins sur les quatre reçoivent une lettre au tarif urgent".
+\end{itemize}
+
+\explication{Le tirage est avec remise (car proportion fixe ou très grand nombre de lettres) et il n'y a que deux issues ("urgent" ou "normal"). Cela correspond à une succession d'épreuves de Bernoulli indépendantes. La variable compte le nombre de succès, on est donc face à une loi Binomiale.}
+
+Soit $X$ le nombre de médecins parmi les 4 qui reçoivent une lettre au tarif urgent. \\
+Comme les lettres sont affranchies au hasard, on suppose qu'elles sont affranchies indépendamment. Ainsi, $X$ suit une loi binomiale de paramètres $n=4$ et $p=\frac{3}{5}$ : $X \sim \mathcal{B}\left(4, \frac{3}{5}\right)$.
+
+\begin{align*}
+    \mathbb{P}(A) &= \mathbb{P}(X \ge 1) = 1 - \mathbb{P}(X=0) \\
+    &= 1 - \binom{4}{0}\left(\frac{3}{5}\right)^0\left(\frac{2}{5}\right)^4 = 1 - \left(\frac{2}{5}\right)^4 = 1 - \frac{16}{625} = \frac{609}{625} \\
+\end{align*}
+
+\begin{align*}
+    \mathbb{P}(B) &= \mathbb{P}(X=2) = \binom{4}{2}\left(\frac{3}{5}\right)^2\left(\frac{2}{5}\right)^2 \\
+    &= 6 \times \frac{9}{25} \times \frac{4}{25} = 6 \times \frac{36}{625} = \frac{216}{625}
+\end{align*}
+
+\subsection*{2. Soit $X$ la variable aléatoire : "nombre de lettres affranchies au tarif urgent parmi 10 lettres". Quelle est la loi de probabilité de $X$, son espérance, sa variance et son écart-type ?}
+
+\explication{On modifie juste le paramètre $n$ (le nombre d'essais passe à 10) et on applique directement les formules de cours (Exercice 1, Q3.b) pour les caractéristiques de la loi.}
+
+Comme précédemment, $X$ suit une loi binomiale : $X \sim \mathcal{B}\left(10, \frac{3}{5}\right)$.
+\begin{itemize}
+    \item Espérance : $\mathbb{E}(X) = n \times p = 10 \times \frac{3}{5} = \mathbf{6}$
+    \item Variance : $\mathbb{V}(X) = n \times p \times (1-p) = 10 \times \frac{3}{5} \times \frac{2}{5} = \frac{60}{25} = \mathbf{\frac{12}{5}}$ (soit 2.4)
+    \item Écart-type : $\sigma(X) = \sqrt{\mathbb{V}(X)} = \sqrt{\frac{60}{25}} = \mathbf{\frac{\sqrt{60}}{5}}$
+\end{itemize}
+
+\end{document}
