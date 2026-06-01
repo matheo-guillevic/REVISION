@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TD 1 corrige - Modelisation des systemes</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="auto.html#auto-td">Retour aux TD d'automatique</a>
+        <div>
+          <span class="eyebrow">AU361 - TD 1</span>
+          <h1>Modelisation des systemes lineaires</h1>
+          <p>Corrige reconstruit depuis le fichier LaTeX <code>pdf/auto/TD/AU361-TD1.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/auto/TD/AU361-TD1.pdf">Ouvrir le PDF</a>
+          <a class="back-link" href="auto.html">Cours d'automatique</a>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1</span>
+              <h3>Exercice 1 : Régulation de niveau d'un réservoir d'eau</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="auto-td1-e1" class="answer-block">
+          <figure class="system-diagram td-figure">
+            <img src="assets/auto/TD/AU361-TD1-Ex1.svg" alt="Schema de regulation de niveau du reservoir." loading="lazy">
+            <figcaption class="diagram-caption">Schema de regulation de niveau du reservoir.</figcaption>
+          </figure>
+          <h4>1. Variables et paramètres du système</h4>
+          <p><em>Paramètre :</em> La section du réservoir \(S\) (en \(m^2\)).<br> <em>Variables :</em><br></p>
+          <ul class="formula-list">
+            <li>L'entrée (ou commande) \(u(t)\) : Le débit entrant \(q_e(t)\).<br></li>
+            <li>La sortie à piloter \(y(t)\) : Le niveau d'eau \(n(t)\).<br></li>
+            <li>La perturbation \(\delta_1(t)\) : Le débit de fuite ou de consommation \(q_s(t)\).</li>
+          </ul>
+          <h4>2. Équation différentielle</h4>
+          <p>La variation du volume d'eau dans le réservoir est égale à la différence entre le débit entrant et le débit sortant. Le volume étant \(V(t) = S \cdot n(t)\), on a : \[\frac{dV(t)}{dt} = S \frac{dn(t)}{dt} = q_e(t) - q_s(t)\]</p>
+          <h4>3. Schéma fonctionnel du système asservi</h4>
+          <p>Le régulateur proportionnel \(R\) produit la commande telle que \(q_e(t) = K(cn(t) - n(t))\).<br> Le comparateur fait la différence entre \(cn(t)\) (consigne) et \(n(t)\) (mesure).<br> La perturbation \(q_s(t)\) est soustraite au débit \(q_e(t)\) avant d'attaquer le processus \(H\).</p>
+          <h4>4. Équation différentielle en boucle fermée</h4>
+          <p>En remplaçant \(q_e(t)\) par son expression dans l'équation du système : \[S \frac{dn(t)}{dt} = K(cn(t) - n(t)) - q_s(t) \implies S \frac{dn(t)}{dt} + K n(t) = K cn(t) - q_s(t)\]</p>
+          <h4>5. Fonctions de transfert \(R(p)\) et \(H(p)\)</h4>
+          <ul class="formula-list">
+            <li>Régulateur proportionnel : \(R(p) = K\).<br></li>
+            <li>Processus : En appliquant la transformée de Laplace avec conditions initiales nulles sur l'équation du réservoir \(S p N(p) = Q_e(p) - Q_s(p)\). Si l'on ne considère que l'entrée \(Q_e(p)\) (donc \(Q_s=0\)), on obtient \(H(p) = \frac{N(p)}{Q_e(p)} = \frac{1}{S p}\).</li>
+          </ul>
+          <h4>6. Diagramme de Bode de \(H(p)\)</h4>
+          <p>La fonction \(H(p) = \frac{1}{Sp}\) est un intégrateur pur.</p>
+          <ul class="formula-list">
+            <li>Gain : Droite de pente -20 dB/décade, passant par 0 dB à la pulsation \(\omega = 1/S\).</li>
+            <li>Phase : Constante et égale à \(-90^\circ\).</li>
+          </ul>
+          <h4>7. Fonctions de transfert en boucle fermée</h4>
+          <p>A partir du schéma fonctionnel : \(N(p) = H(p) [R(p)(CN(p) - N(p)) - \Delta_1(p)]\). \[N(p) = \frac{1}{Sp} [K(CN(p) - N(p)) - \Delta_1(p)] \implies N(p) \left(1 + \frac{K}{Sp}\right) = \frac{K}{Sp} CN(p) - \frac{1}{Sp} \Delta_1(p)\] En multipliant par \(\frac{Sp}{K}\), on identifie : \[T(p) = \frac{N(p)}{CN(p)} = \frac{1}{1 + \frac{S}{K}p} \quad \text{et} \quad T_{\delta 1}(p) = \frac{N(p)}{\Delta_1(p)} = \frac{-1/K}{1 + \frac{S}{K}p}\]</p>
+          <h4>8. Pôles et stabilité</h4>
+          <p>Les deux fonctions de transfert ont le même dénominateur. Le pôle est solution de \(1 + \frac{S}{K}p = 0\), soit \(p = -\frac{K}{S}\). Puisque \(S > 0\) et \(K > 0\), le pôle est strictement négatif. Le système asservi est donc <strong>stable</strong>.</p>
+          <h4>9. Diagrammes de Bode (comparaison)</h4>
+          <ul class="formula-list">
+            <li>Boucle ouverte \(bH(p) = R(p)H(p) = \frac{K}{Sp}\) : intégrateur pur (pente -20dB/décade, phase \(-90^\circ\)).</li>
+            <li>Boucle fermée \(T(p) = \frac{1}{1 + \frac{S}{K}p}\) : système du premier ordre (gain 0 dB en BF, puis cassure à \(\omega_c = K/S\) avec pente -20 dB/décade ; phase de \(0^\circ\) à \(-90^\circ\)).</li>
+          </ul>
+          <h4>10. Régime permanent face à un échelon de perturbation</h4>
+          <p>Ici, \(CN(p) = 0\) et \(q_s(t)\) est un échelon unitaire \(\implies Q_s(p) = \frac{1}{p}\). \[N(p) = T_{\delta 1}(p) Q_s(p) = \frac{-1/K}{1 + \frac{S}{K}p} \cdot \frac{1}{p}\] En appliquant le théorème de la valeur finale : \[\lim_{t \to \infty} n(t) = \lim_{p \to 0} p N(p) = -\frac{1}{K}\] Le niveau baisse de \(1/K\) en régime permanent pour compenser la fuite.</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2</span>
+              <h3>Exercice 2 : Asservissement de vitesse d'une scie</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="auto-td1-e2" class="answer-block">
+          <figure class="system-diagram td-figure">
+            <img src="assets/auto/TD/AU361-TD1-Ex2.svg" alt="Schema fonctionnel de l'asservissement de vitesse." loading="lazy">
+            <figcaption class="diagram-caption">Schema fonctionnel de l'asservissement de vitesse.</figcaption>
+          </figure>
+          <h4>1. Variables et paramètres</h4>
+          <ul class="formula-list">
+            <li>Entrée : Tension de commande \(u(t)\).</li>
+            <li>Sortie : Vitesse angulaire \(w(t)\).</li>
+            <li>Perturbation : Couple résistant \(Cr(t)\).</li>
+            <li>Paramètres : \(J, K_1, K_2, R\).</li>
+          </ul>
+          <h4>2. Équation différentielle du système</h4>
+          <ul class="formula-list">
+            <li>Électrique : \(u(t) = R i(t) + e(t) \implies i(t) = \frac{u(t) - K_2 w(t)}{R}\).</li>
+            <li>Mécanique : \(J \frac{dw(t)}{dt} = C_m(t) - Cr(t) = K_1 i(t) - Cr(t)\).</li>
+          </ul>
+          <p>En combinant : \[J \frac{dw(t)}{dt} = \frac{K_1}{R}(u(t) - K_2 w(t)) - Cr(t) \implies J \frac{dw(t)}{dt} + \frac{K_1 K_2}{R} w(t) = \frac{K_1}{R} u(t) - Cr(t)\]</p>
+          <h4>3. Représentation d'état</h4>
+          <p>On choisit la variable d'état \(x(t) = w(t)\) et le vecteur d'entrée \(V(t) = \begin{bmatrix} u(t) \\ Cr(t) \end{bmatrix}\). \[\dot{x}(t) = -\frac{K_1 K_2}{R J} x(t) + \begin{bmatrix} \frac{K_1}{R J} & -\frac{1}{J} \end{bmatrix} \begin{bmatrix} u(t) \\ Cr(t) \end{bmatrix}\] \[y(t) = x(t)\]</p>
+          <h4>4. Fonction de transfert \(T(p)\)</h4>
+          <p>Si \(Cr(t) = 0\), la transformée de Laplace donne \((J p + \frac{K_1 K_2}{R}) W(p) = \frac{K_1}{R} U(p)\). \[T(p) = \frac{W(p)}{U(p)} = \frac{K_1/R}{Jp + \frac{K_1 K_2}{R}} = \frac{1/K_2}{1 + \frac{RJ}{K_1 K_2}p}\]</p>
+          <h4>5. Stabilité</h4>
+          <p>Le pôle est \(p = -\frac{K_1 K_2}{R J}\). Comme toutes les grandeurs physiques sont positives, le pôle est réel strictement négatif. Le système est stable.</p>
+          <h4>6. Application d'un échelon \(u(t)=10V\)</h4>
+          <ul class="formula-list">
+            <li>En régime permanent (\(t \to \infty\)) : \(\lim_{t \to \infty} w(t) = \lim_{p \to 0} p \cdot T(p) \frac{10}{p} = \frac{10}{K_2}\).</li>
+            <li>A \(t=0^+\) : La variable d'état \(w(t)\) est continue. Etant initialement nulle, \(w(0^+) = 0\).</li>
+            <li>Accélération à \(t=0^+\) : À partir de l'équation différentielle, à \(t=0^+\), \(w(0^+)=0\) donc \(J \cdot acc(0^+) + 0 = \frac{K_1}{R} \cdot 10 \implies acc(0^+) = \frac{10 K_1}{R J}\).</li>
+          </ul>
+          <h4>7. Prise en compte de la perturbation</h4>
+          <p>L'équation différentielle complète dans le domaine de Laplace est : \[(J p + \frac{K_1 K_2}{R}) W(p) = \frac{K_1}{R} U(p) - CR(p)\] \[W(p) = \frac{1/K_2}{1 + \frac{R J}{K_1 K_2} p} U(p) - \frac{R/(K_1 K_2)}{1 + \frac{R J}{K_1 K_2} p} CR(p)\] On identifie \(T_\delta(p) = \frac{-R/(K_1 K_2)}{1 + \frac{R J}{K_1 K_2} p}\).</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 3</span>
+              <h3>Exercice 3 : Régulation de température d'une enceinte</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="auto-td1-e3" class="answer-block">
+          <figure class="system-diagram td-figure">
+            <img src="assets/auto/TD/AU361-TD1-Ex3.svg" alt="Modele thermique de l'enceinte." loading="lazy">
+            <figcaption class="diagram-caption">Modele thermique de l'enceinte.</figcaption>
+          </figure>
+          <h4>1. Modélisation</h4>
+          <ul class="formula-list">
+            <li>Paramètres : \(\alpha_1, \alpha_2, \alpha_3\).</li>
+            <li>Variables : \(Tint(t), Text(t), Tpar(t), Puis(t)\).</li>
+            <li>Commande : \(Puis(t)\) ; Sortie : \(Tint(t)\) ; Perturbation : \(Text(t)\).</li>
+          </ul>
+          <h4>2. Représentation externe</h4>
+          <p>Dans le domaine de Laplace : (1) \(p \cdot Tpar = \alpha_1(Tint - Tpar) + \alpha_2(Text - Tpar) + Puis \implies (p + \alpha_1 + \alpha_2)Tpar = \alpha_1 Tint + \alpha_2 Text + Puis\) (2) \(p \cdot Tint = \alpha_3(Tpar - Tint) \implies Tpar = \frac{p+\alpha_3}{\alpha_3} Tint\). En injectant (2) dans (1), on trouve : \[[p^2 + p(\alpha_1 + \alpha_2 + \alpha_3) + \alpha_2 \alpha_3] Tint = \alpha_3 Puis + \alpha_2 \alpha_3 Text\] Donc : \[H(p) = \frac{\alpha_3}{p^2 + p(\alpha_1+\alpha_2+\alpha_3) + \alpha_2 \alpha_3} \quad \text{et} \quad Hd(p) = \frac{\alpha_2 \alpha_3}{p^2 + p(\alpha_1+\alpha_2+\alpha_3) + \alpha_2 \alpha_3}\] Gain statique de \(Hd(p)\) (pour \(p=0\)) : \(K_{Hd} = \frac{\alpha_2 \alpha_3}{\alpha_2 \alpha_3} = 1\).</p>
+          <h4>3. Enceinte parfaitement isolée (\(\alpha_2 = 0\))</h4>
+          <ul class="formula-list">
+            <li>a) La fonction \(Hd(p)\) devient nulle, l'extérieur n'a plus d'influence.</li>
+            <li>b) \(H(p) = \frac{\alpha_3}{p^2 + p(\alpha_1+\alpha_3)} = \frac{\alpha_3}{p(p + \alpha_1 + \alpha_3)} = \frac{\frac{\alpha_3}{\alpha_1+\alpha_3}}{p(1 + \frac{1}{\alpha_1+\alpha_3} p)}\). On a bien la forme demandée avec \(G = \frac{\alpha_3}{\alpha_1+\alpha_3}\) et \(T = \frac{1}{\alpha_1+\alpha_3}\).</li>
+            <li>c) La réponse indicielle s'obtient en intégrant un système du 1er ordre. C'est une rampe amortie : \(Tint(t) = G \cdot [t - T(1 - e^{-t/T})]\).</li>
+          </ul>
+          <h4>4. Enceinte avec pertes thermiques</h4>
+          <ul class="formula-list">
+            <li>On calcule le dénominateur avec \(\alpha_1=0.9, \alpha_2=0.01, \alpha_3=0.1\) : \(p^2 + 1.01 p + 0.001\).</li>
+            <li>Ce polynôme admet deux racines : \(p_1 \approx -0.001\) et \(p_2 \approx -1\). Le pôle \(p_1\) est dominant (constante de temps très grande), ce qui explique le comportement apparent du premier ordre.</li>
+            <li>Sur la Figure 2, on atteint \(63\%\) de la valeur finale vers \(t = 1000\)s, d'où \(\tau = 1000\)s.</li>
+            <li>Le gain statique de \(H(p)\) est \(K_H = \frac{0.1}{0.001} = 100\). Le gain statique de \(Hd(p)\) est 1.</li>
+          </ul>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 4</span>
+              <h3>Exercice 4 : Régulation de température d'un cryostat</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="auto-td1-e4" class="answer-block">
+          <figure class="system-diagram td-figure">
+            <img src="assets/auto/TD/AU361-TD1-Ex4.svg" alt="Reponse experimentale du cryostat." loading="lazy">
+            <figcaption class="diagram-caption">Reponse experimentale du cryostat.</figcaption>
+          </figure>
+          <h4>Identification des paramètres du modèle</h4>
+          <p>L'essai indique que \(Text(t) = 300K\) constant. Le système est à l'équilibre avant \(t=100s\) (où \(U=0\)). \(Temp(t<100) = Hd(0) \cdot 300 = 300 K\) (puisque \(den(0)=1\)). Cela correspond au graphe.</p>
+          <p>À \(t=100s\), un échelon de consigne de vitesse est appliqué : passage à 1000 tr/min. Sachant que 30V \(\leftrightarrow\) rapport cyclique unitaire \(U=1 \leftrightarrow\) 3000 tr/min, la vitesse est \(3000 \cdot U(t)\). Pour 1000 tr/min, l'échelon de commande est donc \(\Delta U = \frac{1000}{3000} = \frac{1}{3}\).</p>
+          <p>Sur le graphe, la température passe de 300 K à 200 K en régime permanent. L'amplitude de la variation de la sortie est \(\Delta Temp = -100 K\). L'équation en régime permanent pour cette variation donne : \(\Delta Temp = H(0) \cdot \Delta U = \frac{G}{den(0)} \cdot \Delta U\). Ainsi, \(-100 = G \cdot \frac{1}{3} \implies G = -300\).</p>
+          <p>Pour le dénominateur, la réponse a l'allure d'un premier ordre. La valeur finale de la variation est 200K. À \(63\%\) de la transition (soit une chute de 63K, donc Temp=237K), on lit sur le graphe un temps d'environ \(300s\). Sachant que l'échelon a démarré à \(100s\), la constante de temps est \(\tau = 300 - 100 = 200s\).</p>
+          <p>Finalement, \(den(p)\) pour un système du 1er ordre s'écrit \(1 + \tau p\). Les paramètres sont donc : \[G = -300 \quad \text{et} \quad den(p) = 1 + 200p\]</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

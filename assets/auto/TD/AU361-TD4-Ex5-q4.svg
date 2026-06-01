@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 230" width="100%" height="100%">
+  <defs>
+    <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#000" />
+    </marker>
+  </defs>
+
+  <text x="10" y="125" font-family="Arial" font-size="14" font-weight="bold">ConsTint</text>
+  <line x1="80" y1="120" x2="110" y2="120" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+
+  <rect x="110" y="100" width="40" height="40" stroke="#000" stroke-width="2" fill="#fff8dc" />
+  <text x="125" y="125" font-family="Arial" font-size="14">T</text>
+
+  <line x1="150" y1="120" x2="180" y2="120" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+  <circle cx="190" cy="120" r="10" stroke="#000" stroke-width="2" fill="none" />
+  <text x="175" y="110" font-family="Arial" font-size="14">+</text>
+  <text x="195" y="155" font-family="Arial" font-size="14">-</text>
+
+  <line x1="200" y1="120" x2="230" y2="120" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+  <rect x="230" y="100" width="40" height="40" stroke="#000" stroke-width="2" fill="#fff8dc" />
+  <text x="240" y="125" font-family="Arial" font-size="14">1/S</text>
+
+  <line x1="270" y1="120" x2="320" y2="120" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+  <text x="280" y="115" font-family="Arial" font-size="14">Puis</text>
+
+  <rect x="320" y="100" width="60" height="40" stroke="#000" stroke-width="2" fill="#e6f2ff" />
+  <text x="335" y="125" font-family="Arial" font-size="14">H(p)</text>
+
+  <text x="320" y="35" font-family="Arial" font-size="14" font-weight="bold">Text</text>
+  <line x1="360" y1="30" x2="400" y2="30" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+  <rect x="400" y="10" width="60" height="40" stroke="#000" stroke-width="2" fill="#ffe6e6" />
+  <text x="410" y="35" font-family="Arial" font-size="14">Hd(p)</text>
+
+  <line x1="380" y1="120" x2="490" y2="120" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+  <circle cx="500" cy="120" r="10" stroke="#000" stroke-width="2" fill="none" />
+  <text x="485" y="110" font-family="Arial" font-size="14">+</text>
+  <text x="510" y="110" font-family="Arial" font-size="14">+</text>
+  
+  <line x1="460" y1="30" x2="500" y2="30" stroke="#000" stroke-width="2" />
+  <line x1="500" y1="30" x2="500" y2="110" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+
+  <line x1="510" y1="120" x2="610" y2="120" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+  <text x="620" y="125" font-family="Arial" font-size="14" font-weight="bold">Tint</text>
+
+  <line x1="560" y1="120" x2="560" y2="190" stroke="#000" stroke-width="2" />
+  <line x1="560" y1="190" x2="350" y2="190" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+  <rect x="310" y="170" width="40" height="40" stroke="#000" stroke-width="2" fill="#fff8dc" />
+  <text x="325" y="195" font-family="Arial" font-size="14">R</text>
+  <line x1="310" y1="190" x2="190" y2="190" stroke="#000" stroke-width="2" />
+  <line x1="190" y1="190" x2="190" y2="130" stroke="#000" stroke-width="2" marker-end="url(#arrow3)" />
+</svg>

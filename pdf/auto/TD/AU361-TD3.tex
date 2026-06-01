@@ -1,0 +1,140 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\title{Correction du TD 3 : Analyse et Commande des systèmes linéaires}
+\author{AU361 - Grenoble INP Esisar}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Partie I : Analyse du processus à piloter}
+
+Le système mécanique relie la commande $u$ à la vitesse $vit$ par un premier ordre de gain statique $G=5$ et de constante de temps $\tau=0.1$ s[cite: 773].
+
+\textbf{I.1. Expression de la fonction de transfert $H(p)$}
+La position $pos(t)$ est l'intégrale de la vitesse $vit(t)$. Dans le domaine de Laplace, on a $POS(p) = \frac{VIT(p)}{p}$.
+La fonction de transfert entre $U(p)$ et $VIT(p)$ est $\frac{5}{1+0.1p}$[cite: 773].
+Ainsi, la fonction de transfert du processus $H(p)$ est[cite: 775]:
+$$ H(p) = \frac{POS(p)}{U(p)} = \frac{5}{p(1+0.1p)} $$
+
+\textbf{I.2. Valeur des pôles du processus}
+Les pôles annulent le dénominateur de $H(p)$[cite: 776]:
+$$ p(1+0.1p) = 0 \implies p_1 = 0 \quad \text{et} \quad p_2 = -10 \text{ rad/s} $$
+
+\textbf{I.3. Stabilité asymptotique}
+Le système n'est \textbf{pas asymptotiquement stable} car il possède un pôle nul (à la limite de la stabilité), traduisant un comportement intégrateur pur[cite: 777].
+
+\textbf{I.4. Expressions temporelles des réponses indicielles}
+Pour un échelon de commande $U(p) = \frac{1}{p}$[cite: 778, 779]:
+\begin{itemize}
+    \item \textbf{Vitesse :} $VIT(p) = \frac{5}{p(1+0.1p)} = 5 \left( \frac{1}{p} - \frac{0.1}{1+0.1p} \right) = \frac{5}{p} - \frac{5}{p+10}$.
+    En passant dans le domaine temporel : $vit(t) = 5(1 - e^{-10t}) \cdot \Gamma(t)$[cite: 778, 779].
+    \item \textbf{Position :} $POS(p) = \frac{5}{p^2(1+0.1p)} = \frac{5}{p^2} - \frac{0.5}{p} + \frac{0.5}{p+10}$.
+    En passant dans le domaine temporel : $pos(t) = (5t - 0.5 + 0.5e^{-10t}) \cdot \Gamma(t)$[cite: 778, 779].
+\end{itemize}
+
+
+\section*{Partie II : Analyse du système asservi}
+
+\textbf{II.1. Fonction de transfert du régulateur}
+Pour un régulateur proportionnel de gain K[cite: 781]:
+$$ R(p) = K $$
+
+\textbf{II.2. Fonction de transfert en boucle fermée (FTBF)}
+$$ FTBF(p) = \frac{R(p)H(p)}{1 + R(p)H(p)} = \frac{\frac{5K}{p(1+0.1p)}}{1 + \frac{5K}{p(1+0.1p)}} = \frac{5K}{0.1p^2 + p + 5K} $$
+En mettant sous forme canonique du second ordre $\frac{1}{\frac{p^2}{\omega_n^2} + \frac{2\zeta}{\omega_n}p + 1}$[cite: 791]:
+$$ FTBF(p) = \frac{1}{\frac{0.1}{5K}p^2 + \frac{1}{5K}p + 1} $$
+Par identification[cite: 792]:
+$$ \omega_n = \sqrt{50K} \quad \text{et} \quad \zeta = \frac{1}{\sqrt{2K}} $$
+
+\textbf{II.3. Position en régime permanent (consigne échelon)}
+Sans perturbation ($\delta=0$) et pour $cons = 1/p$, on applique le théorème de la valeur finale[cite: 793]:
+$$ pos(\infty) = \lim_{p \to 0} p \cdot FTBF(p) \frac{1}{p} = FTBF(0) = 1 $$
+Le système suit parfaitement la consigne, l'erreur de position est nulle[cite: 793].
+
+\textbf{II.4. Erreur statique due à la perturbation}
+Avec $cons=0$ et $\delta=1/p$, le transfert entre la perturbation et la sortie est $T_\delta(p) = \frac{H(p)}{1+R(p)H(p)} = \frac{5}{0.1p^2 + p + 5K}$[cite: 794, 795].
+$$ pos(\infty) = \lim_{p \to 0} p \cdot T_\delta(p) \frac{1}{p} = T_\delta(0) = \frac{5}{5K} = \frac{1}{K} $$
+L'erreur statique due à cette perturbation est donc $\frac{1}{K}$[cite: 795].
+
+\textbf{II.5. Minimisation de l'erreur statique sans dépassement}
+Pour minimiser l'erreur ($\frac{1}{K}$), il faut maximiser $K$[cite: 796]. Cependant, pour garantir une réponse sans dépassement, il faut un amortissement $\zeta \ge 1$[cite: 796].
+$$ \frac{1}{\sqrt{2K}} \ge 1 \implies 2K \le 1 \implies K \le 0.5 $$
+On choisit la valeur maximale $K = 0.5$. L'erreur statique due à la perturbation vaut alors $\frac{1}{0.5} = 2$[cite: 797].
+
+\textbf{II.6. Diagramme de Bode de $T_\delta(p)$ pour $K=2$}
+Pour $K=2$, $T_\delta(p) = \frac{5}{0.1p^2 + p + 10}$[cite: 798]. 
+Les paramètres deviennent $\omega_n = \sqrt{100} = 10$ rad/s et $\zeta = 0.5$[cite: 798].
+La pulsation de résonance est[cite: 798]:
+$$ \omega_r = \omega_n \sqrt{1 - 2\zeta^2} = 10 \sqrt{1 - 0.5} = \frac{10}{\sqrt{2}} \approx 7.07 \text{ rad/s} $$
+
+\textbf{II.7. Réponse à une perturbation sinusoïdale}
+Fréquence $f = 50$ Hz $\implies \omega = 314$ rad/s[cite: 799]. Amplitude $= 0.1$.
+En régime permanent, la position a l'allure d'une sinusoïde de même pulsation. L'amplitude $A$ de ces variations est[cite: 800]:
+$$ A = 0.1 \times |T_\delta(j\omega)| = \frac{0.5}{\sqrt{(5K - 0.1\omega^2)^2 + \omega^2}} $$
+
+
+\section*{Partie III : Moteur asservi en position}
+
+Le système intègre un correcteur $C(s)$, un transfert $\frac{K}{1+Ts}$ et un intégrateur $\frac{1}{s}$[cite: 805, 809, 810].
+
+\textbf{1. Expressions de $T_1(s)$ et $T_2(s)$}
+D'après le schéma, $V(s) = \frac{K}{1+Ts}[C(s)(CY(s) - Y(s)) - \Gamma_r(s)]$ et $Y(s) = \frac{V(s)}{s}$[cite: 813].
+En réorganisant[cite: 814, 815]:
+$$ Y(s) \left[ 1 + \frac{K C(s)}{s(1+Ts)} \right] = \frac{K C(s)}{s(1+Ts)} CY(s) - \frac{K}{s(1+Ts)} \Gamma_r(s) $$
+On identifie les deux fonctions de transfert[cite: 816]:
+$$ T_1(s) = \frac{K C(s)}{s(1+Ts) + K C(s)} \quad \text{et} \quad T_2(s) = \frac{-K}{s(1+Ts) + K C(s)} $$
+
+\textbf{2. Erreur en suivi de consigne échelon ($C(s) = K_p$)}
+Le transfert en boucle ouverte comporte un intégrateur pur ($\frac{1}{s}$). Le système est donc de classe 1, ce qui garantit une erreur statique de position \textbf{nulle} pour une consigne échelon[cite: 817].
+
+\textbf{3. Erreur en réponse à une perturbation unitaire}
+L'erreur est $\epsilon = -y$ (puisque $cy=0$)[cite: 818].
+$$ \lim_{s \to 0} s \cdot T_2(s) \frac{1}{s} = T_2(0) = \frac{-K}{K K_p} = -\frac{1}{K_p} $$
+L'erreur statique est donc $\frac{1}{K_p}$[cite: 818].
+
+\textbf{4. Erreur de traînage (consigne rampe)}
+Pour $CY(s) = 1/s^2$ [cite: 819], l'erreur $\epsilon(s) = CY(s)(1 - T_1(s)) = \frac{1+Ts}{s[s(1+Ts)+K K_p]}$[cite: 820].
+$$ \epsilon(\infty) = \lim_{s \to 0} s \epsilon(s) = \frac{1}{K K_p} $$
+
+\textbf{5. Pas de surtension de gain ($K=4, T=0.25$)}
+$T_1(s)$ est un 2nd ordre avec $\omega_n^2 = \frac{4K_p}{0.25} = 16K_p$ et $\frac{2\zeta}{\omega_n} = \frac{1}{4K_p}$, d'où $\zeta = \frac{1}{2\sqrt{K_p}}$[cite: 821].
+Il n'y a pas de résonance si $\zeta \ge \frac{1}{\sqrt{2}}$[cite: 821]:
+$$ \frac{1}{2\sqrt{K_p}} \ge \frac{1}{\sqrt{2}} \implies \sqrt{K_p} \le \frac{\sqrt{2}}{2} \implies K_p \le 0.5 $$
+
+\textbf{6. Marge de phase de 45°}
+La FTBO est $L(j\omega) = \frac{4K_p}{j\omega(1+0.25j\omega)}$[cite: 822].
+Phase : $\phi = -90^\circ - \arctan(0.25\omega)$. 
+Pour $M_\phi = 45^\circ$, on a $\phi = -135^\circ \implies \arctan(0.25\omega) = 45^\circ \implies \omega = 4$ rad/s[cite: 822].
+Le gain doit valoir 1 à cette pulsation :
+$$ |L(j4)| = \frac{4K_p}{4\sqrt{1+1}} = \frac{K_p}{\sqrt{2}} = 1 \implies K_p = \sqrt{2} \approx 1.41 $$
+Puisque la phase ne dépasse jamais $-180^\circ$, la marge de gain est \textbf{infinie}[cite: 823].
+
+\textbf{7. Marge de module pour $K_p=1$}
+La marge de module $\Delta M$ est la distance minimale entre le lieu de Nyquist de $L(j\omega)$ et le point critique $-1$[cite: 824].
+$\Delta M = \min_{\omega} |1 + L(j\omega)| = \min_{\omega} |S(j\omega)|^{-1}$. 
+En trouvant le minimum numérique, on obtient $\Delta M \approx 0.68$[cite: 824].
+
+\textbf{8. Stabilité avec correcteur PI}
+Pour $C(s) = \frac{1+sT_a}{sT_b}$[cite: 825, 826], l'équation caractéristique de la boucle fermée est :
+$$ D(s) = T T_b s^3 + T_b s^2 + K T_a s + K = 0 $$
+Tableau de Routh[cite: 827]:
+\begin{center}
+\begin{tabular}{c|cc}
+$s^3$ & $T T_b$ & $K T_a$ \\
+$s^2$ & $T_b$ & $K$ \\
+$s^1$ & $\frac{T_b K T_a - T T_b K}{T_b} = K(T_a - T)$ & 0 \\
+$s^0$ & $K$ & 0 \\
+\end{tabular}
+\end{center}
+Pour que le système soit stable (en supposant $K>0$ et $T_b>0$), tous les éléments de la première colonne doivent être positifs. La condition de stabilité est donc[cite: 827]:
+$$ T_a > T $$
+
+\end{document}

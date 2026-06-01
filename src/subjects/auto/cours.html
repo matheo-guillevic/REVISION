@@ -233,6 +233,112 @@
           </figure>
         </section>
 
+        <section id="auto-marges" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Methode</span>
+            <h2>Calculer les marges de stabilite</h2>
+            <p>Les marges se calculent sur la fonction de transfert en boucle ouverte \(L(p)\), en posant \(p=j\omega\). Elles mesurent la distance a la limite d'instabilite : le point critique \(-1\), soit \(0\) dB et \(-180^\circ\).</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Marge de phase \(M_\phi\)</h4>
+              <ol class="solution-steps">
+                <li>Trouver la pulsation de coupure en gain \(\omega_0\), definie par \(|L(j\omega_0)|=1\), donc \(20\log_{10}|L(j\omega_0)|=0\) dB.</li>
+                <li>Calculer la phase de la boucle ouverte a cette pulsation : \(\arg(L(j\omega_0))\).</li>
+                <li>En deduire la marge : <span class="formula-chip">\(M_\phi=180^\circ+\arg(L(j\omega_0))\)</span>.</li>
+              </ol>
+              <p>Repere courant : une marge de phase entre \(45^\circ\) et \(60^\circ\) donne souvent un compromis correct entre rapidite, amortissement et robustesse.</p>
+            </div>
+            <div class="content-block theorem">
+              <h4>Marge de gain \(M_G\)</h4>
+              <ol class="solution-steps">
+                <li>Trouver la pulsation de coupure en phase \(\omega_\pi\), definie par \(\arg(L(j\omega_\pi))=-180^\circ\).</li>
+                <li>Calculer le module de la boucle ouverte a cette pulsation : \(|L(j\omega_\pi)|\).</li>
+                <li>En deduire la marge en decibels : <span class="formula-chip">\(M_G=-20\log_{10}|L(j\omega_\pi)|\)</span>.</li>
+              </ol>
+              <p>Repere courant : on cherche souvent \(M_G\ge10\) dB pour garder une reserve de robustesse suffisante.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block remember">
+              <h4>Marge de module \(M_M\)</h4>
+              <p>La marge de module est plus globale : elle mesure la distance minimale entre le lieu de Nyquist de \(L(j\omega)\) et le point critique \(-1\).</p>
+              <p><span class="formula-chip">\(M_M=\min_\omega |1+L(j\omega)|\)</span></p>
+              <p>Avec la sensibilite \(S(j\omega)=\frac{1}{1+L(j\omega)}\), on obtient :</p>
+              <p><span class="formula-chip">\(M_M=\frac{1}{\max_\omega |S(j\omega)|}=\frac{1}{\|S\|_\infty}\)</span></p>
+            </div>
+            <div class="content-block warning">
+              <h4>Lecture pratique</h4>
+              <ul class="formula-list">
+                <li>Si \(M_\phi\) est faible, un petit retard supplementaire peut rendre la boucle instable.</li>
+                <li>Si \(M_G\) est faible, une augmentation de gain peut suffire a destabiliser le systeme.</li>
+                <li>Si \(M_M\) est faible, le lieu de Nyquist passe trop pres de \(-1\), meme si les marges separees semblent acceptables.</li>
+                <li>Une conception robuste vise souvent \(M_M\ge0.5\), soit un pic de sensibilite d'environ 6 dB.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-block theorem">
+            <h4>Exemple complet : \(L(p)=\frac{1}{p(p+1)^2}\)</h4>
+            <p>On etudie la FTBO d'un systeme integrateur du troisieme ordre :</p>
+            <p><span class="formula-chip">\(L(j\omega)=\frac{1}{j\omega(1+j\omega)^2}\)</span></p>
+            <p>Avant de calculer les marges, on separe module et phase :</p>
+            <ul class="formula-list">
+              <li><strong>Module</strong> : \(|L(j\omega)|=\frac{1}{\omega(1+\omega^2)}\).</li>
+              <li><strong>Phase</strong> : \(\arg(L(j\omega))=-90^\circ-2\arctan(\omega)\).</li>
+            </ul>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Application : marge de gain</h4>
+              <ol class="solution-steps">
+                <li>On cherche \(\omega_\pi\) tel que \(-90^\circ-2\arctan(\omega_\pi)=-180^\circ\).</li>
+                <li>Donc \(\arctan(\omega_\pi)=45^\circ\), d'ou \(\omega_\pi=1\) rad/s.</li>
+                <li>Le module vaut \(|L(j1)|=\frac{1}{1(1+1^2)}=\frac{1}{2}=0.5\).</li>
+                <li>La marge vaut alors <span class="formula-chip">\(M_G=20\log_{10}(2)\approx6.02\) dB</span>.</li>
+              </ol>
+              <p>Conclusion : le gain peut etre double avant instabilite, mais \(6.02\) dB reste faible par rapport au repere usuel de \(10\) dB.</p>
+            </div>
+            <div class="content-block method">
+              <h4>Application : marge de phase</h4>
+              <ol class="solution-steps">
+                <li>On cherche \(\omega_0\) tel que \(|L(j\omega_0)|=1\), donc \(\frac{1}{\omega_0(1+\omega_0^2)}=1\).</li>
+                <li>On obtient \(\omega_0^3+\omega_0-1=0\), soit numeriquement \(\omega_0\approx0.682\) rad/s.</li>
+                <li>La phase vaut \(\arg(L(j0.682))\approx-90^\circ-2(34.3^\circ)=-158.6^\circ\).</li>
+                <li>La marge vaut alors <span class="formula-chip">\(M_\phi=180^\circ-158.6^\circ=21.4^\circ\)</span>.</li>
+              </ol>
+              <p>Conclusion : la boucle est theoriquement stable, mais la marge de phase est faible ; on attend un amortissement mediocre et des oscillations importantes.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block remember">
+              <h4>Application : marge de module</h4>
+              <p>On cherche la distance minimale au point critique :</p>
+              <p><span class="formula-chip">\(M_M=\min_\omega\left|1+\frac{1}{j\omega(1+j\omega)^2}\right|\)</span></p>
+              <p>Le minimum se lit en pratique avec un calcul numerique, un Nyquist ou un Black. Pour cet exemple, il est atteint autour de \(\omega\approx0.85\) rad/s.</p>
+              <p><span class="formula-chip">\(M_M\approx0.38\)</span></p>
+            </div>
+            <div class="content-block warning">
+              <h4>Bilan de l'exemple</h4>
+              <ul class="formula-list">
+                <li>\(M_G\approx6.02\) dB : reserve de gain faible.</li>
+                <li>\(M_\phi\approx21.4^\circ\) : amortissement insuffisant.</li>
+                <li>\(M_M\approx0.38\) : robustesse globale trop faible par rapport au repere \(0.5\).</li>
+                <li>Les trois lectures racontent la meme chose : le systeme est proche de l'instabilite et demande un correcteur plus robuste.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>Source</strong>
+            <p>Cette methode est synthetisee depuis <code>pdf/auto/cours/marges.tex</code>.</p>
+          </div>
+        </section>
+
         <section id="auto-pid-rst" class="page-section">
           <div class="section-heading">
             <span class="eyebrow">Chapitre 4</span>
@@ -299,25 +405,29 @@
               <span class="status-pill">TD 1</span>
               <h3>Representation des processus</h3>
               <p>Variables, perturbations, schemas fonctionnels, mise en equation et fonction de transfert.</p>
-              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD1.pdf">Ouvrir le PDF</a></p>
+              <p class="secondary-link"><a href="auto-td1.html">Ouvrir la page corrigee</a></p>
+              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD1.pdf">PDF original</a></p>
             </article>
             <article class="chapter-card">
               <span class="status-pill">TD 2</span>
               <h3>Stabilite, robustesse, PID</h3>
               <p>Routh, Nyquist, marge de gain, PI et compromis precision/robustesse.</p>
-              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD2.pdf">Ouvrir le PDF</a></p>
+              <p class="secondary-link"><a href="auto-td2.html">Ouvrir la page corrigee</a></p>
+              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD2.pdf">PDF original</a></p>
             </article>
             <article class="chapter-card">
               <span class="status-pill">TD 3</span>
               <h3>Asservissement de position</h3>
               <p>Systeme mecanique, premier ordre plus integrateur, boucle fermee du second ordre.</p>
-              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD3.pdf">Ouvrir le PDF</a></p>
+              <p class="secondary-link"><a href="auto-td3.html">Ouvrir la page corrigee</a></p>
+              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD3.pdf">PDF original</a></p>
             </article>
             <article class="chapter-card">
               <span class="status-pill">TD 4</span>
               <h3>RST</h3>
               <p>Synthese RST, equation de Bezout, suivi sans erreur statique et rejet de perturbations.</p>
-              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD4.pdf">Ouvrir le PDF</a></p>
+              <p class="secondary-link"><a href="auto-td4.html">Ouvrir la page corrigee</a></p>
+              <p class="secondary-link"><a href="pdf/auto/TD/AU361-TD4.pdf">PDF original</a></p>
             </article>
           </div>
 

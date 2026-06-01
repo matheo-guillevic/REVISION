@@ -7,6 +7,7 @@ const mathCoursePath = path.join(root, "src", "subjects", "probabilites", "cours
 const mathTdDir = path.join(root, "src", "subjects", "probabilites", "td");
 const mathExamDir = path.join(root, "src", "subjects", "probabilites", "exam");
 const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
+const autoTdDir = path.join(root, "src", "subjects", "auto", "td");
 const javaCoursePath = path.join(root, "src", "subjects", "java", "cours.html");
 
 const pages = {
@@ -199,6 +200,7 @@ function renderAutoCourse() {
       ["#auto-modelisation", "Modelisation"],
       ["#auto-analyse", "Analyse"],
       ["#auto-commande", "Commande"],
+      ["#auto-marges", "Marges"],
       ["#auto-pid-rst", "PID/RST"],
       ["#auto-td", "TD"],
       ["#auto-revision", "Revision finale"],
@@ -252,6 +254,12 @@ write(pages.java, renderJavaCourse());
 
 for (const file of ["td1.html", "td2.html", "td3.html"]) {
   fs.copyFileSync(path.join(mathTdDir, file), path.join(outDir, file));
+}
+
+if (fs.existsSync(autoTdDir)) {
+  for (const file of fs.readdirSync(autoTdDir).filter((entry) => entry.endsWith(".html"))) {
+    fs.copyFileSync(path.join(autoTdDir, file), path.join(outDir, file));
+  }
 }
 
 if (fs.existsSync(mathExamDir)) {

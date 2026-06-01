@@ -1,0 +1,134 @@
+\documentclass[12pt, a4paper]{article}
+
+% Paquets requis pour le français et les mathématiques
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% Réglage des marges
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+\title{\textbf{Analyse de la Stabilité des Systèmes Asservis}\\ \large Théorie et exemple détaillé des marges de stabilité}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+L'analyse de la robustesse d'un système asservi se fait généralement en étudiant sa Fonction de Transfert en Boucle Ouverte (FTBO), notée $L(p)$. Les marges de stabilité quantifient la distance qui sépare le système de la limite de stabilité (le point critique $-1$ dans le plan complexe, soit un module de $1$ ou $0 \text{ dB}$, et une phase de $-180^\circ$).
+
+Pour l'analyse fréquentielle (harmonique), on pose $p = j\omega$.
+
+\section*{Présentation de l'exemple d'étude}
+Pour illustrer les méthodes de calcul, nous utiliserons la FTBO d'un système intégrateur du 3\up{ème} ordre :
+\begin{equation*}
+    L(p) = \frac{1}{p(p+1)^2} \quad \Longrightarrow \quad L(j\omega) = \frac{1}{j\omega(1+j\omega)^2}
+\end{equation*}
+
+Avant de déterminer les marges, exprimons le module et la phase de ce système en fonction de la pulsation $\omega$ :
+\begin{itemize}
+    \item \textbf{Module :}
+    \begin{equation*}
+        |L(j\omega)| = \frac{1}{|j\omega| \cdot |1+j\omega|^2} = \frac{1}{\omega \left(\sqrt{1^2+\omega^2}\right)^2} = \frac{1}{\omega(1+\omega^2)}
+    \end{equation*}
+    \item \textbf{Phase (Argument) :}
+    \begin{align*}
+        \arg(L(j\omega)) &= \arg(1) - \arg(j\omega) - 2\arg(1+j\omega) \\
+        \arg(L(j\omega)) &= 0^\circ - 90^\circ - 2\arctan(\omega)
+    \end{align*}
+\end{itemize}
+
+\rule{\linewidth}{0.5pt}
+
+\section{Marge de Gain ($M_G$)}
+
+La marge de gain représente le facteur multiplicatif maximum que l'on peut appliquer au gain du système avant qu'il ne devienne instable, en supposant que la phase reste constante. \textbf{On considère généralement qu'une marge de gain est satisfaisante si $M_G \geq 10 \text{ dB}$.}
+
+\subsection{Méthode théorique}
+\begin{enumerate}
+    \item Trouver la pulsation de coupure en phase ($\omega_\pi$) telle que : $\arg(L(j\omega_\pi)) = -180^\circ$.
+    \item Calculer le module à cette pulsation : $|L(j\omega_\pi)|$.
+    \item Déduire la marge de gain en décibels : $M_G \text{ (dB)} = -20 \log_{10} |L(j\omega_\pi)|$.
+\end{enumerate}
+
+\subsection{Application à l'exemple}
+\textbf{Étape 1 : Pulsation de coupure en phase ($\omega_\pi$)}
+\begin{align*}
+    -90^\circ - 2\arctan(\omega_\pi) &= -180^\circ \\
+    -2\arctan(\omega_\pi) &= -90^\circ \\
+    \arctan(\omega_\pi) &= 45^\circ \quad \Longrightarrow \quad \omega_\pi = 1 \text{ rad/s}
+\end{align*}
+
+\textbf{Étape 2 et 3 : Calcul du module et de la marge}
+On remplace $\omega_\pi$ par $1$ dans l'équation du module :
+\begin{equation*}
+    |L(j1)| = \frac{1}{1(1+1^2)} = \frac{1}{2} = 0.5
+\end{equation*}
+La marge de gain en linéaire est l'inverse de ce module ($1/0.5 = 2$). En décibels :
+\begin{equation*}
+    M_G \text{ (dB)} = 20 \log_{10}(2) \approx 6.02 \text{ dB}
+\end{equation*}
+\textit{Conclusion : Le gain peut être doublé avant instabilité. La marge est un peu faible par rapport au critère usuel des $10 \text{ dB}$.}
+
+\rule{\linewidth}{0.5pt}
+
+\section{Marge de Phase ($M_\phi$)}
+
+La marge de phase représente le retard de phase supplémentaire que le système peut tolérer avant instabilité, à gain constant. \textbf{Pour garantir un bon amortissement, on vise généralement $45^\circ \leq M_\phi \leq 60^\circ$.}
+
+\subsection{Méthode théorique}
+\begin{enumerate}
+    \item Trouver la pulsation de coupure en gain ($\omega_0$) telle que : $|L(j\omega_0)| = 1$.
+    \item Calculer la phase à cette pulsation : $\arg(L(j\omega_0))$.
+    \item Déduire la marge de phase : $M_\phi = 180^\circ + \arg(L(j\omega_0))$.
+\end{enumerate}
+
+\subsection{Application à l'exemple}
+\textbf{Étape 1 : Pulsation de coupure en gain ($\omega_0$)}
+\begin{equation*}
+    \frac{1}{\omega_0(1+\omega_0^2)} = 1 \quad \Longrightarrow \quad \omega_0^3 + \omega_0 - 1 = 0
+\end{equation*}
+La résolution numérique de ce polynôme donne : $\omega_0 \approx 0.682 \text{ rad/s}$.
+
+\textbf{Étape 2 et 3 : Calcul de la phase et de la marge}
+On remplace $\omega_0$ dans l'équation de la phase (sachant que $\arctan(0.682) \approx 34.3^\circ$) :
+\begin{align*}
+    \arg(L(j0.682)) &\approx -90^\circ - 2(34.3^\circ) = -158.6^\circ \\
+    M_\phi &= 180^\circ - 158.6^\circ = 21.4^\circ
+\end{align*}
+\textit{Conclusion : Avec $21.4^\circ$, le système est théoriquement stable mais manque fortement d'amortissement (oscillations importantes en boucle fermée).}
+
+\rule{\linewidth}{0.5pt}
+
+\section{Marge de Module ($M_M$)}
+
+La marge de module est un indicateur de robustesse global correspondant à la distance géométrique minimale entre le lieu de Nyquist de la FTBO et le point critique $-1$. \textbf{Une bonne conception vise généralement $M_M \geq 0.5$.}
+
+\subsection{Méthode théorique}
+La marge de module est définie mathématiquement par :
+\begin{equation*}
+    M_M = \min_{\omega} |1 + L(j\omega)|
+\end{equation*}
+Elle correspond à l'inverse du maximum de la fonction de sensibilité $S(j\omega) = \frac{1}{1 + L(j\omega)}$.
+
+\subsection{Application à l'exemple}
+On cherche à minimiser la fonction suivante :
+\begin{equation*}
+    |1 + L(j\omega)| = \left| 1 + \frac{1}{j\omega(1+j\omega)^2} \right|
+\end{equation*}
+La résolution analytique de ce minimum implique des dérivées complexes. En pratique, on utilise des outils numériques ou le diagramme de Nyquist/Black. 
+
+Pour notre exemple, la distance est minimale autour de $\omega \approx 0.85 \text{ rad/s}$, ce qui donne :
+\begin{equation*}
+    M_M \approx 0.38
+\end{equation*}
+\textit{Conclusion : Étant inférieur à $0.5$, ce résultat confirme le manque de robustesse du système mis en évidence par la faible marge de phase.}
+
+\end{document}

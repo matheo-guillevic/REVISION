@@ -469,8 +469,8 @@ button:hover,
   box-shadow: var(--shadow);
 }
 
-.system-diagram img,
-.system-diagram svg {
+.system-diagram > img,
+.system-diagram > svg {
   display: block;
   width: 100%;
   max-width: 920px;
@@ -488,6 +488,27 @@ button:hover,
   margin: 10px 0 0;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.diagram-caption mjx-container,
+.diagram-caption mjx-container svg {
+  display: inline-block;
+  width: auto;
+  max-width: none;
+  height: auto;
+  font-size: inherit;
+  vertical-align: baseline;
+}
+
+.td-figure {
+  margin: 0 0 6px;
+  box-shadow: none;
+}
+
+.td-figure img,
+.td-figure svg {
+  min-width: 0;
+  max-height: 420px;
 }
 
 .diagram-box {
@@ -772,6 +793,28 @@ button:hover,
   background: #f2fbf6;
 }
 
+.td-divider {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+.latex-table-wrap {
+  overflow-x: auto;
+}
+
+.latex-table {
+  border-collapse: collapse;
+  min-width: 360px;
+  background: #ffffff;
+}
+
+.latex-table td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: center;
+}
+
 .question-block ol {
   display: grid;
   gap: 8px;
@@ -867,8 +910,8 @@ button:hover,
     grid-template-columns: 1fr;
   }
 
-  .system-diagram img,
-  .system-diagram svg {
+  .system-diagram > img,
+  .system-diagram > svg {
     max-height: 300px;
   }
 }

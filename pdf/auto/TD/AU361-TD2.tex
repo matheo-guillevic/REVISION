@@ -1,0 +1,205 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\title{Correction du TD 2 : Analyse et Commande des systèmes linéaires continus}
+\author{AU361}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1 : Stabilité (Routh, Nyquist et Marge de gain)}
+
+Soit la fonction de transfert en boucle ouverte (FTBO) avec le correcteur proportionnel $K$ : 
+$$ FTBO(p) = K \cdot F(p) = \frac{K}{p(p^2+5p+6)} = \frac{K}{p^3+5p^2+6p} $$
+
+\textbf{1. Théorème de Routh}\\
+La fonction de transfert en boucle fermée (FTBF) est :
+$$ FTBF(p) = \frac{FTBO(p)}{1+FTBO(p)} = \frac{K}{p^3+5p^2+6p+K} $$
+L'équation caractéristique est : $D(p) = p^3 + 5p^2 + 6p + K = 0$.
+Dressons le tableau de Routh :
+\begin{center}
+\begin{tabular}{c|cc}
+$p^3$ & 1 & 6 \\
+$p^2$ & 5 & $K$ \\
+$p^1$ & $\frac{30-K}{5}$ & 0 \\
+$p^0$ & $K$ & 0 \\
+\end{tabular}
+\end{center}
+Pour que le système soit stable, tous les termes de la première colonne doivent être strictement positifs :
+$$ 5 > 0 \quad ; \quad \frac{30-K}{5} > 0 \implies K < 30 \quad ; \quad K > 0 $$
+Le système est stable pour **$0 < K < 30$**.
+
+\textbf{2. Critère de Nyquist}\\
+Calculons $FTBO(j\omega)$ :
+$$ FTBO(j\omega) = \frac{K}{j\omega(-\omega^2+5j\omega+6)} = \frac{K}{-5\omega^2 + j\omega(6-\omega^2)} $$
+Le lieu coupe l'axe réel (phase de $-180^\circ$) lorsque la partie imaginaire du dénominateur s'annule (pour $\omega \neq 0$), c'est-à-dire :
+$$ \omega(6-\omega^2) = 0 \implies \omega_{180} = \sqrt{6} \text{ rad/s} $$
+La valeur du gain à cette pulsation est :
+$$ FTBO(j\sqrt{6}) = \frac{K}{-5(6)} = -\frac{K}{30} $$
+D'après le critère du revers (Nyquist simplifié, applicable car le système en BO n'a pas de pôles instables), le point critique $(-1, 0)$ doit laisser le lieu sur sa gauche. Le point d'intersection doit donc être à droite de $-1$ :
+$$ -\frac{K}{30} > -1 \implies K < 30 $$
+On retrouve bien **$0 < K < 30$**.
+
+\textbf{3. Marge de gain pour $K=15$}\\
+La marge de gain (MG) se calcule à la pulsation $\omega_{180} = \sqrt{6}$ rad/s :
+$$ MG = -20 \log_{10} |FTBO(j\omega_{180})| = -20 \log_{10} \left( \frac{15}{30} \right) = -20 \log_{10}(0.5) $$
+$$ MG = 20 \log_{10}(2) \approx \textbf{6.02 dB} $$
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Exercice 2 : Régulateur PI}
+
+Le processus est $F(p) = \frac{1-2p}{(1+p)(1+5p)}$. Ses pôles sont $-1$ et $-1/5$. Le pôle le plus lent est $-1/5$, correspondant à une constante de temps de $5$ s. On choisit donc $T_i = 5$ s.
+
+\textbf{1. Fonction de transfert en boucle ouverte}\\
+$$ R(p) = K \left( 1 + \frac{1}{5p} \right) = K \frac{1+5p}{5p} $$
+$$ FBO(p) = R(p)F(p) = K \frac{1+5p}{5p} \frac{1-2p}{(1+p)(1+5p)} = \mathbf{\frac{K(1-2p)}{5p(1+p)}} $$
+
+\textbf{2. Diagramme de Bode pour $K=1$ (Description asymptotique)}\\
+Le transfert est composé de :
+\begin{itemize}
+    \item Un intégrateur $1/(5p)$ : droite de pente $-20$ dB/déc, coupant 0 dB à $\omega = 0.2$ rad/s. Phase constante de $-90^\circ$.
+    \item Un zéro à partie réelle positive (déphasage non minimal) $(1-2p)$ : Cassure à $\omega_1 = 0.5$ rad/s. Ajoute une pente de $+20$ dB/déc au gain. Ajoute un retard de phase allant de $0^\circ$ à $-90^\circ$.
+    \item Un pôle $(1+p)$ : Cassure à $\omega_2 = 1$ rad/s. Ajoute une pente de $-20$ dB/déc au gain. Ajoute un retard de phase allant de $0^\circ$ à $-90^\circ$.
+\end{itemize}
+En basses fréquences, la phase part de $-90^\circ$. En hautes fréquences, la phase tend vers $-90^\circ - 90^\circ - 90^\circ = -270^\circ$.
+
+\textbf{3. Valeur de $K$ pour une marge de gain de 6 dB}\\
+Cherchons $\omega_{180}$ telle que $\arg(FBO(j\omega)) = -180^\circ$.
+$$ -90^\circ - \arctan(2\omega) - \arctan(\omega) = -180^\circ \implies \arctan(2\omega) + \arctan(\omega) = 90^\circ $$
+En appliquant la fonction tangente :
+$$ \frac{2\omega + \omega}{1 - 2\omega^2} = \infty \implies 1 - 2\omega^2 = 0 \implies \omega_{180} = \frac{1}{\sqrt{2}} \text{ rad/s} $$
+Le module à cette pulsation pour $K=1$ est :
+$$ |FBO(j\omega_{180})|_{K=1} = \frac{\sqrt{1+4\omega^2}}{5\omega\sqrt{1+\omega^2}} = \frac{\sqrt{1+2}}{5\frac{1}{\sqrt{2}}\sqrt{1+0.5}} = \frac{\sqrt{3}}{\frac{5}{2}\sqrt{3}} = \frac{2}{5} = 0.4 $$
+On veut $MG = 6$ dB $\approx$ un facteur $2$.
+$$ 20\log_{10}\left(\frac{1}{K \times 0.4}\right) = 6 \implies \frac{1}{0.4 K} \approx 2 \implies K = \frac{1}{0.8} = \mathbf{1.25} $$
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Exercice 3 : Réponse et régulation d'un système du 3ème ordre}
+
+Soit $F(p) = \frac{A}{(1+Tp)^3}$ et $R(p) = k$. $FTBO(p) = \frac{kA}{(1+Tp)^3}$.
+
+\textbf{2. Valeur de $k$ pour limite de stabilité}\\
+Phase : $-3\arctan(T\omega) = -180^\circ \implies \arctan(T\omega) = 60^\circ \implies \omega_{180} = \frac{\sqrt{3}}{T}$.
+Module à cette pulsation :
+$$ |FTBO(j\omega_{180})| = \frac{kA}{(\sqrt{1+3})^3} = \frac{kA}{8} $$
+Limite de stabilité si gain = 1 $\implies \frac{kA}{8} = 1 \implies \mathbf{k = \frac{8}{A}}$.
+
+\textbf{3. Marge de gain et de phase}\\
+$$ MG = 20\log_{10}\left(\frac{8}{kA}\right) $$
+Pour la marge de phase, soit $\omega_c$ telle que $|FTBO(j\omega_c)| = 1 \implies 1+T^2\omega_c^2 = (kA)^{2/3} \implies \omega_c = \frac{\sqrt{(kA)^{2/3}-1}}{T}$.
+$$ M\varphi = 180^\circ - 3\arctan(T\omega_c) = 180^\circ - 3\arctan\left(\sqrt{(kA)^{2/3}-1}\right) $$
+
+\textbf{4. Fonction de transfert en boucle fermée (FTBF)}\\
+$$ FTBF(p) = \frac{kA}{(1+Tp)^3+kA} = \frac{kA}{T^3p^3+3T^2p^2+3Tp+1+kA} $$
+\textit{Gain statique :} $FTBF(0) = \frac{kA}{1+kA}$.
+L'erreur de position est $1 - \frac{kA}{1+kA} = \frac{1}{1+kA}$. Pour une bonne précision, $k$ doit être grand, mais $k$ est limité à $8/A$ pour la stabilité. Le système présente un conflit direct entre précision et stabilité.
+
+\textbf{7. Réponse à l'échelon pour $k = 8/A$}\\
+Pour $k = 8/A$, le système est à la limite de stabilité.
+$$ FTBF(p) = \frac{8}{(1+Tp)^3+8} $$
+Les pôles annulent le dénominateur : $(1+Tp)^3 = -8 \implies 1+Tp = 2e^{j(\pi+2n\pi)/3}$.
+Les pôles sont $p_1 = -3/T$ et $p_{2,3} = \pm j\sqrt{3}/T$.
+Puisque le système possède des pôles purement imaginaires, sa réponse temporelle à un échelon ne convergera pas et sera le siège d'\textbf{oscillations entretenues} (non amorties) à la pulsation $\sqrt{3}/T$.
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Exercice 4 : Rejet de perturbation}
+
+$H(p) = \frac{G}{p(1+Tp)}$ et $Hd(p) = \frac{1}{1+Tp}$.
+
+\textbf{Partie I : Régulateur Proportionnel $R(p)=K$}
+
+\textbf{I.1.a : Erreur statique en consigne échelon}\\
+$FTBO(p)$ contient un intégrateur pur ($1/p$). Le système est de classe 1, donc l'erreur statique de position est **nulle**.
+
+\textbf{I.1.b : Valeur maximale de $K$ sans dépassement}\\
+$$ FTBF(p) = \frac{KG}{Tp^2+p+KG} = \frac{1}{\frac{T}{KG}p^2 + \frac{1}{KG}p + 1} $$
+On identifie $\omega_n = \sqrt{\frac{KG}{T}}$ et $\frac{2\zeta}{\omega_n} = \frac{1}{KG} \implies \zeta = \frac{1}{2\sqrt{KGT}}$.
+Pour ne pas avoir de dépassement, il faut $\zeta \ge 1$ :
+$$ \frac{1}{2\sqrt{KGT}} \ge 1 \implies \mathbf{K \le \frac{1}{4GT}} $$
+
+\textbf{I.2.a : Bande passante maximale sans résonance}\\
+Limite de résonance : $\zeta = \frac{1}{\sqrt{2}}$.
+$$ \frac{1}{2\sqrt{KGT}} = \frac{1}{\sqrt{2}} \implies 4KGT = 2 \implies \mathbf{K = \frac{1}{2GT}} $$
+
+\textbf{I.3.a : Erreur statique due à $d_2$ échelon unitaire}\\
+$$ Y_{d2}(p) = \frac{H(p)}{1+KH(p)} \frac{1}{p} = \frac{G}{Tp^2+p+KG} \frac{1}{p} $$
+En régime permanent (théorème valeur finale) : $y(\infty) = \frac{G}{KG} = \frac{1}{K}$.
+Puisque consigne $c=0$, l'erreur est $\epsilon = c - y = \mathbf{-1/K}$.
+
+\textbf{I.3.b : Erreur statique due à $d_1$ échelon unitaire}\\
+$$ Y_{d1}(p) = \frac{Hd(p)}{1+KH(p)} \frac{1}{p} = \frac{\frac{1}{1+Tp}}{1+\frac{KG}{p(1+Tp)}} \frac{1}{p} = \frac{p}{Tp^2+p+KG} \frac{1}{p} $$
+$y(\infty) = \lim_{p\to0} p Y_{d1}(p) = \mathbf{0}$.
+
+\textbf{I.3.c : $d_1$ en rampe}\\
+$$ D_1(p) = \frac{1}{p^2} \implies Y_{d1}(p) = \frac{p}{Tp^2+p+KG} \frac{1}{p^2} $$
+$y(\infty) = \lim_{p\to0} p \frac{1}{p(Tp^2+p+KG)} = \mathbf{\frac{1}{KG}}$.
+
+\textbf{I.3.d : Minimisation de l'erreur sans dépassement}\\
+L'erreur est proportionnelle à $1/K$, il faut maximiser $K$. Pour rester sans dépassement, $K = \frac{1}{4GT}$.
+L'erreur en régime permanent vaut alors $\mathbf{y(\infty) = 4T}$.
+
+\textbf{Partie II : Régulateur PI $R(p)=K(1+\frac{1}{T_ip})$}
+
+\textbf{II.2. $T_i = T$}\\
+$$ FTBO(p) = K\frac{1+Tp}{Tp} \frac{G}{p(1+Tp)} = \frac{KG}{Tp^2} $$
+Le diagramme de Black est une droite verticale à $-180^\circ$. La marge de phase est toujours de $0^\circ$. Le système est à la limite de l'instabilité (oscillateur pur).
+
+\textbf{II.4. $T_i = 2T$, erreur due à $d_2$ échelon}\\
+$$ Y(p) = \frac{H(p)}{1+FTBO(p)} \frac{1}{p} = \frac{2TGp}{2Tp^2(1+Tp)+KG(1+2Tp)}\frac{1}{p} $$
+En appliquant la limite $p \to 0$, $y(\infty) = 0$. Le régulateur PI annule l'erreur statique d'une perturbation constante appliquée en entrée du processus grâce à son action intégrale.
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Exercice 5 : Asservissement de position}
+
+Processus vitesse : $\frac{VIT(p)}{U(p)} = \frac{5}{1+0.1p}$.
+La position est l'intégrale de la vitesse, donc $POS(p) = \frac{VIT(p)}{p}$.
+
+\textbf{I. Analyse du processus}
+\begin{enumerate}
+    \item $H(p) = \frac{POS(p)}{U(p)} = \mathbf{\frac{5}{p(1+0.1p)}}$.
+    \item Pôles : $p_1 = \mathbf{0}$ et $p_2 = \mathbf{-10}$.
+    \item Le système possède un pôle nul (intégrateur). Il n'est donc **pas asymptotiquement stable**.
+    \item Réponses indicielles ($U(p) = 1/p$) :
+    $$ VIT(p) = \frac{5}{p(1+0.1p)} \implies \mathbf{vit(t) = 5(1-e^{-10t})} $$
+    $$ pos(t) = \int_0^t vit(\tau)d\tau = \left[ 5\tau + 0.5e^{-10\tau} \right]_0^t = \mathbf{5t + 0.5e^{-10t} - 0.5} $$
+\end{enumerate}
+
+\textbf{II. Analyse du système asservi ($R(p)=K$)}
+\begin{enumerate}
+    \item $R(p) = K$.
+    \item $FTBF(p) = \frac{\frac{5K}{p(1+0.1p)}}{1+\frac{5K}{p(1+0.1p)}} = \frac{5K}{0.1p^2+p+5K} = \frac{1}{\frac{0.1}{5K}p^2 + \frac{1}{5K}p + 1}$.
+    Par identification avec la forme canonique :
+    $$ \omega_n = \mathbf{\sqrt{50K}} \quad \text{et} \quad \zeta = \mathbf{\frac{1}{\sqrt{2K}}} $$
+    \item Erreur pour consigne échelon (sans perturbation) : La FTBF a un gain statique de 1. L'erreur est nulle, la position atteint la consigne.
+    \item Erreur due à $\delta$ échelon ($C=0$, $D=1/p$) :
+    $$ POS(p) = \frac{H(p)}{1+KH(p)} \delta(p) = \frac{5}{0.1p^2+p+5K} \frac{1}{p} $$
+    Théorème de la valeur finale : $pos(\infty) = \mathbf{\frac{1}{K}}$.
+    \item Pour minimiser l'erreur $1/K$, il faut maximiser $K$. Pour n'avoir aucun dépassement, il faut $\zeta \ge 1 \implies \frac{1}{\sqrt{2K}} \ge 1 \implies \mathbf{K \le 0.5}$.
+    Avec $K=0.5$, l'erreur en régime permanent vaut $\mathbf{pos(\infty) = 2}$.
+    \item Pour $K=2$, le transfert de la perturbation est $T_d(p) = \frac{5}{0.1p^2+p+10}$.
+    Paramètres : $\omega_n = 10$ rad/s, $\zeta = 0.5$.
+    La pulsation de résonance est $\omega_r = \omega_n\sqrt{1-2\zeta^2} = 10\sqrt{1-2(0.25)} = \mathbf{7.07 \text{ rad/s}}$.
+    \item Pour une perturbation sinusoïdale de fréquence 50 Hz ($\omega \approx 314$ rad/s), on se situe très loin au-delà de la bande passante du système (10 rad/s). L'amplitude du signal de sortie en régime permanent sera très fortement atténuée (pente asymptotique de -40 dB/déc au-delà de $\omega_n$). L'allure de la position sera une très faible oscillation sinusoïdale centrée sur 0. 
+    L'amplitude est donnée par $0.1 \times |T_d(j\omega)| = \mathbf{\frac{0.5}{\sqrt{(5K - 0.1\omega^2)^2 + \omega^2}}}$.
+\end{enumerate}
+
+\end{document}
