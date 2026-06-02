@@ -1,0 +1,334 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% Configuration pour le code Java
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\title{Correction de l'examen de Programmation Orientée Objet (IN361)}
+\author{Correction détaillée}
+\date{Session de juin 2025}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1 (3 points)}
+\textbf{Question :} Quel est le résultat de ce programme[cite: 13, 14]?
+
+\textbf{Résultat et Raisonnement :}
+Le programme illustre les principes d'héritage et de polymorphisme (liaison dynamique).
+\begin{itemize}
+    \item \texttt{A a = new A(); a.affiche();} $\rightarrow$ \textbf{Je suis un A}
+    \item \texttt{B b = new B(); b.affiche();} $\rightarrow$ \textbf{Je suis un A} (B hérite de A et ne redéfinit pas la méthode [cite: 19]).
+    \item \texttt{C c = new C(); c.affiche();} $\rightarrow$ \textbf{Je suis un C} (C redéfinit \texttt{affiche()} [cite: 21, 22]).
+    \item \texttt{a = c; a.affiche();} $\rightarrow$ \textbf{Je suis un C} (Polymorphisme : \texttt{a} pointe vers une instance de \texttt{C} [cite: 30]).
+    \item \texttt{D d = new D(); d.affiche();} $\rightarrow$ \textbf{Je suis un D} (D redéfinit \texttt{affiche()} [cite: 50, 51]).
+    \item \texttt{a = d; a.affiche();} $\rightarrow$ \textbf{Je suis un D} (\texttt{a} pointe vers \texttt{D} [cite: 34, 35]).
+    \item \texttt{c = d; c.affiche();} $\rightarrow$ \textbf{Je suis un D} (\texttt{c} pointe vers \texttt{D} [cite: 36]).
+    \item \texttt{E e = new E(); e.affiche();} $\rightarrow$ \textbf{Je suis un A} (E hérite de B, qui hérite de A. Aucune ne redéfinit \texttt{affiche()} [cite: 54]).
+    \item \texttt{a = e; a.affiche();} $\rightarrow$ \textbf{Je suis un A} (\texttt{a} pointe vers \texttt{E} [cite: 40, 41]).
+    \item \texttt{b = e; b.affiche();} $\rightarrow$ \textbf{Je suis un A} (\texttt{b} pointe vers \texttt{E} [cite: 42]).
+    \item \texttt{F f = new F(); f.affiche();} $\rightarrow$ \textbf{Je suis un C} (F hérite de C qui possède sa propre méthode \texttt{affiche()} [cite: 55]).
+    \item \texttt{a = f; a.affiche();} $\rightarrow$ \textbf{Je suis un C} (\texttt{a} pointe vers \texttt{F} [cite: 46, 47]).
+    \item \texttt{c = f; c.affiche();} $\rightarrow$ \textbf{Je suis un C} (\texttt{c} pointe vers \texttt{F} [cite: 48]).
+\end{itemize}
+
+\section*{Exercice 2 (4 points)}
+
+\subsection*{Question 2.1 [cite: 64, 65, 66, 67]}
+\textbf{Raisonnement :} Création d'une classe classique avec attributs privés, constructeur et accesseurs/mutateurs.
+\begin{lstlisting}[language=Java]
+public class TypPneu {
+    private int diametre;
+    private int largeur;
+    private String marque;
+
+    public TypPneu(int diametre, int largeur, String marque) {
+        this.diametre = diametre;
+        this.largeur = largeur;
+        this.marque = marque;
+    }
+    
+    // Getters et Setters
+    public int getDiametre() { return diametre; }
+    public void setDiametre(int diametre) { this.diametre = diametre; }
+    
+    public int getLargeur() { return largeur; }
+    public void setLargeur(int largeur) { this.largeur = largeur; }
+    
+    public String getMarque() { return marque; }
+    public void setMarque(String marque) { this.marque = marque; }
+}
+\end{lstlisting}
+
+\subsection*{Question 2.2 [cite: 68, 69]}
+\textbf{Raisonnement :} La méthode \texttt{equals(Object o)} doit être redéfinie pour comparer les valeurs et non les références mémoires.
+\begin{lstlisting}[language=Java]
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    TypPneu typPneu = (TypPneu) obj;
+    return diametre == typPneu.diametre && 
+           largeur == typPneu.largeur && 
+           marque.equals(typPneu.marque);
+}
+\end{lstlisting}
+
+\subsection*{Question 2.3 [cite: 80, 81]}
+\textbf{Raisonnement :} Création de la classe \texttt{TypVoiture} avec composition (elle contient un objet \texttt{TypPneu}).
+\begin{lstlisting}[language=Java]
+public class TypVoiture {
+    private String marque;
+    private String modele;
+    private TypPneu pneu;
+
+    public TypVoiture(String marque, String modele, TypPneu pneu) {
+        this.marque = marque;
+        this.modele = modele;
+        this.pneu = pneu;
+    }
+
+    // Getters et Setters
+    public String getMarque() { return marque; }
+    public void setMarque(String marque) { this.marque = marque; }
+
+    public String getModele() { return modele; }
+    public void setModele(String modele) { this.modele = modele; }
+
+    public TypPneu getTypPneu() { return pneu; }
+    public void setTypPneu(TypPneu pneu) { this.pneu = pneu; }
+}
+\end{lstlisting}
+
+\subsection*{Question 2.4 [cite: 83, 84, 85, 86]}
+\textbf{Raisonnement :} Ajout d'une méthode validant les dimensions avant de remplacer le pneu.
+\begin{lstlisting}[language=Java]
+public void changementPneu(TypPneu tp) {
+    if (this.pneu.getLargeur() == tp.getLargeur() && 
+        this.pneu.getDiametre() == tp.getDiametre()) {
+        this.pneu = tp;
+    } else {
+        throw new RuntimeException("Dimensions incompatibles");
+    }
+}
+\end{lstlisting}
+
+\subsection*{Question 2.5 [cite: 88, 89, 90, 91, 92]}
+\textbf{Erreur : } La méthode \texttt{changementPneu} est appelée sur la classe \texttt{TypVoiture} (\texttt{TypVoiture.changementPneu(p2);}) au lieu d'être appelée sur l'instance \texttt{v1}. Le code correct serait : \texttt{v1.changementPneu(p2);}
+
+\subsection*{Question 2.6 [cite: 94, 99, 100, 102, 103, 104, 107]}
+\textbf{Raisonnement :} \texttt{==} compare les références mémoires. \texttt{equals()} compare le contenu.
+\begin{itemize}
+    \item \texttt{p1 == p2} $\rightarrow$ \textbf{false} (Différentes instances en mémoire).
+    \item \texttt{p1 == p3} $\rightarrow$ \textbf{false} (Différentes instances).
+    \item \texttt{p1.equals(p2)} $\rightarrow$ \textbf{false} (Marques différentes : "Michelin" $\neq$ "Dunlop" [cite: 89, 90]).
+    \item \texttt{p1.equals(p3)} $\rightarrow$ \textbf{false} (Dimensions différentes [cite: 89, 95]).
+    \item \texttt{p1 == p4} $\rightarrow$ \textbf{false} (\texttt{p4} pointe vers \texttt{p3} [cite: 95]).
+    \item \texttt{p3 == p4} $\rightarrow$ \textbf{true} (Même référence [cite: 95]).
+    \item \texttt{p3.equals(p4)} $\rightarrow$ \textbf{true} (Même référence, donc même contenu).
+    \item \texttt{v1.getTypPneu() == v2.getTypPneu()} $\rightarrow$ \textbf{true} (Les deux voitures partagent l'objet \texttt{p1} [cite: 97, 98]).
+    \item \texttt{v1.getTypPneu() == v3.getTypPneu()} $\rightarrow$ \textbf{false} (\texttt{p1} $\neq$ \texttt{p3}).
+    \item \texttt{v1.getTypPneu().equals(p2)} $\rightarrow$ \textbf{false} (Équivaut à \texttt{p1.equals(p2)}).
+\end{itemize}
+
+\section*{Exercice 3 (3 points)}
+
+\subsection*{3.1 [cite: 109]}
+On crée un objet en utilisant le mot-clé \texttt{new} suivi de l'appel au constructeur de la classe (ex: \texttt{A a = new A();}).
+
+\subsection*{3.2 [cite: 111]}
+En Java, le développeur ne supprime pas explicitement les objets. C'est le \textbf{Garbage Collector} (Ramasse-miettes) qui détruit automatiquement les objets en mémoire lorsqu'ils ne sont plus référencés.
+
+\subsection*{3.3 [cite: 113]}
+Java est \textbf{à la fois compilé et interprété}. Le code source (.java) est d'abord compilé en un code intermédiaire appelé \textbf{Bytecode} (.class). Ce bytecode est ensuite interprété (et souvent compilé à la volée, JIT) par la Machine Virtuelle Java (JVM) lors de l'exécution.
+
+\subsection*{3.4 [cite: 114]}
+Le mot-clé \texttt{final} pour une variable indique qu'elle est une \textbf{constante}. Une fois initialisée, sa valeur ne peut plus être modifiée.
+\textit{Exemple :} \texttt{final double PI = 3.14159;} Si on tente de réassigner \texttt{PI = 3.14;}, le compilateur renverra une erreur.
+
+\subsection*{3.5 [cite: 115]}
+\begin{itemize}
+    \item \textbf{Classe abstraite :} Peut contenir des attributs (état), des méthodes concrètes et des constructeurs. Une classe ne peut hériter que d'une seule classe (abstraite ou non).
+    \item \textbf{Interface :} Ne contient (traditionnellement) que des signatures de méthodes abstraites et des constantes (\texttt{public static final}). Une classe peut implémenter plusieurs interfaces.
+\end{itemize}
+
+\section*{Exercice 4 (3 points) [cite: 116, 119, 123, 127, 128, 129, 130]}
+
+\begin{lstlisting}[language=Java]
+public abstract class Vehicule {
+    protected String immatriculation; // Format AA-111-AA sur 9 caracteres
+    protected int poids;
+    protected int places;
+
+    public Vehicule(String immatriculation, int poids, int places) {
+        this.immatriculation = immatriculation;
+        this.poids = poids;
+        this.places = places;
+    }
+    // Getters et setters omis pour breveté
+}
+
+public class Voiture extends Vehicule {
+    private int placesEnfants;
+
+    public Voiture(String immatriculation, int poids, int places, int placesEnfants) {
+        super(immatriculation, poids, places);
+        this.placesEnfants = placesEnfants;
+    }
+}
+
+public class Camion extends Vehicule {
+    private int chargeUtile;
+
+    public Camion(String immatriculation, int poids, int places, int chargeUtile) {
+        super(immatriculation, poids, places);
+        this.chargeUtile = chargeUtile;
+    }
+}
+
+public class Moto extends Vehicule {
+    private int cylindree;
+
+    public Moto(String immatriculation, int poids, int places, int cylindree) {
+        super(immatriculation, poids, places);
+        this.cylindree = cylindree;
+    }
+}
+\end{lstlisting}
+
+\section*{Exercice 5 (4 points) [cite: 143, 144, 146, 147, 148, 149]}
+
+\begin{lstlisting}[language=Java]
+public class Categorie {
+    private char nom; // ex: 'A', 'B'...
+    private double prixJour;
+
+    public Categorie(char nom, double prixJour) {
+        this.nom = nom;
+        this.prixJour = prixJour;
+    }
+    public double getPrixJour() { return prixJour; }
+}
+
+// Modifications dans Vehicule
+public abstract class Vehicule {
+    // ... autres attributs (immatriculation, poids, places)
+    protected Categorie categorie;
+
+    public Vehicule(String immat, int poids, int places, Categorie categorie) {
+        this.immatriculation = immat;
+        this.poids = poids;
+        this.places = places;
+        this.categorie = categorie;
+    }
+
+    public double getPrixLocation(int nbJour) {
+        return this.categorie.getPrixJour() * nbJour;
+    }
+}
+
+// Exemple de modification du constructeur (idem pour Moto et Camion)
+public class Voiture extends Vehicule {
+    private int placesEnfants;
+    public Voiture(String immat, int poids, int places, Categorie cat, int placesEnfants) {
+        super(immat, poids, places, cat);
+        this.placesEnfants = placesEnfants;
+    }
+}
+
+// Classe de test
+public class TestLocation {
+    public static void main(String[] args) {
+        Categorie catA = new Categorie('A', 50.0);
+        Voiture v1 = new Voiture("AB-123-CD", 1200, 5, catA, 2);
+        System.out.println("Prix pour 3 jours: " + v1.getPrixLocation(3));
+    }
+}
+\end{lstlisting}
+
+\section*{Exercice 6 (3 points) [cite: 152, 153, 155, 157, 159, 160]}
+
+\begin{lstlisting}[language=Java]
+import java.util.ArrayList;
+import java.util.List;
+
+public class Parc {
+    private List<Vehicule> vehicules;
+
+    public Parc() {
+        this.vehicules = new ArrayList<>();
+    }
+
+    public void addVehicule(Vehicule v) {
+        for (Vehicule existant : vehicules) {
+            if (existant.immatriculation.equals(v.immatriculation)) {
+                throw new RuntimeException("Vehicule deja existant");
+            }
+        }
+        vehicules.add(v);
+    }
+
+    public void removeVehicule(String immat) {
+        Vehicule aSupprimer = null;
+        for (Vehicule v : vehicules) {
+            if (v.immatriculation.equals(immat)) {
+                aSupprimer = v;
+                break;
+            }
+        }
+        if (aSupprimer == null) {
+            throw new RuntimeException("Vehicule introuvable");
+        }
+        vehicules.remove(aSupprimer);
+    }
+
+    public void displayParc() {
+        for (Vehicule v : vehicules) {
+            System.out.println("Immat: " + v.immatriculation + 
+                ", Prix jour: " + v.getPrixLocation(1));
+            // L'ideal serait d'avoir une methode toString() dans Vehicule
+        }
+    }
+
+    public double getPrixTotalLocation(int nbJour) {
+        double total = 0;
+        for (Vehicule v : vehicules) {
+            total += v.getPrixLocation(nbJour);
+        }
+        return total;
+    }
+}
+\end{lstlisting}
+
+\end{document}

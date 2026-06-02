@@ -1,0 +1,195 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Configuration pour le code Java
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\title{Correction de l'examen CS-318 : Programmation-objet \& interfaces graphiques}
+\author{Session de JUIN 2022}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1 (2 points)}
+\textbf{Question a :} Indiquer la ligne mise en cause et en expliquer la raison[cite: 393].
+
+\textbf{Réponse et Raisonnement :} 
+L'erreur de compilation se trouve à la ligne : \texttt{Math m = new Math();}[cite: 389]. 
+La raison est que le constructeur de la classe \texttt{Math} est explicitement déclaré comme privé (\texttt{private Math() \{\}})[cite: 380]. Il est donc impossible d'instancier un objet de cette classe depuis l'extérieur. De plus, \texttt{PI} est une variable statique[cite: 381].
+
+\textbf{Question b :} Proposer un correctif[cite: 394].
+
+\textbf{Réponse :} Puisque la constante \texttt{PI} est statique, on doit l'appeler directement depuis la classe.
+\begin{lstlisting}[language=Java]
+double r = 10;
+double perimetre = 2 * Math.PI * r;
+\end{lstlisting}
+
+\section*{Exercice 2 (2 points)}
+\textbf{Question :} Modifier cette classe de façon à la rendre non dérivable[cite: 416].
+
+\textbf{Réponse et Raisonnement :} 
+Pour empêcher l'héritage d'une classe en Java, il faut utiliser le mot-clé \texttt{final} dans sa déclaration.
+\begin{lstlisting}[language=Java]
+public final class Materiel {
+    // ...
+}
+\end{lstlisting}
+
+\section*{Exercice 3 (1 point)}
+\textbf{Question :} Expliquez l'erreur de compilation et proposez un correctif[cite: 426, 427].
+
+\textbf{Réponse et Raisonnement :} 
+La méthode \texttt{main} censée être le point d'entrée du programme a une mauvaise signature. Elle doit prendre en paramètre un tableau de chaînes de caractères (\texttt{String[]})[cite: 420]. Le code actuel indique \texttt{String args} (une simple chaîne) au lieu de \texttt{String[] args}[cite: 420].
+\begin{lstlisting}[language=Java]
+public static void main(String[] args) {
+    int a = 0;
+    System.out.println("" + a);
+}
+\end{lstlisting}
+
+\section*{Exercice 4 (2 points)}
+\textbf{Question :} Expliquer la différence en Java entre \texttt{int} et \texttt{Integer}. Quel nom est donné aux classes \texttt{Integer}, \texttt{Double}, \texttt{Boolean} ? Quel est l'intérêt ? [cite: 429, 430]
+
+\textbf{Réponse et Raisonnement :}
+\begin{itemize}
+    \item \textbf{Différence :} \texttt{int} est un type primitif (valeur stockée en mémoire), tandis que \texttt{Integer} est un objet (référence vers un espace mémoire encapsulant un entier).
+    \item \textbf{Nom :} Ce sont des \textbf{classes enveloppes} (ou \textit{Wrapper classes} en anglais).
+    \item \textbf{Intérêt :} Elles permettent de manipuler des types primitifs comme des objets. C'est indispensable pour utiliser les collections génériques en Java (comme \texttt{ArrayList<Integer>}) qui n'acceptent que des objets. De plus, ces classes fournissent des méthodes utilitaires pratiques (ex: \texttt{Integer.parseInt()}).
+\end{itemize}
+
+\section*{Exercice 5 (3 points)}
+\textbf{Question a :} Différence entre redéfinition et surcharge[cite: 452].
+
+\textbf{Réponse :}
+\begin{itemize}
+    \item \textbf{Redéfinition (Overriding) :} Consiste à réécrire une méthode héritée d'une classe mère en gardant \textbf{exactement la même signature} (nom, type de retour et paramètres).
+    \item \textbf{Surcharge (Overloading) :} Consiste à créer plusieurs méthodes portant le \textbf{même nom mais avec des paramètres différents} (nombre ou type) au sein de la même classe (ou héritée).
+\end{itemize}
+
+\textbf{Question b :} Dans \texttt{MaterielSki}, indiquer la méthode redéfinie et surchargée[cite: 453].
+
+\textbf{Réponse :}
+\begin{itemize}
+    \item \texttt{public double getTarifJournee()} est la méthode \textbf{redéfinie} (elle écrase celle de \texttt{Materiel})[cite: 444, 465].
+    \item \texttt{public double getTarifJournee(double coeff)} est la méthode \textbf{surchargée}[cite: 447].
+\end{itemize}
+
+\section*{Exercice 6 (3 points)}
+\textbf{Question 1 :} Indiquer les erreurs et expliquer la raison[cite: 472, 473].
+
+\textbf{Réponse et Raisonnement :}
+\begin{enumerate}
+    \item La méthode \texttt{getMarque()} est déclarée \texttt{abstract} mais possède un corps (des accolades avec un return)[cite: 468, 469, 471]. Une méthode abstraite ne doit avoir qu'une signature terminée par un point-virgule.
+    \item La classe \texttt{Materiel} contient une méthode abstraite, elle doit donc obligatoirement être déclarée abstraite (\texttt{public abstract class Materiel})[cite: 461].
+\end{enumerate}
+
+\textbf{Question 2 :} Apporter un correctif[cite: 474].
+
+\textbf{Réponse :} L'attribut \texttt{marque} étant présent dans la classe, le plus logique n'est pas de faire une méthode abstraite, mais une méthode concrète classique. On retire simplement le mot-clé \texttt{abstract}.
+\begin{lstlisting}[language=Java]
+public String getMarque() {
+    return marque;
+}
+\end{lstlisting}
+
+\section*{Exercice 7 (2 points)}
+\textbf{Question :} Quel est le résultat de ce programme ? [cite: 557]
+
+\textbf{Réponse et Raisonnement :}
+Grâce au polymorphisme (liaison dynamique), la méthode appelée est toujours celle du type réel de l'objet instancié en mémoire. Si la méthode n'est pas redéfinie, c'est celle de la classe mère qui est utilisée.
+\begin{itemize}
+    \item \texttt{a = new A(); a.affiche();} $\rightarrow$ \textbf{Je suis un A } [cite: 518, 486]
+    \item \texttt{b = new B(); b.affiche();} $\rightarrow$ \textbf{Je suis un A } (B hérite de A, pas de redéfinition) [cite: 525, 479]
+    \item \texttt{a = b; a.affiche();} $\rightarrow$ \textbf{Je suis un A } [cite: 526, 527]
+    \item \texttt{c = new C(); c.affiche();} $\rightarrow$ \textbf{Je suis un C} (C redéfinit la méthode) [cite: 529, 530, 500]
+    \item \texttt{a = c; a.affiche();} $\rightarrow$ \textbf{Je suis un C} [cite: 531, 532]
+    \item \texttt{d = new D(); d.affiche();} $\rightarrow$ \textbf{Je suis un D} (D redéfinit) [cite: 534, 535, 510]
+    \item \texttt{a = d; a.affiche(); c = d; c.affiche();} $\rightarrow$ \textbf{Je suis un D} \newline \textbf{Je suis un D} [cite: 536, 537, 538, 539]
+    \item \texttt{e = new E(); e.affiche();} $\rightarrow$ \textbf{Je suis un A } (E hérite de B qui hérite de A) [cite: 541, 542, 488]
+    \item \texttt{a = e; a.affiche(); b = e; b.affiche();} $\rightarrow$ \textbf{Je suis un A } \newline \textbf{Je suis un A } [cite: 543, 544, 545, 546]
+    \item \texttt{f = new F(); f.affiche();} $\rightarrow$ \textbf{Je suis un C} (F hérite de C qui a sa redéfinition) [cite: 548, 549, 497, 500]
+    \item \texttt{a = f; a.affiche(); c = f; c.affiche();} $\rightarrow$ \textbf{Je suis un C} \newline \textbf{Je suis un C} [cite: 550, 551, 552, 553]
+\end{itemize}
+
+\section*{Exercice 8 (3 points)}
+\textbf{Question 1 :} Redéfinir la méthode \texttt{equals} dans \texttt{Materiel}[cite: 587, 588, 589].
+
+\begin{lstlisting}[language=Java]
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) return true; // Meme reference
+    if (obj == null || getClass() != obj.getClass()) return false;
+    Materiel m = (Materiel) obj;
+    // Meme marque et meme tarif
+    return Double.compare(m.tarifJournee, tarifJournee) == 0 &&
+           (marque != null ? marque.equals(m.marque) : m.marque == null);
+}
+\end{lstlisting}
+
+\textbf{Question 2 :} Indiquer pour chaque affichage la valeur indiquée et expliquer[cite: 600].
+\begin{itemize}
+    \item \texttt{m1.equals(m4)} $\rightarrow$ \textbf{false} (Marques différentes : "rossignol" vs "Nordica")[cite: 592, 595, 596].
+    \item \texttt{m1 == m2} $\rightarrow$ \textbf{false} (\texttt{==} compare les adresses mémoire. Ce sont deux instances distinctes avec \texttt{new})[cite: 592, 593, 597].
+    \item \texttt{m1 == m3} $\rightarrow$ \textbf{true} (\texttt{m3} est une copie de la référence de \texttt{m1}, ils pointent vers la même adresse mémoire)[cite: 594, 598].
+    \item \texttt{m1.equals(m2)} $\rightarrow$ \textbf{true} (Ils sont identiques du point de vue de notre méthode redéfinie : même marque "rossignol" et même tarif 10)[cite: 592, 593, 599].
+\end{itemize}
+
+\section*{Exercice 9 (3 points)}
+\textbf{Question 1 :} Erreur à l'exécution et correctif[cite: 678, 679].
+
+\textbf{Réponse et Raisonnement :} 
+Le programme lance une \texttt{NullPointerException} car la liste \texttt{lesMateriels} est déclarée mais n'est jamais instanciée[cite: 662]. Elle vaut \texttt{null} au moment de l'appel \texttt{lesMateriels.add(...)}[cite: 663].
+\begin{lstlisting}[language=Java]
+ArrayList<Materiel> lesMateriels = new ArrayList<>();
+\end{lstlisting}
+
+\textbf{Question 2 :} Afficher le catalogue en appliquant 20\% de réduction sur les skis[cite: 680, 681, 682, 683, 684, 685, 686, 687, 688, 689].
+
+\textbf{Réponse et Raisonnement :} 
+On utilise \texttt{instanceof} pour vérifier si l'objet est un équipement de ski. Si c'est le cas, on le caste pour appeler la méthode surchargée avec le coefficient \texttt{0.8} (ce qui équivaut à -20\%).
+\begin{lstlisting}[language=Java]
+for (Materiel m : lesMateriels) {
+    if (m instanceof MaterielSki) {
+        MaterielSki ms = (MaterielSki) m;
+        // La methode surchagee applique un multiplicateur (ex: 0.8 pour -20%)
+        double tarifPromo = ms.getTarifJournee(0.8);
+        System.out.println(ms.toString() + " PROMO!!" + tarifPromo);
+    } else {
+        System.out.println(m.toString());
+    }
+}
+\end{lstlisting}
+
+\end{document}

@@ -1,0 +1,156 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Configuration pour le code Java
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\title{Correction de l'examen CS-318 : Programmation-objet \& interfaces graphiques}
+\author{Session de JUIN 2023}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1 (2 points)}
+\textbf{Question :} Expliquer ce qu'est un objet immutable. Donner 2 exemples de class Java immutable[cite: 179].
+
+\textbf{Réponse et Raisonnement :}
+Un objet immutable (immuable en français) est un objet dont l'état (les valeurs de ses attributs) ne peut pas être modifié une fois qu'il a été créé et initialisé. 
+\begin{itemize}
+    \item \textbf{Exemples :} \texttt{String}, \texttt{Integer} (ou toute autre classe Wrapper comme \texttt{Double}), et \texttt{LocalDate} (vue dans l'exercice 4).
+\end{itemize}
+
+\section*{Exercice 2 (1 point)}
+\textbf{Question :} Expliquez pourquoi ce programme ne veut pas se lancer[cite: 188, 189].
+
+\textbf{Réponse et Raisonnement :}
+La signature de la méthode principale est incorrecte. Dans le code fourni, la méthode est écrite \texttt{public void main(String args)}[cite: 183]. Pour que la Machine Virtuelle Java (JVM) puisse identifier le point d'entrée du programme et l'exécuter, la méthode doit obligatoirement être \texttt{static} et prendre en paramètre un tableau de chaînes de caractères.
+Il faudrait écrire : \texttt{public static void main(String[] args)}.
+
+\section*{Exercice 3 (2 points)}
+\textbf{Question :} Ce programme ne compile pas. a) Expliquez l'erreur b) Proposer un correctif[cite: 201, 202, 203].
+
+\textbf{Réponse et Raisonnement :}
+\begin{itemize}
+    \item \textbf{a) Explication :} L'erreur provient de la ligne \texttt{ArrayList<int> maListe = new ArrayList<int>();}[cite: 193]. En Java, les collections et la généricité ne fonctionnent qu'avec des types objets (références). Il est impossible d'utiliser un type primitif comme \texttt{int}.
+    \item \textbf{b) Correctif :} Il faut utiliser la classe Wrapper (enveloppe) \texttt{Integer} correspondante au type primitif \texttt{int}.
+\end{itemize}
+\begin{lstlisting}[language=Java]
+ArrayList<Integer> maListe = new ArrayList<Integer>();
+\end{lstlisting}
+
+\section*{Exercice 4 (4 points)}
+\textbf{Question a :} Expliquer ce que fait la ligne \texttt{return this (year, month, dayOfMonth);}[cite: 237].
+
+\textbf{Réponse a :} Cette syntaxe, bien qu'incorrecte dans une méthode statique en Java classique (il faudrait un \texttt{new LocalDate(...)}), représente conceptuellement l'appel au constructeur de la classe courante afin d'instancier et de retourner un nouvel objet \texttt{LocalDate}.
+
+\textbf{Question b :} Indiquer la ligne causant une erreur de compilation et en expliquer la raison[cite: 239].
+
+\textbf{Réponse b :} 
+La ligne en erreur est \texttt{d = new LocalDate (2023,2,15);}[cite: 233]. 
+La raison est que le constructeur de la classe \texttt{LocalDate} est déclaré \texttt{private}[cite: 209]. Il est donc inaccessible depuis une autre classe (comme le programme principal).
+
+\textbf{Question c :} Si possible proposer un correctif[cite: 240].
+
+\textbf{Réponse c :} Il faut utiliser les méthodes statiques fournies par la classe pour obtenir une instance (patron de conception Factory / Fabrique).
+\begin{lstlisting}[language=Java]
+d = LocalDate.of(2023, 2, 15);
+\end{lstlisting}
+
+\textbf{Question d :} Comment peut-on qualifier ses 2 méthodes \texttt{of} en utilisant le vocabulaire orienté objet adapté ?[cite: 241, 242].
+
+\textbf{Réponse d :} C'est de la \textbf{surcharge} (Overloading). On a plusieurs méthodes qui portent le même nom (\texttt{of}) mais qui diffèrent par la signature de leurs paramètres (l'une prend \texttt{int, int, int} [cite: 219] et l'autre \texttt{int, Month, int} [cite: 225]).
+
+\section*{Exercice 5 (2 points)}
+\textbf{Question 1 :} Erreur de compilation sur \texttt{Bien b = new Bien(...);}[cite: 266, 267, 268].
+
+\textbf{Réponse 1 :} La classe \texttt{Bien} est déclarée comme \texttt{abstract}[cite: 250]. Une classe abstraite ne peut pas être instanciée directement avec \texttt{new}. 
+
+\textbf{Question 2 :} Concernant la méthode \texttt{toString}, comment qualifier cette méthode ?[cite: 269].
+
+\textbf{Réponse 2 :} C'est une \textbf{redéfinition} (Overriding). L'annotation \texttt{@Override} [cite: 260] indique que la classe \texttt{Bien} fournit sa propre implémentation de la méthode \texttt{toString()} héritée de la super-classe mère universelle \texttt{Object}.
+
+\section*{Exercice 6 (3 points)}
+\textbf{Question a :} Expliquer la cause de l'erreur sur \texttt{System.out.println("" + b.getSurface());}[cite: 300, 302].
+
+\textbf{Réponse a :} La variable \texttt{b} est déclarée avec le type de référence \texttt{Bien}[cite: 300]. Lors de la compilation, le compilateur vérifie les méthodes disponibles pour le type de référence. Or, la méthode \texttt{getSurface()} n'est pas définie dans la classe \texttt{Bien} [cite: 272, 282], elle n'existe que dans la classe fille \texttt{Maison}[cite: 290].
+
+\textbf{Question b :} Proposer un correctif[cite: 303].
+
+\textbf{Réponse b :} On peut procéder à un "cast" (transtypage) pour indiquer au compilateur que l'objet pointé est bien une \texttt{Maison}.
+\begin{lstlisting}[language=Java]
+System.out.println("" + ((Maison) b).getSurface());
+// Alternative : déclarer b en tant que Maison
+// Maison b = new Maison(1, "Villa Magnifico", "Valence", 1000);
+\end{lstlisting}
+
+\section*{Exercice 7 (3 points)}
+\textbf{Question 1 :} Expliquer l'erreur dans la classe \texttt{Maison}[cite: 329, 330].
+
+\textbf{Réponse 1 :} La classe \texttt{Maison} hérite de la classe \texttt{Bien}[cite: 315]. La classe \texttt{Bien} possède une méthode abstraite \texttt{addTarif(Tarif newTarif)}[cite: 312]. Puisque \texttt{Maison} est une classe concrète, elle est dans l'obligation d'implémenter (redéfinir) toutes les méthodes abstraites héritées de sa classe mère.
+
+\textbf{Question 2 :} Apporter un correctif (code à ajouter dans la classe \texttt{Maison})[cite: 331].
+
+\textbf{Réponse 2 :}
+\begin{lstlisting}[language=Java]
+@Override
+public void addTarif(Tarif newTarif) {
+    // Code d'ajout du tarif
+}
+\end{lstlisting}
+
+\section*{Exercice 8 (3 points)}
+\textbf{Question 1 :} Erreur à l'exécution et correctif[cite: 359, 360].
+
+\textbf{Réponse 1 :} L'erreur est une \texttt{NullPointerException}. La variable \texttt{mesBiens} est déclarée [cite: 336] mais n'a pas été initialisée (elle vaut \texttt{null}). Quand on tente d'appeler \texttt{mesBiens.add(...)}, le programme plante.
+\textbf{Correctif :}
+\begin{lstlisting}[language=Java]
+ArrayList<Bien> mesBiens = new ArrayList<>();
+\end{lstlisting}
+
+\textbf{Question 2 :} Compléter le programme pour afficher les maisons dont la ville est "Valence" et leur surface[cite: 361].
+
+\textbf{Réponse 2 :} Il faut parcourir la liste, vérifier avec \texttt{instanceof} que le bien est une maison, puis vérifier la ville.
+\begin{lstlisting}[language=Java]
+for (Bien b : mesBiens) {
+    // On verifie que c'est une Maison pour pouvoir caster et acceder a la surface
+    if (b instanceof Maison) {
+        if ("Valence".equals(b.getVille())) {
+            Maison m = (Maison) b;
+            System.out.println("Maison : " + m.getNom() + " | Surface : " + m.getSurface());
+        }
+    }
+}
+\end{lstlisting}
+
+\end{document}

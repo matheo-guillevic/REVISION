@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Examen Java 1 - Java</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="java.html#java-exams">Retour aux examens</a>
+        <div>
+          <span class="eyebrow">Examen 1</span>
+          <h1>Examen Java 1</h1>
+          <p>Page reconstruite depuis <code>pdf/java/exam/java-exam1.tex</code>, avec les réponses et raisonnements.</p>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1</span>
+              <h3>Exercice 1 (3 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <div class="question-block">
+            <h4>Question</h4>
+            <p>Quel est le résultat de ce programme?</p>
+          </div>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Résultat et Raisonnement</strong>
+            <p>Le programme illustre les principes d'héritage et de polymorphisme (liaison dynamique).</p>
+          </div>
+          <ul class="formula-list">
+            <li><code>A a = new A(); a.affiche();</code> \(\rightarrow\) <strong>Je suis un A</strong></li>
+            <li><code>B b = new B(); b.affiche();</code> \(\rightarrow\) <strong>Je suis un A</strong> (B hérite de A et ne redéfinit pas la méthode ).</li>
+            <li><code>C c = new C(); c.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> (C redéfinit <code>affiche()</code> ).</li>
+            <li><code>a = c; a.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> (Polymorphisme : <code>a</code> pointe vers une instance de <code>C</code> ).</li>
+            <li><code>D d = new D(); d.affiche();</code> \(\rightarrow\) <strong>Je suis un D</strong> (D redéfinit <code>affiche()</code> ).</li>
+            <li><code>a = d; a.affiche();</code> \(\rightarrow\) <strong>Je suis un D</strong> (<code>a</code> pointe vers <code>D</code> ).</li>
+            <li><code>c = d; c.affiche();</code> \(\rightarrow\) <strong>Je suis un D</strong> (<code>c</code> pointe vers <code>D</code> ).</li>
+            <li><code>E e = new E(); e.affiche();</code> \(\rightarrow\) <strong>Je suis un A</strong> (E hérite de B, qui hérite de A. Aucune ne redéfinit <code>affiche()</code> ).</li>
+            <li><code>a = e; a.affiche();</code> \(\rightarrow\) <strong>Je suis un A</strong> (<code>a</code> pointe vers <code>E</code> ).</li>
+            <li><code>b = e; b.affiche();</code> \(\rightarrow\) <strong>Je suis un A</strong> (<code>b</code> pointe vers <code>E</code> ).</li>
+            <li><code>F f = new F(); f.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> (F hérite de C qui possède sa propre méthode <code>affiche()</code> ).</li>
+            <li><code>a = f; a.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> (<code>a</code> pointe vers <code>F</code> ).</li>
+            <li><code>c = f; c.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> (<code>c</code> pointe vers <code>F</code> ).</li>
+          </ul>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2</span>
+              <h3>Exercice 2 (4 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <h4>Question 2.1 </h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Création d'une classe classique avec attributs privés, constructeur et accesseurs/mutateurs.</p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">public class TypPneu {
+    private int diametre;
+    private int largeur;
+    private String marque;
+
+    public TypPneu(int diametre, int largeur, String marque) {
+        this.diametre = diametre;
+        this.largeur = largeur;
+        this.marque = marque;
+    }
+    
+    // Getters et Setters
+    public int getDiametre() { return diametre; }
+    public void setDiametre(int diametre) { this.diametre = diametre; }
+    
+    public int getLargeur() { return largeur; }
+    public void setLargeur(int largeur) { this.largeur = largeur; }
+    
+    public String getMarque() { return marque; }
+    public void setMarque(String marque) { this.marque = marque; }
+}</code></pre>
+          <h4>Question 2.2 </h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>La méthode <code>equals(Object o)</code> doit être redéfinie pour comparer les valeurs et non les références mémoires.</p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">@Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    TypPneu typPneu = (TypPneu) obj;
+    return diametre == typPneu.diametre &amp;&amp; 
+           largeur == typPneu.largeur &amp;&amp; 
+           marque.equals(typPneu.marque);
+}</code></pre>
+          <h4>Question 2.3 </h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Création de la classe <code>TypVoiture</code> avec composition (elle contient un objet <code>TypPneu</code>).</p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">public class TypVoiture {
+    private String marque;
+    private String modele;
+    private TypPneu pneu;
+
+    public TypVoiture(String marque, String modele, TypPneu pneu) {
+        this.marque = marque;
+        this.modele = modele;
+        this.pneu = pneu;
+    }
+
+    // Getters et Setters
+    public String getMarque() { return marque; }
+    public void setMarque(String marque) { this.marque = marque; }
+
+    public String getModele() { return modele; }
+    public void setModele(String modele) { this.modele = modele; }
+
+    public TypPneu getTypPneu() { return pneu; }
+    public void setTypPneu(TypPneu pneu) { this.pneu = pneu; }
+}</code></pre>
+          <h4>Question 2.4 </h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p>Ajout d'une méthode validant les dimensions avant de remplacer le pneu.</p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">public void changementPneu(TypPneu tp) {
+    if (this.pneu.getLargeur() == tp.getLargeur() &amp;&amp; 
+        this.pneu.getDiametre() == tp.getDiametre()) {
+        this.pneu = tp;
+    } else {
+        throw new RuntimeException("Dimensions incompatibles");
+    }
+}</code></pre>
+          <h4>Question 2.5 </h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Erreur</strong>
+            <p>La méthode <code>changementPneu</code> est appelée sur la classe <code>TypVoiture</code> (<code>TypVoiture.changementPneu(p2);</code>) au lieu d'être appelée sur l'instance <code>v1</code>. Le code correct serait : <code>v1.changementPneu(p2);</code></p>
+          </div>
+          <h4>Question 2.6 </h4>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Raisonnement</strong>
+            <p><code>==</code> compare les références mémoires. <code>equals()</code> compare le contenu.</p>
+          </div>
+          <ul class="formula-list">
+            <li><code>p1 == p2</code> \(\rightarrow\) <strong>false</strong> (Différentes instances en mémoire).</li>
+            <li><code>p1 == p3</code> \(\rightarrow\) <strong>false</strong> (Différentes instances).</li>
+            <li><code>p1.equals(p2)</code> \(\rightarrow\) <strong>false</strong> (Marques différentes : "Michelin" \(\neq\) "Dunlop" ).</li>
+            <li><code>p1.equals(p3)</code> \(\rightarrow\) <strong>false</strong> (Dimensions différentes ).</li>
+            <li><code>p1 == p4</code> \(\rightarrow\) <strong>false</strong> (<code>p4</code> pointe vers <code>p3</code> ).</li>
+            <li><code>p3 == p4</code> \(\rightarrow\) <strong>true</strong> (Même référence ).</li>
+            <li><code>p3.equals(p4)</code> \(\rightarrow\) <strong>true</strong> (Même référence, donc même contenu).</li>
+            <li><code>v1.getTypPneu() == v2.getTypPneu()</code> \(\rightarrow\) <strong>true</strong> (Les deux voitures partagent l'objet <code>p1</code> ).</li>
+            <li><code>v1.getTypPneu() == v3.getTypPneu()</code> \(\rightarrow\) <strong>false</strong> (<code>p1</code> \(\neq\) <code>p3</code>).</li>
+            <li><code>v1.getTypPneu().equals(p2)</code> \(\rightarrow\) <strong>false</strong> (Équivaut à <code>p1.equals(p2)</code>).</li>
+          </ul>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 3</span>
+              <h3>Exercice 3 (3 points)</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <h4>3.1 </h4>
+          <p>On crée un objet en utilisant le mot-clé <code>new</code> suivi de l'appel au constructeur de la classe (ex: <code>A a = new A();</code>).</p>
+          <h4>3.2 </h4>
+          <p>En Java, le développeur ne supprime pas explicitement les objets. C'est le <strong>Garbage Collector</strong> (Ramasse-miettes) qui détruit automatiquement les objets en mémoire lorsqu'ils ne sont plus référencés.</p>
+          <h4>3.3 </h4>
+          <p>Java est <strong>à la fois compilé et interprété</strong>. Le code source (.java) est d'abord compilé en un code intermédiaire appelé <strong>Bytecode</strong> (.class). Ce bytecode est ensuite interprété (et souvent compilé à la volée, JIT) par la Machine Virtuelle Java (JVM) lors de l'exécution.</p>
+          <h4>3.4 </h4>
+          <p>Le mot-clé <code>final</code> pour une variable indique qu'elle est une <strong>constante</strong>. Une fois initialisée, sa valeur ne peut plus être modifiée. <em>Exemple :</em> <code>final double PI = 3.14159;</code> Si on tente de réassigner <code>PI = 3.14;</code>, le compilateur renverra une erreur.</p>
+          <h4>3.5 </h4>
+          <ul class="formula-list">
+            <li><strong>Classe abstraite :</strong> Peut contenir des attributs (état), des méthodes concrètes et des constructeurs. Une classe ne peut hériter que d'une seule classe (abstraite ou non).</li>
+            <li><strong>Interface :</strong> Ne contient (traditionnellement) que des signatures de méthodes abstraites et des constantes (<code>public static final</code>). Une classe peut implémenter plusieurs interfaces.</li>
+          </ul>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 4</span>
+              <h3>Exercice 4 (3 points) </h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <pre class="code-block language-java"><code class="language-java">public abstract class Vehicule {
+    protected String immatriculation; // Format AA-111-AA sur 9 caracteres
+    protected int poids;
+    protected int places;
+
+    public Vehicule(String immatriculation, int poids, int places) {
+        this.immatriculation = immatriculation;
+        this.poids = poids;
+        this.places = places;
+    }
+    // Getters et setters omis pour breveté
+}
+
+public class Voiture extends Vehicule {
+    private int placesEnfants;
+
+    public Voiture(String immatriculation, int poids, int places, int placesEnfants) {
+        super(immatriculation, poids, places);
+        this.placesEnfants = placesEnfants;
+    }
+}
+
+public class Camion extends Vehicule {
+    private int chargeUtile;
+
+    public Camion(String immatriculation, int poids, int places, int chargeUtile) {
+        super(immatriculation, poids, places);
+        this.chargeUtile = chargeUtile;
+    }
+}
+
+public class Moto extends Vehicule {
+    private int cylindree;
+
+    public Moto(String immatriculation, int poids, int places, int cylindree) {
+        super(immatriculation, poids, places);
+        this.cylindree = cylindree;
+    }
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 5</span>
+              <h3>Exercice 5 (4 points) </h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <pre class="code-block language-java"><code class="language-java">public class Categorie {
+    private char nom; // ex: 'A', 'B'...
+    private double prixJour;
+
+    public Categorie(char nom, double prixJour) {
+        this.nom = nom;
+        this.prixJour = prixJour;
+    }
+    public double getPrixJour() { return prixJour; }
+}
+
+// Modifications dans Vehicule
+public abstract class Vehicule {
+    // ... autres attributs (immatriculation, poids, places)
+    protected Categorie categorie;
+
+    public Vehicule(String immat, int poids, int places, Categorie categorie) {
+        this.immatriculation = immat;
+        this.poids = poids;
+        this.places = places;
+        this.categorie = categorie;
+    }
+
+    public double getPrixLocation(int nbJour) {
+        return this.categorie.getPrixJour() * nbJour;
+    }
+}
+
+// Exemple de modification du constructeur (idem pour Moto et Camion)
+public class Voiture extends Vehicule {
+    private int placesEnfants;
+    public Voiture(String immat, int poids, int places, Categorie cat, int placesEnfants) {
+        super(immat, poids, places, cat);
+        this.placesEnfants = placesEnfants;
+    }
+}
+
+// Classe de test
+public class TestLocation {
+    public static void main(String[] args) {
+        Categorie catA = new Categorie('A', 50.0);
+        Voiture v1 = new Voiture("AB-123-CD", 1200, 5, catA, 2);
+        System.out.println("Prix pour 3 jours: " + v1.getPrixLocation(3));
+    }
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 6</span>
+              <h3>Exercice 6 (3 points) </h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <pre class="code-block language-java"><code class="language-java">import java.util.ArrayList;
+import java.util.List;
+
+public class Parc {
+    private List&lt;Vehicule&gt; vehicules;
+
+    public Parc() {
+        this.vehicules = new ArrayList&lt;&gt;();
+    }
+
+    public void addVehicule(Vehicule v) {
+        for (Vehicule existant : vehicules) {
+            if (existant.immatriculation.equals(v.immatriculation)) {
+                throw new RuntimeException("Vehicule deja existant");
+            }
+        }
+        vehicules.add(v);
+    }
+
+    public void removeVehicule(String immat) {
+        Vehicule aSupprimer = null;
+        for (Vehicule v : vehicules) {
+            if (v.immatriculation.equals(immat)) {
+                aSupprimer = v;
+                break;
+            }
+        }
+        if (aSupprimer == null) {
+            throw new RuntimeException("Vehicule introuvable");
+        }
+        vehicules.remove(aSupprimer);
+    }
+
+    public void displayParc() {
+        for (Vehicule v : vehicules) {
+            System.out.println("Immat: " + v.immatriculation + 
+                ", Prix jour: " + v.getPrixLocation(1));
+            // L'ideal serait d'avoir une methode toString() dans Vehicule
+        }
+    }
+
+    public double getPrixTotalLocation(int nbJour) {
+        double total = 0;
+        for (Vehicule v : vehicules) {
+            total += v.getPrixLocation(nbJour);
+        }
+        return total;
+    }
+}</code></pre>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
