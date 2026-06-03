@@ -8,6 +8,7 @@ const mathTdDir = path.join(root, "src", "subjects", "probabilites", "td");
 const mathExamDir = path.join(root, "src", "subjects", "probabilites", "exam");
 const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
 const autoTdDir = path.join(root, "src", "subjects", "auto", "td");
+const elecCoursePath = path.join(root, "src", "subjects", "elec", "cours.html");
 const javaCoursePath = path.join(root, "src", "subjects", "java", "cours.html");
 const javaExamDir = path.join(root, "src", "subjects", "java", "exam");
 const vhdlCoursePath = path.join(root, "src", "subjects", "vhdl", "cours.html");
@@ -18,6 +19,7 @@ const pages = {
   home: path.join(outDir, "index.html"),
   math: path.join(outDir, "math.html"),
   auto: path.join(outDir, "auto.html"),
+  elec: path.join(outDir, "elec.html"),
   java: path.join(outDir, "java.html"),
   vhdl: path.join(outDir, "vhdl.html"),
 };
@@ -58,6 +60,16 @@ const vhdlNav = [
   ["vhdl.html#vhdl-td", "TD"],
   ["vhdl.html#vhdl-exams", "Examens"],
   ["vhdl.html#vhdl-pdfs", "PDF"],
+];
+
+const elecNav = [
+  ["elec.html#elec-intro", "Accueil"],
+  ["elec.html#elec-quadripoles", "1. Quadripoles"],
+  ["elec.html#elec-filtres", "2. Filtres"],
+  ["elec.html#elec-amplis", "3. Amplis"],
+  ["elec.html#elec-oscillateurs", "4. Oscillateurs"],
+  ["elec.html#elec-revision", "Revision"],
+  ["elec.html#elec-pdfs", "PDF"],
 ];
 
 function read(filePath) {
@@ -144,6 +156,7 @@ function renderHome() {
       ["index.html", "Accueil"],
       ["math.html", "Cours de math"],
       ["auto.html", "Automatique"],
+      ["elec.html", "Electronique"],
       ["java.html", "Java"],
       ["vhdl.html", "VHDL"],
     ],
@@ -169,6 +182,12 @@ function renderHome() {
               <h3>Automatique</h3>
               <p>Cours AU361 construit a partir du poly, des supports PID/RST et des TD.</p>
               <p class="secondary-link"><a href="auto.html">Ouvrir le cours</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">Disponible</span>
+              <h3>Electronique</h3>
+              <p>Cours EP361 : quadripoles, filtres, amplificateurs et oscillateurs quasi-sinusoidaux.</p>
+              <p class="secondary-link"><a href="elec.html">Ouvrir le cours</a></p>
             </article>
             <article class="chapter-card">
               <span class="status-pill">Disponible</span>
@@ -222,6 +241,7 @@ function renderAutoCourse() {
     [
       ["index.html", "Accueil"],
       ["math.html", "Cours de math"],
+      ["elec.html", "Electronique"],
       ["java.html", "Java"],
       ["vhdl.html", "VHDL"],
       ["#auto-intro", "Automatique"],
@@ -250,9 +270,27 @@ function renderAutoCourse() {
   });
 }
 
+function renderElecCourse() {
+  const course = read(elecCoursePath);
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["java.html", "Java"], ["vhdl.html", "VHDL"], ...elecNav], "elec.html#elec-intro");
+
+  return renderShell({
+    title: "Electronique EP361 - Revision ESISAR",
+    brandMark: "E",
+    brandTitle: "Electronique",
+    brandSubtitle: "EP361",
+    nav,
+    eyebrow: "Electronique",
+    heading: "Circuits electroniques",
+    cta: '<a class="primary-button" href="index.html">Accueil</a>',
+    body: course,
+    showAnnotations: true,
+  });
+}
+
 function renderJavaCourse() {
   const course = read(javaCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["vhdl.html", "VHDL"], ...javaNav], "java.html#java-intro");
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["vhdl.html", "VHDL"], ...javaNav], "java.html#java-intro");
 
   return renderShell({
     title: "Java - Revision ESISAR",
@@ -269,7 +307,7 @@ function renderJavaCourse() {
 
 function renderVhdlCourse() {
   const course = read(vhdlCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["java.html", "Java"], ...vhdlNav], "vhdl.html#vhdl-intro");
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["java.html", "Java"], ...vhdlNav], "vhdl.html#vhdl-intro");
 
   return renderShell({
     title: "VHDL SN361 - Revision ESISAR",
@@ -296,6 +334,7 @@ copyIfExists(path.join(root, "pdf"), path.join(outDir, "pdf"));
 write(pages.home, renderHome());
 write(pages.math, renderMath());
 write(pages.auto, renderAutoCourse());
+write(pages.elec, renderElecCourse());
 write(pages.java, renderJavaCourse());
 write(pages.vhdl, renderVhdlCourse());
 

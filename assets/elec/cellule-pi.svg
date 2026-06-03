@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="title desc">
+  <title id="title">Cellule en Pi</title>
+  <desc id="desc">Quadripole en Pi avec deux admittances shunt Y1 et Y3 et une admittance Y2 entre les deux ports.</desc>
+  <rect width="720" height="300" fill="#f8fafc"/>
+  <text x="360" y="38" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#172033">Cellule en Pi</text>
+  <g fill="none" stroke="#172033" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M70 125h128"/>
+    <path d="M298 125h124"/>
+    <path d="M520 125h130"/>
+    <path d="M198 125v54"/>
+    <path d="M198 234v26"/>
+    <path d="M160 260h76"/>
+    <path d="M174 274h48"/>
+    <path d="M188 288h20"/>
+    <path d="M520 125v54"/>
+    <path d="M520 234v26"/>
+    <path d="M482 260h76"/>
+    <path d="M496 274h48"/>
+    <path d="M510 288h20"/>
+  </g>
+  <g fill="none" stroke="#1f5f99" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M198 179l-24 12 48 24-48 24 24 12"/>
+    <path d="M520 179l-24 12 48 24-48 24 24 12"/>
+    <path d="M198 125l12-24 24 48 24-48 24 48 24-48 24 48 24-48 24 48 24-48 24 48 24-48 24 48 12-24"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" fill="#172033">
+    <text x="360" y="90" text-anchor="middle" font-size="22" font-weight="700">Y2</text>
+    <text x="246" y="222" font-size="22" font-weight="700">Y1</text>
+    <text x="568" y="222" font-size="22" font-weight="700">Y3</text>
+    <text x="64" y="104" text-anchor="end" font-size="18" font-weight="700">i1</text>
+    <text x="656" y="104" font-size="18" font-weight="700">i2</text>
+    <text x="70" y="158" text-anchor="middle" font-size="18">v1</text>
+    <text x="650" y="158" text-anchor="middle" font-size="18">v2</text>
+  </g>
+  <g fill="#1f5f99">
+    <path d="M126 103l24 22-24 22z"/>
+    <path d="M604 103l24 22-24 22z"/>
+  </g>
+  <circle cx="70" cy="125" r="8" fill="#172033"/>
+  <circle cx="198" cy="125" r="8" fill="#172033"/>
+  <circle cx="520" cy="125" r="8" fill="#172033"/>
+  <circle cx="650" cy="125" r="8" fill="#172033"/>
+</svg>

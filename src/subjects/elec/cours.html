@@ -1,0 +1,358 @@
+        <section id="elec-intro" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">EP361</span>
+            <h2>Circuits electroniques</h2>
+            <p>
+              Cette page integre les quatre supports du dossier <code>pdf/elec/cours</code> :
+              quadripoles, filtres, amplificateurs et oscillateurs quasi-sinusoidaux.
+            </p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="progress-card">
+              <span class="card-kicker">Objectif</span>
+              <strong>EP361</strong>
+              <p>Analyser des blocs analogiques evolues et concevoir des fonctions elementaires.</p>
+            </article>
+            <article class="priority-card">
+              <span class="card-kicker">Priorites de revision</span>
+              <ol class="ordered-list">
+                <li>Choisir la bonne matrice de quadripole selon l'association.</li>
+                <li>Identifier le type de filtre, son ordre, sa frequence caracteristique et son facteur de qualite.</li>
+                <li>Comparer classes d'amplification, rendement, distorsion et bilan thermique.</li>
+                <li>Appliquer Barkhausen pour trouver la condition de depart d'oscillation.</li>
+              </ol>
+            </article>
+          </div>
+
+          <div class="quick-grid">
+            <a class="quick-link" href="#elec-quadripoles">Quadripoles</a>
+            <a class="quick-link" href="#elec-filtres">Filtres</a>
+            <a class="quick-link" href="#elec-amplis">Amplificateurs</a>
+            <a class="quick-link" href="#elec-oscillateurs">Oscillateurs</a>
+            <a class="quick-link" href="#elec-revision">Fiche finale</a>
+            <a class="quick-link" href="#elec-pdfs">PDF</a>
+          </div>
+
+          <figure class="system-diagram" aria-label="Synthese des blocs du cours EP361">
+            <img src="assets/elec/ep361-synthese.svg" alt="Schema reliant quadripoles, filtres, amplificateurs et oscillateurs." loading="lazy">
+            <figcaption class="diagram-caption">Le cours se lit comme une chaine de blocs : modeliser, filtrer, amplifier, puis creer un signal stable.</figcaption>
+          </figure>
+        </section>
+
+        <section id="elec-quadripoles" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 1</span>
+            <h2>Quadripoles</h2>
+            <p>Un quadripole est un bloc electrique a deux ports. Il permet de remplacer un montage par des relations entre tensions et courants d'entree/sortie.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Variables</h4>
+              <ul class="formula-list">
+                <li>Port d'entree : \(v_1, i_1\).</li>
+                <li>Port de sortie : \(v_2, i_2\).</li>
+                <li>Les signes des courants doivent etre gardes constants pendant tout le calcul.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Matrices usuelles</h4>
+              <ul class="formula-list">
+                <li>Admittance : <span class="formula-chip">\(I=YV\)</span>, pratique en parallele.</li>
+                <li>Impedance : <span class="formula-chip">\(V=ZI\)</span>, pratique en serie.</li>
+                <li>Transfert ou chaine : pratique en cascade.</li>
+                <li>Hybride : utile quand entree serie et sortie parallele sont imposees.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Choix rapide</h4>
+              <ul class="formula-list">
+                <li>Mise en parallele : additionner les matrices \(Y\).</li>
+                <li>Mise en serie : additionner les matrices \(Z\).</li>
+                <li>Mise en cascade : multiplier les matrices de chaine dans l'ordre des blocs.</li>
+                <li>Quadripole passif reciproque : symetries de coefficients, par exemple \(y_{12}=y_{21}\).</li>
+              </ul>
+            </div>
+            <div class="content-block warning">
+              <h4>Piege classique</h4>
+              <p>En cascade, l'ordre du produit compte. Il faut respecter l'ordre physique des blocs traverses par le signal.</p>
+            </div>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Lecture des matrices \(Z\) et \(Y\)</h4>
+            <p>La matrice impedance exprime les tensions en fonction des courants :</p>
+            <p><span class="formula-chip">\(\begin{bmatrix}v_1\\v_2\end{bmatrix}=
+            \begin{bmatrix}z_{11}&z_{12}\\z_{21}&z_{22}\end{bmatrix}
+            \begin{bmatrix}i_1\\i_2\end{bmatrix}\)</span></p>
+            <p>La matrice admittance exprime les courants en fonction des tensions :</p>
+            <p><span class="formula-chip">\(\begin{bmatrix}i_1\\i_2\end{bmatrix}=
+            \begin{bmatrix}y_{11}&y_{12}\\y_{21}&y_{22}\end{bmatrix}
+            \begin{bmatrix}v_1\\v_2\end{bmatrix}\)</span></p>
+            <p>Quand les deux existent, elles sont inverses l'une de l'autre : <span class="formula-chip">\(Y=Z^{-1}\)</span> et <span class="formula-chip">\(Z=Y^{-1}\)</span>.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Cellule en T</h4>
+              <figure class="system-diagram td-figure" aria-label="Schema d'une cellule en T">
+                <img src="assets/elec/cellule-t.svg" alt="Cellule en T avec Z1 en serie entree, Z3 en serie sortie et Z2 vers la masse." loading="lazy">
+              </figure>
+              <p>On note \(Z_1\) l'impedance serie cote entree, \(Z_3\) l'impedance serie cote sortie et \(Z_2\) la branche verticale commune vers la masse.</p>
+              <p>La forme en T se traite naturellement avec la matrice impedance, car les deux ports partagent l'impedance centrale \(Z_2\).</p>
+              <p><span class="formula-chip">\(Z_T=
+              \begin{bmatrix}
+              Z_1+Z_2 & Z_2\\
+              Z_2 & Z_2+Z_3
+              \end{bmatrix}\)</span></p>
+              <p>En posant \(\Delta_T=Z_1Z_2+Z_1Z_3+Z_2Z_3\), la matrice admittance vaut :</p>
+              <p><span class="formula-chip">\(Y_T=\frac{1}{\Delta_T}
+              \begin{bmatrix}
+              Z_2+Z_3 & -Z_2\\
+              -Z_2 & Z_1+Z_2
+              \end{bmatrix}\)</span></p>
+            </div>
+            <div class="content-block theorem">
+              <h4>Cellule en Pi</h4>
+              <figure class="system-diagram td-figure" aria-label="Schema d'une cellule en Pi">
+                <img src="assets/elec/cellule-pi.svg" alt="Cellule en Pi avec Y1 et Y3 vers la masse et Y2 entre les deux ports." loading="lazy">
+              </figure>
+              <p>On note \(Y_1\) l'admittance verticale cote entree, \(Y_3\) l'admittance verticale cote sortie et \(Y_2\) l'admittance entre les deux ports.</p>
+              <p>En posant \(\Delta_\Pi=Y_1Y_2+Y_1Y_3+Y_2Y_3\), la matrice impedance vaut :</p>
+              <p><span class="formula-chip">\(Z_\Pi=\frac{1}{\Delta_\Pi}
+              \begin{bmatrix}
+              Y_2+Y_3 & Y_2\\
+              Y_2 & Y_1+Y_2
+              \end{bmatrix}\)</span></p>
+              <p>La forme en Pi se traite naturellement avec la matrice admittance, car les lois de noeuds donnent directement les courants.</p>
+              <p><span class="formula-chip">\(Y_\Pi=
+              \begin{bmatrix}
+              Y_1+Y_2 & -Y_2\\
+              -Y_2 & Y_2+Y_3
+              \end{bmatrix}\)</span></p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Comment retrouver la cellule en T</h4>
+              <ol class="solution-steps">
+                <li>Ouvrir la sortie pour calculer \(z_{11}=v_1/i_1\) : le courant traverse \(Z_1\) puis \(Z_2\), donc \(z_{11}=Z_1+Z_2\).</li>
+                <li>Garder la sortie ouverte et lire \(z_{21}=v_2/i_1\) : la tension de sortie est celle de la branche commune, donc \(z_{21}=Z_2\).</li>
+                <li>Par reciprocite passive, \(z_{12}=z_{21}=Z_2\).</li>
+                <li>Ouvrir l'entree pour calculer \(z_{22}=Z_3+Z_2\).</li>
+              </ol>
+            </div>
+            <div class="content-block method">
+              <h4>Comment retrouver la cellule en Pi</h4>
+              <ol class="solution-steps">
+                <li>Appliquer la loi des noeuds au port 1 : \(i_1=Y_1v_1+Y_2(v_1-v_2)\).</li>
+                <li>On obtient \(i_1=(Y_1+Y_2)v_1-Y_2v_2\).</li>
+                <li>Au port 2 : \(i_2=Y_3v_2+Y_2(v_2-v_1)\).</li>
+                <li>On obtient \(i_2=-Y_2v_1+(Y_2+Y_3)v_2\), ce qui donne directement \(Y_\Pi\).</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section id="elec-filtres" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 2</span>
+            <h2>Filtres analogiques</h2>
+            <p>Un filtre selectionne une zone du spectre. On raisonne avec la fonction de transfert \(H(j\omega)\), son module et sa phase.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Familles ideales</h4>
+              <ul class="formula-list">
+                <li>Passe-bas : transmet les basses frequences.</li>
+                <li>Passe-haut : transmet les hautes frequences.</li>
+                <li>Passe-bande : transmet une bande \([f_1,f_2]\).</li>
+                <li>Coupe-bande : rejette une bande de frequences.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Premier et second ordre</h4>
+              <ul class="formula-list">
+                <li>Premier ordre : pente asymptotique de \(20\) dB/dec par pole.</li>
+                <li>Second ordre : pulsation propre, amortissement et facteur de qualite.</li>
+                <li>Un ordre plus eleve donne une transition plus raide.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Approximations</h4>
+              <ul class="formula-list">
+                <li>Butterworth : module le plus plat possible dans la bande transmise.</li>
+                <li>Tchebytchev : ondulation acceptee pour obtenir une coupure plus raide a ordre donne.</li>
+                <li>Le gabarit fixe les attenuations admissibles et guide le choix de l'ordre.</li>
+              </ul>
+            </div>
+            <div class="content-block remember">
+              <h4>Filtres actifs</h4>
+              <p>Les structures a AOP evitent les selfs, permettent du gain et facilitent la mise en cascade, mais restent limitees par le produit gain-bande et le slew rate.</p>
+            </div>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Structures a connaitre</h4>
+            <p>Le support cite les filtres a contre-reactions multiples, Rauch, Sallen-Key, les filtres passe-tout et les filtres a capacites commutees.</p>
+          </div>
+        </section>
+
+        <section id="elec-amplis" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 3</span>
+            <h2>Amplificateurs</h2>
+            <p>Un amplificateur fournit de la puissance utile a la charge. On surveille gain, impedances, rendement, distorsion et dissipation.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Bilan de puissance</h4>
+              <ul class="formula-list">
+                <li>Puissance absorbee : \(P_{abs}\).</li>
+                <li>Puissance utile : \(P_u\).</li>
+                <li>Puissance dissipee : \(P_d\).</li>
+                <li>Rendement : <span class="formula-chip">\(\eta=\frac{P_u}{P_{abs}}=1-\frac{P_d}{P_{abs}}\)</span>.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Modele quadripole</h4>
+              <ul class="formula-list">
+                <li>Gain en tension a vide : \(A_v=v_s/v_e\) pour \(i_s=0\).</li>
+                <li>Impedance d'entree : \(Z_e=v_e/i_e\).</li>
+                <li>Impedance de sortie : \(Z_s=v_s/i_s\) avec entree annulee.</li>
+                <li>En charge, le gain est reduit par \(Z_s\) et la charge.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Classes</h4>
+              <ul class="formula-list">
+                <li>Classe A : conduction sur \(2\pi\), tres lineaire, rendement faible, petits signaux.</li>
+                <li>Classe B/AB : conduction autour de \(\pi\), bon rendement, risque de distorsion de croisement.</li>
+                <li>Classe C : tres bon rendement mais forte distorsion, utile avec circuit resonant.</li>
+                <li>Classe D : commutation, tres bon rendement, commande de puissance.</li>
+              </ul>
+            </div>
+            <div class="content-block warning">
+              <h4>Distorsion de croisement</h4>
+              <p>En classe B, les transistors peuvent etre bloques pres de zero. La compensation par diodes ou par AOP polarise les transistors pour limiter cette zone morte.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="elec-oscillateurs" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 4</span>
+            <h2>Oscillateurs quasi-sinusoidaux</h2>
+            <p>Un oscillateur produit une sinusoide sans entree externe, a une frequence imposee par un reseau selectif.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Critere de Barkhausen</h4>
+              <p>Pour la boucle \(A(j\omega)B(j\omega)\), l'oscillation ideale se produit si :</p>
+              <p><span class="formula-chip">\(|A(j\omega_0)B(j\omega_0)|=1\)</span></p>
+              <p><span class="formula-chip">\(\arg(A(j\omega_0)B(j\omega_0))=\pm180^\circ\)</span></p>
+            </div>
+            <div class="content-block method">
+              <h4>Demarrage et regime permanent</h4>
+              <ul class="formula-list">
+                <li>Pour demarrer : gain de boucle legerement superieur a 1.</li>
+                <li>Si le gain est inferieur a 1, l'oscillation s'eteint.</li>
+                <li>En regime permanent, une non-linearite stabilise l'amplitude.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Montages</h4>
+              <ul class="formula-list">
+                <li>Pont de Wien : oscillateur BF, condition typique de gain \(A_0=3\).</li>
+                <li>LC : Colpitts, Clapp, Hartley ; la frequence depend du reseau reactif.</li>
+                <li>Quartz : tres grand facteur de qualite, excellente stabilite en frequence.</li>
+                <li>VCO : frequence pilotee par une tension, souvent via diode varicap.</li>
+              </ul>
+            </div>
+            <div class="content-block remember">
+              <h4>Qualite</h4>
+              <p>Les deux criteres pratiques sont la purete spectrale et la stabilite en frequence. Le quartz est privilegie quand la stabilite domine le cahier des charges.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="elec-revision" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Revision</span>
+            <h2>Fiche finale EP361</h2>
+            <p>Les reflexes a avoir devant un exercice.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Methode d'analyse</h4>
+              <ol class="solution-steps">
+                <li>Identifier la fonction du bloc : quadripole, filtre, ampli ou oscillateur.</li>
+                <li>Poser clairement les grandeurs d'entree/sortie et les conventions de signe.</li>
+                <li>Choisir l'outil : matrice, Bode, bilan de puissance ou critere de Barkhausen.</li>
+                <li>Verifier la coherence physique : unites, ordre de grandeur, pertes, saturation.</li>
+              </ol>
+            </div>
+            <div class="content-block remember">
+              <h4>Formules qui tombent vite</h4>
+              <ul class="formula-list">
+                <li>\(H(j\omega)=V_s/V_e\), avec module et phase.</li>
+                <li>\(t_g=-d\varphi/d\omega\), temps de propagation de groupe.</li>
+                <li>\(\eta=P_u/P_{abs}\).</li>
+                <li>\(|AB|=1\) et phase de boucle correcte pour l'oscillateur.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="elec-pdfs" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Supports</span>
+            <h2>PDF originaux</h2>
+            <p>Les supports ajoutes dans <code>pdf/elec/cours</code> restent accessibles directement.</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="chapter-card">
+              <span class="status-pill">I</span>
+              <h3>Quadripoles</h3>
+              <p>Presentation du module, matrices et associations de quadripoles.</p>
+              <p class="secondary-link"><a href="pdf/elec/cours/EP361_I_Presentation_Quadripole.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">II</span>
+              <h3>Filtres</h3>
+              <p>Gabarits, approximations, filtres actifs et capacites commutees.</p>
+              <p class="secondary-link"><a href="pdf/elec/cours/EP361_II_Filtres.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">III</span>
+              <h3>Amplificateurs</h3>
+              <p>Classes A/B, rendement, distorsion, transistors, AOP et dissipation.</p>
+              <p class="secondary-link"><a href="pdf/elec/cours/EP361_III_Amplificateurs.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">IV</span>
+              <h3>Oscillateurs</h3>
+              <p>Barkhausen, pont de Wien, LC, quartz et VCO.</p>
+              <p class="secondary-link"><a href="pdf/elec/cours/EP361_IV_Oscillateurs.pdf">Ouvrir le PDF</a></p>
+            </article>
+          </div>
+        </section>
