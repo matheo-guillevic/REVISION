@@ -9,12 +9,17 @@ const mathExamDir = path.join(root, "src", "subjects", "probabilites", "exam");
 const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
 const autoTdDir = path.join(root, "src", "subjects", "auto", "td");
 const javaCoursePath = path.join(root, "src", "subjects", "java", "cours.html");
+const javaExamDir = path.join(root, "src", "subjects", "java", "exam");
+const vhdlCoursePath = path.join(root, "src", "subjects", "vhdl", "cours.html");
+const vhdlTdDir = path.join(root, "src", "subjects", "vhdl", "td");
+const vhdlExamDir = path.join(root, "src", "subjects", "vhdl", "exam");
 
 const pages = {
   home: path.join(outDir, "index.html"),
   math: path.join(outDir, "math.html"),
   auto: path.join(outDir, "auto.html"),
   java: path.join(outDir, "java.html"),
+  vhdl: path.join(outDir, "vhdl.html"),
 };
 
 const mathNav = [
@@ -38,6 +43,21 @@ const javaNav = [
   ["java.html#java-heritage", "4. Heritage"],
   ["java.html#java-interfaces", "5. Interfaces"],
   ["java.html#java-exceptions", "6. Exceptions"],
+  ["java.html#java-exams", "Examens"],
+];
+
+const vhdlNav = [
+  ["vhdl.html#vhdl-intro", "Accueil"],
+  ["vhdl.html#vhdl-cm1", "1. Introduction"],
+  ["vhdl.html#vhdl-cm2", "2. Nombres"],
+  ["vhdl.html#vhdl-cm3", "3. Combinatoire"],
+  ["vhdl.html#vhdl-cm4", "4. Sequentiel"],
+  ["vhdl.html#vhdl-cm5", "5. FSM"],
+  ["vhdl.html#vhdl-cm6", "6. HDL"],
+  ["vhdl.html#vhdl-cm7", "7. FPGA"],
+  ["vhdl.html#vhdl-td", "TD"],
+  ["vhdl.html#vhdl-exams", "Examens"],
+  ["vhdl.html#vhdl-pdfs", "PDF"],
 ];
 
 function read(filePath) {
@@ -125,6 +145,7 @@ function renderHome() {
       ["math.html", "Cours de math"],
       ["auto.html", "Automatique"],
       ["java.html", "Java"],
+      ["vhdl.html", "VHDL"],
     ],
     "index.html"
   );
@@ -154,6 +175,12 @@ function renderHome() {
               <h3>Java</h3>
               <p>Bases du langage, collections, approche objet, heritage, interfaces et exceptions.</p>
               <p class="secondary-link"><a href="java.html">Ouvrir le cours</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">Disponible</span>
+              <h3>VHDL</h3>
+              <p>Supports SN361 : logique reconfigurable, codage binaire, circuits combinatoires, sequentiels, FSM et FPGA.</p>
+              <p class="secondary-link"><a href="vhdl.html">Ouvrir le cours</a></p>
             </article>
           </div>
         </section>`;
@@ -196,6 +223,7 @@ function renderAutoCourse() {
       ["index.html", "Accueil"],
       ["math.html", "Cours de math"],
       ["java.html", "Java"],
+      ["vhdl.html", "VHDL"],
       ["#auto-intro", "Automatique"],
       ["#auto-modelisation", "Modelisation"],
       ["#auto-analyse", "Analyse"],
@@ -224,7 +252,7 @@ function renderAutoCourse() {
 
 function renderJavaCourse() {
   const course = read(javaCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ...javaNav], "java.html#java-intro");
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["vhdl.html", "VHDL"], ...javaNav], "java.html#java-intro");
 
   return renderShell({
     title: "Java - Revision ESISAR",
@@ -236,6 +264,24 @@ function renderJavaCourse() {
     heading: "Langage Java et programmation objet",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
     body: course,
+  });
+}
+
+function renderVhdlCourse() {
+  const course = read(vhdlCoursePath);
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["java.html", "Java"], ...vhdlNav], "vhdl.html#vhdl-intro");
+
+  return renderShell({
+    title: "VHDL SN361 - Revision ESISAR",
+    brandMark: "V",
+    brandTitle: "VHDL",
+    brandSubtitle: "SN361",
+    nav,
+    eyebrow: "VHDL",
+    heading: "Conception de circuits numeriques",
+    cta: '<a class="primary-button" href="index.html">Accueil</a>',
+    body: course,
+    showAnnotations: true,
   });
 }
 
@@ -251,6 +297,7 @@ write(pages.home, renderHome());
 write(pages.math, renderMath());
 write(pages.auto, renderAutoCourse());
 write(pages.java, renderJavaCourse());
+write(pages.vhdl, renderVhdlCourse());
 
 for (const file of ["td1.html", "td2.html", "td3.html"]) {
   fs.copyFileSync(path.join(mathTdDir, file), path.join(outDir, file));
@@ -265,6 +312,24 @@ if (fs.existsSync(autoTdDir)) {
 if (fs.existsSync(mathExamDir)) {
   for (const file of fs.readdirSync(mathExamDir).filter((entry) => entry.endsWith(".html"))) {
     fs.copyFileSync(path.join(mathExamDir, file), path.join(outDir, file));
+  }
+}
+
+if (fs.existsSync(javaExamDir)) {
+  for (const file of fs.readdirSync(javaExamDir).filter((entry) => entry.endsWith(".html"))) {
+    fs.copyFileSync(path.join(javaExamDir, file), path.join(outDir, file));
+  }
+}
+
+if (fs.existsSync(vhdlTdDir)) {
+  for (const file of fs.readdirSync(vhdlTdDir).filter((entry) => entry.endsWith(".html"))) {
+    fs.copyFileSync(path.join(vhdlTdDir, file), path.join(outDir, file));
+  }
+}
+
+if (fs.existsSync(vhdlExamDir)) {
+  for (const file of fs.readdirSync(vhdlExamDir).filter((entry) => entry.endsWith(".html"))) {
+    fs.copyFileSync(path.join(vhdlExamDir, file), path.join(outDir, file));
   }
 }
 

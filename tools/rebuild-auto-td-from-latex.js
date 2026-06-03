@@ -166,7 +166,10 @@ function normalizeLatex(latex) {
     .replace(/\\end\{enumerate\}/g, "\n@@OL_END@@\n\n")
     .replace(/^\s*\\item\s*/gm, "@@LI@@ ")
     .replace(/^\s*-\s+/gm, "@@LI@@ ")
+    .replace(/\\section\*\{([^}]*)\}/g, "\n\n@@SUBSECTION:$1@@\n\n")
     .replace(/\\subsection\*\{([^}]*)\}/g, "\n\n@@SUBSECTION:$1@@\n\n")
+    .replace(/\\paragraph\{([^}]*)\}/g, "\n\n@@SUBSECTION:$1@@\n\n")
+    .replace(/\\paragraph\*\{([^}]*)\}/g, "\n\n@@SUBSECTION:$1@@\n\n")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
@@ -297,9 +300,37 @@ function renderFigure(file) {
           </figure>`;
 }
 
+function insertAfterFirstHeadingOrParagraph(html, figureHtml) {
+  const match = html.match(/          <h4>[\s\S]*?<\/h4>|          <p>[\s\S]*?<\/p>/);
+  if (!match) return `${figureHtml}\n${html}`;
+  return `${html.slice(0, match.index + match[0].length)}\n${figureHtml}${html.slice(match.index + match[0].length)}`;
+}
+
+function insertAfterHeading(html, pattern, figureHtml) {
+  const headings = [...html.matchAll(/          <h4>([\s\S]*?)<\/h4>/g)];
+  const found = headings.find((match) => pattern.test(match[1]));
+  if (!found) return insertAfterFirstHeadingOrParagraph(html, figureHtml);
+  return `${html.slice(0, found.index + found[0].length)}\n${figureHtml}${html.slice(found.index + found[0].length)}`;
+}
+
+function placeFigures(tdNumber, section, index, body) {
+  const figures = getFigureFiles(tdNumber, section, index);
+  if (!figures.length) return body;
+
+  if (`${tdNumber}:${index + 1}` === "4:5") {
+    let value = insertAfterFirstHeadingOrParagraph(body, renderFigure(figures[0]));
+    return insertAfterHeading(value, /4\.d|sensibilit/i, renderFigure(figures[1]));
+  }
+
+  return insertAfterFirstHeadingOrParagraph(body, figures.map(renderFigure).join("\n"));
+}
+
 function extractSections(latex) {
   const clean = cleanLatex(latex);
-  const matches = [...clean.matchAll(/^\\section\*\{([^}]*)\}/gm)];
+  const allMatches = [...clean.matchAll(/^\\section\*\{([^}]*)\}/gm)];
+  const matches = allMatches.some((match) => /^Exercice\b/i.test(match[1].trim()))
+    ? allMatches.filter((match) => /^Exercice\b/i.test(match[1].trim()))
+    : allMatches;
 
   return matches.map((match, index) => {
     const title = match[1].trim();
@@ -316,7 +347,7 @@ function extractSections(latex) {
 
 function renderSection(tdNumber, section, index) {
   const label = /^Exercice/i.test(section.title) ? `Exercice ${section.number}` : `Partie ${section.number}`;
-  const figures = getFigureFiles(tdNumber, section, index).map(renderFigure).join("\n");
+  const body = placeFigures(tdNumber, section, index, convertBlock(section.body));
   return `        <article class="exercise-card" data-exercise>
           <header>
             <div>
@@ -329,8 +360,7 @@ function renderSection(tdNumber, section, index) {
             </div>
           </header>
           <div id="auto-td${tdNumber}-e${index + 1}" class="answer-block">
-${figures}
-${convertBlock(section.body)}
+${body}
           </div>
         </article>`;
 }

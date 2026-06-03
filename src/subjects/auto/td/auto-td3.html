@@ -42,11 +42,11 @@
             </div>
           </header>
           <div id="auto-td3-e1" class="answer-block">
+          <p>Le système mécanique relie la commande \(u\) à la vitesse \(vit\) par un premier ordre de gain statique \(G=5\) et de constante de temps \(\tau=0.1\) s.</p>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD3-Ex1.svg" alt="Boucle d'asservissement de position avec perturbation." loading="lazy">
             <figcaption class="diagram-caption">Boucle d'asservissement de position avec perturbation.</figcaption>
           </figure>
-          <p>Le système mécanique relie la commande \(u\) à la vitesse \(vit\) par un premier ordre de gain statique \(G=5\) et de constante de temps \(\tau=0.1\) s.</p>
           <h4>I.1. Expression de la fonction de transfert \(H(p)\)</h4>
           <p>La position \(pos(t)\) est l'intégrale de la vitesse \(vit(t)\). Dans le domaine de Laplace, on a \(POS(p) = \frac{VIT(p)}{p}\). La fonction de transfert entre \(U(p)\) et \(VIT(p)\) est \(\frac{5}{1+0.1p}\). Ainsi, la fonction de transfert du processus \(H(p)\) est: \[H(p) = \frac{POS(p)}{U(p)} = \frac{5}{p(1+0.1p)}\]</p>
           <h4>I.2. Valeur des pôles du processus</h4>
@@ -74,7 +74,6 @@
             </div>
           </header>
           <div id="auto-td3-e2" class="answer-block">
-
           <h4>II.1. Fonction de transfert du régulateur</h4>
           <p>Pour un régulateur proportionnel de gain K: \[R(p) = K\]</p>
           <h4>II.2. Fonction de transfert en boucle fermée (FTBF)</h4>
@@ -104,11 +103,11 @@
             </div>
           </header>
           <div id="auto-td3-e3" class="answer-block">
+          <p>Le système intègre un correcteur \(C(s)\), un transfert \(\frac{K}{1+Ts}\) et un intégrateur \(\frac{1}{s}\).</p>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD3-Ex2.svg" alt="Moteur asservi en position." loading="lazy">
             <figcaption class="diagram-caption">Moteur asservi en position.</figcaption>
           </figure>
-          <p>Le système intègre un correcteur \(C(s)\), un transfert \(\frac{K}{1+Ts}\) et un intégrateur \(\frac{1}{s}\).</p>
           <h4>1. Expressions de \(T_1(s)\) et \(T_2(s)\)</h4>
           <p>D'après le schéma, \(V(s) = \frac{K}{1+Ts}[C(s)(CY(s) - Y(s)) - \Gamma_r(s)]\) et \(Y(s) = \frac{V(s)}{s}\). En réorganisant: \[Y(s) \left[ 1 + \frac{K C(s)}{s(1+Ts)} \right] = \frac{K C(s)}{s(1+Ts)} CY(s) - \frac{K}{s(1+Ts)} \Gamma_r(s)\] On identifie les deux fonctions de transfert: \[T_1(s) = \frac{K C(s)}{s(1+Ts) + K C(s)} \quad \text{et} \quad T_2(s) = \frac{-K}{s(1+Ts) + K C(s)}\]</p>
           <h4>2. Erreur en suivi de consigne échelon (\(C(s) = K_p\))</h4>

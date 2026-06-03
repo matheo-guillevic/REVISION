@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 250" width="100%" height="100%">
+  <rect x="150" y="50" width="80" height="100" fill="white" stroke="black" stroke-width="1.5"/>
+  <text x="185" y="105" font-family="Arial" font-size="16">D</text>
+  <polygon points="150,115 160,120 150,125" fill="red" stroke="red"/>
+
+  <rect x="350" y="50" width="80" height="100" fill="white" stroke="black" stroke-width="1.5"/>
+  <text x="385" y="105" font-family="Arial" font-size="16">D</text>
+  <polygon points="350,115 360,120 350,125" fill="red" stroke="red"/>
+
+  <line x1="50" y1="70" x2="150" y2="70" stroke="black" stroke-width="1"/>
+  <text x="10" y="75" font-family="Arial" font-size="16">din</text>
+
+  <line x1="50" y1="120" x2="150" y2="120" stroke="red" stroke-width="1"/>
+  <text x="10" y="125" font-family="Arial" font-size="16">clk</text>
+  <polyline points="100,120 100,170 320,170 320,120 350,120" fill="none" stroke="red" stroke-width="1"/>
+
+  <line x1="180" y1="220" x2="180" y2="150" stroke="#d6a1d8" stroke-width="1"/>
+  <text x="150" y="240" font-family="Arial" font-size="16">reset</text>
+  <polyline points="180,190 380,190 380,150" fill="none" stroke="#d6a1d8" stroke-width="1"/>
+
+  <line x1="220" y1="220" x2="220" y2="150" stroke="#a1a6d8" stroke-width="1"/>
+  <text x="210" y="240" font-family="Arial" font-size="16">enable</text>
+  <polyline points="220,205 410,205 410,150" fill="none" stroke="#a1a6d8" stroke-width="1"/>
+
+  <line x1="230" y1="70" x2="350" y2="70" stroke="black" stroke-width="1"/>
+  <line x1="290" y1="70" x2="290" y2="30" stroke="#87ceeb" stroke-width="1"/>
+  <circle cx="290" cy="70" r="4" fill="#87ceeb"/>
+  <text x="260" y="20" font-family="Arial" font-size="16">dout(0)</text>
+
+  <line x1="430" y1="70" x2="520" y2="70" stroke="black" stroke-width="1"/>
+  <text x="530" y="75" font-family="Arial" font-size="16">dout(1)</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200" width="100%" height="100%">
+  <rect x="350" y="50" width="60" height="90" fill="none" stroke="black" stroke-width="2"/>
+  <text x="360" y="75" font-family="Arial" font-size="14">e</text>
+  <text x="390" y="95" font-family="Arial" font-size="14">s</text>
+  <text x="375" y="115" font-family="Arial" font-size="16" font-weight="bold">D</text>
+  <text x="360" y="135" font-family="Arial" font-size="12">clk</text>
+
+  <path d="M 120 60 Q 140 85 120 110 Q 160 110 180 85 Q 160 60 120 60" fill="none" stroke="black" stroke-width="2"/>
+  <path d="M 110 60 Q 130 85 110 110" fill="none" stroke="black" stroke-width="2"/>
+  
+  <path d="M 230 50 L 250 50 A 25 25 0 0 1 250 100 L 230 100 Z" fill="none" stroke="black" stroke-width="2"/>
+  <circle cx="280" cy="75" r="4" fill="none" stroke="black"/>
+
+  <line x1="30" y1="50" x2="230" y2="50" stroke="black" stroke-width="2"/> <text x="10" y="45" font-family="Arial" font-size="14">init</text>
+  <line x1="30" y1="75" x2="115" y2="75" stroke="black" stroke-width="2"/> <text x="10" y="70" font-family="Arial" font-size="14">T</text>
+  <line x1="30" y1="130" x2="350" y2="130" stroke="black" stroke-width="2"/> <text x="50" y="125" font-family="Arial" font-size="14">clk</text>
+  
+  <line x1="180" y1="85" x2="230" y2="85" stroke="black" stroke-width="2"/>
+  <line x1="284" y1="75" x2="350" y2="75" stroke="black" stroke-width="2"/>
+  
+  <line x1="410" y1="85" x2="480" y2="85" stroke="black" stroke-width="2"/> <text x="490" y="90" font-family="Arial" font-size="14">s</text>
+  <circle cx="450" cy="85" r="4" fill="black"/>
+  <polyline points="450,85 450,170 90,170 90,95 115,95" fill="none" stroke="black" stroke-width="2"/>
+  <text x="250" y="165" font-family="Arial" font-size="14">q</text>
+</svg>

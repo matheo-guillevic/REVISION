@@ -1,0 +1,179 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{circuitikz}
+\usepackage{amsmath}
+\usepackage{array}
+
+\begin{document}
+
+\begin{center}
+    {\Huge \textbf{\textsf{Logic Gates}}}
+\end{center}
+
+\vspace{0.5cm}
+
+% Ajustement de la hauteur des lignes pour que les schémas ne touchent pas les bords
+\renewcommand{\arraystretch}{2.5} 
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|>{\centering\arraybackslash}m{2.5cm}|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{3cm}|>{\centering\arraybackslash}m{3.5cm}|}
+        \hline
+        \textbf{\textsf{\begin{tabular}{c}Logic \\ function\end{tabular}}} & 
+        \textbf{\textsf{\begin{tabular}{c}Logic \\ symbol\end{tabular}}} & 
+        \textbf{\textsf{\begin{tabular}{c}Truth \\ table\end{tabular}}} & 
+        \textbf{\textsf{\begin{tabular}{c}Boolean \\ expression\end{tabular}}} \\
+        \hline
+        
+        % BUFFER
+        \textsf{Buffer} & 
+        \begin{circuitikz}[scale=0.8, transform shape]
+            \draw (0,0) node[buffer] (B) {};
+            \node[left] at (B.in) {A};
+            \node[right] at (B.out) {Y};
+        \end{circuitikz} & 
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{|c|c|}
+            \hline A & Y \\ \hline
+            0 & 0 \\
+            1 & 1 \\ \hline
+        \end{tabular} & 
+        $Y = A$ \\
+        \hline
+        
+        % INVERTER (NOT)
+        \textsf{\begin{tabular}{c}Inverter \\ (NOT gate)\end{tabular}} & 
+        \begin{circuitikz}[scale=0.8, transform shape]
+            \draw (0,0) node[not port] (N) {};
+            \node[left] at (N.in) {A};
+            \node[right] at (N.out) {Y};
+        \end{circuitikz} & 
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{|c|c|}
+            \hline A & Y \\ \hline
+            0 & 1 \\
+            1 & 0 \\ \hline
+        \end{tabular} & 
+        $Y = \overline{A}$ \\
+        \hline
+        
+        % 2-INPUT AND
+        \textsf{\begin{tabular}{c}2-input \\ AND gate\end{tabular}} & 
+        \begin{circuitikz}[scale=0.8, transform shape]
+            \draw (0,0) node[and port] (A) {};
+            \node[left] at (A.in 1) {A};
+            \node[left] at (A.in 2) {B};
+            \node[right] at (A.out) {Y};
+        \end{circuitikz} & 
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{|cc|c|}
+            \hline A & B & Y \\ \hline
+            0 & 0 & 0 \\
+            0 & 1 & 0 \\
+            1 & 0 & 0 \\
+            1 & 1 & 1 \\ \hline
+        \end{tabular} & 
+        $Y = A \cdot B$ \\
+        \hline
+        
+        % 2-INPUT NAND
+        \textsf{\begin{tabular}{c}2-input \\ NAND \\ gate\end{tabular}} & 
+        \begin{circuitikz}[scale=0.8, transform shape]
+            \draw (0,0) node[nand port] (NA) {};
+            \node[left] at (NA.in 1) {A};
+            \node[left] at (NA.in 2) {B};
+            \node[right] at (NA.out) {Y};
+        \end{circuitikz} & 
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{|cc|c|}
+            \hline A & B & Y \\ \hline
+            0 & 0 & 1 \\
+            0 & 1 & 1 \\
+            1 & 0 & 1 \\
+            1 & 1 & 0 \\ \hline
+        \end{tabular} & 
+        $Y = \overline{A \cdot B}$ \\
+        \hline
+        
+        % 2-INPUT OR
+        \textsf{\begin{tabular}{c}2-input \\ OR gate\end{tabular}} & 
+        \begin{circuitikz}[scale=0.8, transform shape]
+            \draw (0,0) node[or port] (O) {};
+            \node[left] at (O.in 1) {A};
+            \node[left] at (O.in 2) {B};
+            \node[right] at (O.out) {Y};
+        \end{circuitikz} & 
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{|cc|c|}
+            \hline A & B & Y \\ \hline
+            0 & 0 & 0 \\
+            0 & 1 & 1 \\
+            1 & 0 & 1 \\
+            1 & 1 & 1 \\ \hline
+        \end{tabular} & 
+        $Y = A + B$ \\
+        \hline
+        
+        % 2-INPUT NOR
+        \textsf{\begin{tabular}{c}2-input \\ NOR gate\end{tabular}} & 
+        \begin{circuitikz}[scale=0.8, transform shape]
+            \draw (0,0) node[nor port] (NO) {};
+            \node[left] at (NO.in 1) {A};
+            \node[left] at (NO.in 2) {B};
+            \node[right] at (NO.out) {Y};
+        \end{circuitikz} & 
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{|cc|c|}
+            \hline A & B & Y \\ \hline
+            0 & 0 & 1 \\
+            0 & 1 & 0 \\
+            1 & 0 & 0 \\
+            1 & 1 & 0 \\ \hline
+        \end{tabular} & 
+        $Y = \overline{A + B}$ \\
+        \hline
+        
+        % 2-INPUT EX-OR (XOR)
+        \textsf{\begin{tabular}{c}2-input \\ EX-OR \\ gate\end{tabular}} & 
+        \begin{circuitikz}[scale=0.8, transform shape]
+            \draw (0,0) node[xor port] (XO) {};
+            \node[left] at (XO.in 1) {A};
+            \node[left] at (XO.in 2) {B};
+            \node[right] at (XO.out) {Y};
+        \end{circuitikz} & 
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{|cc|c|}
+            \hline A & B & Y \\ \hline
+            0 & 0 & 0 \\
+            0 & 1 & 1 \\
+            1 & 0 & 1 \\
+            1 & 1 & 0 \\ \hline
+        \end{tabular} & 
+        $Y = A \oplus B$ \\
+        \hline
+        
+        % 2-INPUT EX-NOR (XNOR)
+        \textsf{\begin{tabular}{c}2-input \\ EX-NOR \\ gate\end{tabular}} & 
+        \begin{circuitikz}[scale=0.8, transform shape]
+            \draw (0,0) node[xnor port] (XN) {};
+            \node[left] at (XN.in 1) {A};
+            \node[left] at (XN.in 2) {B};
+            \node[right] at (XN.out) {Y};
+        \end{circuitikz} & 
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{|cc|c|}
+            \hline A & B & Y \\ \hline
+            0 & 0 & 1 \\
+            0 & 1 & 0 \\
+            1 & 0 & 0 \\
+            1 & 1 & 1 \\ \hline
+        \end{tabular} & 
+        $Y = \overline{A \oplus B}$ \\
+        \hline
+        
+    \end{tabular}
+\end{table}
+
+\end{document}

@@ -42,11 +42,11 @@
             </div>
           </header>
           <div id="auto-td2-e1" class="answer-block">
+          <p>Soit la fonction de transfert en boucle ouverte (FTBO) avec le correcteur proportionnel \(K\) : \[FTBO(p) = K \cdot F(p) = \frac{K}{p(p^2+5p+6)} = \frac{K}{p^3+5p^2+6p}\]</p>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD2-Ex1.svg" alt="Lieu frequentiel et lecture de stabilite." loading="lazy">
             <figcaption class="diagram-caption">Lieu frequentiel et lecture de stabilite.</figcaption>
           </figure>
-          <p>Soit la fonction de transfert en boucle ouverte (FTBO) avec le correcteur proportionnel \(K\) : \[FTBO(p) = K \cdot F(p) = \frac{K}{p(p^2+5p+6)} = \frac{K}{p^3+5p^2+6p}\]</p>
           <h4>1. Théorème de Routh</h4>
           <p>La fonction de transfert en boucle fermée (FTBF) est : \[FTBF(p) = \frac{FTBO(p)}{1+FTBO(p)} = \frac{K}{p^3+5p^2+6p+K}\] L'équation caractéristique est : \(D(p) = p^3 + 5p^2 + 6p + K = 0\). Dressons le tableau de Routh :</p>
           <div class="latex-table-wrap">
@@ -78,11 +78,11 @@
             </div>
           </header>
           <div id="auto-td2-e2" class="answer-block">
+          <p>Le processus est \(F(p) = \frac{1-2p}{(1+p)(1+5p)}\). Ses pôles sont \(-1\) et \(-1/5\). Le pôle le plus lent est \(-1/5\), correspondant à une constante de temps de \(5\) s. On choisit donc \(T_i = 5\) s.</p>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD2-Ex2.svg" alt="Structure et lecture frequentielle du correcteur PI." loading="lazy">
             <figcaption class="diagram-caption">Structure et lecture frequentielle du correcteur PI.</figcaption>
           </figure>
-          <p>Le processus est \(F(p) = \frac{1-2p}{(1+p)(1+5p)}\). Ses pôles sont \(-1\) et \(-1/5\). Le pôle le plus lent est \(-1/5\), correspondant à une constante de temps de \(5\) s. On choisit donc \(T_i = 5\) s.</p>
           <h4>1. Fonction de transfert en boucle ouverte</h4>
           <p>\[R(p) = K \left( 1 + \frac{1}{5p} \right) = K \frac{1+5p}{5p}\] \[FBO(p) = R(p)F(p) = K \frac{1+5p}{5p} \frac{1-2p}{(1+p)(1+5p)} = \mathbf{\frac{K(1-2p)}{5p(1+p)}}\]</p>
           <h4>2. Diagramme de Bode pour \(K=1\) (Description asymptotique)</h4>
@@ -111,11 +111,11 @@
             </div>
           </header>
           <div id="auto-td2-e3" class="answer-block">
+          <p>Soit \(F(p) = \frac{A}{(1+Tp)^3}\) et \(R(p) = k\). \(FTBO(p) = \frac{kA}{(1+Tp)^3}\).</p>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD2-Ex3.svg" alt="Reponse et limites de stabilite du troisieme ordre." loading="lazy">
             <figcaption class="diagram-caption">Reponse et limites de stabilite du troisieme ordre.</figcaption>
           </figure>
-          <p>Soit \(F(p) = \frac{A}{(1+Tp)^3}\) et \(R(p) = k\). \(FTBO(p) = \frac{kA}{(1+Tp)^3}\).</p>
           <h4>2. Valeur de \(k\) pour limite de stabilité</h4>
           <p>Phase : \(-3\arctan(T\omega) = -180^\circ \implies \arctan(T\omega) = 60^\circ \implies \omega_{180} = \frac{\sqrt{3}}{T}\). Module à cette pulsation : \[|FTBO(j\omega_{180})| = \frac{kA}{(\sqrt{1+3})^3} = \frac{kA}{8}\] Limite de stabilité si gain = 1 \(\implies \frac{kA}{8} = 1 \implies \mathbf{k = \frac{8}{A}}\).</p>
           <h4>3. Marge de gain et de phase</h4>
@@ -140,11 +140,11 @@
             </div>
           </header>
           <div id="auto-td2-e4" class="answer-block">
+          <p>\(H(p) = \frac{G}{p(1+Tp)}\) et \(Hd(p) = \frac{1}{1+Tp}\).</p>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD2-Ex4.svg" alt="Schema de rejet de perturbation." loading="lazy">
             <figcaption class="diagram-caption">Schema de rejet de perturbation.</figcaption>
           </figure>
-          <p>\(H(p) = \frac{G}{p(1+Tp)}\) et \(Hd(p) = \frac{1}{1+Tp}\).</p>
           <h4>Partie I : Régulateur Proportionnel \(R(p)=K\)</h4>
           <h4>I.1.a : Erreur statique en consigne échelon</h4>
           <p>\(FTBO(p)\) contient un intégrateur pur (\(1/p\)). Le système est de classe 1, donc l'erreur statique de position est <strong>nulle</strong>.</p>
@@ -181,7 +181,6 @@
             </div>
           </header>
           <div id="auto-td2-e5" class="answer-block">
-
           <p>Processus vitesse : \(\frac{VIT(p)}{U(p)} = \frac{5}{1+0.1p}\). La position est l'intégrale de la vitesse, donc \(POS(p) = \frac{VIT(p)}{p}\).</p>
           <h4>I. Analyse du processus</h4>
           <ol class="solution-steps">

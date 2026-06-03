@@ -1,0 +1,1068 @@
+        <section id="vhdl-intro" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">SN361</span>
+            <h2>VHDL et conception de circuits numeriques</h2>
+            <p>
+              Cette page transforme les supports extraits de <code>pdf/vhdl/cours</code> en cours de revision :
+              chaque chapitre reprend les notions principales, explique ce qu'il faut comprendre, puis isole
+              les points importants a retenir pour l'examen et les TP.
+            </p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="progress-card">
+              <span class="card-kicker">Parcours</span>
+              <strong>7 CM</strong>
+              <p>Du choix FPGA/processeur jusqu'aux machines a etats et aux composants programmables.</p>
+            </article>
+            <article class="priority-card">
+              <span class="card-kicker">Fil rouge</span>
+              <ol class="ordered-list">
+                <li>Un HDL decrit du materiel : le parallelisme est naturel, l'ordre du texte ne suffit pas a comprendre le circuit.</li>
+                <li>La taille des vecteurs, le signe et les conversions determinent le materiel synthetise.</li>
+                <li>Un circuit combinatoire n'a pas de memoire ; un circuit sequentiel memorise sur front d'horloge.</li>
+                <li>Une FSM propre se separe en registre d'etat, calcul du prochain etat et calcul des sorties.</li>
+                <li>Un FPGA donne des ressources concretes : LUT, bascules, routage, blocs RAM, multiplieurs et horloges.</li>
+              </ol>
+            </article>
+          </div>
+
+          <div class="quick-grid">
+            <a class="quick-link" href="#vhdl-cm1">CM1 Intro</a>
+            <a class="quick-link" href="#vhdl-cm2">CM2 Nombres</a>
+            <a class="quick-link" href="#vhdl-cm3">CM3 Combinatoire</a>
+            <a class="quick-link" href="#vhdl-cm4">CM4 Sequentiel</a>
+            <a class="quick-link" href="#vhdl-cm5">CM5 FSM</a>
+            <a class="quick-link" href="#vhdl-cm6">CM6 HDL</a>
+            <a class="quick-link" href="#vhdl-cm7">CM7 FPGA</a>
+            <a class="quick-link" href="#vhdl-td">TD</a>
+            <a class="quick-link" href="#vhdl-exams">Examens</a>
+            <a class="quick-link" href="#vhdl-pdfs">PDF</a>
+          </div>
+        </section>
+
+        <section id="vhdl-cm1" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">CM1</span>
+            <h2>Introduction : pourquoi decrire du materiel en VHDL ?</h2>
+            <p>Le premier chapitre place le VHDL dans le flot de conception des systemes numeriques sur composants reconfigurables.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Objectif du module</h4>
+              <p>Le cours vise a concevoir des circuits numeriques simples sur FPGA, en sachant ecrire du VHDL, lire du Verilog et comprendre les blocs elementaires d'un processeur.</p>
+              <p>Le point central est le passage d'une idee fonctionnelle a un circuit reel : le code HDL doit pouvoir etre simule puis synthetise en portes, bascules et interconnexions.</p>
+            </div>
+            <div class="content-block theorem">
+              <h4>Processeur contre logique reconfigurable</h4>
+              <p>Un processeur execute des instructions dans le temps. Un FPGA realise une structure materielle qui peut effectuer plusieurs operations en parallele.</p>
+              <ul class="formula-list">
+                <li><strong>Processeur</strong> : tres flexible, mais execution principalement sequentielle.</li>
+                <li><strong>FPGA</strong> : moins flexible apres synthese, mais tres performant pour le parallelisme, les traitements rapides et les interfaces temps reel.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Quand choisir le materiel ?</h4>
+              <p>Le cours donne un ordre de grandeur utile : si les evenements se jouent en ps ou ns, on se dirige vers du materiel ; en ms, le logiciel suffit souvent ; en us, le choix depend du besoin.</p>
+              <p>Exemple typique : une expression comme \(S=A x^2 + B y + C\) peut etre decomposee en cycles sur processeur, alors qu'un circuit dedie peut calculer plusieurs produits et additions en parallele.</p>
+            </div>
+            <div class="content-block warning">
+              <h4>Ce qu'il ne faut pas confondre</h4>
+              <p>Le VHDL n'est pas un langage de programmation classique. Deux affectations concurrentes ne sont pas deux lignes executees l'une apres l'autre : elles representent deux morceaux de materiel actifs en meme temps.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Architecture d'un FPGA SRAM</h4>
+              <p>Un FPGA SRAM contient des blocs logiques configurables, des cellules d'entrees/sorties et des interconnexions programmables. La configuration est stockee dans des cellules SRAM.</p>
+              <p>Comme la SRAM est volatile, le FPGA perd sa configuration a l'extinction : il doit etre recharge au demarrage, souvent depuis une memoire non volatile externe.</p>
+            </div>
+            <div class="content-block method">
+              <h4>Flot de conception</h4>
+              <ol class="solution-steps">
+                <li>Ecrire la description HDL au niveau RTL.</li>
+                <li>Simuler pour verifier la fonction avant synthese.</li>
+                <li>Synthetiser vers une netlist de portes et de bascules.</li>
+                <li>Faire le placement-routage dans le FPGA cible.</li>
+                <li>Verifier les contraintes temporelles, generer le bitstream et programmer le composant.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>A retenir</strong>
+            <p>La question a toujours poser devant un code VHDL est : quel materiel ce code decrit-il ? Si tu ne peux pas dessiner portes, registres ou multiplexeurs, le code est probablement mal compris.</p>
+          </div>
+        </section>
+
+        <section id="vhdl-cm2" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">CM2</span>
+            <h2>Representation des nombres en binaire</h2>
+            <p>Ce chapitre fixe les bases de codage indispensables avant toute operation arithmetique en VHDL.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Entiers non signes</h4>
+              <p>Avec \(N\) bits, on obtient \(2^N\) valeurs possibles, de \(0\) a \(2^N-1\). Par exemple, 8 bits donnent 256 valeurs, de 0 a 255.</p>
+              <p>La valeur d'un mot binaire se calcule en additionnant les puissances de 2 associees aux bits a 1. Exemple : <code>01011010</code> vaut \(64+16+8+2=90\).</p>
+            </div>
+            <div class="content-block definition">
+              <h4>Hexadecimal</h4>
+              <p>L'hexadecimal est une base 16 compacte : chaque chiffre hexadecimal correspond a 4 bits. C'est tres pratique pour lire et ecrire des vecteurs larges.</p>
+              <ul class="formula-list">
+                <li><code>1111_0000</code> devient <code>F0</code>.</li>
+                <li><code>A01</code> devient <code>1010_0000_0001</code>.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Nombre de bits necessaires</h4>
+              <p>Pour coder un entier positif \(x\), on utilise :</p>
+              <p><span class="formula-chip">\(N=\lceil \log_2(x+1)\rceil\)</span></p>
+              <p>Pour coder jusqu'a 511, il faut donc 9 bits, car \(2^9-1=511\).</p>
+            </div>
+            <div class="content-block warning">
+              <h4>Largeur des vecteurs</h4>
+              <p>En materiel, la largeur n'est jamais un detail. Un resultat tronque ou un bit de signe oublie change le circuit et peut rendre une addition fausse.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Complement a 2</h4>
+              <p>Le complement a 2 permet de coder les nombres positifs et negatifs avec les memes circuits d'addition/soustraction.</p>
+              <ul class="formula-list">
+                <li>Pour obtenir l'oppose : inverser tous les bits puis ajouter 1.</li>
+                <li>Le bit de poids fort donne le signe.</li>
+                <li>Avec \(N\) bits signes : intervalle \([-2^{N-1}; 2^{N-1}-1]\).</li>
+              </ul>
+              <p>Exemple sur 4 bits : \(5 = 0101\), donc \(-5 = 1011\).</p>
+            </div>
+            <div class="content-block method">
+              <h4>Types VHDL importants</h4>
+              <ul class="formula-list">
+                <li><code>bit</code> et <code>bit_vector</code> : valeurs simples <code>'0'</code> et <code>'1'</code>.</li>
+                <li><code>std_logic</code> et <code>std_logic_vector</code> : valeurs plus riches, dont <code>U</code>, <code>X</code>, <code>Z</code>, utiles en simulation.</li>
+                <li><code>unsigned</code> et <code>signed</code> : interpretation numerique pour l'arithmetique.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Conversions propres avec <code>numeric_std</code></h4>
+            <p>Pour eviter les conversions ambigues, le cours insiste sur <code>IEEE.numeric_std</code>.</p>
+            <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+signal n  : integer;
+signal v  : std_logic_vector(15 downto 0);
+
+v &lt;= std_logic_vector(to_unsigned(n, 16));
+n &lt;= to_integer(unsigned(v));</code></pre>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>A retenir</strong>
+            <p>Avant une operation arithmetique, verifie toujours trois choses : largeur, signe, type. En VHDL, <code>std_logic_vector</code> seul est un paquet de bits, pas encore un nombre.</p>
+          </div>
+        </section>
+
+        <section id="vhdl-cm3" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">CM3</span>
+            <h2>Circuits combinatoires</h2>
+            <p>Un circuit combinatoire calcule ses sorties uniquement a partir de ses entrees presentes.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Definition</h4>
+              <p>Une fonction booleenne correspond a un circuit combinatoire. Les sorties sont determinees par les entrees, sans memoire interne.</p>
+              <ul class="formula-list">
+                <li>Portes usuelles : NOT, AND, OR, NAND, NOR, XOR, XNOR.</li>
+                <li>Les boucles combinatoires sont interdites dans une conception saine.</li>
+                <li>Une fonction peut etre simplifiee par algebre booleenne ou tableau de Karnaugh.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Operateurs VHDL</h4>
+              <pre class="code-block language-vhdl"><code class="language-vhdl">s  &lt;= not a;
+s1 &lt;= a or b;
+s2 &lt;= a and b;
+s3 &lt;= a xor b;
+s4 &lt;= a sll 1; -- decalage gauche
+s5 &lt;= a srl 1; -- decalage droite</code></pre>
+            </div>
+            <div class="content-block warning">
+              <h4>Delais et puissance</h4>
+              <p>Les portes ont un temps de propagation lie a la charge/decharge des capacites. Dans un FPGA, les LUT ont des delais de l'ordre de la centaine de ps, mais le routage compte aussi beaucoup.</p>
+              <p>La puissance dynamique augmente avec la capacite, la tension et la frequence : \(P \approx C V_{DD}^2 F\).</p>
+            </div>
+            <div class="content-block remember">
+              <h4>Lecture RTL</h4>
+              <p>Une affectation concurrente comme <code>F &lt;= (a and b) or c;</code> decrit directement une porte AND suivie d'une porte OR. Il faut visualiser la structure.</p>
+            </div>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Fiche logic-gate : portes logiques de base</h4>
+            <p>La section <code>logic-gate</code> resume les portes elementaires a reconnaitre immediatement : leur role, leur table de verite et leur expression booleenne. Ces portes sont les briques de base des equations combinatoires et des schemas de synthese.</p>
+            <div class="latex-table-wrap">
+              <table class="latex-table">
+                <tr>
+                  <th>Porte</th>
+                  <th>Symbole</th>
+                  <th>Role</th>
+                  <th>Table de verite</th>
+                  <th>Expression</th>
+                  <th>VHDL</th>
+                </tr>
+                <tr>
+                  <td>Buffer</td>
+                  <td>
+                    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="Symbole buffer">
+                      <line x1="10" y1="35" x2="35" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <polygon points="35,15 35,55 78,35" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="78" y1="35" x2="110" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <text x="6" y="29" font-size="12">A</text>
+                      <text x="110" y="29" font-size="12">Y</text>
+                    </svg>
+                  </td>
+                  <td>Recopie l'entree sans inversion.</td>
+                  <td><code>A=0 -> Y=0</code><br><code>A=1 -> Y=1</code></td>
+                  <td>\(Y=A\)</td>
+                  <td><code>Y &lt;= A;</code></td>
+                </tr>
+                <tr>
+                  <td>NOT</td>
+                  <td>
+                    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="Symbole porte NOT">
+                      <line x1="10" y1="35" x2="35" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <polygon points="35,15 35,55 75,35" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="82" cy="35" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="88" y1="35" x2="110" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <text x="6" y="29" font-size="12">A</text>
+                      <text x="110" y="29" font-size="12">Y</text>
+                    </svg>
+                  </td>
+                  <td>Inverse l'entree.</td>
+                  <td><code>A=0 -> Y=1</code><br><code>A=1 -> Y=0</code></td>
+                  <td>\(Y=\overline A\)</td>
+                  <td><code>Y &lt;= not A;</code></td>
+                </tr>
+                <tr>
+                  <td>AND</td>
+                  <td>
+                    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="Symbole porte AND">
+                      <line x1="10" y1="25" x2="35" y2="25" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="45" x2="35" y2="45" stroke="currentColor" stroke-width="2"/>
+                      <path d="M35 15 H62 A20 20 0 0 1 62 55 H35 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="82" y1="35" x2="110" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <text x="6" y="21" font-size="12">A</text>
+                      <text x="6" y="58" font-size="12">B</text>
+                      <text x="110" y="29" font-size="12">Y</text>
+                    </svg>
+                  </td>
+                  <td>Sortie a 1 uniquement si toutes les entrees valent 1.</td>
+                  <td><code>00 -> 0</code><br><code>01 -> 0</code><br><code>10 -> 0</code><br><code>11 -> 1</code></td>
+                  <td>\(Y=A\cdot B\)</td>
+                  <td><code>Y &lt;= A and B;</code></td>
+                </tr>
+                <tr>
+                  <td>NAND</td>
+                  <td>
+                    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="Symbole porte NAND">
+                      <line x1="10" y1="25" x2="35" y2="25" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="45" x2="35" y2="45" stroke="currentColor" stroke-width="2"/>
+                      <path d="M35 15 H62 A20 20 0 0 1 62 55 H35 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="89" cy="35" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="95" y1="35" x2="110" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <text x="6" y="21" font-size="12">A</text>
+                      <text x="6" y="58" font-size="12">B</text>
+                      <text x="110" y="29" font-size="12">Y</text>
+                    </svg>
+                  </td>
+                  <td>Inverse de AND. C'est une porte universelle.</td>
+                  <td><code>00 -> 1</code><br><code>01 -> 1</code><br><code>10 -> 1</code><br><code>11 -> 0</code></td>
+                  <td>\(Y=\overline{A\cdot B}\)</td>
+                  <td><code>Y &lt;= A nand B;</code></td>
+                </tr>
+                <tr>
+                  <td>OR</td>
+                  <td>
+                    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="Symbole porte OR">
+                      <line x1="10" y1="25" x2="38" y2="25" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="45" x2="38" y2="45" stroke="currentColor" stroke-width="2"/>
+                      <path d="M32 15 C50 22 68 22 88 35 C68 48 50 48 32 55 C42 43 42 27 32 15 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="88" y1="35" x2="110" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <text x="6" y="21" font-size="12">A</text>
+                      <text x="6" y="58" font-size="12">B</text>
+                      <text x="110" y="29" font-size="12">Y</text>
+                    </svg>
+                  </td>
+                  <td>Sortie a 1 si au moins une entree vaut 1.</td>
+                  <td><code>00 -> 0</code><br><code>01 -> 1</code><br><code>10 -> 1</code><br><code>11 -> 1</code></td>
+                  <td>\(Y=A+B\)</td>
+                  <td><code>Y &lt;= A or B;</code></td>
+                </tr>
+                <tr>
+                  <td>NOR</td>
+                  <td>
+                    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="Symbole porte NOR">
+                      <line x1="10" y1="25" x2="38" y2="25" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="45" x2="38" y2="45" stroke="currentColor" stroke-width="2"/>
+                      <path d="M32 15 C50 22 68 22 88 35 C68 48 50 48 32 55 C42 43 42 27 32 15 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="94" cy="35" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="100" y1="35" x2="110" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <text x="6" y="21" font-size="12">A</text>
+                      <text x="6" y="58" font-size="12">B</text>
+                      <text x="110" y="29" font-size="12">Y</text>
+                    </svg>
+                  </td>
+                  <td>Inverse de OR. C'est aussi une porte universelle.</td>
+                  <td><code>00 -> 1</code><br><code>01 -> 0</code><br><code>10 -> 0</code><br><code>11 -> 0</code></td>
+                  <td>\(Y=\overline{A+B}\)</td>
+                  <td><code>Y &lt;= A nor B;</code></td>
+                </tr>
+                <tr>
+                  <td>XOR</td>
+                  <td>
+                    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="Symbole porte XOR">
+                      <line x1="10" y1="25" x2="34" y2="25" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="45" x2="34" y2="45" stroke="currentColor" stroke-width="2"/>
+                      <path d="M26 15 C36 27 36 43 26 55" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <path d="M36 15 C54 22 72 22 92 35 C72 48 54 48 36 55 C46 43 46 27 36 15 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="92" y1="35" x2="110" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <text x="6" y="21" font-size="12">A</text>
+                      <text x="6" y="58" font-size="12">B</text>
+                      <text x="110" y="29" font-size="12">Y</text>
+                    </svg>
+                  </td>
+                  <td>Detecte une difference entre deux bits.</td>
+                  <td><code>00 -> 0</code><br><code>01 -> 1</code><br><code>10 -> 1</code><br><code>11 -> 0</code></td>
+                  <td>\(Y=A\oplus B\)</td>
+                  <td><code>Y &lt;= A xor B;</code></td>
+                </tr>
+                <tr>
+                  <td>XNOR</td>
+                  <td>
+                    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="Symbole porte XNOR">
+                      <line x1="10" y1="25" x2="34" y2="25" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="45" x2="34" y2="45" stroke="currentColor" stroke-width="2"/>
+                      <path d="M26 15 C36 27 36 43 26 55" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <path d="M36 15 C54 22 72 22 92 35 C72 48 54 48 36 55 C46 43 46 27 36 15 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="98" cy="35" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="104" y1="35" x2="110" y2="35" stroke="currentColor" stroke-width="2"/>
+                      <text x="6" y="21" font-size="12">A</text>
+                      <text x="6" y="58" font-size="12">B</text>
+                      <text x="110" y="29" font-size="12">Y</text>
+                    </svg>
+                  </td>
+                  <td>Detecte une egalite entre deux bits.</td>
+                  <td><code>00 -> 1</code><br><code>01 -> 0</code><br><code>10 -> 0</code><br><code>11 -> 1</code></td>
+                  <td>\(Y=\overline{A\oplus B}\)</td>
+                  <td><code>Y &lt;= A xnor B;</code></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Comment lire une table de verite</h4>
+              <p>Pour deux entrees, la table contient \(2^2=4\) lignes. Chaque ligne correspond a une combinaison possible de \(A\) et \(B\). La colonne \(Y\) indique la sortie produite par la porte.</p>
+              <p>Cette lecture sert directement a construire une equation booleenne : on repere les lignes ou \(Y=1\), puis on ecrit une somme de produits.</p>
+            </div>
+            <div class="content-block remember">
+              <h4>Reflexes importants</h4>
+              <ul class="formula-list">
+                <li><strong>NAND</strong> et <strong>NOR</strong> sont universelles : on peut reconstruire toutes les autres fonctions avec seulement l'une de ces portes.</li>
+                <li><strong>XOR</strong> vaut 1 quand les bits sont differents ; il sert beaucoup pour additionneurs, detection de front et comparateurs.</li>
+                <li><strong>XNOR</strong> vaut 1 quand les bits sont identiques ; c'est la brique naturelle d'un comparateur d'egalite.</li>
+                <li>En VHDL, ces operateurs s'appliquent aussi bit a bit sur des vecteurs compatibles.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Entity et architecture</h4>
+              <p>L'<code>entity</code> decrit la vue externe du composant : nom, entrees, sorties. L'<code>architecture</code> decrit l'interieur.</p>
+              <pre class="code-block language-vhdl"><code class="language-vhdl">entity Fonction is
+  port(a, b, c : in bit;
+       F       : out bit);
+end Fonction;
+
+architecture comb of Fonction is
+begin
+  F &lt;= (a and b) or c;
+end comb;</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>Description structurelle</h4>
+              <p>La description structurelle instancie des composants et les relie par des signaux internes. Elle est utile pour construire un circuit a partir de sous-blocs.</p>
+              <p>Le <code>port map</code> peut se faire par position ou par nom ; par nom, le code est plus lisible et moins fragile.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Multiplexeur, demultiplexeur, decodeur</h4>
+              <p>Ces trois blocs sont des circuits combinatoires de routage. Ils ne memorisent rien : quand les entrees ou les signaux de selection changent, les sorties changent apres le temps de propagation.</p>
+              <p>Ils se lisent toujours avec la meme question : <strong>qui selectionne quoi ?</strong></p>
+              <ul class="formula-list">
+                <li><strong>Multiplexeur</strong> : plusieurs entrees, une sortie. Les bits de selection choisissent quelle entree est recopied vers la sortie.</li>
+                <li><strong>Demultiplexeur</strong> : une entree, plusieurs sorties. Les bits de selection choisissent vers quelle sortie l'entree est envoyee.</li>
+                <li><strong>Decodeur</strong> : un mot binaire en entree, plusieurs sorties. Une seule sortie est activee : celle dont l'indice correspond a la valeur binaire d'entree.</li>
+              </ul>
+            </div>
+            <div class="content-block warning">
+              <h4>Process combinatoire complet</h4>
+              <p>Dans un processus combinatoire, tous les signaux lus doivent etre dans la liste de sensibilite, et toutes les sorties doivent etre affectees dans tous les cas.</p>
+              <p>Le reflexe utile : donner une valeur par defaut au debut du processus, puis specialiser dans le <code>case</code> ou le <code>if</code>.</p>
+            </div>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Lire les symboles</h4>
+            <div class="latex-table-wrap">
+              <table class="latex-table">
+                <tr>
+                  <th>Bloc</th>
+                  <th>Symbole</th>
+                  <th>Lecture</th>
+                  <th>Exemple</th>
+                </tr>
+                <tr>
+                  <td>Multiplexeur 4 vers 1</td>
+                  <td>
+                    <svg viewBox="0 0 180 120" width="180" height="120" role="img" aria-label="Symbole multiplexeur 4 vers 1">
+                      <polygon points="55,15 125,35 125,85 55,105" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="28" x2="58" y2="28" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="48" x2="58" y2="48" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="68" x2="58" y2="68" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="88" x2="58" y2="88" stroke="currentColor" stroke-width="2"/>
+                      <line x1="125" y1="60" x2="170" y2="60" stroke="currentColor" stroke-width="2"/>
+                      <line x1="80" y1="112" x2="80" y2="101" stroke="currentColor" stroke-width="2"/>
+                      <line x1="100" y1="112" x2="100" y2="95" stroke="currentColor" stroke-width="2"/>
+                      <text x="8" y="24" font-size="11">I0</text>
+                      <text x="8" y="44" font-size="11">I1</text>
+                      <text x="8" y="64" font-size="11">I2</text>
+                      <text x="8" y="84" font-size="11">I3</text>
+                      <text x="142" y="54" font-size="12">Y</text>
+                      <text x="72" y="119" font-size="10">S1</text>
+                      <text x="96" y="119" font-size="10">S0</text>
+                      <text x="74" y="63" font-size="14">MUX</text>
+                    </svg>
+                  </td>
+                  <td>Les entrees arrivent a gauche, la sortie est a droite, les selections arrivent souvent en bas. Le mot \(S_1S_0\) designe l'indice de l'entree choisie.</td>
+                  <td>\(S_1S_0=10\) selectionne \(I_2\), donc \(Y=I_2\).</td>
+                </tr>
+                <tr>
+                  <td>Demultiplexeur 1 vers 4</td>
+                  <td>
+                    <svg viewBox="0 0 180 120" width="180" height="120" role="img" aria-label="Symbole demultiplexeur 1 vers 4">
+                      <polygon points="55,35 125,15 125,105 55,85" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="60" x2="55" y2="60" stroke="currentColor" stroke-width="2"/>
+                      <line x1="122" y1="28" x2="170" y2="28" stroke="currentColor" stroke-width="2"/>
+                      <line x1="122" y1="48" x2="170" y2="48" stroke="currentColor" stroke-width="2"/>
+                      <line x1="122" y1="68" x2="170" y2="68" stroke="currentColor" stroke-width="2"/>
+                      <line x1="122" y1="88" x2="170" y2="88" stroke="currentColor" stroke-width="2"/>
+                      <line x1="80" y1="112" x2="80" y2="95" stroke="currentColor" stroke-width="2"/>
+                      <line x1="100" y1="112" x2="100" y2="101" stroke="currentColor" stroke-width="2"/>
+                      <text x="8" y="54" font-size="12">E</text>
+                      <text x="150" y="24" font-size="11">Y0</text>
+                      <text x="150" y="44" font-size="11">Y1</text>
+                      <text x="150" y="64" font-size="11">Y2</text>
+                      <text x="150" y="84" font-size="11">Y3</text>
+                      <text x="72" y="119" font-size="10">S1</text>
+                      <text x="96" y="119" font-size="10">S0</text>
+                      <text x="68" y="63" font-size="13">DEMUX</text>
+                    </svg>
+                  </td>
+                  <td>L'entree arrive a gauche. Les selections choisissent une seule sortie active ; les autres sorties sont forcees a 0.</td>
+                  <td>\(S_1S_0=11\) envoie \(E\) vers \(Y_3\) : \(Y_3=E\), les autres valent 0.</td>
+                </tr>
+                <tr>
+                  <td>Decodeur 2 vers 4</td>
+                  <td>
+                    <svg viewBox="0 0 180 120" width="180" height="120" role="img" aria-label="Symbole decodeur 2 vers 4">
+                      <rect x="55" y="18" width="70" height="84" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="45" x2="55" y2="45" stroke="currentColor" stroke-width="2"/>
+                      <line x1="10" y1="75" x2="55" y2="75" stroke="currentColor" stroke-width="2"/>
+                      <line x1="125" y1="30" x2="170" y2="30" stroke="currentColor" stroke-width="2"/>
+                      <line x1="125" y1="50" x2="170" y2="50" stroke="currentColor" stroke-width="2"/>
+                      <line x1="125" y1="70" x2="170" y2="70" stroke="currentColor" stroke-width="2"/>
+                      <line x1="125" y1="90" x2="170" y2="90" stroke="currentColor" stroke-width="2"/>
+                      <text x="8" y="39" font-size="12">A1</text>
+                      <text x="8" y="69" font-size="12">A0</text>
+                      <text x="150" y="26" font-size="11">D0</text>
+                      <text x="150" y="46" font-size="11">D1</text>
+                      <text x="150" y="66" font-size="11">D2</text>
+                      <text x="150" y="86" font-size="11">D3</text>
+                      <text x="65" y="64" font-size="12">DEC</text>
+                      <text x="64" y="80" font-size="10">2 -> 4</text>
+                    </svg>
+                  </td>
+                  <td>Le mot d'entree \(A_1A_0\) est interprete comme un nombre. Une seule sortie vaut 1 : celle de meme indice.</td>
+                  <td>\(A_1A_0=10\) vaut 2, donc \(D_2=1\) et \(D_0=D_1=D_3=0\).</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Multiplexeur : choisir une entree</h4>
+              <p>Un multiplexeur \(2^n\) vers 1 possede \(2^n\) entrees de donnees et \(n\) bits de selection. Il agit comme un aiguillage : une seule entree est connectee logiquement a la sortie.</p>
+              <p>Pour un MUX 4 vers 1, on lit \(S_1S_0\) comme un nombre binaire :</p>
+              <ul class="formula-list">
+                <li>\(00 \rightarrow Y=I_0\)</li>
+                <li>\(01 \rightarrow Y=I_1\)</li>
+                <li>\(10 \rightarrow Y=I_2\)</li>
+                <li>\(11 \rightarrow Y=I_3\)</li>
+              </ul>
+              <pre class="code-block language-vhdl"><code class="language-vhdl">with sel select
+  y &lt;= i0 when "00",
+       i1 when "01",
+       i2 when "10",
+       i3 when "11",
+       i0 when others;</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>Demultiplexeur : distribuer une entree</h4>
+              <p>Le demultiplexeur fait l'operation inverse : il recoit une entree \(E\) et l'envoie vers une seule sortie. Il faut toujours definir les sorties non selectionnees, souvent a 0.</p>
+              <pre class="code-block language-vhdl"><code class="language-vhdl">process(e, sel)
+begin
+  y &lt;= "0000";
+  case sel is
+    when "00" =&gt; y(0) &lt;= e;
+    when "01" =&gt; y(1) &lt;= e;
+    when "10" =&gt; y(2) &lt;= e;
+    when "11" =&gt; y(3) &lt;= e;
+    when others =&gt; y &lt;= "0000";
+  end case;
+end process;</code></pre>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Decodeur : produire un one-hot</h4>
+              <p>Un decodeur \(n\) vers \(2^n\) transforme un nombre binaire en sortie <em>one-hot</em> : une seule ligne vaut 1. C'est tres utile pour selectionner un registre, une case memoire, un afficheur ou un etat.</p>
+              <p>Pour un decodeur 2 vers 4 :</p>
+              <ul class="formula-list">
+                <li>\(D_0=\overline{A_1}\overline{A_0}\)</li>
+                <li>\(D_1=\overline{A_1}A_0\)</li>
+                <li>\(D_2=A_1\overline{A_0}\)</li>
+                <li>\(D_3=A_1A_0\)</li>
+              </ul>
+            </div>
+            <div class="content-block remember">
+              <h4>Ce qu'il faut reconnaitre en schema</h4>
+              <ul class="formula-list">
+                <li>Un bloc qui <strong>converge</strong> vers une seule sortie est souvent un multiplexeur.</li>
+                <li>Un bloc qui <strong>diverge</strong> depuis une seule entree est souvent un demultiplexeur.</li>
+                <li>Un bloc avec seulement des entrees d'adresse et plusieurs sorties one-hot est un decodeur.</li>
+                <li>Les entrees notees \(S\), <code>sel</code>, <code>addr</code> ou \(A_i\) ne sont pas des donnees : elles choisissent le chemin actif.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Addition, soustraction, multiplication</h4>
+              <ul class="formula-list">
+                <li>Une addition de deux nombres de \(n\) bits peut necessiter \(n+1\) bits.</li>
+                <li>Une soustraction se fait par addition du complement a 2 : \(A-B = A+(-B)\).</li>
+                <li>Le produit de deux nombres non signes de \(n\) bits produit jusqu'a \(2n\) bits.</li>
+                <li>Pour les nombres signes, la nature <code>signed</code>/<code>unsigned</code> change le multiplieur synthetise.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Division</h4>
+              <p>La division par une puissance de 2 est simple : elle devient un decalage. Les autres divisions coutent cher en materiel et sont souvent evitees ou remplacees par une architecture dediee.</p>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>A retenir</strong>
+            <p>Un bon code combinatoire se lit comme un schema de portes ou de blocs. S'il memorise une ancienne valeur, ce n'est plus du combinatoire : il y a probablement un latch involontaire.</p>
+          </div>
+        </section>
+
+        <section id="vhdl-cm4" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">CM4</span>
+            <h2>Circuits sequentiels : memoriser et cadencer</h2>
+            <p>Un circuit sequentiel contient un etat. Ses sorties dependent des entrees, mais aussi de ce qui a ete memorise.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>D latch et D flip-flop</h4>
+              <p>Une D latch est transparente quand son signal de controle est actif : la sortie peut suivre l'entree pendant toute l'impulsion.</p>
+              <p>Une D flip-flop echantillonne l'entree sur un front d'horloge. Elle evite le probleme de transparence et sert de brique de base aux registres synchrones.</p>
+            </div>
+            <div class="content-block warning">
+              <h4>Setup, hold, reset, enable</h4>
+              <ul class="formula-list">
+                <li><strong>Setup</strong> : D doit etre stable avant le front actif.</li>
+                <li><strong>Hold</strong> : D doit rester stable apres le front actif.</li>
+                <li><strong>Reset/Set</strong> : initialisation prioritaire de la bascule.</li>
+                <li><strong>Enable</strong> : autorise ou bloque le chargement au front actif.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Modele VHDL d'une bascule D avec reset synchrone</h4>
+            <pre class="code-block language-vhdl"><code class="language-vhdl">process(clk)
+begin
+  if rising_edge(clk) then
+    if reset = '1' then
+      q &lt;= '0';
+    elsif enable = '1' then
+      q &lt;= d;
+    end if;
+  end if;
+end process;</code></pre>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Registres</h4>
+              <p>Un registre \(N\) bits est un ensemble de \(N\) bascules partageant la meme horloge, le meme reset et souvent le meme enable.</p>
+              <p>Le nombre de bascules synthetisees se lit en comptant les bits affectes dans les branches <code>rising_edge</code>.</p>
+            </div>
+            <div class="content-block method">
+              <h4>Registres a decalage</h4>
+              <p>Un registre a decalage est une chaine de bascules D. A chaque front actif de l'horloge, chaque bascule transmet son ancienne valeur a la bascule voisine, pendant qu'un nouveau bit entre dans la chaine.</p>
+              <p>Il sert a transformer un flux serie en mot parallele, a retarder un signal de plusieurs cycles, ou a construire des interfaces qui envoient les bits les uns apres les autres.</p>
+              <pre class="code-block language-vhdl"><code class="language-vhdl">if rising_edge(clk) then
+  q_temp &lt;= q_temp(3 downto 1) &amp; d;
+end if;</code></pre>
+            </div>
+            <div class="content-block theorem">
+              <h4>Compteurs</h4>
+              <p>Un compteur est un registre reboucle sur un additionneur ou soustracteur. Il peut avoir un clear, un enable, une entree de chargement et un signal terminal count.</p>
+              <p>Un compteur modulo \(N\) revient a remettre le registre a zero quand la valeur \(N-1\) est atteinte.</p>
+            </div>
+            <div class="content-block method">
+              <h4>Diviseur de frequence</h4>
+              <p>Pour obtenir des impulsions plus lentes a partir d'une horloge, on utilise un compteur. Diviser 512 MHz par 256 donne 2 MHz, avec un compteur 8 bits modulo 256.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Les quatre familles</h4>
+              <ul class="formula-list">
+                <li><strong>SISO</strong> : Serial In, Serial Out. Un bit entre a chaque cycle, un bit ressort apres \(N\) cycles. C'est une ligne a retard numerique.</li>
+                <li><strong>SIPO</strong> : Serial In, Parallel Out. Les bits arrivent un par un, puis on lit tout le mot stocke en parallele.</li>
+                <li><strong>PISO</strong> : Parallel In, Serial Out. On charge un mot complet, puis on l'envoie bit par bit.</li>
+                <li><strong>PIPO</strong> : Parallel In, Parallel Out. C'est le registre classique : tout le mot est charge et lu en parallele.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Lecture de l'exemple SISO/SIPO</h4>
+              <p>Dans <code>q_temp &lt;= q_temp(3 downto 1) &amp; d;</code>, l'operateur <code>&amp;</code> concatene les bits. Le nouveau vecteur est forme avec les anciens bits <code>q_temp(3)</code>, <code>q_temp(2)</code>, <code>q_temp(1)</code>, puis le nouveau bit <code>d</code>.</p>
+              <p>Si <code>q_temp</code> vaut <code>1010</code> avant le front et que <code>d='1'</code>, alors apres le front il vaut <code>0101</code>. L'ancien bit le plus a gauche est sorti de la chaine.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Effet temporel</h4>
+              <p>Un registre a decalage de \(N\) bits retarde une information de \(N\) fronts d'horloge entre son entree serie et sa sortie serie. La sortie parallele, elle, donne l'etat complet de la chaine apres chaque front.</p>
+              <p>Pour dessiner un chronogramme, on raisonne front par front : les nouvelles valeurs ne sont visibles qu'apres le front actif, car toutes les bascules se mettent a jour en meme temps.</p>
+            </div>
+            <div class="content-block warning">
+              <h4>Pieges classiques</h4>
+              <ul class="formula-list">
+                <li>Ne pas lire l'affectation comme une suite d'instructions : toutes les bascules changent simultanement au front d'horloge.</li>
+                <li>Verifier le sens du vecteur : <code>downto</code> et <code>to</code> changent la maniere naturelle de lire le decalage.</li>
+                <li>Initialiser le registre si l'etat de depart compte, sinon la simulation peut afficher des valeurs inconnues avec <code>std_logic</code>.</li>
+                <li>Ajouter un signal <code>enable</code> si le decalage ne doit pas avoir lieu a tous les cycles.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Modele VHDL avec reset et enable</h4>
+            <pre class="code-block language-vhdl"><code class="language-vhdl">signal q_temp : std_logic_vector(3 downto 0);
+
+process(clk, reset)
+begin
+  if reset = '1' then
+    q_temp &lt;= (others =&gt; '0');
+  elsif rising_edge(clk) then
+    if enable = '1' then
+      q_temp &lt;= q_temp(2 downto 0) &amp; din;
+    end if;
+  end if;
+end process;
+
+dout_parallel &lt;= q_temp;
+dout_serial   &lt;= q_temp(3);</code></pre>
+            <p>Ici, <code>din</code> entre par le bit de poids faible, les anciens bits montent vers les indices plus eleves, et <code>dout_serial</code> recupere le bit expulse en tete de chaine.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Memoires</h4>
+              <p>Une memoire est un tableau de mots. Un bus d'adresse de \(n\) bits selectionne \(2^n\) mots ; un bus de donnees de \(m\) bits lit ou ecrit un mot de \(m\) bits.</p>
+              <ul class="formula-list">
+                <li><strong>ROM</strong> : lecture seule, non volatile, vue comme combinatoire par adresse.</li>
+                <li><strong>RAM</strong> : lecture/ecriture, volatile.</li>
+                <li><strong>SRAM</strong> : rapide, souvent utilisee pour caches et blocs internes.</li>
+                <li><strong>DRAM</strong> : dense mais necessite rafraichissement.</li>
+              </ul>
+            </div>
+            <div class="content-block warning">
+              <h4>Test bench</h4>
+              <p>Un test bench genere les stimuli, connecte le circuit a tester et observe les signaux. Il n'a ni entree ni sortie et n'est pas synthetisable.</p>
+              <p>C'est normal d'y utiliser des delais comme <code>wait for 10 ns</code> ; ce serait en revanche suspect dans un module a synthetiser.</p>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>A retenir</strong>
+            <p>Le sequentiel sain se reconnait a une horloge claire. Tout ce qui doit memoriser durablement une valeur doit etre dans un processus cadence, avec reset et enable reflechis.</p>
+          </div>
+        </section>
+
+        <section id="vhdl-cm5" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">CM5</span>
+            <h2>Machines a etats finis</h2>
+            <p>Les FSM modelisent des systemes discrets dont le comportement depend d'un etat courant et d'evenements d'entree.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Diagramme de transitions</h4>
+              <ul class="formula-list">
+                <li>Un etat est represente par un cercle et un nom.</li>
+                <li>L'etat initial est indique par une fleche de reset.</li>
+                <li>Une transition est franchie au front actif de l'horloge si sa condition est vraie.</li>
+                <li>Sans condition indiquee, la transition est toujours vraie.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Nombre de bascules</h4>
+              <p>Pour coder \(N_{etats}\) etats, il faut au minimum :</p>
+              <p><span class="formula-chip">\(n=\lceil \log_2(N_{etats})\rceil\)</span></p>
+              <p>En pratique, le code VHDL peut utiliser un type enumere ; l'outil choisira ensuite un codage adapte.</p>
+            </div>
+            <div class="content-block method">
+              <h4>Machine de Moore</h4>
+              <p>Dans une machine de Moore, les sorties dependent seulement de l'etat courant. Elles ne changent donc qu'apres un front actif qui change l'etat.</p>
+              <p>C'est souvent plus simple a raisonner et plus robuste temporellement.</p>
+            </div>
+            <div class="content-block warning">
+              <h4>Machine de Mealy</h4>
+              <p>Dans une machine de Mealy, les sorties dependent de l'etat courant et des entrees. Elles peuvent donc changer sans attendre un front d'horloge.</p>
+              <p>La Mealy est souvent plus rapide et peut utiliser moins d'etats, mais elle demande plus d'attention aux glitches et aux chemins combinatoires.</p>
+            </div>
+          </div>
+
+          <div class="content-block neutral">
+            <h4>Structure VHDL recommandee</h4>
+            <pre class="code-block language-vhdl"><code class="language-vhdl">type state_type is (E0, E1, E2);
+signal state, next_state : state_type;
+
+-- registre d'etat
+process(clk)
+begin
+  if rising_edge(clk) then
+    if reset = '1' then
+      state &lt;= E0;
+    else
+      state &lt;= next_state;
+    end if;
+  end if;
+end process;
+
+-- logique combinatoire de transition et de sortie
+process(state, e)
+begin
+  next_state &lt;= state;
+  s &lt;= '0';
+  case state is
+    when E0 =&gt;
+      if e = '1' then next_state &lt;= E1; end if;
+    when E1 =&gt;
+      s &lt;= '1';
+      if e = '1' then next_state &lt;= E2;
+      else next_state &lt;= E0;
+      end if;
+    when E2 =&gt;
+      if e = '0' then next_state &lt;= E0; end if;
+  end case;
+end process;</code></pre>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>A retenir</strong>
+            <p>Pour une FSM, dessine d'abord le graphe. Ensuite seulement, code le registre d'etat et la logique combinatoire. Le code doit retrouver exactement les transitions du dessin.</p>
+          </div>
+        </section>
+
+        <section id="vhdl-cm6" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">CM6</span>
+            <h2>Complements HDL : generiques, boucles et simulation evenementielle</h2>
+            <p>Ce chapitre explique comment ecrire des descriptions plus flexibles et comment comprendre le simulateur VHDL.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Parametres generiques</h4>
+              <p>Un <code>generic</code> permet de decrire une entite parametree, par exemple un compteur ou un additionneur sur \(N\) bits. La valeur est fixee lors de l'instanciation.</p>
+              <pre class="code-block language-vhdl"><code class="language-vhdl">entity countN is
+  generic(N : integer := 10);
+  port(clk, rst, en : in bit;
+       count : out bit_vector(N-1 downto 0));
+end countN;</code></pre>
+            </div>
+            <div class="content-block method">
+              <h4>Boucles synthetisables</h4>
+              <p>La boucle <code>for</code> peut etre synthetisee si ses bornes sont connues et si elle decrit une structure finie. Elle ne cree pas une boucle temporelle : elle replique ou organise du materiel.</p>
+              <p><code>for ... generate</code> sert a creer plusieurs instances, par exemple \(N\) bascules ou \(N\) full adders.</p>
+            </div>
+            <div class="content-block warning">
+              <h4>Erreur classique avec les signaux</h4>
+              <p>Un signal VHDL n'est pas mis a jour immediatement. Dans une boucle, faire plusieurs affectations successives au meme signal ne donne pas une accumulation immediate.</p>
+              <p>Si tu veux construire une chaine combinatoire, utilise des signaux intermediaires distincts ou une variable locale adaptee au modele voulu.</p>
+            </div>
+            <div class="content-block theorem">
+              <h4>Generate structurel</h4>
+              <p>Le cours montre par exemple un additionneur \(N\) bits construit par instanciation repetee de full adders, avec un vecteur de retenues internes.</p>
+              <p>Ce pattern est fondamental pour passer de circuits 1 bit a des circuits parametrables.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Simulation evenementielle</h4>
+              <p>Le simulateur VHDL avance d'evenement en evenement. Un signal possede un pilote, c'est-a-dire une liste de changements prevus avec des dates.</p>
+              <p>Une affectation comme <code>s &lt;= '0', '1' after 10 ns;</code> programme des evenements futurs, tres utile en test bench.</p>
+            </div>
+            <div class="content-block warning">
+              <h4>Signal, variable, constante</h4>
+              <ul class="formula-list">
+                <li><strong>Constante</strong> : ne change pas.</li>
+                <li><strong>Variable</strong> : mise a jour immediate dans le processus.</li>
+                <li><strong>Signal</strong> : mise a jour quand les processus en cours sont suspendus.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Liste de sensibilite</h4>
+              <p>Un processus combinatoire avec liste de sensibilite est equivalent a un processus qui termine par <code>wait on</code> les signaux lus. Pour etre coherent en synthese, les signaux lus doivent y apparaitre.</p>
+            </div>
+            <div class="content-block remember">
+              <h4>Un seul pilote</h4>
+              <p>Regle de conception importante : plusieurs composants ne doivent pas piloter le meme signal interne. En VHDL de synthese, affecte un signal dans un seul processus ou une seule affectation concurrente.</p>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>A retenir</strong>
+            <p>Le simulateur n'execute pas du VHDL comme du C. Il reveille des processus quand des signaux changent, calcule des evenements, puis met a jour les signaux. C'est la cle pour comprendre les decalages inattendus.</p>
+          </div>
+        </section>
+
+        <section id="vhdl-cm7" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">CM7</span>
+            <h2>Composants programmables : CPLD, FPGA et criteres de choix</h2>
+            <p>Le dernier chapitre relie le code VHDL aux architectures materielles programmables qui l'executent.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>CPLD</h4>
+              <p>Les CPLD heritent des architectures SPLD/PAL : des blocs logiques de type tableaux de ET programmables et OU fixes, regroupes avec des macrocellules.</p>
+              <ul class="formula-list">
+                <li>Peu de blocs logiques, mais blocs avec beaucoup d'entrees/sorties.</li>
+                <li>Interconnexions moins flexibles que dans un FPGA.</li>
+                <li>Souvent non volatiles.</li>
+                <li>Performances elevees et plus reproductibles.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>FPGA</h4>
+              <p>Un FPGA est un tableau de blocs logiques configurables relies par des canaux de routage et des cellules d'entrees/sorties.</p>
+              <p>Les cellules logiques sont plus fines que dans un CPLD, mais tres nombreuses. Le routage devient donc une partie majeure du delai final.</p>
+            </div>
+            <div class="content-block method">
+              <h4>LUT</h4>
+              <p>La logique programmable d'un FPGA repose souvent sur des LUT, des petites memoires qui implementent une table de verite.</p>
+              <p>Une LUT de \(2^n\) cases peut implementer n'importe quelle fonction booleenne de \(n\) variables : les entrees adressent la memoire, la sortie lit le bit configure.</p>
+            </div>
+            <div class="content-block warning">
+              <h4>Technologies</h4>
+              <ul class="formula-list">
+                <li><strong>SRAM</strong> : majoritaire, reprogrammable, volatile, necessite un chargement au demarrage.</li>
+                <li><strong>Flash</strong> : non volatile, plus autonome, technologie moins standard.</li>
+                <li><strong>Anti-fusible</strong> : dense et non volatile, mais non reprogrammable.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>IP soft et hard</h4>
+              <p>Les FPGA integrent ou fournissent souvent des composants prets a l'emploi.</p>
+              <ul class="formula-list">
+                <li><strong>Soft IP</strong> : description HDL synthetisable d'un composant classique.</li>
+                <li><strong>Hard IP</strong> : bloc cable et optimise dans le silicium : RAM, multiplieur, MAC, controleur d'horloge, processeur, etc.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Choisir un composant</h4>
+              <p>Le choix depend de la quantite de logique, du nombre de blocs RAM, des I/O, du cout, des performances, des horloges, de la consommation et des blocs cables disponibles.</p>
+              <p>Un CPLD convient bien aux logiques de controle simples et rapides ; un FPGA convient mieux aux designs larges, paralleles et riches en ressources internes.</p>
+            </div>
+          </div>
+
+          <div class="annotation" data-annotation>
+            <strong>A retenir</strong>
+            <p>Le VHDL n'est jamais abstrait jusqu'au bout : a la fin, il occupe des LUT, des bascules, du routage et parfois des blocs dedies. Les performances dependent autant de l'architecture cible que du code.</p>
+          </div>
+        </section>
+
+        <section id="vhdl-td" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Entrainement</span>
+            <h2>TD VHDL corriges</h2>
+            <p>Les pages ci-dessous sont reconstruites depuis les fichiers LaTeX du dossier <code>pdf/vhdl/TD</code>, avec les enonces, corrections, tableaux, formules et blocs de code.</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="chapter-card">
+              <span class="status-pill">TD 1</span>
+              <h3>Codage et combinatoire</h3>
+              <p>Conversions signees/non signees, complement a 2, tables de verite, portes logiques, XOR/XNOR et comparateurs.</p>
+              <p class="secondary-link"><a href="vhdl-td1.html">Ouvrir la page corrigee</a></p>
+              <p class="secondary-link"><a href="pdf/vhdl/TD/TD1_Correction_SN361.pdf">PDF original</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">TD 2</span>
+              <h3>Synthese logique</h3>
+              <p>Lecture de code VHDL, schemas de bascules, sorties synchrones/asynchrones, detection d'evenements et chronogrammes.</p>
+              <p class="secondary-link"><a href="vhdl-td2.html">Ouvrir la page corrigee</a></p>
+              <p class="secondary-link"><a href="pdf/vhdl/TD/TD2_Correction_SN361.pdf">PDF original</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">TD 3</span>
+              <h3>Compteurs et test benches</h3>
+              <p>Compteur 8 bits, reset asynchrone, enable, test benches VHDL/Verilog et extensions up/down.</p>
+              <p class="secondary-link"><a href="vhdl-td3.html">Ouvrir la page corrigee</a></p>
+              <p class="secondary-link"><a href="pdf/vhdl/TD/TD3_Correction_SN361.pdf">PDF original</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">TD 4</span>
+              <h3>Machines a etats</h3>
+              <p>Bascule Toggle, machines de Moore et Mealy, reset asynchrone, synchronisation d'une entree asynchrone.</p>
+              <p class="secondary-link"><a href="vhdl-td4.html">Ouvrir la page corrigee</a></p>
+              <p class="secondary-link"><a href="pdf/vhdl/TD/TD4_correction_vb.pdf">PDF original</a></p>
+            </article>
+          </div>
+        </section>
+
+        <section id="vhdl-exams" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Examens</span>
+            <h2>Examens VHDL corriges</h2>
+            <p>Ces pages sont reconstruites depuis les sources LaTeX du dossier <code>pdf/vhdl/exam</code>, avec les corrections, explications, formules, tableaux et codes VHDL.</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="chapter-card">
+              <span class="status-pill">Examen 1</span>
+              <h3>Registre et compteur modulo N</h3>
+              <p>Registre generique, architecture RTL et structurelle, nombre de bascules, compteur modulo N et testbench.</p>
+              <p class="secondary-link"><a href="vhdl-exam1.html">Ouvrir l'examen corrige</a></p>
+              <p class="secondary-link"><a href="pdf/vhdl/exam/vhdl-exam1.pdf">PDF original</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">Examen 2</span>
+              <h3>Timer et porte de garage</h3>
+              <p>Timer 32 bits, decompteur, multiplexeur, nombre de bascules, testbench et controleur de porte de garage.</p>
+              <p class="secondary-link"><a href="vhdl-exam2.html">Ouvrir l'examen corrige</a></p>
+              <p class="secondary-link"><a href="pdf/vhdl/exam/vhdl-exam2.pdf">PDF original</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">Examen 3</span>
+              <h3>Cours et registre SIPO</h3>
+              <p>Virgule fixe, Karnaugh, <code>numeric_std</code>, concurrence des processus, registre SIPO RTL/structurel et chronogrammes.</p>
+              <p class="secondary-link"><a href="vhdl-exam3.html">Ouvrir l'examen corrige</a></p>
+              <p class="secondary-link"><a href="pdf/vhdl/exam/vhdl-exam3.pdf">PDF original</a></p>
+            </article>
+          </div>
+        </section>
+
+        <section id="vhdl-pdfs" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Sources</span>
+            <h2>PDF originaux et fiche syntaxe</h2>
+            <p>Ces liens servent a retrouver les schemas, chronogrammes et exercices complets des supports originaux.</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="chapter-card">
+              <span class="status-pill">26 pages</span>
+              <h3>CM1 - Introduction</h3>
+              <p>Logique reconfigurable, FPGA SRAM, HDL et flot de conception.</p>
+              <p class="secondary-link"><a href="pdf/vhdl/cours/SN361_CM1_Introduction_V2.3.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">19 pages</span>
+              <h3>CM2 - Representation des nombres</h3>
+              <p>Binaire, hexadecimal, types VHDL et complement a 2.</p>
+              <p class="secondary-link"><a href="pdf/vhdl/cours/SN361_CM2_Representation_des_nombres_V2.4.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">44 pages</span>
+              <h3>CM3 - Circuits combinatoires</h3>
+              <p>Portes logiques, equations, VHDL combinatoire et blocs usuels.</p>
+              <p class="secondary-link"><a href="pdf/vhdl/cours/SN361_CM3_Circuits_combinatoires_V2.4.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">52 pages</span>
+              <h3>CM4 - Circuits sequentiels</h3>
+              <p>Bascules, registres, compteurs, memoires et processus synchrones.</p>
+              <p class="secondary-link"><a href="pdf/vhdl/cours/SN361_CM4_Circuits_sequentiels_V2.5.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">22 pages</span>
+              <h3>CM5 - Machines a etats finis</h3>
+              <p>Moore, Mealy, transitions, sorties et codage VHDL des FSM.</p>
+              <p class="secondary-link"><a href="pdf/vhdl/cours/SN361_CM5_Machines_a_etats_finis_V2.4.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">32 pages</span>
+              <h3>CM6 - Complements HDL</h3>
+              <p>Generiques, generate, signaux, variables et simulation evenementielle.</p>
+              <p class="secondary-link"><a href="pdf/vhdl/cours/SN361_CM6_Complements_HDL_V3.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">37 pages</span>
+              <h3>CM7 - Composants programmables</h3>
+              <p>CPLD, FPGA, LUT, technologies SRAM/Flash/anti-fusible et criteres de choix.</p>
+              <p class="secondary-link"><a href="pdf/vhdl/cours/SN361_CM7_Les_composants_programmables_3_3.pdf">Ouvrir le PDF</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill muted">Bonus</span>
+              <h3>Syntaxe VHDL</h3>
+              <p>Fiche de syntaxe disponible dans le dossier <code>pdf/vhdl/cheatsheet</code>.</p>
+              <p class="secondary-link"><a href="pdf/vhdl/cheatsheet/Syntaxe-VHDL-Esisar.pdf">Ouvrir la fiche</a></p>
+            </article>
+          </div>
+        </section>

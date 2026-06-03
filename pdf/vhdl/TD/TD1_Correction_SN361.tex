@@ -1,0 +1,338 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Configuration pour les blocs de code VHDL et Verilog
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    showstringspaces=false,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true
+}
+
+\title{TD1 Correction \\ \large SN360/SN361 : Introduction à la conception des circuits numériques}
+\author{Grenoble INP - Esisar - E13}
+\date{Année 2024/2025}
+
+\begin{document}
+
+\maketitle
+
+\section*{EXERCICE 1}
+
+\paragraph{1) Rappeler les bornes minimale et maximale pour le codage des nombres signés et non signés sur $n$ bits.}
+Pour un nombre signé sur $n$ bits, les valeurs vont de $-2^{(n-1)}$ à $2^{(n-1)}-1$[cite: 6].\\
+Pour un nombre non signé sur $n$ bits, les valeurs vont de $0$ à $2^{n}-1$[cite: 7].
+
+\paragraph{2) et 3) Conversion des nombres en base 10 sur 10 bits et hexadécimale :}
+Avec 10 bits, on peut coder des nombres signés allant de $-512$ à $511$[cite: 9].\\
+Avec 10 bits, on peut coder des nombres non signés allant de $0$ à $1023$[cite: 9].
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lllc}
+        \toprule
+        \textbf{Décimal} & \textbf{Signé} & \textbf{Non signé} & \textbf{Hexadécimale} \\
+        \midrule
+        344 & Oui, 0101011000 & Oui, 0101011000 & 158 \\
+        115 & Oui, 0001110011 & Oui, 0001110011 & 73 \\
+        -42 & Oui, 1111010110 & Non & FD6 \\
+        666 & Non (hors de la plage) & Oui, 1010011010 & 29A \\
+        -950 & Non (hors de la plage) & Non & X \\
+        -496 & Oui, 1000010000 & Non & E10 \\
+        260 & Oui, 0100000100 & Oui, 0100000100 & 104 \\
+        1515 & Non (hors de la plage) & Non & X \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+% [cite: 10]
+
+\paragraph{4) Pour chaque nombre suivant en base 2 sur 8 bits signés, donner sa valeur numérique correspondante en base 10 :}
+On utilise la méthode du complément à 2[cite: 12]:
+\begin{itemize}
+    \item 0b11000011 $= -61$ [cite: 13]
+    \item 0b10100110 $= -90$ [cite: 14]
+    \item 0b11110000 $= -16$ [cite: 14]
+    \item 0b11111101 $= -3$ [cite: 14]
+    \item 0b00111011 $= 59$ [cite: 14]
+\end{itemize}
+
+\paragraph{5) En VHDL et en Verilog, comment convertit-on les nombres décimaux 293993 et -293900 en nombres binaires signés et non signés ?}
+\textbf{VHDL :}
+\begin{lstlisting}[language=VHDL]
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity Convertisseur is
+Port (
+    resultat_non_signe: out std_logic_vector(18 downto 0);
+    resultat_signe: out std_logic_vector(19 downto 0)
+);
+end Convertisseur;
+
+architecture Behavioral of Convertisseur is
+    signal decimal_value: integer := 293993;
+    signal binary_value_unsigned: std_logic_vector(18 downto 0);
+    signal binary_value_signed: std_logic_vector(19 downto 0);
+begin
+    binary_value_unsigned <= std_logic_vector(to_unsigned(decimal_value, 19));
+    binary_value_signed <= std_logic_vector(to_signed(decimal_value, 20));
+    resultat_non_signe <= binary_value_unsigned;
+    resultat_signe <= binary_value_signed;
+end Behavioral;
+\end{lstlisting}
+% [cite: 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 33, 34, 35, 36, 37]
+
+\textbf{Verilog :}
+\begin{lstlisting}[language=Verilog]
+module Convertisseur (
+    output reg [18:0] resultat_non_signe,
+    output reg [19:0] resultat_signe
+);
+    integer decimal_value = 293993;
+    always @(*) begin
+        resultat_non_signe = decimal_value[18:0];
+        resultat_signe = decimal_value[19:0];
+    end
+endmodule
+\end{lstlisting}
+% [cite: 38, 39, 40, 41, 42, 43, 44, 45, 46, 48]
+
+\section*{EXERCICE 2}
+
+\paragraph{1) Rappeler la table de vérité de la fonction NAND.}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cc|c}
+        \toprule
+        $a$ & $b$ & $a \text{ NAND } b$ \\
+        \midrule
+        0 & 0 & 1 \\
+        0 & 1 & 1 \\
+        1 & 0 & 1 \\
+        1 & 1 & 0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+% [cite: 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63, 64, 65]
+
+\paragraph{2) Démontrer par les tables de vérité l'égalité suivante : $b = \overline{a}\cdot b + a\cdot\overline{b}$}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cc|cc|cc|c|c}
+        \toprule
+        $a$ & $b$ & $\overline{a}$ & $\overline{b}$ & $\overline{a}\cdot b$ & $a\cdot\overline{b}$ & $\overline{a}\cdot b + a\cdot\overline{b}$ & $a \text{ XOR } b$ \\
+        \midrule
+        0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 1 & 0 & 1 & 0 & 1 & 1 \\
+        1 & 0 & 0 & 1 & 0 & 1 & 1 & 1 \\
+        1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+% [cite: 60, 67]
+
+\paragraph{3) En déduire l'expression et un circuit à base de AND, OR et NOT de la fonction XNOR}
+En utilisant le tableau de Karnaugh basé sur la table de vérité de l'opération XNOR : $(a\cdot b)+(\overline{a}\cdot\overline{b})$[cite: 69].\\
+Remarque : Il est également possible d'appliquer la loi de Morgan à l'équation logique de l'opération XOR : $(a+b)\cdot(\overline{a}+\overline{b})$[cite: 70].
+
+Pour le circuit, on peut réaliser l'équation dérivée du tableau de Karnaugh[cite: 71].
+% Espace pour insérer l'image du circuit de la question 3
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.6\textwidth]{chemin/vers/image_circuit_xnor.svg}
+% \end{figure}
+
+\paragraph{4) Donner les tables de vérités des fonctions suivantes : $a+a\cdot b$, $a+\overline{a}\cdot b$, multiplexeur 4 vers 1.}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cc|c}
+        \toprule
+        $a$ & $b$ & $a+a\cdot b$ \\
+        \midrule
+        0 & 0 & 0 \\
+        0 & 1 & 0 \\
+        1 & 0 & 1 \\
+        1 & 1 & 1 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+% [cite: 78]
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cc|cc|c}
+        \toprule
+        $a$ & $b$ & $\overline{a}$ & $\overline{a}\cdot b$ & $a+\overline{a}\cdot b$ \\
+        \midrule
+        0 & 0 & 1 & 0 & 0 \\
+        0 & 1 & 1 & 1 & 1 \\
+        1 & 0 & 0 & 0 & 1 \\
+        1 & 1 & 0 & 0 & 1 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+% [cite: 79]
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cc|c}
+        \toprule
+        Sel1 & Sel0 & Sortie \\
+        \midrule
+        0 & 0 & In0 \\
+        0 & 1 & In1 \\
+        1 & 0 & In2 \\
+        1 & 1 & In3 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+% [cite: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94]
+
+\section*{EXERCICE 3}
+
+\paragraph{1) Quelle fonction logique booléenne retourne 0 lorsque les entrées sont différentes et 1 sinon.}
+La fonction est XNOR[cite: 98].
+
+\paragraph{2) Combien de lignes comporte la table de vérité complète ?}
+Considérons les valeurs suivantes qui sont sur 4 bits : $A = A_3A_2A_1A_0$ et $B = B_3B_2B_1B_0$. La taille de la table de vérité aura donc $2^{4+4}=256$ lignes[cite: 100].
+
+\paragraph{3) Donner la fonction logique correspondante à la comparaison sur 4 bits.}
+Pour que les deux valeurs soient similaires, il faut que chaque bit à l'indice $n$ de A soit égal au bit à l'indice $n$ de B[cite: 102].\\
+La fonction logique est : $\text{Comparateur} = (A_3 \text{ XNOR } B_3) \text{ AND } (A_2 \text{ XNOR } B_2) \text{ AND } (A_1 \text{ XNOR } B_1) \text{ AND } (A_0 \text{ XNOR } B_0)$[cite: 104].
+
+\paragraph{4) Faire le schéma de câblage}
+% Espace pour insérer l'image du circuit comparateur 4 bits
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{chemin/vers/image_comparateur.svg}
+% \end{figure}
+[cite: 105]
+
+\paragraph{5) Ecrire cette fonction en VHDL et Verilog comportemental.}
+\textbf{VHDL :}
+\begin{lstlisting}[language=VHDL]
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Comparateur_4bits is
+Port (
+    A: in STD_LOGIC_VECTOR(3 downto 0);
+    B: in STD_LOGIC_VECTOR(3 downto 0);
+    Equal: out STD_LOGIC
+);
+end Comparateur_4bits;
+
+architecture Behavioral of Comparateur_4bits is
+begin
+    Equal <= (A(3) xnor B(3)) and (A(2) xnor B(2)) and (A(1) xnor B(1)) and (A(0) xnor B(0));
+end Behavioral;
+\end{lstlisting}
+% [cite: 111, 112, 113, 114, 115, 117, 118, 119, 120, 121, 122, 123]
+
+\textbf{Verilog :}
+\begin{lstlisting}[language=Verilog]
+module Comparateur_4bits (
+    input [3:0] A,
+    input [3:0] B,
+    output Equal
+);
+    assign Equal = (A[3] ~^ B[3]) & (A[2] ~^ B[2]) & (A[1] ~^ B[1]) & (A[0] ~^ B[0]);
+endmodule
+\end{lstlisting}
+% [cite: 125, 126, 128, 129, 130, 131]
+
+\section*{EXERCICE 4}
+
+Eq1 : $a\cdot b + \overline{a}\cdot\overline{b}$ [cite: 133]\\
+Eq2 : $(a+b)\cdot c$ [cite: 134]\\
+Eq3 : $\overline{a\cdot b}+c$ [cite: 135]
+
+\paragraph{1) Représentez avec des portes logiques les trois équations.}
+[cite: 137]
+
+\paragraph{2) Codez en VHDL et Verilog les équations en comportemental.}
+On le fait pour l'équation 1[cite: 140]:
+
+\textbf{VHDL :}
+\begin{lstlisting}[language=VHDL]
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Eq1 is
+Port (
+    a: in STD_LOGIC;
+    b: in STD_LOGIC;
+    result: out STD_LOGIC
+);
+end Eq1;
+
+architecture Behavioral of Eq1 is
+begin
+    result <= (a AND b) OR (NOT a AND NOT b);
+end Behavioral;
+\end{lstlisting}
+% [cite: 141, 142, 143, 147, 149, 150, 151, 152, 153, 154, 155, 156]
+
+\textbf{Verilog :}
+\begin{lstlisting}[language=Verilog]
+module Eq1 (
+    input wire a,
+    input wire b,
+    output wire result
+);
+    assign result = (a & b) | (~a & ~b);
+endmodule
+\end{lstlisting}
+% [cite: 157, 159, 160, 161, 162, 163, 164]
+
+\section*{EXERCICE 5}
+
+\paragraph{1) Compléter la table de vérité de l'afficheur 7 segments.}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ccc}
+        \toprule
+        \textbf{Decimal Digit} & \textbf{Input lines (ABCD)} & \textbf{Output lines (abcdefg)} \\
+        \midrule
+        0 & 0000 & 1111110 \\
+        1 & 0001 & 0110000 \\
+        2 & 0010 & 1101101 \\
+        3 & 0011 & 1111001 \\
+        4 & 0100 & 0110011 \\
+        5 & 0101 & 1011011 \\
+        6 & 0110 & 1011111 \\
+        7 & 0111 & 1110000 \\
+        8 & 1000 & 1111111 \\
+        9 & 1001 & 1111011 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+% [cite: 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 181, 182, 184, 186, 188, 189, 191, 192, 194, 199, 200, 201, 203, 204]
+
+\paragraph{2) En utilisant les tableaux de Karnaugh, simplifier les fonctions des segments $a$, $b$ et $g$.}
+[cite: 206]
+\begin{align*}
+    a &= A + C + B\cdot D + \overline{B}\cdot\overline{D} \\
+    b &= \overline{B} + \overline{C}\cdot\overline{D} + C\cdot D \\
+    g &= A + B\cdot\overline{C} + \overline{B}\cdot C + C\cdot\overline{D}
+\end{align*}
+% [cite: 275, 276, 277]
+
+\end{document}

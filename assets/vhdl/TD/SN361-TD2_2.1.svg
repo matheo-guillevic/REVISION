@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 180" width="100%" height="100%">
+  <rect x="100" y="30" width="50" height="70" fill="none" stroke="black" stroke-width="2"/>
+  <text x="110" y="50" font-family="Arial" font-size="12">d</text>
+  <text x="135" y="70" font-family="Arial" font-size="12">q</text>
+  <polyline points="100,85 108,90 100,95" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="120" y="115" font-family="Arial" font-size="12" font-weight="bold">D1</text>
+  
+  <rect x="320" y="70" width="50" height="70" fill="none" stroke="black" stroke-width="2"/>
+  <text x="330" y="90" font-family="Arial" font-size="12">d</text>
+  <text x="355" y="110" font-family="Arial" font-size="12">q</text>
+  <polyline points="320,125 328,130 320,135" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="340" y="155" font-family="Arial" font-size="12" font-weight="bold">D2</text>
+
+  <path d="M 220 50 Q 240 75 220 100 Q 260 100 280 75 Q 260 50 220 50" fill="none" stroke="black" stroke-width="2"/>
+  <path d="M 210 50 Q 230 75 210 100" fill="none" stroke="black" stroke-width="2"/>
+  
+  <line x1="30" y1="40" x2="100" y2="40" stroke="black" stroke-width="2"/> <text x="10" y="45" font-family="Arial" font-size="14">e</text>
+  <circle cx="70" cy="40" r="4" fill="black"/>
+  <polyline points="70,40 70,90 215,90" fill="none" stroke="black" stroke-width="2"/>
+  
+  <line x1="150" y1="60" x2="215" y2="60" stroke="black" stroke-width="2"/> <text x="170" y="55" font-family="Arial" font-size="12">qe</text>
+  <line x1="280" y1="75" x2="320" y2="75" stroke="black" stroke-width="2"/>
+  
+  <line x1="30" y1="130" x2="320" y2="130" stroke="black" stroke-width="2"/> <text x="10" y="135" font-family="Arial" font-size="14">clk</text>
+  <circle cx="90" cy="130" r="4" fill="black"/>
+  <polyline points="90,130 90,90 100,90" fill="none" stroke="black" stroke-width="2"/>
+  
+  <line x1="370" y1="100" x2="410" y2="100" stroke="black" stroke-width="2"/> <text x="420" y="105" font-family="Arial" font-size="14">s</text>
+</svg>

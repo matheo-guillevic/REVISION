@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TD 1 corrige - Codage binaire et logique combinatoire</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="vhdl.html#vhdl-td">Retour aux TD VHDL</a>
+        <div>
+          <span class="eyebrow">SN361 - TD 1</span>
+          <h1>Codage binaire, tables de verite et logique combinatoire</h1>
+          <p>Conversions signees/non signees, complement a 2, portes logiques, XOR/XNOR et comparateurs.</p>
+          <p>Page reconstruite depuis le fichier LaTeX <code>pdf/vhdl/TD/TD1_Correction_SN361.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/vhdl/TD/TD1_Correction_SN361.pdf">Ouvrir le PDF</a>
+          <a class="back-link" href="vhdl.html">Cours VHDL</a>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1</span>
+              <h3>EXERCICE 1</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td1-e1" class="answer-block">
+          <h4>1) Rappeler les bornes minimale et maximale pour le codage des nombres signés et non signés sur \(n\) bits.</h4>
+          <p>Pour un nombre signé sur \(n\) bits, les valeurs vont de \(-2^{(n-1)}\) à \(2^{(n-1)}-1\).<br> Pour un nombre non signé sur \(n\) bits, les valeurs vont de \(0\) à \(2^{n}-1\).</p>
+          <h4>2) et 3) Conversion des nombres en base 10 sur 10 bits et hexadécimale :</h4>
+          <p>Avec 10 bits, on peut coder des nombres signés allant de \(-512\) à \(511\).<br> Avec 10 bits, on peut coder des nombres non signés allant de \(0\) à \(1023\).</p>
+          <div class="latex-table-wrap">
+            <table class="latex-table">
+              <tr>
+                <th><strong>Décimal</strong></th>                <th><strong>Signé</strong></th>                <th><strong>Non signé</strong></th>                <th><strong>Hexadécimale</strong></th>
+              </tr>
+              <tr>
+                <td>344</td>                <td>Oui, 0101011000</td>                <td>Oui, 0101011000</td>                <td>158</td>
+              </tr>
+              <tr>
+                <td>115</td>                <td>Oui, 0001110011</td>                <td>Oui, 0001110011</td>                <td>73</td>
+              </tr>
+              <tr>
+                <td>-42</td>                <td>Oui, 1111010110</td>                <td>Non</td>                <td>FD6</td>
+              </tr>
+              <tr>
+                <td>666</td>                <td>Non (hors de la plage)</td>                <td>Oui, 1010011010</td>                <td>29A</td>
+              </tr>
+              <tr>
+                <td>-950</td>                <td>Non (hors de la plage)</td>                <td>Non</td>                <td>X</td>
+              </tr>
+              <tr>
+                <td>-496</td>                <td>Oui, 1000010000</td>                <td>Non</td>                <td>E10</td>
+              </tr>
+              <tr>
+                <td>260</td>                <td>Oui, 0100000100</td>                <td>Oui, 0100000100</td>                <td>104</td>
+              </tr>
+              <tr>
+                <td>1515</td>                <td>Non (hors de la plage)</td>                <td>Non</td>                <td>X</td>
+              </tr>
+            </table>
+          </div>
+          <h4>4) Pour chaque nombre suivant en base 2 sur 8 bits signés, donner sa valeur numérique correspondante en base 10 :</h4>
+          <p>On utilise la méthode du complément à 2:</p>
+          <ul class="formula-list">
+            <li>0b11000011 \(= -61\)</li>
+            <li>0b10100110 \(= -90\)</li>
+            <li>0b11110000 \(= -16\)</li>
+            <li>0b11111101 \(= -3\)</li>
+            <li>0b00111011 \(= 59\)</li>
+          </ul>
+          <h4>5) En VHDL et en Verilog, comment convertit-on les nombres décimaux 293993 et -293900 en nombres binaires signés et non signés ?</h4>
+          <p><strong>VHDL :</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity Convertisseur is
+Port (
+    resultat_non_signe: out std_logic_vector(18 downto 0);
+    resultat_signe: out std_logic_vector(19 downto 0)
+);
+end Convertisseur;
+
+architecture Behavioral of Convertisseur is
+    signal decimal_value: integer := 293993;
+    signal binary_value_unsigned: std_logic_vector(18 downto 0);
+    signal binary_value_signed: std_logic_vector(19 downto 0);
+begin
+    binary_value_unsigned &lt;= std_logic_vector(to_unsigned(decimal_value, 19));
+    binary_value_signed &lt;= std_logic_vector(to_signed(decimal_value, 20));
+    resultat_non_signe &lt;= binary_value_unsigned;
+    resultat_signe &lt;= binary_value_signed;
+end Behavioral;</code></pre>
+          <p><strong>Verilog :</strong></p>
+          <pre class="code-block language-vhdl"><code>module Convertisseur (
+    output reg [18:0] resultat_non_signe,
+    output reg [19:0] resultat_signe
+);
+    integer decimal_value = 293993;
+    always @(*) begin
+        resultat_non_signe = decimal_value[18:0];
+        resultat_signe = decimal_value[19:0];
+    end
+endmodule</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2</span>
+              <h3>EXERCICE 2</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td1-e2" class="answer-block">
+          <h4>1) Rappeler la table de vérité de la fonction NAND.</h4>
+          <div class="latex-table-wrap">
+            <table class="latex-table">
+              <tr>
+                <th>\(a\)</th>                <th>\(b\)</th>                <th>\(a \text{ NAND } b\)</th>
+              </tr>
+              <tr>
+                <td>0</td>                <td>0</td>                <td>1</td>
+              </tr>
+              <tr>
+                <td>0</td>                <td>1</td>                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>0</td>                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>1</td>                <td>0</td>
+              </tr>
+            </table>
+          </div>
+          <h4>2) Démontrer par les tables de vérité l'égalité suivante : $b = \overline{a</h4>
+          <p>\cdot b + a\cdot\overline{b}$}</p>
+          <div class="latex-table-wrap">
+            <table class="latex-table">
+              <tr>
+                <th>\(a\)</th>                <th>\(b\)</th>                <th>\(\overline{a}\)</th>                <th>\(\overline{b}\)</th>                <th>\(\overline{a}\cdot b\)</th>                <th>\(a\cdot\overline{b}\)</th>                <th>\(\overline{a}\cdot b + a\cdot\overline{b}\)</th>                <th>\(a \text{ XOR } b\)</th>
+              </tr>
+              <tr>
+                <td>0</td>                <td>0</td>                <td>1</td>                <td>1</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>0</td>
+              </tr>
+              <tr>
+                <td>0</td>                <td>1</td>                <td>1</td>                <td>0</td>                <td>1</td>                <td>0</td>                <td>1</td>                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>0</td>                <td>0</td>                <td>1</td>                <td>0</td>                <td>1</td>                <td>1</td>                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>1</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>0</td>
+              </tr>
+            </table>
+          </div>
+          <h4>3) En déduire l'expression et un circuit à base de AND, OR et NOT de la fonction XNOR</h4>
+          <p>En utilisant le tableau de Karnaugh basé sur la table de vérité de l'opération XNOR : \((a\cdot b)+(\overline{a}\cdot\overline{b})\).<br> Remarque : Il est également possible d'appliquer la loi de Morgan à l'équation logique de l'opération XOR : \((a+b)\cdot(\overline{a}+\overline{b})\).</p>
+          <p>Pour le circuit, on peut réaliser l'équation dérivée du tableau de Karnaugh.</p>
+          <h4>4) Donner les tables de vérités des fonctions suivantes : \(a+a\cdot b\), $a+\overline{a</h4>
+          <p>\cdot b$, multiplexeur 4 vers 1.}</p>
+          <div class="latex-table-wrap">
+            <table class="latex-table">
+              <tr>
+                <th>\(a\)</th>                <th>\(b\)</th>                <th>\(a+a\cdot b\)</th>
+              </tr>
+              <tr>
+                <td>0</td>                <td>0</td>                <td>0</td>
+              </tr>
+              <tr>
+                <td>0</td>                <td>1</td>                <td>0</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>0</td>                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>1</td>                <td>1</td>
+              </tr>
+            </table>
+          </div>
+          <div class="latex-table-wrap">
+            <table class="latex-table">
+              <tr>
+                <th>\(a\)</th>                <th>\(b\)</th>                <th>\(\overline{a}\)</th>                <th>\(\overline{a}\cdot b\)</th>                <th>\(a+\overline{a}\cdot b\)</th>
+              </tr>
+              <tr>
+                <td>0</td>                <td>0</td>                <td>1</td>                <td>0</td>                <td>0</td>
+              </tr>
+              <tr>
+                <td>0</td>                <td>1</td>                <td>1</td>                <td>1</td>                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>1</td>                <td>0</td>                <td>0</td>                <td>1</td>
+              </tr>
+            </table>
+          </div>
+          <div class="latex-table-wrap">
+            <table class="latex-table">
+              <tr>
+                <th>Sel1</th>                <th>Sel0</th>                <th>Sortie</th>
+              </tr>
+              <tr>
+                <td>0</td>                <td>0</td>                <td>In0</td>
+              </tr>
+              <tr>
+                <td>0</td>                <td>1</td>                <td>In1</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>0</td>                <td>In2</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>1</td>                <td>In3</td>
+              </tr>
+            </table>
+          </div>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 3</span>
+              <h3>EXERCICE 3</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td1-e3" class="answer-block">
+          <h4>1) Quelle fonction logique booléenne retourne 0 lorsque les entrées sont différentes et 1 sinon.</h4>
+          <p>La fonction est XNOR.</p>
+          <h4>2) Combien de lignes comporte la table de vérité complète ?</h4>
+          <p>Considérons les valeurs suivantes qui sont sur 4 bits : \(A = A_3A_2A_1A_0\) et \(B = B_3B_2B_1B_0\). La taille de la table de vérité aura donc \(2^{4+4}=256\) lignes.</p>
+          <h4>3) Donner la fonction logique correspondante à la comparaison sur 4 bits.</h4>
+          <p>Pour que les deux valeurs soient similaires, il faut que chaque bit à l'indice \(n\) de A soit égal au bit à l'indice \(n\) de B.<br> La fonction logique est : \(\text{Comparateur} = (A_3 \text{ XNOR } B_3) \text{ AND } (A_2 \text{ XNOR } B_2) \text{ AND } (A_1 \text{ XNOR } B_1) \text{ AND } (A_0 \text{ XNOR } B_0)\).</p>
+          <h4>4) Faire le schéma de câblage</h4>
+          <h4>5) Ecrire cette fonction en VHDL et Verilog comportemental.</h4>
+          <p><strong>VHDL :</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Comparateur_4bits is
+Port (
+    A: in STD_LOGIC_VECTOR(3 downto 0);
+    B: in STD_LOGIC_VECTOR(3 downto 0);
+    Equal: out STD_LOGIC
+);
+end Comparateur_4bits;
+
+architecture Behavioral of Comparateur_4bits is
+begin
+    Equal &lt;= (A(3) xnor B(3)) and (A(2) xnor B(2)) and (A(1) xnor B(1)) and (A(0) xnor B(0));
+end Behavioral;</code></pre>
+          <p><strong>Verilog :</strong></p>
+          <pre class="code-block language-vhdl"><code>module Comparateur_4bits (
+    input [3:0] A,
+    input [3:0] B,
+    output Equal
+);
+    assign Equal = (A[3] ~^ B[3]) &amp; (A[2] ~^ B[2]) &amp; (A[1] ~^ B[1]) &amp; (A[0] ~^ B[0]);
+endmodule</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 4</span>
+              <h3>EXERCICE 4</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td1-e4" class="answer-block">
+          <p>Eq1 : \(a\cdot b + \overline{a}\cdot\overline{b}\) <br> Eq2 : \((a+b)\cdot c\) <br> Eq3 : \(\overline{a\cdot b}+c\)</p>
+          <h4>1) Représentez avec des portes logiques les trois équations.</h4>
+          <h4>2) Codez en VHDL et Verilog les équations en comportemental.</h4>
+          <p>On le fait pour l'équation 1:</p>
+          <p><strong>VHDL :</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Eq1 is
+Port (
+    a: in STD_LOGIC;
+    b: in STD_LOGIC;
+    result: out STD_LOGIC
+);
+end Eq1;
+
+architecture Behavioral of Eq1 is
+begin
+    result &lt;= (a AND b) OR (NOT a AND NOT b);
+end Behavioral;</code></pre>
+          <p><strong>Verilog :</strong></p>
+          <pre class="code-block language-vhdl"><code>module Eq1 (
+    input wire a,
+    input wire b,
+    output wire result
+);
+    assign result = (a &amp; b) | (~a &amp; ~b);
+endmodule</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 5</span>
+              <h3>EXERCICE 5</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td1-e5" class="answer-block">
+          <h4>1) Compléter la table de vérité de l'afficheur 7 segments.</h4>
+          <div class="latex-table-wrap">
+            <table class="latex-table">
+              <tr>
+                <th><strong>Decimal Digit</strong></th>                <th><strong>Input lines (ABCD)</strong></th>                <th><strong>Output lines (abcdefg)</strong></th>
+              </tr>
+              <tr>
+                <td>0</td>                <td>0000</td>                <td>1111110</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>0001</td>                <td>0110000</td>
+              </tr>
+              <tr>
+                <td>2</td>                <td>0010</td>                <td>1101101</td>
+              </tr>
+              <tr>
+                <td>3</td>                <td>0011</td>                <td>1111001</td>
+              </tr>
+              <tr>
+                <td>4</td>                <td>0100</td>                <td>0110011</td>
+              </tr>
+              <tr>
+                <td>5</td>                <td>0101</td>                <td>1011011</td>
+              </tr>
+              <tr>
+                <td>6</td>                <td>0110</td>                <td>1011111</td>
+              </tr>
+              <tr>
+                <td>7</td>                <td>0111</td>                <td>1110000</td>
+              </tr>
+              <tr>
+                <td>8</td>                <td>1000</td>                <td>1111111</td>
+              </tr>
+              <tr>
+                <td>9</td>                <td>1001</td>                <td>1111011</td>
+              </tr>
+            </table>
+          </div>
+          <h4>2) En utilisant les tableaux de Karnaugh, simplifier les fonctions des segments \(a\), \(b\) et \(g\).</h4>
+          <p>\[\begin{aligned}a &= A + C + B\cdot D + \overline{B}\cdot\overline{D} \\ b &= \overline{B} + \overline{C}\cdot\overline{D} + C\cdot D \\ g &= A + B\cdot\overline{C} + \overline{B}\cdot C + C\cdot\overline{D}\end{aligned}\]</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

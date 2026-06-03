@@ -42,11 +42,11 @@
             </div>
           </header>
           <div id="auto-td1-e1" class="answer-block">
+          <h4>1. Variables et paramètres du système</h4>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD1-Ex1.svg" alt="Schema de regulation de niveau du reservoir." loading="lazy">
             <figcaption class="diagram-caption">Schema de regulation de niveau du reservoir.</figcaption>
           </figure>
-          <h4>1. Variables et paramètres du système</h4>
           <p><em>Paramètre :</em> La section du réservoir \(S\) (en \(m^2\)).<br> <em>Variables :</em><br></p>
           <ul class="formula-list">
             <li>L'entrée (ou commande) \(u(t)\) : Le débit entrant \(q_e(t)\).<br></li>
@@ -96,11 +96,11 @@
             </div>
           </header>
           <div id="auto-td1-e2" class="answer-block">
+          <h4>1. Variables et paramètres</h4>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD1-Ex2.svg" alt="Schema fonctionnel de l'asservissement de vitesse." loading="lazy">
             <figcaption class="diagram-caption">Schema fonctionnel de l'asservissement de vitesse.</figcaption>
           </figure>
-          <h4>1. Variables et paramètres</h4>
           <ul class="formula-list">
             <li>Entrée : Tension de commande \(u(t)\).</li>
             <li>Sortie : Vitesse angulaire \(w(t)\).</li>
@@ -142,11 +142,11 @@
             </div>
           </header>
           <div id="auto-td1-e3" class="answer-block">
+          <h4>1. Modélisation</h4>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD1-Ex3.svg" alt="Modele thermique de l'enceinte." loading="lazy">
             <figcaption class="diagram-caption">Modele thermique de l'enceinte.</figcaption>
           </figure>
-          <h4>1. Modélisation</h4>
           <ul class="formula-list">
             <li>Paramètres : \(\alpha_1, \alpha_2, \alpha_3\).</li>
             <li>Variables : \(Tint(t), Text(t), Tpar(t), Puis(t)\).</li>
@@ -182,11 +182,11 @@
             </div>
           </header>
           <div id="auto-td1-e4" class="answer-block">
+          <h4>Identification des paramètres du modèle</h4>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD1-Ex4.svg" alt="Reponse experimentale du cryostat." loading="lazy">
             <figcaption class="diagram-caption">Reponse experimentale du cryostat.</figcaption>
           </figure>
-          <h4>Identification des paramètres du modèle</h4>
           <p>L'essai indique que \(Text(t) = 300K\) constant. Le système est à l'équilibre avant \(t=100s\) (où \(U=0\)). \(Temp(t<100) = Hd(0) \cdot 300 = 300 K\) (puisque \(den(0)=1\)). Cela correspond au graphe.</p>
           <p>À \(t=100s\), un échelon de consigne de vitesse est appliqué : passage à 1000 tr/min. Sachant que 30V \(\leftrightarrow\) rapport cyclique unitaire \(U=1 \leftrightarrow\) 3000 tr/min, la vitesse est \(3000 \cdot U(t)\). Pour 1000 tr/min, l'échelon de commande est donc \(\Delta U = \frac{1000}{3000} = \frac{1}{3}\).</p>
           <p>Sur le graphe, la température passe de 300 K à 200 K en régime permanent. L'amplitude de la variation de la sortie est \(\Delta Temp = -100 K\). L'équation en régime permanent pour cette variation donne : \(\Delta Temp = H(0) \cdot \Delta U = \frac{G}{den(0)} \cdot \Delta U\). Ainsi, \(-100 = G \cdot \frac{1}{3} \implies G = -300\).</p>

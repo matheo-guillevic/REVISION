@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Examen VHDL 3 - VHDL</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="vhdl.html#vhdl-exams">Retour aux examens VHDL</a>
+        <div>
+          <span class="eyebrow">SN361 - Examen 3</span>
+          <h1>Questions de cours et registre a decalage SIPO</h1>
+          <p>Virgule fixe, Karnaugh, numeric_std, processus concurrents, registre SIPO RTL/structurel et chronogrammes.</p>
+          <p>Page reconstruite depuis <code>pdf/vhdl/exam/vhdl-exam3.tex</code>, avec les corrections et explications.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/vhdl/exam/vhdl-exam3.pdf">Ouvrir le PDF</a>
+          <a class="back-link" href="vhdl.html">Cours VHDL</a>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Partie I</span>
+              <h3>Partie I : Partie cours [34/90]</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <h4>Question 1.1</h4>
+          <p><strong>Énoncé :</strong> Codez en virgule fixe avec le minimum de bits 511,75 [6] .</p>
+          <p><strong>Correction et Explications :</strong> Pour coder un nombre en virgule fixe, on convertit séparément la partie entière et la partie décimale en binaire.</p>
+          <ul class="formula-list">
+            <li><strong>Partie entière (511)</strong> : On sait que \(2^9 = 512\), donc \(511 = 2^9 - 1\). En binaire, 511 s'écrit avec 9 bits à '1' : \(111111111_2\).</li>
+            <li><strong>Partie décimale (0,75)</strong> : \(0,75 = 0,5 + 0,25 = 2^{-1} + 2^{-2}\). En binaire, cela s'écrit \(0,11_2\).</li>
+          </ul>
+          <p><strong>Réponse :</strong></p>
+          <ul class="formula-list">
+            <li>En <strong>non signé</strong>, le minimum est de <strong>11 bits</strong> : \(111111111,11_2\).</li>
+            <li>En <strong>signé</strong> (complément à 2), il faut ajouter un bit de signe (0 pour positif), soit un minimum de <strong>12 bits</strong> : \(0111111111,11_2\).</li>
+          </ul>
+          <h4>Question 1.2</h4>
+          <p><strong>Énoncé :</strong> Simplifiez en utilisant un tableau de Karnaugh la fonction \(F\) [12] .</p>
+          <p><em>Note : Le texte d'origine a perdu les barres de négation (OCR : F=ABC+ABC+ABC+ABC+ABC ). Nous traiterons l'exemple suivant pour illustrer la méthode : \(F = \overline{A}\overline{B}C + \overline{A}BC + A\overline{B}C + AB\overline{C} + ABC\)</em></p>
+          <p><strong>Correction et Explications :</strong> On place des '1' dans le tableau de Karnaugh pour chaque minterme :</p>
+          <div class="latex-table-wrap">
+            <table class="latex-table">
+              <tr>
+                <th>\(A \backslash BC\)</th>                <th>00</th>                <th>01</th>                <th>11</th>                <th>10</th>
+              </tr>
+              <tr>
+                <td>0</td>                <td>0</td>                <td><strong>1</strong> (\(\overline{A}\overline{B}C\))</td>                <td><strong>1</strong> (\(\overline{A}BC\))</td>                <td>0</td>
+              </tr>
+              <tr>
+                <td>1</td>                <td>0</td>                <td><strong>1</strong> (\(A\overline{B}C\))</td>                <td><strong>1</strong> (\(ABC\))</td>                <td><strong>1</strong> (\(AB\overline{C}\))</td>
+              </tr>
+            </table>
+          </div>
+          <p>Regroupements possibles (les plus grands possibles en puissances de 2) :</p>
+          <ul class="formula-list">
+            <li>Un groupe de 4 (colonne 01 et 11) : donne \(C\).</li>
+            <li>Un groupe de 2 (ligne du bas, 11 et 10) : donne \(AB\).</li>
+          </ul>
+          <p><strong>Résultat simplifié :</strong> \(F = C + AB\).</p>
+          <h4>Question 1.3</h4>
+          <p><strong>Énoncé :</strong> En VHDL, quel type normalisé doit être utilisé pour réaliser des opérations arithmétiques sur des vecteurs binaires non signés [2]  ? Quels bibliothèques et paquetages déclarer [2]  ? Montrez comment \(-5 - 7\) est obtenu en complément à 2 .</p>
+          <p><strong>Correction et Explications :</strong></p>
+          <ul class="formula-list">
+            <li><strong>Type normalisé :</strong> Il faut utiliser le type <code>unsigned</code> .</li>
+            <li><strong>Bibliothèque et paquetage :</strong> <code>library IEEE; use IEEE.numeric_std.all;</code>  (ne jamais utiliser l'obsolète <code>std_logic_unsigned</code>).</li>
+            <li><strong>Opération \(-5 - 7\) en complément à 2 (sur 5 bits) :</strong></li>
+          </ul>
+          <p>Pour coder \(-12\) (le résultat), il faut au minimum 5 bits (plage de \(-16\) à \(+15\)).</p>
+          <ol class="solution-steps">
+            <li>\(+5\) en binaire = \(00101_2\). Inversion = \(11010_2\). On ajoute 1 \(\rightarrow\) <strong>\(-5 = 11011_2\)</strong>.</li>
+            <li>\(+7\) en binaire = \(00111_2\). Inversion = \(11000_2\). On ajoute 1 \(\rightarrow\) <strong>\(-7 = 11001_2\)</strong>.</li>
+            <li>Addition : \(11011_2 + 11001_2 = (1) 10100_2\). On ignore la retenue sortante.</li>
+            <li>Résultat : <strong>\(10100_2\)</strong>. Pour vérifier sa valeur : on inverse (\(01011_2\)) et on ajoute 1 (\(01100_2 = 12_{10}\)). Le résultat est bien \(-12\).</li>
+          </ol>
+          <h4>Question 1.4</h4>
+          <p><strong>Énoncé :</strong> En VHDL est-ce que l'ordre des processus a une importance  ? Si non, dans quel ordre sont-ils exécutés  ?</p>
+          <p><strong>Correction et Explications :</strong> <strong>Non</strong>, l'ordre des processus dans l'architecture n'a aucune importance . En VHDL, les processus sont des instructions <strong>concurrentes</strong>. Ils s'exécutent de manière parallèle . Leur exécution est déclenchée (réveillée) uniquement par les événements qui surviennent sur les signaux présents dans leur <strong>liste de sensibilité</strong>.</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Partie II</span>
+              <h3>Partie II : Conception d'un registre à décalage SIPO [56/90]</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <h4>Question 2.1</h4>
+          <figure class="system-diagram td-figure">
+            <img src="assets/vhdl/exam/exam3-sipo-2.1.svg" alt="Schema du registre a decalage SIPO de l'examen 3." loading="lazy">
+            <figcaption class="diagram-caption">Schema du registre a decalage SIPO de l'examen 3.</figcaption>
+          </figure>
+          <p><strong>Énoncé :</strong> Dessinez le schéma d'un registre SIPO de \(n\) bits en utilisant \(n\) bascules D . Entrées : <code>din</code>, <code>clk</code>, <code>enable</code>, <code>reset</code> . Sortie : <code>dout</code> (n bits) .</p>
+          <p><em>(Voir le code SVG fourni séparément pour générer ou visualiser ce schéma).</em> Explication : Les bascules sont en cascade. L'entrée \(D\) de la première bascule est liée à <code>din</code>. L'entrée \(D\) des bascules suivantes est liée à la sortie \(Q\) de la bascule précédente. <code>clk</code>, <code>reset</code> et <code>enable</code> sont communs à toutes les bascules.</p>
+          <h4>Question 2.2</h4>
+          <p><strong>Énoncé :</strong> Ecrire en VHDL RTL l'entité générique (<code>shift</code>) et l'architecture (<code>rtl</code>) .</p>
+          <p><strong>Correction :</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity shift is
+    generic (n : integer := 8);
+    port (
+        din    : in  std_logic;
+        clk    : in  std_logic;
+        reset  : in  std_logic;
+        enable : in  std_logic;
+        dout   : out std_logic_vector(n-1 downto 0)
+    );
+end entity shift;
+
+architecture rtl of shift is
+    signal shift_reg : std_logic_vector(n-1 downto 0);
+begin
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if reset = '1' then
+                shift_reg &lt;= (others =&gt; '0');
+            elsif enable = '1' then
+                -- Decalage vers la gauche : le MSB recoit din
+                shift_reg &lt;= shift_reg(n-2 downto 0) &amp; din;
+            end if;
+        end if;
+    end process;
+    dout &lt;= shift_reg;
+end architecture rtl;</code></pre>
+          <h4>Question 2.3</h4>
+          <p><strong>Énoncé :</strong> Ecrire en VHDL structurel l'architecture (<code>struct</code>) de la même entité . Composant disponible : <code>bascule</code> .</p>
+          <p><strong>Correction :</strong></p>
+          <pre class="code-block language-vhdl"><code>architecture struct of shift is
+    component bascule
+        port(d, clk, reset, enable: in std_logic;
+             q: out std_logic);
+    end component;
+    
+    -- Signal intermediaire pour relier les bascules en cascade
+    signal q_int : std_logic_vector(n downto 0);
+begin
+    q_int(0) &lt;= din; -- L'entree du registre attaque la 1ere bascule
+
+    gen_shift: for i in 0 to n-1 generate
+        bascule_inst : bascule port map (
+            d      =&gt; q_int(i),
+            clk    =&gt; clk,
+            reset  =&gt; reset,
+            enable =&gt; enable,
+            q      =&gt; q_int(i+1)
+        );
+    end generate gen_shift;
+
+    -- Affectation des sorties paralleles
+    dout &lt;= q_int(n downto 1);
+end architecture struct;</code></pre>
+          <h4>Question 2.4</h4>
+          <p><strong>Énoncé :</strong> Ecrire un testbench simulant l'architecture structurelle pour \(n=8\) .</p>
+          <p><strong>Correction :</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity tb_shift is
+end entity tb_shift;
+
+architecture sim of tb_shift is
+    signal din, clk, reset, enable : std_logic := '0';
+    signal dout : std_logic_vector(7 downto 0);
+    constant period : time := 10 ns;
+begin
+    UUT: entity work.shift(struct)
+        generic map (n =&gt; 8)
+        port map (din =&gt; din, clk =&gt; clk, reset =&gt; reset, enable =&gt; enable, dout =&gt; dout);
+
+    clk_proc: process begin
+        clk &lt;= '0'; wait for period/2;
+        clk &lt;= '1'; wait for period/2;
+    end process;
+
+    stim_proc: process begin
+        reset &lt;= '1'; wait for 20 ns;
+        reset &lt;= '0'; enable &lt;= '1'; din &lt;= '1'; wait for period;
+        din &lt;= '0'; wait for 2 * period;
+        enable &lt;= '0'; wait for 2 * period; -- Retenue d'etat
+        enable &lt;= '1'; din &lt;= '1'; wait for 2 * period;
+        reset &lt;= '1'; wait for period;
+        wait;
+    end process;
+end architecture sim;</code></pre>
+          <h4>Question 2.5</h4>
+          <p><strong>Énoncé :</strong> Dessinez les chronogrammes correspondant au testbench .</p>
+          <p><strong>Correction (via TikZ-Timing) :</strong></p>
+          <div class="content-block neutral">
+            <h4>Chronogramme TikZ-Timing source</h4>
+            <p>Le chronogramme original est conserve sous forme source pour garder les valeurs temporelles exactes.</p>
+            <pre class="code-block language-latex"><code>  \texttt{clk}    &amp; 14{C} \\
+  \texttt{reset}  &amp; 2{1} 10{0} 2{1} \\
+  \texttt{enable} &amp; 2{0} 6{1} 2{0} 4{1} \\
+  \texttt{din}    &amp; 2{0} 2{1} 6{0} 4{1} \\
+  \texttt{dout}   &amp; 2D{00} 2D{00} 2D{01} 2D{02} 2D{04} 2D{04} 2D{09} 2D{00} \\
+\extracode
+  \tablegrid</code></pre>
+          </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 250" width="100%" height="100%">
+  <rect x="200" y="30" width="50" height="70" fill="none" stroke="black" stroke-width="2"/>
+  <text x="210" y="50" font-family="Arial" font-size="12">d</text>
+  <text x="235" y="70" font-family="Arial" font-size="12">q</text>
+  <polyline points="200,85 208,90 200,95" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="210" y="90" font-family="Arial" font-size="10">clk</text>
+  
+  <rect x="350" y="120" width="50" height="70" fill="none" stroke="black" stroke-width="2"/>
+  <text x="360" y="140" font-family="Arial" font-size="12">e</text>
+  <text x="385" y="160" font-family="Arial" font-size="12">s</text>
+  <polyline points="350,175 358,180 350,185" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="360" y="180" font-family="Arial" font-size="10">clk</text>
+
+  <path d="M 330 40 L 350 40 A 20 20 0 0 1 350 80 L 330 80 Z" fill="none" stroke="black" stroke-width="2"/>
+  <circle cx="330" cy="50" r="3" fill="none" stroke="black"/> <path d="M 280 120 L 300 120 A 20 20 0 0 1 300 160 L 280 160 Z" fill="none" stroke="black" stroke-width="2"/>
+  <circle cx="280" cy="150" r="3" fill="none" stroke="black"/> <line x1="50" y1="40" x2="200" y2="40" stroke="black" stroke-width="2"/> <text x="30" y="45" font-family="Arial" font-size="14">e</text>
+  <line x1="50" y1="90" x2="200" y2="90" stroke="black" stroke-width="2"/> <text x="20" y="95" font-family="Arial" font-size="14">clk</text>
+  <line x1="50" y1="180" x2="350" y2="180" stroke="black" stroke-width="2"/> <text x="15" y="185" font-family="Arial" font-size="14">eclk</text>
+
+  <circle cx="120" cy="40" r="4" fill="black"/>
+  <polyline points="120,40 120,150 277,150" fill="none" stroke="black" stroke-width="2"/> <polyline points="120,40 330,40" fill="none" stroke="black" stroke-width="2"/> <line x1="250" y1="65" x2="270" y2="65" stroke="black" stroke-width="2"/> <text x="255" y="60" font-family="Arial" font-size="12">qe</text>
+  <circle cx="270" cy="65" r="4" fill="black"/>
+  <polyline points="270,65 270,50 327,50" fill="none" stroke="black" stroke-width="2"/> <polyline points="270,65 270,130 280,130" fill="none" stroke="black" stroke-width="2"/> <line x1="370" y1="60" x2="420" y2="60" stroke="black" stroke-width="2"/> <text x="430" y="65" font-family="Arial" font-size="14">s_clk</text>
+  <line x1="320" y1="140" x2="350" y2="140" stroke="black" stroke-width="2"/> <line x1="400" y1="150" x2="420" y2="150" stroke="black" stroke-width="2"/> <text x="430" y="155" font-family="Arial" font-size="14">s_eclk</text>
+</svg>

@@ -1,0 +1,282 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Configuration des blocs de code VHDL
+\lstset{
+    language=VHDL,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    showstringspaces=false,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    tabsize=4
+}
+
+\title{TD4 Correction \\ \large SN360/SN361 : Introduction à la conception des circuits numériques}
+\author{Grenoble INP - Esisar - EI3-2024/2025}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1 :}
+
+Vous allez décrire en VHDL une bascule Toggle dont la sortie $q$ change de valeur à chaque nouveau front d'horloge \texttt{clk} quand \texttt{t} est actif. Le signal de remise à zéro \texttt{reset} est asynchrone.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{clk} & \textbf{t} & \textbf{reset} & $\mathbf{q'}$ \\ \hline
+        Front montant & 1 & 0 & $\overline{q}$ \\ \hline
+        Front montant & 0 & 0 & $q$ \\ \hline
+        X & X & 1 & 0 \\ \hline
+    \end{tabular}
+    \caption{Table de vérité de la bascule Toggle}
+\end{table}
+
+\paragraph{1) Donner le diagramme de transitions d'une machine à états de Moore de ce circuit.}
+\textit{(Le schéma SVG de la machine de Moore correspond aux états S0/S1 avec les transitions $t=0$ et $t=1$ et l'initialisation $reset=1 \rightarrow q=0$).}
+
+\paragraph{2) Donner le code VHDL de cette machine (décrire uniquement son architecture) avec 2 processus comme vu dans le cours.}
+
+\begin{lstlisting}[language=VHDL]
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Toggle_FlipFlop_Moore is
+port (
+    clk: in std_logic;
+    reset: in std_logic;
+    t: in std_logic;
+    q: out std_logic
+);
+end Toggle_FlipFlop_Moore;
+
+architecture Behavioral of Toggle_FlipFlop_Moore is
+    type state_type is (S0, S1);
+    signal current_state, next_state: state_type := S0;
+begin
+
+    process(clk, reset)
+    begin
+        if reset = '1' then
+            current_state <= S0;
+        elsif rising_edge(clk) then
+            current_state <= next_state;
+        end if;
+    end process;
+
+    process(current_state, t)
+    begin
+        next_state <= current_state;
+        case current_state is
+            when S0 =>
+                q <= '0';
+                if t = '1' then
+                    next_state <= S1;
+                end if;
+            when S1 =>
+                q <= '1';
+                if t = '1' then
+                    next_state <= S0;
+                end if;
+            when others =>
+                next_state <= S0;
+        end case;
+    end process;
+end Behavioral;
+\end{lstlisting}
+
+\paragraph{3) Faire de même (questions 1 et 2) avec une machine de Mealy.}
+
+\textit{(Le schéma SVG de la machine de Mealy assigne les sorties sur les transitions).}
+
+\begin{lstlisting}[language=VHDL]
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL; 
+
+entity Toggle_FlipFlop_Mealy is 
+port (
+    clk: in std_logic;
+    reset: in std_logic;
+    t: in std_logic;
+    q: out std_logic
+);
+end Toggle_FlipFlop_Mealy; 
+
+architecture Behavioral of Toggle_FlipFlop_Mealy is 
+    type state_type is (S0, S1);
+    signal current_state, next_state: state_type := S0; 
+begin 
+    process(clk, reset) 
+    begin
+        if reset = '1' then 
+            current_state <= S0;
+        elsif rising_edge(clk) then 
+            current_state <= next_state; 
+        end if;
+    end process; 
+
+    process(current_state, t) 
+    begin 
+        case current_state is 
+            when S0 => 
+                if t = '1' then 
+                    next_state <= S1;
+                    q <= '0'; 
+                else 
+                    next_state <= S0;
+                    q <= '0'; 
+                end if; 
+            when S1 => 
+                if t = '1' then 
+                    next_state <= S0;
+                    q <= '1'; 
+                else 
+                    next_state <= S1; -- Stay in S1 if t=0
+                    q <= '1';
+                end if;
+            when others =>
+                next_state <= S0;
+                q <= '0';
+        end case;
+    end process;
+end Behavioral;
+\end{lstlisting}
+*(Note : Le comportement de Mealy décrit ici assigne les sorties en fonction de l'état actuel et de l'entrée, bien que les valeurs de sortie soient similaires à celles de l'état actuel).*
+
+\paragraph{4) Combien de bascules nécessite l'implantation de chaque machine ?}
+Une bascule pour les deux.
+
+\paragraph{On suppose maintenant que le signal t est asynchrone.}
+1. Afin d'éviter l'apparition de métastabilité, décrire en VHDL un unique processus permettant de synchroniser le signal asynchrone \texttt{t}.
+
+\begin{lstlisting}[language=VHDL]
+-- Processus de synchronisation (Double bascule)
+process(clk, reset)
+begin
+    if reset = '1' then
+        t_sync1 <= '0';
+        t_sync_out <= '0';
+    elsif rising_edge(clk) then
+        t_sync1 <= t;          -- Premiere bascule de synchronisation
+        t_sync_out <= t_sync1; -- Deuxieme bascule de synchronisation
+    end if;
+end process;
+\end{lstlisting}
+
+\vspace{1cm}
+
+\section*{Exercice 2 : Détecteur de séquence}
+
+Dans cet exercice vous allez concevoir une machine à états qui détecte la séquence $abc= \text{<< } 111 \text{ >>}$ avec la contrainte que cette séquence doit être ordonnée temporellement : d'abord $a='1'$ pendant un premier cycle d'horloge, puis $b='1'$, puis enfin $c='1'$. La sortie $x$ devient '1' quand la séquence est correctement ordonnée. On considèrera les recouvrements (ex: $x$ reste à '1' tant que la séquence $111$ est maintenue).
+
+\paragraph{1) Dessiner le diagramme de transitions de cette machine à états.}
+La machine d'états (de type Moore) est conçue de manière à ce que les signaux $a, b, c$ apparaissent successivement. L'entrée est évaluée comme un vecteur $abc$.
+\begin{itemize}
+    \item \textbf{S0} (attente de $a$, $x=0$) : Si $abc = "100" \rightarrow \text{aller à S1}$. Sinon rester dans S0.
+    \item \textbf{S1} (attente de $b$, $x=0$) : Si $abc = "110" \rightarrow \text{aller à S2}$. Si $abc = "100" \rightarrow \text{rester dans S1}$. Sinon $\rightarrow \text{retour à S0}$.
+    \item \textbf{S2} (attente de $c$, $x=0$) : Si $abc = "111" \rightarrow \text{aller à S3}$. Si $abc = "110" \rightarrow \text{rester dans S2}$. Si $abc = "100" \rightarrow \text{aller à S1}$. Sinon $\rightarrow \text{retour à S0}$.
+    \item \textbf{S3} (succès, $x=1$) : Si $abc = "111" \rightarrow \text{rester dans S3}$. Si $abc = "110" \rightarrow \text{aller à S2}$. Si $abc = "100" \rightarrow \text{aller à S1}$. Sinon $\rightarrow \text{retour à S0}$.
+\end{itemize}
+\textit{(Le schéma SVG correspondant est à inclure ici).}
+
+\paragraph{2) Combien de bascules seront nécessaires au minimum pour implanter cette machine? Justifiez.}
+Le diagramme de transitions comporte \textbf{4 états distincts} (S0, S1, S2, S3). Le nombre minimum de bascules $n$ nécessaires pour coder $E$ états est donné par la relation $2^n \ge E$. Ainsi, $2^n \ge 4$, ce qui donne \textbf{$n = 2$ bascules au minimum}.
+
+\paragraph{3) Donner le code VHDL de cette machine.}
+
+\begin{lstlisting}[language=VHDL]
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity sequence_detector is
+    Port ( a   : in STD_LOGIC;
+           b   : in STD_LOGIC;
+           c   : in STD_LOGIC;
+           clk : in STD_LOGIC;
+           rst : in STD_LOGIC;
+           x   : out STD_LOGIC);
+end sequence_detector;
+
+architecture Behavioral of sequence_detector is
+    type state_type is (S0, S1, S2, S3);
+    signal current_state, next_state : state_type;
+    signal abc : std_logic_vector(2 downto 0);
+begin
+    -- Concaténation des entrees pour faciliter la lecture
+    abc <= a & b & c;
+
+    -- Processus synchrone
+    process(clk, rst)
+    begin
+        if rst = '1' then
+            current_state <= S0;
+        elsif rising_edge(clk) then
+            current_state <= next_state;
+        end if;
+    end process;
+
+    -- Processus combinatoire
+    process(current_state, abc)
+    begin
+        -- Valeurs par defaut pour eviter les latches
+        next_state <= S0;
+        x <= '0';
+
+        case current_state is
+            when S0 =>
+                if abc = "100" then
+                    next_state <= S1;
+                end if;
+            when S1 =>
+                if abc = "110" then
+                    next_state <= S2;
+                elsif abc = "100" then
+                    next_state <= S1;
+                end if;
+            when S2 =>
+                if abc = "111" then
+                    next_state <= S3;
+                elsif abc = "110" then
+                    next_state <= S2;
+                elsif abc = "100" then
+                    next_state <= S1;
+                end if;
+            when S3 =>
+                x <= '1';
+                if abc = "111" then
+                    next_state <= S3;
+                elsif abc = "110" then
+                    next_state <= S2;
+                elsif abc = "100" then
+                    next_state <= S1;
+                end if;
+            when others =>
+                next_state <= S0;
+        end case;
+    end process;
+end Behavioral;
+\end{lstlisting}
+
+\paragraph{4) Combien de bascules générera la synthèse de votre code ? Justifiez.}
+En utilisant un type énuméré VHDL (\texttt{type state\_type is (S0, S1, S2, S3);}), l'outil de synthèse (comme Vivado ou Quartus) choisit par défaut un encodage \textbf{"One-Hot"}. 
+\begin{itemize}
+    \item Si l'encodage \textbf{One-Hot} est appliqué, la synthèse générera \textbf{4 bascules} (une bascule dédiée pour chaque état).
+    \item Si l'outil de synthèse est configuré pour optimiser la surface (encodage \textbf{Binaire}), il générera \textbf{2 bascules}, car 2 bits suffisent pour représenter 4 états.
+\end{itemize}
+
+\end{document}

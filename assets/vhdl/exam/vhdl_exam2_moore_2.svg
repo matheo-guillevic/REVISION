@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 750" width="100%" height="100%">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#333" />
+        </marker>
+        <style>
+            .state-text { font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #333; text-anchor: middle; }
+            .state-sub { font-family: Arial, sans-serif; font-size: 11px; fill: #555; text-anchor: middle; }
+            .trans-label { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #0055aa; text-anchor: middle; }
+            .sensor-label { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #5cb85c; text-anchor: middle; }
+            .wait-state { fill: #fdf2e9; stroke: #e67e22; stroke-width: 2; }
+            .action-state { fill: #e3f2fd; stroke: #0055aa; stroke-width: 2; }
+            .idle-state { fill: #f8f9fa; stroke: #333; stroke-width: 2; }
+            .line { fill: none; stroke: #333; stroke-width: 2; }
+        </style>
+    </defs>
+
+    <rect width="100%" height="100%" fill="white" />
+
+    <text x="475" y="30" font-family="Arial" font-size="20" font-weight="bold" fill="#333" text-anchor="middle">Diagramme de Transition (Machine de Moore, signal continu) - Q2.2</text>
+
+    <path d="M 50,150 L 95,150" class="line" marker-end="url(#arrow)" />
+    <text x="75" y="140" font-family="Arial" font-size="14" font-weight="bold" fill="#d9534f" text-anchor="middle">rst=1</text>
+
+    <path d="M 200,150 L 295,150" class="line" marker-end="url(#arrow)" />
+    <text x="250" y="140" class="trans-label">remt=1</text>
+
+    <path d="M 400,150 L 545,150" class="line" marker-end="url(#arrow)" />
+    <text x="475" y="140" class="trans-label">remt=0</text>
+
+    <path d="M 650,150 L 745,150" class="line" marker-end="url(#arrow)" />
+    <text x="700" y="140" class="sensor-label">sen1=1</text>
+
+    <path d="M 600,200 L 600,245" class="line" marker-end="url(#arrow)" />
+    <text x="635" y="230" class="trans-label">remt=1</text>
+
+    <path d="M 600,350 L 600,395" class="line" marker-end="url(#arrow)" />
+    <text x="635" y="380" class="trans-label">remt=0</text>
+
+    <path d="M 600,500 L 600,545" class="line" marker-end="url(#arrow)" />
+    <text x="635" y="530" class="trans-label">remt=1</text>
+
+    <path d="M 765,190 L 625,560" class="line" marker-end="url(#arrow)" />
+    <text x="715" y="380" class="trans-label">remt=1</text>
+
+    <path d="M 550,600 L 405,600" class="line" marker-end="url(#arrow)" />
+    <text x="475" y="590" class="trans-label">remt=0</text>
+
+    <path d="M 315,560 L 180,190" class="line" marker-end="url(#arrow)" />
+    <text x="220" y="380" class="sensor-label">sen2=1</text>
+
+    <path d="M 350,550 L 350,505" class="line" marker-end="url(#arrow)" />
+    <text x="310" y="530" class="trans-label">remt=1</text>
+
+    <path d="M 350,400 L 350,355" class="line" marker-end="url(#arrow)" />
+    <text x="310" y="380" class="trans-label">remt=0</text>
+
+    <path d="M 350,250 L 350,205" class="line" marker-end="url(#arrow)" />
+    <text x="310" y="230" class="trans-label">remt=1</text>
+
+    <path d="M 350,100 C 310,40 390,40 350,100" class="line" marker-end="url(#arrow)" />
+    <text x="350" y="35" class="trans-label">remt=1</text>
+
+    <path d="M 650,300 C 710,260 710,340 650,300" class="line" marker-end="url(#arrow)" />
+    <text x="735" y="305" class="trans-label">remt=1</text>
+
+    <path d="M 600,650 C 640,710 560,710 600,650" class="line" marker-end="url(#arrow)" />
+    <text x="600" y="730" class="trans-label">remt=1</text>
+
+    <path d="M 300,450 C 240,410 240,490 300,450" class="line" marker-end="url(#arrow)" />
+    <text x="215" y="455" class="trans-label">remt=1</text>
+
+
+    <circle cx="150" cy="150" r="50" class="idle-state" />
+    <text x="150" y="145" class="state-text">FERME</text>
+    <text x="150" y="165" class="state-sub">ctr = 0X</text>
+
+    <circle cx="350" cy="150" r="50" class="wait-state" />
+    <text x="350" y="145" class="state-text">ATT_OUV</text>
+    <text x="350" y="165" class="state-sub">ctr = 0X</text>
+
+    <circle cx="600" cy="150" r="50" class="action-state" />
+    <text x="600" y="145" class="state-text">OUVERTURE</text>
+    <text x="600" y="165" class="state-sub">ctr = 10</text>
+
+    <circle cx="800" cy="150" r="50" class="idle-state" />
+    <text x="800" y="145" class="state-text">OUVERT</text>
+    <text x="800" y="165" class="state-sub">ctr = 0X</text>
+
+    <circle cx="600" cy="300" r="50" class="wait-state" />
+    <text x="600" y="290" class="state-text">ATT_</text>
+    <text x="600" y="305" class="state-text">STOP_OUV</text>
+    <text x="600" y="325" class="state-sub">ctr = 0X</text>
+
+    <circle cx="350" cy="300" r="50" class="idle-state" />
+    <text x="350" y="295" class="state-text">STOP_FERM</text>
+    <text x="350" y="315" class="state-sub">ctr = 0X</text>
+
+    <circle cx="600" cy="450" r="50" class="idle-state" />
+    <text x="600" y="445" class="state-text">STOP_OUV</text>
+    <text x="600" y="465" class="state-sub">ctr = 0X</text>
+
+    <circle cx="350" cy="450" r="50" class="wait-state" />
+    <text x="350" y="440" class="state-text">ATT_</text>
+    <text x="350" y="455" class="state-text">STOP_FERM</text>
+    <text x="350" y="475" class="state-sub">ctr = 0X</text>
+
+    <circle cx="600" cy="600" r="50" class="wait-state" />
+    <text x="600" y="595" class="state-text">ATT_FERM</text>
+    <text x="600" y="615" class="state-sub">ctr = 0X</text>
+
+    <circle cx="350" cy="600" r="50" class="action-state" />
+    <text x="350" y="595" class="state-text">FERMETURE</text>
+    <text x="350" y="615" class="state-sub">ctr = 11</text>
+</svg>

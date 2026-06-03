@@ -1,0 +1,233 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{tikz-timing}
+\geometry{hmargin=2.5cm, vmargin=2.5cm}
+
+% Configuration de l'affichage du code VHDL
+\lstset{
+    language=VHDL,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    frame=single,
+    breaklines=true,
+    backgroundcolor=\color{gray!5}
+}
+
+\title{\textbf{Correction d'Examen : Architecture des Ordinateurs}}
+\author{Grenoble INP - Esisar \cite{1170} \\ Cours CE317 \cite{1173}}
+\date{Session 1 - Année 2015-2016 \cite{1175} (Durée : 180mn \cite{1172})}
+
+\begin{document}
+
+\maketitle
+
+\section*{Partie I : Partie cours [34/90] \cite{1183}}
+
+\subsection*{Question 1.1 \cite{1184}}
+\textbf{Énoncé :} Codez en virgule fixe avec le minimum de bits 511,75 [6] \cite{1184}.
+
+\textbf{Correction et Explications :}
+Pour coder un nombre en virgule fixe, on convertit séparément la partie entière et la partie décimale en binaire.
+\begin{itemize}
+    \item \textbf{Partie entière (511)} : On sait que $2^9 = 512$, donc $511 = 2^9 - 1$. En binaire, 511 s'écrit avec 9 bits à '1' : $111111111_2$.
+    \item \textbf{Partie décimale (0,75)} : $0,75 = 0,5 + 0,25 = 2^{-1} + 2^{-2}$. En binaire, cela s'écrit $0,11_2$.
+\end{itemize}
+\textbf{Réponse :}
+\begin{itemize}
+    \item En \textbf{non signé}, le minimum est de \textbf{11 bits} : $111111111,11_2$.
+    \item En \textbf{signé} (complément à 2), il faut ajouter un bit de signe (0 pour positif), soit un minimum de \textbf{12 bits} : $0111111111,11_2$.
+\end{itemize}
+
+\subsection*{Question 1.2 \cite{1185, 1186}}
+\textbf{Énoncé :} Simplifiez en utilisant un tableau de Karnaugh la fonction $F$ [12] \cite{1185}.
+
+\textit{Note : Le texte d'origine a perdu les barres de négation (OCR : F=ABC+ABC+ABC+ABC+ABC \cite{1186}). Nous traiterons l'exemple suivant pour illustrer la méthode : $F = \overline{A}\overline{B}C + \overline{A}BC + A\overline{B}C + AB\overline{C} + ABC$}
+
+\textbf{Correction et Explications :}
+On place des '1' dans le tableau de Karnaugh pour chaque minterme :
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$A \backslash BC$ & 00 & 01 & 11 & 10 \\
+\hline
+0 & 0 & \textbf{1} ($\overline{A}\overline{B}C$) & \textbf{1} ($\overline{A}BC$) & 0 \\
+\hline
+1 & 0 & \textbf{1} ($A\overline{B}C$) & \textbf{1} ($ABC$) & \textbf{1} ($AB\overline{C}$) \\
+\hline
+\end{tabular}
+\end{center}
+Regroupements possibles (les plus grands possibles en puissances de 2) :
+\begin{itemize}
+    \item Un groupe de 4 (colonne 01 et 11) : donne $C$.
+    \item Un groupe de 2 (ligne du bas, 11 et 10) : donne $AB$.
+\end{itemize}
+\textbf{Résultat simplifié :} $F = C + AB$.
+
+\subsection*{Question 1.3 \cite{1187, 1188, 1189}}
+\textbf{Énoncé :} En VHDL, quel type normalisé doit être utilisé pour réaliser des opérations arithmétiques sur des vecteurs binaires non signés [2] \cite{1187} ? Quels bibliothèques et paquetages déclarer [2] \cite{1188} ? Montrez comment $-5 - 7$ est obtenu en complément à 2 \cite{1189}.
+
+\textbf{Correction et Explications :}
+\begin{itemize}
+    \item \textbf{Type normalisé :} Il faut utiliser le type \texttt{unsigned} \cite{1187}.
+    \item \textbf{Bibliothèque et paquetage :} \texttt{library IEEE; use IEEE.numeric\_std.all;} \cite{1188} (ne jamais utiliser l'obsolète \texttt{std\_logic\_unsigned}).
+    \item \textbf{Opération $-5 - 7$ en complément à 2 (sur 5 bits) :} \cite{1189}
+    Pour coder $-12$ (le résultat), il faut au minimum 5 bits (plage de $-16$ à $+15$).
+    \begin{enumerate}
+        \item $+5$ en binaire = $00101_2$. Inversion = $11010_2$. On ajoute 1 $\rightarrow$ \textbf{$-5 = 11011_2$}.
+        \item $+7$ en binaire = $00111_2$. Inversion = $11000_2$. On ajoute 1 $\rightarrow$ \textbf{$-7 = 11001_2$}.
+        \item Addition : $11011_2 + 11001_2 = (1) 10100_2$. On ignore la retenue sortante.
+        \item Résultat : \textbf{$10100_2$}. Pour vérifier sa valeur : on inverse ($01011_2$) et on ajoute 1 ($01100_2 = 12_{10}$). Le résultat est bien $-12$.
+    \end{enumerate}
+\end{itemize}
+
+\subsection*{Question 1.4 \cite{1190, 1191}}
+\textbf{Énoncé :} En VHDL est-ce que l'ordre des processus a une importance \cite{1190} ? Si non, dans quel ordre sont-ils exécutés \cite{1191} ?
+
+\textbf{Correction et Explications :}
+\textbf{Non}, l'ordre des processus dans l'architecture n'a aucune importance \cite{1190}. 
+En VHDL, les processus sont des instructions \textbf{concurrentes}. Ils s'exécutent de manière parallèle \cite{1191}. Leur exécution est déclenchée (réveillée) uniquement par les événements qui surviennent sur les signaux présents dans leur \textbf{liste de sensibilité}.
+
+\newpage
+
+\section*{Partie II : Conception d'un registre à décalage SIPO [56/90] \cite{1199, 1200}}
+
+\subsection*{Question 2.1 \cite{1201}}
+\textbf{Énoncé :} Dessinez le schéma d'un registre SIPO de $n$ bits en utilisant $n$ bascules D \cite{1201}. Entrées : \texttt{din}, \texttt{clk}, \texttt{enable}, \texttt{reset} \cite{1203, 1204, 1205, 1207}. Sortie : \texttt{dout} (n bits) \cite{1206}.
+
+\textit{(Voir le code SVG fourni séparément pour générer ou visualiser ce schéma).} Explication : Les bascules sont en cascade. L'entrée $D$ de la première bascule est liée à \texttt{din}. L'entrée $D$ des bascules suivantes est liée à la sortie $Q$ de la bascule précédente. \texttt{clk}, \texttt{reset} et \texttt{enable} sont communs à toutes les bascules.
+
+\subsection*{Question 2.2 \cite{1214}}
+\textbf{Énoncé :} Ecrire en VHDL RTL l'entité générique (\texttt{shift}) et l'architecture (\texttt{rtl}) \cite{1214}.
+
+\textbf{Correction :}
+\begin{lstlisting}
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity shift is
+    generic (n : integer := 8);
+    port (
+        din    : in  std_logic;
+        clk    : in  std_logic;
+        reset  : in  std_logic;
+        enable : in  std_logic;
+        dout   : out std_logic_vector(n-1 downto 0)
+    );
+end entity shift;
+
+architecture rtl of shift is
+    signal shift_reg : std_logic_vector(n-1 downto 0);
+begin
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if reset = '1' then
+                shift_reg <= (others => '0');
+            elsif enable = '1' then
+                -- Decalage vers la gauche : le MSB recoit din
+                shift_reg <= shift_reg(n-2 downto 0) & din;
+            end if;
+        end if;
+    end process;
+    dout <= shift_reg;
+end architecture rtl;
+\end{lstlisting}
+
+\subsection*{Question 2.3 \cite{1215}}
+\textbf{Énoncé :} Ecrire en VHDL structurel l'architecture (\texttt{struct}) de la même entité \cite{1215}. Composant disponible : \texttt{bascule} \cite{1210-1213}.
+
+\textbf{Correction :}
+\begin{lstlisting}
+architecture struct of shift is
+    component bascule
+        port(d, clk, reset, enable: in std_logic;
+             q: out std_logic);
+    end component;
+    
+    -- Signal intermediaire pour relier les bascules en cascade
+    signal q_int : std_logic_vector(n downto 0);
+begin
+    q_int(0) <= din; -- L'entree du registre attaque la 1ere bascule
+
+    gen_shift: for i in 0 to n-1 generate
+        bascule_inst : bascule port map (
+            d      => q_int(i),
+            clk    => clk,
+            reset  => reset,
+            enable => enable,
+            q      => q_int(i+1)
+        );
+    end generate gen_shift;
+
+    -- Affectation des sorties paralleles
+    dout <= q_int(n downto 1);
+end architecture struct;
+\end{lstlisting}
+
+\subsection*{Question 2.4 \cite{1216}}
+\textbf{Énoncé :} Ecrire un testbench simulant l'architecture structurelle pour $n=8$ \cite{1216, 1217}.
+
+\textbf{Correction :}
+\begin{lstlisting}
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity tb_shift is
+end entity tb_shift;
+
+architecture sim of tb_shift is
+    signal din, clk, reset, enable : std_logic := '0';
+    signal dout : std_logic_vector(7 downto 0);
+    constant period : time := 10 ns;
+begin
+    UUT: entity work.shift(struct)
+        generic map (n => 8)
+        port map (din => din, clk => clk, reset => reset, enable => enable, dout => dout);
+
+    clk_proc: process begin
+        clk <= '0'; wait for period/2;
+        clk <= '1'; wait for period/2;
+    end process;
+
+    stim_proc: process begin
+        reset <= '1'; wait for 20 ns;
+        reset <= '0'; enable <= '1'; din <= '1'; wait for period;
+        din <= '0'; wait for 2 * period;
+        enable <= '0'; wait for 2 * period; -- Retenue d'etat
+        enable <= '1'; din <= '1'; wait for 2 * period;
+        reset <= '1'; wait for period;
+        wait;
+    end process;
+end architecture sim;
+\end{lstlisting}
+
+\subsection*{Question 2.5 \cite{1218}}
+\textbf{Énoncé :} Dessinez les chronogrammes correspondant au testbench \cite{1218, 1219}.
+
+\textbf{Correction (via TikZ-Timing) :}
+\begin{center}
+\begin{tikztimingtable}[timing/slope=0]
+  \texttt{clk}    & 14{C} \\
+  \texttt{reset}  & 2{1} 10{0} 2{1} \\
+  \texttt{enable} & 2{0} 6{1} 2{0} 4{1} \\
+  \texttt{din}    & 2{0} 2{1} 6{0} 4{1} \\
+  \texttt{dout}   & 2D{00} 2D{00} 2D{01} 2D{02} 2D{04} 2D{04} 2D{09} 2D{00} \\
+\extracode
+  \tablegrid
+\end{tikztimingtable}
+\end{center}
+
+\end{document}

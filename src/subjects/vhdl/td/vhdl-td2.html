@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TD 2 corrige - Synthese logique et circuits sequentiels</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="vhdl.html#vhdl-td">Retour aux TD VHDL</a>
+        <div>
+          <span class="eyebrow">SN361 - TD 2</span>
+          <h1>Synthese de schemas, bascules et detection d'evenements</h1>
+          <p>Lecture de code VHDL, schemas de bascules, sorties synchrones/asynchrones et chronogrammes.</p>
+          <p>Page reconstruite depuis le fichier LaTeX <code>pdf/vhdl/TD/TD2_Correction_SN361.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/vhdl/TD/TD2_Correction_SN361.pdf">Ouvrir le PDF</a>
+          <a class="back-link" href="vhdl.html">Cours VHDL</a>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1.1</span>
+              <h3>Exercice 1.1</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td2-e1" class="answer-block">
+          <p>On considère le programme ci-dessous :</p>
+          <ol class="solution-steps">
+            <li>Déduire de ce programme, par une construction méthodique, un schéma (bascules et portes logiques).</li>
+            <li>Compléter le chronogramme Fig 1.1.</li>
+          </ol>
+          <pre class="code-block language-vhdl"><code>entity transitm is
+port (hor, e : in bit;
+      s      : out bit);
+end transitm;
+architecture quasi_struct of transitm is
+signal qa, qb : bit;
+begin
+    s &lt;= qa xor qb;
+    schem: process (hor)
+    begin
+        if hor'event and hor = '1' then
+            qa &lt;= e;
+            qb &lt;= qa;
+        end if;
+    end process schem;
+end quasi_struct;</code></pre>
+          <h4>Correction</h4>
+          <figure class="system-diagram td-figure">
+            <img src="assets/vhdl/TD/SN361-TD2_1.1.svg" alt="Schema de synthese de l'exercice 1.1." loading="lazy">
+            <figcaption class="diagram-caption">Schema de synthese de l'exercice 1.1.</figcaption>
+          </figure>
+          <h4>1. Schéma :</h4>
+          <p>Le schéma correspondant se trouve dans le fichier SVG 1.1 (à inclure ici). Il est constitué de deux bascules D en cascade pour <code>qa</code> et <code>qb</code>, pilotées par la même horloge <code>hor</code>, dont les sorties attaquent une porte XOR pour générer <code>s</code>.</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1.2</span>
+              <h3>Exercice 1.2</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td2-e2" class="answer-block">
+          <p>On considère le programme ci-dessous :</p>
+          <ol class="solution-steps">
+            <li>Compléter le code manquant.</li>
+            <li>Déduire un schéma (bascules et portes logiques) de ce programme.</li>
+            <li>Caractériser les sorties : synchrones ou asynchrones ?</li>
+            <li>Compléter le chronogramme Fig 1.2.</li>
+          </ol>
+          <pre class="code-block language-vhdl"><code>entity condit is
+port (
+    clk    : in bit;
+    eclk   : in bit;
+    e      : in bit;
+    s_clk  : out bit;
+    s_eclk : out bit);
+end condit;
+architecture reg_lvl of condit is
+    signal qe : bit ;
+begin
+    s_clk &lt;= e and not (qe);
+    
+    echl : process (clk)
+    begin
+        if clk'event and clk = '1' then
+            qe &lt;= e;
+        end if;
+    end process echl;
+    
+    ech : process (eclk)
+    begin
+        if eclk'event and eclk = '1' then
+            s_eclk &lt;= (qe and not(e));
+        end if;
+    end process ech;
+end reg_lvl;</code></pre>
+          <h4>Correction</h4>
+          <figure class="system-diagram td-figure">
+            <img src="assets/vhdl/TD/SN361-TD2_1.2.svg" alt="Schema de synthese de l'exercice 1.2." loading="lazy">
+            <figcaption class="diagram-caption">Schema de synthese de l'exercice 1.2.</figcaption>
+          </figure>
+          <h4>2. Schéma :</h4>
+          <p>Voir le fichier SVG 1.2 pour le schéma de synthèse.</p>
+          <h4>3. Caractérisation des sorties :</h4>
+          <p>La sortie <code>s_clk</code> est <strong>asynchrone</strong> car elle est affectée en dehors de tout processus synchrone. <br> La sortie <code>s_eclk</code> est <strong>synchrone</strong> (synchronisée sur <code>eclk</code>) car son affectation se trouve dans un processus sensible au front montant de l'horloge <code>eclk</code>.</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1.3</span>
+              <h3>Exercice 1.3</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td2-e3" class="answer-block">
+          <p>On considère le programme ci-dessous :</p>
+          <ol class="solution-steps">
+            <li>Ce code est-il correct ?</li>
+            <li>Déduire un schéma (bascules et portes logiques) de ce programme.</li>
+            <li>Compléter le chronogramme Fig 1.3.</li>
+          </ol>
+          <pre class="code-block language-vhdl"><code>entity mise_feu is
+port (
+    clk : in bit;
+    ina : in bit;
+    maf : out bit);
+end mise_feu;
+architecture detect of mise_feu is
+    signal maf_sync : bit;
+begin
+    maf &lt;= maf_sync;
+    sync : process (clk)
+    begin
+        if clk'event and clk = '1' then
+            maf_sync &lt;= ina and not maf_sync;
+        end if;
+    end process sync;
+end detect;</code></pre>
+          <h4>Correction</h4>
+          <figure class="system-diagram td-figure">
+            <img src="assets/vhdl/TD/SN361-TD2_1.3.svg" alt="Schema de synthese de l'exercice 1.3." loading="lazy">
+            <figcaption class="diagram-caption">Schema de synthese de l'exercice 1.3.</figcaption>
+          </figure>
+          <h4>2. Schéma :</h4>
+          <p>Voir le fichier SVG 1.3 (boucle de rétroaction sur la bascule avec porte AND).</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2.1</span>
+              <h3>Exercice 2.1</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td2-e4" class="answer-block">
+          <p>On considère la fonction logique de la figure 2.1 (Bloc fonctionnel) :</p>
+          <ol class="solution-steps">
+            <li>Compléter le programme pour réaliser cette fonction.</li>
+            <li>Réaliser un chronogramme de test de cette fonction (compléter le chronogramme fig 2.2).</li>
+          </ol>
+          <h4>Correction</h4>
+          <figure class="system-diagram td-figure">
+            <img src="assets/vhdl/TD/SN361-TD2_2.1.svg" alt="Bloc fonctionnel de l'exercice 2.1." loading="lazy">
+            <figcaption class="diagram-caption">Bloc fonctionnel de l'exercice 2.1.</figcaption>
+          </figure>
+          <p><strong>1. Code VHDL :</strong></p>
+          <pre class="code-block language-vhdl"><code>entity detect is
+port (
+    clk : in bit;
+    e   : in bit;
+    s   : out bit);
+end detect;
+architecture reg of detect is
+    signal qe : bit;
+begin
+    sync : process (clk)
+    begin
+        if clk'event and clk = '1' then
+            qe &lt;= e;
+            s  &lt;= qe xor e;
+        end if;
+    end process sync;
+end reg;</code></pre>
+          <p>*(Le schéma est illustré dans le SVG 2.1)*</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2.2</span>
+              <h3>Exercice 2.2</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td2-e5" class="answer-block">
+          <p>On considère l'équation logique ci-dessous : \[Q_{(t+1)} = \overline{(init \cdot (T \oplus Q_{(t)}))}\]</p>
+          <ol class="solution-steps">
+            <li>Concevoir le schéma de réalisation de cette équation.</li>
+            <li>Compléter le code VHDL pour réaliser cette fonction.</li>
+            <li>Le cahier des charges évolue : il faut transformer le signal <code>init</code> en une commande &lt;&lt; actif bas &gt;&gt; (si \(init='0'\)), de remise à zéro asynchrone.</li>
+            <li>Transformer le programme pour qu'il utilise le type <code>std_logic</code>. Rajouter une commande de haute impédance &lt;&lt; <code>oe</code> &gt;&gt; active basse, qui pilote la sortie uniquement lorsque &lt;&lt; <code>oe</code> &gt;&gt; est actif.</li>
+          </ol>
+          <h4>Correction</h4>
+          <figure class="system-diagram td-figure">
+            <img src="assets/vhdl/TD/SN361-TD2_2.2.svg" alt="Schema de synthese de l'exercice 2.2." loading="lazy">
+            <figcaption class="diagram-caption">Schema de synthese de l'exercice 2.2.</figcaption>
+          </figure>
+          <h4>1. Schéma :</h4>
+          <p>Voir le fichier SVG 2.2. Il est composé d'une porte XOR, d'une porte NAND et d'une bascule D.</p>
+          <p><strong>2. Code VHDL classique :</strong></p>
+          <pre class="code-block language-vhdl"><code>entity basc is
+port (T, clk, init : in bit;
+      s            : out bit);
+end basc;
+architecture primitive of basc is
+    signal q : bit;
+begin
+    s &lt;= q;
+    process (clk)
+    begin
+        if clk'event and clk = '1' then
+            q &lt;= not (init and (T xor q));
+        end if;
+    end process;
+end primitive;</code></pre>
+          <p><strong>3. Programme avec la commande init en remise à zéro asynchrone :</strong></p>
+          <pre class="code-block language-vhdl"><code>entity basc is
+port (T, clk, init : in bit;
+      s            : out bit);
+end basc;
+architecture primitive of basc is
+    signal q : bit;
+begin
+    s &lt;= q;
+    process (clk, init)
+    begin
+        if init = '0' then
+            q &lt;= '0';
+        elsif clk'event and clk = '1' then
+            q &lt;= not (T xor q);
+        end if;
+    end process;
+end primitive;</code></pre>
+          <p><strong>4. Programme avec le type <code>std_logic</code> et <code>oe</code> :</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity basc is
+port (
+    T, clk, init, oe : in std_logic;
+    s                : out std_logic);
+end basc;
+architecture primitive of basc is
+    signal q : std_logic;
+begin
+    s &lt;= q when oe = '0' else 'Z';
+    process (clk, init)
+    begin
+        if init = '0' then
+            q &lt;= '0';
+        elsif clk'event and clk = '1' then
+            q &lt;= not (T xor q);
+        end if;
+    end process;
+end primitive;</code></pre>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

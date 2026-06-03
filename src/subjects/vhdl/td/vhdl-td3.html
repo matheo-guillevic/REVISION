@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TD 3 corrige - Compteurs et test benches</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="vhdl.html#vhdl-td">Retour aux TD VHDL</a>
+        <div>
+          <span class="eyebrow">SN361 - TD 3</span>
+          <h1>Compteurs, resets, enable et test benches</h1>
+          <p>Compteur 8 bits, reset asynchrone, activation synchrone, simulation VHDL/Verilog et evolution up/down.</p>
+          <p>Page reconstruite depuis le fichier LaTeX <code>pdf/vhdl/TD/TD3_Correction_SN361.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/vhdl/TD/TD3_Correction_SN361.pdf">Ouvrir le PDF</a>
+          <a class="back-link" href="vhdl.html">Cours VHDL</a>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1</span>
+              <h3>Exercice 1 : Conception d'un compteur électronique</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td3-e1" class="answer-block">
+          <p>En électronique, un compteur est un composant essentiel. Considérons ici un compteur 8 bits comportant:</p>
+          <ul class="formula-list">
+            <li>Une entrée d'activation synchrone appelée <code>Enable</code>.</li>
+            <li>Un signal de reset asynchrone nommé <code>rst</code>.</li>
+            <li>Une incrémentation qui s'effectue sur les fronts montants de l'horloge <code>clk</code>.</li>
+          </ul>
+          <h4>Questions :</h4>
+          <h4>1) Combien de bascules sont nécessaires pour implémenter ce compteur ?</h4>
+          <p>8 bascules, chaque bit étant représenté par une bascule.</p>
+          <h4>2) Dessinez un chronogramme illustrant le fonctionnement du compteur.</h4>
+          <p>Il s'agit d'un exemple de simulation avec Vivado pour un compteur utilisant une horloge d'une période de 10 ns. *(Le chronogramme affiche l'évolution de <code>count</code> de 00 à 13 en hexadécimal à chaque front d'horloge lorsque <code>Enable</code> est actif ).*</p>
+          <h4>3) Écrivez le code de ce compteur en VHDL et en Verilog.</h4>
+          <p><strong>VHDL :</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity compteur is
+Port (
+    clk    : in STD_LOGIC;  -- horloge
+    rst    : in STD_LOGIC;  -- reset
+    Enable : in STD_LOGIC;  -- activation
+    count  : out STD_LOGIC_VECTOR (7 downto 0) -- sortie sur 8 bits
+);
+end compteur;
+
+architecture Behavioral of compteur is
+    signal count_internal: unsigned(7 downto 0) := (others =&gt; '0');
+begin
+    process (clk, rst)
+    begin
+        if rst = '1' then
+            count_internal &lt;= (others =&gt; '0');
+        elsif rising_edge(clk) then
+            if Enable = '1' then
+                count_internal &lt;= count_internal + 1;
+            end if;
+        end if;
+    end process;
+    count &lt;= std_logic_vector(count_internal);
+end Behavioral;</code></pre>
+          <p><strong>Verilog :</strong></p>
+          <pre class="code-block language-vhdl"><code>module compteur (
+    input wire clk,
+    input wire rst,
+    input wire Enable,
+    output reg [7:0] Count 
+);
+
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        Count &lt;= 8'b0;
+    end else if (Enable) begin
+        Count &lt;= Count + 1;
+    end
+end
+endmodule</code></pre>
+          <h4>4) Créer le TestBench pour le compteur en VHDL et Verilog :</h4>
+          <p>Le TestBench permet de vérifier le bon fonctionnement du système. Dans l'exemple suivant, on teste la réaction du système à une horloge avec une période de 10 ns. Le signal reset et le signal enable sont respectivement à 1 et 0 pendant 50 ns. Ensuite, reset passe à 0 et enable à 1 pendant 200 ns. Enfin, les deux signaux sont positionnés à 1.</p>
+          <p><strong>TestBench VHDL :</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity compteur_tb is
+end compteur_tb;
+
+architecture Behavioral of compteur_tb is
+    component compteur
+    Port (
+        clk    : in STD_LOGIC;
+        rst    : in STD_LOGIC;
+        Enable : in STD_LOGIC;
+        count  : out STD_LOGIC_VECTOR (7 downto 0)
+    );
+    end component;
+
+    signal clk    : STD_LOGIC := '0';
+    signal rst    : STD_LOGIC := '0';
+    signal Enable : STD_LOGIC := '0';
+    signal count  : STD_LOGIC_VECTOR (7 downto 0);
+begin
+    uut: compteur Port map (
+        clk    =&gt; clk,
+        rst    =&gt; rst,
+        Enable =&gt; Enable,
+        count  =&gt; count
+    );
+
+    clk_process: process
+    begin
+        clk &lt;= not(clk);
+        wait for 5 ns;
+    end process;
+
+    stim_proc: process
+    begin
+        rst &lt;= '1';
+        Enable &lt;= '0';
+        wait for 50 ns;
+        rst &lt;= '0';
+        Enable &lt;= '1';
+        wait for 200 ns;
+        Enable &lt;= '1';
+        rst &lt;= '1';
+        wait;
+    end process;
+end Behavioral;</code></pre>
+          <p><strong>TestBench Verilog :</strong></p>
+          <pre class="code-block language-vhdl"><code>`timescale 1ns/1ps
+
+module tb_compteur();
+    reg clk = 1;
+    reg rst = 0;
+    reg Enable = 0;
+    wire [7:0] Count;
+
+    compteur uut (
+        .clk(clk),
+        .rst(rst),
+        .Enable(Enable),
+        .Count(Count)
+    );
+
+    initial begin
+        forever #5 clk = ~clk;
+    end
+
+    initial begin
+        rst = 1;
+        Enable = 0;
+        #50 rst = 0;
+        Enable = 1;
+        #200 rst = 1;
+        Enable = 1;
+    end
+endmodule</code></pre>
+          <h4>Amélioration :</h4>
+          <p>Nous souhaitons maintenant étendre le fonctionnement du compteur avec deux nouvelles entrées:</p>
+          <ul class="formula-list">
+            <li><code>up</code> : Si active, le compteur s'incrémente.</li>
+            <li><code>down</code> : Si active, le compteur se décrémente.</li>
+          </ul>
+          <p><strong>Modifiez le code VHDL pour intégrer cette nouvelle fonctionnalité :</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity compteur_ext is
+Port (
+    clk    : in STD_LOGIC;
+    rst    : in STD_LOGIC;
+    Enable : in STD_LOGIC;
+    up     : in STD_LOGIC;
+    down   : in STD_LOGIC;
+    count  : out STD_LOGIC_VECTOR (7 downto 0)
+);
+end compteur_ext;
+
+architecture Behavioral of compteur_ext is
+    signal count_internal: unsigned (7 downto 0) := (others =&gt; '0');
+begin
+    process (clk, rst)
+    begin
+        if rst = '1' then
+            count_internal &lt;= (others =&gt; '0'); -- Reinitialisation du compteur
+        elsif rising_edge(clk) then
+            if Enable = '1' then
+                if up = '1' and down = '0' then
+                    count_internal &lt;= count_internal + 1; -- Incrementation
+                elsif down = '1' and up = '0' then
+                    count_internal &lt;= count_internal - 1; -- Decrementation
+                else 
+                    count_internal &lt;= (others =&gt; '0'); -- si up et down actifs en meme temps
+                end if;
+            end if;
+        end if;
+    end process;
+    count &lt;= std_logic_vector(count_internal);
+end Behavioral;</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2</span>
+              <h3>Exercice 2 : Conception d'un registre à décalage SIPO de N bits</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="vhdl-td3-e2" class="answer-block">
+          <h4>1) On dispose de la description VHDL d'une bascule D (flip-flop) dont l'entité est donnée ci-dessous. Ecrivez le testbench de ce composant.</h4>
+          <figure class="system-diagram td-figure">
+            <img src="assets/vhdl/TD/SN361-TD3_2.1.svg" alt="Registre a decalage SIPO generique." loading="lazy">
+            <figcaption class="diagram-caption">Registre a decalage SIPO generique.</figcaption>
+          </figure>
+          <pre class="code-block language-vhdl"><code>entity bascule is
+port(d, clk, reset, enable: in std_logic;
+     q: out std_logic);
+end entity bascule;</code></pre>
+          <p>Voici un TestBench conçu pour tester le système. L'objectif est de vérifier un maximum d'entrées, voire toutes si possible, afin d'observer la réaction de la sortie et de s'assurer qu'elle correspond aux attentes.</p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity tb_bascule is
+end tb_bascule;
+
+architecture bhv of tb_bascule is
+    signal tb_clk    : std_logic := '0';
+    signal tb_d      : std_logic := '0';
+    signal tb_enable : std_logic := '0';
+    signal tb_reset  : std_logic := '0';
+    signal tb_q      : std_logic;
+
+    component bascule
+    port (
+        d, clk, reset, enable: in std_logic;
+        q: out std_logic
+    );
+    end component;
+
+begin
+    i1: bascule port map (
+        d      =&gt; tb_d,
+        clk    =&gt; tb_clk,
+        reset  =&gt; tb_reset,
+        enable =&gt; tb_enable,
+        q      =&gt; tb_q
+    );
+
+    -- Il est possible de tester le signal d'horloge (clk) sans utiliser de processus.
+    tb_clk &lt;= not tb_clk after 5 ns; 
+
+    stim_proc: process
+    begin
+        tb_reset &lt;= '1';
+        tb_enable &lt;= '0';
+        tb_d &lt;= '0';
+        wait for 10 ns;
+        
+        tb_reset &lt;= '0';
+        wait for 10 ns;
+        
+        tb_d &lt;= '1';
+        wait for 20 ns;
+        
+        tb_enable &lt;= '1';
+        wait for 10 ns;
+        
+        tb_d &lt;= '0';
+        wait for 20 ns;
+        
+        tb_reset &lt;= '1';
+        wait for 10 ns;
+        
+        tb_reset &lt;= '0';
+        wait for 20 ns;
+        
+        wait;
+    end process;
+end bhv;</code></pre>
+          <h4>2) On veut construire un registre à décalage de 2 bits SIPO (Serial In - Parallel Out) en utilisant uniquement 2 bascules D.</h4>
+          <p>Ce registre à décalage comporte:</p>
+          <ul class="formula-list">
+            <li>un simple bit d'entrée (<code>din</code>)</li>
+            <li>une entrée d'autorisation de décalage (<code>enable</code>) active à l'état haut</li>
+            <li>une sortie parallèle (<code>dout</code>) sur 2 bits</li>
+            <li>une remise à zéro (<code>reset</code>) synchrone active à l'état haut.</li>
+          </ul>
+          <p><strong>2.1. Dessinez le schéma de ce registre</strong> *(Le schéma est à inclure ici à l'aide du fichier SVG généré).*</p>
+          <p><strong>2.2. Ecrivez la description structurelle du registre SIPO (entité + architecture) </strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity SIPO is
+port( 
+    din, enable, clk, reset: in std_logic;
+    dout: out std_logic_vector(0 to 1)
+);
+end SIPO;
+
+architecture struct of SIPO is
+    component bascule
+    port(
+        d, clk, reset, enable: in std_logic;
+        q: out std_logic
+    );
+    end component;
+
+    signal dout_temp: std_logic_vector(0 to 1);
+begin
+    i1: bascule port map(
+        d =&gt; din, enable =&gt; enable, clk =&gt; clk, reset =&gt; reset, q =&gt; dout_temp(0)
+    );
+    
+    i2: bascule port map (
+        d =&gt; dout_temp(0), enable =&gt; enable, clk =&gt; clk, reset =&gt; reset, q =&gt; dout_temp(1)
+    );
+    
+    dout &lt;= dout_temp;
+end struct;</code></pre>
+          <h4>3) Pour que le registre soit facilement réutilisable dans différents projets, on souhaite le rendre plus générique.</h4>
+          <p>On veut qu'il soit paramétrable pour supporter différentes tailles de vecteurs de sortie. On veut donc construire un registre à décalage SIPO de N bits. Ecrivez l'entité de ce registre.</p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity SIPO_n is
+generic (N: integer := 5);
+port (
+    din    : in std_logic;
+    enable : in std_logic;
+    clk    : in std_logic;
+    reset  : in std_logic;
+    dout   : out std_logic_vector(0 to N-1)
+);
+end SIPO_n;
+
+architecture struct of SIPO_n is
+    component bascule
+    port (
+        d      : in std_logic;
+        clk    : in std_logic;
+        reset  : in std_logic;
+        enable : in std_logic;
+        q      : out std_logic
+    );
+    end component;
+
+    signal dout_temp: std_logic_vector(0 to N);
+begin
+    bascules_gen: for I in 0 to N-1 generate
+    begin
+        bascule_inst: bascule port map (
+            d      =&gt; dout_temp(I),
+            enable =&gt; enable,
+            clk    =&gt; clk,
+            reset  =&gt; reset,
+            q      =&gt; dout_temp(I+1)
+        );
+    end generate;
+    
+    dout_temp(0) &lt;= din;
+    dout &lt;= dout_temp(1 to N);
+end architecture;</code></pre>
+          <p><strong>TestBench pour SIPO_n:</strong></p>
+          <pre class="code-block language-vhdl"><code>library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity tb_SIPO_n is
+end tb_SIPO_n;
+
+architecture bhv of tb_SIPO_n is
+    signal tb_clk    : std_logic := '1';
+    signal tb_din, tb_enable, tb_reset: std_logic;
+    signal tb_dout   : std_logic_vector(0 to 4);
+
+    component SIPO_n
+    generic(N: integer := 5);
+    port(
+        din, enable, clk, reset: in std_logic;
+        dout: out std_logic_vector(0 to N-1)
+    );
+    end component;
+begin
+    i1: SIPO_n 
+    generic map( N =&gt; 5 )
+    port map (
+        din    =&gt; tb_din,
+        enable =&gt; tb_enable, 
+        clk    =&gt; tb_clk,
+        reset  =&gt; tb_reset,
+        dout   =&gt; tb_dout
+    );
+
+    tb_clk &lt;= not(tb_clk) after 5 ns;
+    
+    tb_din &lt;= '0', '1' after 5 ns, '0' after 25 ns, '1' after 45 ns;
+    tb_enable &lt;= '0', '1' after 15 ns, '0' after 25 ns, '1' after 35 ns;
+    tb_reset &lt;= '0', '1' after 55 ns, '0' after 65 ns;
+end bhv;</code></pre>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
