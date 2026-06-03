@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="450" viewBox="0 0 900 450" role="img" aria-labelledby="title desc">
+  <title id="title">FSM de Moore detectant un front montant</title>
+  <desc id="desc">Diagramme a quatre etats : repos, deux cycles de sortie haute, puis attente du retour de X a zero.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#172033"/>
+    </marker>
+  </defs>
+  <rect width="900" height="450" fill="#ffffff"/>
+  <g font-family="Inter, Arial, sans-serif" fill="#172033">
+    <text x="34" y="34" font-size="19" font-weight="700">FSM de Moore : Y=1 pendant deux cycles apres un front 0 -> 1 de X</text>
+    <g fill="#eef6ff" stroke="#1f5f99" stroke-width="2.4">
+      <circle cx="170" cy="215" r="62"/>
+      <circle cx="390" cy="215" r="62"/>
+      <circle cx="610" cy="215" r="62"/>
+      <circle cx="760" cy="350" r="62"/>
+    </g>
+    <g text-anchor="middle">
+      <text x="170" y="207" font-size="21" font-weight="800">S0</text>
+      <text x="170" y="231" font-size="14">Repos</text>
+      <text x="170" y="252" font-size="16" font-weight="700">Y=0</text>
+      <text x="390" y="207" font-size="21" font-weight="800">S1</text>
+      <text x="390" y="231" font-size="14">Cycle 1</text>
+      <text x="390" y="252" font-size="16" font-weight="700">Y=1</text>
+      <text x="610" y="207" font-size="21" font-weight="800">S2</text>
+      <text x="610" y="231" font-size="14">Cycle 2</text>
+      <text x="610" y="252" font-size="16" font-weight="700">Y=1</text>
+      <text x="760" y="342" font-size="21" font-weight="800">S3</text>
+      <text x="760" y="366" font-size="14">Attente X=0</text>
+      <text x="760" y="387" font-size="16" font-weight="700">Y=0</text>
+    </g>
+    <path d="M222 215 C260 215 300 215 328 215" fill="none" stroke="#172033" stroke-width="2.4" marker-end="url(#arrow)"/>
+    <text x="280" y="198" font-size="14" font-weight="700">X=1</text>
+    <path d="M452 215 C490 215 530 215 548 215" fill="none" stroke="#172033" stroke-width="2.4" marker-end="url(#arrow)"/>
+    <text x="500" y="198" font-size="14" font-weight="700">cycle suivant</text>
+    <path d="M655 258 C684 290 706 313 716 326" fill="none" stroke="#172033" stroke-width="2.4" marker-end="url(#arrow)"/>
+    <text x="690" y="284" font-size="14" font-weight="700">X=1</text>
+    <path d="M563 252 C472 350 286 350 190 267" fill="none" stroke="#172033" stroke-width="2.4" marker-end="url(#arrow)"/>
+    <text x="400" y="364" font-size="14" font-weight="700">X=0</text>
+    <path d="M700 350 C515 420 250 370 184 278" fill="none" stroke="#172033" stroke-width="2.4" marker-end="url(#arrow)"/>
+    <text x="465" y="415" font-size="14" font-weight="700">X=0</text>
+    <path d="M118 190 C70 150 80 95 150 95 C215 95 235 150 215 186" fill="none" stroke="#172033" stroke-width="2.4" marker-end="url(#arrow)"/>
+    <text x="116" y="83" font-size="14" font-weight="700">X=0</text>
+    <path d="M808 320 C860 275 860 385 814 378" fill="none" stroke="#172033" stroke-width="2.4" marker-end="url(#arrow)"/>
+    <text x="835" y="322" font-size="14" font-weight="700">X=1</text>
+    <path d="M50 215 L103 215" fill="none" stroke="#172033" stroke-width="2.4" marker-end="url(#arrow)"/>
+    <text x="36" y="203" font-size="14" font-weight="700">rst=1</text>
+  </g>
+</svg>

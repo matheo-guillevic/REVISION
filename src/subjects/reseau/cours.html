@@ -154,6 +154,102 @@
               <p>Le codage Hamming 7,4 envoie 4 bits utiles et 3 bits de controle. Le syndrome indique la position d'un bit errone, ce qui permet de corriger une erreur simple.</p>
             </div>
           </div>
+
+          <div class="content-block neutral">
+            <h4>Exemple a la main : Hamming 7,4</h4>
+            <p>On code le mot utile \(1011\) avec une parite paire. Les positions \(1\), \(2\) et \(4\) portent les bits de controle ; les positions \(3\), \(5\), \(6\), \(7\) portent les donnees.</p>
+            <div class="latex-table-wrap">
+              <table class="latex-table">
+                <tr>
+                  <td>Position</td>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td>4</td>
+                  <td>5</td>
+                  <td>6</td>
+                  <td>7</td>
+                </tr>
+                <tr>
+                  <td>Role</td>
+                  <td>\(p_1\)</td>
+                  <td>\(p_2\)</td>
+                  <td>\(d_1\)</td>
+                  <td>\(p_4\)</td>
+                  <td>\(d_2\)</td>
+                  <td>\(d_3\)</td>
+                  <td>\(d_4\)</td>
+                </tr>
+                <tr>
+                  <td>Valeur</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>1</td>
+                </tr>
+              </table>
+            </div>
+            <ol class="solution-steps">
+              <li>Placer les donnees : \(d_1=1\), \(d_2=0\), \(d_3=1\), \(d_4=1\), donc les cases \(3,5,6,7\) valent \(1,0,1,1\).</li>
+              <li>Calculer \(p_1\) sur les positions \(1,3,5,7\) : pour que \(p_1,1,0,1\) ait une parite paire, il faut \(p_1=0\).</li>
+              <li>Calculer \(p_2\) sur les positions \(2,3,6,7\) : pour que \(p_2,1,1,1\) ait une parite paire, il faut \(p_2=1\).</li>
+              <li>Calculer \(p_4\) sur les positions \(4,5,6,7\) : pour que \(p_4,0,1,1\) ait une parite paire, il faut \(p_4=0\).</li>
+              <li>Le mot transmis est donc <span class="formula-chip">\(0110011\)</span>.</li>
+            </ol>
+            <p>Si le recepteur lit \(0110111\), les tests donnent \(s_1=1\), \(s_2=0\), \(s_4=1\). Le syndrome \(s_4s_2s_1=101_2=5\) designe la position 5 : on inverse ce bit et on retrouve \(0110011\).</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Exemple a la main : Huffman</h4>
+              <p>On veut coder 10 symboles avec les frequences \(A:6\), \(B:2\), \(C:1\), \(D:1\).</p>
+              <ol class="solution-steps">
+                <li>Trier les poids : \(C=1\), \(D=1\), \(B=2\), \(A=6\).</li>
+                <li>Fusionner les deux plus petits : \(C+D=2\).</li>
+                <li>Fusionner \(B=2\) avec \((C,D)=2\) : on obtient un bloc de poids 4.</li>
+                <li>Fusionner ce bloc avec \(A=6\) : l'arbre est termine.</li>
+                <li>En mettant 0 a gauche et 1 a droite, un code possible est \(A=0\), \(B=10\), \(C=110\), \(D=111\).</li>
+              </ol>
+              <p>Pour \(AAAAAABBCD\), on obtient \(0000001010110111\), soit 16 bits. Avec un code fixe sur 4 symboles, il faudrait \(10\times2=20\) bits.</p>
+            </div>
+            <div class="content-block theorem">
+              <h4>Exemple a la main : LZ78</h4>
+              <p>On compresse \(ABABABA\). Le dictionnaire commence vide ; chaque sortie est un couple \((index, symbole)\), ou \(index=0\) designe le mot vide.</p>
+              <div class="latex-table-wrap">
+                <table class="latex-table">
+                  <tr>
+                    <td>Lecture</td>
+                    <td>Sortie</td>
+                    <td>Nouvelle entree</td>
+                  </tr>
+                  <tr>
+                    <td>\(A\)</td>
+                    <td>\((0,A)\)</td>
+                    <td>1 : \(A\)</td>
+                  </tr>
+                  <tr>
+                    <td>\(B\)</td>
+                    <td>\((0,B)\)</td>
+                    <td>2 : \(B\)</td>
+                  </tr>
+                  <tr>
+                    <td>\(AB\)</td>
+                    <td>\((1,B)\)</td>
+                    <td>3 : \(AB\)</td>
+                  </tr>
+                  <tr>
+                    <td>\(ABA\)</td>
+                    <td>\((3,A)\)</td>
+                    <td>4 : \(ABA\)</td>
+                  </tr>
+                </table>
+              </div>
+              <p>La sortie compressee est donc <span class="formula-chip">\((0,A),(0,B),(1,B),(3,A)\)</span>. Pour decoder, on reconstruit le meme dictionnaire dans le meme ordre.</p>
+            </div>
+          </div>
         </section>
 
         <section id="reseau-couche2" class="page-section">

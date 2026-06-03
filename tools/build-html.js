@@ -9,6 +9,7 @@ const mathExamDir = path.join(root, "src", "subjects", "probabilites", "exam");
 const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
 const autoTdDir = path.join(root, "src", "subjects", "auto", "td");
 const elecCoursePath = path.join(root, "src", "subjects", "elec", "cours.html");
+const elecExamDir = path.join(root, "src", "subjects", "elec", "exam");
 const javaCoursePath = path.join(root, "src", "subjects", "java", "cours.html");
 const reseauCoursePath = path.join(root, "src", "subjects", "reseau", "cours.html");
 const javaExamDir = path.join(root, "src", "subjects", "java", "exam");
@@ -27,7 +28,7 @@ const pages = {
 };
 
 const mathNav = [
-  ["math.html#probabilites", "Accueil"],
+  ["math.html#probabilites", "Intro"],
   ["math.html#probabilites-programme", "Programme"],
   ["math.html#probabilites-chap1", "1. Denombrement"],
   ["math.html#probabilites-chap2", "2. Espaces probabilises"],
@@ -40,7 +41,7 @@ const mathNav = [
 ];
 
 const javaNav = [
-  ["java.html#java-intro", "Accueil"],
+  ["java.html#java-intro", "Intro"],
   ["java.html#java-bases", "1. Bases"],
   ["java.html#java-collections", "2. Collections"],
   ["java.html#java-objet", "3. Objet"],
@@ -51,7 +52,7 @@ const javaNav = [
 ];
 
 const vhdlNav = [
-  ["vhdl.html#vhdl-intro", "Accueil"],
+  ["vhdl.html#vhdl-intro", "Intro"],
   ["vhdl.html#vhdl-cm1", "1. Introduction"],
   ["vhdl.html#vhdl-cm2", "2. Nombres"],
   ["vhdl.html#vhdl-cm3", "3. Combinatoire"],
@@ -65,17 +66,18 @@ const vhdlNav = [
 ];
 
 const elecNav = [
-  ["elec.html#elec-intro", "Accueil"],
+  ["elec.html#elec-intro", "Intro"],
   ["elec.html#elec-quadripoles", "1. Quadripoles"],
   ["elec.html#elec-filtres", "2. Filtres"],
   ["elec.html#elec-amplis", "3. Amplis"],
   ["elec.html#elec-oscillateurs", "4. Oscillateurs"],
+  ["elec.html#elec-exams", "Examens"],
   ["elec.html#elec-revision", "Revision"],
   ["elec.html#elec-pdfs", "PDF"],
 ];
 
 const reseauNav = [
-  ["reseau.html#reseau-intro", "Accueil"],
+  ["reseau.html#reseau-intro", "Intro"],
   ["reseau.html#reseau-bases", "Bases"],
   ["reseau.html#reseau-osi", "Modele OSI"],
   ["reseau.html#reseau-couche1", "Couche 1"],
@@ -261,12 +263,7 @@ function renderAutoCourse() {
   const nav = renderNav(
     [
       ["index.html", "Accueil"],
-      ["math.html", "Cours de math"],
-      ["elec.html", "Electronique"],
-      ["java.html", "Java"],
-      ["reseau.html", "Reseaux"],
-      ["vhdl.html", "VHDL"],
-      ["#auto-intro", "Automatique"],
+      ["#auto-intro", "Intro"],
       ["#auto-modelisation", "Modelisation"],
       ["#auto-analyse", "Analyse"],
       ["#auto-commande", "Commande"],
@@ -294,7 +291,7 @@ function renderAutoCourse() {
 
 function renderElecCourse() {
   const course = read(elecCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["java.html", "Java"], ["reseau.html", "Reseaux"], ["vhdl.html", "VHDL"], ...elecNav], "elec.html#elec-intro");
+  const nav = renderNav([["index.html", "Accueil"], ...elecNav], "elec.html#elec-intro");
 
   return renderShell({
     title: "Electronique EP361 - Revision ESISAR",
@@ -312,7 +309,7 @@ function renderElecCourse() {
 
 function renderJavaCourse() {
   const course = read(javaCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["reseau.html", "Reseaux"], ["vhdl.html", "VHDL"], ...javaNav], "java.html#java-intro");
+  const nav = renderNav([["index.html", "Accueil"], ...javaNav], "java.html#java-intro");
 
   return renderShell({
     title: "Java - Revision ESISAR",
@@ -329,7 +326,7 @@ function renderJavaCourse() {
 
 function renderReseauCourse() {
   const course = read(reseauCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["java.html", "Java"], ["vhdl.html", "VHDL"], ...reseauNav], "reseau.html#reseau-intro");
+  const nav = renderNav([["index.html", "Accueil"], ...reseauNav], "reseau.html#reseau-intro");
 
   return renderShell({
     title: "Reseaux IN363 - Revision ESISAR",
@@ -347,7 +344,7 @@ function renderReseauCourse() {
 
 function renderVhdlCourse() {
   const course = read(vhdlCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["java.html", "Java"], ["reseau.html", "Reseaux"], ...vhdlNav], "vhdl.html#vhdl-intro");
+  const nav = renderNav([["index.html", "Accueil"], ...vhdlNav], "vhdl.html#vhdl-intro");
 
   return renderShell({
     title: "VHDL SN361 - Revision ESISAR",
@@ -392,6 +389,12 @@ if (fs.existsSync(autoTdDir)) {
 if (fs.existsSync(mathExamDir)) {
   for (const file of fs.readdirSync(mathExamDir).filter((entry) => entry.endsWith(".html"))) {
     fs.copyFileSync(path.join(mathExamDir, file), path.join(outDir, file));
+  }
+}
+
+if (fs.existsSync(elecExamDir)) {
+  for (const file of fs.readdirSync(elecExamDir).filter((entry) => entry.endsWith(".html"))) {
+    fs.copyFileSync(path.join(elecExamDir, file), path.join(outDir, file));
   }
 }
 

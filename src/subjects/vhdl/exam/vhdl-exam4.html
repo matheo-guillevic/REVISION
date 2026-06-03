@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Examen VHDL 4 - VHDL</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="vhdl.html#vhdl-exams">Retour aux examens VHDL</a>
+        <div>
+          <span class="eyebrow">SN360 - Examen 4</span>
+          <h1>Correction examen VHDL 2026</h1>
+          <p>Complement a 2, chronogrammes, traduction Verilog vers VHDL, analyse d'une PWM et FSM de Moore.</p>
+          <p>Page construite depuis <code>pdf/vhdl/exam/vhdl-exam4.tex</code>, avec chronogrammes et diagrammes ajoutes dans <code>assets/vhdl/exam</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/vhdl/exam/vhdl-exam4.tex">Ouvrir le sujet LaTeX</a>
+          <a class="back-link" href="vhdl.html">Cours VHDL</a>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Partie I</span>
+              <h3>Questions de cours</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+
+          <div class="answer-block">
+            <h4>1.1 Type VHDL pour les vecteurs signes et calcul de \(-6 \times 7\)</h4>
+            <p>Pour faire de l'arithmetique signee normalisee sur des vecteurs binaires en complement a 2, il faut utiliser le type <code>signed</code> du paquetage <code>ieee.numeric_std</code>.</p>
+            <pre class="code-block language-vhdl"><code>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</code></pre>
+            <p>Sur 4 bits, \(7=0111_2\). Pour \(-6\), on part de \(6=0110_2\), on inverse puis on ajoute 1 : \(1001+1=1010_2\).</p>
+            <p>Le resultat doit etre conserve sur 8 bits. En decimal, \(-6 \times 7=-42\). Le codage de \(42\) sur 8 bits vaut \(00101010_2\). Son complement a 2 vaut :</p>
+            <p><span class="formula-chip">\(00101010 \rightarrow 11010101+1=11010110\)</span></p>
+            <p>Donc le resultat attendu est <span class="formula-chip">\(11010110_2=-42\)</span>.</p>
+
+            <h4>1.2 Chronogramme de l'affectation avec <code>after</code></h4>
+            <pre class="code-block language-vhdl"><code>S &lt;= '0', '1' after 10 ns, '0' after 25 ns, '1' after 30 ns;</code></pre>
+            <figure class="system-diagram td-figure" aria-label="Chronogramme du signal S">
+              <img src="assets/vhdl/exam/vhdl-exam4-signal-s.svg" alt="Chronogramme de S : 0, puis 1 a 10 ns, 0 a 25 ns, 1 a 30 ns." loading="lazy">
+              <figcaption class="diagram-caption">Chaque date indique un evenement programme par rapport a \(t=0\).</figcaption>
+            </figure>
+
+            <h4>1.3 Effet de <code>wait;</code> dans un process</h4>
+            <ul class="formula-list">
+              <li>Avec <code>wait;</code> inconditionnel : le processus s'execute une fois puis reste bloque pour toujours. C'est classique dans un testbench.</li>
+              <li>Sans <code>wait</code> et sans liste de sensibilite : le process boucle immediatement en cycles delta, sans faire avancer le temps de simulation.</li>
+            </ul>
+
+            <h4>1.4 Ordre des processus</h4>
+            <p>L'ordre d'ecriture des processus dans le fichier VHDL n'a pas d'importance. Les processus sont concurrents : ils representent des blocs materiels qui existent en meme temps. En simulation, un processus est reveille par les evenements des signaux presents dans sa liste de sensibilite, puis ses instructions internes s'executent sequentiellement.</p>
+
+            <h4>1.5 Traductions Verilog vers VHDL</h4>
+            <p>Affectation continue :</p>
+            <pre class="code-block language-vhdl"><code>x &lt;= a and b and c;</code></pre>
+            <p>Multiplexeur combinatoire :</p>
+            <pre class="code-block language-vhdl"><code>process(ad, e0, e1, e2, e3)
+begin
+  case ad is
+    when "00" =&gt; s &lt;= e0;
+    when "01" =&gt; s &lt;= e1;
+    when "10" =&gt; s &lt;= e2;
+    when others =&gt; s &lt;= e3;
+  end case;
+end process;</code></pre>
+            <p>Verrou combinatoire volontaire, car il n'y a pas de <code>else</code> :</p>
+            <pre class="code-block language-vhdl"><code>process(c, d)
+begin
+  if c = '1' then
+    q &lt;= d;
+  end if;
+end process;</code></pre>
+            <p>Registre a decalage SISO/SIPO :</p>
+            <pre class="code-block language-vhdl"><code>library ieee;
+use ieee.std_logic_1164.all;
+
+entity SISO_SIPO is
+  port (
+    clk, d : in std_logic;
+    s      : out std_logic;
+    q      : out std_logic_vector(4 downto 1)
+  );
+end entity;
+
+architecture rtl of SISO_SIPO is
+  signal q_t : std_logic_vector(4 downto 1);
+begin
+  process(clk)
+  begin
+    if rising_edge(clk) then
+      q_t &lt;= q_t(3 downto 1) &amp; d;
+    end if;
+  end process;
+
+  q &lt;= q_t;
+  s &lt;= q_t(4);
+end architecture;</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Partie II</span>
+              <h3>Analyse d'une description VHDL : PWM</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+
+          <div class="answer-block">
+            <h4>Architecture analysee</h4>
+            <p>L'architecture correspond a un compteur 4 bits et a une sortie tamponnee. Le reset du sujet est asynchrone, car il est teste avant le front d'horloge.</p>
+            <pre class="code-block language-vhdl"><code>architecture rtl of hidden is
+  signal r   : unsigned(3 downto 0);
+  signal buf : std_logic;
+begin
+  process(clk, reset)
+  begin
+    if reset = '1' then
+      r   &lt;= (others =&gt; '0');
+      buf &lt;= '0';
+    elsif rising_edge(clk) then
+      r &lt;= r + 1;
+      if (r &lt; unsigned(w)) or (w = "0000") then
+        buf &lt;= '1';
+      else
+        buf &lt;= '0';
+      end if;
+    end if;
+  end process;
+
+  pulse &lt;= buf;
+end architecture;</code></pre>
+
+            <h4>2.1 Reset synchrone ou asynchrone ?</h4>
+            <p>Il est asynchrone. La condition <code>reset = '1'</code> est evaluee directement dans le process, avant le test <code>rising_edge(clk)</code>. Le circuit peut donc etre remis a zero sans attendre un front montant.</p>
+
+            <h4>2.2 Version avec reset synchrone</h4>
+            <pre class="code-block language-vhdl"><code>process(clk)
+begin
+  if rising_edge(clk) then
+    if reset = '1' then
+      r   &lt;= (others =&gt; '0');
+      buf &lt;= '0';
+    else
+      r &lt;= r + 1;
+      if (r &lt; unsigned(w)) or (w = "0000") then
+        buf &lt;= '1';
+      else
+        buf &lt;= '0';
+      end if;
+    end if;
+  end if;
+end process;</code></pre>
+
+            <h4>2.3 Bibliotheques et entite</h4>
+            <pre class="code-block language-vhdl"><code>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity hidden is
+  port (
+    clk, reset : in std_logic;
+    w          : in std_logic_vector(3 downto 0);
+    pulse      : out std_logic
+  );
+end entity;</code></pre>
+
+            <h4>2.4 Testbench pour deux valeurs de \(w\)</h4>
+            <p>Comme \(r\) est sur 4 bits, un tour complet dure 16 cycles. Avec une periode d'horloge de 10 ns, il faut garder chaque valeur de \(w\) au moins 160 ns.</p>
+            <pre class="code-block language-vhdl"><code>library ieee;
+use ieee.std_logic_1164.all;
+
+entity tb_hidden is
+end entity;
+
+architecture sim of tb_hidden is
+  signal clk, reset : std_logic := '0';
+  signal w          : std_logic_vector(3 downto 0) := "0000";
+  signal pulse      : std_logic;
+begin
+  uut: entity work.hidden port map(clk, reset, w, pulse);
+
+  clk &lt;= not clk after 5 ns;
+
+  process
+  begin
+    reset &lt;= '1';
+    wait for 15 ns;
+    reset &lt;= '0';
+
+    w &lt;= "0011";
+    wait for 160 ns;
+
+    w &lt;= "0110";
+    wait for 160 ns;
+
+    wait;
+  end process;
+end architecture;</code></pre>
+
+            <h4>2.5 Chronogramme de simulation</h4>
+            <figure class="system-diagram td-figure" aria-label="Chronogramme PWM">
+              <img src="assets/vhdl/exam/vhdl-exam4-pwm.svg" alt="Chronogramme de la PWM avec w egal a 3 puis w egal a 6." loading="lazy">
+              <figcaption class="diagram-caption">La periode de <code>pulse</code> vaut 16 cycles ; son etat haut dure \(w\) cycles.</figcaption>
+            </figure>
+
+            <h4>2.6 Nombre de bascules synthetisees</h4>
+            <p>Il y a 5 bascules : 4 pour le registre <code>r</code> de type <code>unsigned(3 downto 0)</code>, et 1 pour <code>buf</code>. Le signal <code>pulse</code> est seulement une affectation concurrente de <code>buf</code>, donc un fil.</p>
+
+            <h4>2.7 Fonction realisee</h4>
+            <p>Cette architecture realise un generateur PWM, ou modulation de largeur d'impulsion. Le compteur \(r\) donne une periode fixe de 16 cycles ; \(w\) fixe le rapport cyclique. Plus \(w\) est grand, plus <code>pulse</code> reste haut longtemps. Cas particulier : si \(w=0\), la condition <code>w = "0000"</code> force <code>pulse</code> a 1.</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Partie III</span>
+              <h3>Machine a etats de Moore</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+
+          <div class="answer-block">
+            <h4>3.1 Diagramme de transitions</h4>
+            <p>La machine doit detecter le passage \(0 \rightarrow 1\) de \(X\), mettre \(Y=1\) pendant deux cycles, puis attendre que \(X\) retombe a 0 avant de pouvoir redemarrer.</p>
+            <figure class="system-diagram td-figure" aria-label="Diagramme de transitions FSM">
+              <img src="assets/vhdl/exam/vhdl-exam4-fsm.svg" alt="FSM de Moore a quatre etats S0, S1, S2 et S3." loading="lazy">
+              <figcaption class="diagram-caption">Les sorties sont portees par les etats, car c'est une machine de Moore.</figcaption>
+            </figure>
+
+            <h4>3.2 Chronogramme</h4>
+            <p>La sortie reagit au front d'horloge qui suit la montee de \(X\), puis reste a 1 pendant les etats \(S1\) et \(S2\).</p>
+            <figure class="system-diagram td-figure" aria-label="Chronogramme FSM">
+              <img src="assets/vhdl/exam/vhdl-exam4-fsm-chrono.svg" alt="Chronogramme de clk, rst, X, etat et Y pour la FSM." loading="lazy">
+              <figcaption class="diagram-caption">Si \(X\) reste a 1 apres les deux cycles, la FSM attend en \(S3\).</figcaption>
+            </figure>
+
+            <h4>3.3 Code VHDL complet</h4>
+            <pre class="code-block language-vhdl"><code>library ieee;
+use ieee.std_logic_1164.all;
+
+entity edge_fsm is
+  port (
+    clk : in std_logic;
+    rst : in std_logic;
+    X   : in std_logic;
+    Y   : out std_logic
+  );
+end entity;
+
+architecture rtl of edge_fsm is
+  type state_t is (S0, S1, S2, S3);
+  signal state, next_state : state_t;
+begin
+  process(clk)
+  begin
+    if rising_edge(clk) then
+      if rst = '1' then
+        state &lt;= S0;
+      else
+        state &lt;= next_state;
+      end if;
+    end if;
+  end process;
+
+  process(state, X)
+  begin
+    next_state &lt;= state;
+    Y &lt;= '0';
+
+    case state is
+      when S0 =&gt;
+        if X = '1' then
+          next_state &lt;= S1;
+        end if;
+
+      when S1 =&gt;
+        Y &lt;= '1';
+        next_state &lt;= S2;
+
+      when S2 =&gt;
+        Y &lt;= '1';
+        if X = '1' then
+          next_state &lt;= S3;
+        else
+          next_state &lt;= S0;
+        end if;
+
+      when S3 =&gt;
+        if X = '0' then
+          next_state &lt;= S0;
+        end if;
+    end case;
+  end process;
+end architecture;</code></pre>
+
+            <h4>3.4 Nombre minimal de bascules</h4>
+            <p>La FSM possede 4 etats. Le nombre minimal de bits pour coder 4 etats est :</p>
+            <p><span class="formula-chip">\(n=\lceil \log_2(4)\rceil=2\)</span></p>
+            <p>Il faut donc au minimum 2 bascules pour le registre d'etat, en supposant un codage binaire dense.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

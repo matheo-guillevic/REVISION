@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="230" viewBox="0 0 920 230" role="img" aria-labelledby="title desc">
+  <title id="title">Chronogramme du signal S</title>
+  <desc id="desc">S vaut 0 de 0 a 10 ns, 1 de 10 a 25 ns, 0 de 25 a 30 ns, puis 1.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#172033"/>
+    </marker>
+  </defs>
+  <rect width="920" height="230" fill="#ffffff"/>
+  <g font-family="Inter, Arial, sans-serif" fill="#172033">
+    <text x="34" y="34" font-size="18" font-weight="700">S &lt;= '0', '1' after 10 ns, '0' after 25 ns, '1' after 30 ns;</text>
+    <line x1="90" y1="170" x2="840" y2="170" stroke="#172033" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="846" y="176" font-size="14">t</text>
+    <line x1="120" y1="55" x2="120" y2="180" stroke="#667085" stroke-width="1.4"/>
+    <line x1="300" y1="55" x2="300" y2="180" stroke="#667085" stroke-width="1.4" stroke-dasharray="5 5"/>
+    <line x1="570" y1="55" x2="570" y2="180" stroke="#667085" stroke-width="1.4" stroke-dasharray="5 5"/>
+    <line x1="660" y1="55" x2="660" y2="180" stroke="#667085" stroke-width="1.4" stroke-dasharray="5 5"/>
+    <text x="112" y="198" font-size="13">0</text>
+    <text x="281" y="198" font-size="13">10 ns</text>
+    <text x="551" y="198" font-size="13">25 ns</text>
+    <text x="641" y="198" font-size="13">30 ns</text>
+    <text x="62" y="91" font-size="15" font-weight="700">S=1</text>
+    <text x="62" y="145" font-size="15" font-weight="700">S=0</text>
+    <polyline points="120,140 300,140 300,85 570,85 570,140 660,140 660,85 810,85" fill="none" stroke="#1f5f99" stroke-width="5" stroke-linejoin="round"/>
+    <circle cx="120" cy="140" r="5" fill="#1f5f99"/>
+    <circle cx="300" cy="85" r="5" fill="#1f5f99"/>
+    <circle cx="570" cy="140" r="5" fill="#1f5f99"/>
+    <circle cx="660" cy="85" r="5" fill="#1f5f99"/>
+  </g>
+</svg>

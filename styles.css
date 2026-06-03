@@ -138,8 +138,11 @@ button,
 }
 
 .main-content {
-  margin-left: 280px;
   padding: 28px;
+}
+
+.app-shell > .main-content {
+  margin-left: 280px;
 }
 
 .topbar {
@@ -645,8 +648,8 @@ button:hover,
 
 .td-page .main-content {
   max-width: 1120px;
-  margin-left: auto;
   margin-right: auto;
+  margin-left: auto;
 }
 
 .td-header {
@@ -890,6 +893,7 @@ button:hover,
     grid-auto-columns: max-content;
   }
 
+  .app-shell > .main-content,
   .main-content {
     margin-left: 0;
     padding: 20px;
