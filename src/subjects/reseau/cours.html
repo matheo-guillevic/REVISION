@@ -1,0 +1,352 @@
+        <section id="reseau-intro" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">IN363</span>
+            <h2>Cours reseaux</h2>
+            <p>
+              Cette page reprend le support <code>pdf/reseau/cours/IN363_Reseau_3app_V4_2.pdf</code> :
+              bases de calcul, modele OSI, couches basses, Ethernet, adressage IP, protocoles de resolution,
+              transport TCP/UDP et premiers protocoles applicatifs.
+            </p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="progress-card">
+              <span class="card-kicker">Objectif</span>
+              <strong>IN363</strong>
+              <p>Comprendre comment une donnee devient une trame, traverse un reseau, puis remonte vers une application.</p>
+            </article>
+            <article class="priority-card">
+              <span class="card-kicker">Priorites de revision</span>
+              <ol class="ordered-list">
+                <li>Revoir les conversions binaire, decimal et hexadecimal.</li>
+                <li>Savoir replacer MAC, IP, TCP/UDP, ARP et HTTP dans les bonnes couches.</li>
+                <li>Lire une trame Ethernet et identifier source, destination, donnees et controle.</li>
+                <li>Calculer reseau, hote et masque par operation ET binaire.</li>
+              </ol>
+            </article>
+          </div>
+
+          <div class="quick-grid">
+            <a class="quick-link" href="#reseau-bases">Bases</a>
+            <a class="quick-link" href="#reseau-osi">OSI</a>
+            <a class="quick-link" href="#reseau-couche1">Couche 1</a>
+            <a class="quick-link" href="#reseau-couche2">Couche 2</a>
+            <a class="quick-link" href="#reseau-couche3">Couche 3</a>
+            <a class="quick-link" href="#reseau-transport">Transport</a>
+            <a class="quick-link" href="#reseau-revision">Fiche finale</a>
+            <a class="quick-link" href="#reseau-pdfs">PDF</a>
+          </div>
+
+          <figure class="system-diagram" aria-label="Synthese de la pile reseau IN363">
+            <img src="assets/reseau/pile-reseau.svg" alt="Pile reseau simplifiee : application, transport, IP, Ethernet et physique." loading="lazy">
+            <figcaption class="diagram-caption">Reflexe central : chaque couche ajoute ou interprete une information differente autour des donnees utiles.</figcaption>
+          </figure>
+        </section>
+
+        <section id="reseau-bases" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Prelude</span>
+            <h2>Calcul en bases 2, 10 et 16</h2>
+            <p>Le numerique manipule des bits. L'hexadecimal sert de notation compacte : un chiffre hexa represente exactement 4 bits.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Correspondances utiles</h4>
+              <ul class="formula-list">
+                <li>Base 2 : chiffres \(0\) et \(1\), poids \(2^n\).</li>
+                <li>Base 10 : chiffres \(0\) a \(9\), poids \(10^n\).</li>
+                <li>Base 16 : chiffres \(0\) a \(9\), puis \(A=10\) a \(F=15\).</li>
+                <li>Un octet vaut 8 bits, donc 2 chiffres hexadecimaux.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Methode de conversion</h4>
+              <ol class="solution-steps">
+                <li>Pour decimal vers binaire : decomposer en puissances de 2 ou diviser successivement par 2.</li>
+                <li>Pour binaire vers decimal : sommer les bits actifs avec leur poids.</li>
+                <li>Pour binaire vers hexa : grouper les bits par paquets de 4 depuis la droite.</li>
+                <li>Pour hexa vers binaire : remplacer chaque chiffre par son quartet de bits.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Exemples du cours</h4>
+              <ul class="formula-list">
+                <li>\(17_{10}=10001_2=11_{16}\).</li>
+                <li>\(1A_{16}=26_{10}=00011010_2\).</li>
+                <li>\(10001101_2=8D_{16}=141_{10}\).</li>
+              </ul>
+            </div>
+            <div class="content-block remember">
+              <h4>Pourquoi c'est partout</h4>
+              <p>Les adresses MAC, IPv6, champs de trames et captures Wireshark sont souvent lus en hexadecimal. Savoir repasser aux bits permet de verifier masques, tailles et controles.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="reseau-osi" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 1</span>
+            <h2>Modele OSI</h2>
+            <p>Le modele OSI separe une communication en couches. Le cours insiste surtout sur les couches basses, celles qui rendent le transfert possible.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Lecture par couches</h4>
+              <ul class="formula-list">
+                <li>Couche 1 : support physique et signaux.</li>
+                <li>Couche 2 : liaison locale, adresses MAC et trames.</li>
+                <li>Couche 3 : reseau, adressage IP et acheminement.</li>
+                <li>Couche 4 : transport, fiabilite ou rapidite selon TCP/UDP.</li>
+                <li>Couches hautes : session, presentation, application.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Encapsulation</h4>
+              <p>Une application produit une donnee. En descendant la pile, chaque couche ajoute son en-tete : segment TCP/UDP, paquet IP, trame Ethernet, puis signal physique.</p>
+              <p>En reception, les couches retirent et interpretent ces informations dans l'ordre inverse.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="reseau-couche1" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 2</span>
+            <h2>Couche 1 et niveau 1.5</h2>
+            <p>La couche physique transporte des bits sur cuivre, fibre optique ou ondes radio. Le support ajoute un niveau pratique sur compression et verification.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Supports physiques</h4>
+              <ul class="formula-list">
+                <li>Cuivre : paire torsadee, connecteur RJ45, signaux electriques.</li>
+                <li>Fibre : impulsions lumineuses emises par diode et recues par photodiode.</li>
+                <li>Air : Wi-Fi, 4G et propagation d'ondes.</li>
+                <li>Cables sous-marins : support essentiel des transferts intercontinentaux.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Compression</h4>
+              <ul class="formula-list">
+                <li>Sans perte : les donnees initiales sont reconstruisibles exactement.</li>
+                <li>Avec perte : une partie de l'information est supprimee pour gagner en taille.</li>
+                <li>LZ78 construit un dictionnaire de motifs deja vus et remplace des repetitions par des references.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Verification d'erreur</h4>
+              <ul class="formula-list">
+                <li>Un checksum ou CRC detecte qu'une trame a probablement ete alteree.</li>
+                <li>La detection signale un probleme, elle ne corrige pas toujours la donnee.</li>
+                <li>Le FCS Ethernet en fin de trame joue ce role de controle.</li>
+              </ul>
+            </div>
+            <div class="content-block remember">
+              <h4>Hamming 7,4</h4>
+              <p>Le codage Hamming 7,4 envoie 4 bits utiles et 3 bits de controle. Le syndrome indique la position d'un bit errone, ce qui permet de corriger une erreur simple.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="reseau-couche2" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 2</span>
+            <h2>Couche 2 : MAC, Ethernet et trames</h2>
+            <p>La couche liaison gere la communication locale. Elle s'appuie sur les adresses MAC et sur le format de trame Ethernet.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Adresse MAC</h4>
+              <ul class="formula-list">
+                <li>Adresse physique d'une interface reseau, differente d'une adresse IP.</li>
+                <li>Longueur : 6 octets, souvent notes en hexadecimal.</li>
+                <li>Les 3 premiers octets identifient le constructeur, les 3 suivants l'interface.</li>
+                <li>Elle peut parfois etre modifiee logiciellement, avec risque de refus sur certains reseaux.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>Trame Ethernet</h4>
+              <ul class="formula-list">
+                <li>Debut : adresse MAC destination puis adresse MAC source.</li>
+                <li>Donnees : charge utile, eventuellement completee par du bourrage.</li>
+                <li>Fin : FCS, controle d'erreur base sur un CRC.</li>
+                <li>Wireshark permet d'observer ces champs dans des captures reelles.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-block method">
+            <h4>Lire une trame en revision</h4>
+            <ol class="solution-steps">
+              <li>Prendre les 6 premiers octets : MAC destinataire.</li>
+              <li>Prendre les 6 octets suivants : MAC source.</li>
+              <li>Identifier le type ou la longueur selon la trame.</li>
+              <li>Regarder la charge utile, puis verifier la presence du controle FCS.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section id="reseau-couche3" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Chapitre 3</span>
+            <h2>Couche 3 : reseaux, IP et resolution</h2>
+            <p>La couche reseau adresse les machines et choisit comment joindre un autre reseau. IP livre des paquets sans connexion et sans garantie absolue.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Types et topologies</h4>
+              <ul class="formula-list">
+                <li>LAN : reseau local, maison, salle, batiment ou entreprise.</li>
+                <li>VLAN : regroupement logique independant de la position physique.</li>
+                <li>MAN : reseau a l'echelle d'une ville ou d'un campus.</li>
+                <li>WAN : reseau etendu, jusqu'a Internet.</li>
+                <li>Topologies : etoile, bus, anneau, maille.</li>
+              </ul>
+            </div>
+            <div class="content-block theorem">
+              <h4>IPv4 et masques</h4>
+              <ul class="formula-list">
+                <li>IPv4 : 4 octets, par exemple \(192.168.1.2\).</li>
+                <li>Le masque separe partie reseau et partie hote.</li>
+                <li>Bits du masque a 1 : partie reseau.</li>
+                <li>Bits du masque a 0 : partie machine.</li>
+                <li>Adresse reseau : <span class="formula-chip">\(IP \; ET \; masque\)</span>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Exemple masque</h4>
+              <p>Avec \(192.168.1.2\) et \(255.255.255.0\), les 24 premiers bits sont le reseau.</p>
+              <p><span class="formula-chip">reseau = 192.168.1.0</span></p>
+              <p><span class="formula-chip">hote = 0.0.0.2</span></p>
+            </div>
+            <div class="content-block remember">
+              <h4>IPv6</h4>
+              <p>IPv6 repond a la limite d'adresses IPv4. L'adresse passe a 16 octets et s'ecrit en groupes hexadecimaux separes par des deux-points.</p>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>ARP et RARP</h4>
+              <ul class="formula-list">
+                <li>ARP retrouve une adresse MAC a partir d'une adresse IP sur le reseau local.</li>
+                <li>La requete ARP est diffusee ; la machine visee repond avec sa MAC.</li>
+                <li>RARP fait l'inverse pour une machine qui connait sa MAC mais pas son IP.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>BOOTP et DHCP</h4>
+              <ul class="formula-list">
+                <li>BOOTP fournit des informations de demarrage via UDP/IP.</li>
+                <li>DHCP attribue dynamiquement une adresse IP pour une duree negociee.</li>
+                <li>DHCP peut aussi transmettre routeur, serveur et options reseau.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="reseau-transport" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Couches 4 et 5</span>
+            <h2>TCP, UDP, ICMP et HTTP</h2>
+            <p>IP ne garantit pas l'arrivee parfaite des paquets. La couche transport choisit entre fiabilite forte et simplicite rapide.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>TCP</h4>
+              <ul class="formula-list">
+                <li>Connexion de bout en bout, full duplex et orientee flux d'octets.</li>
+                <li>Acquittement positif avec retransmission en cas de perte.</li>
+                <li>Fenetre d'emission pour envoyer plusieurs donnees avant les ACK.</li>
+                <li>Connexion par triple poignee de mains : SYN, SYN-ACK, ACK.</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>UDP</h4>
+              <ul class="formula-list">
+                <li>Protocole simple, sans synchronisation forte.</li>
+                <li>Envoie un datagramme et ne gere pas la retransmission.</li>
+                <li>Adapte au streaming, a la voix sur IP et aux usages tolerants aux pertes.</li>
+                <li>TCP est prefere pour mail, transfert de fichier et donnees critiques.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block warning">
+              <h4>ICMP</h4>
+              <p>ICMP signale des erreurs IP : port inaccessible, TTL expire, machine ou route indisponible. Il informe l'emetteur mais ne corrige pas le probleme.</p>
+            </div>
+            <div class="content-block remember">
+              <h4>HTTP</h4>
+              <ul class="formula-list">
+                <li>Protocole applicatif interprete par le navigateur.</li>
+                <li>Port standard : TCP 80, meme si d'autres ports sont possibles.</li>
+                <li>Une URL contient protocole, serveur et chemin de ressource.</li>
+                <li>Methodes classiques : GET, HEAD, POST.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="reseau-revision" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Revision</span>
+            <h2>Fiche finale IN363</h2>
+            <p>Les reflexes a avoir devant une question de reseau ou une capture.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block method">
+              <h4>Methode d'analyse</h4>
+              <ol class="solution-steps">
+                <li>Identifier la couche concernee : physique, liaison, reseau, transport ou application.</li>
+                <li>Reperer les adresses : MAC pour le local, IP pour le routage.</li>
+                <li>Lire les tailles en octets et convertir en hexadecimal/binaire si besoin.</li>
+                <li>Pour un masque, appliquer un ET binaire entre IP et masque.</li>
+                <li>Choisir TCP si la fiabilite prime, UDP si la latence et la simplicite priment.</li>
+              </ol>
+            </div>
+            <div class="content-block remember">
+              <h4>Questions qui tombent vite</h4>
+              <ul class="formula-list">
+                <li>Quelle est la difference entre MAC et IP ?</li>
+                <li>Qui emet et qui recoit cette trame Ethernet ?</li>
+                <li>Quelle adresse reseau correspond a cette IP et ce masque ?</li>
+                <li>Pourquoi ARP est necessaire entre IP et Ethernet ?</li>
+                <li>Dans quel cas choisir TCP plutot qu'UDP ?</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="reseau-pdfs" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Support</span>
+            <h2>PDF original</h2>
+            <p>Le support ajoute dans <code>pdf/reseau/cours</code> reste accessible directement.</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="chapter-card">
+              <span class="status-pill">IN363</span>
+              <h3>Cours reseaux</h3>
+              <p>Support complet : OSI, couches basses, Ethernet, IP, ARP, TCP/UDP, ICMP et HTTP.</p>
+              <p class="secondary-link"><a href="pdf/reseau/cours/IN363_Reseau_3app_V4_2.pdf">Ouvrir le PDF</a></p>
+            </article>
+          </div>
+        </section>

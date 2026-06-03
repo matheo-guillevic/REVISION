@@ -10,6 +10,7 @@ const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
 const autoTdDir = path.join(root, "src", "subjects", "auto", "td");
 const elecCoursePath = path.join(root, "src", "subjects", "elec", "cours.html");
 const javaCoursePath = path.join(root, "src", "subjects", "java", "cours.html");
+const reseauCoursePath = path.join(root, "src", "subjects", "reseau", "cours.html");
 const javaExamDir = path.join(root, "src", "subjects", "java", "exam");
 const vhdlCoursePath = path.join(root, "src", "subjects", "vhdl", "cours.html");
 const vhdlTdDir = path.join(root, "src", "subjects", "vhdl", "td");
@@ -21,6 +22,7 @@ const pages = {
   auto: path.join(outDir, "auto.html"),
   elec: path.join(outDir, "elec.html"),
   java: path.join(outDir, "java.html"),
+  reseau: path.join(outDir, "reseau.html"),
   vhdl: path.join(outDir, "vhdl.html"),
 };
 
@@ -70,6 +72,18 @@ const elecNav = [
   ["elec.html#elec-oscillateurs", "4. Oscillateurs"],
   ["elec.html#elec-revision", "Revision"],
   ["elec.html#elec-pdfs", "PDF"],
+];
+
+const reseauNav = [
+  ["reseau.html#reseau-intro", "Accueil"],
+  ["reseau.html#reseau-bases", "Bases"],
+  ["reseau.html#reseau-osi", "Modele OSI"],
+  ["reseau.html#reseau-couche1", "Couche 1"],
+  ["reseau.html#reseau-couche2", "Couche 2"],
+  ["reseau.html#reseau-couche3", "Couche 3"],
+  ["reseau.html#reseau-transport", "Transport"],
+  ["reseau.html#reseau-revision", "Revision"],
+  ["reseau.html#reseau-pdfs", "PDF"],
 ];
 
 function read(filePath) {
@@ -158,6 +172,7 @@ function renderHome() {
       ["auto.html", "Automatique"],
       ["elec.html", "Electronique"],
       ["java.html", "Java"],
+      ["reseau.html", "Reseaux"],
       ["vhdl.html", "VHDL"],
     ],
     "index.html"
@@ -194,6 +209,12 @@ function renderHome() {
               <h3>Java</h3>
               <p>Bases du langage, collections, approche objet, heritage, interfaces et exceptions.</p>
               <p class="secondary-link"><a href="java.html">Ouvrir le cours</a></p>
+            </article>
+            <article class="chapter-card">
+              <span class="status-pill">Disponible</span>
+              <h3>Reseaux</h3>
+              <p>Cours IN363 : modele OSI, Ethernet, IP, ARP, TCP/UDP, ICMP et HTTP.</p>
+              <p class="secondary-link"><a href="reseau.html">Ouvrir le cours</a></p>
             </article>
             <article class="chapter-card">
               <span class="status-pill">Disponible</span>
@@ -243,6 +264,7 @@ function renderAutoCourse() {
       ["math.html", "Cours de math"],
       ["elec.html", "Electronique"],
       ["java.html", "Java"],
+      ["reseau.html", "Reseaux"],
       ["vhdl.html", "VHDL"],
       ["#auto-intro", "Automatique"],
       ["#auto-modelisation", "Modelisation"],
@@ -272,7 +294,7 @@ function renderAutoCourse() {
 
 function renderElecCourse() {
   const course = read(elecCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["java.html", "Java"], ["vhdl.html", "VHDL"], ...elecNav], "elec.html#elec-intro");
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["java.html", "Java"], ["reseau.html", "Reseaux"], ["vhdl.html", "VHDL"], ...elecNav], "elec.html#elec-intro");
 
   return renderShell({
     title: "Electronique EP361 - Revision ESISAR",
@@ -290,7 +312,7 @@ function renderElecCourse() {
 
 function renderJavaCourse() {
   const course = read(javaCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["vhdl.html", "VHDL"], ...javaNav], "java.html#java-intro");
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["reseau.html", "Reseaux"], ["vhdl.html", "VHDL"], ...javaNav], "java.html#java-intro");
 
   return renderShell({
     title: "Java - Revision ESISAR",
@@ -305,9 +327,27 @@ function renderJavaCourse() {
   });
 }
 
+function renderReseauCourse() {
+  const course = read(reseauCoursePath);
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["java.html", "Java"], ["vhdl.html", "VHDL"], ...reseauNav], "reseau.html#reseau-intro");
+
+  return renderShell({
+    title: "Reseaux IN363 - Revision ESISAR",
+    brandMark: "R",
+    brandTitle: "Reseaux",
+    brandSubtitle: "IN363",
+    nav,
+    eyebrow: "Reseaux",
+    heading: "Couches reseau et protocoles",
+    cta: '<a class="primary-button" href="index.html">Accueil</a>',
+    body: course,
+    showAnnotations: true,
+  });
+}
+
 function renderVhdlCourse() {
   const course = read(vhdlCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["java.html", "Java"], ...vhdlNav], "vhdl.html#vhdl-intro");
+  const nav = renderNav([["index.html", "Accueil"], ["math.html", "Cours de math"], ["auto.html", "Automatique"], ["elec.html", "Electronique"], ["java.html", "Java"], ["reseau.html", "Reseaux"], ...vhdlNav], "vhdl.html#vhdl-intro");
 
   return renderShell({
     title: "VHDL SN361 - Revision ESISAR",
@@ -336,6 +376,7 @@ write(pages.math, renderMath());
 write(pages.auto, renderAutoCourse());
 write(pages.elec, renderElecCourse());
 write(pages.java, renderJavaCourse());
+write(pages.reseau, renderReseauCourse());
 write(pages.vhdl, renderVhdlCourse());
 
 for (const file of ["td1.html", "td2.html", "td3.html"]) {

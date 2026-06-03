@@ -20,6 +20,5 @@
   <text x="868" y="112" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#172033">Oscillateurs</text>
   <text x="868" y="148" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" fill="#334155">Barkhausen</text>
   <text x="868" y="174" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" fill="#334155">LC, quartz</text>
-  <path d="M112 276c42-82 88-82 132 0s88 82 132 0 88-82 132 0 88 82 132 0 88-82 132 0" fill="none" stroke="#1f5f99" stroke-width="5" stroke-linecap="round"/>
-  <text x="490" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f5f99">Du modele au signal analogique stable</text>
+  
 </svg>

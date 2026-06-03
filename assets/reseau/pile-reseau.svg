@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">Synthese des couches reseau du cours IN363</title>
+  <desc id="desc">Pile reseau simplifiee reliant application, transport, reseau, liaison et physique.</desc>
+  <rect width="920" height="360" rx="18" fill="#f8fafc"/>
+  <g fill="none" stroke="#cbd5e1" stroke-width="2">
+    <path d="M145 72h630"/>
+    <path d="M145 132h630"/>
+    <path d="M145 192h630"/>
+    <path d="M145 252h630"/>
+    <path d="M145 312h630"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#172033">
+    <text x="70" y="109">Donnees</text>
+    <text x="70" y="169">Segments</text>
+    <text x="70" y="229">Paquets</text>
+    <text x="70" y="289">Trames</text>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-size="20" font-weight="800">
+    <rect x="175" y="34" width="570" height="52" rx="10" fill="#fff9cf" stroke="#e7d76d"/>
+    <text x="205" y="68" fill="#172033">Couche 5+ : session et HTTP</text>
+    <rect x="175" y="94" width="570" height="52" rx="10" fill="#e8f6ef" stroke="#9fd8b8"/>
+    <text x="205" y="128" fill="#172033">Couche 4 : TCP, UDP, ICMP</text>
+    <rect x="175" y="154" width="570" height="52" rx="10" fill="#e7f1fb" stroke="#9fc4e6"/>
+    <text x="205" y="188" fill="#172033">Couche 3 : IP, masques, routage</text>
+    <rect x="175" y="214" width="570" height="52" rx="10" fill="#efedf8" stroke="#beb6e6"/>
+    <text x="205" y="248" fill="#172033">Couche 2 : MAC, Ethernet, ARP</text>
+    <rect x="175" y="274" width="570" height="52" rx="10" fill="#fff4df" stroke="#edc37a"/>
+    <text x="205" y="308" fill="#172033">Couche 1 : support, codage, erreurs</text>
+  </g>
+  <g fill="#1f5f99">
+    <path d="M800 56h56v18h-56z"/>
+    <path d="M835 34l42 31-42 31z"/>
+    <path d="M800 286h56v18h-56z"/>
+    <path d="M835 264l42 31-42 31z"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#475569">
+    <text x="774" y="36">encapsulation</text>
+    <text x="790" y="346">transmission</text>
+  </g>
+</svg>
