@@ -1,119 +1,201 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt, a4paper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{listings}
-\usepackage{xcolor}
+\usepackage{amsmath, amssymb}
 \usepackage{geometry}
-\usepackage{tikz-timing}
-\geometry{hmargin=2.5cm, vmargin=2.5cm}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{hyperref}
 
-% Configuration de l'affichage du code VHDL
-\lstset{
-    language=VHDL,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue}\bfseries,
-    commentstyle=\color{green!50!black}\itshape,
-    stringstyle=\color{red},
-    numbers=left,
-    numberstyle=\tiny\color{gray},
-    stepnumber=1,
-    frame=single,
-    breaklines=true,
-    backgroundcolor=\color{gray!5}
+% Configuration des marges
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=1.5cm,
+    right=1.5cm
 }
 
-\title{\textbf{Correction d'Examen : Architecture des Ordinateurs}}
-\author{Grenoble INP - Esisar \cite{1170} \\ Cours CE317 \cite{1173}}
-\date{Session 1 - Année 2015-2016 \cite{1175} (Durée : 180mn \cite{1172})}
+% Configuration pour les blocs de code VHDL
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    tabsize=4,
+    showstringspaces=false,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray}
+}
+
+% Commande pour les placeholders d'images
+\newcommand{\imageplaceholder}[2]{
+    \begin{center}
+        \fbox{\begin{minipage}{#1}\centering\vspace{1cm}\textit{#2}\vspace{1cm}\end{minipage}}
+    \end{center}
+}
+
+% Commande pour afficher la correction avec explication
+\newcommand{\corr}[1]{
+    \vspace{0.3cm}
+    \begin{center}
+    \fcolorbox{blue}{blue!5}{
+    \begin{minipage}{0.95\textwidth}
+    \color{blue} \textbf{Correction \& Raisonnement :} \\
+    #1
+    \end{minipage}}
+    \end{center}
+    \vspace{0.3cm}
+}
 
 \begin{document}
 
-\maketitle
+% ==================== EN-TÊTE ====================
+\noindent
+\begin{tabularx}{\textwidth}{@{}X c r@{}}
+\textbf{SN361} & \textbf{Session 1} & \textbf{Documents selon sujet} \\
+\textbf{VHDL} & \textbf{Examen} & \textbf{Calculatrice selon sujet} \\
+\end{tabularx}
+\vspace{0.2cm}
+\hrule
+\vspace{0.4cm}
 
-\section*{Partie I : Partie cours [34/90] \cite{1183}}
+% ==================== PROBLÈME I ====================
+\begin{center}
+    \textbf{\Large Problème I - Partie cours - 34 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
 
-\subsection*{Question 1.1 \cite{1184}}
-\textbf{Énoncé :} Codez en virgule fixe avec le minimum de bits 511,75 [6] \cite{1184}.
+\noindent \textbf{1.1} Codez en virgule fixe avec le minimum de bits 511,75 [6].
 
-\textbf{Correction et Explications :}
-Pour coder un nombre en virgule fixe, on convertit séparément la partie entière et la partie décimale en binaire.
-\begin{itemize}
-    \item \textbf{Partie entière (511)} : On sait que $2^9 = 512$, donc $511 = 2^9 - 1$. En binaire, 511 s'écrit avec 9 bits à '1' : $111111111_2$.
-    \item \textbf{Partie décimale (0,75)} : $0,75 = 0,5 + 0,25 = 2^{-1} + 2^{-2}$. En binaire, cela s'écrit $0,11_2$.
-\end{itemize}
-\textbf{Réponse :}
-\begin{itemize}
-    \item En \textbf{non signé}, le minimum est de \textbf{11 bits} : $111111111,11_2$.
-    \item En \textbf{signé} (complément à 2), il faut ajouter un bit de signe (0 pour positif), soit un minimum de \textbf{12 bits} : $0111111111,11_2$.
-\end{itemize}
+\corr{
+\textbf{Étape 1 : Conversion de la partie entière.}\\
+On convertit la valeur entière 511 en binaire. Sachant que $2^9 = 512$, on a $511 = 2^9 - 1$.
+En binaire, cela correspond à 9 bits tous à '1' :
+$$ 511_{10} = 111111111_2 $$
 
-\subsection*{Question 1.2 \cite{1185, 1186}}
-\textbf{Énoncé :} Simplifiez en utilisant un tableau de Karnaugh la fonction $F$ [12] \cite{1185}.
+\textbf{Étape 2 : Conversion de la partie décimale.}\\
+On convertit 0,75 en sommes de puissances négatives de 2 : $0,75 = 0,5 + 0,25 = 2^{-1} + 2^{-2}$.
+$$ 0,75_{10} = 0,11_2 $$
 
-\textit{Note : Le texte d'origine a perdu les barres de négation (OCR : F=ABC+ABC+ABC+ABC+ABC \cite{1186}). Nous traiterons l'exemple suivant pour illustrer la méthode : $F = \overline{A}\overline{B}C + \overline{A}BC + A\overline{B}C + AB\overline{C} + ABC$}
+\textbf{Étape 3 : Format non signé.}\\
+En combinant les deux parties, on obtient le code en virgule fixe non signé. Il nécessite au minimum 11 bits :
+$$ \mathbf{111111111,11_2} $$
 
-\textbf{Correction et Explications :}
-On place des '1' dans le tableau de Karnaugh pour chaque minterme :
+\textbf{Étape 4 : Format signé (complément à 2).}\\
+Pour une représentation signée, un bit de signe doit être ajouté en position de poids fort. Le nombre étant strictement positif, le bit de signe est '0'. Cela requiert au minimum 12 bits :
+$$ \mathbf{0111111111,11_2} $$
+}
+
+\noindent \textbf{1.2} Simplifiez en utilisant un tableau de Karnaugh la fonction $F = \overline{A}\overline{B}C + \overline{A}BC + A\overline{B}C + AB\overline{C} + ABC$ [12].
+
+\corr{
+\textbf{Étape 1 : Remplissage du tableau de Karnaugh.}\\
+Pour la fonction donnée, on place les '1' dans les cases correspondant aux mintermes :
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 $A \backslash BC$ & 00 & 01 & 11 & 10 \\
 \hline
-0 & 0 & \textbf{1} ($\overline{A}\overline{B}C$) & \textbf{1} ($\overline{A}BC$) & 0 \\
+0 & 0 & 1 ($\overline{A}\overline{B}C$) & 1 ($\overline{A}BC$) & 0 \\
 \hline
-1 & 0 & \textbf{1} ($A\overline{B}C$) & \textbf{1} ($ABC$) & \textbf{1} ($AB\overline{C}$) \\
+1 & 0 & 1 ($A\overline{B}C$) & 1 ($ABC$) & 1 ($AB\overline{C}$) \\
 \hline
 \end{tabular}
 \end{center}
-Regroupements possibles (les plus grands possibles en puissances de 2) :
-\begin{itemize}
-    \item Un groupe de 4 (colonne 01 et 11) : donne $C$.
-    \item Un groupe de 2 (ligne du bas, 11 et 10) : donne $AB$.
-\end{itemize}
-\textbf{Résultat simplifié :} $F = C + AB$.
 
-\subsection*{Question 1.3 \cite{1187, 1188, 1189}}
-\textbf{Énoncé :} En VHDL, quel type normalisé doit être utilisé pour réaliser des opérations arithmétiques sur des vecteurs binaires non signés [2] \cite{1187} ? Quels bibliothèques et paquetages déclarer [2] \cite{1188} ? Montrez comment $-5 - 7$ est obtenu en complément à 2 \cite{1189}.
-
-\textbf{Correction et Explications :}
+\textbf{Étape 2 : Regroupement des mintermes.}\\
+On cherche à faire les plus grands groupements adjacents possibles (tailles en puissances de 2) :
 \begin{itemize}
-    \item \textbf{Type normalisé :} Il faut utiliser le type \texttt{unsigned} \cite{1187}.
-    \item \textbf{Bibliothèque et paquetage :} \texttt{library IEEE; use IEEE.numeric\_std.all;} \cite{1188} (ne jamais utiliser l'obsolète \texttt{std\_logic\_unsigned}).
-    \item \textbf{Opération $-5 - 7$ en complément à 2 (sur 5 bits) :} \cite{1189}
-    Pour coder $-12$ (le résultat), il faut au minimum 5 bits (plage de $-16$ à $+15$).
-    \begin{enumerate}
-        \item $+5$ en binaire = $00101_2$. Inversion = $11010_2$. On ajoute 1 $\rightarrow$ \textbf{$-5 = 11011_2$}.
-        \item $+7$ en binaire = $00111_2$. Inversion = $11000_2$. On ajoute 1 $\rightarrow$ \textbf{$-7 = 11001_2$}.
-        \item Addition : $11011_2 + 11001_2 = (1) 10100_2$. On ignore la retenue sortante.
-        \item Résultat : \textbf{$10100_2$}. Pour vérifier sa valeur : on inverse ($01011_2$) et on ajoute 1 ($01100_2 = 12_{10}$). Le résultat est bien $-12$.
-    \end{enumerate}
+    \item Un groupe de 4 cases (colonnes 01 et 11) qui isole la variable $C$.
+    \item Un groupe de 2 cases (ligne $A=1$, colonnes 11 et 10) qui isole $AB$.
 \end{itemize}
 
-\subsection*{Question 1.4 \cite{1190, 1191}}
-\textbf{Énoncé :} En VHDL est-ce que l'ordre des processus a une importance \cite{1190} ? Si non, dans quel ordre sont-ils exécutés \cite{1191} ?
+\textbf{Étape 3 : Expression simplifiée.}\\
+La fonction finale est la somme logique de ces groupements :
+$$ \mathbf{F = C + AB} $$
+}
 
-\textbf{Correction et Explications :}
-\textbf{Non}, l'ordre des processus dans l'architecture n'a aucune importance \cite{1190}. 
-En VHDL, les processus sont des instructions \textbf{concurrentes}. Ils s'exécutent de manière parallèle \cite{1191}. Leur exécution est déclenchée (réveillée) uniquement par les événements qui surviennent sur les signaux présents dans leur \textbf{liste de sensibilité}.
+\noindent \textbf{1.3} En VHDL, quel type normalisé doit être utilisé pour réaliser des opérations arithmétiques sur des vecteurs binaires non signés [2] ? Quels bibliothèques et paquetages déclarer [2] ? Montrez comment $-5 - 7$ est obtenu en complément à 2.
+
+\corr{
+\textbf{Étape 1 : Type normalisé et bibliothèques.}\\
+Pour réaliser des opérations arithmétiques sur des vecteurs non signés, le type normalisé à utiliser est \texttt{unsigned}.
+Il faut déclarer la bibliothèque IEEE et son paquetage mathématique officiel :
+$$ \mathbf{\texttt{library IEEE; use IEEE.numeric\_std.all;}} $$
+
+\textbf{Étape 2 : Préparation des opérandes sur 5 bits.}\\
+Pour que le résultat ($-12$) puisse être codé sans débordement, il faut au minimum 5 bits (plage de $-16$ à $+15$).
+\begin{itemize}
+    \item $+5 = 00101_2 \implies \text{Inversion} = 11010_2 \implies \text{Ajout de 1} \implies \mathbf{-5 = 11011_2}$
+    \item $+7 = 00111_2 \implies \text{Inversion} = 11000_2 \implies \text{Ajout de 1} \implies \mathbf{-7 = 11001_2}$
+\end{itemize}
+
+\textbf{Étape 3 : Addition en complément à 2.}\\
+On effectue l'addition binaire standard de ces deux nombres négatifs et on ignore la retenue sortante du bit de poids fort :
+$$ 11011_2 + 11001_2 = (1) 10100_2 $$
+        
+\textbf{Étape 4 : Résultat final.}\\
+Le résultat est :
+$$ \mathbf{10100_2} $$
+\textit{(Vérification : l'inverse est $01011_2$, plus 1 donne $01100_2 = 12_{10}$. Le résultat est donc bien $-12$).}
+}
+
+\noindent \textbf{1.4} En VHDL est-ce que l'ordre des processus a une importance ? Si non, dans quel ordre sont-ils exécutés ?
+
+\corr{
+\textbf{Étape 1 : Importance de l'ordre structurel.}\\
+\textbf{Non}, l'ordre physique d'écriture des processus dans l'architecture n'a absolument aucune importance. Le VHDL modélise des composants matériels.
+
+\textbf{Étape 2 : Mécanisme d'exécution réel.}\\
+Les processus s'exécutent de manière \textbf{concurrente} (parallèle). Leur exécution est purement \textbf{événementielle} : un processus est évalué uniquement lorsqu'un changement d'état (événement) se produit sur l'un des signaux inscrits dans sa \textbf{liste de sensibilité}.
+}
 
 \newpage
 
-\section*{Partie II : Conception d'un registre à décalage SIPO [56/90] \cite{1199, 1200}}
+% ==================== PROBLÈME II ====================
+\begin{center}
+    \textbf{\Large Problème II - Conception d'un registre à décalage SIPO - 56 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
 
-\subsection*{Question 2.1 \cite{1201}}
-\textbf{Énoncé :} Dessinez le schéma d'un registre SIPO de $n$ bits en utilisant $n$ bascules D \cite{1201}. Entrées : \texttt{din}, \texttt{clk}, \texttt{enable}, \texttt{reset} \cite{1203, 1204, 1205, 1207}. Sortie : \texttt{dout} (n bits) \cite{1206}.
+\noindent \textbf{2.1} Dessinez le schéma d'un registre SIPO de $n$ bits en utilisant $n$ bascules D. Entrées : \texttt{din}, \texttt{clk}, \texttt{enable}, \texttt{reset}. Sortie : \texttt{dout} (n bits).
 
-\textit{(Voir le code SVG fourni séparément pour générer ou visualiser ce schéma).} Explication : Les bascules sont en cascade. L'entrée $D$ de la première bascule est liée à \texttt{din}. L'entrée $D$ des bascules suivantes est liée à la sortie $Q$ de la bascule précédente. \texttt{clk}, \texttt{reset} et \texttt{enable} sont communs à toutes les bascules.
+\corr{
+\textbf{Étape 1 : Structure générale.}\\
+Un registre à décalage SIPO (Serial In, Parallel Out) de $n$ bits est constitué de $n$ bascules D identiques, connectées en cascade pour faire transiter l'information bit par bit.
 
-\subsection*{Question 2.2 \cite{1214}}
-\textbf{Énoncé :} Ecrire en VHDL RTL l'entité générique (\texttt{shift}) et l'architecture (\texttt{rtl}) \cite{1214}.
+\textbf{Étape 2 : Connexions.}\\
+\begin{itemize}
+    \item L'entrée de données série \texttt{din} attaque l'entrée D de la première bascule.
+    \item La sortie Q d'une bascule de rang $i$ attaque l'entrée D de la bascule suivante de rang $i+1$.
+    \item Les signaux de contrôle (\texttt{clk}, \texttt{reset}, \texttt{enable}) sont connectés à toutes les bascules en parallèle.
+    \item Le vecteur de sortie \texttt{dout} regroupe en parallèle les $n$ sorties Q des différentes bascules.
+\end{itemize}
 
-\textbf{Correction :}
-\begin{lstlisting}
+\imageplaceholder{0.8\textwidth}{[Insérer Schéma Registre SIPO]}
+}
+
+\noindent \textbf{2.2} Ecrire en VHDL RTL l'entité générique (\texttt{shift}) et l'architecture (\texttt{rtl}).
+
+\corr{
+\textbf{Étape 1 : Définition de l'entité avec generic.}\\
+On déclare les signaux de port, ainsi que le paramètre \texttt{n}.
+
+\textbf{Étape 2 : Processus de décalage.}\\
+On crée un processus synchrone pour décrire le comportement RTL, en gérant le \texttt{reset} et le signal \texttt{enable}.
+\begin{lstlisting}[language=VHDL]
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -137,7 +219,7 @@ begin
             if reset = '1' then
                 shift_reg <= (others => '0');
             elsif enable = '1' then
-                -- Decalage vers la gauche : le MSB recoit din
+                -- Decalage : le LSB glisse, din entre en position 0
                 shift_reg <= shift_reg(n-2 downto 0) & din;
             end if;
         end if;
@@ -145,22 +227,26 @@ begin
     dout <= shift_reg;
 end architecture rtl;
 \end{lstlisting}
+}
 
-\subsection*{Question 2.3 \cite{1215}}
-\textbf{Énoncé :} Ecrire en VHDL structurel l'architecture (\texttt{struct}) de la même entité \cite{1215}. Composant disponible : \texttt{bascule} \cite{1210-1213}.
+\noindent \textbf{2.3} Ecrire en VHDL structurel l'architecture (\texttt{struct}) de la même entité. Composant disponible : \texttt{bascule}.
 
-\textbf{Correction :}
-\begin{lstlisting}
+\corr{
+\textbf{Étape 1 : Déclaration des composants et signaux internes.}\\
+On déclare le composant unitaire \texttt{bascule} et un vecteur de signaux internes \texttt{q\_int} pour relier les bascules entre elles.
+
+\textbf{Étape 2 : Instanciation avec une boucle.}\\
+On utilise l'instruction \texttt{for ... generate} pour instancier les $n$ bascules et on assigne les câblages matériels de cascade.
+\begin{lstlisting}[language=VHDL]
 architecture struct of shift is
     component bascule
         port(d, clk, reset, enable: in std_logic;
              q: out std_logic);
     end component;
     
-    -- Signal intermediaire pour relier les bascules en cascade
     signal q_int : std_logic_vector(n downto 0);
 begin
-    q_int(0) <= din; -- L'entree du registre attaque la 1ere bascule
+    q_int(0) <= din;
 
     gen_shift: for i in 0 to n-1 generate
         bascule_inst : bascule port map (
@@ -172,16 +258,20 @@ begin
         );
     end generate gen_shift;
 
-    -- Affectation des sorties paralleles
     dout <= q_int(n downto 1);
 end architecture struct;
 \end{lstlisting}
+}
 
-\subsection*{Question 2.4 \cite{1216}}
-\textbf{Énoncé :} Ecrire un testbench simulant l'architecture structurelle pour $n=8$ \cite{1216, 1217}.
+\noindent \textbf{2.4} Ecrire un testbench simulant l'architecture structurelle pour $n=8$.
 
-\textbf{Correction :}
-\begin{lstlisting}
+\corr{
+\textbf{Étape 1 : Instanciation de l'UUT et de l'horloge.}\\
+On déclare l'entité de test, les signaux, on mappe les ports et on crée un processus autonome de génération de la porteuse d'horloge.
+
+\textbf{Étape 2 : Scénario d'excitation.}\\
+On crée un processus pour jouer une séquence (reset, entrée de 1, désactivation, etc.).
+\begin{lstlisting}[language=VHDL]
 library IEEE;
 use IEEE.std_logic_1164.all;
 
@@ -213,11 +303,16 @@ begin
     end process;
 end architecture sim;
 \end{lstlisting}
+}
 
-\subsection*{Question 2.5 \cite{1218}}
-\textbf{Énoncé :} Dessinez les chronogrammes correspondant au testbench \cite{1218, 1219}.
+\noindent \textbf{2.5} Dessinez les chronogrammes correspondant au testbench.
 
-\textbf{Correction (via TikZ-Timing) :}
+\corr{
+\textbf{Étape 1 : Analyse des signaux d'entrée.}\\
+D'après le testbench, l'information \texttt{din} est insérée bit par bit au rythme de l'horloge, à condition que \texttt{enable} soit à '1'.
+
+\textbf{Étape 2 : Tracé des sorties.}\\
+La sortie décale les bits entrés vers la gauche. Lors de la désactivation du signal d'enable, la valeur dans le registre fige temporairement sa progression.
 \begin{center}
 \begin{tikztimingtable}[timing/slope=0]
   \texttt{clk}    & 14{C} \\
@@ -229,5 +324,13 @@ end architecture sim;
   \tablegrid
 \end{tikztimingtable}
 \end{center}
+}
+
+\vfill
+% ==================== PIED DE PAGE ====================
+\hrule
+\vspace{0.1cm}
+\noindent
+Équipe Pédagogique \hfill Esisar \hfill Page 1/1
 
 \end{document}

@@ -1,72 +1,108 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt, a4paper]{article}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
+\usepackage{amsmath, amssymb}
 \usepackage{geometry}
-\geometry{a4paper, margin=2cm}
-\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
 \usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
 \usepackage{hyperref}
 
-% Configuration pour le code Java
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=1.5cm,
+    right=1.5cm
 }
-\lstset{style=mystyle}
 
-\title{Correction de l'examen de Programmation Orientée Objet (IN361)}
-\author{Correction détaillée}
-\date{Session de juin 2025}
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    tabsize=4,
+    showstringspaces=false,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray}
+}
+
+\newcommand{\imageplaceholder}[2]{
+    \begin{center}
+        \fbox{\begin{minipage}{#1}\centering\vspace{1cm}\textit{#2}\vspace{1cm}\end{minipage}}
+    \end{center}
+}
+
+\newcommand{\corr}[1]{
+    \vspace{0.3cm}
+    \begin{center}
+    \fcolorbox{blue}{blue!5}{
+    \begin{minipage}{0.95\textwidth}
+    \color{blue} \textbf{Correction \& Raisonnement :} \\
+    #1
+    \end{minipage}}
+    \end{center}
+    \vspace{0.3cm}
+}
 
 \begin{document}
 
-\maketitle
+% ==================== EN-TÊTE ====================
+\noindent
+\begin{tabularx}{\textwidth}{@{}X c r@{}}
+\textbf{IN361} & \textbf{Session de juin 2025} & \textbf{Documents selon sujet} \\
+\textbf{Java} & \textbf{Examen} & \textbf{Calculatrice selon sujet} \\
+\end{tabularx}
+\vspace{0.2cm}
+\hrule
+\vspace{0.4cm}
+% ==================== EXERCICE 1 ====================
+\begin{center}
+    \textbf{\Large Exercice 1 (3 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+\textbf{Question :} Quel est le résultat de ce programme?
 
-\section*{Exercice 1 (3 points)}
-\textbf{Question :} Quel est le résultat de ce programme[cite: 13, 14]?
-
+\corr{
 \textbf{Résultat et Raisonnement :}
 Le programme illustre les principes d'héritage et de polymorphisme (liaison dynamique).
 \begin{itemize}
     \item \texttt{A a = new A(); a.affiche();} $\rightarrow$ \textbf{Je suis un A}
-    \item \texttt{B b = new B(); b.affiche();} $\rightarrow$ \textbf{Je suis un A} (B hérite de A et ne redéfinit pas la méthode [cite: 19]).
-    \item \texttt{C c = new C(); c.affiche();} $\rightarrow$ \textbf{Je suis un C} (C redéfinit \texttt{affiche()} [cite: 21, 22]).
-    \item \texttt{a = c; a.affiche();} $\rightarrow$ \textbf{Je suis un C} (Polymorphisme : \texttt{a} pointe vers une instance de \texttt{C} [cite: 30]).
-    \item \texttt{D d = new D(); d.affiche();} $\rightarrow$ \textbf{Je suis un D} (D redéfinit \texttt{affiche()} [cite: 50, 51]).
-    \item \texttt{a = d; a.affiche();} $\rightarrow$ \textbf{Je suis un D} (\texttt{a} pointe vers \texttt{D} [cite: 34, 35]).
-    \item \texttt{c = d; c.affiche();} $\rightarrow$ \textbf{Je suis un D} (\texttt{c} pointe vers \texttt{D} [cite: 36]).
-    \item \texttt{E e = new E(); e.affiche();} $\rightarrow$ \textbf{Je suis un A} (E hérite de B, qui hérite de A. Aucune ne redéfinit \texttt{affiche()} [cite: 54]).
-    \item \texttt{a = e; a.affiche();} $\rightarrow$ \textbf{Je suis un A} (\texttt{a} pointe vers \texttt{E} [cite: 40, 41]).
-    \item \texttt{b = e; b.affiche();} $\rightarrow$ \textbf{Je suis un A} (\texttt{b} pointe vers \texttt{E} [cite: 42]).
-    \item \texttt{F f = new F(); f.affiche();} $\rightarrow$ \textbf{Je suis un C} (F hérite de C qui possède sa propre méthode \texttt{affiche()} [cite: 55]).
-    \item \texttt{a = f; a.affiche();} $\rightarrow$ \textbf{Je suis un C} (\texttt{a} pointe vers \texttt{F} [cite: 46, 47]).
-    \item \texttt{c = f; c.affiche();} $\rightarrow$ \textbf{Je suis un C} (\texttt{c} pointe vers \texttt{F} [cite: 48]).
+    \item \texttt{B b = new B(); b.affiche();} $\rightarrow$ \textbf{Je suis un A} (B hérite de A et ne redéfinit pas la méthode ).
+    \item \texttt{C c = new C(); c.affiche();} $\rightarrow$ \textbf{Je suis un C} (C redéfinit \texttt{affiche()} ).
+    \item \texttt{a = c; a.affiche();} $\rightarrow$ \textbf{Je suis un C} (Polymorphisme : \texttt{a} pointe vers une instance de \texttt{C} ).
+    \item \texttt{D d = new D(); d.affiche();} $\rightarrow$ \textbf{Je suis un D} (D redéfinit \texttt{affiche()} ).
+    \item \texttt{a = d; a.affiche();} $\rightarrow$ \textbf{Je suis un D} (\texttt{a} pointe vers \texttt{D} ).
+    \item \texttt{c = d; c.affiche();} $\rightarrow$ \textbf{Je suis un D} (\texttt{c} pointe vers \texttt{D} ).
+    \item \texttt{E e = new E(); e.affiche();} $\rightarrow$ \textbf{Je suis un A} (E hérite de B, qui hérite de A. Aucune ne redéfinit \texttt{affiche()} ).
+    \item \texttt{a = e; a.affiche();} $\rightarrow$ \textbf{Je suis un A} (\texttt{a} pointe vers \texttt{E} ).
+    \item \texttt{b = e; b.affiche();} $\rightarrow$ \textbf{Je suis un A} (\texttt{b} pointe vers \texttt{E} ).
+    \item \texttt{F f = new F(); f.affiche();} $\rightarrow$ \textbf{Je suis un C} (F hérite de C qui possède sa propre méthode \texttt{affiche()} ).
+    \item \texttt{a = f; a.affiche();} $\rightarrow$ \textbf{Je suis un C} (\texttt{a} pointe vers \texttt{F} ).
+    \item \texttt{c = f; c.affiche();} $\rightarrow$ \textbf{Je suis un C} (\texttt{c} pointe vers \texttt{F} ).
 \end{itemize}
+}
 
-\section*{Exercice 2 (4 points)}
+% ==================== EXERCICE 2 ====================
+\begin{center}
+    \textbf{\Large Exercice 2 (4 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
 
-\subsection*{Question 2.1 [cite: 64, 65, 66, 67]}
-\textbf{Raisonnement :} Création d'une classe classique avec attributs privés, constructeur et accesseurs/mutateurs.
+\subsection*{Question 2.1 }
+\corr{
+\textbf{Raisonnement :}
+Création d'une classe classique avec attributs privés, constructeur et accesseurs/mutateurs.
 \begin{lstlisting}[language=Java]
 public class TypPneu {
     private int diametre;
@@ -90,9 +126,12 @@ public class TypPneu {
     public void setMarque(String marque) { this.marque = marque; }
 }
 \end{lstlisting}
+}
 
-\subsection*{Question 2.2 [cite: 68, 69]}
-\textbf{Raisonnement :} La méthode \texttt{equals(Object o)} doit être redéfinie pour comparer les valeurs et non les références mémoires.
+\subsection*{Question 2.2 }
+\corr{
+\textbf{Raisonnement :}
+La méthode \texttt{equals(Object o)} doit être redéfinie pour comparer les valeurs et non les références mémoires.
 \begin{lstlisting}[language=Java]
 @Override
 public boolean equals(Object obj) {
@@ -104,9 +143,12 @@ public boolean equals(Object obj) {
            marque.equals(typPneu.marque);
 }
 \end{lstlisting}
+}
 
-\subsection*{Question 2.3 [cite: 80, 81]}
-\textbf{Raisonnement :} Création de la classe \texttt{TypVoiture} avec composition (elle contient un objet \texttt{TypPneu}).
+\subsection*{Question 2.3 }
+\corr{
+\textbf{Raisonnement :}
+Création de la classe \texttt{TypVoiture} avec composition (elle contient un objet \texttt{TypPneu}).
 \begin{lstlisting}[language=Java]
 public class TypVoiture {
     private String marque;
@@ -130,9 +172,12 @@ public class TypVoiture {
     public void setTypPneu(TypPneu pneu) { this.pneu = pneu; }
 }
 \end{lstlisting}
+}
 
-\subsection*{Question 2.4 [cite: 83, 84, 85, 86]}
-\textbf{Raisonnement :} Ajout d'une méthode validant les dimensions avant de remplacer le pneu.
+\subsection*{Question 2.4 }
+\corr{
+\textbf{Raisonnement :}
+Ajout d'une méthode validant les dimensions avant de remplacer le pneu.
 \begin{lstlisting}[language=Java]
 public void changementPneu(TypPneu tp) {
     if (this.pneu.getLargeur() == tp.getLargeur() && 
@@ -143,47 +188,63 @@ public void changementPneu(TypPneu tp) {
     }
 }
 \end{lstlisting}
+}
 
-\subsection*{Question 2.5 [cite: 88, 89, 90, 91, 92]}
+\subsection*{Question 2.5 }
 \textbf{Erreur : } La méthode \texttt{changementPneu} est appelée sur la classe \texttt{TypVoiture} (\texttt{TypVoiture.changementPneu(p2);}) au lieu d'être appelée sur l'instance \texttt{v1}. Le code correct serait : \texttt{v1.changementPneu(p2);}
 
-\subsection*{Question 2.6 [cite: 94, 99, 100, 102, 103, 104, 107]}
-\textbf{Raisonnement :} \texttt{==} compare les références mémoires. \texttt{equals()} compare le contenu.
+\subsection*{Question 2.6 }
+\corr{
+\textbf{Raisonnement :}
+\texttt{==} compare les références mémoires. \texttt{equals()} compare le contenu.
 \begin{itemize}
     \item \texttt{p1 == p2} $\rightarrow$ \textbf{false} (Différentes instances en mémoire).
     \item \texttt{p1 == p3} $\rightarrow$ \textbf{false} (Différentes instances).
-    \item \texttt{p1.equals(p2)} $\rightarrow$ \textbf{false} (Marques différentes : "Michelin" $\neq$ "Dunlop" [cite: 89, 90]).
-    \item \texttt{p1.equals(p3)} $\rightarrow$ \textbf{false} (Dimensions différentes [cite: 89, 95]).
-    \item \texttt{p1 == p4} $\rightarrow$ \textbf{false} (\texttt{p4} pointe vers \texttt{p3} [cite: 95]).
-    \item \texttt{p3 == p4} $\rightarrow$ \textbf{true} (Même référence [cite: 95]).
+    \item \texttt{p1.equals(p2)} $\rightarrow$ \textbf{false} (Marques différentes : "Michelin" $\neq$ "Dunlop" ).
+    \item \texttt{p1.equals(p3)} $\rightarrow$ \textbf{false} (Dimensions différentes ).
+    \item \texttt{p1 == p4} $\rightarrow$ \textbf{false} (\texttt{p4} pointe vers \texttt{p3} ).
+    \item \texttt{p3 == p4} $\rightarrow$ \textbf{true} (Même référence ).
     \item \texttt{p3.equals(p4)} $\rightarrow$ \textbf{true} (Même référence, donc même contenu).
-    \item \texttt{v1.getTypPneu() == v2.getTypPneu()} $\rightarrow$ \textbf{true} (Les deux voitures partagent l'objet \texttt{p1} [cite: 97, 98]).
+    \item \texttt{v1.getTypPneu() == v2.getTypPneu()} $\rightarrow$ \textbf{true} (Les deux voitures partagent l'objet \texttt{p1} ).
     \item \texttt{v1.getTypPneu() == v3.getTypPneu()} $\rightarrow$ \textbf{false} (\texttt{p1} $\neq$ \texttt{p3}).
     \item \texttt{v1.getTypPneu().equals(p2)} $\rightarrow$ \textbf{false} (Équivaut à \texttt{p1.equals(p2)}).
 \end{itemize}
+}
 
-\section*{Exercice 3 (3 points)}
+% ==================== EXERCICE 3 ====================
+\begin{center}
+    \textbf{\Large Exercice 3 (3 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
 
-\subsection*{3.1 [cite: 109]}
+\subsection*{3.1 }
 On crée un objet en utilisant le mot-clé \texttt{new} suivi de l'appel au constructeur de la classe (ex: \texttt{A a = new A();}).
 
-\subsection*{3.2 [cite: 111]}
+\subsection*{3.2 }
 En Java, le développeur ne supprime pas explicitement les objets. C'est le \textbf{Garbage Collector} (Ramasse-miettes) qui détruit automatiquement les objets en mémoire lorsqu'ils ne sont plus référencés.
 
-\subsection*{3.3 [cite: 113]}
+\subsection*{3.3 }
 Java est \textbf{à la fois compilé et interprété}. Le code source (.java) est d'abord compilé en un code intermédiaire appelé \textbf{Bytecode} (.class). Ce bytecode est ensuite interprété (et souvent compilé à la volée, JIT) par la Machine Virtuelle Java (JVM) lors de l'exécution.
 
-\subsection*{3.4 [cite: 114]}
+\subsection*{3.4 }
 Le mot-clé \texttt{final} pour une variable indique qu'elle est une \textbf{constante}. Une fois initialisée, sa valeur ne peut plus être modifiée.
 \textit{Exemple :} \texttt{final double PI = 3.14159;} Si on tente de réassigner \texttt{PI = 3.14;}, le compilateur renverra une erreur.
 
-\subsection*{3.5 [cite: 115]}
+\subsection*{3.5 }
 \begin{itemize}
     \item \textbf{Classe abstraite :} Peut contenir des attributs (état), des méthodes concrètes et des constructeurs. Une classe ne peut hériter que d'une seule classe (abstraite ou non).
     \item \textbf{Interface :} Ne contient (traditionnellement) que des signatures de méthodes abstraites et des constantes (\texttt{public static final}). Une classe peut implémenter plusieurs interfaces.
 \end{itemize}
 
-\section*{Exercice 4 (3 points) [cite: 116, 119, 123, 127, 128, 129, 130]}
+% ==================== EXERCICE 4 ====================
+\begin{center}
+    \textbf{\Large Exercice 4 (3 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
 
 \begin{lstlisting}[language=Java]
 public abstract class Vehicule {
@@ -227,7 +288,13 @@ public class Moto extends Vehicule {
 }
 \end{lstlisting}
 
-\section*{Exercice 5 (4 points) [cite: 143, 144, 146, 147, 148, 149]}
+% ==================== EXERCICE 5 ====================
+\begin{center}
+    \textbf{\Large Exercice 5 (4 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
 
 \begin{lstlisting}[language=Java]
 public class Categorie {
@@ -277,7 +344,13 @@ public class TestLocation {
 }
 \end{lstlisting}
 
-\section*{Exercice 6 (3 points) [cite: 152, 153, 155, 157, 159, 160]}
+% ==================== EXERCICE 6 ====================
+\begin{center}
+    \textbf{\Large Exercice 6 (3 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
 
 \begin{lstlisting}[language=Java]
 import java.util.ArrayList;

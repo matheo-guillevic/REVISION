@@ -1,126 +1,222 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt, a4paper]{article}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
+\usepackage{amsmath, amssymb}
 \usepackage{geometry}
-\geometry{a4paper, margin=2cm}
-\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
 \usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{hyperref}
 
-% Configuration pour le code Java
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{blue},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=1.5cm,
+    right=1.5cm
 }
-\lstset{style=mystyle}
 
-\title{Correction de l'examen CS-318 : Programmation-objet \& interfaces graphiques}
-\author{Session de JUIN 2023}
-\date{}
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    tabsize=4,
+    showstringspaces=false,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray}
+}
+
+\newcommand{\imageplaceholder}[2]{
+    \begin{center}
+        \fbox{\begin{minipage}{#1}\centering\vspace{1cm}\textit{#2}\vspace{1cm}\end{minipage}}
+    \end{center}
+}
+
+\newcommand{\corr}[1]{
+    \vspace{0.3cm}
+    \begin{center}
+    \fcolorbox{blue}{blue!5}{
+    \begin{minipage}{0.95\textwidth}
+    \color{blue} \textbf{Correction \& Raisonnement :} \\
+    #1
+    \end{minipage}}
+    \end{center}
+    \vspace{0.3cm}
+}
 
 \begin{document}
 
-\maketitle
+% ==================== EN-TÊTE ====================
+\noindent
+\begin{tabularx}{\textwidth}{@{}X c r@{}}
+\textbf{IN361} & \textbf{Session de juin 2023} & \textbf{Documents selon sujet} \\
+\textbf{Java} & \textbf{Examen} & \textbf{Calculatrice selon sujet} \\
+\end{tabularx}
+\vspace{0.2cm}
+\hrule
+\vspace{0.4cm}
+% ==================== EXERCICE 1 ====================
+\begin{center}
+    \textbf{\Large Exercice 1 (2 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+\textbf{Question :} Expliquer ce qu'est un objet immutable. Donner 2 exemples de class Java immutable.
 
-\section*{Exercice 1 (2 points)}
-\textbf{Question :} Expliquer ce qu'est un objet immutable. Donner 2 exemples de class Java immutable[cite: 179].
-
+\corr{
 \textbf{Réponse et Raisonnement :}
 Un objet immutable (immuable en français) est un objet dont l'état (les valeurs de ses attributs) ne peut pas être modifié une fois qu'il a été créé et initialisé. 
 \begin{itemize}
     \item \textbf{Exemples :} \texttt{String}, \texttt{Integer} (ou toute autre classe Wrapper comme \texttt{Double}), et \texttt{LocalDate} (vue dans l'exercice 4).
 \end{itemize}
+}
 
-\section*{Exercice 2 (1 point)}
-\textbf{Question :} Expliquez pourquoi ce programme ne veut pas se lancer[cite: 188, 189].
+% ==================== EXERCICE 2 ====================
+\begin{center}
+    \textbf{\Large Exercice 2 (1 point)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+\textbf{Question :} Expliquez pourquoi ce programme ne veut pas se lancer.
 
+\corr{
 \textbf{Réponse et Raisonnement :}
-La signature de la méthode principale est incorrecte. Dans le code fourni, la méthode est écrite \texttt{public void main(String args)}[cite: 183]. Pour que la Machine Virtuelle Java (JVM) puisse identifier le point d'entrée du programme et l'exécuter, la méthode doit obligatoirement être \texttt{static} et prendre en paramètre un tableau de chaînes de caractères.
+La signature de la méthode principale est incorrecte. Dans le code fourni, la méthode est écrite \texttt{public void main(String args)}. Pour que la Machine Virtuelle Java (JVM) puisse identifier le point d'entrée du programme et l'exécuter, la méthode doit obligatoirement être \texttt{static} et prendre en paramètre un tableau de chaînes de caractères.
 Il faudrait écrire : \texttt{public static void main(String[] args)}.
+}
 
-\section*{Exercice 3 (2 points)}
-\textbf{Question :} Ce programme ne compile pas. a) Expliquez l'erreur b) Proposer un correctif[cite: 201, 202, 203].
+% ==================== EXERCICE 3 ====================
+\begin{center}
+    \textbf{\Large Exercice 3 (2 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+\textbf{Question :} Ce programme ne compile pas. a) Expliquez l'erreur b) Proposer un correctif.
 
+\corr{
 \textbf{Réponse et Raisonnement :}
 \begin{itemize}
-    \item \textbf{a) Explication :} L'erreur provient de la ligne \texttt{ArrayList<int> maListe = new ArrayList<int>();}[cite: 193]. En Java, les collections et la généricité ne fonctionnent qu'avec des types objets (références). Il est impossible d'utiliser un type primitif comme \texttt{int}.
+    \item \textbf{a) Explication :} L'erreur provient de la ligne \texttt{ArrayList<int> maListe = new ArrayList<int>();}. En Java, les collections et la généricité ne fonctionnent qu'avec des types objets (références). Il est impossible d'utiliser un type primitif comme \texttt{int}.
     \item \textbf{b) Correctif :} Il faut utiliser la classe Wrapper (enveloppe) \texttt{Integer} correspondante au type primitif \texttt{int}.
 \end{itemize}
 \begin{lstlisting}[language=Java]
 ArrayList<Integer> maListe = new ArrayList<Integer>();
 \end{lstlisting}
+}
 
-\section*{Exercice 4 (4 points)}
-\textbf{Question a :} Expliquer ce que fait la ligne \texttt{return this (year, month, dayOfMonth);}[cite: 237].
+% ==================== EXERCICE 4 ====================
+\begin{center}
+    \textbf{\Large Exercice 4 (4 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+\textbf{Question a :} Expliquer ce que fait la ligne \texttt{return this (year, month, dayOfMonth);}.
 
-\textbf{Réponse a :} Cette syntaxe, bien qu'incorrecte dans une méthode statique en Java classique (il faudrait un \texttt{new LocalDate(...)}), représente conceptuellement l'appel au constructeur de la classe courante afin d'instancier et de retourner un nouvel objet \texttt{LocalDate}.
+\corr{
+\textbf{Réponse a :}
+Cette syntaxe, bien qu'incorrecte dans une méthode statique en Java classique (il faudrait un \texttt{new LocalDate(...)}), représente conceptuellement l'appel au constructeur de la classe courante afin d'instancier et de retourner un nouvel objet \texttt{LocalDate}.
+}
 
-\textbf{Question b :} Indiquer la ligne causant une erreur de compilation et en expliquer la raison[cite: 239].
+\textbf{Question b :} Indiquer la ligne causant une erreur de compilation et en expliquer la raison.
 
-\textbf{Réponse b :} 
-La ligne en erreur est \texttt{d = new LocalDate (2023,2,15);}[cite: 233]. 
-La raison est que le constructeur de la classe \texttt{LocalDate} est déclaré \texttt{private}[cite: 209]. Il est donc inaccessible depuis une autre classe (comme le programme principal).
+\corr{
+\textbf{Réponse b :}
+La ligne en erreur est \texttt{d = new LocalDate (2023,2,15);}. 
+La raison est que le constructeur de la classe \texttt{LocalDate} est déclaré \texttt{private}. Il est donc inaccessible depuis une autre classe (comme le programme principal).
+}
 
-\textbf{Question c :} Si possible proposer un correctif[cite: 240].
+\textbf{Question c :} Si possible proposer un correctif.
 
-\textbf{Réponse c :} Il faut utiliser les méthodes statiques fournies par la classe pour obtenir une instance (patron de conception Factory / Fabrique).
+\corr{
+\textbf{Réponse c :}
+Il faut utiliser les méthodes statiques fournies par la classe pour obtenir une instance (patron de conception Factory / Fabrique).
 \begin{lstlisting}[language=Java]
 d = LocalDate.of(2023, 2, 15);
 \end{lstlisting}
+}
 
-\textbf{Question d :} Comment peut-on qualifier ses 2 méthodes \texttt{of} en utilisant le vocabulaire orienté objet adapté ?[cite: 241, 242].
+\textbf{Question d :} Comment peut-on qualifier ses 2 méthodes \texttt{of} en utilisant le vocabulaire orienté objet adapté ?.
 
-\textbf{Réponse d :} C'est de la \textbf{surcharge} (Overloading). On a plusieurs méthodes qui portent le même nom (\texttt{of}) mais qui diffèrent par la signature de leurs paramètres (l'une prend \texttt{int, int, int} [cite: 219] et l'autre \texttt{int, Month, int} [cite: 225]).
+\corr{
+\textbf{Réponse d :}
+C'est de la \textbf{surcharge} (Overloading). On a plusieurs méthodes qui portent le même nom (\texttt{of}) mais qui diffèrent par la signature de leurs paramètres (l'une prend \texttt{int, int, int}  et l'autre \texttt{int, Month, int} ).
+}
 
-\section*{Exercice 5 (2 points)}
-\textbf{Question 1 :} Erreur de compilation sur \texttt{Bien b = new Bien(...);}[cite: 266, 267, 268].
+% ==================== EXERCICE 5 ====================
+\begin{center}
+    \textbf{\Large Exercice 5 (2 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+\textbf{Question 1 :} Erreur de compilation sur \texttt{Bien b = new Bien(...);}.
 
-\textbf{Réponse 1 :} La classe \texttt{Bien} est déclarée comme \texttt{abstract}[cite: 250]. Une classe abstraite ne peut pas être instanciée directement avec \texttt{new}. 
+\corr{
+\textbf{Réponse 1 :}
+La classe \texttt{Bien} est déclarée comme \texttt{abstract}. Une classe abstraite ne peut pas être instanciée directement avec \texttt{new}.
+}
 
-\textbf{Question 2 :} Concernant la méthode \texttt{toString}, comment qualifier cette méthode ?[cite: 269].
+\textbf{Question 2 :} Concernant la méthode \texttt{toString}, comment qualifier cette méthode ?.
 
-\textbf{Réponse 2 :} C'est une \textbf{redéfinition} (Overriding). L'annotation \texttt{@Override} [cite: 260] indique que la classe \texttt{Bien} fournit sa propre implémentation de la méthode \texttt{toString()} héritée de la super-classe mère universelle \texttt{Object}.
+\corr{
+\textbf{Réponse 2 :}
+C'est une \textbf{redéfinition} (Overriding). L'annotation \texttt{@Override}  indique que la classe \texttt{Bien} fournit sa propre implémentation de la méthode \texttt{toString()} héritée de la super-classe mère universelle \texttt{Object}.
+}
 
-\section*{Exercice 6 (3 points)}
-\textbf{Question a :} Expliquer la cause de l'erreur sur \texttt{System.out.println("" + b.getSurface());}[cite: 300, 302].
+% ==================== EXERCICE 6 ====================
+\begin{center}
+    \textbf{\Large Exercice 6 (3 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+\textbf{Question a :} Expliquer la cause de l'erreur sur \texttt{System.out.println("" + b.getSurface());}.
 
-\textbf{Réponse a :} La variable \texttt{b} est déclarée avec le type de référence \texttt{Bien}[cite: 300]. Lors de la compilation, le compilateur vérifie les méthodes disponibles pour le type de référence. Or, la méthode \texttt{getSurface()} n'est pas définie dans la classe \texttt{Bien} [cite: 272, 282], elle n'existe que dans la classe fille \texttt{Maison}[cite: 290].
+\corr{
+\textbf{Réponse a :}
+La variable \texttt{b} est déclarée avec le type de référence \texttt{Bien}. Lors de la compilation, le compilateur vérifie les méthodes disponibles pour le type de référence. Or, la méthode \texttt{getSurface()} n'est pas définie dans la classe \texttt{Bien} , elle n'existe que dans la classe fille \texttt{Maison}.
+}
 
-\textbf{Question b :} Proposer un correctif[cite: 303].
+\textbf{Question b :} Proposer un correctif.
 
-\textbf{Réponse b :} On peut procéder à un "cast" (transtypage) pour indiquer au compilateur que l'objet pointé est bien une \texttt{Maison}.
+\corr{
+\textbf{Réponse b :}
+On peut procéder à un "cast" (transtypage) pour indiquer au compilateur que l'objet pointé est bien une \texttt{Maison}.
 \begin{lstlisting}[language=Java]
 System.out.println("" + ((Maison) b).getSurface());
 // Alternative : déclarer b en tant que Maison
 // Maison b = new Maison(1, "Villa Magnifico", "Valence", 1000);
 \end{lstlisting}
+}
 
-\section*{Exercice 7 (3 points)}
-\textbf{Question 1 :} Expliquer l'erreur dans la classe \texttt{Maison}[cite: 329, 330].
+% ==================== EXERCICE 7 ====================
+\begin{center}
+    \textbf{\Large Exercice 7 (3 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+\textbf{Question 1 :} Expliquer l'erreur dans la classe \texttt{Maison}.
 
-\textbf{Réponse 1 :} La classe \texttt{Maison} hérite de la classe \texttt{Bien}[cite: 315]. La classe \texttt{Bien} possède une méthode abstraite \texttt{addTarif(Tarif newTarif)}[cite: 312]. Puisque \texttt{Maison} est une classe concrète, elle est dans l'obligation d'implémenter (redéfinir) toutes les méthodes abstraites héritées de sa classe mère.
+\corr{
+\textbf{Réponse 1 :}
+La classe \texttt{Maison} hérite de la classe \texttt{Bien}. La classe \texttt{Bien} possède une méthode abstraite \texttt{addTarif(Tarif newTarif)}. Puisque \texttt{Maison} est une classe concrète, elle est dans l'obligation d'implémenter (redéfinir) toutes les méthodes abstraites héritées de sa classe mère.
+}
 
-\textbf{Question 2 :} Apporter un correctif (code à ajouter dans la classe \texttt{Maison})[cite: 331].
+\textbf{Question 2 :} Apporter un correctif (code à ajouter dans la classe \texttt{Maison}).
 
+\corr{
 \textbf{Réponse 2 :}
 \begin{lstlisting}[language=Java]
 @Override
@@ -128,19 +224,33 @@ public void addTarif(Tarif newTarif) {
     // Code d'ajout du tarif
 }
 \end{lstlisting}
+}
 
-\section*{Exercice 8 (3 points)}
-\textbf{Question 1 :} Erreur à l'exécution et correctif[cite: 359, 360].
+% ==================== EXERCICE 8 ====================
+\begin{center}
+    \textbf{\Large Exercice 8 (3 points)}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+\textbf{Question 1 :} Erreur à l'exécution et correctif.
 
-\textbf{Réponse 1 :} L'erreur est une \texttt{NullPointerException}. La variable \texttt{mesBiens} est déclarée [cite: 336] mais n'a pas été initialisée (elle vaut \texttt{null}). Quand on tente d'appeler \texttt{mesBiens.add(...)}, le programme plante.
+\corr{
+\textbf{Réponse 1 :}
+L'erreur est une \texttt{NullPointerException}. La variable \texttt{mesBiens} est déclarée  mais n'a pas été initialisée (elle vaut \texttt{null}). Quand on tente d'appeler \texttt{mesBiens.add(...)}, le programme plante.
+}
+\corr{
 \textbf{Correctif :}
 \begin{lstlisting}[language=Java]
 ArrayList<Bien> mesBiens = new ArrayList<>();
 \end{lstlisting}
+}
 
-\textbf{Question 2 :} Compléter le programme pour afficher les maisons dont la ville est "Valence" et leur surface[cite: 361].
+\textbf{Question 2 :} Compléter le programme pour afficher les maisons dont la ville est "Valence" et leur surface.
 
-\textbf{Réponse 2 :} Il faut parcourir la liste, vérifier avec \texttt{instanceof} que le bien est une maison, puis vérifier la ville.
+\corr{
+\textbf{Réponse 2 :}
+Il faut parcourir la liste, vérifier avec \texttt{instanceof} que le bien est une maison, puis vérifier la ville.
 \begin{lstlisting}[language=Java]
 for (Bien b : mesBiens) {
     // On verifie que c'est une Maison pour pouvoir caster et acceder a la surface
@@ -152,5 +262,6 @@ for (Bien b : mesBiens) {
     }
 }
 \end{lstlisting}
+}
 
 \end{document}

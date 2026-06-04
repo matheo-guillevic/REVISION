@@ -20,15 +20,15 @@
   <body class="td-page">
     <main class="main-content">
       <header class="td-header">
-        <a class="back-link" href="vhdl.html#vhdl-exams">Retour aux examens VHDL</a>
+        <a class="back-link" href="vhdl.html#vhdl-exams">Retour aux examens</a>
         <div>
           <span class="eyebrow">SN361 - Examen 2</span>
           <h1>Timer et controleur de porte de garage</h1>
           <p>Timer 32 bits, decompteur, multiplexeur, testbench et machine a etats de Moore.</p>
-          <p>Page reconstruite depuis <code>pdf/vhdl/exam/vhdl-exam2.tex</code>, avec les corrections et explications.</p>
+          <p>Page reconstruite depuis <code>pdf/vhdl/exam/vhdl-exam2.tex</code>.</p>
         </div>
         <div class="td-actions">
-          <a class="primary-button" href="pdf/vhdl/exam/vhdl-exam2.pdf">Ouvrir le PDF</a>
+          <a class="primary-button" href="pdf/vhdl/exam/vhdl-exam2.tex">Ouvrir le sujet LaTeX</a>
           <a class="back-link" href="vhdl.html">Cours VHDL</a>
         </div>
       </header>
@@ -37,8 +37,8 @@
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Partie 1</span>
-              <h3>Exercice 1 : Conception et validation d'un « timer » [90 points]</h3>
+              <span class="status-pill">Probleme 1</span>
+              <h3>Problème I - Conception et validation d'un « timer »</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -47,52 +47,60 @@
           </header>
           <div class="answer-block">
           <h4>Contexte</h4>
-          <p>L'objectif est de concevoir un timer générant périodiquement une impulsion d'une période d'horloge de large . Ce timer est contrôlé par une horloge interne de période 1 \(\mu\)s . Il a une largeur de 32 bits .</p>
-          <h4>Lecture du Schéma : Liste des éléments et leur utilité</h4>
-          <p>Le schéma illustre l'architecture matérielle (chemin de données et contrôle) du timer. Voici comment le lire pas-à-pas :</p>
-          <ul class="formula-list">
-            <li><strong>1 microsec oscillator (Oscillateur)</strong> : Fournit le signal d'horloge de base (période de 1 \(\mu\)s) qui cadence tous les éléments synchrones du circuit .</li>
-            <li><strong>Bloc "-1" (Décrémenteur combinatoire)</strong> : Réalise une opération de soustraction de 1 sur l'entrée \(M\) . Cela est nécessaire car le compteur décrémente jusqu'à 0 inclus. Pour compter \(M\) cycles, il faut démarrer le comptage à \(M-1\).</li>
-            <li><strong>32-bit register (Registre de mémorisation)</strong> : Sauvegarde la valeur \(M-1\) à chaque fois que la commande <code>load</code> est active (à '1'). Il sert de mémoire pour conserver la configuration du timer (la période souhaitée) de manière autonome, même si le signal externe \(M\) vient à changer par la suite.</li>
-            <li><strong>4-bit 2x1 Mux (Multiplexeur 2 vers 1)</strong> : Aiguille la donnée qui sera chargée dans le compteur. Si <code>load</code> est à '1', il laisse passer directement la nouvelle valeur calculée \(M-1\). Si <code>load</code> est à '0', il laisse passer la valeur sauvegardée dans le registre (pour recharger automatiquement le compteur à chaque fin de cycle).</li>
-            <li><strong>Porte logique OU (OR gate)</strong> : Génère le signal de chargement (<code>ld</code>) du compteur. Le compteur est rechargé dans deux situations : soit par un ordre externe de l'utilisateur (<code>load = 1</code>), soit de manière autonome quand le compteur atteint zéro et lève son drapeau <code>tc</code>.</li>
-            <li><strong>32-bit down-counter (Décompteur 32 bits)</strong> : C'est le cœur du timer. Activé par <code>enable</code>, il décrémente sa valeur à chaque front d'horloge. Lorsqu'il atteint 0, sa sortie <code>tc</code> (Terminal Count) passe à 1 . Cela déclenche simultanément l'impulsion de sortie <code>Q</code> vers l'extérieur et le rechargement automatique du compteur via la porte OU pour recommencer un cycle.</li>
-          </ul>
-          <h4>Question 1</h4>
-          <p><strong>Énoncé :</strong> Quelle valeur doit être programmée (c'est-à-dire envoyée vers M) pour générer une impulsion toutes les 300 ms ?</p>
-          <p><strong>Correction et Explications :</strong></p>
-          <ul class="formula-list">
-            <li>L'horloge a une période de 1 \(\mu\)s .</li>
-            <li>On souhaite une période de 300 ms, soit \(300 \times 10^3 = 300\,000\) \(\mu\)s.</li>
-            <li>Il faut donc compter \(300\,000\) cycles d'horloge entre chaque impulsion.</li>
-            <li>Le circuit décrémente à partir de \(M-1\) jusqu'à \(0\) (soit \(M\) états au total).</li>
-            <li><strong>Réponse :</strong> La valeur à programmer sur l'entrée M est donc <strong>300 000</strong>.</li>
-          </ul>
-          <h4>Question 2</h4>
           <figure class="system-diagram td-figure">
             <img src="assets/vhdl/exam/exam2_vhdl_chronogramme-.svg" alt="Chronogramme du timer pour les valeurs M=3 puis M=2." loading="lazy">
             <figcaption class="diagram-caption">Chronogramme du timer pour les valeurs M=3 puis M=2.</figcaption>
           </figure>
-          <p><strong>Énoncé :</strong> Faire un chronogramme pour deux impulsions avec \(M=3\) puis deux impulsions avec \(M=2\) .</p>
-          <p><strong>Correction et Explications (Description du chronogramme) :</strong> <em>(En LaTeX, un chronogramme complexe est souvent décrit sous forme de table d'états cycle par cycle pour plus de clarté).</em></p>
+          <p>L'objectif est de concevoir un timer générant périodiquement une impulsion d'une période d'horloge de large. Ce timer est contrôlé par une horloge interne de période \(1\,\mu\text{s}\). Il a une largeur de 32 bits.</p>
+          <h4>Lecture du Schéma : Liste des éléments et leur utilité</h4>
+          <p>Le schéma illustre l'architecture matérielle (chemin de données et contrôle) du timer. Voici comment le lire pas-à-pas :</p>
           <ul class="formula-list">
-            <li><strong>Cycle 0 (Initialisation) :</strong> <code>load</code> = 1, \(M = 3\). Le bloc -1 calcule <code>M32</code> = 2. Le registre R32 charge 2. Le Mux32 laisse passer <code>M32</code> (2). Le compteur C charge 2 car la porte OU donne 1 (load=1).</li>
-            <li><strong>Cycle 1 :</strong> <code>load</code> = 0, <code>enable</code> = 1. C = 2. <code>tc</code> (Q) = 0. Au front d'horloge, C décrémente à 1.</li>
-            <li><strong>Cycle 2 :</strong> C = 1, Q = 0. Au front d'horloge, C décrémente à 0.</li>
-            <li><strong>Cycle 3 (Impulsion) :</strong> C = 0, Q = 1 (<code>tc</code>=1 car C=0) . La porte OU vaut 1 (car Q=1). Le Mux32 laisse passer R32 (qui vaut toujours 2). Au front d'horloge, C recharge 2.</li>
-            <li><strong>Cycle 4, 5, 6 :</strong> C passe de 2 à 1, puis à 0. On obtient une 2ème impulsion.</li>
-            <li><strong>Cycle 7 (Changement M=2) :</strong> On met <code>load</code> = 1, \(M = 2\). <code>M32</code> = 1. R32 et C chargent 1.</li>
-            <li><strong>Cycle 8 (Impulsion courte) :</strong> <code>load</code> = 0, <code>enable</code> = 1. C passe de 1 à 0 au cycle 9. La période est maintenant de 2 coups d'horloge.</li>
+            <li><strong>1 microsec oscillator (Oscillateur)</strong> : Fournit le signal d'horloge de base (période de \(1\,\mu\text{s}\)) qui cadence tous les éléments synchrones du circuit.</li>
+            <li><strong>Bloc "-1" (Décrémenteur combinatoire)</strong> : Réalise une opération de soustraction de 1 sur l'entrée \(M\). Cela est nécessaire car le compteur décrémente jusqu'à 0 inclus. Pour compter \(M\) cycles, il faut démarrer le comptage à \(M-1\).</li>
+            <li><strong>32-bit register (Registre de mémorisation)</strong> : Sauvegarde la valeur \(M-1\) à chaque fois que la commande <code>load</code> est active (à '1'). Il sert de mémoire pour conserver la configuration du timer de manière autonome.</li>
+            <li><strong>4-bit 2x1 Mux (Multiplexeur 2 vers 1)</strong> : Aiguille la donnée qui sera chargée dans le compteur. Si <code>load</code> est à '1', il laisse passer la nouvelle valeur \(M-1\). Si <code>load</code> est à '0', il laisse passer la valeur sauvegardée dans le registre.</li>
+            <li><strong>Porte logique OU (OR gate)</strong> : Génère le signal de chargement (<code>ld</code>) du compteur (si <code>load = 1</code> ou <code>tc = 1</code>).</li>
+            <li><strong>32-bit down-counter (Décompteur 32 bits)</strong> : C'est le cœur du timer. Activé par <code>enable</code>, il décrémente sa valeur à chaque front d'horloge. Lorsqu'il atteint 0, sa sortie <code>tc</code> passe à 1.</li>
           </ul>
-          <h4>Question 3</h4>
-          <p><strong>Énoncé :</strong> Est-ce que les périodes des impulsions générées correspondent aux valeurs de M successives (3 puis 2) ? Si ce n'est pas le cas, expliquez .</p>
-          <p><strong>Correction et Explications :</strong> <strong>Oui</strong>, les périodes correspondent parfaitement. Pour \(M=3\), le compteur prend les valeurs \(2 \rightarrow 1 \rightarrow 0\) (soit 3 cycles d'horloge par impulsion). Pour \(M=2\), il prend les valeurs \(1 \rightarrow 0\) (soit 2 cycles). Le bloc "-1" en amont  permet justement de corriger le cycle supplémentaire dû au passage par 0, garantissant que la période réelle en cycles est exactement égale à \(M\).</p>
-          <h4>Question 4</h4>
-          <p><strong>Énoncé :</strong> Donnez une description en VHDL de l'entité du timer .</p>
-          <p><strong>Correction :</strong></p>
-          <pre class="code-block language-vhdl"><code>library ieee;
+          <p><strong>Question 1</strong> : Quelle valeur doit être programmée (c'est-à-dire envoyée vers M) pour générer une impulsion toutes les 300 ms ?</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Analyse des périodes.</strong><br> L'horloge a une période de \(1\,\mu\text{s}\). On souhaite une période globale de \(300\text{ ms}\), ce qui équivaut à \(300\,000\,\mu\text{s}\).</p>
+          <p><strong>Étape 2 : Calcul du nombre de cycles.</strong><br> Il faut donc compter exactement \(300\,000\) cycles d'horloge entre chaque impulsion.</p>
+          <p><strong>Étape 3 : Logique de comptage.</strong><br> Le circuit décrémente de \(M-1\) jusqu'à \(0\) (soit un total de \(M\) états ou \(M\) cycles). Le bloc "-1" matériel s'occupe déjà de soustraire 1 à la valeur de consigne.</p>
+          <p><strong>Étape 4 : Déduction de M.</strong><br> La valeur à programmer sur l'entrée \(M\) correspond donc directement au nombre de cycles souhaités : \[\mathbf{M = 300\,000}\]</p>
+          </div>
+          <p><strong>Question 2</strong> : Faire un chronogramme pour deux impulsions avec \(M=3\) puis deux impulsions avec \(M=2\).</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Initialisation (Cycle 0).</strong><br> <code>load</code> = 1, \(M = 3\). Le bloc "-1" calcule \(M-1 = 2\). Le registre R32 charge 2. Le Mux32 laisse passer 2. Le compteur C charge 2 car la porte OU donne 1.</p>
+          <p><strong>Étape 2 : Première séquence d'impulsions (M=3).</strong><br></p>
+          <ul class="formula-list">
+            <li><strong>Cycle 1 :</strong> <code>load</code> = 0, <code>enable</code> = 1. C = 2. <code>tc</code> (Q) = 0. Au front, C \(\rightarrow\) 1.</li>
+            <li><strong>Cycle 2 :</strong> C = 1, Q = 0. Au front, C \(\rightarrow\) 0.</li>
+            <li><strong>Cycle 3 (Impulsion) :</strong> C = 0. Donc Q = 1 (<code>tc</code>=1). La porte OU vaut 1. Le Mux32 laisse passer R32 (2). Au front, C recharge 2.</li>
+            <li><strong>Cycles 4, 5, 6 :</strong> Identique aux cycles 1 à 3. On obtient une 2ème impulsion.</li>
+          </ul>
+          <p><strong>Étape 3 : Seconde séquence d'impulsions (M=2).</strong><br></p>
+          <ul class="formula-list">
+            <li><strong>Cycle 7 (Changement) :</strong> <code>load</code> = 1, \(M = 2\). R32 et C chargent 1 (\(2-1\)).</li>
+            <li><strong>Cycle 8 (Impulsion) :</strong> <code>load</code> = 0, <code>enable</code> = 1. C passe de 1 à 0 au cycle 9. La période est maintenant de 2 cycles.</li>
+          </ul>
+          </div>
+          <p><strong>Question 3</strong> : Est-ce que les périodes des impulsions générées correspondent aux valeurs de M successives (3 puis 2) ? Si ce n'est pas le cas, expliquez.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Vérification pour M=3.</strong><br> Pour \(M=3\), le compteur prend les valeurs \(2 \rightarrow 1 \rightarrow 0\). Il faut donc 3 cycles d'horloge complets pour revenir à l'état initial. La période correspond.</p>
+          <p><strong>Étape 2 : Vérification pour M=2.</strong><br> Pour \(M=2\), le compteur prend les valeurs \(1 \rightarrow 0\). Il faut donc 2 cycles d'horloge. La période correspond.</p>
+          <p><strong>Étape 3 : Conclusion et rôle du bloc soustracteur.</strong><br> <strong>Oui</strong>, les périodes correspondent parfaitement. Le bloc "-1" placé en amont compense le fait que le compteur passe par l'état "0". Il garantit que la période mesurée en cycles d'horloge soit exactement égale à la valeur entière \(M\) demandée.</p>
+          </div>
+          <p><strong>Question 4</strong> : Donnez une description en VHDL de l'entité du timer.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Identification des ports et bibliothèques.</strong><br> Le schéma montre les entrées d'horloge, de contrôle (<code>load</code>, <code>enable</code>), le bus de données \(M\) sur 32 bits et la sortie scalaire \(Q\). On inclut <code>numeric_std</code> en prévision de l'architecture.</p>
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all; -- Requis pour les operations arithmetiques
+use ieee.numeric_std.all;
 
 entity timer is
     port (
@@ -103,25 +111,26 @@ entity timer is
         Q      : out std_logic
     );
 end entity timer;</code></pre>
-          <h4>Question 5</h4>
-          <p><strong>Énoncé :</strong> Décrire en VHDL RTL l'architecture <code>rtl</code> de ce circuit .</p>
-          <p><strong>Correction et Explications :</strong> L'architecture doit traduire les blocs de la figure .</p>
-          <pre class="code-block language-vhdl"><code>architecture rtl of timer is
-    -- Signaux internes
+          </div>
+          <p><strong>Question 5</strong> : Décrire en VHDL RTL l'architecture <code>rtl</code> de ce circuit.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Déclaration des signaux internes.</strong><br> On déclare les signaux de type <code>unsigned</code> pour les bus de données (M32, R32, Mux32, C) pour permettre l'arithmétique.</p>
+          <p><strong>Étape 2 : Implémentation combinatoire et processus synchrones.</strong><br> La logique combinatoire gère le soustracteur, le multiplexeur, la porte OU et le comparateur à zéro. Deux processus distincts gèrent les éléments mémorisants (Registre R32 et Compteur C).</p>
+          <pre class="code-block language-vhdl"><code class="language-vhdl">architecture rtl of timer is
     signal M32_uns, R32_uns, Mux32_uns, C_uns : unsigned(31 downto 0);
     signal OR1, Q_int : std_logic;
 begin
-    -- Instructions concurrentes (Questions 5.3 et 5.4)
-    M32_uns &lt;= unsigned(M) - 1; 
+    -- Logique Combinatoire
+    M32_uns &lt;= unsigned(M) - 1;
     Mux32_uns &lt;= M32_uns when load = '1' else R32_uns;
     
-    OR1 &lt;= load or Q_int;
     Q_int &lt;= '1' when C_uns = to_unsigned(0, 32) else '0';
-    Q &lt;= Q_int; -- Connexion de la sortie interne vers le port externe
+    OR1 &lt;= load or Q_int;
+    Q &lt;= Q_int;
 
-    -- Processus pour le registre R32 (Question 5.1)
-    process(clk)
-    begin
+    -- Registre de Memorisation (R32)
+    process(clk) begin
         if rising_edge(clk) then
             if load = '1' then
                 R32_uns &lt;= M32_uns;
@@ -129,34 +138,41 @@ begin
         end if;
     end process;
 
-    -- Processus pour le decompteur C (Question 5.2)
-    process(clk)
-    begin
+    -- Decompteur 32 bits (C)
+    process(clk) begin
         if rising_edge(clk) then
             if OR1 = '1' then
-                C_uns &lt;= Mux32_uns; -- Chargement synchrone
+                C_uns &lt;= Mux32_uns;     -- Chargement synchrone
             elsif enable = '1' then
-                C_uns &lt;= C_uns - 1; -- Decomptage synchrone
+                C_uns &lt;= C_uns - 1;     -- Decomptage synchrone
             end if;
         end if;
     end process;
-
 end architecture rtl;</code></pre>
-          <h4>Question 6 (Commentaire Verilog)</h4>
-          <p><strong>Énoncé :</strong> Commentez la fonction du code Verilog fourni .</p>
-          <p><strong>Correction et Explications :</strong> Le code décrit un <strong>multiplexeur 2 vers 1</strong> de manière combinatoire (<code>always @(load or M32 or R32)</code>). En fonction de la valeur de <code>load</code>, la sortie <code>MUX32</code> prend la valeur de <code>R32</code> (si <code>load</code> = 0) ou de <code>M32</code> (si <code>load</code> = 1) .</p>
-          <h4>Question 7 (Bascules)</h4>
-          <p><strong>Énoncé :</strong> Combien de bascules générera la synthèse de votre architecture précédente ? Justifiez .</p>
-          <p><strong>Correction et Explications :</strong> Le circuit générera <strong>64 bascules</strong> D. <em>Justification :</em> L'architecture contient deux processus synchrones (sensibles au front d'horloge <code>clk</code>).</p>
+          </div>
+          <p><strong>Question 6</strong> : Commentez la fonction du code Verilog fourni. <em>(Note: Fait référence à un bout de code Verilog issu du sujet original).</em></p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Traduction du comportement.</strong><br> Le code Verilog décrit un <strong>multiplexeur 2 vers 1</strong> modélisé de manière combinatoire (sensibilité <code>always @(*)</code> ou <code>always @(load or M32 or R32)</code>).</p>
+          <p><strong>Étape 2 : Conclusion.</strong><br> Il aiguille le signal : si <code>load</code> vaut 1, la sortie prend la valeur de l'entrée <code>M32</code>. Si <code>load</code> vaut 0, la sortie prend la valeur de l'entrée <code>R32</code>.</p>
+          </div>
+          <p><strong>Question 7</strong> : Combien de bascules générera la synthèse de votre architecture précédente ? Justifiez.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Analyse des processus synchrones.</strong><br> Le circuit contient deux processus réagissant au front montant de l'horloge (<code>rising_edge(clk)</code>), qui vont donc synthétiser des bascules D.</p>
+          <p><strong>Étape 2 : Dénombrement.</strong><br></p>
           <ul class="formula-list">
-            <li>Le premier mémorise le signal <code>R32</code>, qui est un vecteur de 32 bits \(\rightarrow\) 32 bascules.</li>
-            <li>Le second mémorise le compteur <code>C</code>, qui est également un vecteur de 32 bits \(\rightarrow\) 32 bascules.</li>
+            <li>Le premier processus mémorise le vecteur <code>R32_uns</code> (32 bits) \(\rightarrow\) 32 bascules.</li>
+            <li>Le second processus mémorise le vecteur <code>C_uns</code> (32 bits) \(\rightarrow\) 32 bascules.</li>
           </ul>
-          <p>Les autres éléments (Mux, bloc -1, porte OU) sont purement combinatoires et ne génèrent pas de bascules.</p>
-          <h4>Question 8 (Testbench)</h4>
-          <p><strong>Énoncé :</strong> Donnez une description du testbench <code>tb_timer</code> permettant de retrouver exactement le même chronogramme que celui de la question 2 .</p>
-          <p><strong>Correction :</strong></p>
-          <pre class="code-block language-vhdl"><code>library ieee;
+          <p>Tous les autres signaux (Mux, bloc -1, porte OU) sont modélisés en combinatoire. \[\mathbf{Total = 64 \text{ bascules}}\]</p>
+          </div>
+          <p><strong>Question 8</strong> : Donnez une description du testbench <code>tb_timer</code> permettant de retrouver exactement le même chronogramme que celui de la question 2.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Instanciation et horloge.</strong><br> On crée l'entité de test, on génère une horloge de \(1\,\mu\text{s}\) et on instancie le <code>timer</code>.</p>
+          <p><strong>Étape 2 : Scénario (Stimuli).</strong><br></p>
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
@@ -164,65 +180,44 @@ entity tb_timer is
 end entity tb_timer;
 
 architecture sim of tb_timer is
-    signal clk    : std_logic := '0';
-    signal load   : std_logic := '0';
-    signal enable : std_logic := '0';
-    signal M      : std_logic_vector(31 downto 0) := (others =&gt; '0');
-    signal Q      : std_logic;
-    
+    signal clk, load, enable, Q : std_logic := '0';
+    signal M : std_logic_vector(31 downto 0) := (others =&gt; '0');
     constant CLK_PERIOD : time := 1 us;
 begin
-    -- Instanciation du composant (UUT)
-    UUT: entity work.timer
-        port map (
-            clk =&gt; clk, load =&gt; load, enable =&gt; enable, M =&gt; M, Q =&gt; Q
-        );
+    UUT: entity work.timer port map(clk, load, enable, M, Q);
 
-    -- Generation de l'horloge
-    clk_process : process
-    begin
-        clk &lt;= '0';
-        wait for CLK_PERIOD / 2;
-        clk &lt;= '1';
-        wait for CLK_PERIOD / 2;
+    clk_process : process begin
+        clk &lt;= '0'; wait for CLK_PERIOD / 2;
+        clk &lt;= '1'; wait for CLK_PERIOD / 2;
     end process;
 
-    -- Stimuli (Scenario Q2)
-    stim_proc : process
-    begin
+    stim_proc : process begin
         -- Initialisation (Cycle 0)
         M &lt;= std_logic_vector(to_unsigned(3, 32));
-        load &lt;= '1';
-        enable &lt;= '0';
-        wait for CLK_PERIOD;
+        load &lt;= '1'; enable &lt;= '0'; wait for CLK_PERIOD;
         
-        -- Comptage normal pour generer deux impulsions
-        load &lt;= '0';
-        enable &lt;= '1';
-        wait for 6 * CLK_PERIOD; -- Attend 6 cycles (2 impulsions de periode 3)
+        -- Generation de 2 impulsions (M=3 -&gt; 6 cycles)
+        load &lt;= '0'; enable &lt;= '1'; wait for 6 * CLK_PERIOD;
         
-        -- Changement de M (M=2)
+        -- Changement (M=2)
         M &lt;= std_logic_vector(to_unsigned(2, 32));
-        load &lt;= '1';
-        wait for CLK_PERIOD;
+        load &lt;= '1'; wait for CLK_PERIOD;
         
-        -- Nouveau comptage pour generer deux impulsions
-        load &lt;= '0';
-        wait for 4 * CLK_PERIOD; -- Attend 4 cycles (2 impulsions de periode 2)
+        -- Generation de 2 impulsions (M=2 -&gt; 4 cycles)
+        load &lt;= '0'; wait for 4 * CLK_PERIOD;
         
-        -- Fin simulation
-        enable &lt;= '0';
-        wait;
+        enable &lt;= '0'; wait;
     end process;
 end architecture sim;</code></pre>
+          </div>
           </div>
         </article>
 
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Partie 2</span>
-              <h3>Exercice 2 : Contrôleur de porte de garage [30 points]</h3>
+              <span class="status-pill">Probleme 2</span>
+              <h3>Problème II - Contrôleur de porte de garage</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -231,36 +226,52 @@ end architecture sim;</code></pre>
           </header>
           <div class="answer-block">
           <h4>Contexte</h4>
-          <p>Une porte de garage est contrôlée par une machine à états. <code>ctr(1)</code> gère l'alimentation du moteur (1=ON, 0=OFF) et <code>ctr(0)</code> définit le sens (0=ouverture, 1=fermeture) . Les capteurs <code>sen1</code> et <code>sen2</code> détectent respectivement l'ouverture totale et la fermeture totale . Le bouton <code>remt</code> donne les ordres .</p>
-          <h4>Question 2.1</h4>
-          <figure class="system-diagram td-figure">
-            <img src="assets/vhdl/exam/vhdl_exam2_moore_1.svg" alt="Diagramme de transition de la porte de garage avec remt impulsionnel." loading="lazy">
-            <figcaption class="diagram-caption">Diagramme de transition de la porte de garage avec remt impulsionnel.</figcaption>
-          </figure>
-          <p><strong>Énoncé :</strong> Donnez un diagramme de transitions de la machine à états de Moore avec <code>remt</code> sous forme d'impulsion d'une seule période .</p>
-          <p><strong>Correction et Explications :</strong> On modélise le système en définissant les états suivants et leurs sorties associées (<code>ctr(1..0)</code>) :</p>
-          <ul class="formula-list">
-            <li><strong>FERME</strong> (<code>ctr = "0X"</code>) : État initial (après <code>rst</code>) . Si <code>remt = 1</code>, transition vers OUVERTURE .</li>
-            <li><strong>OUVERTURE</strong> (<code>ctr = "10"</code>) : Le moteur ouvre. Si <code>sen1 = 1</code>, transition vers OUVERT. Si <code>remt = 1</code>, transition vers STOP_OUVERTURE .</li>
-            <li><strong>OUVERT</strong> (<code>ctr = "0X"</code>) : Si <code>remt = 1</code>, transition vers FERMETURE .</li>
-            <li><strong>FERMETURE</strong> (<code>ctr = "11"</code>) : Le moteur ferme. Si <code>sen2 = 1</code>, transition vers FERME. Si <code>remt = 1</code>, transition vers STOP_FERMETURE .</li>
-            <li><strong>STOP_OUVERTURE</strong> (<code>ctr = "0X"</code>) : Arrêt en cours d'ouverture. Si <code>remt = 1</code>, transition vers FERMETURE .</li>
-            <li><strong>STOP_FERMETURE</strong> (<code>ctr = "0X"</code>) : Arrêt en cours de fermeture. Si <code>remt = 1</code>, transition vers OUVERTURE .</li>
-          </ul>
-          <h4>Question 2.2</h4>
           <figure class="system-diagram td-figure">
             <img src="assets/vhdl/exam/vhdl_exam2_moore_2.svg" alt="Diagramme de transition de la porte de garage avec remt continu." loading="lazy">
             <figcaption class="diagram-caption">Diagramme de transition de la porte de garage avec remt continu.</figcaption>
           </figure>
-          <p><strong>Énoncé :</strong> Donnez un diagramme de transitions de la machine à états de Moore si le signal <code>remt</code> est un signal continu tant qu'on appuie sur le bouton. Il faut détecter les passages à 0 .</p>
-          <p><strong>Correction et Explications :</strong> Puisque <code>remt</code> n'est plus une impulsion d'un cycle, rester dans l'état (par exemple) <strong>FERME</strong> ferait boucler la machine immédiatement entre <strong>OUVERTURE</strong> et <strong>STOP_OUVERTURE</strong> à la vitesse de l'horloge. Pour corriger cela dans une FSM de Moore, il faut doubler les états où l'on s'arrête (ou créer des états transitoires d'attente de relâchement du bouton). Par exemple, pour chaque action déclenchée par <code>remt=1</code>, on ne passe à l'état actif final que lorsque <code>remt=0</code> :</p>
+          <figure class="system-diagram td-figure">
+            <img src="assets/vhdl/exam/vhdl_exam2_moore_1.svg" alt="Diagramme de transition de la porte de garage avec remt impulsionnel." loading="lazy">
+            <figcaption class="diagram-caption">Diagramme de transition de la porte de garage avec remt impulsionnel.</figcaption>
+          </figure>
+          <p>Une porte de garage est contrôlée par une machine à états. <code>ctr(1)</code> gère l'alimentation du moteur (1=ON, 0=OFF) et <code>ctr(0)</code> définit le sens (0=ouverture, 1=fermeture). Les capteurs <code>sen1</code> et <code>sen2</code> détectent respectivement l'ouverture totale et la fermeture totale. Le bouton <code>remt</code> donne les ordres.</p>
+          <p><strong>Question 2.1</strong> : Donnez un diagramme de transitions de la machine à états de Moore avec <code>remt</code> sous forme d'impulsion d'une seule période.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Définition des états et sorties.</strong><br> La sortie dépend uniquement de l'état (Machine de Moore). On définit les vecteurs <code>ctr</code> associés :</p>
           <ul class="formula-list">
-            <li><strong>FERME</strong> : Si <code>remt = 1</code>, aller vers <strong>ATTENTE_RELACHEMENT_OUVERTURE</strong> (Moteur = 10, ou 0X selon choix sécuritaire).</li>
-            <li><strong>ATTENTE_RELACHEMENT_OUVERTURE</strong> : Si <code>remt = 0</code>, aller vers <strong>OUVERTURE</strong>. Si <code>remt = 1</code>, on boucle ici.</li>
-            <li><strong>OUVERTURE</strong> : Si <code>remt = 1</code>, aller vers <strong>ATTENTE_RELACHEMENT_STOP</strong> (Moteur OFF).</li>
-            <li><strong>ATTENTE_RELACHEMENT_STOP</strong> : Si <code>remt = 0</code>, aller vers <strong>STOP_OUVERTURE</strong>.</li>
+            <li><strong>FERME</strong> (<code>ctr = "0X"</code>) : Moteur coupé.</li>
+            <li><strong>OUVERTURE</strong> (<code>ctr = "10"</code>) : Moteur ON, sens ouverture.</li>
+            <li><strong>OUVERT</strong> (<code>ctr = "0X"</code>) : Moteur coupé.</li>
+            <li><strong>FERMETURE</strong> (<code>ctr = "11"</code>) : Moteur ON, sens fermeture.</li>
+            <li><strong>STOP_OUVERTURE</strong> (<code>ctr = "0X"</code>) : Arrêt d'urgence/pause.</li>
+            <li><strong>STOP_FERMETURE</strong> (<code>ctr = "0X"</code>) : Arrêt d'urgence/pause.</li>
           </ul>
-          <p><em>Note : Une méthode plus optimisée industriellement consiste à générer un signal <code>remt_pulse</code> en amont de la machine d'états à l'aide d'un détecteur de front montant synchrone, ce qui permet de conserver exactement la machine de la question 2.1.</em></p>
+          <p><strong>Étape 2 : Conditions de transition.</strong><br></p>
+          <ul class="formula-list">
+            <li>Depuis <strong>FERME</strong> : Si <code>remt = 1</code> \(\rightarrow\) <strong>OUVERTURE</strong>.</li>
+            <li>Depuis <strong>OUVERTURE</strong> : Si <code>sen1 = 1</code> \(\rightarrow\) <strong>OUVERT</strong>. Si <code>remt = 1</code> \(\rightarrow\) <strong>STOP_OUVERTURE</strong>.</li>
+            <li>Depuis <strong>OUVERT</strong> : Si <code>remt = 1</code> \(\rightarrow\) <strong>FERMETURE</strong>.</li>
+            <li>Depuis <strong>FERMETURE</strong> : Si <code>sen2 = 1</code> \(\rightarrow\) <strong>FERME</strong>. Si <code>remt = 1</code> \(\rightarrow\) <strong>STOP_FERMETURE</strong>.</li>
+            <li>Depuis <strong>STOP_OUVERTURE</strong> : Si <code>remt = 1</code> \(\rightarrow\) <strong>FERMETURE</strong> (inversion de sens).</li>
+            <li>Depuis <strong>STOP_FERMETURE</strong> : Si <code>remt = 1</code> \(\rightarrow\) <strong>OUVERTURE</strong> (inversion de sens).</li>
+          </ul>
+          </div>
+          <p><strong>Question 2.2</strong> : Donnez un diagramme de transitions de la machine à états de Moore si le signal <code>remt</code> est un signal continu tant qu'on appuie sur le bouton. Il faut détecter les passages à 0.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Identification du problème (Bouton continu).</strong><br> Si <code>remt</code> reste à '1' sur plusieurs cycles d'horloge, la machine basculerait instantanément entre, par exemple, <strong>OUVERTURE</strong> et <strong>STOP_OUVERTURE</strong> à chaque coup d'horloge.</p>
+          <p><strong>Étape 2 : Résolution avec des états d'attente (Wait states).</strong><br> Pour éviter le rebouclage indésirable, il faut attendre le relâchement du bouton (<code>remt = 0</code>) avant de valider l'action. On double les états déclenchés par <code>remt</code> :</p>
+          <ul class="formula-list">
+            <li><strong>FERME</strong> : Si <code>remt = 1</code> \(\rightarrow\) <strong>ATTENTE_RELACHEMENT_OUV</strong> (<code>ctr = "0X"</code>).</li>
+            <li><strong>ATTENTE_RELACHEMENT_OUV</strong> : Si <code>remt = 0</code> \(\rightarrow\) <strong>OUVERTURE</strong>. Si <code>remt = 1</code>, boucle sur lui-même.</li>
+            <li><strong>OUVERTURE</strong> : Si <code>remt = 1</code> \(\rightarrow\) <strong>ATTENTE_RELACHEMENT_STOP</strong> (<code>ctr = "0X"</code>).</li>
+            <li><strong>ATTENTE_RELACHEMENT_STOP</strong> : Si <code>remt = 0</code> \(\rightarrow\) <strong>STOP_OUVERTURE</strong>.</li>
+          </ul>
+          <p>Cette logique s'applique symétriquement pour la fermeture.</p>
+          </div>
+          <p>\vfill</p>
+          <p>Équipe Pédagogique Esisar Page 1/1</p>
           </div>
         </article>
       </section>

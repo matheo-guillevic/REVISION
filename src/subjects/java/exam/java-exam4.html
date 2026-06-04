@@ -22,9 +22,14 @@
       <header class="td-header">
         <a class="back-link" href="java.html#java-exams">Retour aux examens</a>
         <div>
-          <span class="eyebrow">Examen 4</span>
+          <span class="eyebrow">IN361 - Examen 4</span>
           <h1>Examen Java 4</h1>
-          <p>Page reconstruite depuis <code>pdf/java/exam/java-exam4.tex</code>, avec les réponses et raisonnements.</p>
+          <p>Conception Java, classes, polymorphisme, exceptions et code.</p>
+          <p>Page reconstruite depuis <code>pdf/java/exam/java-exam4.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/java/exam/java-exam4.tex">Ouvrir le sujet LaTeX</a>
+          <a class="back-link" href="java.html">Cours Java</a>
         </div>
       </header>
 
@@ -41,24 +46,18 @@
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question a</h4>
-            <p>Indiquer la ligne mise en cause et en expliquer la raison.</p>
-          </div>
+          <p><strong>Question a :</strong> Indiquer la ligne mise en cause et en expliquer la raison.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-            <p>L'erreur de compilation se trouve à la ligne : <code>Math m = new Math();</code>. La raison est que le constructeur de la classe <code>Math</code> est explicitement déclaré comme privé (\texttt{private Math() \{\}}). Il est donc impossible d'instancier un objet de cette classe depuis l'extérieur. De plus, <code>PI</code> est une variable statique.</p>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong> L'erreur de compilation se trouve à la ligne : <code>Math m = new Math();</code>. La raison est que le constructeur de la classe <code>Math</code> est explicitement déclaré comme privé (\texttt{private Math() \{\}}). Il est donc impossible d'instancier un objet de cette classe depuis l'extérieur. De plus, <code>PI</code> est une variable statique.</p>
           </div>
-          <div class="question-block">
-            <h4>Question b</h4>
-            <p>Proposer un correctif.</p>
-          </div>
+          <p><strong>Question b :</strong> Proposer un correctif.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>Puisque la constante <code>PI</code> est statique, on doit l'appeler directement depuis la classe.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse :</strong> Puisque la constante <code>PI</code> est statique, on doit l'appeler directement depuis la classe.</p>
           <pre class="code-block language-java"><code class="language-java">double r = 10;
 double perimetre = 2 * Math.PI * r;</code></pre>
+          </div>
           </div>
         </article>
 
@@ -74,17 +73,14 @@ double perimetre = 2 * Math.PI * r;</code></pre>
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question</h4>
-            <p>Modifier cette classe de façon à la rendre non dérivable.</p>
-          </div>
+          <p><strong>Question :</strong> Modifier cette classe de façon à la rendre non dérivable.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-            <p>Pour empêcher l'héritage d'une classe en Java, il faut utiliser le mot-clé <code>final</code> dans sa déclaration.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong> Pour empêcher l'héritage d'une classe en Java, il faut utiliser le mot-clé <code>final</code> dans sa déclaration.</p>
           <pre class="code-block language-java"><code class="language-java">public final class Materiel {
     // ...
 }</code></pre>
+          </div>
           </div>
         </article>
 
@@ -100,18 +96,15 @@ double perimetre = 2 * Math.PI * r;</code></pre>
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question</h4>
-            <p>Expliquez l'erreur de compilation et proposez un correctif.</p>
-          </div>
+          <p><strong>Question :</strong> Expliquez l'erreur de compilation et proposez un correctif.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-            <p>La méthode <code>main</code> censée être le point d'entrée du programme a une mauvaise signature. Elle doit prendre en paramètre un tableau de chaînes de caractères (<code>String[]</code>). Le code actuel indique <code>String args</code> (une simple chaîne) au lieu de <code>String[] args</code>.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong> La méthode <code>main</code> censée être le point d'entrée du programme a une mauvaise signature. Elle doit prendre en paramètre un tableau de chaînes de caractères (<code>String[]</code>). Le code actuel indique <code>String args</code> (une simple chaîne) au lieu de <code>String[] args</code>.</p>
           <pre class="code-block language-java"><code class="language-java">public static void main(String[] args) {
     int a = 0;
     System.out.println("" + a);
 }</code></pre>
+          </div>
           </div>
         </article>
 
@@ -127,18 +120,16 @@ double perimetre = 2 * Math.PI * r;</code></pre>
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question</h4>
-            <p>Expliquer la différence en Java entre <code>int</code> et <code>Integer</code>. Quel nom est donné aux classes <code>Integer</code>, <code>Double</code>, <code>Boolean</code> ? Quel est l'intérêt ?</p>
-          </div>
+          <p><strong>Question :</strong> Expliquer la différence en Java entre <code>int</code> et <code>Integer</code>. Quel nom est donné aux classes <code>Integer</code>, <code>Double</code>, <code>Boolean</code> ? Quel est l'intérêt ?</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong></p>
           <ul class="formula-list">
             <li><strong>Différence :</strong> <code>int</code> est un type primitif (valeur stockée en mémoire), tandis que <code>Integer</code> est un objet (référence vers un espace mémoire encapsulant un entier).</li>
             <li><strong>Nom :</strong> Ce sont des <strong>classes enveloppes</strong> (ou <em>Wrapper classes</em> en anglais).</li>
             <li><strong>Intérêt :</strong> Elles permettent de manipuler des types primitifs comme des objets. C'est indispensable pour utiliser les collections génériques en Java (comme <code>ArrayList&lt;Integer&gt;</code>) qui n'acceptent que des objets. De plus, ces classes fournissent des méthodes utilitaires pratiques (ex: <code>Integer.parseInt()</code>).</li>
           </ul>
+          </div>
           </div>
         </article>
 
@@ -154,28 +145,24 @@ double perimetre = 2 * Math.PI * r;</code></pre>
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question a</h4>
-            <p>Différence entre redéfinition et surcharge.</p>
-          </div>
+          <p><strong>Question a :</strong> Différence entre redéfinition et surcharge.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse :</strong></p>
           <ul class="formula-list">
             <li><strong>Redéfinition (Overriding) :</strong> Consiste à réécrire une méthode héritée d'une classe mère en gardant <strong>exactement la même signature</strong> (nom, type de retour et paramètres).</li>
             <li><strong>Surcharge (Overloading) :</strong> Consiste à créer plusieurs méthodes portant le <strong>même nom mais avec des paramètres différents</strong> (nombre ou type) au sein de la même classe (ou héritée).</li>
           </ul>
-          <div class="question-block">
-            <h4>Question b</h4>
-            <p>Dans <code>MaterielSki</code>, indiquer la méthode redéfinie et surchargée.</p>
           </div>
+          <p><strong>Question b :</strong> Dans <code>MaterielSki</code>, indiquer la méthode redéfinie et surchargée.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse :</strong></p>
           <ul class="formula-list">
             <li><code>public double getTarifJournee()</code> est la méthode <strong>redéfinie</strong> (elle écrase celle de <code>Materiel</code>).</li>
             <li><code>public double getTarifJournee(double coeff)</code> est la méthode <strong>surchargée</strong>.</li>
           </ul>
+          </div>
           </div>
         </article>
 
@@ -191,28 +178,23 @@ double perimetre = 2 * Math.PI * r;</code></pre>
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question 1</h4>
-            <p>Indiquer les erreurs et expliquer la raison.</p>
-          </div>
+          <p><strong>Question 1 :</strong> Indiquer les erreurs et expliquer la raison.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-          </div>
-          <ul class="formula-list">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong></p>
+          <ol class="solution-steps">
             <li>La méthode <code>getMarque()</code> est déclarée <code>abstract</code> mais possède un corps (des accolades avec un return). Une méthode abstraite ne doit avoir qu'une signature terminée par un point-virgule.</li>
             <li>La classe <code>Materiel</code> contient une méthode abstraite, elle doit donc obligatoirement être déclarée abstraite (<code>public abstract class Materiel</code>).</li>
-          </ul>
-          <div class="question-block">
-            <h4>Question 2</h4>
-            <p>Apporter un correctif.</p>
+          </ol>
           </div>
+          <p><strong>Question 2 :</strong> Apporter un correctif.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>L'attribut <code>marque</code> étant présent dans la classe, le plus logique n'est pas de faire une méthode abstraite, mais une méthode concrète classique. On retire simplement le mot-clé <code>abstract</code>.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse :</strong> L'attribut <code>marque</code> étant présent dans la classe, le plus logique n'est pas de faire une méthode abstraite, mais une méthode concrète classique. On retire simplement le mot-clé <code>abstract</code>.</p>
           <pre class="code-block language-java"><code class="language-java">public String getMarque() {
     return marque;
 }</code></pre>
+          </div>
           </div>
         </article>
 
@@ -228,14 +210,10 @@ double perimetre = 2 * Math.PI * r;</code></pre>
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question</h4>
-            <p>Quel est le résultat de ce programme ?</p>
-          </div>
+          <p><strong>Question :</strong> Quel est le résultat de ce programme ?</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-            <p>Grâce au polymorphisme (liaison dynamique), la méthode appelée est toujours celle du type réel de l'objet instancié en mémoire. Si la méthode n'est pas redéfinie, c'est celle de la classe mère qui est utilisée.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong> Grâce au polymorphisme (liaison dynamique), la méthode appelée est toujours celle du type réel de l'objet instancié en mémoire. Si la méthode n'est pas redéfinie, c'est celle de la classe mère qui est utilisée.</p>
           <ul class="formula-list">
             <li><code>a = new A(); a.affiche();</code> \(\rightarrow\) <strong>Je suis un A </strong></li>
             <li><code>b = new B(); b.affiche();</code> \(\rightarrow\) <strong>Je suis un A </strong> (B hérite de A, pas de redéfinition)</li>
@@ -243,12 +221,13 @@ double perimetre = 2 * Math.PI * r;</code></pre>
             <li><code>c = new C(); c.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> (C redéfinit la méthode)</li>
             <li><code>a = c; a.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong></li>
             <li><code>d = new D(); d.affiche();</code> \(\rightarrow\) <strong>Je suis un D</strong> (D redéfinit)</li>
-            <li><code>a = d; a.affiche(); c = d; c.affiche();</code> \(\rightarrow\) <strong>Je suis un D</strong> <br> <strong>Je suis un D</strong></li>
+            <li><code>a = d; a.affiche(); c = d; c.affiche();</code> \(\rightarrow\) <strong>Je suis un D</strong> \newline <strong>Je suis un D</strong></li>
             <li><code>e = new E(); e.affiche();</code> \(\rightarrow\) <strong>Je suis un A </strong> (E hérite de B qui hérite de A)</li>
-            <li><code>a = e; a.affiche(); b = e; b.affiche();</code> \(\rightarrow\) <strong>Je suis un A </strong> <br> <strong>Je suis un A </strong></li>
+            <li><code>a = e; a.affiche(); b = e; b.affiche();</code> \(\rightarrow\) <strong>Je suis un A </strong> \newline <strong>Je suis un A </strong></li>
             <li><code>f = new F(); f.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> (F hérite de C qui a sa redéfinition)</li>
-            <li><code>a = f; a.affiche(); c = f; c.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> <br> <strong>Je suis un C</strong></li>
+            <li><code>a = f; a.affiche(); c = f; c.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> \newline <strong>Je suis un C</strong></li>
           </ul>
+          </div>
           </div>
         </article>
 
@@ -264,10 +243,7 @@ double perimetre = 2 * Math.PI * r;</code></pre>
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question 1</h4>
-            <p>Redéfinir la méthode <code>equals</code> dans <code>Materiel</code>.</p>
-          </div>
+          <p><strong>Question 1 :</strong> Redéfinir la méthode <code>equals</code> dans <code>Materiel</code>.</p>
           <pre class="code-block language-java"><code class="language-java">@Override
 public boolean equals(Object obj) {
     if (this == obj) return true; // Meme reference
@@ -277,10 +253,7 @@ public boolean equals(Object obj) {
     return Double.compare(m.tarifJournee, tarifJournee) == 0 &amp;&amp;
            (marque != null ? marque.equals(m.marque) : m.marque == null);
 }</code></pre>
-          <div class="question-block">
-            <h4>Question 2</h4>
-            <p>Indiquer pour chaque affichage la valeur indiquée et expliquer.</p>
-          </div>
+          <p><strong>Question 2 :</strong> Indiquer pour chaque affichage la valeur indiquée et expliquer.</p>
           <ul class="formula-list">
             <li><code>m1.equals(m4)</code> \(\rightarrow\) <strong>false</strong> (Marques différentes : "rossignol" vs "Nordica").</li>
             <li><code>m1 == m2</code> \(\rightarrow\) <strong>false</strong> (<code>==</code> compare les adresses mémoire. Ce sont deux instances distinctes avec <code>new</code>).</li>
@@ -302,23 +275,16 @@ public boolean equals(Object obj) {
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question 1</h4>
-            <p>Erreur à l'exécution et correctif.</p>
-          </div>
+          <p><strong>Question 1 :</strong> Erreur à l'exécution et correctif.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-            <p>Le programme lance une <code>NullPointerException</code> car la liste <code>lesMateriels</code> est déclarée mais n'est jamais instanciée. Elle vaut <code>null</code> au moment de l'appel <code>lesMateriels.add(...)</code>.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong> Le programme lance une <code>NullPointerException</code> car la liste <code>lesMateriels</code> est déclarée mais n'est jamais instanciée. Elle vaut <code>null</code> au moment de l'appel <code>lesMateriels.add(...)</code>.</p>
           <pre class="code-block language-java"><code class="language-java">ArrayList&lt;Materiel&gt; lesMateriels = new ArrayList&lt;&gt;();</code></pre>
-          <div class="question-block">
-            <h4>Question 2</h4>
-            <p>Afficher le catalogue en appliquant 20\% de réduction sur les skis.</p>
           </div>
+          <p><strong>Question 2 :</strong> Afficher le catalogue en appliquant 20% de réduction sur les skis.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-            <p>On utilise <code>instanceof</code> pour vérifier si l'objet est un équipement de ski. Si c'est le cas, on le caste pour appeler la méthode surchargée avec le coefficient <code>0.8</code> (ce qui équivaut à -20\%).</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong> On utilise <code>instanceof</code> pour vérifier si l'objet est un équipement de ski. Si c'est le cas, on le caste pour appeler la méthode surchargée avec le coefficient <code>0.8</code> (ce qui équivaut à -20%).</p>
           <pre class="code-block language-java"><code class="language-java">for (Materiel m : lesMateriels) {
     if (m instanceof MaterielSki) {
         MaterielSki ms = (MaterielSki) m;
@@ -329,6 +295,7 @@ public boolean equals(Object obj) {
         System.out.println(m.toString());
     }
 }</code></pre>
+          </div>
           </div>
         </article>
       </section>

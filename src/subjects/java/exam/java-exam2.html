@@ -22,9 +22,14 @@
       <header class="td-header">
         <a class="back-link" href="java.html#java-exams">Retour aux examens</a>
         <div>
-          <span class="eyebrow">Examen 2</span>
+          <span class="eyebrow">IN361 - Examen 2</span>
           <h1>Examen Java 2</h1>
-          <p>Page reconstruite depuis <code>pdf/java/exam/java-exam2.tex</code>, avec les réponses et raisonnements.</p>
+          <p>Objets, collections, exceptions et conception de classes.</p>
+          <p>Page reconstruite depuis <code>pdf/java/exam/java-exam2.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/java/exam/java-exam2.tex">Ouvrir le sujet LaTeX</a>
+          <a class="back-link" href="java.html">Cours Java</a>
         </div>
       </header>
 
@@ -41,17 +46,14 @@
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question</h4>
-            <p>Expliquer ce qu'est un objet immutable. Donner 2 exemples de class Java immutable.</p>
-          </div>
+          <p><strong>Question :</strong> Expliquer ce qu'est un objet immutable. Donner 2 exemples de class Java immutable.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-            <p>Un objet immutable (immuable en français) est un objet dont l'état (les valeurs de ses attributs) ne peut pas être modifié une fois qu'il a été créé et initialisé.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong> Un objet immutable (immuable en français) est un objet dont l'état (les valeurs de ses attributs) ne peut pas être modifié une fois qu'il a été créé et initialisé.</p>
           <ul class="formula-list">
             <li><strong>Exemples :</strong> <code>String</code>, <code>Integer</code> (ou toute autre classe Wrapper comme <code>Double</code>), et <code>LocalDate</code> (vue dans l'exercice 4).</li>
           </ul>
+          </div>
           </div>
         </article>
 
@@ -67,13 +69,10 @@
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question</h4>
-            <p>Expliquez pourquoi ce programme ne veut pas se lancer.</p>
-          </div>
+          <p><strong>Question :</strong> Expliquez pourquoi ce programme ne veut pas se lancer.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-            <p>La signature de la méthode principale est incorrecte. Dans le code fourni, la méthode est écrite <code>public void main(String args)</code>. Pour que la Machine Virtuelle Java (JVM) puisse identifier le point d'entrée du programme et l'exécuter, la méthode doit obligatoirement être <code>static</code> et prendre en paramètre un tableau de chaînes de caractères. Il faudrait écrire : <code>public static void main(String[] args)</code>.</p>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong> La signature de la méthode principale est incorrecte. Dans le code fourni, la méthode est écrite <code>public void main(String args)</code>. Pour que la Machine Virtuelle Java (JVM) puisse identifier le point d'entrée du programme et l'exécuter, la méthode doit obligatoirement être <code>static</code> et prendre en paramètre un tableau de chaînes de caractères. Il faudrait écrire : <code>public static void main(String[] args)</code>.</p>
           </div>
           </div>
         </article>
@@ -90,18 +89,16 @@
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question</h4>
-            <p>Ce programme ne compile pas. a) Expliquez l'erreur b) Proposer un correctif.</p>
-          </div>
+          <p><strong>Question :</strong> Ce programme ne compile pas. a) Expliquez l'erreur b) Proposer un correctif.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse et Raisonnement</strong>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse et Raisonnement :</strong></p>
           <ul class="formula-list">
             <li><strong>a) Explication :</strong> L'erreur provient de la ligne <code>ArrayList&lt;int&gt; maListe = new ArrayList&lt;int&gt;();</code>. En Java, les collections et la généricité ne fonctionnent qu'avec des types objets (références). Il est impossible d'utiliser un type primitif comme <code>int</code>.</li>
             <li><strong>b) Correctif :</strong> Il faut utiliser la classe Wrapper (enveloppe) <code>Integer</code> correspondante au type primitif <code>int</code>.</li>
           </ul>
           <pre class="code-block language-java"><code class="language-java">ArrayList&lt;Integer&gt; maListe = new ArrayList&lt;Integer&gt;();</code></pre>
+          </div>
           </div>
         </article>
 
@@ -117,38 +114,26 @@
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question a</h4>
-            <p>Expliquer ce que fait la ligne <code>return this (year, month, dayOfMonth);</code>.</p>
-          </div>
+          <p><strong>Question a :</strong> Expliquer ce que fait la ligne <code>return this (year, month, dayOfMonth);</code>.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse a</strong>
-            <p>Cette syntaxe, bien qu'incorrecte dans une méthode statique en Java classique (il faudrait un <code>new LocalDate(...)</code>), représente conceptuellement l'appel au constructeur de la classe courante afin d'instancier et de retourner un nouvel objet <code>LocalDate</code>.</p>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse a :</strong> Cette syntaxe, bien qu'incorrecte dans une méthode statique en Java classique (il faudrait un <code>new LocalDate(...)</code>), représente conceptuellement l'appel au constructeur de la classe courante afin d'instancier et de retourner un nouvel objet <code>LocalDate</code>.</p>
           </div>
-          <div class="question-block">
-            <h4>Question b</h4>
-            <p>Indiquer la ligne causant une erreur de compilation et en expliquer la raison.</p>
-          </div>
+          <p><strong>Question b :</strong> Indiquer la ligne causant une erreur de compilation et en expliquer la raison.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse b</strong>
-            <p>La ligne en erreur est <code>d = new LocalDate (2023,2,15);</code>. La raison est que le constructeur de la classe <code>LocalDate</code> est déclaré <code>private</code>. Il est donc inaccessible depuis une autre classe (comme le programme principal).</p>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse b :</strong> La ligne en erreur est <code>d = new LocalDate (2023,2,15);</code>. La raison est que le constructeur de la classe <code>LocalDate</code> est déclaré <code>private</code>. Il est donc inaccessible depuis une autre classe (comme le programme principal).</p>
           </div>
-          <div class="question-block">
-            <h4>Question c</h4>
-            <p>Si possible proposer un correctif.</p>
-          </div>
+          <p><strong>Question c :</strong> Si possible proposer un correctif.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse c</strong>
-            <p>Il faut utiliser les méthodes statiques fournies par la classe pour obtenir une instance (patron de conception Factory / Fabrique).</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse c :</strong> Il faut utiliser les méthodes statiques fournies par la classe pour obtenir une instance (patron de conception Factory / Fabrique).</p>
           <pre class="code-block language-java"><code class="language-java">d = LocalDate.of(2023, 2, 15);</code></pre>
-          <div class="question-block">
-            <h4>Question d</h4>
-            <p>Comment peut-on qualifier ses 2 méthodes <code>of</code> en utilisant le vocabulaire orienté objet adapté ?.</p>
           </div>
+          <p><strong>Question d :</strong> Comment peut-on qualifier ses 2 méthodes <code>of</code> en utilisant le vocabulaire orienté objet adapté ?.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse d</strong>
-            <p>C'est de la <strong>surcharge</strong> (Overloading). On a plusieurs méthodes qui portent le même nom (<code>of</code>) mais qui diffèrent par la signature de leurs paramètres (l'une prend <code>int, int, int</code>  et l'autre <code>int, Month, int</code> ).</p>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse d :</strong> C'est de la <strong>surcharge</strong> (Overloading). On a plusieurs méthodes qui portent le même nom (<code>of</code>) mais qui diffèrent par la signature de leurs paramètres (l'une prend <code>int, int, int</code> et l'autre <code>int, Month, int</code> ).</p>
           </div>
           </div>
         </article>
@@ -165,21 +150,15 @@
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question 1</h4>
-            <p>Erreur de compilation sur <code>Bien b = new Bien(...);</code>.</p>
-          </div>
+          <p><strong>Question 1 :</strong> Erreur de compilation sur <code>Bien b = new Bien(...);</code>.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse 1</strong>
-            <p>La classe <code>Bien</code> est déclarée comme <code>abstract</code>. Une classe abstraite ne peut pas être instanciée directement avec <code>new</code>.</p>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse 1 :</strong> La classe <code>Bien</code> est déclarée comme <code>abstract</code>. Une classe abstraite ne peut pas être instanciée directement avec <code>new</code>.</p>
           </div>
-          <div class="question-block">
-            <h4>Question 2</h4>
-            <p>Concernant la méthode <code>toString</code>, comment qualifier cette méthode ?.</p>
-          </div>
+          <p><strong>Question 2 :</strong> Concernant la méthode <code>toString</code>, comment qualifier cette méthode ?.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse 2</strong>
-            <p>C'est une <strong>redéfinition</strong> (Overriding). L'annotation <code>@Override</code>  indique que la classe <code>Bien</code> fournit sa propre implémentation de la méthode <code>toString()</code> héritée de la super-classe mère universelle <code>Object</code>.</p>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse 2 :</strong> C'est une <strong>redéfinition</strong> (Overriding). L'annotation <code>@Override</code> indique que la classe <code>Bien</code> fournit sa propre implémentation de la méthode <code>toString()</code> héritée de la super-classe mère universelle <code>Object</code>.</p>
           </div>
           </div>
         </article>
@@ -196,25 +175,19 @@
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question a</h4>
-            <p>Expliquer la cause de l'erreur sur <code>System.out.println("" + b.getSurface());</code>.</p>
-          </div>
+          <p><strong>Question a :</strong> Expliquer la cause de l'erreur sur <code>System.out.println("" + b.getSurface());</code>.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse a</strong>
-            <p>La variable <code>b</code> est déclarée avec le type de référence <code>Bien</code>. Lors de la compilation, le compilateur vérifie les méthodes disponibles pour le type de référence. Or, la méthode <code>getSurface()</code> n'est pas définie dans la classe <code>Bien</code> , elle n'existe que dans la classe fille <code>Maison</code>.</p>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse a :</strong> La variable <code>b</code> est déclarée avec le type de référence <code>Bien</code>. Lors de la compilation, le compilateur vérifie les méthodes disponibles pour le type de référence. Or, la méthode <code>getSurface()</code> n'est pas définie dans la classe <code>Bien</code> , elle n'existe que dans la classe fille <code>Maison</code>.</p>
           </div>
-          <div class="question-block">
-            <h4>Question b</h4>
-            <p>Proposer un correctif.</p>
-          </div>
+          <p><strong>Question b :</strong> Proposer un correctif.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse b</strong>
-            <p>On peut procéder à un "cast" (transtypage) pour indiquer au compilateur que l'objet pointé est bien une <code>Maison</code>.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse b :</strong> On peut procéder à un "cast" (transtypage) pour indiquer au compilateur que l'objet pointé est bien une <code>Maison</code>.</p>
           <pre class="code-block language-java"><code class="language-java">System.out.println("" + ((Maison) b).getSurface());
 // Alternative : déclarer b en tant que Maison
 // Maison b = new Maison(1, "Villa Magnifico", "Valence", 1000);</code></pre>
+          </div>
           </div>
         </article>
 
@@ -230,25 +203,20 @@
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question 1</h4>
-            <p>Expliquer l'erreur dans la classe <code>Maison</code>.</p>
-          </div>
+          <p><strong>Question 1 :</strong> Expliquer l'erreur dans la classe <code>Maison</code>.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse 1</strong>
-            <p>La classe <code>Maison</code> hérite de la classe <code>Bien</code>. La classe <code>Bien</code> possède une méthode abstraite <code>addTarif(Tarif newTarif)</code>. Puisque <code>Maison</code> est une classe concrète, elle est dans l'obligation d'implémenter (redéfinir) toutes les méthodes abstraites héritées de sa classe mère.</p>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse 1 :</strong> La classe <code>Maison</code> hérite de la classe <code>Bien</code>. La classe <code>Bien</code> possède une méthode abstraite <code>addTarif(Tarif newTarif)</code>. Puisque <code>Maison</code> est une classe concrète, elle est dans l'obligation d'implémenter (redéfinir) toutes les méthodes abstraites héritées de sa classe mère.</p>
           </div>
-          <div class="question-block">
-            <h4>Question 2</h4>
-            <p>Apporter un correctif (code à ajouter dans la classe <code>Maison</code>).</p>
-          </div>
+          <p><strong>Question 2 :</strong> Apporter un correctif (code à ajouter dans la classe <code>Maison</code>).</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse 2</strong>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse 2 :</strong></p>
           <pre class="code-block language-java"><code class="language-java">@Override
 public void addTarif(Tarif newTarif) {
     // Code d'ajout du tarif
 }</code></pre>
+          </div>
           </div>
         </article>
 
@@ -264,26 +232,20 @@ public void addTarif(Tarif newTarif) {
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question 1</h4>
-            <p>Erreur à l'exécution et correctif.</p>
+          <p><strong>Question 1 :</strong> Erreur à l'exécution et correctif.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse 1 :</strong> L'erreur est une <code>NullPointerException</code>. La variable <code>mesBiens</code> est déclarée mais n'a pas été initialisée (elle vaut <code>null</code>). Quand on tente d'appeler <code>mesBiens.add(...)</code>, le programme plante.</p>
           </div>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse 1</strong>
-            <p>L'erreur est une <code>NullPointerException</code>. La variable <code>mesBiens</code> est déclarée  mais n'a pas été initialisée (elle vaut <code>null</code>). Quand on tente d'appeler <code>mesBiens.add(...)</code>, le programme plante.</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Correctif</strong>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Correctif :</strong></p>
           <pre class="code-block language-java"><code class="language-java">ArrayList&lt;Bien&gt; mesBiens = new ArrayList&lt;&gt;();</code></pre>
-          <div class="question-block">
-            <h4>Question 2</h4>
-            <p>Compléter le programme pour afficher les maisons dont la ville est "Valence" et leur surface.</p>
           </div>
+          <p><strong>Question 2 :</strong> Compléter le programme pour afficher les maisons dont la ville est "Valence" et leur surface.</p>
           <div class="td-step-block td-solution-block">
-            <strong>Réponse 2</strong>
-            <p>Il faut parcourir la liste, vérifier avec <code>instanceof</code> que le bien est une maison, puis vérifier la ville.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Réponse 2 :</strong> Il faut parcourir la liste, vérifier avec <code>instanceof</code> que le bien est une maison, puis vérifier la ville.</p>
           <pre class="code-block language-java"><code class="language-java">for (Bien b : mesBiens) {
     // On verifie que c'est une Maison pour pouvoir caster et acceder a la surface
     if (b instanceof Maison) {
@@ -293,6 +255,7 @@ public void addTarif(Tarif newTarif) {
         }
     }
 }</code></pre>
+          </div>
           </div>
         </article>
       </section>

@@ -20,15 +20,15 @@
   <body class="td-page">
     <main class="main-content">
       <header class="td-header">
-        <a class="back-link" href="vhdl.html#vhdl-exams">Retour aux examens VHDL</a>
+        <a class="back-link" href="vhdl.html#vhdl-exams">Retour aux examens</a>
         <div>
           <span class="eyebrow">SN361 - Examen 1</span>
           <h1>Registre generique et compteur modulo N</h1>
           <p>Register Transfer Level, description structurelle, generate, compteur modulo N et testbench.</p>
-          <p>Page reconstruite depuis <code>pdf/vhdl/exam/vhdl-exam1.tex</code>, avec les corrections et explications.</p>
+          <p>Page reconstruite depuis <code>pdf/vhdl/exam/vhdl-exam1.tex</code>.</p>
         </div>
         <div class="td-actions">
-          <a class="primary-button" href="pdf/vhdl/exam/vhdl-exam1.pdf">Ouvrir le PDF</a>
+          <a class="primary-button" href="pdf/vhdl/exam/vhdl-exam1.tex">Ouvrir le sujet LaTeX</a>
           <a class="back-link" href="vhdl.html">Cours VHDL</a>
         </div>
       </header>
@@ -37,8 +37,8 @@
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Partie I</span>
-              <h3>Partie I : Conception d'un registre [40/90]</h3>
+              <span class="status-pill">Probleme 1</span>
+              <h3>Problème I - Conception d'un registre</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -46,30 +46,30 @@
             </div>
           </header>
           <div class="answer-block">
-          <h4>Question 1.1</h4>
-          <p><strong>Énoncé :</strong> Dessinez en utilisant uniquement des bascules DFF (possédant des entrées reset et enable) le circuit d'un registre \(n\) bits à chargement parallèle et sortie parallèle capturant de l'entrée <code>Din</code> sur la sortie <code>Dout</code> sur les fronts montants de l'horloge <code>clk</code> avec  :</p>
+          <p><strong>Question 1.1</strong> : Dessinez en utilisant uniquement des bascules DFF (possédant des entrées reset et enable) le circuit d'un registre \(n\) bits à chargement parallèle et sortie parallèle capturant de l'entrée <code>Din</code> sur la sortie <code>Dout</code> sur les fronts montants de l'horloge <code>clk</code> avec :</p>
           <ul class="formula-list">
-            <li>une entrée <code>enable</code> active à l'état haut autorisant le chargement de l'entrée <code>Din</code> .</li>
-            <li>une entrée de données <code>Din</code> sur \(n\) bits .</li>
-            <li>une sortie <code>Dout</code> sur \(n\) bits .</li>
-            <li>une remise à zéro <code>Reset</code> synchrone active à l'état haut .</li>
+            <li>une entrée <code>enable</code> active à l'état haut autorisant le chargement de l'entrée <code>Din</code>.</li>
+            <li>une entrée de données <code>Din</code> sur \(n\) bits.</li>
+            <li>une sortie <code>Dout</code> sur \(n\) bits.</li>
+            <li>une remise à zéro <code>Reset</code> synchrone active à l'état haut.</li>
           </ul>
-          <p><strong>Correction et Explication :</strong> Un registre sur \(n\) bits est simplement une mise en parallèle de \(n\) bascules D. Pour concevoir ce circuit :</p>
-          <ul class="formula-list">
-            <li>Tous les signaux de contrôle (<code>clk</code>, <code>reset</code>, <code>enable</code>) sont connectés en commun à toutes les bascules.</li>
-            <li>Le bit \(i\) de l'entrée de données (<code>Din[i]</code>) est connecté à l'entrée <code>D</code> de la bascule \(i\).</li>
-            <li>Le bit \(i\) de la sortie de données (<code>Dout[i]</code>) est connecté à la sortie <code>Q</code> de la bascule \(i\).</li>
-          </ul>
-          <p><em>Note : Lors de la capture d'un front montant d'horloge, si <code>reset</code> est à '1', la sortie passe à 0. Sinon, si <code>enable</code> est à '1', l'entrée <code>D</code> est recopiée sur la sortie <code>Q</code>.</em></p>
-          <h4>Question 1.2</h4>
-          <p><strong>Énoncé :</strong> Ecrire en VHDL RTL l'entité générique (<code>registerN</code>) et l'architecture (<code>rtl</code>) du composant précédent [10] .</p>
-          <p><strong>Correction et Explication :</strong> La description "RTL" (Register Transfer Level) décrit le comportement du registre en utilisant un processus synchrone. Le <code>reset</code> étant synchrone, il doit être testé à l'intérieur de la condition du front d'horloge .</p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Structure globale du registre.</strong><br> Un registre sur \(n\) bits n'est rien d'autre qu'une mise en parallèle de \(n\) bascules de type D indépendantes, permettant de mémoriser simultanément un mot complet de \(n\) bits.</p>
+          <p><strong>Étape 2 : Câblage des signaux de contrôle.</strong><br> Tous les signaux de commande ou de rythme (<code>clk</code>, <code>reset</code>, <code>enable</code>) sont connectés de manière commune et distribués à toutes les bascules du circuit en parallèle.</p>
+          <p><strong>Étape 3 : Câblage des bus de données.</strong><br> Le bit de poids \(i\) du bus d'entrée (<code>Din[i]</code>) attaque directement l'entrée <code>D</code> de la bascule de rang \(i\). Sa sortie <code>Q</code> correspond directement au bit \(i\) du bus de sortie (<code>Dout[i]</code>). Ainsi, sur un front montant, si <code>enable=1</code> et <code>reset=0</code>, chaque bascule recopie l'état de son bit d'entrée respectif.</p>
+          </div>
+          <p><strong>Question 1.2</strong> : Ecrire en VHDL RTL l'entité générique (<code>registerN</code>) et l'architecture (<code>rtl</code>) du composant précédent [10].</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Définition de l'entité.</strong><br> On déclare l'entité avec un paramètre générique pour la taille \(n\) et les ports d'entrée/sortie sur forme de vecteurs.</p>
+          <p><strong>Étape 2 : Implémentation du comportement RTL.</strong><br> On utilise un processus séquentiel sensible à l'horloge. Le <code>reset</code> étant synchrone, il est testé à l'intérieur de la condition <code>rising_edge(clk)</code>, avec une priorité supérieure à <code>enable</code>.</p>
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity registerN is
     generic (
-        n : integer := 8 -- Valeur par defaut arbitraire
+        n : integer := 8
     );
     port (
         clk    : in  std_logic;
@@ -93,24 +93,28 @@ begin
         end if;
     end process;
 end architecture rtl;</code></pre>
-          <h4>Question 1.3</h4>
-          <p><strong>Énoncé :</strong> Combien de bascules seront générées par la synthèse de cette description rtl [5] .</p>
-          <p><strong>Correction et Explication :</strong> La synthèse logique générera exactement <strong>\(n\) bascules D</strong>. <em>Explication :</em> L'entrée et la sortie étant définies par des vecteurs de taille \(n\) (<code>n-1 downto 0</code>), le processus assigne une valeur mémorisée à chaque bit du vecteur <code>Dout</code> à chaque front d'horloge. Chaque bit mémorisé correspond physiquement à une bascule.</p>
-          <h4>Question 1.4</h4>
-          <p><strong>Énoncé :</strong> Ecrire en VHDL structurel l'architecture (<code>struct</code>) de la même entité (<code>registerN</code>) précédente [15] . On dispose du composant suivant  :</p>
-          <pre class="code-block language-vhdl"><code>entity bascule is
+          </div>
+          <p><strong>Question 1.3</strong> : Combien de bascules seront générées par la synthèse de cette description rtl [5].</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Règles d'inférence de bascules.</strong><br> La synthèse logique infère systématiquement une bascule D pour chaque bit d'un signal assigné de façon conditionnelle sous l'évaluation d'un front d'horloge.</p>
+          <p><strong>Étape 2 : Analyse et dénombrement.</strong><br> Le processus mémorise la sortie <code>Dout</code>. Comme cette sortie est un vecteur défini sur la plage <code>(n-1 downto 0)</code>, elle comporte physiquement \(n\) bits indépendants. \[\mathbf{Total = n \text{ bascules}}\]</p>
+          </div>
+          <p><strong>Question 1.4</strong> : Ecrire en VHDL structurel l'architecture (<code>struct</code>) de la même entité (<code>registerN</code>) précédente [15]. On dispose du composant suivant :</p>
+          <pre class="code-block language-vhdl"><code class="language-vhdl">entity bascule is
 port(d, clk, reset, enable: in std_logic;
      q: out std_logic);
 end entity bascule;</code></pre>
-          <p><strong>Correction et Explication :</strong> Une description structurelle consiste à instancier et relier des sous-composants existants (ici, l'entité <code>bascule</code>). Puisque le registre a une taille générique \(n\), nous devons utiliser une boucle <code>generate</code> pour instancier les \(n\) bascules de façon élégante.</p>
-          <pre class="code-block language-vhdl"><code>architecture struct of registerN is
-    -- Declaration du composant a instancier
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Déclaration du composant.</strong><br> Il faut d'abord déclarer le composant unitaire <code>bascule</code> dans l'en-tête de l'architecture pour qu'il soit connu du compilateur.</p>
+          <p><strong>Étape 2 : Instanciation répétée via une boucle.</strong><br> Puisque le nombre de bascules dépend d'un paramètre générique (\(n\)), on utilise la syntaxe <code>for ... generate</code> pour instancier automatiquement les \(n\) composants matériels en mappant le bit \(i\) de chaque vecteur à l'instance de rang \(i\).</p>
+          <pre class="code-block language-vhdl"><code class="language-vhdl">architecture struct of registerN is
     component bascule
         port(d, clk, reset, enable: in std_logic;
              q: out std_logic);
     end component;
 begin
-    -- Generation de n bascules
     gen_bascules: for i in 0 to n-1 generate
         bascule_inst : bascule
             port map (
@@ -123,13 +127,14 @@ begin
     end generate gen_bascules;
 end architecture struct;</code></pre>
           </div>
+          </div>
         </article>
 
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Partie II</span>
-              <h3>Partie II : Conception d'un « compteur générique » [50/90]</h3>
+              <span class="status-pill">Probleme 2</span>
+              <h3>Problème II - Conception d'un « compteur générique »</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -137,21 +142,22 @@ end architecture struct;</code></pre>
             </div>
           </header>
           <div class="answer-block">
-          <h4>Question 2.1</h4>
-          <p><strong>Énoncé :</strong> Ecrire en VHDL RTL l'entité (<code>compteur_moduloN</code>) avec un paramètre générique <code>N</code> et l'architecture (<code>rtl</code>) d'un compteur comptant sur 4 bits et modulo N [15] .</p>
+          <p><strong>Question 2.1</strong> : Ecrire en VHDL RTL l'entité (<code>compteur_moduloN</code>) avec un paramètre générique <code>N</code> et l'architecture (<code>rtl</code>) d'un compteur comptant sur 4 bits et modulo N [15].</p>
           <ul class="formula-list">
-            <li>Entrées : horloge (<code>clk</code>) sur front montant, reset (<code>rst</code>) asynchrone actif haut, enable (<code>en</code>) actif haut .</li>
-            <li>Sorties : valeur (<code>count</code>, sur 4 bits), signal (<code>fin</code>) qui passe à '1' quand la valeur max (N-1) est atteinte .</li>
+            <li>Entrées : horloge (<code>clk</code>) sur front montant, reset (<code>rst</code>) asynchrone actif haut, enable (<code>en</code>) actif haut.</li>
+            <li>Sorties : valeur (<code>count</code>, sur 4 bits), signal (<code>fin</code>) qui passe à '1' quand la valeur max (N-1) est atteinte.</li>
           </ul>
-          <p><strong>Correction et Explication :</strong> Le compteur est "modulo N", ce qui signifie qu'il compte de \(0\) à \(N-1\), puis repasse à \(0\). Le reset asynchrone implique que le signal <code>rst</code> doit figurer dans la liste de sensibilité du processus et être testé avant le front d'horloge.</p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Définition du comportement (Modulo).</strong><br> Un compteur modulo \(N\) s'incrémente de 0 jusqu'à la borne \(N-1\), puis retourne à 0 au cycle suivant.</p>
+          <p><strong>Étape 2 : Processus de comptage (Reset asynchrone).</strong><br> Puisque le signal <code>rst</code> est défini comme asynchrone, il doit être inclus dans la liste de sensibilité du processus et doit être évalué en priorité de manière isolée, sans attendre le front d'horloge.</p>
+          <p><strong>Étape 3 : Logique de sortie.</strong><br> La valeur courante <code>count</code> est recopiée depuis un signal interne de type <code>unsigned</code>. Le drapeau <code>fin</code> est un signal combinatoire qui compare directement la valeur du compteur avec la borne.</p>
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all; -- Utilisation recommandee pour les compteurs
+use IEEE.numeric_std.all;
 
 entity compteur_moduloN is
-    generic (
-        N : integer := 10 -- Modulo par defaut
-    );
+    generic ( N : integer := 10 );
     port (
         clk   : in  std_logic;
         rst   : in  std_logic;
@@ -162,15 +168,12 @@ entity compteur_moduloN is
 end entity compteur_moduloN;
 
 architecture rtl of compteur_moduloN is
-    -- Signal interne pour faciliter les operations arithmetiques
     signal count_int : unsigned(3 downto 0);
 begin
     process(clk, rst)
     begin
-        -- Reset asynchrone
         if rst = '1' then
-            count_int &lt;= (others =&gt; '0');
-        -- Action synchrone sur front montant
+            count_int &lt;= (others =&gt; '0');   -- Reset asynchrone
         elsif rising_edge(clk) then
             if en = '1' then
                 if count_int = N - 1 then
@@ -182,112 +185,62 @@ begin
         end if;
     end process;
 
-    -- Assignations concurrentes pour les sorties
     count &lt;= std_logic_vector(count_int);
-    
-    -- Le signal fin vaut '1' uniquement quand le compteur atteint N-1
     fin &lt;= '1' when (count_int = N - 1) else '0';
-    
 end architecture rtl;</code></pre>
-          <h4>Question 2.2</h4>
-          <p><strong>Énoncé :</strong> Combien de bascules seront générées par la synthèse logique de votre description précédente [5] ?</p>
-          <p><strong>Correction et Explication :</strong> <strong>4 bascules</strong> seront générées. <em>Explication :</em> L'énoncé précise explicitement que la sortie du compteur (<code>count</code>) est sur 4 bits . Même si \(N\) est générique, la taille du registre interne mémorisant l'état est fixée à 4 bits (de 0 à 15 maximum). Le signal <code>fin</code> est un signal purement combinatoire généré à partir de ces 4 bascules (il n'est pas mémorisé).</p>
-          <h4>Question 2.3</h4>
-          <p><strong>Énoncé :</strong> Ecrire en VHDL un testbench permettant de simuler l'architecture précédente pour un modulo \(N=8\) [15] .</p>
-          <p><strong>Correction et Explication :</strong> Un banc de test (testbench) n'a ni entrée ni sortie. Il instancie le composant à tester (UUT - Unit Under Test), génère l'horloge et applique des stimuli (scénario de test) sur les entrées pour observer le comportement.</p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          </div>
+          <p><strong>Question 2.2</strong> : Combien de bascules seront générées par la synthèse logique de votre description précédente [5] ?</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Analyse des signaux mémorisés sous horloge.</strong><br> Le seul signal assigné dans la section synchrone du processus (sous la condition du front d'horloge) est le signal interne <code>count_int</code>.</p>
+          <p><strong>Étape 2 : Calcul de la taille.</strong><br> L'énoncé contraint le compteur à produire une sortie sur 4 bits (<code>3 downto 0</code>), indépendamment de la valeur de N. Le signal <code>fin</code> quant à lui est purement combinatoire. \[\mathbf{Total = 4 \text{ bascules}}\]</p>
+          </div>
+          <p><strong>Question 2.3</strong> : Ecrire en VHDL un testbench permettant de simuler l'architecture précédente pour un modulo \(N=8\) [15].</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Structure globale du Testbench.</strong><br> L'entité est sans port. Dans l'architecture, on déclare les signaux de stimulation et on instancie l'unité sous test (UUT) en fixant <code>N = 8</code> via un <code>generic map</code>.</p>
+          <p><strong>Étape 2 : Génération de la porteuse.</strong><br> On crée un processus autonome qui fait basculer le signal <code>clk</code> en permanence pour créer la fréquence.</p>
+          <p><strong>Étape 3 : Scénario séquentiel.</strong><br> Un processus de stimuli applique le <code>rst</code>, libère le composant, et active le <code>en</code> assez longtemps pour observer au moins un tour complet.</p>
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity tb_compteur is
--- Un testbench n'a pas de ports
 end entity tb_compteur;
 
 architecture behavior of tb_compteur is
-    -- Signaux pour se connecter a l'UUT
-    signal clk   : std_logic := '0';
-    signal rst   : std_logic := '0';
-    signal en    : std_logic := '0';
+    signal clk, rst, en, fin : std_logic := '0';
     signal count : std_logic_vector(3 downto 0);
-    signal fin   : std_logic;
-
     constant clk_period : time := 10 ns;
-
 begin
-    -- Instanciation de l'UUT avec N = 8
     uut: entity work.compteur_moduloN
-        generic map (
-            N =&gt; 8
-        )
-        port map (
-            clk   =&gt; clk,
-            rst   =&gt; rst,
-            en    =&gt; en,
-            count =&gt; count,
-            fin   =&gt; fin
-        );
+        generic map ( N =&gt; 8 )
+        port map ( clk =&gt; clk, rst =&gt; rst, en =&gt; en, count =&gt; count, fin =&gt; fin );
 
-    -- Generation de l'horloge
-    clk_process : process
-    begin
-        clk &lt;= '0';
-        wait for clk_period/2;
-        clk &lt;= '1';
-        wait for clk_period/2;
+    clk_process : process begin
+        clk &lt;= '0'; wait for clk_period/2;
+        clk &lt;= '1'; wait for clk_period/2;
     end process;
 
-    -- Processus des stimuli
-    stim_proc: process
-    begin
-        -- Initialisation : Reset actif
-        rst &lt;= '1';
-        en  &lt;= '0';
-        wait for 20 ns;
+    stim_proc: process begin
+        rst &lt;= '1'; en &lt;= '0'; wait for 20 ns;
         
-        -- Relachement du reset, activation du compteur
-        rst &lt;= '0';
-        en  &lt;= '1';
+        rst &lt;= '0'; en &lt;= '1'; -- Demarrage
+        wait for 100 ns;       -- Attente de 10 cycles (modulo 8 sera visible)
         
-        -- On laisse tourner le compteur pour voir au moins un cycle complet (N=8)
-        -- 8 coups d'horloge font 80 ns. On attend 100 ns.
-        wait for 100 ns;
-        
-        -- Fin de la simulation
-        en &lt;= '0';
+        en &lt;= '0';             -- Arret
         wait;
     end process;
 end architecture behavior;</code></pre>
-          <h4>Question 2.4</h4>
-          <p><strong>Énoncé :</strong> Dessinez les chronogrammes des signaux de l'entité correspondant très exactement à la simulation que donnerait votre testbench précédent [15] . Indiquez clairement l'échelle des temps sur l'axe temporel .</p>
-          <p><strong>Correction et Explication :</strong> Voici la description textuelle du chronogramme généré par le banc de test précédent.</p>
-          <ul class="formula-list">
-            <li><strong>De 0 ns à 20 ns :</strong></li>
-          </ul>
-          <ul class="formula-list">
-            <li><code>rst</code> = '1', <code>en</code> = '0'</li>
-            <li><code>count</code> = "0000" (0 en décimal, maintenu par le reset asynchrone)</li>
-            <li><code>fin</code> = '0'</li>
-          </ul>
-          <ul class="formula-list">
-            <li><strong>À 20 ns :</strong> <code>rst</code> descend à '0', <code>en</code> passe à '1'.</li>
-            <li><strong>De 20 ns à 100 ns (Activité de comptage) :</strong></li>
-          </ul>
-          <ul class="formula-list">
-            <li>À 25 ns (front montant) : <code>count</code> \(\rightarrow\) 1</li>
-            <li>À 35 ns (front montant) : <code>count</code> \(\rightarrow\) 2</li>
-            <li>À 45 ns (front montant) : <code>count</code> \(\rightarrow\) 3</li>
-            <li>À 55 ns (front montant) : <code>count</code> \(\rightarrow\) 4</li>
-            <li>À 65 ns (front montant) : <code>count</code> \(\rightarrow\) 5</li>
-            <li>À 75 ns (front montant) : <code>count</code> \(\rightarrow\) 6</li>
-            <li>À 85 ns (front montant) : <code>count</code> \(\rightarrow\) 7. Le signal <code>fin</code> passe <strong>immédiatement à '1'</strong> (logique combinatoire).</li>
-            <li>À 95 ns (front montant) : <code>count</code> \(\rightarrow\) 0 (bouclage car \(N=8\)). Le signal <code>fin</code> retombe immédiatement à '0'.</li>
-          </ul>
-          <ul class="formula-list">
-            <li><strong>Au-delà de 100 ns :</strong></li>
-          </ul>
-          <ul class="formula-list">
-            <li>À 105 ns (front montant) : <code>count</code> \(\rightarrow\) 1.</li>
-            <li>À 120 ns, <code>en</code> repasse à '0' (selon le testbench), le compteur s'arrête sur sa valeur courante.</li>
-          </ul>
+          </div>
+          <p><strong>Question 2.4</strong> : Dessinez les chronogrammes des signaux de l'entité correspondant très exactement à la simulation que donnerait votre testbench précédent [15]. Indiquez clairement l'échelle des temps sur l'axe temporel.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Période de maintien sous reset (0 à 20 ns).</strong><br> Le signal <code>rst</code> force le maintien du compteur <code>count</code> à "0000" et <code>fin</code> à '0'. L'horloge bat toutes les \(10\text{ ns}\) mais sans effet sur la sortie.</p>
+          <p><strong>Étape 2 : Phase d'incrémentation (20 ns à 100 ns).</strong><br> Dès le relâchement du reset et l'activation de <code>en</code>, la valeur s'incrémente au rythme des fronts montants : \(0 \rightarrow 1 \rightarrow 2 \rightarrow 3 \rightarrow 4 \rightarrow 5 \rightarrow 6 \rightarrow 7\). Lors du passage à la valeur 7 (à \(t = 85\text{ ns}\)), le signal <code>fin</code> passe immédiatement à '1' de façon combinatoire car il vaut \(N-1\).</p>
+          <p><strong>Étape 3 : Bouclage modulo (100 ns).</strong><br> Au front d'horloge suivant (\(t = 95\text{ ns}\)), le compteur ne peut pas passer à 8. Il reboucle à "0000" (condition modulo vérifiée). Le signal <code>fin</code> retombe instantanément à '0'. Le testbench fige l'exécution ensuite.</p>
+          </div>
+          <p>\vfill</p>
+          <p>Équipe Pédagogique Esisar Page 1/1</p>
           </div>
         </article>
       </section>

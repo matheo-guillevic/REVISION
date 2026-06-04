@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Examen electronique 2026 - EP361</title>
+    <title>Examen electronique 2026 - Electronique</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
     <script>
       window.MathJax = {
         tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
@@ -12,6 +13,8 @@
       };
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
     <script defer src="script.js"></script>
   </head>
   <body class="td-page">
@@ -22,7 +25,7 @@
           <span class="eyebrow">EP360 / EP361 - Examen 2026</span>
           <h1>Correction examen electronique 2026</h1>
           <p>Darlington, filtres actifs, filtre universel et oscillateur a reseau de retour.</p>
-          <p>Page reconstruite depuis <code>pdf/elec/exam/ELEC-exam-2026.tex</code>, avec les schemas du dossier <code>assets/elec/exam</code>.</p>
+          <p>Page reconstruite depuis <code>pdf/elec/exam/ELEC-exam-2026.tex</code>.</p>
         </div>
         <div class="td-actions">
           <a class="primary-button" href="pdf/elec/exam/ELEC-exam-2026.tex">Ouvrir le sujet LaTeX</a>
@@ -270,6 +273,8 @@
           <p><strong>Étape 2 : Calcul de la valeur du module de retour à \(\omega_{osc}\).</strong><br> À la pulsation d'oscillation, nous avons établi que \(\frac{\omega_{osc}}{\omega_0} = \sqrt{3}\). Remplaçons ce rapport dans la formule du module de \(B\) : \[|B(j\omega_{osc})| = \frac{1}{\left(\sqrt{1 + (\sqrt{3})^2}\right)^3} = \frac{1}{\left(\sqrt{1 + 3}\right)^3} = \frac{1}{(\sqrt{4})^3} = \frac{1}{2^3} = \frac{1}{8}\]</p>
           <p><strong>Étape 3 : Déduction du gain limite.</strong><br> \[K \ge \frac{1}{1/8} \implies \mathbf{K_{min} = 8}\] Il faut donc un gain d'amplification d'au moins <strong>8</strong> pour compenser l'atténuation d'un facteur 8 subie par le signal lors de son passage dans le réseau de retour à la fréquence d'oscillation.</p>
           </div>
+          <p>\vfill</p>
+          <p>Allane Esisar 1/2</p>
           </div>
         </article>
       </section>

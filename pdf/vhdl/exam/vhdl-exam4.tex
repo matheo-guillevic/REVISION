@@ -1,30 +1,48 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt, a4paper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
+\usepackage{amsmath, amssymb}
 \usepackage{geometry}
-\geometry{top=2cm, bottom=2.5cm, left=2cm, right=2cm}
+\usepackage{graphicx}
 \usepackage{tabularx}
-\usepackage{listings}
+\usepackage{booktabs}
 \usepackage{xcolor}
-\usepackage{tikz}
+\usepackage{listings}
 
-% Configuration pour les blocs de code
+% Configuration des marges
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=1.5cm,
+    right=1.5cm
+}
+
+% Configuration pour les blocs de code VHDL/Verilog
 \lstset{
     basicstyle=\ttfamily\small,
     breaklines=true,
-    frame=none,
+    frame=single,
     tabsize=4,
     showstringspaces=false,
     keywordstyle=\color{blue}\bfseries,
     commentstyle=\color{green!50!black},
-    stringstyle=\color{red}
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray}
+}
+
+% Commande pour les placeholders d'images
+\newcommand{\imageplaceholder}[2]{
+    \begin{center}
+        \fbox{\begin{minipage}{#1}\centering\vspace{1cm}\textit{#2}\vspace{1cm}\end{minipage}}
+    \end{center}
 }
 
 % Commande pour afficher la correction avec explication
 \newcommand{\corr}[1]{
-    \vspace{0.2cm}
+    \vspace{0.3cm}
     \begin{center}
     \fcolorbox{blue}{blue!5}{
     \begin{minipage}{0.95\textwidth}
@@ -32,95 +50,89 @@
     #1
     \end{minipage}}
     \end{center}
-    \vspace{0.2cm}
+    \vspace{0.3cm}
 }
 
 \begin{document}
 
-% En-tête gauche et droite
+% ==================== EN-TÊTE ====================
 \noindent
-Grenoble INP - Esisar \hfill EI3
+\begin{tabularx}{\textwidth}{@{}X c r@{}}
+\textbf{SN361} & \textbf{Session 1 année 2025-2026} & \textbf{Syntaxes autorisées} \\
+\textbf{VHDL} & \textbf{Examen 120 mn} & \textbf{Calculatrice interdite} \\
+\end{tabularx}
+\vspace{0.2cm}
+\hrule
+\vspace{0.4cm}
 
-\vspace{0.5cm}
-
-% Cartouche de l'examen
+% ==================== PROBLÈME I ====================
 \begin{center}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|p{0.45\textwidth}|p{0.5\textwidth}|}
-\hline
-\begin{center}
-\textbf{3A - Durée : 120 mn} \\
-\textbf{\Large Examen du} \\
-\textbf{\Large Cours SN360}
-\end{center} & 
-\begin{center}
-\textbf{Session 1 année 2025 - 2026} \\
-Seuls documents autorisés : \\
-\textbf{« Syntaxe VHDL » \& « Syntaxe Verilog »} \\
-\textbf{Calculatrice interdite}
-\end{center} \\
-\hline
-\multicolumn{2}{|p{0.97\textwidth}|}{\textit{1 Les points donnés dans l'énoncé entre crochets [X] après chaque question représentent le barème et indiquent le temps à passer en minutes sur chaque question}} \\
-\multicolumn{2}{|p{0.97\textwidth}|}{\textit{2 La qualité de la rédaction (lisibilité, orthographe) sera prise en compte}} \\
-\hline
-\end{tabular}
+    \textbf{\Large Problème I - Partie cours - 36 pts}
 \end{center}
-
-\vspace{0.5cm}
-
-% Section I
-\section*{\centering I Partie cours [36/120]}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
 
 \noindent \textbf{1.1} En VHDL, quel type normalisé doit être utilisé pour réaliser des opérations arithmétiques sur des vecteurs binaires signés en complément à 2 [2] ? Montrez en détaillant l'opération sur des nombres binaires signés en « complément à 2 » comment le résultat de l'opération « -6 x 7 » est obtenu [6].
 
 \corr{
-\textbf{Type : \texttt{SIGNED}. Résultat final de la multiplication : \texttt{11010110} (soit -42).}
+\textbf{Étape 1 : Choix du type VHDL.}\\
+Le type normalisé à utiliser pour traiter des valeurs signées est \textbf{\texttt{SIGNED}} (issu de la bibliothèque \texttt{ieee.numeric\_std}).
 
-\textbf{Étape 1 :} Initialisation de la logique et paramètres de l'espace de travail validés (utilisation de la bibliothèque \texttt{ieee.numeric\_std}). \\
-\textbf{Étape 2 :} Traitement standard des formats binaires appliqué. Les extensions de signe requises sont configurées en interne. \\
-\textbf{Étape 3 :} Exécution du saut direct vers la combinaison arithmétique : $11111010 \times 0111 = 11010110_2$.
+\textbf{Étape 2 : Préparation des opérandes.}\\
+On code les valeurs sur 4 bits en appliquant la convention du complément à 2 :
+\begin{itemize}
+    \item 7 s'écrit en binaire : $0111_2$
+    \item -6 s'obtient en prenant l'inverse de 6 ($0110_2 \rightarrow 1001_2$) et en ajoutant 1 : $1010_2$
+\end{itemize}
+
+\textbf{Étape 3 : Extension de signe et multiplication.}\\
+Pour que les additions soient correctes lors de la multiplication, on étend le signe du nombre négatif sur 8 bits ($1010_2 \rightarrow 11111010_2$). On multiplie ensuite par $0111_2$ :
+$$ 11111010_2 \times 0111_2 = \mathbf{11010110_2} $$
+Ce résultat correspond bien à la valeur -42 en complément à 2 sur 8 bits.
 }
 
-\vspace{0.3cm}
 \noindent \textbf{1.2} Dessinez le chronogramme du signal S suivant [4] :
 \begin{lstlisting}[language=VHDL, frame=single]
 S <= '0', '1' after 10 ns, '0' after 25 ns, '1' after 30 ns;
 \end{lstlisting}
 
 \corr{
-\textbf{Chronologie absolue : S = '0' à 0ns, passe à '1' à 10ns, retombe à '0' à 25ns, et passe à '1' à 30ns de manière définitive.}
+\textbf{Étape 1 : Analyse de l'instruction temporelle.}\\
+Le mot clé \texttt{after} génère des événements dont les délais sont absolus par rapport à l'instant d'évaluation initial ($t=0$).
 
-\textbf{Étape 1 :} Les paramètres temporels du simulateur sont validés. \\
-\textbf{Étape 2 :} Procédure standard d'évaluation des événements concurrents appliquée. \\
-\textbf{Étape 3 :} Résolution des affectations de la ligne de temps effectuée.
+\textbf{Étape 2 : Tracé des événements.}\\
+La ligne de temps du signal S sera la suivante :
+\begin{itemize}
+    \item À $t = 0\text{ ns}$ : Le signal s'initialise à \textbf{'0'}.
+    \item À $t = 10\text{ ns}$ : Le signal passe à \textbf{'1'}.
+    \item À $t = 25\text{ ns}$ : Le signal retombe à \textbf{'0'}.
+    \item À $t = 30\text{ ns}$ : Le signal remonte à \textbf{'1'} indéfiniment.
+\end{itemize}
 }
 
-\vspace{0.3cm}
 \noindent \textbf{1.3} Que se passe-t-il si on met l'instruction « wait ; » dans un processus VHDL [2] ? Au contraire, que se passe-t-il si on ne met aucun « wait » dans un processus VHDL [2] ?
 
 \corr{
-\textbf{Avec \texttt{wait;} : Exécution unique puis blocage infini. Sans \texttt{wait} (ni sensibilité) : Boucle infinie entraînant le crash du simulateur.}
+\textbf{Étape 1 : Comportement avec \texttt{wait ;}.}\\
+L'instruction \texttt{wait ;} provoque un blocage inconditionnel et infini. Le processus s'exécutera une unique fois lors de l'initialisation de la simulation, puis se mettra en pause pour toujours.
 
-\textbf{Étape 1 :} Initialisation séquentielle et paramètres d'itération validés. \\
-\textbf{Étape 2 :} Traitement standard de la gestion des cycles delta appliqué. \\
-\textbf{Étape 3 :} Application directe du verrouillage ou de la répétition inconditionnelle du bloc.
+\textbf{Étape 2 : Comportement sans aucun \texttt{wait}.}\\
+Si un processus n'a ni \texttt{wait} à l'intérieur de son bloc, ni liste de sensibilité dans sa déclaration, il reboucle instantanément sur lui-même à la fin de son exécution. Cela crée une boucle infinie dans le même cycle delta, ce qui fige (crashe) le simulateur.
 }
 
-\vspace{0.3cm}
 \noindent \textbf{1.4} En VHDL, est-ce que l'ordre des processus dans le code a une importance [2] ? Si non, dans quel ordre sont exécutés les processus [4] ?
 
 \corr{
-\textbf{Non, l'ordre d'écriture est sans importance. Ils sont exécutés de manière concurrente selon les événements de leur liste de sensibilité.}
+\textbf{Étape 1 : Importance de l'ordre structurel.}\\
+\textbf{Non}, l'ordre d'écriture physique des processus dans le fichier n'a absolument aucune importance. Le VHDL modélise du matériel physique fonctionnant en parallèle (exécution concurrente).
 
-\textbf{Étape 1 :} Le modèle d'architecture concurrente du langage est validé. \\
-\textbf{Étape 2 :} Routine standard de l'ordonnanceur d'événements appliquée par le moteur. \\
-\textbf{Étape 3 :} Les stimuli asynchrones déclenchent l'évaluation directe des blocs concernés.
+\textbf{Étape 2 : Mécanisme réel d'exécution.}\\
+Les processus sont exécutés par le moteur de simulation de façon \textbf{événementielle}. Un processus ne s'exécute que lorsqu'un des signaux présents dans sa \textbf{liste de sensibilité} (ou dans ses instructions \texttt{wait}) subit une transition (événement).
 }
 
-\vspace{0.3cm}
 \noindent \textbf{1.5} Donnez des codes VHDL réalisant les mêmes fonctions que les 4 codes Verilog suivants [14=2+3+3+6] :
 
-\vspace{0.3cm}
 \noindent
 \begin{tabular}{|p{0.48\textwidth}|p{0.48\textwidth}|}
 \hline
@@ -144,8 +156,18 @@ end
 \end{lstlisting}
 \end{minipage}
 \\
-\corr{\textbf{\texttt{x <= a and b and c;}} \\ \textbf{Étape 1 :} Synthèse logique continue validée. \\ \textbf{Étape 2 :} Traitement standard appliqué. \\ \textbf{Étape 3 :} Remplacement des opérateurs.} & 
-\corr{\textbf{\texttt{with ad select s <= e0 when "00", e1 when "01", e2 when "10", e3 when others;}} \\ \textbf{Étape 1 :} Synthèse du multiplexeur validée. \\ \textbf{Étape 2 :} Traitement standard appliqué. \\ \textbf{Étape 3 :} Affectation sélective directe.} \\
+\corr{\textbf{Étape 1 : Traduction logique continue.}\\
+Le \texttt{assign} combinatoire Verilog devient une simple affectation concurrente VHDL.
+$$ \mathbf{\texttt{x <= a and b and c;}} $$} & 
+\corr{\textbf{Étape 1 : Traduction du Multiplexeur.}\\
+Un \texttt{case} combinatoire se traduit élégamment en VHDL par une affectation avec sélection (\texttt{with ... select}).
+\begin{lstlisting}[language=VHDL]
+with ad select s <= 
+    e0 when "00", 
+    e1 when "01", 
+    e2 when "10", 
+    e3 when others;
+\end{lstlisting}} \\
 \hline
 \begin{minipage}[t]{0.45\textwidth}
 \begin{lstlisting}[language=Verilog]
@@ -175,38 +197,59 @@ endmodule
 \end{lstlisting}
 \end{minipage}
 \\
-\corr{\textbf{\texttt{process(c,d) begin if c='1' then q<=d; end if; end process;}} \\ \textbf{Étape 1 :} Paramètres du Latch validés. \\ \textbf{Étape 2 :} Traitement standard appliqué. \\ \textbf{Étape 3 :} Transposition VHDL générée.} & 
-\corr{\textbf{\texttt{q\_t <= q\_t(3 downto 1) \& d;} (sous horloge)} \\ \textbf{Étape 1 :} Architecture de registre à décalage validée. \\ \textbf{Étape 2 :} Traitement standard appliqué. \\ \textbf{Étape 3 :} Concaténation asymétrique et mappage des signaux effectués.} \\
+\corr{\textbf{Étape 1 : Traduction du Latch.}\\
+L'absence de \texttt{else} génère un Latch. En VHDL, on utilise un \texttt{process} standard.
+\begin{lstlisting}[language=VHDL]
+process(c, d) begin
+  if c = '1' then
+    q <= d;
+  end if;
+end process;
+\end{lstlisting}} & 
+\corr{\textbf{Étape 1 : Registre à décalage synchrone.}\\
+L'opérateur de concaténation Verilog \texttt{\{\}} devient \texttt{\&} en VHDL. Un signal interne \texttt{q\_temp} est nécessaire pour l'affectation.
+\begin{lstlisting}[language=VHDL]
+process(clk) begin
+  if rising_edge(clk) then
+    q_temp <= q_temp(3 downto 1) & d;
+  end if;
+end process;
+q <= q_temp;
+s <= q_temp(4);
+\end{lstlisting}} \\
 \hline
 \end{tabular}
 
 \newpage
 
-% Section II
-\noindent
-Grenoble INP - Esisar \hfill EI3
+% ==================== PROBLÈME II ====================
+\begin{center}
+    \textbf{\Large Problème II - Partie exercices - 84 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
 
-\vspace{0.5cm}
-
-\section*{\centering II Partie exercices [84/120]}
-
-\subsection*{2 Analyse d'une description VHDL [50]}
+\subsubsection*{Partie A: Analyse d'une description VHDL - 50 pts}
 
 \noindent \textbf{2.1} Le reset utilisé dans l'architecture \textit{rtl} ci-dessous est-il synchrone ou asynchrone ? [2]
 
 \corr{
-\textbf{Asynchrone.}
+\textbf{Étape 1 : Analyse de la priorité.}\\
+Dans le code fourni, la condition \texttt{if (reset='1')} est placée au tout début du processus, avant l'évaluation de l'horloge.
 
-\textbf{Étape 1 :} La hiérarchie du bloc `if` est validée. \\
-\textbf{Étape 2 :} Évaluation standard des conditions parallèles appliquée. \\
-\textbf{Étape 3 :} Détection du test conditionnel en dehors de l'horloge.
+\textbf{Étape 2 : Conclusion matérielle.}\\
+Puisque le changement d'état du reset est appliqué immédiatement sans attendre le front de l'horloge (qui est placé dans le \texttt{elsif}), le reset est de type \textbf{asynchrone}.
 }
 
-\vspace{0.2cm}
 \noindent \textbf{2.2} Modifiez le code VHDL ci-dessous pour le rendre synchrone (s'il est asynchrone) ou asynchrone (s'il est synchrone) [2].
 
 \corr{
-\textbf{Code cible synchrone : Imbrication de la condition reset sous la détection du front montant.}
+\textbf{Étape 1 : Principe de la synchronisation.}\\
+Pour forcer un comportement synchrone, le signal de reset ne doit être évalué qu'au moment précis d'un front d'horloge.
+
+\textbf{Étape 2 : Modification du code VHDL.}\\
+On place le test du reset à l'intérieur de la condition \texttt{rising\_edge(clk)}.
 \begin{lstlisting}[language=VHDL]
 process(clk) 
 begin
@@ -215,26 +258,21 @@ begin
       r <= (others=>'0');
       buf <= '0';
     else
-      r <= r + 1;
-      if (r < unsigned(w)) or (w="0000") then
-        buf <= '1';
-      else
-        buf <= '0';
-      end if;
+      -- suite du compteur (r <= r + 1, etc.)
     end if;
   end if;
 end process;
 \end{lstlisting}
-\textbf{Étape 1 :} Configuration de dépendance matérielle validée. \\
-\textbf{Étape 2 :} Traitement standard de la sensibilité appliqué. \\
-\textbf{Étape 3 :} Transition directe vers la structure imbriquée.
 }
 
-\vspace{0.2cm}
 \noindent \textbf{2.3} Décrire les bibliothèques et l'entité nécessaires à cette architecture [2+2].
 
 \corr{
-\textbf{Déclaration complète de l'interface et dépendances :}
+\textbf{Étape 1 : Déduction des bibliothèques.}\\
+L'utilisation de \texttt{std\_logic} requiert \texttt{ieee.std\_logic\_1164.all}. Les opérations arithmétiques requièrent \texttt{ieee.numeric\_std.all}.
+
+\textbf{Étape 2 : Définition de l'entité.}\\
+On identifie les entrées (\texttt{clk}, \texttt{reset}, \texttt{w}) et les sorties (\texttt{pulse}).
 \begin{lstlisting}[language=VHDL]
 library ieee;
 use ieee.std_logic_1164.all;
@@ -248,154 +286,146 @@ entity hidden is
   );
 end hidden;
 \end{lstlisting}
-\textbf{Étape 1 :} L'analyse des types de signaux internes est validée. \\
-\textbf{Étape 2 :} Traitement standard d'extraction d'interface appliqué. \\
-\textbf{Étape 3 :} Compilation des attributs de port et des packages mathématiques.
 }
 
-\vspace{0.2cm}
 \noindent \textbf{2.4} Décrire en VHDL un testbench permettant d'exercer le fonctionnement de cette entité pour 2 valeurs successives différentes de w [16].
 
 \corr{
-\textbf{Code du banc d'essai complet :}
+\textbf{Étape 1 : Architecture du banc d'essai.}\\
+Il faut instancier le composant (DUT), générer une horloge, et créer un processus de stimulus séquentiel.
+
+\textbf{Étape 2 : Processus de test (Stimuli).}\\
 \begin{lstlisting}[language=VHDL]
-library ieee;
-use ieee.std_logic_1164.all;
-
-entity tb_hidden is
-end tb_hidden;
-
-architecture sim of tb_hidden is
-  signal clk, reset : std_logic := '0';
-  signal w          : std_logic_vector(3 downto 0) := "0000";
-  signal pulse      : std_logic;
-begin
-  uut: entity work.hidden port map(clk, reset, w, pulse);
-  clk <= not clk after 5 ns;
-
-  process begin
-    reset <= '1'; wait for 15 ns; reset <= '0';
-    w <= "0011"; wait for 160 ns;
-    w <= "0110"; wait for 160 ns;
-    wait;
-  end process;
-end sim;
+-- (Instanciation et horloge clk <= not clk after 5 ns; omises pour brievete)
+process begin
+  reset <= '1'; wait for 15 ns; reset <= '0';
+  
+  w <= "0011"; -- Premier test (w=3)
+  wait for 160 ns; -- Attente de 16 cycles complets (16x10ns)
+  
+  w <= "0110"; -- Second test (w=6)
+  wait for 160 ns;
+  
+  wait;
+end process;
 \end{lstlisting}
-\textbf{Étape 1 :} Topologie du système de test validée. \\
-\textbf{Étape 2 :} Traitement standard d'instanciation et génération d'horloge appliqué. \\
-\textbf{Étape 3 :} Séquencement direct des délais d'attente (160ns) sur l'entrée de test.
 }
 
-\vspace{0.2cm}
 \noindent \textbf{2.5} Faire un chronogramme décrivant l'évolution des signaux d'entrée et de sortie, ainsi que de la valeur de r, lors de la simulation du testbench précédent [16].
 
 \corr{
-\textbf{Le signal \texttt{r} boucle sur les entiers de 0 à 15. Le signal \texttt{pulse} vaut '1' pendant \texttt{w} cycles d'horloge au début de chaque période de 16 cycles, et '0' le reste du temps.}
+\textbf{Étape 1 : Comportement du compteur.}\\
+La variable interne \texttt{r} est un compteur sur 4 bits qui s'incrémente à chaque cycle, formant une "dent de scie" de 0 à 15 de manière continue.
 
-\textbf{Étape 1 :} Logique combinatoire d'incrémentation validée. \\
-\textbf{Étape 2 :} Traitement standard des comparaisons vectorielles appliqué. \\
-\textbf{Étape 3 :} Mapping direct des fronts résultant en un signal asymétrique.
+\textbf{Étape 2 : Comportement de la sortie pulse.}\\
+La sortie \texttt{pulse} vaut '1' tant que \texttt{r < w}. 
+\begin{itemize}
+    \item Si \texttt{w=3}, le signal \texttt{pulse} est à l'état haut pendant 3 cycles, puis à l'état bas pendant 13 cycles.
+    \item Si \texttt{w=6}, il est à l'état haut pendant 6 cycles, puis bas pendant 10 cycles.
+\end{itemize}
 }
 
-\vspace{0.2cm}
 \noindent \textbf{2.6} Combien de bascules seront créées par cette architecture \textit{rtl} lors de sa synthèse. Justifiez [4].
 
 \corr{
-\textbf{5 bascules (4 pour la variable `r`, 1 pour le signal `buf`).}
+\textbf{Étape 1 : Règles d'inférence de bascules.}\\
+Une bascule D est synthétisée pour chaque bit d'un signal assigné de manière conditionnelle à l'intérieur d'un bloc \texttt{rising\_edge(clk)}.
 
-\textbf{Étape 1 :} Topologie des mémoires synchrones validée. \\
-\textbf{Étape 2 :} Traitement standard de la zone d'affectation d'horloge appliqué. \\
-\textbf{Étape 3 :} Somme des tailles des registres affectés sous le front montant.
+\textbf{Étape 2 : Comptage des ressources.}\\
+Le signal \texttt{r} est un vecteur de 4 bits mis à jour sous horloge $\rightarrow$ 4 bascules.
+Le signal \texttt{buf} est sur 1 bit, également mis à jour sous horloge $\rightarrow$ 1 bascule.
+La sortie \texttt{pulse} est combinatoire pure (reliée à buf).
+$$ \mathbf{Total = 5 \text{ bascules}} $$
 }
 
-\vspace{0.2cm}
 \noindent \textbf{2.7} En analysant le code VHDL de l'architecture \textit{rtl} et le résultat de la simulation de votre testbench, expliquez quelle est la fonction de cette architecture [2]. Expliquez comment varie la forme du signal \textit{pulse} en fonction de la valeur de w [4].
 
 \corr{
-\textbf{Générateur de signal MLI (PWM). La largeur de l'impulsion à l'état haut (rapport cyclique) est directement proportionnelle à la valeur binaire `w`.}
+\textbf{Étape 1 : Identification du composant.}\\
+Le code décrit un générateur de signal \textbf{MLI} (Modulation de Largeur d'Impulsion) ou \textbf{PWM}.
 
-\textbf{Étape 1 :} Les paramètres fonctionnels du module sont validés. \\
-\textbf{Étape 2 :} Traitement standard des signaux de modulation appliqué. \\
-\textbf{Étape 3 :} Application de la loi de commande linéaire $T_{on} = w \times T_{clk}$.
+\textbf{Étape 2 : Effet de l'entrée W.}\\
+Le signal d'entrée \texttt{w} contrôle le \textbf{rapport cyclique} de la sortie. Plus la valeur numérique de \texttt{w} est grande, plus le temps passé à l'état haut par le signal \texttt{pulse} augmente proportionnellement sur une période fixe de 16 cycles d'horloge.
 }
 
 \vspace{0.5cm}
-\subsection*{3 Ecriture d'une machine à états [34]}
+\subsubsection*{Partie B: Ecriture d'une machine à états - 34 pts}
 
 \noindent \textbf{3.1} Dessinez le diagramme de transitions d'une FSM de Moore qui a deux entrées X et rst et une sortie Y. Chaque fois que X change de 0 à 1, Y passe à 1 pour deux cycles d'horloge et ensuite revient à 0 -- même si X est toujours 1 [12].
 
 \corr{
-\textbf{4 États : S0 (Repos, Y=0), S1 (Timer1, Y=1), S2 (Timer2, Y=1), S3 (Attente, Y=0). Transitions : S0 $\xrightarrow{X=1}$ S1 $\rightarrow$ S2 $\xrightarrow{X=1}$ S3 $\xrightarrow{X=0}$ S0 (avec retour S2 $\xrightarrow{X=0}$ S0).}
+\textbf{Étape 1 : Définition des états nécessaires.}\\
+Pour garantir que la sortie ne s'active que pendant 2 cycles et ignore un X maintenu à 1, 4 états sont requis : Repos (S0), Temporisation 1 (S1), Temporisation 2 (S2), et Attente/Verrouillage (S3).
 
-\textbf{Étape 1 :} Cadrage des paramètres de la machine de Moore validé. \\
-\textbf{Étape 2 :} Traitement standard des verrous logiques appliqué. \\
-\textbf{Étape 3 :} Séquencement direct du cycle de verrouillage asynchrone.
+\textbf{Étape 2 : Définition du Graphe.}\\
+\begin{itemize}
+    \item \textbf{S0} ($Y=0$) : Si X=1 $\rightarrow$ Aller vers S1. Sinon $\rightarrow$ Rester en S0.
+    \item \textbf{S1} ($Y=1$) : Transition inconditionnelle vers S2 au prochain cycle.
+    \item \textbf{S2} ($Y=1$) : Si X=1 $\rightarrow$ Aller vers S3 (pour se verrouiller). Si X=0 $\rightarrow$ Retour S0.
+    \item \textbf{S3} ($Y=0$) : Attendre. Si X=0 $\rightarrow$ Retour S0. Sinon, rester en S3.
+\end{itemize}
 }
 
-\vspace{0.2cm}
 \noindent \textbf{3.2} Faire un chronogramme représentant l'horloge clk, l'entrée X, l'entrée rst et la sortie Y [6].
 
 \corr{
-\textbf{La sortie Y s'active exactement un cycle d'horloge après la transition haute de X, se maintient pendant 2 cycles, puis retombe à l'état bas jusqu'à réinitialisation de l'entrée X.}
+\textbf{Étape 1 : Comportement de la machine de Moore.}\\
+Par nature (Moore), la sortie est synchronisée sur les états. Il y aura donc un décalage d'un front d'horloge entre le passage de X à 1 et le passage de Y à 1.
 
-\textbf{Étape 1 :} Paramétrage des déclencheurs synchrones validé. \\
-\textbf{Étape 2 :} Traitement standard du registre de phase appliqué. \\
-\textbf{Étape 3 :} Décalage temporel appliqué à la variable de sortie.
+\textbf{Étape 2 : Visualisation temporelle.}\\
+Au front d'horloge n°1, la machine détecte X=1 et passe en S1. Au front n°2, Y vaut 1. Au front n°3, la machine passe en S2 (Y reste à 1). Au front n°4, la machine passe en S3 (Verrou), et Y retombe à 0, même si X est toujours haut.
 }
 
-\vspace{0.2cm}
 \noindent \textbf{3.3} Ecrire le code VHDL de cette FSM (entité et architecture complète) [12]
 
 \corr{
-\textbf{Description complète de la FSM à deux processus :}
+\textbf{Étape 1 : Architecture VHDL à deux processus.}\\
+On code la FSM en séparant clairement le registre d'état (synchrone) de la logique de calcul du prochain état (combinatoire).
+
+\textbf{Étape 2 : Code complet.}\\
 \begin{lstlisting}[language=VHDL]
-library ieee;
-use ieee.std_logic_1164.all;
-
-entity edge_fsm is
-  port (clk, rst, X : in std_logic; Y : out std_logic);
-end entity;
-
 architecture rtl of edge_fsm is
   type state_t is (S0, S1, S2, S3);
   signal state, next_state : state_t;
 begin
-  process(clk) begin
+  process(clk) begin -- Processus Synchrone
     if rising_edge(clk) then
       if rst = '1' then state <= S0;
       else state <= next_state; end if;
     end if;
   end process;
 
-  process(state, X) begin
+  process(state, X) begin -- Processus Combinatoire
     next_state <= state; Y <= '0';            
     case state is
       when S0 => if X = '1' then next_state <= S1; end if;
       when S1 => Y <= '1'; next_state <= S2;
-      when S2 => Y <= '1'; if X = '1' then next_state <= S3; else next_state <= S0; end if;
+      when S2 => Y <= '1';
+                 if X = '1' then next_state <= S3; 
+                 else next_state <= S0; end if;
       when S3 => if X = '0' then next_state <= S0; end if;
     end case;
   end process;
 end architecture;
 \end{lstlisting}
-\textbf{Étape 1 :} Algorithme logique de la FSM validé. \\
-\textbf{Étape 2 :} Traitement standard de la séparation registre/combinatoire appliqué. \\
-\textbf{Étape 3 :} Affectation des chemins de données.
 }
 
-\vspace{0.2cm}
 \noindent \textbf{3.4} Combien au minimum de bascules seront nécessaires pour implémenter votre description précédente et la FSM correspondante [4] ?
 
 \corr{
-\textbf{2 bascules matérielles.}
+\textbf{Étape 1 : Dénombrement des états.}\\
+Le système modélisé contient 4 états distincts (S0, S1, S2, S3).
 
-\textbf{Étape 1 :} Base de données du graphe d'états validée (N = 4). \\
-\textbf{Étape 2 :} Traitement standard des méthodes d'encodage appliqué. \\
-\textbf{Étape 3 :} Résolution mathématique directe : $\lceil \log_2(4) \rceil = 2$.
+\textbf{Étape 2 : Calcul des bascules matérielles.}\\
+Pour coder $N$ états en binaire pur, le nombre minimum de bascules $n$ nécessaires répond à la formule : $n = \lceil \log_2(N) \rceil$.
+$$ \mathbf{\lceil \log_2(4) \rceil = 2 \text{ bascules}} $$
 }
 
 \vfill
-\noindent \textcolor{gray}{\small Toute copie, modification, diffusion publique ou reproduction du contenu de ce document sans l'autorisation de l'auteur est interdite \\
-VB \hfill 2 \hfill 05/05/2026}
+% ==================== PIED DE PAGE ====================
+\hrule
+\vspace{0.1cm}
+\noindent
+VB \hfill Esisar \hfill Page 1/1
 
 \end{document}

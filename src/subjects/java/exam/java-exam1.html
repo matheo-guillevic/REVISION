@@ -22,9 +22,14 @@
       <header class="td-header">
         <a class="back-link" href="java.html#java-exams">Retour aux examens</a>
         <div>
-          <span class="eyebrow">Examen 1</span>
+          <span class="eyebrow">IN361 - Examen 1</span>
           <h1>Examen Java 1</h1>
-          <p>Page reconstruite depuis <code>pdf/java/exam/java-exam1.tex</code>, avec les réponses et raisonnements.</p>
+          <p>Programmation orientee objet, heritage, polymorphisme et classes.</p>
+          <p>Page reconstruite depuis <code>pdf/java/exam/java-exam1.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/java/exam/java-exam1.tex">Ouvrir le sujet LaTeX</a>
+          <a class="back-link" href="java.html">Cours Java</a>
         </div>
       </header>
 
@@ -41,14 +46,10 @@
             </div>
           </header>
           <div class="answer-block">
-          <div class="question-block">
-            <h4>Question</h4>
-            <p>Quel est le résultat de ce programme?</p>
-          </div>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Résultat et Raisonnement</strong>
-            <p>Le programme illustre les principes d'héritage et de polymorphisme (liaison dynamique).</p>
-          </div>
+          <p><strong>Question :</strong> Quel est le résultat de ce programme?</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Résultat et Raisonnement :</strong> Le programme illustre les principes d'héritage et de polymorphisme (liaison dynamique).</p>
           <ul class="formula-list">
             <li><code>A a = new A(); a.affiche();</code> \(\rightarrow\) <strong>Je suis un A</strong></li>
             <li><code>B b = new B(); b.affiche();</code> \(\rightarrow\) <strong>Je suis un A</strong> (B hérite de A et ne redéfinit pas la méthode ).</li>
@@ -65,6 +66,7 @@
             <li><code>c = f; c.affiche();</code> \(\rightarrow\) <strong>Je suis un C</strong> (<code>c</code> pointe vers <code>F</code> ).</li>
           </ul>
           </div>
+          </div>
         </article>
 
         <article class="exercise-card" data-exercise>
@@ -79,11 +81,10 @@
             </div>
           </header>
           <div class="answer-block">
-          <h4>Question 2.1 </h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Création d'une classe classique avec attributs privés, constructeur et accesseurs/mutateurs.</p>
-          </div>
+          <h4>Question 2.1</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Raisonnement :</strong> Création d'une classe classique avec attributs privés, constructeur et accesseurs/mutateurs.</p>
           <pre class="code-block language-java"><code class="language-java">public class TypPneu {
     private int diametre;
     private int largeur;
@@ -105,11 +106,11 @@
     public String getMarque() { return marque; }
     public void setMarque(String marque) { this.marque = marque; }
 }</code></pre>
-          <h4>Question 2.2 </h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>La méthode <code>equals(Object o)</code> doit être redéfinie pour comparer les valeurs et non les références mémoires.</p>
           </div>
+          <h4>Question 2.2</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Raisonnement :</strong> La méthode <code>equals(Object o)</code> doit être redéfinie pour comparer les valeurs et non les références mémoires.</p>
           <pre class="code-block language-java"><code class="language-java">@Override
 public boolean equals(Object obj) {
     if (this == obj) return true;
@@ -119,11 +120,11 @@ public boolean equals(Object obj) {
            largeur == typPneu.largeur &amp;&amp; 
            marque.equals(typPneu.marque);
 }</code></pre>
-          <h4>Question 2.3 </h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Création de la classe <code>TypVoiture</code> avec composition (elle contient un objet <code>TypPneu</code>).</p>
           </div>
+          <h4>Question 2.3</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Raisonnement :</strong> Création de la classe <code>TypVoiture</code> avec composition (elle contient un objet <code>TypPneu</code>).</p>
           <pre class="code-block language-java"><code class="language-java">public class TypVoiture {
     private String marque;
     private String modele;
@@ -145,11 +146,11 @@ public boolean equals(Object obj) {
     public TypPneu getTypPneu() { return pneu; }
     public void setTypPneu(TypPneu pneu) { this.pneu = pneu; }
 }</code></pre>
-          <h4>Question 2.4 </h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Ajout d'une méthode validant les dimensions avant de remplacer le pneu.</p>
           </div>
+          <h4>Question 2.4</h4>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Raisonnement :</strong> Ajout d'une méthode validant les dimensions avant de remplacer le pneu.</p>
           <pre class="code-block language-java"><code class="language-java">public void changementPneu(TypPneu tp) {
     if (this.pneu.getLargeur() == tp.getLargeur() &amp;&amp; 
         this.pneu.getDiametre() == tp.getDiametre()) {
@@ -158,16 +159,13 @@ public boolean equals(Object obj) {
         throw new RuntimeException("Dimensions incompatibles");
     }
 }</code></pre>
-          <h4>Question 2.5 </h4>
+          </div>
+          <h4>Question 2.5</h4>
+          <p><strong>Erreur : </strong> La méthode <code>changementPneu</code> est appelée sur la classe <code>TypVoiture</code> (<code>TypVoiture.changementPneu(p2);</code>) au lieu d'être appelée sur l'instance <code>v1</code>. Le code correct serait : <code>v1.changementPneu(p2);</code></p>
+          <h4>Question 2.6</h4>
           <div class="td-step-block td-solution-block">
-            <strong>Erreur</strong>
-            <p>La méthode <code>changementPneu</code> est appelée sur la classe <code>TypVoiture</code> (<code>TypVoiture.changementPneu(p2);</code>) au lieu d'être appelée sur l'instance <code>v1</code>. Le code correct serait : <code>v1.changementPneu(p2);</code></p>
-          </div>
-          <h4>Question 2.6 </h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p><code>==</code> compare les références mémoires. <code>equals()</code> compare le contenu.</p>
-          </div>
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Raisonnement :</strong> <code>==</code> compare les références mémoires. <code>equals()</code> compare le contenu.</p>
           <ul class="formula-list">
             <li><code>p1 == p2</code> \(\rightarrow\) <strong>false</strong> (Différentes instances en mémoire).</li>
             <li><code>p1 == p3</code> \(\rightarrow\) <strong>false</strong> (Différentes instances).</li>
@@ -180,6 +178,7 @@ public boolean equals(Object obj) {
             <li><code>v1.getTypPneu() == v3.getTypPneu()</code> \(\rightarrow\) <strong>false</strong> (<code>p1</code> \(\neq\) <code>p3</code>).</li>
             <li><code>v1.getTypPneu().equals(p2)</code> \(\rightarrow\) <strong>false</strong> (Équivaut à <code>p1.equals(p2)</code>).</li>
           </ul>
+          </div>
           </div>
         </article>
 
@@ -195,15 +194,15 @@ public boolean equals(Object obj) {
             </div>
           </header>
           <div class="answer-block">
-          <h4>3.1 </h4>
+          <h4>3.1</h4>
           <p>On crée un objet en utilisant le mot-clé <code>new</code> suivi de l'appel au constructeur de la classe (ex: <code>A a = new A();</code>).</p>
-          <h4>3.2 </h4>
+          <h4>3.2</h4>
           <p>En Java, le développeur ne supprime pas explicitement les objets. C'est le <strong>Garbage Collector</strong> (Ramasse-miettes) qui détruit automatiquement les objets en mémoire lorsqu'ils ne sont plus référencés.</p>
-          <h4>3.3 </h4>
+          <h4>3.3</h4>
           <p>Java est <strong>à la fois compilé et interprété</strong>. Le code source (.java) est d'abord compilé en un code intermédiaire appelé <strong>Bytecode</strong> (.class). Ce bytecode est ensuite interprété (et souvent compilé à la volée, JIT) par la Machine Virtuelle Java (JVM) lors de l'exécution.</p>
-          <h4>3.4 </h4>
+          <h4>3.4</h4>
           <p>Le mot-clé <code>final</code> pour une variable indique qu'elle est une <strong>constante</strong>. Une fois initialisée, sa valeur ne peut plus être modifiée. <em>Exemple :</em> <code>final double PI = 3.14159;</code> Si on tente de réassigner <code>PI = 3.14;</code>, le compilateur renverra une erreur.</p>
-          <h4>3.5 </h4>
+          <h4>3.5</h4>
           <ul class="formula-list">
             <li><strong>Classe abstraite :</strong> Peut contenir des attributs (état), des méthodes concrètes et des constructeurs. Une classe ne peut hériter que d'une seule classe (abstraite ou non).</li>
             <li><strong>Interface :</strong> Ne contient (traditionnellement) que des signatures de méthodes abstraites et des constantes (<code>public static final</code>). Une classe peut implémenter plusieurs interfaces.</li>
@@ -215,7 +214,7 @@ public boolean equals(Object obj) {
           <header>
             <div>
               <span class="status-pill">Exercice 4</span>
-              <h3>Exercice 4 (3 points) </h3>
+              <h3>Exercice 4 (3 points)</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -269,7 +268,7 @@ public class Moto extends Vehicule {
           <header>
             <div>
               <span class="status-pill">Exercice 5</span>
-              <h3>Exercice 5 (4 points) </h3>
+              <h3>Exercice 5 (4 points)</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -329,7 +328,7 @@ public class TestLocation {
           <header>
             <div>
               <span class="status-pill">Exercice 6</span>
-              <h3>Exercice 6 (3 points) </h3>
+              <h3>Exercice 6 (3 points)</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>

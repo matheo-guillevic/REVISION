@@ -1,0 +1,163 @@
+{
+  "figureCaptions": {
+    "ELEC-exam-2025-schema-1.png": "Fig. 1 - Cellule en T utilisee pour etablir la matrice admittance.",
+    "ELEC-exam-2025-schema-2.png": "Fig. 2 - AOP parfait associe aux quadripoles en admittance.",
+    "ELEC-exam-2025-schema-3.png": "Fig. 3 - Filtre universel realise avec plusieurs AOP.",
+    "ELEC-exam-2025-schema-4.png": "Fig. 4 - Etage de puissance push-pull place dans la contre-reaction.",
+    "ELEC-exam-2026-schema-1.png": "Fig. 1 - Les deux transistors forment un montage Darlington.",
+    "ELEC-exam-2026-schema-2.png": "Fig. 2 et 3 - AOP inverseur avec quadripoles QA et QB.",
+    "ELEC-exam-2026-schema-3.png": "Fig. 4 - Filtre universel a trois AOP.",
+    "ELEC-exam-2026-schema-4.png": "Fig. 5 - Boucle d'oscillateur avec amplificateur inverseur et reseau de retour.",
+    "exam2_vhdl_chronogramme-.svg": "Chronogramme du timer pour les valeurs M=3 puis M=2.",
+    "vhdl_exam2_moore_1.svg": "Diagramme de transition de la porte de garage avec remt impulsionnel.",
+    "vhdl_exam2_moore_2.svg": "Diagramme de transition de la porte de garage avec remt continu.",
+    "exam3-sipo-2.1.svg": "Schema du registre a decalage SIPO de l'examen 3.",
+    "vhdl-exam4-fsm.svg": "Diagramme de machine a etats de l'examen VHDL 4.",
+    "vhdl-exam4-fsm-chrono.svg": "Chronogramme associe a la machine a etats.",
+    "vhdl-exam4-pwm.svg": "Schema de generation PWM de l'examen VHDL 4.",
+    "vhdl-exam4-signal-s.svg": "Chronogramme du signal S."
+  },
+  "groups": [
+    {
+      "subject": "elec",
+      "label": "Electronique",
+      "sourceDir": "pdf/elec/exam",
+      "targetDir": "src/subjects/elec/exam",
+      "backHref": "elec.html#elec-exams",
+      "courseHref": "elec.html",
+      "courseLabel": "Cours electronique",
+      "assetPrefix": "assets/elec/exam",
+      "unitKind": "problem",
+      "exams": [
+        {
+          "source": "ELEC-exam-2025.tex",
+          "target": "elec-exam-2025.html",
+          "title": "Examen electronique 2025",
+          "eyebrow": "EP361 - Examen 2025",
+          "heading": "Correction examen electronique 2025",
+          "summary": "Quadripoles, filtre actif passe-bas, filtre universel et AOP de puissance push-pull.",
+          "figurePrefix": "ELEC-exam-2025-schema"
+        },
+        {
+          "source": "ELEC-exam-2026.tex",
+          "target": "elec-exam-2026.html",
+          "title": "Examen electronique 2026",
+          "eyebrow": "EP360 / EP361 - Examen 2026",
+          "heading": "Correction examen electronique 2026",
+          "summary": "Darlington, filtres actifs, filtre universel et oscillateur a reseau de retour.",
+          "figurePrefix": "ELEC-exam-2026-schema"
+        }
+      ]
+    },
+    {
+      "subject": "vhdl",
+      "label": "VHDL",
+      "sourceDir": "pdf/vhdl/exam",
+      "targetDir": "src/subjects/vhdl/exam",
+      "backHref": "vhdl.html#vhdl-exams",
+      "courseHref": "vhdl.html",
+      "courseLabel": "Cours VHDL",
+      "assetPrefix": "assets/vhdl/exam",
+      "unitKind": "problem",
+      "exams": [
+        {
+          "source": "vhdl-exam1.tex",
+          "target": "vhdl-exam1.html",
+          "title": "Examen VHDL 1",
+          "eyebrow": "SN361 - Examen 1",
+          "heading": "Registre generique et compteur modulo N",
+          "summary": "Register Transfer Level, description structurelle, generate, compteur modulo N et testbench."
+        },
+        {
+          "source": "vhdl-exam2.tex",
+          "target": "vhdl-exam2.html",
+          "title": "Examen VHDL 2",
+          "eyebrow": "SN361 - Examen 2",
+          "heading": "Timer et controleur de porte de garage",
+          "summary": "Timer 32 bits, decompteur, multiplexeur, testbench et machine a etats de Moore.",
+          "figures": {
+            "1": [{ "file": "exam2_vhdl_chronogramme-.svg", "after": "Question 2\\b" }],
+            "2": [
+              { "file": "vhdl_exam2_moore_1.svg", "after": "Question 2\\.1\\b" },
+              { "file": "vhdl_exam2_moore_2.svg", "after": "Question 2\\.2\\b" }
+            ]
+          }
+        },
+        {
+          "source": "vhdl-exam3.tex",
+          "target": "vhdl-exam3.html",
+          "title": "Examen VHDL 3",
+          "eyebrow": "SN361 - Examen 3",
+          "heading": "Questions de cours et registre a decalage SIPO",
+          "summary": "Virgule fixe, Karnaugh, numeric_std, processus concurrents, registre SIPO RTL/structurel et chronogrammes.",
+          "figures": {
+            "2": [{ "file": "exam3-sipo-2.1.svg", "after": "Question 2\\.1\\b" }]
+          }
+        },
+        {
+          "source": "vhdl-exam4.tex",
+          "target": "vhdl-exam4.html",
+          "title": "Examen VHDL 4",
+          "eyebrow": "SN361 - Examen 4",
+          "heading": "Questions de cours, FSM, PWM et composants",
+          "summary": "Questions de cours VHDL, machines a etats, PWM, composants et chronogrammes.",
+          "figures": {
+            "2": [
+              { "file": "vhdl-exam4-fsm.svg", "after": "Question 2|etat|FSM|machine" },
+              { "file": "vhdl-exam4-fsm-chrono.svg", "after": "chronogramme|Question 2" }
+            ],
+            "3": [
+              { "file": "vhdl-exam4-pwm.svg", "after": "PWM|Question 3" },
+              { "file": "vhdl-exam4-signal-s.svg", "after": "signal S|Question 3" }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subject": "java",
+      "label": "Java",
+      "sourceDir": "pdf/java/exam",
+      "targetDir": "src/subjects/java/exam",
+      "backHref": "java.html#java-exams",
+      "courseHref": "java.html",
+      "courseLabel": "Cours Java",
+      "assetPrefix": null,
+      "unitKind": "exercise",
+      "exams": [
+        {
+          "source": "java-exam1.tex",
+          "target": "java-exam1.html",
+          "title": "Examen Java 1",
+          "eyebrow": "IN361 - Examen 1",
+          "heading": "Examen Java 1",
+          "summary": "Programmation orientee objet, heritage, polymorphisme et classes."
+        },
+        {
+          "source": "java-exam2.tex",
+          "target": "java-exam2.html",
+          "title": "Examen Java 2",
+          "eyebrow": "IN361 - Examen 2",
+          "heading": "Examen Java 2",
+          "summary": "Objets, collections, exceptions et conception de classes."
+        },
+        {
+          "source": "java-exam3.tex",
+          "target": "java-exam3.html",
+          "title": "Examen Java 3",
+          "eyebrow": "IN361 - Examen 3",
+          "heading": "Examen Java 3",
+          "summary": "Programmation objet, interfaces, heritage et exceptions."
+        },
+        {
+          "source": "java-exam4.tex",
+          "target": "java-exam4.html",
+          "title": "Examen Java 4",
+          "eyebrow": "IN361 - Examen 4",
+          "heading": "Examen Java 4",
+          "summary": "Conception Java, classes, polymorphisme, exceptions et code."
+        }
+      ]
+    }
+  ]
+}
