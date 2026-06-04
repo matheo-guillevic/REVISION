@@ -68,46 +68,73 @@
 \noindent a) Exprimez $Y_{s}$ la matrice admittance d'un élément série $y_{o}$.
 
 \corr{
-\textit{Méthode :} Un dipôle d'admittance $y_o$ monté en série entre le port 1 et le port 2 d'un quadripôle obéit aux lois de Kirchhoff. La tension à ses bornes est $(v_1 - v_2)$.\\
-Le courant entrant au port 1 est : $i_1 = y_o(v_1 - v_2) = y_o v_1 - y_o v_2$.\\
-Le courant entrant au port 2 est : $i_2 = y_o(v_2 - v_1) = -y_o v_1 + y_o v_2$.\\
-On peut l'écrire sous forme matricielle :
-$$ \begin{bmatrix} i_1 \\ i_2 \end{bmatrix} = \begin{bmatrix} y_o & -y_o \\ -y_o & y_o \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} \quad \implies \quad Y_s = \begin{bmatrix} y_o & -y_o \\ -y_o & y_o \end{bmatrix} $$
+\textbf{Étape 1 : Définition des tensions et courants du quadripôle.}\\
+Un dipôle d'admittance $y_o$ est monté en série entre le port d'entrée (1) et le port de sortie (2). Soient $v_1, i_1$ la tension et le courant à l'entrée, et $v_2, i_2$ à la sortie.
+
+\textbf{Étape 2 : Application des lois fondamentales.}\\
+La différence de potentiel aux bornes de l'admittance $y_o$ est $(v_1 - v_2)$. 
+D'après la loi d'Ohm, le courant entrant par le port 1 est : 
+$$ i_1 = y_o(v_1 - v_2) = y_o v_1 - y_o v_2 $$
+Le courant $i_2$ entrant par le port 2 est l'opposé du courant traversant le composant de 1 vers 2 :
+$$ i_2 = y_o(v_2 - v_1) = -y_o v_1 + y_o v_2 $$
+
+\textbf{Étape 3 : Écriture sous forme matricielle.}\\
+En regroupant ces équations dans une matrice reliant les courants aux tensions, on obtient la matrice admittance $Y_s$ :
+$$ \begin{bmatrix} i_1 \\ i_2 \end{bmatrix} = \begin{bmatrix} y_o & -y_o \\ -y_o & y_o \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} \quad \implies \quad \mathbf{Y_s = \begin{bmatrix} y_o & -y_o \\ -y_o & y_o \end{bmatrix}} $$
 }
 
 \noindent b) Exprimez les coefficients $y_{ij}$ de la matrice admittance $Y_{T}$ en fonction des admittances $y_{1}$, $y_2$, $y_3$ des dipôles Fig. 1.
 
 \corr{
-\textit{Méthode (Théorème de Millman / Loi des nœuds) :} Soit $v_x$ la tension au nœud central du T.
-La loi des nœuds en ce point donne : $i_1 + i_2 = y_3 v_x$, mais on peut aussi l'écrire avec les tensions extérieures.
-Exprimons $v_x$ avec le théorème de Millman :
+\textbf{Étape 1 : Définition du nœud central.}\\
+Soit $v_x$ la tension au nœud central (jonction entre $y_1, y_2$ et $y_3$).
+
+\textbf{Étape 2 : Écriture de la loi des nœuds en $v_x$.}\\
+On écrit la somme des courants sortant du nœud central. Les trois branches relient $v_x$ à $v_1$, à $v_2$ et à la masse :
+$$ y_1(v_x-v_1)+y_2(v_x-v_2)+y_3v_x=0 $$
+On regroupe les termes en $v_x$ :
+$$ (y_1+y_2+y_3)v_x = y_1v_1+y_2v_2 $$
+Donc :
 $$ v_x = \frac{y_1 v_1 + y_2 v_2}{y_1 + y_2 + y_3} $$
-Les courants d'entrée et de sortie s'écrivent :
-$$ i_1 = y_1(v_1 - v_x) \quad \text{et} \quad i_2 = y_2(v_2 - v_x) $$
-En remplaçant $v_x$ dans l'expression de $i_1$ :
-$$ i_1 = y_1 v_1 - y_1 \frac{y_1 v_1 + y_2 v_2}{y_1 + y_2 + y_3} = \frac{y_1(y_1 + y_2 + y_3) - y_1^2}{y_1 + y_2 + y_3} v_1 - \frac{y_1 y_2}{y_1 + y_2 + y_3} v_2 = \frac{y_1(y_2 + y_3)}{y_1 + y_2 + y_3} v_1 - \frac{y_1 y_2}{y_1 + y_2 + y_3} v_2 $$
-Par symétrie, pour $i_2$ on obtient :
-$$ i_2 = \frac{-y_1 y_2}{y_1 + y_2 + y_3} v_1 + \frac{y_2(y_1 + y_3)}{y_1 + y_2 + y_3} v_2 $$
-La matrice admittance s'écrit donc :
-$$ Y_T = \frac{1}{y_1 + y_2 + y_3} \begin{bmatrix} y_1(y_2 + y_3) & -y_1 y_2 \\ -y_1 y_2 & y_2(y_1 + y_3) \end{bmatrix} $$
+
+\textbf{Étape 3 : Calcul des courants d'entrée et de sortie.}\\
+Les courants s'écrivent : $i_1 = y_1(v_1 - v_x)$ et $i_2 = y_2(v_2 - v_x)$.
+Remplaçons $v_x$ dans l'expression de $i_1$ :
+$$ i_1 = y_1 v_1 - y_1 \left( \frac{y_1 v_1 + y_2 v_2}{y_1 + y_2 + y_3} \right) $$
+$$ i_1 = \frac{y_1(y_1 + y_2 + y_3)v_1 - y_1^2 v_1 - y_1 y_2 v_2}{y_1 + y_2 + y_3} = \mathbf{\frac{y_1(y_2 + y_3)}{y_1 + y_2 + y_3} v_1 - \frac{y_1 y_2}{y_1 + y_2 + y_3} v_2} $$
+Par symétrie, pour le courant $i_2$ :
+$$ i_2 = y_2 v_2 - y_2 \left( \frac{y_1 v_1 + y_2 v_2}{y_1 + y_2 + y_3} \right) = \mathbf{\frac{-y_1 y_2}{y_1 + y_2 + y_3} v_1 + \frac{y_2(y_1 + y_3)}{y_1 + y_2 + y_3} v_2} $$
+
+\textbf{Étape 4 : Identification de la matrice admittance $Y_T$.}\\
+On extrait directement les coefficients des équations précédentes :
+$$ \mathbf{Y_T = \frac{1}{y_1 + y_2 + y_3} \begin{bmatrix} y_1(y_2 + y_3) & -y_1 y_2 \\ -y_1 y_2 & y_2(y_1 + y_3) \end{bmatrix}} $$
 }
 
 \noindent c) Le quadripôle est chargé par un dipôle d'admittance $y_{u}$, exprimez $T(p)$ en fonction des $y_{ij}$ et de $y_{u}$ : $T(p) = \frac{v_2}{v_1}$.
 
 \corr{
-\textit{Méthode :} En connectant une charge $y_u$ au port 2, le courant $i_2$ s'exprime par $i_2 = -y_u v_2$ (le signe moins vient de la convention récepteur du quadripôle où $i_2$ est entrant).
-D'après la définition de la matrice admittance :
+\textbf{Étape 1 : Condition imposée par la charge.}\\
+En connectant une charge $y_u$ en sortie, le courant sortant du quadripôle traverse cette charge. En convention quadripôle (où $i_2$ est défini comme entrant), on a la relation :
+$$ i_2 = -y_u v_2 $$
+
+\textbf{Étape 2 : Utilisation du modèle matriciel.}\\
+D'après la définition générale de la matrice admittance, le courant de sortie s'écrit :
 $$ i_2 = y_{21} v_1 + y_{22} v_2 $$
-On égalise les deux expressions :
-$$ -y_u v_2 = y_{21} v_1 + y_{22} v_2 \implies v_2 (y_u + y_{22}) = -y_{21} v_1 $$
-Ce qui donne la fonction de transfert :
-$$ T(p) = \frac{v_2}{v_1} = \frac{-y_{21}}{y_{22} + y_u} $$
+
+\textbf{Étape 3 : Résolution de la fonction de transfert.}\\
+En égalisant les deux expressions de $i_2$ :
+$$ -y_u v_2 = y_{21} v_1 + y_{22} v_2 $$
+On regroupe les termes en $v_2$ :
+$$ v_2 (y_{22} + y_u) = -y_{21} v_1 $$
+Ce qui donne directement la fonction de transfert en tension :
+$$ \mathbf{T(p) = \frac{v_2}{v_1} = \frac{-y_{21}}{y_{22} + y_u}} $$
 }
 
 \vspace{0.5cm}
 \subsubsection*{Partie B: Filtre à quadripôles - 10 pts}
 
-Le filtre ci-dessous est constitué d'un AOP parfait, alimenté en symétrique associé à deux quadripôles $Q_{A}, Q_{B}$. Les quadripôles A et B sont décrits par leur matrice admittance.
+Le filtre ci-dessous est constitué d'un AOP parfait, alimenté en symétrique associé à deux quadripôles $Q_{A}, Q_{B}$.
+Les quadripôles A et B sont décrits par leur matrice admittance.
 
 \begin{minipage}{0.45\textwidth}
 \imageplaceholder{0.9\textwidth}{[Insérer Figure 2 : Schéma AOP]}
@@ -118,6 +145,7 @@ $$ Y_A = \begin{bmatrix} y_{A_{11}} & y_{A_{12}} \\ y_{A_{21}} & y_{A_{22}} \end
 $$ Y_B = \begin{bmatrix} y_{B_{11}} & y_{B_{12}} \\ y_{B_{21}} & y_{B_{22}} \end{bmatrix} $$
 \end{minipage}
 
+\vspace{0.3cm}
 \textbf{Données :}\\
 Quadripôle A - Matrice Admittance : $Y_A = \frac{1}{y_1 + y_2 + y_3} \begin{bmatrix} y_1(y_2 + y_3) & -y_1 y_2 \\ -y_1 y_2 & y_2(y_1 + y_3) \end{bmatrix}$ \\
 Quadripôle B - Matrice Admittance : $Y_B = \begin{bmatrix} \frac{y_1(y_2+y_3)}{y_1+y_2+y_3} + y_4 & \frac{-y_1 y_2}{y_1+y_2+y_3} - y_4 \\[10pt] \frac{-y_1 y_2}{y_1+y_2+y_3} - y_4 & \frac{y_2(y_1+y_3)}{y_1+y_2+y_3} + y_4 \end{bmatrix}$
@@ -126,14 +154,19 @@ Quadripôle B - Matrice Admittance : $Y_B = \begin{bmatrix} \frac{y_1(y_2+y_3)}{
 \noindent a/ Exprimez en démontrant $H(p)$ en fonction de certains éléments $y_{x_{ij}} : H(p)=\frac{v_s}{v_e}$
 
 \corr{
-\textit{Méthode (AOP en régime linéaire + Masse virtuelle) :}
-L'AOP est supposé parfait et en boucle fermée sur l'entrée inverseuse ($V^-$). La tension différentielle est donc nulle : $V^+ = V^- = 0$. De plus, le courant d'entrée de l'AOP est nul ($i^- = 0$).
+\textbf{Étape 1 : Hypothèses liées à l'AOP parfait.}\\
+L'AOP est supposé parfait et possède une boucle de rétroaction sur son entrée inverseuse ($V^-$), il fonctionne donc en régime linéaire. Son entrée non-inverseuse étant à la masse ($V^+ = 0$), on obtient une \textbf{masse virtuelle} : $V^- = 0$. De plus, le courant entrant dans l'AOP est nul : $i^- = 0$.
+
+\textbf{Étape 2 : Analyse des courants aux bornes des quadripôles.}\\
 \begin{itemize}
-    \item La sortie de $Q_A$ est reliée à $V^-$. Le courant sortant de $Q_A$ est $i_{A2} = y_{A21}v_e + y_{A22}V^-$. Puisque $V^-=0$, on a $i_{A2} = y_{A21}v_e$.
-    \item L'entrée de $Q_B$ est reliée à $V^-$ et sa sortie à $v_s$. Le courant entrant dans $Q_B$ est $i_{B1} = y_{B11}V^- + y_{B12}v_s$. Puisque $V^-=0$, on a $i_{B1} = y_{B12}v_s$.
+    \item \textbf{Quadripôle A} : Son port de sortie (2) est connecté à $V^-$. Le courant de sortie est $i_{A2} = y_{A21}v_e + y_{A22}V^-$. Puisque $V^-=0$, on a simplement $i_{A2} = y_{A21}v_e$.
+    \item \textbf{Quadripôle B} : Son port d'entrée (1) est connecté à $V^-$ et sa sortie (2) à $v_s$. Le courant d'entrée est $i_{B1} = y_{B11}V^- + y_{B12}v_s$. Puisque $V^-=0$, on a $i_{B1} = y_{B12}v_s$.
 \end{itemize}
-Loi des nœuds en $V^-$ : la somme des courants est nulle $\implies i_{A2} + i_{B1} = 0$.
-$$ y_{A21} v_e + y_{B12} v_s = 0 \implies H(p) = \frac{v_s}{v_e} = -\frac{y_{A21}}{y_{B12}} $$
+
+\textbf{Étape 3 : Loi des nœuds et déduction de H(p).}\\
+En appliquant la loi des nœuds à l'entrée inverseuse de l'AOP, on a $i_{A2} + i_{B1} = i^- = 0$.
+$$ y_{A21} v_e + y_{B12} v_s = 0 \implies y_{B12} v_s = -y_{A21} v_e $$
+$$ \mathbf{H(p) = \frac{v_s}{v_e} = -\frac{y_{A21}}{y_{B12}}} $$
 }
 
 \noindent b/ Exprimez $H(p)$ la fonction de transfert du filtre Fig. 3 :\\
@@ -141,28 +174,38 @@ $y_1$ : résistance R \qquad $y_3$ : capacité C\\
 $y_2$ : résistance R \qquad $y_4$ : capacité C
 
 \corr{
-D'après les matrices données :
+\textbf{Étape 1 : Extraction des paramètres nécessaires.}\\
+D'après les matrices fournies dans les données et le résultat de la question précédente, on a besoin de :
 $$ y_{A21} = \frac{-y_1 y_2}{y_1 + y_2 + y_3} \quad \text{et} \quad y_{B12} = \frac{-y_1 y_2}{y_1 + y_2 + y_3} - y_4 $$
-On utilise l'expression de $H(p)$ :
-$$ H(p) = -\frac{\frac{-y_1 y_2}{y_1 + y_2 + y_3}}{\frac{-y_1 y_2}{y_1 + y_2 + y_3} - y_4} = \frac{y_1 y_2}{-y_1 y_2 - y_4(y_1 + y_2 + y_3)} $$
-On remplace par les admittances physiques ($y_1 = y_2 = 1/R$ et $y_3 = y_4 = Cp$) :
-$$ H(p) = \frac{(1/R)(1/R)}{-(1/R)(1/R) - Cp(1/R + 1/R + Cp)} = \frac{1/R^2}{-1/R^2 - 2Cp/R - C^2 p^2} $$
-On multiplie en haut et en bas par $-R^2$ pour normaliser :
-$$ H(p) = -\frac{1}{1 + 2RCp + (RCp)^2} = -\frac{1}{(1 + RCp)^2} $$
+
+\textbf{Étape 2 : Simplification littérale de H(p).}\\
+$$ H(p) = -\frac{\frac{-y_1 y_2}{y_1 + y_2 + y_3}}{\frac{-y_1 y_2}{y_1 + y_2 + y_3} - y_4} $$
+En multipliant le numérateur et le dénominateur par $(y_1 + y_2 + y_3)$ pour retirer les fractions étagées :
+$$ H(p) = \frac{y_1 y_2}{-y_1 y_2 - y_4(y_1 + y_2 + y_3)} $$
+
+\textbf{Étape 3 : Remplacement par les composants réels.}\\
+On remplace par les admittances complexes ($y_1 = y_2 = 1/R$ et $y_3 = y_4 = Cp$) :
+$$ H(p) = \frac{(1/R)(1/R)}{-(1/R)(1/R) - Cp(1/R + 1/R + Cp)} = \frac{1/R^2}{-1/R^2 - \frac{2Cp}{R} - C^2 p^2} $$
+
+\textbf{Étape 4 : Mise sous forme canonique.}\\
+On multiplie en haut et en bas par $-R^2$ pour avoir "1" au numérateur et en premier terme du dénominateur :
+$$ H(p) = \frac{-1}{1 + 2RCp + R^2C^2p^2} = \mathbf{-\frac{1}{(1 + RCp)^2}} $$
 }
 
 \noindent c/ Définissez l'ordre et le type de filtre.
 
 \corr{
-\textit{Analyse de la fonction de transfert :}
-La fonction de transfert est $H(p) = -\frac{1}{(1 + RCp)^2}$.
-\begin{itemize}
-    \item \textbf{Type :} C'est un filtre \textbf{passe-bas}. (Le gain vaut 1 en basse fréquence $p=0$ et tend vers 0 en haute fréquence $p \rightarrow \infty$).
-    \item \textbf{Ordre :} Le dénominateur est un polynôme de degré 2 en $p$. C'est un filtre du \textbf{2ème ordre} (plus précisément, deux pôles réels identiques).
-\end{itemize}
-}
+\textbf{Étape 1 : Détermination de l'ordre.}\\
+Le dénominateur de la fonction de transfert $H(p) = -\frac{1}{(1 + RCp)^2}$ est un polynôme de degré 2 en $p$. Il s'agit donc d'un filtre du \textbf{2ème ordre} (avec deux pôles réels identiques).
 
-\vspace{0.5cm}
+\textbf{Étape 2 : Détermination du type de filtre.}\\
+On analyse le comportement asymptotique du gain :
+\begin{itemize}
+    \item À très basse fréquence ($p \rightarrow 0$) : Le numérateur est constant et le dénominateur tend vers 1. Le gain tend vers $-1$ (module 1).
+    \item À très haute fréquence ($p \rightarrow \infty$) : Le dénominateur tend vers l'infini, donc le gain $H(p) \rightarrow 0$.
+\end{itemize}
+Ce filtre laisse passer les basses fréquences et atténue les hautes fréquences, c'est donc un filtre \textbf{passe-bas}.
+}
 % ==================== PROBLÈME II ====================
 \begin{center}
     \textbf{\Large Problème II Filtre} \hfill \textbf{10 pts}
@@ -184,42 +227,79 @@ La fonction de transfert est $H(p) = -\frac{1}{(1 + RCp)^2}$.
 \end{itemize}
 
 \corr{
-\textit{Analyse des étages du filtre universel (variables d'état) :}\\
-1. \textbf{AOP $A_1$ (Sommateur-Intégrateur ou Dérivateur) :}
-L'entrée $v_e$ attaque une capacité C, et $v_1$ attaque une autre capacité C. La contre-réaction est une résistance R. Le théorème de Millman à l'entrée inverseuse de $A_1$ ($V^- = 0$) donne :
-$$ \frac{v_e \cdot Cp + v_1 \cdot Cp + v_2 / R}{Cp + Cp + 1/R} = 0 \implies v_2 = -RCp(v_e + v_1) $$
+\textbf{1. Expression de la tension $v_2$ en fonction de $v_e$ et $v_1$}\\
+\textbf{Étape 1 : Analyse de l'AOP $A_1$.}\\
+L'AOP $A_1$ fonctionne en régime linéaire (présence d'une boucle de contre-réaction via la résistance R)[cite: 84]. Son entrée non-inverseuse étant reliée à la masse, on caractérise une masse virtuelle sur l'entrée inverseuse : $V^- = 0$. Les courants d'entrée de l'AOP étant nuls, on peut appliquer la loi des nœuds.\\
+\textbf{Étape 2 : Loi des nœuds sur l'entrée inverseuse.}\\
+On somme les courants sortant du nœud inverseur, dont la tension vaut $0$ grâce à la masse virtuelle. Les deux entrées arrivent par des capacités d'admittance $Cp$ et la contre-réaction arrive par la résistance $R$ :
+$$ Cp(0-v_e)+Cp(0-v_1)+\frac{0-v_2}{R}=0 $$
+\textbf{Étape 3 : Résolution de l'équation.}\\
+On obtient :
+$$ -Cp\,v_e-Cp\,v_1-\frac{v_2}{R}=0 $$
+$$ \frac{v_2}{R}=-Cp(v_e+v_1) \implies \mathbf{v_2 = -RCp(v_e + v_1)} $$
 
-2. \textbf{AOP $A_3$ (Inverseur unitaire) :}
-C'est un simple amplificateur inverseur avec deux résistances $R_1$ identiques :
-$$ v_1 = -\frac{R_1}{R_1} v_s \implies v_1 = -v_s $$
+\vspace{0.2cm}
+\textbf{2. Expression de la tension $v_s$ en fonction de $v_2$}\\
+\textbf{Étape 1 : Analyse de l'AOP $A_2$.}\\
+L'AOP $A_2$ est également monté en amplificateur inverseur fonctionnant en régime linéaire avec $V^- = 0$. Il agit spécifiquement comme un intégrateur à fuite[cite: 85].\\
+\textbf{Étape 2 : Identification des admittances de boucle.}\\
+L'admittance de la branche d'entrée est $Y_{in} = Cp$. L'admittance de la boucle de rétroaction (composée de R en parallèle avec $C_3$) est $Y_{ret} = \frac{1}{R} + C_3 p$[cite: 86].\\
+\textbf{Étape 3 : Expression de la tension de sortie.}\\
+La formule canonique du montage inverseur donne :
+$$ v_s = - \frac{Y_{in}}{Y_{ret}} v_2 = - \frac{Cp}{\frac{1}{R} + C_3 p} v_2 $$
+En multipliant par $R$ au numérateur et au dénominateur pour simplifier :
+$$ \mathbf{v_s = - v_2 \frac{RCp}{1 + R C_3 p}} $$
 
-3. \textbf{AOP $A_2$ (Intégrateur à fuite / Filtre passe-bas) :}
-L'entrée $v_2$ attaque une capacité C. La boucle de rétroaction contient R en parallèle avec $C_3$. L'admittance de retour est $Y_{ret} = 1/R + C_3 p$.
-$$ v_s = - \frac{Y_{in}}{Y_{ret}} v_2 = - \frac{Cp}{1/R + C_3 p} v_2 = - \frac{RCp}{1 + R C_3 p} v_2 $$
+\vspace{0.2cm}
+\textbf{3. Expression de la tension $v_1$ en fonction de $v_s$}\\
+\textbf{Étape 1 : Analyse de l'AOP $A_3$.}\\
+Ce montage est un amplificateur inverseur classique[cite: 84].\\
+\textbf{Étape 2 : Application de la formule du gain.}\\
+Les résistances d'entrée et de contre-réaction sont identiques et valent $R_1$. Le gain est donc unitaire et inversé :
+$$ v_1 = -\frac{R_1}{R_1} v_s \implies \mathbf{v_1 = -v_s} $$
 
-4. \textbf{Fonction de transfert globale $T(p)$ :}
-On remplace $v_1$ par $-v_s$ dans l'équation 1 : $v_2 = -RCp(v_e - v_s)$.
-On insère cela dans l'équation 3 :
-$$ v_s = - \left( -RCp(v_e - v_s) \right) \frac{RCp}{1 + R C_3 p} = (v_e - v_s) \frac{(RCp)^2}{1 + R C_3 p} $$
-On regroupe les termes en $v_s$ :
+\vspace{0.2cm}
+\textbf{4. Fonction de transfert $T(p)$ et paramètres canoniques}\\
+\textbf{Étape 1 : Substitution itérative des variables intermédiaires.}\\
+On remplace tout d'abord $v_1$ par $-v_s$ dans l'équation initiale de $v_2$ :
+$$ v_2 = -RCp(v_e - v_s) $$
+\textbf{Étape 2 : Injection dans l'équation liant $v_s$ et $v_2$.}\\
+$$ v_s = - \left[ -RCp(v_e - v_s) \right] \frac{RCp}{1 + R C_3 p} = (v_e - v_s) \frac{(RCp)^2}{1 + R C_3 p} $$ [cite: 88]\\
+\textbf{Étape 3 : Regroupement et isolation de $v_s$.}\\
+On développe puis on passe tous les termes en $v_s$ à gauche de l'égalité :
 $$ v_s \left[ 1 + \frac{(RCp)^2}{1 + R C_3 p} \right] = v_e \frac{(RCp)^2}{1 + R C_3 p} $$
-$$ T(p) = \frac{v_s}{v_e} = \frac{(RCp)^2}{1 + R C_3 p + (RCp)^2} $$
-
-5. \textbf{Identification canonique, Type et Ordre :}
-C'est une structure du type $H(p) = \frac{A_0 \cdot (p/\omega_0)^2}{1 + 2m(p/\omega_0) + (p/\omega_0)^2}$.
+En mettant le crochet sous un dénominateur commun :
+$$ v_s \left[ \frac{1 + R C_3 p + (RCp)^2}{1 + R C_3 p} \right] = v_e \frac{(RCp)^2}{1 + R C_3 p} $$
+Les dénominateurs se simplifient mutuellement, donnant $T(p)$ :
+$$ \mathbf{T(p) = \frac{v_s}{v_e} = \frac{(RCp)^2}{1 + R C_3 p + (RCp)^2}} $$
+\textbf{Étape 4 : Identification des paramètres canoniques.}\\
+La forme canonique attendue est $T(p) = \frac{A_0 \cdot (p/\omega_0)^2}{1 + 2m(p/\omega_0) + (p/\omega_0)^2}$[cite: 89]. Par analogie avec notre résultat en posant $\frac{p}{\omega_0} = RCp$ :
 \begin{itemize}
-    \item \textbf{Type :} \textbf{Passe-haut} (le numérateur est en $p^2$).
-    \item \textbf{Ordre :} \textbf{2ème ordre}.
-    \item Pulsation propre : $\omega_0 = \frac{1}{RC}$.
-    \item Gain statique (haute fréquence ici) : $A_0 = 1$.
-    \item Coefficient d'amortissement : Le terme du 1er degré est $RC_3 p$. On identifie $\frac{2m}{\omega_0} = RC_3 \implies 2m RC = RC_3 \implies m = \frac{C_3}{2C}$.
+    \item \textbf{Pulsation propre :} $\mathbf{\omega_0 = \frac{1}{RC}}$[cite: 90].
+    \item \textbf{Gain statique en haute fréquence :} $\mathbf{A_0 = 1}$[cite: 90].
+    \item \textbf{Coefficient d'amortissement ($m$) :} Le terme du premier degré est $2m\frac{p}{\omega_0} = R C_3 p$[cite: 91]. En isolant $m$, on a $\frac{2m}{1/(RC)} = R C_3 \implies 2m RC = R C_3 \implies \mathbf{m = \frac{C_3}{2C}}$[cite: 92].
 \end{itemize}
 
-6. \textbf{Pourquoi tant de composants ?}
-Ce type de montage (filtre à variables d'état) permet de régler indépendamment la fréquence de coupure $\omega_0$ (en modifiant R) et le facteur d'amortissement $m$ (en modifiant $C_3$). Cela offre une souplesse de réglage impossible avec une simple cellule de Sallen-Key.
+\vspace{0.2cm}
+\textbf{5. Type et ordre du filtre}\\
+\textbf{Étape 1 : Détermination de l'ordre.}\\
+Le dénominateur de $T(p)$ est un polynôme dont la puissance maximale est 2. Il s'agit de manière évidente d'un filtre du \textbf{2ème ordre}[cite: 89].\\
+\textbf{Étape 2 : Détermination du comportement asymptotique.}\\
+À basse fréquence ($p \to 0$), le terme $(RCp)^2$ au numérateur tend vers zéro, donc $T(p) \to 0$. À haute fréquence ($p \to \infty$), les termes en $p^2$ dominent au numérateur et au dénominateur, donc $T(p) \to 1$. Ce filtre bloque les basses fréquences et laisse passer les hautes : c'est un filtre \textbf{passe-haut}[cite: 89].
+
+\vspace{0.2cm}
+\textbf{6. Pourquoi utiliser tant de composants pour ce filtre ?}\\
+\textbf{Étape 1 : Identification de l'architecture.}\\
+Cette topologie de circuit est connue sous le nom de filtre à variables d'état (ou filtre universel).\\
+\textbf{Étape 2 : Avantage industriel et technique.}\\
+Son utilité principale réside dans la \textbf{décorrélation totale des réglages}. Contrairement aux structures simples comme celles de Sallen-Key[cite: 94]:
+\begin{itemize}
+    \item L'ajustement de la résistance $R$ permet de régler précisément la fréquence de coupure $\omega_0$[cite: 93].
+    \item L'ajustement de la capacité $C_3$ permet de modifier le facteur d'amortissement $m$ indépendamment[cite: 93], sans jamais dérégler $\omega_0$.
+\end{itemize}
+Cette caractéristique offre une fiabilité et une souplesse de conception inégalables.
 }
 
-\vspace{0.5cm}
 % ==================== PROBLÈME III ====================
 \begin{center}
     \textbf{\Large Problème III AOP de puissance} \hfill \textbf{10 pts}
@@ -233,7 +313,8 @@ Ce type de montage (filtre à variables d'état) permet de régler indépendamme
 La tension $v_1(t)$ est un signal triangulaire symétrique, imposé par l'extérieur, d'amplitude crête $\hat{v}_1$ de 0,3 V de fréquence 1 kHz, centré en zéro.
 \begin{itemize}
     \item AOP parfait. Transistors $T_1$ et $T_2$ : $\beta = 100 \gg 1$, $|v_{be}| = 0.7 V$.
-    \item Résistances : $R_1 = 1 k\Omega$, $R_2 = 9 k\Omega$, $R_u = 8 \Omega$. Alim $\pm V_{cc} = \pm 15 V$.
+    \item Résistances : $R_1 = 1 k\Omega$, $R_2 = 9 k\Omega$, $R_u = 8 \Omega$.
+    \item Alim $\pm V_{cc} = \pm 15 V$.
 \end{itemize}
 
 \noindent Exprimez l'amplification en tension $A=v_2/v_1$. Calculez A. \\
@@ -243,32 +324,53 @@ Tracé $v_2(t)$, $V_{BM}(t)$ sur la grille prévue. \\
 Exprimez la puissance active (moyenne) $P_u$ dans $R_u$ en fonction de $\hat{v}_2$. Calculez $P_u$.
 
 \corr{
-\textbf{1. Amplification en tension et tension de sortie crête :}\\
-L'AOP est monté en amplificateur non-inverseur. L'étage de puissance push-pull (T1/T2) est inséré \textit{dans} la boucle de contre-réaction. Par conséquent, l'AOP compense les chutes de tension $v_{be}$.
-Le diviseur de tension sur le retour fixe $V^- = v_2 \frac{R_1}{R_1 + R_2}$. Comme l'AOP est parfait, $V^+ = V^- \implies v_1 = v_2 \frac{R_1}{R_1 + R_2}$.
-$$ A = \frac{v_2}{v_1} = \frac{R_1 + R_2}{R_1} = 1 + \frac{9k}{1k} = \mathbf{10} $$
-La tension de sortie crête est $\hat{v}_2 = A \times \hat{v}_1 = 10 \times 0.3V = \mathbf{3 V}$.
+\textbf{1. Amplification en tension ($A$) et tension crête ($\hat{v}_2$)}\\
+\textbf{Étape 1 : Analyse du montage.}\\
+L'AOP est monté en \textbf{amplificateur non-inverseur}. L'étage de puissance "push-pull" (formé par $T_1$ et $T_2$) est inclus \textit{à l'intérieur} de la boucle de contre-réaction. Grâce à son gain infini, l'AOP parfait va automatiquement compenser la chute de tension $V_{be}$ des transistors. On peut donc analyser le gain global comme si les transistors étaient de simples fils.\\
+\textbf{Étape 2 : Équations de l'AOP parfait.}\\
+En régime linéaire, la tension différentielle est nulle : $V^+ = V^-$. 
+Ici, $V^+ = v_1$. La tension $V^-$ est fixée par le pont diviseur formé par $R_1$ et $R_2$ alimenté par $v_2$ :
+$$ V^- = v_2 \frac{R_1}{R_1 + R_2} $$
+\textbf{Étape 3 : Calcul de $A$ et $\hat{v}_2$.}\\
+En égalisant $V^+$ et $V^-$ :
+$$ v_1 = v_2 \frac{R_1}{R_1 + R_2} \implies \mathbf{A = \frac{v_2}{v_1} = \frac{R_1 + R_2}{R_1} = 1 + \frac{9k}{1k} = 10} $$
+La tension de sortie crête est simplement amplifiée par A :
+$$ \mathbf{\hat{v}_2 = A \times \hat{v}_1 = 10 \times 0.3V = 3\,V} $$
 
-\textbf{2. Courants crêtes $I_u$ et $I_{out}$ :}\\
-Le courant maximum dans la charge $R_u$ est $\hat{I}_u = \frac{\hat{v}_2}{R_u} = \frac{3V}{8\Omega} = \mathbf{0.375 A}$ ($375 mA$).
-Le courant $i_{out}$ sortant de l'AOP doit fournir le courant de base du transistor et le courant de la boucle de retour.
-Courant de retour : $\hat{I}_{ret} = \frac{\hat{v}_2}{R_1 + R_2} = \frac{3V}{10k\Omega} = 0.3 mA$.
-Courant de base : Le transistor T1 fournit $\hat{I}_u$. Donc $\hat{i}_B \approx \frac{\hat{I}_u}{\beta} = \frac{375mA}{100} = 3.75 mA$.
-Le courant crête total fourni par l'AOP est $\hat{I}_{out} = 3.75 + 0.3 = \mathbf{4.05 mA}$. (Cela reste largement dans les capacités d'un AOP classique).
+\vspace{0.2cm}
+\textbf{2. Courants crêtes $I_u$ et $I_{out}$}\\
+\textbf{Étape 1 : Courant dans la charge ($I_u$).}\\
+On applique la loi d'Ohm sur la résistance de charge $R_u$ :
+$$ \mathbf{\hat{I}_u = \frac{\hat{v}_2}{R_u} = \frac{3V}{8\Omega} = 0.375\,A \quad \text{(soit } 375\,mA)} $$
+\textbf{Étape 2 : Courant sortant de l'AOP ($I_{out}$).}\\
+L'AOP fournit uniquement le courant de base ($I_B$) aux transistors. Les transistors fournissent quant à eux le courant d'émetteur ($I_E$), qui se divise en deux : le courant utile $I_u$ et le très faible courant de retour $I_{ret}$ traversant $R_1+R_2$.
+$$ \hat{I}_{ret} = \frac{\hat{v}_2}{R_1 + R_2} = \frac{3V}{10k\Omega} = 0.3\,mA $$
+Le courant d'émetteur total est $\hat{I}_E = 375 + 0.3 = 375.3\,mA$.\\
+Sachant que $I_B = I_E / \beta$ :
+$$ \mathbf{\hat{I}_{out} = \hat{I}_B = \frac{375.3\,mA}{100} \approx 3.75\,mA} $$
+\textit{(Note : La correction d'origine affiche $4.05\,mA$ en additionnant directement $\hat{I}_B = 3.75$ et $\hat{I}_{ret} = 0.3$. Cela supposerait que la résistance $R_2$ soit branchée sur la sortie de l'AOP (nœud B), alors qu'elle est sur l'émetteur (nœud E). Le résultat rigoureux est bien $3.75\,mA$, ce qui reste largement dans la limite des $20\,mA$ qu'un AOP classique peut fournir).}
 
-\textbf{3. Tracé de $v_2(t)$ et $V_{BM}(t)$ :}\\
-$v_2(t)$ est un signal triangulaire parfaitement proportionnel à $v_1(t)$ avec une amplitude de $\pm 3V$.\\
-$V_{BM}(t)$ est la tension à la sortie de l'AOP (base des transistors). 
-Lorsque $v_2 > 0$, T1 conduit, il faut que $V_{BM} = v_2 + v_{BE1} = v_2 + 0.7V$. L'AOP "saute" instantanément à $+0.7V$ lorsque le signal croise zéro pour éliminer la distorsion de croisement.
-Lorsque $v_2 < 0$, T2 conduit, $V_{BM} = v_2 - 0.7V$.
-(\textit{Sur la grille, $V_{BM}$ suit la forme du triangle mais décalé de 0.7V vers le haut pour les phases positives et de 0.7V vers le bas pour les phases négatives, créant un saut vertical au passage par zéro}).
+\vspace{0.2cm}
+\textbf{3. Tracé de $v_2(t)$ et $V_{BM}(t)$}\\
+\textbf{Étape 1 : Allure de $v_2(t)$.}\\
+$v_2(t)$ est une copie parfaite de $v_1(t)$ amplifiée par 10. C'est donc un triangle symétrique d'amplitude $\pm 3\,V$.\\
+\textbf{Étape 2 : Allure de $V_{BM}(t)$ (sortie de l'AOP).}\\
+Pour que la tension sur l'émetteur ($v_2$) soit un beau triangle sans distorsion, l'AOP doit forcer sur la base (nœud B) une tension supérieure ou inférieure pour compenser le seuil des jonctions P-N :
+\begin{itemize}
+    \item Quand $v_2 > 0$ : T1 conduit, $V_{BM} = v_2 + V_{be} = v_2 + 0.7\,V$.
+    \item Quand $v_2 < 0$ : T2 conduit, $V_{BM} = v_2 - V_{be} = v_2 - 0.7\,V$.
+\end{itemize}
+\textit{Graphiquement, $V_{BM}$ a la même forme triangulaire que $v_2$, mais présente un saut vertical instantané de $-0.7\,V$ à $+0.7\,V$ à chaque passage par zéro de la tension.}
 
-\textbf{4. Puissance active $P_u$ :}\\
-Pour un signal triangulaire d'amplitude crête $\hat{v}_2$, la valeur efficace est $V_{eff} = \frac{\hat{v}_2}{\sqrt{3}}$.
-La puissance moyenne dissipée dans une résistance est :
-$$ P_u = \frac{V_{eff}^2}{R_u} = \frac{\left( \hat{v}_2 / \sqrt{3} \right)^2}{R_u} = \frac{\hat{v}_2^2}{3 R_u} $$
-Calcul numérique :
-$$ P_u = \frac{3^2}{3 \times 8} = \frac{9}{24} = \frac{3}{8} = \mathbf{0.375 W} \quad \text{(soit 375 mW)} $$
+\vspace{0.2cm}
+\textbf{4. Puissance active moyenne $P_u$}\\
+\textbf{Étape 1 : Valeur efficace d'un signal triangulaire.}\\
+Pour un signal triangulaire d'amplitude crête $\hat{v}_2$, la tension efficace est : $V_{eff} = \frac{\hat{v}_2}{\sqrt{3}}$.\\
+\textbf{Étape 2 : Calcul de la puissance.}\\
+La puissance moyenne dissipée dans la résistance $R_u$ s'écrit $P_u = \frac{V_{eff}^2}{R_u}$. En remplaçant par l'expression de la tension efficace :
+$$ \mathbf{P_u = \frac{\left( \hat{v}_2 / \sqrt{3} \right)^2}{R_u} = \frac{\hat{v}_2^2}{3 R_u}} $$
+Application numérique :
+$$ \mathbf{P_u = \frac{3^2}{3 \times 8} = \frac{9}{24} = \frac{3}{8} = 0.375\,W \quad \text{(soit } 375\,mW)} $$
 }
 
 \vfill

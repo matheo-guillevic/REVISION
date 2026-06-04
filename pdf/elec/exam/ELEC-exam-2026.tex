@@ -64,65 +64,103 @@ a) Donner la représentation générale d'un transistor bipolaire en paramètres
 On considèrera pour la suite $h_{12}=0$ et $h_{22}=0$.
 
 \corr{
-La représentation d'un quadripôle en paramètres hybrides relie les grandeurs d'entrée ($v_{be}$, $i_b$) aux grandeurs de sortie ($v_{ce}$, $i_c$).
-$$ \begin{bmatrix} v_{be} \\ i_c \end{bmatrix} = \begin{bmatrix} h_{11} & h_{12} \\ h_{21} & h_{22} \end{bmatrix} \begin{bmatrix} i_b \\ v_{ce} \end{bmatrix} $$
-Avec $h_{12}=0$ et $h_{22}=0$, la matrice se simplifie et le transistor se modélise par une résistance d'entrée $h_{11}$ et une source de courant commandée $h_{21}i_b$ (souvent noté $\beta i_b$).
+\textbf{Étape 1 : Modèle général du quadripôle.} \\
+La représentation en paramètres hybrides permet de lier les grandeurs d'entrée ($v_{be}$, $i_b$) aux grandeurs de sortie ($v_{ce}$, $i_c$) d'un transistor[cite: 3]. La matrice générale s'écrit :
+$$ \begin{bmatrix} v_{be} \\ i_c \end{bmatrix} = \begin{bmatrix} h_{11} & h_{12} \\ h_{21} & h_{22} \end{bmatrix} \begin{bmatrix} i_b \\ v_{ce} \end{bmatrix} $$ [cite: 4]
+
+\textbf{Étape 2 : Application des hypothèses simplificatrices.} \\
+Le sujet nous donne $h_{12}=0$ et $h_{22}=0$. Les équations deviennent donc :
+$$ v_{be} = h_{11} \cdot i_b $$
+$$ i_c = h_{21} \cdot i_b $$
+
+\textbf{Conclusion :}\\
+Le transistor se modélise par un circuit simple : une résistance d'entrée $h_{11}$ et une source de courant commandée $h_{21}i_b$ (souvent notée $\beta i_b$)[cite: 4].
 }
 
 b) Donner le schéma équivalent dynamique du montage de la Fig. 1 vu entre les bornes B, C et E.
 
 \corr{
-\textit{Raisonnement :} On remplace chaque transistor par son modèle dynamique simplifié.
+\textbf{Étape 1 : Remplacement par les modèles dynamiques.}\\
+Pour établir le schéma équivalent, il faut remplacer chaque transistor ($T_1$ et $T_2$) par le modèle simplifié déterminé à la question a)[cite: 5].
+
+\textbf{Étape 2 : Identification des connexions (Nœuds).}\\
+En suivant le schéma de la Fig. 1, on réalise les connexions suivantes :
 \begin{itemize}
-    \item La base globale B est reliée à $B_1$.
-    \item L'émetteur $E_1$ est directement connecté à la base $B_2$.
-    \item Les collecteurs $C_1$ et $C_2$ sont reliés ensemble pour former le collecteur global C.
-    \item L'émetteur $E_2$ forme l'émetteur global E.
+    \item \textbf{Base globale (B) :} Elle correspond directement à la base du premier transistor ($B_1$)[cite: 6].
+    \item \textbf{Liaison interne ($E_1$ - $B_2$) :} L'émetteur de $T_1$ est directement connecté à la base de $T_2$[cite: 7]. 
+    \item \textbf{Collecteur global (C) :} Les collecteurs $C_1$ et $C_2$ sont reliés ensemble pour former le collecteur global C[cite: 8].
+    \item \textbf{Émetteur global (E) :} Il correspond à l'émetteur du deuxième transistor ($E_2$)[cite: 8].
 \end{itemize}
-\textit{(Le schéma comportera $h_{11,T1}$ suivi de $h_{11,T2}$ en série, avec deux sources de courant $h_{21,T1}ib_1$ et $h_{21,T2}ib_2$ injectant dans le collecteur commun C).}
+\textit{Le schéma comporte donc $h_{11,T1}$ en série avec $h_{11,T2}$, et deux sources de courant ($h_{21,T1}ib_1$ et $h_{21,T2}ib_2$) injectant en parallèle dans le collecteur commun C[cite: 8].}
 }
 
 c) Exprimer $ib_2$ en fonction de $ib_1$ et de $h_{21,T1}$ (on ne négligera pas le terme 1 devant $h_{21}$).
 
 \corr{
-Le courant entrant dans la base $B_2$ correspond au courant d'émetteur de $T_1$.
-D'après la loi des nœuds sur $T_1$ :
-$$ i_{e1} = i_{b1} + i_{c1} $$
-Or $i_{c1} = h_{21,T1} \cdot i_{b1}$. Donc :
-$$ ib_2 = i_{e1} = i_{b1} + h_{21,T1} i_{b1} = (1 + h_{21,T1}) i_{b1} $$
+\textbf{Étape 1 : Analyse de la liaison $E_1$-$B_2$.}\\
+Le courant entrant dans la base $B_2$ ($ib_2$) correspond exactement au courant d'émetteur de $T_1$ ($i_{e1}$)[cite: 9].
+
+\textbf{Étape 2 : Loi des nœuds sur le transistor 1.}\\
+La somme des courants entrant dans un transistor est égale au courant sortant par l'émetteur[cite: 10]:
+$$ i_{e1} = i_{b1} + i_{c1} $$ [cite: 10]
+
+\textbf{Étape 3 : Substitution et factorisation.}\\
+On sait que $i_{c1} = h_{21,T1} \cdot i_{b1}$[cite: 10]. En remplaçant dans l'équation :
+$$ ib_2 = i_{b1} + h_{21,T1} \cdot i_{b1} $$ [cite: 11]
+$$ \mathbf{ib_2 = (1 + h_{21,T1}) \cdot i_{b1}} $$ [cite: 11]
 }
 
 d) En déduire l'expression de l'impédance d'entrée équivalente.
 
 \corr{
-L'impédance d'entrée globale est $h_{11,Teq} = \frac{v_{be}}{i_b}$.
-La maille d'entrée donne : $v_{be} = v_{be1} + v_{be2}$.
-En utilisant les modèles hybrides :
-$$ v_{be} = h_{11,T1} i_{b1} + h_{11,T2} i_{b2} $$
-On remplace $ib_2$ par son expression calculée en c) :
-$$ v_{be} = h_{11,T1} i_{b1} + h_{11,T2} (1 + h_{21,T1}) i_{b1} $$
-En factorisant par $i_{b1}$ (sachant que $i_b = i_{b1}$) :
-$$ h_{11,Teq} = h_{11,T1} + h_{11,T2} (1 + h_{21,T1}) $$
+\textbf{Étape 1 : Définir l'impédance d'entrée.}\\
+L'impédance d'entrée globale est définie par $h_{11,Teq} = \frac{v_{be}}{i_b}$[cite: 12].
+
+\textbf{Étape 2 : Loi des mailles à l'entrée.}\\
+La maille d'entrée donne : $v_{be} = v_{be1} + v_{be2}$[cite: 12]. En utilisant les modèles hybrides pour chaque transistor :
+$$ v_{be} = h_{11,T1} \cdot i_{b1} + h_{11,T2} \cdot i_{b2} $$ [cite: 13]
+
+\textbf{Étape 3 : Substitution de $ib_2$.}\\
+On remplace $ib_2$ par l'expression obtenue en c) :
+$$ v_{be} = h_{11,T1} \cdot i_{b1} + h_{11,T2} \cdot (1 + h_{21,T1}) \cdot i_{b1} $$ [cite: 13]
+
+\textbf{Étape 4 : Factorisation.}\\
+En factorisant par $i_{b1}$ (sachant que le courant d'entrée global $i_b = i_{b1}$)[cite: 13]:
+$$ \mathbf{h_{11,Teq} = h_{11,T1} + h_{11,T2}(1 + h_{21,T1})} $$ [cite: 13]
 }
 
 e) En déduire l'expression du gain en courant équivalent.
 
 \corr{
-Le gain en courant global est $h_{21,Teq} = \frac{i_c}{i_b}$.
-Le courant de collecteur total est la somme des deux courants :
-$$ i_c = i_{c1} + i_{c2} = h_{21,T1} i_{b1} + h_{21,T2} i_{b2} $$
+\textbf{Étape 1 : Définir le gain en courant.}\\
+Le gain en courant global est $h_{21,Teq} = \frac{i_c}{i_b}$[cite: 14].
+
+\textbf{Étape 2 : Loi des nœuds au collecteur.}\\
+Le courant de collecteur total est la somme des deux courants de collecteur[cite: 14]:
+$$ i_c = i_{c1} + i_{c2} = h_{21,T1} \cdot i_{b1} + h_{21,T2} \cdot i_{b2} $$ [cite: 14]
+
+\textbf{Étape 3 : Substitution et développement.}\\
 On remplace $ib_2$ par son expression :
-$$ i_c = h_{21,T1} i_{b1} + h_{21,T2} (1 + h_{21,T1}) i_{b1} $$
-$$ h_{21,Teq} = h_{21,T1} + h_{21,T2} + h_{21,T1} \cdot h_{21,T2} $$
+$$ i_c = h_{21,T1} \cdot i_{b1} + h_{21,T2} \cdot (1 + h_{21,T1}) \cdot i_{b1} $$ [cite: 14]
+En factorisant par $i_{b1}$ :
+$$ \mathbf{h_{21,Teq} = h_{21,T1} + h_{21,T2} + h_{21,T1} \cdot h_{21,T2}} $$ [cite: 14]
 }
 
 f) Dans le cas où les deux transistors sont identiques, simplifier les expressions de : $h_{11,Teq}$ et $h_{21,Teq}$
 
 \corr{
-Si les transistors sont identiques ($h_{11,T1} = h_{11,T2} = h_{11}$ et $h_{21,T1} = h_{21,T2} = \beta$) :
-$$ h_{11,Teq} = h_{11} + h_{11}(1 + \beta) = h_{11} (2 + \beta) \approx \beta \cdot h_{11} $$
-$$ h_{21,Teq} = \beta + \beta + \beta^2 = \beta^2 + 2\beta \approx \beta^2 $$
-*(L'approximation est valable car $\beta \gg 1$ en général).*
+\textbf{Hypothèse :}\\
+Les transistors sont identiques, on pose donc $h_{11,T1} = h_{11,T2} = h_{11}$ et $h_{21,T1} = h_{21,T2} = \beta$[cite: 14].
+
+\textbf{Simplification de $h_{11,Teq}$ :}\\
+$$ h_{11,Teq} = h_{11} + h_{11}(1 + \beta) = h_{11}(2 + \beta) $$ [cite: 14, 15]
+Comme $\beta \gg 1$ en général, on approxime[cite: 15]:
+$$ \mathbf{h_{11,Teq} \approx \beta \cdot h_{11}} $$ [cite: 15]
+
+\textbf{Simplification de $h_{21,Teq}$ :}\\
+$$ h_{21,Teq} = \beta + \beta + \beta^2 = 2\beta + \beta^2 $$ [cite: 15]
+Avec $\beta \gg 1$, le terme au carré est dominant :
+$$ \mathbf{h_{21,Teq} \approx \beta^2} $$ [cite: 15]
 }
 \end{minipage}
 \hfill
@@ -130,8 +168,16 @@ $$ h_{21,Teq} = \beta + \beta + \beta^2 = \beta^2 + 2\beta \approx \beta^2 $$
 g) Indiquer de quel type de montage il s'agit et préciser son principal intérêt.
 
 \corr{
-Il s'agit d'un **Montage Darlington**. 
-Son intérêt principal est de se comporter comme un transistor unique possédant un **très grand gain en courant** (environ $\beta^2$) et une **très grande impédance d'entrée**, ce qui le rend idéal pour des étages de puissance ou d'amplification nécessitant peu de courant de commande.
+\textbf{Type de montage :}\\
+Il s'agit d'un \textbf{Montage Darlington}[cite: 16]. 
+
+\textbf{Intérêt principal :}\\
+Ce montage permet de se comporter comme un transistor unique possédant :
+\begin{itemize}
+    \item Un \textbf{très grand gain en courant} (environ $\beta^2$)[cite: 16].
+    \item Une \textbf{très grande impédance d'entrée}[cite: 16].
+\end{itemize}
+Cela le rend idéal pour des étages de puissance ou d'amplification nécessitant un très faible courant de commande[cite: 16].
 }
 
 \imageplaceholder{0.9\textwidth}{[Insérer Figure 1 : Montage Darlington]}
@@ -152,8 +198,8 @@ Son intérêt principal est de se comporter comme un transistor unique possédan
 
 \noindent
 \begin{minipage}[t]{0.45\textwidth}
-Le filtre ci-dessous est constitué d'un AOP parfait, alimenté en symétrique associé à deux quadripôles $\text{Q}_\text{A}$, $\text{Q}_\text{B}$. Les quadripôles A et B sont décrits par leur matrice admittance.
-
+Le filtre ci-dessous est constitué d'un AOP parfait, alimenté en symétrique associé à deux quadripôles $\text{Q}_\text{A}$, $\text{Q}_\text{B}$.
+Les quadripôles A et B sont décrits par leur matrice admittance.
 \imageplaceholder{0.9\textwidth}{[Insérer Figures 2 et 3 : Schéma AOP et quadripôles]}
 \begin{center}
     {\small Fig. 2 \hspace{2cm} Fig. 3}
@@ -164,15 +210,31 @@ $$ \text{Y}_\text{A} = \begin{bmatrix} y_{A_{11}} & y_{A_{12}} \\ y_{A_{21}} & y
 a/ Exprimer en démontrant H(p) en fonction de certains éléments $y_{x\;ij}$ : $\text{H(p)} = \frac{v_S}{v_E}$ \quad avec (x = A ou B).
 
 \corr{
-L'AOP étant parfait et fonctionnant en régime linéaire (boucle de rétroaction sur l'entrée -), la tension différentielle est nulle : $V^+ = V^- = 0$ (Masse virtuelle).
+\textbf{Étape 1 : Propriétés de l'AOP parfait en régime linéaire.}\\
+L'AOP possède une boucle de rétroaction sur son entrée inverseuse (via $Q_B$), il fonctionne donc en régime linéaire. Par conséquent, la tension différentielle est nulle : $V^+ = V^-$.
+Puisque l'entrée non-inverseuse est à la masse ($V^+ = 0$), on obtient une **masse virtuelle** : $V^- = 0$.
+De plus, les courants d'entrée d'un AOP parfait sont nuls : $i^- = 0$.
+
+\textbf{Étape 2 : Équations de transfert des quadripôles.}\\
 \begin{itemize}
-    \item Pour le quadripôle A, le courant de sortie $I_{A2}$ vaut : $I_{A2} = y_{A21} V_{e} + y_{A22} V^-$. Comme $V^- = 0$, $I_{A2} = y_{A21} V_{e}$.
-    \item Pour le quadripôle B, le courant d'entrée $I_{B1}$ vaut : $I_{B1} = y_{B11} V^- + y_{B12} V_{s}$. Comme $V^- = 0$, $I_{B1} = y_{B12} V_{s}$.
+    \item \textbf{Pour le quadripôle A} (connecté entre $V_e$ et $V^-$) : le courant de sortie $I_{A2}$ s'écrit, d'après la matrice admittance : 
+    $$ I_{A2} = y_{A21} V_e + y_{A22} V^- $$
+    Comme $V^- = 0$, cela se simplifie en : $I_{A2} = y_{A21} V_e$.
+    
+    \item \textbf{Pour le quadripôle B} (connecté entre $V^-$ et $V_s$) : le courant d'entrée $I_{B1}$ s'écrit :
+    $$ I_{B1} = y_{B11} V^- + y_{B12} V_s $$
+    Comme $V^- = 0$, cela se simplifie en : $I_{B1} = y_{B12} V_s$.
 \end{itemize}
-L'AOP a un courant d'entrée nul ($i^- = 0$), la loi des nœuds à l'entrée inverseuse donne :
-$$ I_{A2} + I_{B1} = 0 \implies y_{A21} V_{e} + y_{B12} V_{s} = 0 $$
-On en déduit la fonction de transfert :
-$$ H(p) = \frac{V_s}{V_e} = -\frac{y_{A21}}{y_{B12}} $$
+
+\textbf{Étape 3 : Loi des nœuds à l'entrée inverseuse.}\\
+Le courant sortant de $Q_A$ s'additionne au courant entrant dans $Q_B$, et la somme doit être égale au courant $i^-$ de l'AOP :
+$$ I_{A2} + I_{B1} = i^- = 0 $$
+
+\textbf{Étape 4 : Déduction de la fonction de transfert.}\\
+En remplaçant les courants par les expressions trouvées à l'étape 2 :
+$$ y_{A21} V_e + y_{B12} V_s = 0 $$
+$$ y_{B12} V_s = - y_{A21} V_e $$
+$$ \mathbf{H(p) = \frac{V_s}{V_e} = -\frac{y_{A21}}{y_{B12}}} $$
 }
 \end{minipage}
 \hfill
@@ -198,20 +260,37 @@ $$ \text{Y}_\text{A} = \frac{1}{y_1+y_2+y_3} \begin{bmatrix} y_1(y_2+y_3) & -y_1
 $$ \text{Y}_\text{B} = \begin{bmatrix} \dots & \frac{-y_1 y_2}{y_1+y_2+y_3} - y_4 \\[10pt] \dots & \dots \end{bmatrix} $$
 
 \corr{
-\textbf{Question b/ et c/ :}\\
-D'après les matrices fournies, on a : $y_{A21} = \frac{-y_1 y_2}{y_1+y_2+y_3}$ et $y_{B12} = \frac{-y_1 y_2}{y_1+y_2+y_3} - y_4$.
-On utilise le résultat a/ :
-$$ H(p) = -\frac{\frac{-y_1 y_2}{y_1+y_2+y_3}}{\frac{-y_1 y_2}{y_1+y_2+y_3} - y_4} = \frac{-y_1 y_2}{-y_1 y_2 - y_4(y_1+y_2+y_3)} = \frac{y_1 y_2}{y_1 y_2 + y_4(y_1+y_2+y_3)} $$
-On remplace avec les composants (admittances complexes : $y_1 = y_2 = Cp$, $y_3 = y_4 = 1/R$) :
-$$ H(p) = \frac{(Cp)(Cp)}{(Cp)(Cp) + \frac{1}{R}(2Cp + \frac{1}{R})} = \frac{C^2p^2}{C^2p^2 + \frac{2C}{R}p + \frac{1}{R^2}} $$
-En multipliant par $R^2$ en haut et en bas, on obtient la **forme canonique** :
-$$ H(p) = \frac{(RCp)^2}{1 + 2RCp + (RCp)^2} $$
+\textbf{Questions b/ et c/ :}\\
+\textbf{Étape 1 : Identification des paramètres des matrices.}\\
+En observant les matrices $Y_A$ et $Y_B$ fournies, on repère les coefficients nécessaires :
+$$ y_{A21} = \frac{-y_1 y_2}{y_1+y_2+y_3} \quad \text{et} \quad y_{B12} = \frac{-y_1 y_2}{y_1+y_2+y_3} - y_4 $$
 
+\textbf{Étape 2 : Remplacement dans H(p).}\\
+D'après la question a/ :
+$$ H(p) = -\frac{\frac{-y_1 y_2}{y_1+y_2+y_3}}{\frac{-y_1 y_2}{y_1+y_2+y_3} - y_4} $$
+En multipliant numérateur et dénominateur par $(y_1+y_2+y_3)$ pour éliminer les fractions étagées :
+$$ H(p) = \frac{y_1 y_2}{y_1 y_2 + y_4(y_1+y_2+y_3)} $$
+
+\textbf{Étape 3 : Remplacement par les admittances des composants complexes.}\\
+L'admittance d'un condensateur est $Cp$ et celle d'une résistance est $1/R$. Ainsi, $y_1 = y_2 = Cp$ et $y_3 = y_4 = \frac{1}{R}$.
+$$ H(p) = \frac{(Cp)(Cp)}{(Cp)(Cp) + \frac{1}{R}\left(Cp + Cp + \frac{1}{R}\right)} $$
+$$ H(p) = \frac{C^2p^2}{C^2p^2 + \frac{1}{R}\left(2Cp + \frac{1}{R}\right)} = \frac{C^2p^2}{C^2p^2 + \frac{2C}{R}p + \frac{1}{R^2}} $$
+
+\textbf{Étape 4 : Mise sous forme canonique.}\\
+Pour identifier une forme canonique standard, on cherche à obtenir "1" comme terme de degré 0 au dénominateur. On multiplie numérateur et dénominateur par $R^2$ :
+$$ \mathbf{H(p) = \frac{(RCp)^2}{1 + 2RCp + (RCp)^2}} $$
+
+\vspace{0.2cm}
 \textbf{Question d/ :}\\
-En identifiant à la forme canonique $H(p) = \frac{A_0 \cdot (p/\omega_0)^2}{1 + 2m(p/\omega_0) + (p/\omega_0)^2}$ :
+\textbf{Étape 1 : Identification avec la forme générale.}\\
+La fonction de transfert correspond à la forme canonique :
+$$ H(p) = \frac{A_0 \cdot \left(\frac{p}{\omega_0}\right)^2}{1 + 2m\left(\frac{p}{\omega_0}\right) + \left(\frac{p}{\omega_0}\right)^2} $$
+Avec $\omega_0 = \frac{1}{RC}$, $A_0 = 1$ et $m = 1$.
+
+\textbf{Étape 2 : Conclusion sur le filtre.}\\
 \begin{itemize}
-    \item \textbf{Type :} C'est un filtre **passe-haut**. (Gain tend vers 1 à haute fréquence, 0 à basse fréquence).
-    \item \textbf{Ordre :} C'est un filtre du **2ème ordre** (pôle de degré 2).
+    \item \textbf{Ordre :} La puissance maximale de $p$ au dénominateur est 2. C'est un filtre du \textbf{2ème ordre}.
+    \item \textbf{Type :} À très basse fréquence ($p \to 0$), $H(p) \to 0$. À très haute fréquence ($p \to \infty$), $H(p) \to \frac{(RCp)^2}{(RCp)^2} = 1$. Il laisse donc passer les hautes fréquences, c'est un filtre \textbf{passe-haut}.
 \end{itemize}
 }
 \end{minipage}
@@ -241,38 +320,87 @@ Les AOP sont parfaits alimentés symétriques +/- $\text{V}_{\text{cc}}$.
     \item Quel est le type et l'ordre du filtre
     \item Pourquoi tant de composants pour ce filtre ?
 \end{itemize}
+\end{minipage}
 
+\vspace{0.3cm}
+
+\noindent
+\begin{minipage}{\textwidth}
 \corr{
-\textit{Analyse de la Figure 4 (schéma à 3 AOP) :}
+\textbf{1. Expression de la tension $v_2$ en fonction de $V_e$ et $V_1$}\\
+\textbf{Étape 1 : Analyse du régime de fonctionnement de $A_1$.}\\
+L'AOP $A_1$ possède une boucle de rétroaction négative via la résistance $R$, il fonctionne donc en régime linéaire. Comme son entrée non-inverseuse est à la masse ($V^+ = 0$), on en déduit une masse virtuelle sur l'entrée inverseuse : $V^- = 0$. Les courants d'entrée de l'AOP étant nuls, on peut appliquer la loi des nœuds en ce point.\\
+\textbf{Étape 2 : Application de la loi des nœuds.}\\
+Trois branches de composants arrivent au nœud $V^-$. Comme $V^- = 0$, on somme les courants sortant de ce nœud vers $V_e$, vers $V_1$ et vers $v_2$ :
+$$ Cp(0 - V_e) + Cp(0 - V_1) + \frac{0 - v_2}{R} = 0 $$
+\textbf{Étape 3 : Résolution algébrique.}\\
+$$ -CpV_e - CpV_1 - \frac{v_2}{R} = 0 $$
+$$ \frac{v_2}{R} = -Cp(V_e + V_1) \implies \mathbf{v_2 = -RCp(V_e + V_1)} $$
+
+\vspace{0.2cm}
+\textbf{2. Expression de la tension $v_s$ en fonction de $V_2$}\\
+\textbf{Étape 1 : Analyse du nœud inverseur de $A_2$.}\\
+De la même manière, $A_2$ fonctionne en régime linéaire avec $V^+ = 0$, donc son entrée inverseuse est également à un potentiel nul ($V^- = 0$).\\
+\textbf{Étape 2 : Détermination de l'admittance de la boucle de rétroaction.}\\
+La rétroaction de $A_2$ est composée d'une résistance $R$ en parallèle avec un condensateur $C_3$. L'admittance globale de cette branche parallèle est : $Y_f = \frac{1}{R} + C_3p$.\\
+\textbf{Étape 3 : Application de la loi des nœuds au point $V^- = 0$.}\\
+Le courant arrivant de $v_2$ à travers le condensateur $C$ est égal au courant repartant vers $v_s$ à travers la branche parallèle :
+$$ (v_2 - 0)\cdot Cp + (v_s - 0)\cdot \left(\frac{1}{R} + C_3p\right) = 0 $$
+$$ v_s \cdot \left(\frac{1 + RC_3p}{R}\right) = -v_2 \cdot Cp \implies \mathbf{v_s = -v_2 \frac{RCp}{1 + RC_3p}} $$
+
+\vspace{0.2cm}
+\textbf{3. Expression de la tension $v_1$ en fonction de $V_s$}\\
+\textbf{Étape 1 : Identification du montage $A_3$.}\\
+L'AOP $A_3$ est câblé selon une structure classique d'amplificateur inverseur.\\
+\textbf{Étape 2 : Équation du montage.}\\
+Le signal d'entrée est $v_s$ (appliqué sur la résistance d'entrée $R_1$) et la sortie est $v_1$ (liée par la résistance de rétroaction $R_1$). La formule du gain de l'inverseur donne directement :
+$$ v_1 = -\frac{R_1}{R_1} \cdot v_s \implies \mathbf{v_1 = -v_s} $$
+
+\vspace{0.2cm}
+\textbf{4. Expression de la fonction de transfert globale $T(p) = \frac{v_s}{v_e}$}\\
+\textbf{Étape 1 : Substitution des variables intermédiaires.}\\
+Remplaçons d'abord $V_1$ par $-v_s$ (trouvé à la question 3) dans l'expression de $v_2$ (question 1) :
+$$ v_2 = -RCp(V_e - v_s) = RCp(v_s - V_e) $$
+\textbf{Étape 2 : Injection dans l'équation de la tension de sortie.}\\
+Introduisons cette expression de $v_2$ dans la relation de la question 2 :
+$$ v_s = - \left[ RCp(v_s - V_e) \right] \cdot \frac{RCp}{1 + RC_3p} = (V_e - v_s) \frac{(RCp)^2}{1 + RC_3p} $$
+\textbf{Étape 3 : Isolation de la variable de sortie $v_s$.}\\
+Multiplions toute l'équation par $(1 + RC_3p)$ :
+$$ v_s(1 + RC_3p) = V_e(RCp)^2 - v_s(RCp)^2 \implies v_s \left[1 + RC_3p + (RCp)^2\right] = V_e(RCp)^2 $$
+On obtient la fonction de transfert globale :
+$$ \mathbf{T(p) = \frac{v_s}{V_e} = \frac{(RCp)^2}{1 + RC_3p + (RCp)^2}} $$
+\textbf{Étape 4 : Identification des paramètres de la forme canonique.}\\
+La forme générale standard d'un filtre du second ordre passe-haut est : $T(p) = \frac{T_0 \left(\frac{p}{\omega_0}\right)^2}{1 + 2m\left(\frac{p}{\omega_0}\right) + \left(\frac{p}{\omega_0}\right)^2}$. En posant $\frac{p}{\omega_0} = RCp$, on en déduit par identification :
 \begin{itemize}
-    \item \textbf{AOP A1 (Sommateur-dérivateur) :} Les signaux $V_e$ et $V_1$ arrivent sur des capacités $C$, avec une résistance $R$ en contre-réaction.
-    Théorème de Millman en $V^-$ ($V^+ = 0$) :
-    $ (0 - V_e)Cp + (0 - V_1)Cp + (0 - v_2)/R = 0 \implies v_2 = -RCp \cdot (V_e + V_1) $
-    
-    \item \textbf{AOP A3 (Inverseur de gain unitaire) :} Le signal $v_s$ passe dans $R_1$, contre-réaction par $R_1$.
-    $$ V_1 = -\frac{R_1}{R_1} v_s = -v_s $$
-    
-    \item \textbf{AOP A2 (Intégrateur à fuite / Dérivateur amorti) :} $v_2$ arrive par un condensateur $C$. La contre-réaction est un RC parallèle ($R$ // $C_3$). L'admittance de retour est $Y_R = 1/R + C_3 p$.
-    Loi des nœuds : $(0 - v_2)Cp + (0 - v_s)(1/R + C_3p) = 0$
-    $$ v_s = -v_2 \frac{Cp}{\frac{1}{R} + C_3 p} = -v_2 \frac{RCp}{1 + RC_3p} $$
-
-    \item \textbf{Fonction de transfert globale $T(p)$ :}
-    On remplace $V_1$ par $-v_s$ dans la première équation : $v_2 = -RCp(V_e - v_s)$.
-    On injecte dans l'équation de $v_s$ :
-    $$ v_s = RCp(V_e - v_s) \cdot \frac{RCp}{1 + RC_3p} = (V_e - v_s) \frac{(RCp)^2}{1 + RC_3p} $$
-    $$ v_s \left[1 + \frac{(RCp)^2}{1 + RC_3p}\right] = V_e \frac{(RCp)^2}{1 + RC_3p} $$
-    $$ T(p) = \frac{v_s}{V_e} = \frac{(RCp)^2}{1 + RC_3p + (RCp)^2} $$
-    Forme canonique : $\omega_0 = \frac{1}{RC}$, gain $T_0 = 1$, et l'amortissement $m$ se déduit du terme en $p$ : $\frac{C_3}{C} RCp = 2m \frac{p}{\omega_0} \implies m = \frac{C_3}{2C}$.
-    
-    \item \textbf{Type et Ordre :} Filtre **Passe-haut** du **2ème ordre**.
-    \item \textbf{Pourquoi tant de composants ?} Il s'agit d'un filtre universel (à variables d'états). Cette topologie permet de **régler indépendamment** la fréquence de coupure $\omega_0$ (via R) et le coefficient d'amortissement $m$ (via $C_3$), ce qui est impossible avec des structures simples de Sallen-Key par exemple.
+    \item Pulsation propre : $\mathbf{\omega_0 = \frac{1}{RC}}$
+    \item Gain statique : $\mathbf{T_0 = 1}$
+    \item Coefficient d'amortissement ($m$) : le terme du premier degré donne $2m\frac{p}{\omega_0} = 2mRCp$. En égalisant avec notre terme $RC_3p$, on obtient $2mRC = RC_3 \implies \mathbf{m = \frac{C_3}{2C}}$.
 \end{itemize}
-}
 
+\vspace{0.2cm}
+\textbf{5. Type et ordre du filtre}\\
+\textbf{Étape 1 : Détermination de l'ordre.}\\
+Le dénominateur de la fonction de transfert est un polynôme en $p$ dont le degré maximal est de 2. Il s'agit donc d'un filtre du \textbf{2ème ordre}.\\
+\textbf{Étape 2 : Détermination du comportement fréquentiel.}\\
+\begin{itemize}
+    \item À basse fréquence ($p \to 0$) : Le numérateur tend vers 0, donc $T(p) \to 0$.
+    \item À haute fréquence ($p \to \infty$) : Les termes de plus haut degré l'emportent, $T(p) \to \frac{(RCp)^2}{(RCp)^2} = 1$.
+\end{itemize}
+Le filtre bloque les basses fréquences et laisse passer les hautes fréquences, c'est un filtre \textbf{passe-haut}.
+
+\vspace{0.2cm}
+\textbf{6. Intérêt de cette structure (Filtre universel / Variable d'état)}\\
+Bien que ce circuit nécessite 3 AOP et de nombreux composants passifs, il offre un avantage industriel majeur par rapport aux structures plus simples (Sallen-Key ou Rauch) : \textbf{l'indépendance des réglages}.\\
+En effet, l'équation montre que :
+\begin{itemize}
+    \item On peut modifier la fréquence de coupure $\omega_0$ en faisant varier la résistance $R$ sans perturber le facteur d'amortissement $m$.
+    \item On peut ajuster le facteur d'amortissement $m$ uniquement en modifiant la capacité $C_3$, sans impacter la fréquence de coupure $\omega_0$.
+\end{itemize}
+Cette décorrélation rend le filtre extrêmement stable, précis et facile à calibrer.
+}
 \end{minipage}
 
 \vspace{0.5cm}
-
 % ==================== PROBLÈME IV ====================
 \begin{center}
     \textbf{Problème IV - 10 pts}
@@ -299,33 +427,72 @@ et d'un réseau de retour ayant comme fonction de transfert :
 $$ B(j\omega) = \frac{1}{\left(1+j\frac{\omega}{\omega_0}\right)^3} \qquad \text{avec } \omega_0 = 10^4 \text{ rad/s} $$
 
 1. Tracer le diagramme de Bode (module et phase) de $B(j\omega)$.\\
-2. Determiner graphiquement et par calcul la pulsation d'oscillation $\omega_{osc}$. Justifier.\\
+2. Determiner graphiquement et par calcul 
+la pulsation d'oscillation $\omega_{osc}$. Justifier.\\
 3. Quel est le gain minimal K permettant l'oscillation ?
+\end{minipage}
 
+\vspace{0.3cm}
+
+\noindent
+\begin{minipage}{\textwidth}
 \corr{
-\textbf{Raisonnement basé sur le Critère de Barkhausen :}\\
-Pour qu'un système entretienne des oscillations (régime permanent sinusoïdal sans entrée), il faut que le gain de boucle ouverte soit égal à 1 : $A(j\omega)B(j\omega) = 1$.
-Puisque $A = -K$, cela donne $-K \cdot B(j\omega) = 1$, soit $K \cdot B(j\omega) = -1$.
-Cela impose deux conditions :
+\textbf{1. Établissement du diagramme de Bode de $B(j\omega)$}\\
+\textbf{Étape 1 : Analyse du module et du gain en dB.}\\
+Le module de la fonction de transfert s'exprime par : 
+$$ |B(j\omega)| = \frac{1}{\left(\sqrt{1 + \left(\frac{\omega}{\omega_0}\right)^2}\right)^3} = \left(1 + \left(\frac{\omega}{\omega_0}\right)^2\right)^{-3/2} $$
+Le gain en décibels est donc : $G_{dB}(\omega) = 20\log|B(j\omega)| = -30\log\left(1 + \left(\frac{\omega}{\omega_0}\right)^2\right)$.
 \begin{itemize}
-    \item \textbf{Condition de phase} : $\arg(B(j\omega)) = -180^\circ$ (ou $-\pi$ rad) pour annuler le signe moins de l'ampli inverseur.
-    \item \textbf{Condition de gain} : $K \cdot |B(j\omega)| \ge 1$ (pour le démarrage).
+    \item \textbf{À basse fréquence} ($\omega \ll \omega_0$) : $G_{dB}(\omega) \approx 0 \text{ dB}$ (asymptote horizontale).
+    \item \textbf{À haute fréquence} ($\omega \gg \omega_0$) : $G_{dB}(\omega) \approx -60\log\left(\frac{\omega}{\omega_0}\right)$, ce qui donne une droite de pente \textbf{$-60 \text{ dB/décade}$} (comportement d'un système d'ordre 3).
+    \item \textbf{À la pulsation propre} ($\omega = \omega_0$) : $G_{dB}(\omega_0) = -30\log(2) \approx -9 \text{ dB}$.
 \end{itemize}
 
-\textbf{Calcul de la pulsation d'oscillation ($\omega_{osc}$) :}\\
-La phase du réseau B est : $\phi_B = -3 \arctan\left(\frac{\omega}{\omega_0}\right)$.
-On cherche $\omega_{osc}$ tel que $\phi_B = -180^\circ$ :
-$$ -3 \arctan\left(\frac{\omega_{osc}}{\omega_0}\right) = -180^\circ \implies \arctan\left(\frac{\omega_{osc}}{\omega_0}\right) = 60^\circ $$
-Or $\tan(60^\circ) = \sqrt{3}$. Donc : $\frac{\omega_{osc}}{\omega_0} = \sqrt{3}$.
-$$ \omega_{osc} = 10^4 \cdot \sqrt{3} \approx 17320 \text{ rad/s} $$
+\textbf{Étape 2 : Analyse de la phase.}\\
+L'argument de $B(j\omega)$ est donné par la somme des arguments (le dénominateur apporte un signe moins) :
+$$ \phi(\omega) = \arg(B(j\omega)) = -3 \arctan\left(\frac{\omega}{\omega_0}\right) $$
+\begin{itemize}
+    \item \textbf{À basse fréquence} ($\omega \to 0$) : $\phi \to -3 \times 0^\circ = 0^\circ$.
+    \item \textbf{À la pulsation propre} ($\omega = \omega_0$) : $\phi = -3 \times \arctan(1) = -3 \times 45^\circ = -135^\circ$.
+    \item \textbf{À haute fréquence} ($\omega \to \infty$) : $\phi \to -3 \times 90^\circ = -270^\circ$.
+\end{itemize}
 
-\textbf{Calcul du gain minimal K :}\\
-Le module du réseau B à cette pulsation est :
-$$ |B(j\omega_{osc})| = \frac{1}{\left( \sqrt{1^2 + (\sqrt{3})^2} \right)^3} = \frac{1}{\left( \sqrt{1+3} \right)^3} = \frac{1}{2^3} = \frac{1}{8} $$
-La condition de gain exige $K \cdot |B(j\omega_{osc})| \ge 1$, soit $K \cdot \frac{1}{8} \ge 1$.
-Le gain minimal nécessaire est donc **$K \ge 8$**.
+\vspace{0.3cm}
+\textbf{2. Détermination de la pulsation d'oscillation $\omega_{osc}$}\\
+\textbf{Étape 1 : Condition théorique d'oscillation (Critère de Barkhausen).}\\
+Pour qu'un circuit oscille de façon autonome (sans signal d'entrée), le système en boucle fermée doit avoir un pôle sur l'axe imaginaire, ce qui se traduit par un dénominateur nul : $1 - A\cdot B = 0 \implies A\cdot B(j\omega_{osc}) = 1$.\\
+En remplaçant l'amplificateur par son gain $A = -K$, on obtient : 
+$$ -K \cdot B(j\omega_{osc}) = 1 \implies B(j\omega_{osc}) = -\frac{1}{K} $$
+
+\textbf{Étape 2 : Extraction de la condition de phase.}\\
+Le gain $K$ étant un réel positif, le terme $-\frac{1}{K}$ est un nombre réel purement négatif. Son argument est donc égal à $\pm 180^\circ$ (ou $\pi$ radians)[cite: 45]. On cherche la pulsation $\omega_{osc}$ telle que :
+$$ \arg(B(j\omega_{osc})) = -180^\circ $$
+
+\textbf{Étape 3 : Calcul mathématique de $\omega_{osc}$.}\\
+Utilisons l'expression de la phase trouvée à la question 1 :
+$$ -3 \arctan\left(\frac{\omega_{osc}}{\omega_0}\right) = -180^\circ \implies \arctan\left(\frac{\omega_{osc}}{\omega_0}\right) = 60^\circ \quad \left(\text{ou } \frac{\pi}{3} \text{ rad}\right) $$
+En appliquant la fonction tangente des deux côtés :
+$$ \frac{\omega_{osc}}{\omega_0} = \tan(60^\circ) = \sqrt{3} \implies \mathbf{\omega_{osc} = \omega_0\sqrt{3}} $$
+En effectuant l'application numérique avec $\omega_0 = 10^4 \text{ rad/s}$ :
+$$ \mathbf{\omega_{osc} = 10^4 \times \sqrt{3} \approx 17\,320 \text{ rad/s}} $$
+
+\textbf{Étape 4 : Justification graphique.}\\
+Sur le diagramme de Bode de phase, la pulsation $\omega_{osc}$ correspond précisément au point d'intersection où la courbe de phase croise la ligne horizontale d'ordonnée $-180^\circ$.
+
+\vspace{0.3cm}
+\textbf{3. Calcul du gain minimal $K$ permettant le démarrage de l'oscillation}\\
+\textbf{Étape 1 : Application de la condition de module.}\\
+D'après le critère de Barkhausen ($A \cdot B = 1$), la condition sur les modules impose : $|A| \cdot |B(j\omega_{osc})| = 1 \implies K \cdot |B(j\omega_{osc})| = 1$. Pour assurer le démarrage des oscillations face aux pertes du circuit, le gain réel doit être supérieur ou égal à cette limite :
+$$ K \ge \frac{1}{|B(j\omega_{osc})|} $$
+
+\textbf{Étape 2 : Calcul de la valeur du module de retour à $\omega_{osc}$.}\\
+À la pulsation d'oscillation, nous avons établi que $\frac{\omega_{osc}}{\omega_0} = \sqrt{3}$. Remplaçons ce rapport dans la formule du module de $B$ :
+$$ |B(j\omega_{osc})| = \frac{1}{\left(\sqrt{1 + (\sqrt{3})^2}\right)^3} = \frac{1}{\left(\sqrt{1 + 3}\right)^3} = \frac{1}{(\sqrt{4})^3} = \frac{1}{2^3} = \frac{1}{8} $$
+
+\textbf{Étape 3 : Déduction du gain limite.}\\
+$$ K \ge \frac{1}{1/8} \implies \mathbf{K_{min} = 8} $$
+Il faut donc un gain d'amplification d'au moins \textbf{8} pour compenser l'atténuation d'un facteur 8 subie par le signal lors de son passage dans le réseau de retour à la fréquence d'oscillation.
 }
-
 \end{minipage}
 
 \vfill
