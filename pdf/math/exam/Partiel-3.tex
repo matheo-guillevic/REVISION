@@ -1,0 +1,462 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+% Configuration des marges
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=1.5cm,
+    right=1.5cm
+}
+
+% Commande pour les placeholders d'images
+\newcommand{\imageplaceholder}[2]{
+    \begin{center}
+        \fbox{\begin{minipage}{#1}\centering\vspace{1cm}\textit{#2}\vspace{1cm}\end{minipage}}
+    \end{center}
+}
+
+% Commande pour afficher la correction avec explication
+\newcommand{\corr}[1]{
+    \vspace{0.3cm}
+    \begin{center}
+    \fcolorbox{blue}{blue!5}{
+    \begin{minipage}{0.95\textwidth}
+    \color{blue} \textbf{Correction \& Raisonnement :} \\
+    #1
+    \end{minipage}}
+    \end{center}
+    \vspace{0.3cm}
+}
+
+\begin{document}
+
+% ==================== EN-TÊTE ====================
+\noindent
+\begin{tabularx}{\textwidth}{@{}X c r@{}}
+\textbf{MT330} & \textbf{Année 2023-2024} & \textbf{Sans documents} \\
+\textbf{Probabilités} & \textbf{Corrigé de l'Examen} & \textbf{Calculatrice autorisée} \\
+\end{tabularx}
+\vspace{0.2cm}
+\hrule
+\vspace{0.4cm}
+
+% ==================== PROBLÈME I ====================
+\begin{center}
+    \textbf{\Large Problème I - QCM - 5 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent \textbf{Question 1} : Soient X et Y deux variables aléatoires indépendantes telles que X suit une loi exponentielle de paramètre $\alpha$ et Y suit une loi exponentielle de paramètre $\beta$. $P(X<Y)$ est égale à :
+
+\corr{
+\textbf{Étape 1 : Application des propriétés des lois exponentielles.}\\
+C'est un résultat classique des lois exponentielles indépendantes : la probabilité que la première variable soit strictement inférieure à la seconde correspond au ratio de son propre paramètre sur la somme des deux paramètres.
+
+\textbf{Étape 2 : Résultat final.}\\
+$$ \mathbf{\mathbb{P}(X < Y) = \frac{\alpha}{\alpha+\beta}} $$
+}
+
+\noindent \textbf{Question 2} : Quel est l'énoncé du théorème de transfert ?
+
+\corr{
+\textbf{Étape 1 : Définition du théorème.}\\
+Le théorème de transfert permet de calculer l'espérance d'une fonction d'une variable aléatoire, $\varphi(X)$, directement à partir de la densité $f(t)$ de la variable initiale $X$, sans avoir besoin de déterminer préalablement la loi de probabilité de $\varphi(X)$.
+
+\textbf{Étape 2 : Résultat final.}\\
+$$ \mathbf{\mathbb{E}(\varphi(X)) = \int_{-\infty}^{+\infty} \varphi(t)f(t)\,dt} $$
+}
+
+\noindent \textbf{Question 3} : Soit X une variable aléatoire qui suit une loi exponentielle de paramètre $\lambda$. Alors, la variance de X est égale à :
+
+\corr{
+\textbf{Étape 1 : Rappel de cours.}\\
+Pour une variable aléatoire suivant une loi exponentielle $\mathcal{E}(\lambda)$, son espérance est donnée par $1/\lambda$.
+
+\textbf{Étape 2 : Résultat final pour la variance.}\\
+La variance correspond au carré de ce terme :
+$$ \mathbf{V(X) = \frac{1}{\lambda^2}} $$
+}
+
+\noindent \textbf{Question 4} : Soit X une variable aléatoire qui suit une loi normale de moyenne $m$ et d'écart-type $\sigma$, $X \sim \mathcal{N}(m,\sigma)$. La densité de X est :
+
+\corr{
+\textbf{Étape 1 : Identification du paramétrage.}\\
+L'énoncé précise explicitement que le second paramètre de la notation utilisée est l'écart-type $\sigma$ (et non la variance $\sigma^2$).
+
+\textbf{Étape 2 : Résultat final.}\\
+La formule classique de la densité de la loi normale comporte $\sigma$ en dehors de l'exponentielle et $2\sigma^2$ au dénominateur dans l'exponentielle :
+$$ \mathbf{f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-m)^2}{2\sigma^2}}} $$
+}
+
+\noindent \textbf{Question 5} : Soient X et Y deux variables indépendantes telles que $X \sim \mathcal{N}(50;3)$ et $Y \sim \mathcal{N}(60;4)$. Alors la loi de $X+Y$ est :
+
+\corr{
+\textbf{Étape 1 : Stabilité de la loi normale.}\\
+La somme de deux variables aléatoires indépendantes de lois normales suit une loi normale. L'espérance de la somme est la somme des espérances : $50 + 60 = 110$.
+
+\textbf{Étape 2 : Calcul de l'écart-type.}\\
+Les variances s'additionnent par indépendance : $V(X+Y) = 3^2 + 4^2 = 9 + 16 = 25$. L'écart-type de la somme est la racine carrée de la variance globale, soit $\sqrt{25} = 5$.
+
+\textbf{Étape 3 : Résultat final.}\\
+$$ \mathbf{X+Y \sim \mathcal{N}(110; 5)} $$
+}
+
+\noindent \textbf{Question 6} : Soit X une variable aléatoire qui suit une loi exponentielle de paramètre $\lambda$, et soit $Y=X^2$. La densité de Y est :
+
+\corr{
+\textbf{Étape 1 : Fonction de répartition de Y.}\\
+On exprime la fonction de répartition de Y en fonction de celle de X :
+$$ F_Y(y) = \mathbb{P}(Y \le y) = \mathbb{P}(X^2 \le y) $$
+Puisque X est positive (loi exponentielle), on a pour $y > 0$ : 
+$$ F_Y(y) = \mathbb{P}(X \le \sqrt{y}) = 1 - e^{-\lambda\sqrt{y}} $$
+
+\textbf{Étape 2 : Densité par dérivation.}\\
+En dérivant cette fonction par rapport à y pour obtenir la densité, on applique la règle de composition (la dérivée de $\sqrt{y}$ fait apparaître le facteur $1/(2\sqrt{y})$) :
+$$ \mathbf{f_Y(y) = \frac{\lambda}{2\sqrt{y}} e^{-\lambda\sqrt{y}} \quad \text{pour } y>0} $$
+}
+
+\newpage
+
+% ==================== PROBLÈME II ====================
+\begin{center}
+    \textbf{\Large Problème II - Densité et Moments - 6 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Soit $f(x) = 6(a-x^2)$ pour $x \in [-\sqrt{a}, \sqrt{a}]$, et $0$ sinon.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 1} : Déterminer la valeur de a pour que f soit une densité.
+
+\corr{
+\textbf{Étape 1 : Condition de normalisation.}\\
+L'intégrale de la densité de probabilité sur l'ensemble de son domaine de définition doit être strictement égale à 1.
+$$ \int_{-\sqrt{a}}^{\sqrt{a}} 6(a-x^2)\,dx = 1 $$
+
+\textbf{Étape 2 : Calcul de l'intégrale et résolution.}\\
+On calcule la primitive :
+$$ 6 \left[ ax - \frac{x^3}{3} \right]_{-\sqrt{a}}^{\sqrt{a}} = 6 \left( \left(a\sqrt{a} - \frac{a\sqrt{a}}{3}\right) - \left(-a\sqrt{a} + \frac{a\sqrt{a}}{3}\right) \right) $$
+$$ 6 \left( \frac{2}{3}a\sqrt{a} + \frac{2}{3}a\sqrt{a} \right) = 6 \left( \frac{4}{3}a\sqrt{a} \right) = 8a\sqrt{a} = 8a^{3/2} $$
+On résout l'équation :
+$$ 8a^{3/2} = 1 \implies a^{3/2} = \frac{1}{8} $$
+$$ \mathbf{a = \frac{1}{4}} $$
+Le domaine d'intégration est donc $[-1/2, 1/2]$.
+}
+
+\noindent \textbf{Question 2} : Calculer l'espérance et la variance de X.
+
+\corr{
+\textbf{Étape 1 : Calcul de l'espérance par symétrie.}\\
+La fonction de densité $f(x)$ est paire et l'intervalle d'intégration $[-1/2, 1/2]$ est symétrique par rapport à 0. L'intégrande $x f(x)$ est donc impair. L'espérance est de ce fait nulle :
+$$ \mathbf{\mathbb{E}(X) = 0} $$
+
+\textbf{Étape 2 : Calcul de la variance.}\\
+Puisque l'espérance est nulle, $V(X) = \mathbb{E}(X^2)$.
+$$ V(X) = \int_{-1/2}^{1/2} x^2 \cdot 6\left(\frac{1}{4}-x^2\right)\,dx = 6 \int_{-1/2}^{1/2} \left(\frac{x^2}{4} - x^4\right)\,dx $$
+$$ V(X) = 6 \left[ \frac{x^3}{12} - \frac{x^5}{5} \right]_{-1/2}^{1/2} = 12 \left( \frac{(1/2)^3}{12} - \frac{(1/2)^5}{5} \right) $$
+$$ V(X) = 12 \left( \frac{1/8}{12} - \frac{1/32}{5} \right) = 12 \left( \frac{1}{96} - \frac{1}{160} \right) = 12 \left( \frac{5 - 3}{480} \right) = \frac{24}{480} $$
+$$ \mathbf{V(X) = \frac{1}{20}} $$
+}
+
+\noindent \textbf{Question 3} : Soit $Y=X^2$, déterminer la loi de Y.
+
+\corr{
+\textbf{Étape 1 : Fonction de répartition de Y.}\\
+Puisque $X \in [-1/2, 1/2]$, les valeurs possibles pour $Y$ sont dans $[0, 1/4]$. Pour $y \in [0, 1/4]$ :
+$$ F_Y(y) = \mathbb{P}(X^2 \le y) = \mathbb{P}(-\sqrt{y} \le X \le \sqrt{y}) = \int_{-\sqrt{y}}^{\sqrt{y}} 6\left(\frac{1}{4}-x^2\right)\,dx $$
+$$ F_Y(y) = 12 \left[ \frac{x}{4} - \frac{x^3}{3} \right]_0^{\sqrt{y}} = 3\sqrt{y} - 4y\sqrt{y} = 3y^{1/2} - 4y^{3/2} $$
+
+\textbf{Étape 2 : Déduction de la densité.}\\
+La densité de $Y$ s'obtient en dérivant $F_Y(y)$ par rapport à $y$ :
+$$ \mathbf{f_Y(y) = \frac{3}{2\sqrt{y}} - 6\sqrt{y}} \quad \text{pour } y \in \left]0, \frac{1}{4}\right[ \text{ (et } 0 \text{ sinon).} $$
+}
+
+\newpage
+
+% ==================== PROBLÈME III ====================
+\begin{center}
+    \textbf{\Large Problème III - Couple de variables aléatoires - 6 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Soit la densité jointe : $f(x,y) = k\left(\frac{1}{x^2} + y^2\right)$ pour $x \in [1, 5]$ et $y \in [-1, 1]$.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 1} : Pour quelle valeur de k la fonction f est-elle une densité ?
+
+\corr{
+\textbf{Étape 1 : Condition de normalisation.}\\
+L'intégrale double sur le domaine défini doit valoir 1.
+$$ \iint f(x,y)\,dx\,dy = \int_1^5 \left( \int_{-1}^1 k(x^{-2} + y^2)\,dy \right) dx = 1 $$
+
+\textbf{Étape 2 : Intégration interne (selon y).}\\
+$$ \int_{-1}^1 k(x^{-2} + y^2)\,dy = k \left[ \frac{y}{x^2} + \frac{y^3}{3} \right]_{-1}^1 = k \left( \left(\frac{1}{x^2} + \frac{1}{3}\right) - \left(-\frac{1}{x^2} - \frac{1}{3}\right) \right) = k \left( \frac{2}{x^2} + \frac{2}{3} \right) $$
+
+\textbf{Étape 3 : Intégration externe (selon x) et résolution.}\\
+$$ \int_1^5 k \left( \frac{2}{x^2} + \frac{2}{3} \right) dx = k \left[ -\frac{2}{x} + \frac{2x}{3} \right]_1^5 $$
+$$ = k \left( \left(-\frac{2}{5} + \frac{10}{3}\right) - \left(-2 + \frac{2}{3}\right) \right) = k \left( \frac{44}{15} - \left(-\frac{4}{3}\right) \right) = k \left( \frac{44}{15} + \frac{20}{15} \right) = k \frac{64}{15} $$
+On égalise à 1 :
+$$ \mathbf{k = \frac{15}{64}} $$
+}
+
+\noindent \textbf{Question 2} : Déterminer les lois marginales de X et de Y.
+
+\corr{
+\textbf{Étape 1 : Densité marginale de X.}\\
+On intègre la densité jointe par rapport à y pour $x \in [1, 5]$ :
+$$ f_X(x) = \int_{-1}^1 \frac{15}{64} \left( \frac{1}{x^2} + y^2 \right) dy = \frac{15}{64} \left[ \frac{y}{x^2} + \frac{y^3}{3} \right]_{-1}^1 = \frac{15}{64} \left( \frac{2}{x^2} + \frac{2}{3} \right) $$
+$$ \mathbf{f_X(x) = \frac{15}{32x^2} + \frac{5}{32}} $$
+
+\textbf{Étape 2 : Densité marginale de Y.}\\
+On intègre la densité jointe par rapport à x pour $y \in [-1, 1]$ :
+$$ f_Y(y) = \int_1^5 \frac{15}{64} \left( \frac{1}{x^2} + y^2 \right) dx = \frac{15}{64} \left[ -\frac{1}{x} + xy^2 \right]_1^5 = \frac{15}{64} \left( \left(-\frac{1}{5} + 5y^2\right) - \left(-1 + y^2\right) \right) $$
+$$ f_Y(y) = \frac{15}{64} \left( \frac{4}{5} + 4y^2 \right) $$
+$$ \mathbf{f_Y(y) = \frac{3}{16} + \frac{15}{16}y^2} $$
+}
+
+\noindent \textbf{Question 3} : Les variables X et Y sont-elles indépendantes ?
+
+\corr{
+\textbf{Étape 1 : Condition d'indépendance.}\\
+Pour que les variables soient indépendantes, la densité conjointe doit être le produit exact des densités marginales : $f(x,y) = f_X(x)f_Y(y)$.
+
+\textbf{Étape 2 : Conclusion.}\\
+Le produit des marginales $\left( \frac{15}{32x^2} + \frac{5}{32} \right) \times \left( \frac{3}{16} + \frac{15}{16}y^2 \right)$ donne des termes croisés (constante isolée, terme en $1/x^2 \cdot y^2$) qui ne se factorisent pas sous la forme additive initiale $k(1/x^2 + y^2)$.
+\textbf{Non, les variables ne sont pas indépendantes.}
+}
+
+\noindent \textbf{Question 4} : Calculer la covariance de X et Y.
+
+\corr{
+\textbf{Étape 1 : Propriétés de parité.}\\
+On sait que $cov(X,Y) = \mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)$.
+La densité marginale $f_Y(y)$ est une fonction paire définie sur un intervalle symétrique $[-1, 1]$. Donc $\mathbb{E}(Y) = 0$.
+
+\textbf{Étape 2 : Calcul de $\mathbb{E}(XY)$ par symétrie.}\\
+Calculons $\mathbb{E}(XY) = \int_1^5 \int_{-1}^1 xy f(x,y)\,dy\,dx$.
+L'intégrande $y f(x,y)$ est impair par rapport à y et l'intervalle est symétrique $[-1, 1]$. L'intégrale interne vaut donc strictement 0. Ainsi, $\mathbb{E}(XY) = 0$.
+
+\textbf{Étape 3 : Résultat.}\\
+$$ \mathbf{cov(X,Y) = 0 - \mathbb{E}(X) \times 0 = 0} $$
+}
+
+\newpage
+
+% ==================== PROBLÈME IV ====================
+\begin{center}
+    \textbf{\Large Problème IV - Loi du Khi-deux - 4 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Soient $X, Y, Z \sim \mathcal{N}(0,1)$ indépendantes. Soit $U = X^2 + Y^2 + Z^2$.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 1} : Quelle est la loi de U ? Espérance et variance.
+
+\corr{
+\textbf{Étape 1 : Identification de la loi usuelle.}\\
+C'est une définition mathématique fondamentale : la somme des carrés de $n$ variables de lois normales centrées réduites indépendantes suit une loi du Khi-deux à $n$ degrés de liberté.
+
+\textbf{Étape 2 : Caractéristiques de la loi.}\\
+Ici $n=3$, donc U suit une \textbf{loi du $\chi^2$ à 3 degrés de liberté} ($\chi^2_3$).
+Pour une loi du $\chi^2_n$, l'espérance vaut $n$ et la variance vaut $2n$.
+$$ \mathbf{\mathbb{E}(U) = 3 \quad \text{et} \quad V(U) = 6} $$
+}
+
+\noindent \textbf{Question 2} : Fonction de répartition et densité de U.
+
+\corr{
+\textbf{Étape 1 : Expression du domaine (Coordonnées sphériques).}\\
+L'événement $(U \le u)$ correspond au volume de la boule de rayon $\sqrt{u}$ centrée à l'origine en 3D. La densité jointe du triplet est le produit des densités : $f(x,y,z) = \frac{1}{(2\pi)^{3/2}} e^{-(x^2+y^2+z^2)/2}$.
+$$ F_U(u) = \iiint_{x^2+y^2+z^2 \le u} \frac{1}{(2\pi)^{3/2}} e^{-(x^2+y^2+z^2)/2}\,dx\,dy\,dz $$
+
+\textbf{Étape 2 : Intégration en sphériques.}\\
+En passant en coordonnées sphériques (Jacobien $\rho^2 \sin(\varphi)$) :
+$$ F_U(u) = \int_0^{\sqrt{u}} \int_0^{2\pi} \int_0^\pi \frac{1}{(2\pi)^{3/2}} e^{-\rho^2/2} \rho^2 \sin(\varphi)\,d\varphi\,d\theta\,d\rho $$
+L'intégration angulaire donne $\int_0^{2\pi} d\theta \int_0^\pi \sin(\varphi)\,d\varphi = 2\pi \times 2 = 4\pi$.
+$$ \mathbf{F_U(u) = \sqrt{\frac{2}{\pi}} \int_0^{\sqrt{u}} \rho^2 e^{-\rho^2/2}\,d\rho} $$
+
+\textbf{Étape 3 : Dérivation pour obtenir la densité.}\\
+En dérivant selon $u$ avec le théorème fondamental de l'analyse et la règle de composition (la dérivée de la borne $\sqrt{u}$ vaut $\frac{1}{2\sqrt{u}}$) :
+$$ f_U(u) = F_U'(u) = \sqrt{\frac{2}{\pi}} (\sqrt{u})^2 e^{-(\sqrt{u})^2/2} \cdot \frac{1}{2\sqrt{u}} $$
+$$ \mathbf{f_U(u) = \frac{1}{\sqrt{2\pi}} \sqrt{u} e^{-u/2} \quad \text{pour } u>0} $$
+}
+
+\newpage
+
+% ==================== PROBLÈME V ====================
+\begin{center}
+    \textbf{\Large Problème V - Maximum de vraisemblance - 3 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Soit la densité $f(x) = \frac{1}{2\theta\sqrt{x}} e^{-\sqrt{x}/\theta}$ pour $x>0$. Estimer $\theta$ par le maximum de vraisemblance.
+
+\corr{
+\textbf{Étape 1 : Fonction de vraisemblance et Log-vraisemblance.}\\
+On écrit la fonction de vraisemblance comme le produit des densités marginales, puis on passe au logarithme pour transformer le produit en somme.
+$$ L(\theta) = \prod_{i=1}^n \frac{1}{2\theta\sqrt{x_i}} e^{-\sqrt{x_i}/\theta} = \frac{1}{(2\theta)^n \prod_{i=1}^n \sqrt{x_i}} \exp\left(-\frac{1}{\theta}\sum_{i=1}^n \sqrt{x_i}\right) $$
+La log-vraisemblance est :
+$$ \ln L(\theta) = -n\ln(2) - n\ln(\theta) - \sum_{i=1}^n \ln(\sqrt{x_i}) - \frac{1}{\theta} \sum_{i=1}^n \sqrt{x_i} $$
+
+\textbf{Étape 2 : Dérivation et annulation.}\\
+On dérive par rapport à $\theta$ et on cherche la valeur qui annule cette dérivée.
+$$ \frac{\partial \ln L}{\partial \theta} = -\frac{n}{\theta} + \frac{1}{\theta^2} \sum_{i=1}^n \sqrt{x_i} = 0 $$
+
+\textbf{Étape 3 : Calcul de l'estimateur.}\\
+$$ \frac{n}{\theta} = \frac{1}{\theta^2} \sum_{i=1}^n \sqrt{x_i} \iff n\theta = \sum_{i=1}^n \sqrt{x_i} $$
+L'estimateur du maximum de vraisemblance est donc :
+$$ \mathbf{\hat{\theta} = \frac{1}{n} \sum_{i=1}^n \sqrt{x_i}} $$
+}
+
+\newpage
+
+% ==================== PROBLÈME VI ====================
+\begin{center}
+    \textbf{\Large Problème VI - Probabilités appliquées - 8 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent \textbf{Question 1(a)} : Calculer la probabilité de l'événement « Robert tombe sur la piste qu'il a choisie ».
+
+\corr{
+\textbf{Étape 1 : Définition des évènements.}\\
+Soient B, R, N les choix des pistes (Bleue, Rouge, Noire) formant un système complet, et T l'événement "tomber".
+
+\textbf{Étape 2 : Formule des probabilités totales.}\\
+$$ \mathbb{P}(T) = \mathbb{P}(T|B)\mathbb{P}(B) + \mathbb{P}(T|R)\mathbb{P}(R) + \mathbb{P}(T|N)\mathbb{P}(N) $$
+$$ \mathbb{P}(T) = \left(\frac{1}{10} \times \frac{1}{4}\right) + \left(\frac{1}{6} \times \frac{1}{2}\right) + \left(\frac{2}{5} \times \frac{1}{4}\right) $$
+$$ \mathbb{P}(T) = \frac{1}{40} + \frac{1}{12} + \frac{1}{10} = \frac{3 + 10 + 12}{120} $$
+$$ \mathbf{\mathbb{P}(T) = \frac{5}{24}} $$
+}
+
+\noindent \textbf{Question 1(b)} : Quelle est la probabilité que Robert ait choisi la piste noire sachant qu'il est tombé ?
+
+\corr{
+\textbf{Étape 1 : Formule de Bayes.}\\
+C'est une probabilité conditionnelle inverse (théorème de Bayes).
+$$ \mathbb{P}(N|T) = \frac{\mathbb{P}(T|N)\mathbb{P}(N)}{\mathbb{P}(T)} $$
+
+\textbf{Étape 2 : Application numérique.}\\
+$$ \mathbb{P}(N|T) = \frac{\frac{2}{5} \times \frac{1}{4}}{\frac{5}{24}} = \frac{1/10}{5/24} = \frac{24}{50} $$
+$$ \mathbf{\mathbb{P}(N|T) = 0.48} $$
+}
+
+\noindent \textbf{Question 2(a)} : Loi de $Z = X+Y$.
+
+\corr{
+\textbf{Étape 1 : Produit de convolution.}\\
+On calcule le produit de convolution entre $X \sim \mathcal{E}(1/5)$ et $Y \sim \mathcal{U}[10; 15]$.
+$$ f_Z(z) = \int_{10}^{15} f_X(z-y)f_Y(y)\,dy $$
+
+\textbf{Étape 2 : Séparation des cas selon le domaine.}\\
+Trois cas se présentent pour le support de la densité résultante :
+\begin{itemize}
+    \item Si $z < 10$ : l'intervalle est vide, $\mathbf{f_Z(z) = 0}$.
+    \item Si $10 \le z \le 15$ : on intègre de 10 à z.
+    $$ f_Z(z) = \frac{1}{25} e^{-z/5} \int_{10}^z e^{y/5}\,dy = \mathbf{\frac{1}{5} \left( 1 - e^{-(z-10)/5} \right)} $$
+    \item Si $z > 15$ : on intègre de 10 à 15.
+    $$ f_Z(z) = \frac{1}{25} e^{-z/5} \int_{10}^{15} e^{y/5}\,dy = \mathbf{\frac{1}{5} e^{-z/5} \left( e^3 - e^2 \right)} $$
+\end{itemize}
+}
+
+\noindent \textbf{Question 2(b)} : Probabilité qu'il ne soit pas en retard.
+
+\corr{
+\textbf{Étape 1 : Formulation de l'évènement.}\\
+Il a 15 minutes devant lui pour le trajet complet. L'événement de non-retard s'écrit $Z \le 15$.
+
+\textbf{Étape 2 : Calcul de l'intégrale correspondante.}\\
+$$ \mathbb{P}(Z \le 15) = \int_{10}^{15} \frac{1}{5} \left( 1 - e^{-(z-10)/5} \right) dz = \left[ \frac{z}{5} + e^{-(z-10)/5} \right]_{10}^{15} $$
+$$ \mathbb{P}(Z \le 15) = \left( 3 + e^{-1} \right) - (2 + 1) $$
+$$ \mathbf{\mathbb{P}(Z \le 15) = e^{-1} \approx 0.368} $$
+}
+
+\noindent \textbf{Question 2(c)} : Probabilité que Stéphanie arrive avant Robert.
+
+\corr{
+\textbf{Étape 1 : Domaine total et domaine favorable.}\\
+Les variables sont uniformes : $T_1 \sim \mathcal{U}[55; 85]$ (Robert) et $T_2 \sim \mathcal{U}[65; 75]$ (Stéphanie). On cherche $\mathbb{P}(T_2 < T_1)$.
+L'aire totale du domaine (rectangle des temps possibles) est $30 \times 10 = 300$.
+Le sous-domaine favorable correspond à $t_2 < t_1$. Ce domaine géométrique se découpe en deux :
+- Un triangle pour $t_1 \in [65; 75]$, dont l'aire est $\frac{10 \times 10}{2} = 50$.
+- Un rectangle plein pour $t_1 \in [75; 85]$, d'aire $10 \times 10 = 100$.
+L'aire favorable totale est $150$. 
+
+\textbf{Étape 2 : Probabilité géométrique uniforme.}\\
+$$ \mathbb{P}(T_2 < T_1) = \frac{150}{300} $$
+$$ \mathbf{\mathbb{P}(T_2 < T_1) = \frac{1}{2}} $$
+}
+
+\noindent \textbf{Question 3(a)} : Loi exacte de $S_n$.
+
+\corr{
+\textbf{Étape 1 : Identification du schéma de Bernoulli.}\\
+On répète $n$ expériences identiques et indépendantes de manière dichotomique (succès = obtenir des skis Castafiore, probabilité $p$).
+
+\textbf{Étape 2 : Conclusion sur la loi.}\\
+$S_n$ suit donc exactement une \textbf{loi binomiale} de paramètres $n$ et $p$ : $\mathbf{\mathcal{B}(n, p)}$.
+}
+
+\noindent \textbf{Question 3(b)} : Valeur de $n$ pour déterminer $p$ à $10^{-2}$ près avec risque $0.05$.
+
+\corr{
+\textbf{Étape 1 : Marge d'erreur de l'intervalle de confiance.}\\
+La demi-largeur de l'intervalle de confiance asymptotique à 95\% (risque 5\%) est $1.96 \sqrt{\frac{p(1-p)}{n}}$. On veut contraindre cette erreur à $0.01$.
+
+\textbf{Étape 2 : Majoration de la variance.}\\
+Sans information sur la vraie proportion $p$, on se place dans le cas mathématiquement le plus défavorable maximisant la variance, soit $p=0.5$.
+$$ 1.96 \sqrt{\frac{0.5 \times 0.5}{n}} \le 0.01 \iff \frac{1.96 \times 0.5}{\sqrt{n}} \le 0.01 $$
+
+\textbf{Étape 3 : Résolution.}\\
+$$ \sqrt{n} \ge \frac{1.96 \times 0.5}{0.01} = 98 $$
+Soit $n \ge 98^2 = 9604$.
+Il faut enquêter \textbf{au moins 9604 skieurs}.
+}
+
+\noindent \textbf{Question 3(c)} : Intervalle de confiance avec 1200 skieurs et 250 skis Castafiore.
+
+\corr{
+\textbf{Étape 1 : Estimation ponctuelle.}\\
+La proportion empirique est : $\hat{p} = \frac{250}{1200} = \frac{5}{24} \approx 0.2083$.
+
+\textbf{Étape 2 : Marge d'erreur empirique.}\\
+On applique la formule de la borne de l'intervalle de confiance :
+$$ E = 1.96 \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} = 1.96 \sqrt{\frac{(5/24) \times (19/24)}{1200}} \approx 1.96 \times 0.0117 \approx 0.023 $$
+
+\textbf{Étape 3 : Intervalle de confiance.}\\
+L'intervalle de confiance au risque 5\% est centré sur la proportion observée :
+$$ IC_{95\%} \approx [0.208 - 0.023, 0.208 + 0.023] $$
+$$ \mathbf{IC_{95\%} = [0.185 ; 0.231]} $$
+}
+
+\vfill
+% ==================== PIED DE PAGE ====================
+\hrule
+\vspace{0.1cm}
+\noindent
+Équipe Pédagogique \hfill Esisar \hfill Page 1/1
+
+\end{document}

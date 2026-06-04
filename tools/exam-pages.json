@@ -158,6 +158,60 @@
           "summary": "Conception Java, classes, polymorphisme, exceptions et code."
         }
       ]
+    },
+    {
+      "subject": "math",
+      "label": "Probabilites",
+      "sourceDir": "pdf/math/exam",
+      "targetDir": "src/subjects/probabilites/exam",
+      "backHref": "probabilites.html#probabilites-exams",
+      "courseHref": "probabilites.html",
+      "courseLabel": "Cours probabilites",
+      "assetPrefix": null,
+      "unitKind": "mixed",
+      "titlePattern": "\\\\textbf\\{\\\\Large\\s*((?:Problème|Exercice)\\s+(?:[IVX]+|\\d+)[^}]*)\\}",
+      "exams": [
+        {
+          "source": "CC-denombrement.tex",
+          "target": "controle-denombrement.html",
+          "title": "Controle corrige - Denombrement",
+          "eyebrow": "MT331 - Controle",
+          "heading": "Denombrement",
+          "summary": "Questions de cours, denombrement, probabilites finies et calculs combinatoires."
+        },
+        {
+          "source": "CC-VA.tex",
+          "target": "controle-va.html",
+          "title": "Controle corrige - Variables aleatoires",
+          "eyebrow": "MA337 - Controle",
+          "heading": "Variables aleatoires",
+          "summary": "Esperance, variance, covariance, lois de reference et independance."
+        },
+        {
+          "source": "Partiel-1.tex",
+          "target": "partiel-1.html",
+          "title": "Partiel corrige 1 - Probabilites",
+          "eyebrow": "Partiel 1",
+          "heading": "Corrige de partiel",
+          "summary": "Lois discretes, lois conjointes, esperance, variance et probabilites conditionnelles."
+        },
+        {
+          "source": "Partiel-2.tex",
+          "target": "partiel-2.html",
+          "title": "Partiel corrige 2 - Probabilites",
+          "eyebrow": "Partiel 2",
+          "heading": "Corrige de partiel",
+          "summary": "Lois normales, densites, variables continues, lois marginales et transformations."
+        },
+        {
+          "source": "Partiel-3.tex",
+          "target": "partiel-3.html",
+          "title": "Partiel corrige 3 - Probabilites",
+          "eyebrow": "Partiel 3",
+          "heading": "Corrige de partiel",
+          "summary": "QCM, densites, moments, fonctions de repartition et variables aleatoires continues."
+        }
+      ]
     }
   ]
 }

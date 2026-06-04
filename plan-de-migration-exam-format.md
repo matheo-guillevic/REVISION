@@ -222,7 +222,7 @@ Commande commune :
 Build actuel :
 
 ```json
-"build": "node tools/rebuild-math-td-from-latex.js && node tools/rebuild-math-exams-from-latex.js && node tools/rebuild-auto-td-from-latex.js && node tools/rebuild-vhdl-td-from-latex.js && node tools/rebuild-exams-from-latex.js && node tools/build-html.js"
+"build": "node tools/rebuild-math-td-from-latex.js && node tools/rebuild-auto-td-from-latex.js && node tools/rebuild-vhdl-td-from-latex.js && node tools/rebuild-exams-from-latex.js && node tools/build-html.js"
 ```
 
 ## Phase 8 - Validation systematique

@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Controle corrige - Variables aleatoires</title>
+    <title>Controle corrige - Variables aleatoires - Probabilites</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
     <script>
       window.MathJax = {
         tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
@@ -12,16 +13,23 @@
       };
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
     <script defer src="script.js"></script>
   </head>
   <body class="td-page">
     <main class="main-content">
       <header class="td-header">
-        <a class="back-link" href="math.html#probabilites-sujets">Retour aux examens</a>
+        <a class="back-link" href="probabilites.html#probabilites-exams">Retour aux examens</a>
         <div>
-          <span class="eyebrow">Controle</span>
+          <span class="eyebrow">MA337 - Controle</span>
           <h1>Variables aleatoires</h1>
-          <p>Page reconstruite depuis le sujet/corrige LaTeX du dossier PDF.</p>
+          <p>Esperance, variance, covariance, lois de reference et independance.</p>
+          <p>Page reconstruite depuis <code>pdf/math/exam/CC-VA.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/math/exam/CC-VA.tex">Ouvrir le sujet LaTeX</a>
+          <a class="back-link" href="probabilites.html">Cours probabilites</a>
         </div>
       </header>
 
@@ -29,8 +37,8 @@
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Exercice 1</span>
-              <h3>Exercice 1 (8 points) Cours</h3>
+              <span class="status-pill">Probleme 1</span>
+              <h3>Problème I - Cours</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -39,34 +47,63 @@
           </header>
           <div class="answer-block">
           <p>Soit \((\Omega,\mathcal{P}(\Omega),\mathbb{P})\) un espace probabilisé, \(X\) et \(Y\) deux variables aléatoires discrètes sur \(\Omega\).</p>
-          <h4>1. Compléter ces propriétés de l'espérance</h4>
+          <p><strong>Question 1 : Compléter ces propriétés de l'espérance</strong></p>
+          <ol class="solution-steps">
+            <li>Linéarité : \(\mathbb{E}(X+Y) = \mathbf{\mathbb{E}(X) + \mathbb{E}(Y)}\) <br></li>
+          </ol>
+          <p>et pour tout réel \(a\), \(\mathbb{E}(aX) = \mathbf{a\mathbb{E}(X)}\)</p>
           <ul class="formula-list">
-            <li>Linéarité : \(\mathbb{E}(X+Y) = \mathbf{\mathbb{E}(X) + \mathbb{E}(Y)}\) <br> et pour tout réel \(a\), \(\mathbb{E}(aX) = \mathbf{a\mathbb{E}(X)}\)</li>
             <li>Produit : Si <strong>\(X\) et \(Y\) sont indépendantes</strong> alors \(\mathbb{E}(XY) = \mathbf{\mathbb{E}(X)\mathbb{E}(Y)}\)</li>
           </ul>
-          <h4>2. Variance et écart-type</h4>
+          <p><strong>Question 2 : Variance et écart-type</strong></p>
+          <ol class="solution-steps">
+            <li>Rappeler la définition de la variance et de l'écart-type : <br></li>
+          </ol>
+          <p>\(\mathbb{V}(X) = \mathbf{\mathbb{E}\left((X - \mathbb{E}(X))^2\right)}\) <br> \(\sigma(X) = \mathbf{\sqrt{\mathbb{V}(X)}}\)</p>
           <ul class="formula-list">
-            <li>Rappeler la définition de la variance et de l'écart-type : <br> \(\mathbb{V}(X) = \mathbf{\mathbb{E}\left((X - \mathbb{E}(X))^2\right)}\) <br> \(\sigma(X) = \mathbf{\sqrt{\mathbb{V}(X)}}\)</li>
-            <li>Rappeler la formule donnant \(\mathbb{V}(X)\) en fonction de \(\mathbb{E}(X^2)\) et de \(\mathbb{E}(X)^2\) (Théorème de Koenig-Huygens) : <br> \(\mathbb{V}(X) = \mathbf{\mathbb{E}(X^2) - (\mathbb{E}(X))^2}\)</li>
-            <li>Démontrer la formule précédente. $\begin{align*} \mathbb{V}(X) &amp;= \mathbb{E}\left(X^2 - 2X\mathbb{E}(X) + (\mathbb{E}(X))^2\right) <br> &amp;= \mathbb{E}(X^2) - 2\mathbb{E}(X)\mathbb{E}(X) + (\mathbb{E}(X))^2 \quad \text{(par linéarité de l'espérance)} <br> &amp;= \mathbb{E}(X^2) - 2(\mathbb{E}(X))^2 + (\mathbb{E}(X))^2 <br> &amp;= \mathbb{E}(X^2) - (\mathbb{E}(X))^2 \end{align*}$</li>
-            <li>Rappeler la définition de \(cov(X,Y)\) : <br> \(cov(X,Y) = \mathbf{\mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)}\)</li>
-            <li>Compléter ces formules du cours : <br> \(\mathbb{V}(X+Y) = \mathbf{\mathbb{V}(X) + \mathbb{V}(Y) + 2cov(X,Y)}\) <br> pour tout réel \(a\), \(\mathbb{V}(aX) = \mathbf{a^2\mathbb{V}(X)}\) <br> et \(\sigma(aX) = \mathbf{|a|\sigma(X)}\)</li>
-            <li>Démontrer la première formule de l'item précédent. $\begin{align*} \mathbb{V}(X+Y) &amp;= \mathbb{E}\left((X+Y)^2\right) - (\mathbb{E}(X+Y))^2 <br> &amp;= \mathbb{E}(X^2 + 2XY + Y^2) - (\mathbb{E}(X) + \mathbb{E}(Y))^2 <br> &amp;= \mathbb{E}(X^2) + 2\mathbb{E}(XY) + \mathbb{E}(Y^2) - \left((\mathbb{E}(X))^2 + 2\mathbb{E}(X)\mathbb{E}(Y) + (\mathbb{E}(Y))^2\right) <br> &amp;= \left(\mathbb{E}(X^2) - (\mathbb{E}(X))^2\right) + \left(\mathbb{E}(Y^2) - (\mathbb{E}(Y))^2\right) + 2\left(\mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)\right) <br> &amp;= \mathbb{V}(X) + \mathbb{V}(Y) + 2cov(X,Y) \end{align*}$</li>
+            <li>Rappeler la formule donnant \(\mathbb{V}(X)\) en fonction de \(\mathbb{E}(X^2)\) et de \(\mathbb{E}(X)^2\) (Théorème de Koenig-Huygens) : <br></li>
           </ul>
-          <h4>3. Lois de référence</h4>
+          <p>\(\mathbb{V}(X) = \mathbf{\mathbb{E}(X^2) - (\mathbb{E}(X))^2}\)</p>
           <ul class="formula-list">
+            <li>Démontrer la formule précédente.</li>
+          </ul>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Développement de l'expression.</strong><br> On utilise le développement du carré \((a-b)^2 = a^2 - 2ab + b^2\) à l'intérieur de l'espérance. \[\begin{aligned}\mathbb{V}(X) &= \mathbb{E}\left(X^2 - 2X\mathbb{E}(X) + (\mathbb{E}(X))^2\right)\end{aligned}\]</p>
+          <p><strong>Étape 2 : Utilisation de la linéarité.</strong><br> On applique la linéarité de l'espérance, sachant que \(\mathbb{E}(X)\) est une constante. \[\begin{aligned}\mathbb{V}(X) &= \mathbb{E}(X^2) - 2\mathbb{E}(X)\mathbb{E}(X) + (\mathbb{E}(X))^2 \\ &= \mathbb{E}(X^2) - 2(\mathbb{E}(X))^2 + (\mathbb{E}(X))^2\end{aligned}\]</p>
+          <p><strong>Étape 3 : Conclusion.</strong><br> En simplifiant les termes, on retrouve la formule de Koenig-Huygens : \[\mathbf{\mathbb{V}(X) = \mathbb{E}(X^2) - (\mathbb{E}(X))^2}\]</p>
+          </div>
+          <ol class="solution-steps">
+            <li>Rappeler la définition de \(cov(X,Y)\) : <br></li>
+          </ol>
+          <p>\(cov(X,Y) = \mathbf{\mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)}\)</p>
+          <ul class="formula-list">
+            <li>Compléter ces formules du cours : <br></li>
+          </ul>
+          <p>\(\mathbb{V}(X+Y) = \mathbf{\mathbb{V}(X) + \mathbb{V}(Y) + 2cov(X,Y)}\) <br> pour tout réel \(a\), \(\mathbb{V}(aX) = \mathbf{a^2\mathbb{V}(X)}\) <br> et \(\sigma(aX) = \mathbf{|a|\sigma(X)}\)</p>
+          <ul class="formula-list">
+            <li>Démontrer la première formule de l'item précédent.</li>
+          </ul>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Utilisation du théorème de Koenig-Huygens.</strong><br> On applique la formule démontrée précédemment à la somme \((X+Y)\). \[\begin{aligned}\mathbb{V}(X+Y) &= \mathbb{E}\left((X+Y)^2\right) - (\mathbb{E}(X+Y))^2\end{aligned}\]</p>
+          <p><strong>Étape 2 : Développement et linéarité.</strong><br> On développe les carrés et on sépare les termes grâce à la linéarité de l'espérance. \[\begin{aligned}\mathbb{V}(X+Y) &= \mathbb{E}(X^2 + 2XY + Y^2) - (\mathbb{E}(X) + \mathbb{E}(Y))^2 \\ &= \mathbb{E}(X^2) + 2\mathbb{E}(XY) + \mathbb{E}(Y^2) - \left((\mathbb{E}(X))^2 + 2\mathbb{E}(X)\mathbb{E}(Y) + (\mathbb{E}(Y))^2\right)\end{aligned}\]</p>
+          <p><strong>Étape 3 : Regroupement et conclusion.</strong><br> On regroupe les termes correspondant aux variances de \(X\) et \(Y\), ainsi que ceux formant la covariance : \[\begin{aligned}\mathbb{V}(X+Y) &= \left(\mathbb{E}(X^2) - (\mathbb{E}(X))^2\right) + \left(\mathbb{E}(Y^2) - (\mathbb{E}(Y))^2\right) + 2\left(\mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)\right)\end{aligned}\] \[\mathbf{\mathbb{V}(X+Y) = \mathbb{V}(X) + \mathbb{V}(Y) + 2cov(X,Y)}\]</p>
+          </div>
+          <p><strong>Question 3 : Lois de référence</strong></p>
+          <ol class="solution-steps">
             <li>Si \(X\) suit la loi de Bernoulli de paramètre \(p\), alors \(\mathbb{E}(X) = \mathbf{p}\) et \(\mathbb{V}(X) = \mathbf{p(1-p)}\).</li>
             <li>Si \(X\) suit la loi binomiale de paramètres \(n\) et \(p\), alors \(\mathbb{E}(X) = \mathbf{np}\) et \(\mathbb{V}(X) = \mathbf{np(1-p)}\).</li>
             <li>Si \(X\) suit la loi géométrique de paramètre \(p\), alors pour \(k \in \mathbb{N}^*\), <br> \(\mathbb{P}(X=k) = \mathbf{(1-p)^{k-1}p}\) et \(\mathbb{E}(X) = \mathbf{\frac{1}{p}}\).</li>
-          </ul>
+          </ol>
           </div>
         </article>
 
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Exercice 2</span>
-              <h3>Exercice 2 (4 points)</h3>
+              <span class="status-pill">Probleme 2</span>
+              <h3>Problème II - Tirages et Indépendance</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -79,38 +116,28 @@
             <li>\(A\) : "la boule tirée porte un numéro pair"</li>
             <li>\(B\) : "la boule tirée porte un numéro multiple de 3"</li>
           </ul>
-          <h4>1. On suppose que \(n=6\). Montrer que les événements \(A\) et \(B\) sont indépendants.</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Pour prouver l'indépendance de deux événements \(A\) et \(B\), il faut vérifier l'égalité fondamentale : \(\mathbb{P}(A \cap B) = \mathbb{P}(A) \times \mathbb{P}(B)\). L'univers est ici \(\Omega = \{1, 2, 3, 4, 5, 6\}\) et la probabilité est équirépartie (tirage au hasard).</p>
+          <p><strong>Question 1</strong> : On suppose que \(n=6\). Montrer que les événements \(A\) et \(B\) sont indépendants.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Définition de l'indépendance.</strong><br> Pour prouver l'indépendance de deux événements \(A\) et \(B\), il faut vérifier l'égalité fondamentale : \(\mathbb{P}(A \cap B) = \mathbb{P}(A) \times \mathbb{P}(B)\). L'univers est ici \(\Omega = \{1, 2, 3, 4, 5, 6\}\) et le tirage étant au hasard, la probabilité est équirépartie.</p>
+          <p><strong>Étape 2 : Calcul des probabilités simples.</strong><br> Pour l'événement \(A\) (numéros pairs) : \(A = \{2, 4, 6\} \implies \mathbb{P}(A) = \frac{3}{6} = \frac{1}{2}\).<br> Pour l'événement \(B\) (multiples de 3) : \(B = \{3, 6\} \implies \mathbb{P}(B) = \frac{2}{6} = \frac{1}{3}\).</p>
+          <p><strong>Étape 3 : Calcul de la probabilité de l'intersection et vérification.</strong><br> L'intersection \(A \cap B\) correspond aux boules à la fois paires et multiples de 3 : \(A \cap B = \{6\} \implies \mathbb{P}(A \cap B) = \frac{1}{6}\).<br> On vérifie le produit des probabilités marginales : \[\mathbb{P}(A) \times \mathbb{P}(B) = \frac{1}{2} \times \frac{1}{3} = \frac{1}{6}\] L'égalité est bien vérifiée : \[\mathbf{\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)}\] Les événements \(A\) et \(B\) sont donc indépendants pour \(n=6\).</p>
           </div>
-          <p>On a \(\Omega = \{1,2,3,4,5,6\}\) et la probabilité est équirépartie.</p>
-          <ul class="formula-list">
-            <li>\(A = \{2, 4, 6\}\) donc \(\mathbb{P}(A) = \frac{|A|}{|\Omega|} = \frac{3}{6} = \frac{1}{2}\).</li>
-            <li>\(B = \{3, 6\}\) donc \(\mathbb{P}(B) = \frac{|B|}{|\Omega|} = \frac{2}{6} = \frac{1}{3}\).</li>
-            <li>\(A \cap B = \{6\}\) (les multiples de 2 et de 3) donc \(\mathbb{P}(A \cap B) = \frac{1}{6}\).</li>
-          </ul>
-          <p>On remarque que \(\mathbb{P}(A) \times \mathbb{P}(B) = \frac{1}{2} \times \frac{1}{3} = \frac{1}{6}\). <br> Donc \(\mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B)\), ce qui prouve que \(A\) et \(B\) sont bien indépendants.</p>
-          <h4>2. Donner une valeur de \(n\) pour laquelle \(A\) et \(B\) ne sont pas indépendants. Justifier.</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>L'indépendance dépend de la proportion des nombres. Si l'on choisit un \(n\) qui coupe court aux multiples communs, on peut facilement créer une dépendance. Testons avec \(n=3\).</p>
+          <p><strong>Question 2</strong> : Donner une valeur de \(n\) pour laquelle \(A\) et \(B\) ne sont pas indépendants. Justifier.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Choix d'un contre-exemple.</strong><br> L'indépendance dépend fortement du nombre total \(n\) qui modifie la proportion des multiples communs. Testons avec \(n=3\). L'univers est réduit à \(\Omega = \{1,2,3\}\).</p>
+          <p><strong>Étape 2 : Calcul des probabilités.</strong><br> Pour \(A\) (pairs) : \(A = \{2\} \implies \mathbb{P}(A) = \frac{1}{3}\).<br> Pour \(B\) (multiples de 3) : \(B = \{3\} \implies \mathbb{P}(B) = \frac{1}{3}\).<br> Pour \(A \cap B\) : il n'y a aucun nombre à la fois pair et multiple de 3 dans cet ensemble. Donc \(A \cap B = \emptyset \implies \mathbb{P}(A \cap B) = 0\).</p>
+          <p><strong>Étape 3 : Vérification de la condition d'indépendance.</strong><br> Le produit des probabilités donne : \[\mathbb{P}(A) \times \mathbb{P}(B) = \frac{1}{3} \times \frac{1}{3} = \frac{1}{9}\] Puisque \(0 \neq \frac{1}{9}\), la relation d'indépendance n'est pas vérifiée : \[\mathbf{\text{Pour } n=3 \text{, les événements ne sont pas indépendants.}}\]</p>
           </div>
-          <p>Pour \(n=3\), l'univers est \(\Omega = \{1,2,3\}\).</p>
-          <ul class="formula-list">
-            <li>\(A = \{2\}\) donc \(\mathbb{P}(A) = \frac{1}{3}\).</li>
-            <li>\(B = \{3\}\) donc \(\mathbb{P}(B) = \frac{1}{3}\).</li>
-            <li>\(A \cap B = \emptyset\) donc \(\mathbb{P}(A \cap B) = 0\).</li>
-          </ul>
-          <p>On a \(\mathbb{P}(A) \times \mathbb{P}(B) = \frac{1}{3} \times \frac{1}{3} = \frac{1}{9} \neq 0\). <br> Donc \(\mathbb{P}(A \cap B) \neq \mathbb{P}(A)\mathbb{P}(B)\). Les événements \(A\) et \(B\) ne sont pas indépendants.</p>
           </div>
         </article>
 
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Exercice 3</span>
-              <h3>Exercice 3 (4 points)</h3>
+              <span class="status-pill">Probleme 3</span>
+              <h3>Problème III - Inversion de probabilités</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -119,27 +146,19 @@
           </header>
           <div class="answer-block">
           <p>On dispose de 100 dés dont 25 sont pipés. Pour chaque dé pipé, la probabilité d'obtenir le chiffre 6 lors d'un lancer vaut \(\frac{1}{2}\).</p>
-          <h4>1. On tire un dé au hasard parmi les 100 dés. On lance ce dé et on obtient 6. Quelle est la probabilité que ce dé soit pipé ?</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il s'agit d'un problème typique d'inversion des probabilités (Formule de Bayes). On connaît l'issue (le chiffre 6 est obtenu), et on cherche la cause (le dé est-il pipé ?). On pose d'abord nos événements et leurs probabilités a priori.</p>
+          <p><strong>Question 1</strong> : On tire un dé au hasard parmi les 100 dés. On lance ce dé et on obtient 6. Quelle est la probabilité que ce dé soit pipé ?</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Modélisation et événements.</strong><br> Il s'agit d'un problème d'inversion des probabilités (Formule de Bayes). On note \(S\) : "on obtient 6" et \(T\) : "le dé est pipé". La proportion de dés pipés est de \(25/100 = 0.25\), on a donc \(\mathbb{P}(T) = 0.25\) et \(\mathbb{P}(\overline{T}) = 0.75\). On connaît \(\mathbb{P}_T(S) = \frac{1}{2}\) et \(\mathbb{P}_{\overline{T}}(S) = \frac{1}{6}\).</p>
+          <p><strong>Étape 2 : Application de la formule de Bayes.</strong><br> D'après la formule de Bayes, comme \(\{T, \overline{T}\}\) forme un système complet d'événements, on exprime la probabilité cherchée : \[\mathbb{P}_S(T) = \frac{\mathbb{P}(S \cap T)}{\mathbb{P}(S)} = \frac{\mathbb{P}(T)\mathbb{P}_T(S)}{\mathbb{P}(T \cap S) + \mathbb{P}(\overline{T} \cap S)}\]</p>
+          <p><strong>Étape 3 : Calcul numérique.</strong><br> En remplaçant par les probabilités connues : \[\mathbb{P}_S(T) = \frac{0.25 \times \frac{1}{2}}{0.25 \times \frac{1}{2} + 0.75 \times \frac{1}{6}} = \frac{\frac{1}{4} \times \frac{1}{2}}{\frac{1}{4} \times \frac{1}{2} + \frac{3}{4} \times \frac{1}{6}}\] \[\mathbb{P}_S(T) = \frac{\frac{1}{8}}{\frac{1}{8} + \frac{1}{8}} = \frac{\frac{1}{8}}{\frac{2}{8}}\] \[\mathbf{\mathbb{P}_S(T) = \frac{1}{2}}\]</p>
           </div>
-          <p>Soit \(S\) : "on obtient 6" et \(T\) : "le dé est pipé". La proportion de dés pipés est de \(25/100 = 0.25\) donc \(\mathbb{P}(T) = 0.25\) et \(\mathbb{P}(\overline{T}) = 0.75\). <br> On cherche \(\mathbb{P}_S(T)\) (probabilité que le dé soit pipé sachant qu'on a obtenu un 6).</p>
-          <p>D'après la formule de Bayes, comme \(\{T, \overline{T}\}\) forme un système complet d'événements :</p>
-          <p>\(\begin{align*} \mathbb{P}_S(T) &= \frac{\mathbb{P}(S \cap T)}{\mathbb{P}(S)} \\ &= \frac{\mathbb{P}(T)\mathbb{P}_T(S)}{\mathbb{P}(T \cap S) + \mathbb{P}(\overline{T} \cap S)} \\ &= \frac{0.25 \times \frac{1}{2}}{0.25 \times \frac{1}{2} + 0.75 \times \frac{1}{6}} \\ &= \frac{\frac{1}{4} \times \frac{1}{2}}{\frac{1}{4} \times \frac{1}{2} + \frac{3}{4} \times \frac{1}{6}} = \frac{\frac{1}{8}}{\frac{1}{8} + \frac{1}{8}} = \frac{\frac{1}{8}}{\frac{2}{8}} = \frac{1}{2} \end{align*}\)</p>
-          <p>La probabilité que ce dé soit pipé est donc de \(\frac{1}{2}\).</p>
-          <h4>2. Soit \(n \in \mathbb{N}^*\). On tire un dé au hasard parmi 100 dés. On lance ce dé \(n\) fois et on obtient \(n\) fois le chiffre 6. Quelle est la probabilité \(p_n\) pour que ce dé soit pipé ?</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Le raisonnement est identique, mais l'événement \(S\) devient \(S_n\) : "obtenir \(n\) fois un 6". L'expérience consiste en \(n\) tirages indépendants, d'où l'élévation des probabilités à la puissance \(n\).</p>
-          </div>
-          <p>On reprend le même raisonnement en notant \(S_n\) : "on obtient 6 aux \(n\) lancers".</p>
-          <p>\(\begin{align*} p_n &= \mathbb{P}_{S_n}(T) = \frac{\mathbb{P}(T \cap S_n)}{\mathbb{P}(T \cap S_n) + \mathbb{P}(\overline{T} \cap S_n)} \\ &= \frac{0.25 \times \left(\frac{1}{2}\right)^n}{0.25 \times \left(\frac{1}{2}\right)^n + 0.75 \times \left(\frac{1}{6}\right)^n} \end{align*}\)</p>
-          <p>En divisant le numérateur et le dénominateur par \(0.25 \times \left(\frac{1}{2}\right)^n\), on obtient :</p>
-          <p>\(\begin{align*} p_n &= \frac{1}{1 + 3 \times \frac{\left(\frac{1}{6}\right)^n}{\left(\frac{1}{2}\right)^n}} = \frac{1}{1 + 3 \times \left(\frac{1}{3}\right)^n} \end{align*}\)</p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On observe que \(\lim_{n \to +\infty} p_n = 1\). Ce qui est logique intuitivement : plus on obtient de "6" consécutifs, plus on est certain que le dé utilisé est pipé.</p>
+          <p><strong>Question 2</strong> : Soit \(n \in \mathbb{N}^*\). On tire un dé au hasard parmi 100 dés. On lance ce dé \(n\) fois et on obtient \(n\) fois le chiffre 6. Quelle est la probabilité \(p_n\) pour que ce dé soit pipé ?</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Adaptation du modèle pour \(n\) lancers.</strong><br> L'expérience consiste en \(n\) tirages successifs et indépendants. Notons \(S_n\) : "on obtient 6 aux \(n\) lancers". Les probabilités conditionnelles s'élèvent à la puissance \(n\) : \(\mathbb{P}_T(S_n) = \left(\frac{1}{2}\right)^n\) et \(\mathbb{P}_{\overline{T}}(S_n) = \left(\frac{1}{6}\right)^n\).</p>
+          <p><strong>Étape 2 : Application de la formule de Bayes.</strong><br> \[p_n = \mathbb{P}_{S_n}(T) = \frac{\mathbb{P}(T)\mathbb{P}_T(S_n)}{\mathbb{P}(T \cap S_n) + \mathbb{P}(\overline{T} \cap S_n)}\] \[p_n = \frac{0.25 \times \left(\frac{1}{2}\right)^n}{0.25 \times \left(\frac{1}{2}\right)^n + 0.75 \times \left(\frac{1}{6}\right)^n}\]</p>
+          <p><strong>Étape 3 : Simplification de l'expression.</strong><br> En divisant le numérateur et le dénominateur par le terme du numérateur \(0.25 \times \left(\frac{1}{2}\right)^n\), on obtient : \[p_n = \frac{1}{1 + 3 \times \frac{\left(\frac{1}{6}\right)^n}{\left(\frac{1}{2}\right)^n}} = \frac{1}{1 + 3 \times \left(\frac{1}{3}\right)^n}\] \[\mathbf{p_n = \frac{1}{1 + 3 \left(\frac{1}{3}\right)^n}}\] <em>(Note : Plus le nombre de "6" consécutifs augmente, plus on s'approche de la certitude que le dé est pipé car \(\lim_{n \to +\infty} p_n = 1\)).</em></p>
           </div>
           </div>
         </article>
@@ -147,8 +166,8 @@
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Exercice 4</span>
-              <h3>Exercice 4 (4 points)</h3>
+              <span class="status-pill">Probleme 4</span>
+              <h3>Problème IV - Loi Binomiale</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -157,29 +176,27 @@
           </header>
           <div class="answer-block">
           <p>Une entreprise pharmaceutique décide d'affranchir, au hasard, une proportion de 3 lettres sur 5 au tarif urgent, les autres au tarif normal.</p>
-          <h4>1. Quatre lettres sont envoyées dans un cabinet médical de quatre médecins : quelle est la probabilité des événements \(A\) et \(B\) ?</h4>
+          <p><strong>Question 1</strong> : Quatre lettres sont envoyées dans un cabinet médical de quatre médecins. Quelle est la probabilité des événements \(A\) et \(B\) suivants :</p>
           <ul class="formula-list">
             <li>\(A\) : "Au moins l'un d'entre eux reçoit une lettre au tarif urgent".</li>
             <li>\(B\) : "Exactement 2 médecins sur les quatre reçoivent une lettre au tarif urgent".</li>
           </ul>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Le tirage est avec remise (car proportion fixe ou très grand nombre de lettres) et il n'y a que deux issues ("urgent" ou "normal"). Cela correspond à une succession d'épreuves de Bernoulli indépendantes. La variable compte le nombre de succès, on est donc face à une loi Binomiale.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Identification de la loi de probabilité.</strong><br> L'affranchissement se faisant au hasard pour une proportion fixe, les envois sont considérés comme des épreuves de Bernoulli indépendantes (succès = "tarif urgent", probabilité \(p=\frac{3}{5}\)). Soit \(X\) le nombre de médecins parmi les 4 qui reçoivent une lettre urgente. \(X\) suit une loi binomiale de paramètres \(n=4\) et \(p=\frac{3}{5}\). \[X \sim \mathcal{B}\left(4, \frac{3}{5}\right)\]</p>
+          <p><strong>Étape 2 : Calcul de la probabilité de l'événement A.</strong><br> L'événement \(A\) correspond à \(X \ge 1\). On passe par l'événement contraire : \[\mathbb{P}(A) = \mathbb{P}(X \ge 1) = 1 - \mathbb{P}(X=0)\] \[\mathbb{P}(A) = 1 - \binom{4}{0}\left(\frac{3}{5}\right)^0\left(\frac{2}{5}\right)^4 = 1 - 1 \times 1 \times \left(\frac{2}{5}\right)^4 = 1 - \frac{16}{625}\] \[\mathbf{\mathbb{P}(A) = \frac{609}{625}}\]</p>
+          <p><strong>Étape 3 : Calcul de la probabilité de l'événement B.</strong><br> L'événement \(B\) correspond exactement à \(X = 2\). \[\mathbb{P}(B) = \mathbb{P}(X=2) = \binom{4}{2}\left(\frac{3}{5}\right)^2\left(\frac{2}{5}\right)^2\] \[\mathbb{P}(B) = 6 \times \frac{9}{25} \times \frac{4}{25} = 6 \times \frac{36}{625}\] \[\mathbf{\mathbb{P}(B) = \frac{216}{625}}\]</p>
           </div>
-          <p>Soit \(X\) le nombre de médecins parmi les 4 qui reçoivent une lettre au tarif urgent. <br> Comme les lettres sont affranchies au hasard, on suppose qu'elles sont affranchies indépendamment. Ainsi, \(X\) suit une loi binomiale de paramètres \(n=4\) et \(p=\frac{3}{5}\) : \(X \sim \mathcal{B}\left(4, \frac{3}{5}\right)\).</p>
-          <p>\(\begin{align*} \mathbb{P}(A) &= \mathbb{P}(X \ge 1) = 1 - \mathbb{P}(X=0) \\ &= 1 - \binom{4}{0}\left(\frac{3}{5}\right)^0\left(\frac{2}{5}\right)^4 = 1 - \left(\frac{2}{5}\right)^4 = 1 - \frac{16}{625} = \frac{609}{625} \\ \end{align*}\)</p>
-          <p>\(\begin{align*} \mathbb{P}(B) &= \mathbb{P}(X=2) = \binom{4}{2}\left(\frac{3}{5}\right)^2\left(\frac{2}{5}\right)^2 \\ &= 6 \times \frac{9}{25} \times \frac{4}{25} = 6 \times \frac{36}{625} = \frac{216}{625} \end{align*}\)</p>
-          <h4>2. Soit \(X\) la variable aléatoire : "nombre de lettres affranchies au tarif urgent parmi 10 lettres". Quelle est la loi de probabilité de \(X\), son espérance, sa variance et son écart-type ?</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On modifie juste le paramètre \(n\) (le nombre d'essais passe à 10) et on applique directement les formules de cours (Exercice 1, Q3.b) pour les caractéristiques de la loi.</p>
+          <p><strong>Question 2</strong> : Soit \(X\) la variable aléatoire : "nombre de lettres affranchies au tarif urgent parmi 10 lettres". Quelle est la loi de probabilité de \(X\), son espérance, sa variance et son écart-type ?</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Identification de la nouvelle loi.</strong><br> Le nombre d'essais passe de 4 à 10. Ainsi, la nouvelle variable \(X\) suit une loi binomiale de paramètres \(n=10\) et \(p=\frac{3}{5}\). \[\mathbf{X \sim \mathcal{B}\left(10, \frac{3}{5}\right)}\]</p>
+          <p><strong>Étape 2 : Calcul de l'espérance.</strong><br> L'espérance mathématique d'une loi binomiale est donnée par \(\mathbb{E}(X) = n \times p\). \[\mathbb{E}(X) = 10 \times \frac{3}{5} = \mathbf{6}\]</p>
+          <p><strong>Étape 3 : Calcul de la variance.</strong><br> La variance d'une loi binomiale est donnée par \(\mathbb{V}(X) = n \times p \times (1-p)\). \[\mathbb{V}(X) = 10 \times \frac{3}{5} \times \frac{2}{5} = \frac{60}{25} = \mathbf{\frac{12}{5}} \quad (\text{soit } 2.4)\]</p>
+          <p><strong>Étape 4 : Calcul de l'écart-type.</strong><br> L'écart-type est par définition la racine carrée de la variance : \(\sigma(X) = \sqrt{\mathbb{V}(X)}\). \[\sigma(X) = \sqrt{\frac{12}{5}} = \mathbf{\frac{2\sqrt{15}}{5}} \quad (\approx 1.55)\]</p>
           </div>
-          <p>Comme précédemment, \(X\) suit une loi binomiale : \(X \sim \mathcal{B}\left(10, \frac{3}{5}\right)\).</p>
-          <ul class="formula-list">
-            <li>Espérance : \(\mathbb{E}(X) = n \times p = 10 \times \frac{3}{5} = \mathbf{6}\)</li>
-            <li>Variance : \(\mathbb{V}(X) = n \times p \times (1-p) = 10 \times \frac{3}{5} \times \frac{2}{5} = \frac{60}{25} = \mathbf{\frac{12}{5}}\) (soit 2.4)</li>
-            <li>Écart-type : \(\sigma(X) = \sqrt{\mathbb{V}(X)} = \sqrt{\frac{60}{25}} = \mathbf{\frac{\sqrt{60}}{5}}\)</li>
-          </ul>
+          <p>\vfill</p>
+          <p>Équipe Pédagogique Esisar Page 1/1</p>
           </div>
         </article>
       </section>

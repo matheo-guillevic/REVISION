@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Controle corrige - Denombrement</title>
+    <title>Controle corrige - Denombrement - Probabilites</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
     <script>
       window.MathJax = {
         tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
@@ -12,16 +13,23 @@
       };
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
     <script defer src="script.js"></script>
   </head>
   <body class="td-page">
     <main class="main-content">
       <header class="td-header">
-        <a class="back-link" href="math.html#probabilites-sujets">Retour aux examens</a>
+        <a class="back-link" href="probabilites.html#probabilites-exams">Retour aux examens</a>
         <div>
-          <span class="eyebrow">Controle</span>
+          <span class="eyebrow">MT331 - Controle</span>
           <h1>Denombrement</h1>
-          <p>Page reconstruite depuis le sujet/corrige LaTeX du dossier PDF.</p>
+          <p>Questions de cours, denombrement, probabilites finies et calculs combinatoires.</p>
+          <p>Page reconstruite depuis <code>pdf/math/exam/CC-denombrement.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/math/exam/CC-denombrement.tex">Ouvrir le sujet LaTeX</a>
+          <a class="back-link" href="probabilites.html">Cours probabilites</a>
         </div>
       </header>
 
@@ -29,8 +37,8 @@
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Exercice 1</span>
-              <h3>Exercice 1</h3>
+              <span class="status-pill">Probleme 1</span>
+              <h3>Problème I - Questions de cours</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -38,77 +46,86 @@
             </div>
           </header>
           <div class="answer-block">
-          <p>Répondre au bout de la ligne sans justification. \(|A|\) désigne le cardinal de l'ensemble A.</p>
           <p><strong>1.</strong> Soit \(k\) un entier naturel et \(A\) et \(B\) deux ensembles avec \(|A|=n\) et \(|B|=p\).</p>
-          <ul class="formula-list">
-            <li>le cardinal de \(A \times B\) est : \(n \times p\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Par définition, le cardinal du produit cartésien de deux ensembles finis est égal au produit des cardinaux de ces deux ensembles.</p>
-            </div></li>
-            <li>le cardinal de \(A^k\) est : \(n^k\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>A^k désigne l'ensemble des applications d'un ensemble à k éléments vers A. Pour chacun des k éléments de l'ensemble de départ, on a n choix possibles dans A.</p>
-            </div></li>
-            <li>le nombre de k-listes d'éléments de A est : \(n^k\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Une k-liste (ou k-uplet) est une suite ordonnée de k éléments où les répétitions sont autorisées. C'est mathématiquement équivalent à un élément de A^k, d'où n^k possibilités.</p>
-            </div></li>
-            <li>si \(k \le n\), le nombre de k-listes sans répétition d'éléments de A est : \(\frac{n!}{(n-k)!}\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Il s'agit du nombre d'arrangements de k éléments parmi n (noté A_n^k). On a n choix pour le premier, (n-1) pour le second... jusqu'à (n-k+1) pour le k-ième.</p>
-            </div></li>
-            <li>le nombre de façons différentes d'ordonner les n éléments de A est : \(n!\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Ordonner n éléments distincts revient à chercher le nombre de permutations de cet ensemble. Le résultat est factorielle n (n!).</p>
-            </div></li>
-            <li>si \(k \le n\), le nombre de parties à k éléments de A est : \(\binom{n}{k} = \frac{n!}{k!(n-k)!}\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Choisir un sous-ensemble (une partie) de k éléments parmi n revient à calculer le nombre de combinaisons. Ici, contrairement aux listes, l'ordre n'a pas d'importance.</p>
-            </div></li>
-            <li>le nombre de parties de A est : \(2^n\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>L'ensemble de toutes les parties de A (noté P(A)) a pour cardinal 2^{|A|}. On peut aussi comprendre cela en disant que pour construire une partie, chaque élément de A a exactement 2 choix : appartenir ou ne pas appartenir à cette partie.</p>
-            </div></li>
-          </ul>
+          <p>(a) le cardinal de \(A \times B\) est :</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Définition du produit cartésien.</strong><br> Par définition, le cardinal du produit cartésien de deux ensembles finis est égal au produit des cardinaux de ces deux ensembles. \[\mathbf{|A \times B| = n \times p}\]</p>
+          </div>
+          <p>(b) le cardinal de \(A^k\) est :</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Applications vers un ensemble.</strong><br> \(A^k\) désigne l'ensemble des applications d'un ensemble à \(k\) éléments vers \(A\). Pour chacun des \(k\) éléments de l'ensemble de départ, on a \(n\) choix possibles dans \(A\). \[\mathbf{|A^k| = n^k}\]</p>
+          </div>
+          <p>(c) le nombre de k-listes d'éléments de A est :</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : k-listes avec remise.</strong><br> Une k-liste (ou k-uplet) est une suite ordonnée de \(k\) éléments où les répétitions sont autorisées. C'est mathématiquement équivalent à un élément de \(A^k\). \[\mathbf{n^k}\]</p>
+          </div>
+          <p>(d) si \(k \le n\), le nombre de k-listes sans répétition d'éléments de A est :</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Arrangements.</strong><br> Il s'agit du nombre d'arrangements de \(k\) éléments parmi \(n\) (noté \(A_n^k\)). On a \(n\) choix pour le premier élément, \((n-1)\) pour le second... jusqu'à \((n-k+1)\) pour le \(k\)-ième. \[\mathbf{\frac{n!}{(n-k)!}}\]</p>
+          </div>
+          <p>(e) le nombre de façons différentes d'ordonner les n éléments de A est :</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Permutations.</strong><br> Ordonner \(n\) éléments distincts revient à chercher le nombre de permutations de cet ensemble. Le résultat est la factorielle de \(n\). \[\mathbf{n!}\]</p>
+          </div>
+          <p>(f) si \(k \le n\), le nombre de parties à k éléments de A est :</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Combinaisons.</strong><br> Choisir un sous-ensemble (une partie) de \(k\) éléments parmi \(n\) revient à calculer le nombre de combinaisons. Ici, contrairement aux listes, l'ordre n'a pas d'importance. \[\mathbf{\binom{n}{k} = \frac{n!}{k!(n-k)!}}\]</p>
+          </div>
+          <p>(g) le nombre de parties de A est :</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Ensemble des parties.</strong><br> L'ensemble de toutes les parties de \(A\) (noté \(\mathcal{P}(A)\)) a pour cardinal \(2^{|A|}\). On peut le comprendre en disant que pour construire une partie, chaque élément de \(A\) a exactement 2 choix : appartenir ou ne pas appartenir à cette partie. \[\mathbf{2^n}\]</p>
+          </div>
           <p><strong>2.</strong> Soit \((\Omega, \mathcal{P}(\Omega), \mathbb{P})\) un espace probabilisé fini, et A et B deux événements de \(\Omega\).</p>
-          <ul class="formula-list">
-            <li>\(\mathbb{P}(\Omega) = 1\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>C'est l'axiome fondamental de la définition d'une probabilité : la probabilité de l'univers entier (l'événement certain) est égale à 1.</p>
-            </div></li>
-            <li>\(\mathbb{P}(\emptyset) = 0\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Propriété directe découlant des axiomes : l'événement impossible a une probabilité nulle.</p>
-            </div></li>
-            <li>Si \(A \cap B = \emptyset\), alors \(\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B)\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>C'est l'axiome d'additivité pour des événements incompatibles (disjoints). Comme ils ne peuvent pas se produire en même temps, la probabilité de l'un ou de l'autre est la somme des deux.</p>
-            </div></li>
-            <li>\(\mathbb{P}(\overline{A}) = 1 - \mathbb{P}(A)\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Un événement et son contraire forment une partition de l'univers Omega. Donc P(A) + P(A_barre) = P(Omega) = 1.</p>
-            </div></li>
-            <li>\(\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Formule générale de l'additivité (principe d'inclusion-exclusion). On doit soustraire P(A inter B) car les éléments communs à A et B ont été comptés deux fois (une fois dans P(A) et une fois dans P(B)).</p>
-            </div></li>
-            <li>Par définition, \(\mathbb{P}_A(B) = \mathbb{P}(B|A) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(A)}\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>C'est la définition formelle de la probabilité conditionnelle de B sachant que l'événement A est déjà réalisé (sous réserve que P(A) &gt; 0).</p>
-            </div></li>
-            <li>Si \((A_i)_{1\le i\le n}\) est un système complet d'événements de \(\Omega\), alors \(\sum_{i=1}^{n}\mathbb{P}(B|A_i)\mathbb{P}(A_i) = \mathbb{P}(B)\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Il s'agit de la formule des probabilités totales. Le système complet d'événements partitionne l'univers de manière disjointe, permettant de décomposer le calcul de P(B) selon les différents scénarios A_i.</p>
-            </div></li>
-          </ul>
+          <p>(a) \(\mathbb{P}(\Omega) =\)</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Axiome de probabilité.</strong><br> C'est l'axiome fondamental de la définition d'une probabilité : la probabilité de l'univers entier (l'événement certain) est égale à 1. \[\mathbf{1}\]</p>
+          </div>
+          <p>(b) \(\mathbb{P}(\emptyset) =\)</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Événement impossible.</strong><br> Propriété directe découlant des axiomes : l'événement impossible a une probabilité nulle. \[\mathbf{0}\]</p>
+          </div>
+          <p>(c) Si \(A \cap B = \emptyset\), alors \(\mathbb{P}(A \cup B) =\)</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Additivité.</strong><br> C'est l'axiome d'additivité pour des événements incompatibles (disjoints). Comme ils ne peuvent pas se produire en même temps, la probabilité de la réunion est la somme des probabilités. \[\mathbf{\mathbb{P}(A) + \mathbb{P}(B)}\]</p>
+          </div>
+          <p>(d) \(\mathbb{P}(\overline{A}) =\)</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Événement contraire.</strong><br> Un événement et son contraire forment une partition de l'univers \(\Omega\). La somme de leurs probabilités vaut donc 1. \[\mathbf{1 - \mathbb{P}(A)}\]</p>
+          </div>
+          <p>(e) \(\mathbb{P}(A \cup B) =\)</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Principe d'inclusion-exclusion.</strong><br> C'est la formule générale de l'additivité. On doit soustraire \(\mathbb{P}(A \cap B)\) car les éléments communs à \(A\) et \(B\) ont été comptés deux fois (une fois dans \(\mathbb{P}(A)\) et une fois dans \(\mathbb{P}(B)\)). \[\mathbf{\mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)}\]</p>
+          </div>
+          <p>(f) Par définition, \(\mathbb{P}_A(B) = \mathbb{P}(B|A) =\)</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Probabilité conditionnelle.</strong><br> C'est la définition formelle de la probabilité conditionnelle de \(B\) sachant que l'événement \(A\) est déjà réalisé (sous réserve que \(\mathbb{P}(A) > 0\)). \[\mathbf{\frac{\mathbb{P}(A \cap B)}{\mathbb{P}(A)}}\]</p>
+          </div>
+          <p>(g) Si \((A_i)_{1\le i\le n}\) est un système complet d'événements de \(\Omega\), alors \(\sum_{i=1}^{n}\mathbb{P}(B|A_i)\mathbb{P}(A_i) =\)</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Probabilités totales.</strong><br> Il s'agit de la formule des probabilités totales. Le système complet d'événements partitionne l'univers de manière disjointe, permettant de décomposer le calcul selon les différents scénarios \(A_i\). \[\mathbf{\mathbb{P}(B)}\]</p>
+          </div>
           </div>
         </article>
 
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Exercice 2</span>
-              <h3>Exercice 2</h3>
+              <span class="status-pill">Probleme 2</span>
+              <h3>Problème II - Rangement de livres</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -117,54 +134,32 @@
           </header>
           <div class="answer-block">
           <p>On souhaite ranger sur une étagère 4 livres de mathématiques, 6 livres de physique, et 3 de chimie. De combien de façons peut-on effectuer ce rangement :</p>
-          <p><strong>1. si les livres doivent être groupés par matières.</strong> <br> On choisit successivement :</p>
+          <p><strong>1. si les livres doivent être groupés par matières.</strong></p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Ordre des blocs de matières.</strong><br> On a 3 blocs distincts à agencer sur l'étagère (le bloc de Maths, le bloc de Physique et le bloc de Chimie). Il y a \(3!\) façons d'ordonner ces 3 blocs.</p>
+          <p><strong>Étape 2 : Ordre interne des livres.</strong><br> À l'intérieur de chaque bloc, on doit ordonner les livres distincts :</p>
           <ul class="formula-list">
-            <li>l'ordre des 3 groupes : \(3!\) possibilités <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>On a 3 blocs distincts à agencer sur l'étagère (le bloc M, le bloc P et le bloc C). Il y a 3! façons d'ordonner ces 3 blocs (ex: M-P-C, C-M-P, etc.).</p>
-            </div></li>
-            <li>l'ordre des livres de maths : \(4!\) possibilités <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>À l'intérieur du bloc de mathématiques, on doit ranger les 4 livres distincts (4! possibilités).</p>
-            </div></li>
-            <li>l'ordre des livres de physique : \(6!\) possibilités <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>À l'intérieur du bloc de physique, on fait de même avec les 6 livres (6! possibilités).</p>
-            </div></li>
-            <li>l'ordre des livres de chimie : \(3!\) possibilités <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>À l'intérieur du bloc de chimie, on ordonne les 3 livres (3! possibilités).</p>
-            </div></li>
+            <li>\(4!\) possibilités pour les livres de mathématiques.</li>
+            <li>\(6!\) possibilités pour les livres de physique.</li>
+            <li>\(3!\) possibilités pour les livres de chimie.</li>
           </ul>
-          <p>Donc (principe multiplicatif) : \(3! \times 4! \times 6! \times 3!\)</p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Comme ces choix s'effectuent de manière successive et indépendante, le principe multiplicatif stipule qu'on multiplie le nombre de possibilités de chaque étape.</p>
+          <p><strong>Étape 3 : Principe multiplicatif.</strong><br> Comme ces choix s'effectuent de manière successive et indépendante, on multiplie le nombre de possibilités de chaque étape. \[\mathbf{3! \times 4! \times 6! \times 3!}\]</p>
           </div>
-          <p><strong>2. si seuls les livres de mathématiques doivent être groupés.</strong> <br> On choisit successivement :</p>
-          <ul class="formula-list">
-            <li>le nombre de livres qui précèdent le bloc de maths : 10 possibilités <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Il y a au total 6 + 3 = 9 livres qui ne sont pas des maths. Le bloc indissociable des 4 livres de maths peut se positionner à 10 endroits différents : soit avant le premier livre non-maths, soit entre le 1er et le 2e... soit tout à la fin après le 9e livre non-maths.</p>
-            </div></li>
-            <li>l'ordre des livres de maths : \(4!\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>On ordonne les 4 livres de mathématiques au sein de leur propre bloc.</p>
-            </div></li>
-            <li>l'ordre des livres non maths : \(9!\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>On ordonne les 9 autres livres (physique et chimie mélangés) sur le reste de l'étagère.</p>
-            </div></li>
-          </ul>
-          <p>Donc avec le principe multiplicatif : \(10 \times 4! \times 9! = 10! \times 4!\)</p>
+          <p><strong>2. si seuls les livres de mathématiques doivent être groupés.</strong></p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Création d'un bloc.</strong><br> On peut considérer le bloc indissociable des 4 livres de mathématiques comme un seul "super-livre". On a alors à ranger 9 livres isolés (les 6 de physique + les 3 de chimie) ainsi que ce super-livre, soit un total de 10 éléments. Il y a \(10!\) façons d'ordonner ces éléments sur l'étagère.</p>
+          <p><strong>Étape 2 : Ordre interne du bloc.</strong><br> On multiplie ensuite par les façons de permuter les livres de mathématiques à l'intérieur de leur bloc, soit \(4!\). \[\mathbf{10! \times 4!}\]</p>
+          </div>
           </div>
         </article>
 
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Exercice 3</span>
-              <h3>Exercice 3</h3>
+              <span class="status-pill">Probleme 3</span>
+              <h3>Problème III - Anagrammes</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -172,54 +167,35 @@
             </div>
           </header>
           <div class="answer-block">
-          <p>On considère les lettres du mot EVENEMENT (sans accents). Combien d'anagrammes différents peut-on former ? <br></p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Raisonnement préliminaire : Le mot contient 9 lettres en tout. Cependant, certaines lettres se répètent : la lettre E apparaît 4 fois, et la lettre N apparaît 2 fois. Les lettres V, M, T sont uniques. On choisit successivement :</p>
-          </div>
+          <p>On considère les lettres du mot EVENEMENT (sans accents).</p>
+          <p><strong>1. Combien d'anagrammes différents peut-on former ?</strong></p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Analyse des lettres.</strong><br> Le mot contient 9 lettres en tout. Certaines lettres se répètent : la lettre 'E' apparaît 4 fois, et la lettre 'N' apparaît 2 fois. Les lettres 'V', 'M', 'T' sont uniques.</p>
+          <p><strong>Étape 2 : Choix successifs des positions.</strong><br></p>
           <ul class="formula-list">
-            <li>la position des E : \(\binom{9}{4}\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Parmi les 9 cases vides de notre anagramme, on choisit les 4 emplacements où seront placés les 'E'.</p>
-            </div></li>
-            <li>la position des N : \(\binom{5}{2}\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Il reste 9 - 4 = 5 cases vides. On choisit 2 emplacements pour y placer les 'N'.</p>
-            </div></li>
-            <li>l'ordre pour V, M et T : \(3!\) <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>Il reste exactement 3 cases pour 3 lettres toutes distinctes (V, M, T). On les permute (3!).</p>
-            </div></li>
+            <li>On choisit d'abord les emplacements des 'E' parmi les 9 cases vides : \(\binom{9}{4}\).</li>
+            <li>Il reste 5 cases vides. On choisit les emplacements pour les 'N' : \(\binom{5}{2}\).</li>
+            <li>Il reste exactement 3 cases pour les 3 lettres distinctes ('V', 'M', 'T'), on les permute : \(3!\).</li>
           </ul>
-          <p>soit en tout : \(\binom{9}{4} \times \binom{5}{2} \times 3! = \frac{9 \times 8 \times 7 \times 6}{4!} \times \frac{5 \times 4}{2!} \times 3! = \frac{9!}{4! \times 2!}\)</p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Raisonnement alternatif (formule des permutations avec répétitions) : On calcule le nombre total de permutations (9!) que l'on divise par le produit des factorielles des répétitions pour annuler les doublons visuels : 9! / (4! * 2!).</p>
+          <p><strong>Étape 3 : Principe multiplicatif (ou permutations avec répétitions).</strong><br> Le nombre total d'anagrammes s'écrit \(\binom{9}{4} \times \binom{5}{2} \times 3!\), ce qui correspond directement à la formule des permutations avec répétitions (on divise le total des permutations par les factorielles des doublons) : \[\mathbf{\frac{9!}{4! \times 2!}}\]</p>
           </div>
-          <p>Parmi ces anagrammes, combien commencent et se terminent par la même lettre ? <br></p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Pour qu'un anagramme commence et finisse par la même lettre, il faut impérativement que cette lettre soit présente au moins deux fois dans le mot de base. Les seuls choix possibles sont donc la lettre 'N' ou la lettre 'E'. Il y a 2 cas pour la lettre identique :</p>
+          <p><strong>2. Parmi ces anagrammes, combien commencent et se terminent par la même lettre ?</strong></p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Identification des lettres possibles.</strong><br> Pour qu'un anagramme commence et finisse par la même lettre, cette lettre doit être présente au moins deux fois dans le mot d'origine. Les seuls choix possibles sont donc la lettre 'N' ou la lettre 'E'.</p>
+          <p><strong>Étape 2 : Cas de la lettre N aux extrémités.</strong><br> On place un 'N' en première et en dernière position. Il reste 7 places au centre pour les lettres restantes (4 'E', 1 'V', 1 'M', 1 'T'). Le nombre de structures possibles au milieu est calculé en permutant ces 7 lettres et en divisant par les répétitions des 'E' : \(\frac{7!}{4!}\).</p>
+          <p><strong>Étape 3 : Cas de la lettre E aux extrémités.</strong><br> On place un 'E' au début et à la fin. Il reste 7 places au centre pour les lettres restantes (2 'E', 2 'N', 1 'V', 1 'M', 1 'T'). Le nombre d'anagrammes de ce bloc central est : \(\frac{7!}{2! \times 2!}\).</p>
+          <p><strong>Étape 4 : Somme des cas.</strong><br> Les deux cas étant mutuellement exclusifs, on additionne les probabilités (principe additif) : \[\frac{7!}{4!} + \frac{7!}{2! \times 2!} = \frac{7!}{24} + \frac{7!}{4} = \frac{7! + 6 \times 7!}{24}\] \[\mathbf{\frac{7 \times 7!}{24}}\]</p>
           </div>
-          <ul class="formula-list">
-            <li>Les N : Il reste 7 lettres à placer (dont 4 E), soit \(\frac{7!}{4!}\) possibilités <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>On place un 'N' en première position et un 'N' en dernière position (figés). Il reste 7 places au milieu à combler avec le reste des lettres : 4 'E', 1 'V', 1 'M', 1 'T'. Le nombre de structures possibles au milieu est calculé par 7! / 4! (car les 4 'E' sont interchangeables).</p>
-            </div></li>
-            <li>Les E : Il reste 7 lettres à placer (dont 2 E et 2 N), soit \(\frac{7!}{2!2!}\) possibilités <div class="td-step-block td-reasoning-block">
-              <strong>Raisonnement</strong>
-              <p>On place un 'E' au début et un 'E' à la fin. Il reste 7 places au centre. Les lettres restantes à placer sont : 2 'E' restants, 2 'N', 1 'V', 1 'M', 1 'T'. Le nombre d'anagrammes de ce bloc central est donné par 7! / (2! * 2!).</p>
-            </div></li>
-          </ul>
-          <p>Donc avec le principe additif (les deux cas étant mutuellement exclusifs) : \(\frac{7!}{2^2} + \frac{7!}{4!} = \frac{3 \times 7! + 7!}{12} = \frac{4 \times 7!}{12} = \frac{7!}{3}\)</p>
           </div>
         </article>
 
         <article class="exercise-card" data-exercise>
           <header>
             <div>
-              <span class="status-pill">Exercice 4</span>
-              <h3>Exercice 4</h3>
+              <span class="status-pill">Probleme 4</span>
+              <h3>Problème IV - Tirage de cartes</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -227,27 +203,15 @@
             </div>
           </header>
           <div class="answer-block">
-          <p>On prend 5 cartes simultanément dans un jeu de 32 cartes. Quelle est la probabilité d'obtenir au moins un as ?</p>
-          <p>On commencera par modéliser cette expérience aléatoire en donnant l'ensemble \(\Omega\) des issues et en donnant la probabilité \(\mathbb{P}\) sur \(\Omega\). <br> Soit \(E\) l'ensemble des 32 cartes, \(\Omega\) est l'ensemble des parties à 5 éléments de \(E\), et \(\mathbb{P}\) est la probabilité équirépartie.</p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Raisonnement de modélisation : Le tirage étant simultané, l'ordre n'a aucune importance et il n'y a pas de remise. L'univers Omega est donc l'ensemble de tous les sous-ensembles (combinaisons) possibles de 5 cartes choisies parmi 32. Le nombre total d'issues est card(Omega) = \binom{32}{5}. Le tirage s'effectuant de manière juste, on applique la loi d'équiprobabilité.</p>
+          <p>On prend 5 cartes simultanément dans un jeu de 32 cartes. Quelle est la probabilité d'obtenir au moins un as ? On commencera par modéliser cette expérience aléatoire en donnant l'ensemble \(\Omega\) des issues et en donnant la probabilité \(\mathbb{P}\) sur \(\Omega\).</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Modélisation de l'univers \(\Omega\).</strong><br> Le tirage étant simultané, l'ordre n'a aucune importance et il n'y a pas de remise. L'univers \(\Omega\) est donc l'ensemble de tous les sous-ensembles (combinaisons) possibles de 5 cartes choisies parmi 32. Le nombre total d'issues est \(|\Omega| = \binom{32}{5}\). Le tirage s'effectuant au hasard, on munit cet espace de la probabilité équirépartie.</p>
+          <p><strong>Étape 2 : Définition de l'événement contraire.</strong><br> Soit \(A\) l'événement "obtenir au moins un as". Il est beaucoup plus rapide de passer par l'événement contraire \(\overline{A}\) : "n'obtenir aucun as". Un jeu de 32 cartes contient 4 as. Les cartes qui ne sont pas des as sont au nombre de \(32 - 4 = 28\). Pour n'avoir aucun as, il faut choisir nos 5 cartes uniquement parmi ces 28 cartes : \[\mathbb{P}(\overline{A}) = \frac{|\overline{A}|}{|\Omega|} = \frac{\binom{28}{5}}{\binom{32}{5}}\]</p>
+          <p><strong>Étape 3 : Probabilité de l'événement A.</strong><br> On applique la formule fondamentale des probabilités complémentaires : \(\mathbb{P}(A) = 1 - \mathbb{P}(\overline{A})\). \[\mathbf{\mathbb{P}(A) = 1 - \frac{\binom{28}{5}}{\binom{32}{5}}}\]</p>
           </div>
-          <p>En notant :</p>
-          <ul class="formula-list">
-            <li>\(A\) : obtenir au moins un as</li>
-            <li>\(\overline{A}\) : ne pas obtenir d'as</li>
-          </ul>
-          <p>on a : \[\mathbb{P}(\overline{A}) = \frac{|\overline{A}|}{|\Omega|} = \frac{\binom{28}{5}}{\binom{32}{5}}\]</p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Calculer la probabilité d'avoir "au moins un as" directement demanderait d'additionner les cas : avoir exactement 1 as, 2 as, 3 as, ou 4 as. Il est beaucoup plus rapide de passer par l'événement contraire "n'obtenir aucun as". Un jeu de 32 cartes contient 4 as. Les cartes qui ne sont pas des as sont au nombre de 32 - 4 = 28. Pour n'avoir aucun as, il faut choisir nos 5 cartes uniquement parmi ces 28 cartes non-as, d'où \binom{28}{5} possibilités.</p>
-          </div>
-          <p>Donc : \[\mathbb{P}(A) = 1 - \mathbb{P}(\overline{A}) = 1 - \frac{28 \times 27 \times 26 \times 25 \times 24}{32 \times 31 \times 30 \times 29 \times 28}\]</p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On applique la formule fondamentale des probabilités complémentaires : P(A) = 1 - P(A_barre).</p>
-          </div>
+          <p>\vfill</p>
+          <p>Équipe Pédagogique Esisar Page 1/1</p>
           </div>
         </article>
       </section>

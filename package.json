@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "node tools/rebuild-math-td-from-latex.js && node tools/rebuild-math-exams-from-latex.js && node tools/rebuild-auto-td-from-latex.js && node tools/rebuild-vhdl-td-from-latex.js && node tools/rebuild-exams-from-latex.js && node tools/build-html.js",
+    "build": "node tools/rebuild-math-td-from-latex.js && node tools/rebuild-auto-td-from-latex.js && node tools/rebuild-vhdl-td-from-latex.js && node tools/rebuild-exams-from-latex.js && node tools/build-html.js",
     "split": "node tools/split-html.js",
     "extract": "node tools/extract-pdfs.js",
     "enrich-td": "node tools/enrich-td-pages.js",
@@ -9,7 +9,6 @@
     "restructure-td": "node tools/restructure-td-answers.js",
     "fill-td": "node tools/fill-td-question-answers.js",
     "rebuild-math-td": "node tools/rebuild-math-td-from-latex.js",
-    "rebuild-math-exams": "node tools/rebuild-math-exams-from-latex.js",
     "rebuild-auto-td": "node tools/rebuild-auto-td-from-latex.js",
     "rebuild-exams": "node tools/rebuild-exams-from-latex.js",
     "rebuild-vhdl-td": "node tools/rebuild-vhdl-td-from-latex.js"

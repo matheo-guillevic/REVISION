@@ -1,0 +1,449 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+% Configuration des marges
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=1.5cm,
+    right=1.5cm
+}
+
+% Commande pour les placeholders d'images
+\newcommand{\imageplaceholder}[2]{
+    \begin{center}
+        \fbox{\begin{minipage}{#1}\centering\vspace{1cm}\textit{#2}\vspace{1cm}\end{minipage}}
+    \end{center}
+}
+
+% Commande pour afficher la correction avec explication
+\newcommand{\corr}[1]{
+    \vspace{0.3cm}
+    \begin{center}
+    \fcolorbox{blue}{blue!5}{
+    \begin{minipage}{0.95\textwidth}
+    \color{blue} \textbf{Correction \& Raisonnement :} \\
+    #1
+    \end{minipage}}
+    \end{center}
+    \vspace{0.3cm}
+}
+
+\begin{document}
+
+% ==================== EN-TÊTE ====================
+\noindent
+\begin{tabularx}{\textwidth}{@{}X c r@{}}
+\textbf{MT331} & \textbf{Année 2024-2025} & \textbf{Sans documents} \\
+\textbf{Probabilités} & \textbf{Corrigé de l'Examen} & \textbf{Calculatrice autorisée} \\
+\end{tabularx}
+\vspace{0.2cm}
+\hrule
+\vspace{0.4cm}
+
+% ==================== EXERCICE 1 ====================
+\begin{center}
+    \textbf{\Large Exercice 1 - 6 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent \textbf{Question 1} : Déterminer $\mathbb{P}(X=k|N=n)$.
+
+\corr{
+\textbf{Étape 1 : Analyse de l'expérience conditionnée.}\\
+Si on sait que Robert a pris le train $n$ fois (c'est-à-dire sachant $N=n$), chaque trajet a une probabilité $p$ d'être en retard et les retards sont implicitement indépendants. 
+
+\textbf{Étape 2 : Déduction de la loi.}\\
+La variable $X$, qui compte le nombre de retards (succès) parmi ces $n$ trajets, suit donc une loi Binomiale de paramètres $n$ et $p$ : $\mathcal{B}(n, p)$.
+Ainsi, pour tout $k \in [0, n]$ :
+$$ \mathbf{\mathbb{P}(X=k|N=n) = \binom{n}{k} p^k (1-p)^{n-k}} $$
+}
+
+\noindent \textbf{Question 2} : Déterminer la loi de probabilité de X. En déduire son espérance et sa variance.
+
+\corr{
+\textbf{Étape 1 : Utilisation de la formule des probabilités totales.}\\
+Pour trouver la loi marginale de $X$, on utilise la formule des probabilités totales avec le système complet d'événements $(N=n)_{n \in \mathbb{N}}$. Il faut sommer pour tous les $n \ge k$ puisque le nombre de retards $k$ ne peut pas excéder le nombre de trains pris $n$.
+\begin{align*}
+\mathbb{P}(X=k) &= \sum_{n=k}^{+\infty} \mathbb{P}(X=k|N=n)\mathbb{P}(N=n) \\
+&= \sum_{n=k}^{+\infty} \binom{n}{k} p^k (1-p)^{n-k} e^{-\lambda} \frac{\lambda^n}{n!} \\
+&= e^{-\lambda} \frac{p^k}{k!} \sum_{n=k}^{+\infty} \frac{n!}{(n-k)!} (1-p)^{n-k} \frac{\lambda^n}{n!} \\
+&= e^{-\lambda} \frac{(\lambda p)^k}{k!} \sum_{n=k}^{+\infty} \frac{(\lambda(1-p))^{n-k}}{(n-k)!}
+\end{align*}
+
+\textbf{Étape 2 : Simplification par changement d'indice.}\\
+On effectue le changement d'indice $j = n-k$ :
+$$ \mathbb{P}(X=k) = e^{-\lambda} \frac{(\lambda p)^k}{k!} \sum_{j=0}^{+\infty} \frac{(\lambda(1-p))^j}{j!} = e^{-\lambda} \frac{(\lambda p)^k}{k!} e^{\lambda(1-p)} $$
+$$ \mathbf{\mathbb{P}(X=k) = e^{-\lambda p} \frac{(\lambda p)^k}{k!}} $$
+$X$ suit donc une \textbf{loi de Poisson de paramètre $\lambda p$}.
+
+\textbf{Étape 3 : Espérance et Variance.}\\
+D'après les propriétés de la loi de Poisson :
+$$ \mathbf{\mathbb{E}(X) = \lambda p \quad \text{et} \quad \mathbb{V}(X) = \lambda p} $$
+}
+
+\noindent \textbf{Question 3} : Quelle est la loi de probabilité de Y ?
+
+\corr{
+\textbf{Étape 1 : Modélisation du temps d'attente.}\\
+Brad prend le train de manière répétée jusqu'à l'obtention d'un premier succès (l'événement "le train est en retard", de probabilité $p$). On s'arrête dès que ce succès arrive. $Y$ compte le nombre d'essais nécessaires pour obtenir ce premier succès.
+
+\textbf{Étape 2 : Conclusion.}\\
+$Y$ suit donc une \textbf{loi géométrique de paramètre $p$}. Pour tout $k \in \mathbb{N}^*$ :
+$$ \mathbf{\mathbb{P}(Y=k) = (1-p)^{k-1}p} $$
+}
+
+\noindent \textbf{Question 4} : Calculer la probabilité que Robert prenne plus souvent le train que Brad.
+
+\corr{
+\textbf{Étape 1 : Formule des probabilités totales.}\\
+On cherche $\mathbb{P}(N > Y)$. On sait que $X$ et $Y$ (et donc $N$ et $Y$) sont indépendantes. On va utiliser la formule des probabilités totales en fixant $N=n$. On utilise la propriété de la fonction de répartition complémentaire de la loi géométrique : $\mathbb{P}(Y \ge n) = (1-p)^{n-1}$.
+
+\textbf{Étape 2 : Développement du calcul.}\\
+\begin{align*}
+\mathbb{P}(N > Y) &= \sum_{n=1}^{+\infty} \mathbb{P}(N=n) \mathbb{P}(Y < n) \\
+&= \sum_{n=1}^{+\infty} e^{-\lambda} \frac{\lambda^n}{n!} \left(1 - \mathbb{P}(Y \ge n)\right) \\
+&= \sum_{n=1}^{+\infty} e^{-\lambda} \frac{\lambda^n}{n!} \left(1 - (1-p)^{n-1}\right) \\
+&= \sum_{n=1}^{+\infty} e^{-\lambda} \frac{\lambda^n}{n!} - \sum_{n=1}^{+\infty} e^{-\lambda} \frac{\lambda^n}{n!} (1-p)^{n-1} \\
+&= (1 - \mathbb{P}(N=0)) - \frac{e^{-\lambda}}{1-p} \sum_{n=1}^{+\infty} \frac{(\lambda(1-p))^n}{n!} \\
+&= (1 - e^{-\lambda}) - \frac{e^{-\lambda}}{1-p} \left( e^{\lambda(1-p)} - 1 \right)
+\end{align*}
+
+\textbf{Étape 3 : Expression finale.}\\
+$$ \mathbf{\mathbb{P}(N > Y) = 1 - e^{-\lambda} - \frac{e^{-\lambda p} - e^{-\lambda}}{1-p}} $$
+}
+
+\newpage
+
+% ==================== EXERCICE 2 ====================
+\begin{center}
+    \textbf{\Large Exercice 2 - 5 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent \textbf{Question 1} : Déterminer les lois marginales de X et de Y. X et Y sont-elles indépendantes ?
+
+\corr{
+\textbf{Étape 1 : Calcul des lois marginales.}\\
+Les lois marginales s'obtiennent en sommant respectivement les lignes (pour X) et les colonnes (pour Y) du tableau de la loi conjointe.
+\begin{itemize}
+    \item $\mathbb{P}(X=0) = 0.05 + 0.08 + 0.12 = \mathbf{0.25}$
+    \item $\mathbb{P}(X=1) = 0.15 + 0.12 + 0.08 = \mathbf{0.35}$
+    \item $\mathbb{P}(X=2) = 0.20 + 0.15 + 0.05 = \mathbf{0.40}$
+\end{itemize}
+\begin{itemize}
+    \item $\mathbb{P}(Y=1) = 0.05 + 0.15 + 0.20 = \mathbf{0.40}$
+    \item $\mathbb{P}(Y=2) = 0.08 + 0.12 + 0.15 = \mathbf{0.35}$
+    \item $\mathbb{P}(Y=4) = 0.12 + 0.08 + 0.05 = \mathbf{0.25}$
+\end{itemize}
+
+\textbf{Étape 2 : Vérification de l'indépendance.}\\
+Pour vérifier l'indépendance, on regarde si la probabilité conjointe est égale au produit des probabilités marginales. Prenons la case $(X=0, Y=1)$ :
+$$ \mathbb{P}(X=0 \cap Y=1) = 0.05 $$
+$$ \mathbb{P}(X=0) \times \mathbb{P}(Y=1) = 0.25 \times 0.40 = 0.10 $$
+Comme $0.05 \neq 0.10$, on conclut que \textbf{$X$ et $Y$ ne sont pas indépendantes}.
+}
+
+\noindent \textbf{Question 2} : Déterminer la loi de la variable aléatoire $Z=XY$.
+
+\corr{
+\textbf{Étape 1 : Identification des valeurs possibles.}\\
+On liste toutes les valeurs possibles pour le produit $XY$, et on additionne les probabilités conjointes des cases correspondantes.
+Les valeurs possibles pour $Z$ sont : $0, 1, 2, 4, 8$.
+
+\textbf{Étape 2 : Calcul des probabilités de Z.}\\
+\begin{itemize}
+    \item $\mathbb{P}(Z=0) = \mathbb{P}(X=0) = \mathbf{0.25}$
+    \item $\mathbb{P}(Z=1) = \mathbb{P}(X=1, Y=1) = \mathbf{0.15}$
+    \item $\mathbb{P}(Z=2) = \mathbb{P}(X=1, Y=2) + \mathbb{P}(X=2, Y=1) = 0.12 + 0.20 = \mathbf{0.32}$
+    \item $\mathbb{P}(Z=4) = \mathbb{P}(X=1, Y=4) + \mathbb{P}(X=2, Y=2) = 0.08 + 0.15 = \mathbf{0.23}$
+    \item $\mathbb{P}(Z=8) = \mathbb{P}(X=2, Y=4) = \mathbf{0.05}$
+\end{itemize}
+}
+
+\noindent \textbf{Question 3} : Calculer la covariance de X et Y.
+
+\corr{
+\textbf{Étape 1 : Calcul des espérances marginales.}\\
+Il faut calculer les espérances à partir des lois marginales obtenues à la question 1.
+$$ \mathbb{E}(X) = 0(0.25) + 1(0.35) + 2(0.40) = 1.15 $$
+$$ \mathbb{E}(Y) = 1(0.40) + 2(0.35) + 4(0.25) = 2.10 $$
+
+\textbf{Étape 2 : Calcul de l'espérance du produit.}\\
+On utilise la loi de $Z = XY$ pour calculer $\mathbb{E}(XY)$.
+$$ \mathbb{E}(XY) = \mathbb{E}(Z) = 0(0.25) + 1(0.15) + 2(0.32) + 4(0.23) + 8(0.05) = 2.11 $$
+
+\textbf{Étape 3 : Application de la formule de la covariance.}\\
+$$ Cov(X,Y) = \mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y) = 2.11 - (1.15 \times 2.10) $$
+$$ \mathbf{Cov(X,Y) = 2.11 - 2.415 = -0.305} $$
+}
+
+\noindent \textbf{Question 4} : Calculer $\mathbb{P}(X=Y)$ et $\mathbb{P}(X \le Y)$.
+
+\corr{
+\textbf{Étape 1 : Calcul de $\mathbb{P}(X=Y)$.}\\
+On identifie directement les cases de la diagonale du tableau où les valeurs sont égales et on somme leurs probabilités :
+$$ \mathbb{P}(X=Y) = \mathbb{P}(X=1, Y=1) + \mathbb{P}(X=2, Y=2) = 0.15 + 0.15 $$
+$$ \mathbf{\mathbb{P}(X=Y) = 0.30} $$
+
+\textbf{Étape 2 : Calcul de $\mathbb{P}(X \le Y)$.}\\
+Il est plus rapide de passer par l'événement contraire : $\mathbb{P}(X \le Y) = 1 - \mathbb{P}(X > Y)$.
+La seule case du tableau où $X > Y$ est celle où $X=2$ et $Y=1$ (probabilité de 0.20).
+$$ \mathbb{P}(X \le Y) = 1 - 0.20 $$
+$$ \mathbf{\mathbb{P}(X \le Y) = 0.80} $$
+}
+
+\newpage
+
+% ==================== EXERCICE 3 ====================
+\begin{center}
+    \textbf{\Large Exercice 3 - 4 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent \textbf{Question 1} : Calculer la probabilité qu'un habitant pris au hasard soit sans opinion.
+
+\corr{
+\textbf{Étape 1 : Définition des événements et hypothèses.}\\
+Le problème ne précise pas la proportion d'habitants entre le pays A et le pays B. En l'absence de cette donnée et avec l'expression "au hasard", on supposera que les deux pays ont le même poids démographique : $\mathbb{P}(A) = \mathbb{P}(B) = 0.5$.
+Notons les événements : $P$: Paix, $G$: Guerre, $S$: Sans opinion. D'après l'énoncé :
+$$ \mathbb{P}(P|A) = 0.60, \quad \mathbb{P}(G|A) = 0.16 \quad \Rightarrow \mathbb{P}(S|A) = 1 - (0.60 + 0.16) = 0.24 $$
+$$ \mathbb{P}(G|B) = 0.68, \quad \mathbb{P}(P|B) = 0.12 \quad \Rightarrow \mathbb{P}(S|B) = 1 - (0.68 + 0.12) = 0.20 $$
+
+\textbf{Étape 2 : Formule des probabilités totales.}\\
+$$ \mathbb{P}(S) = \mathbb{P}(S|A)\mathbb{P}(A) + \mathbb{P}(S|B)\mathbb{P}(B) $$
+$$ \mathbb{P}(S) = 0.24 \times 0.5 + 0.20 \times 0.5 $$
+$$ \mathbf{\mathbb{P}(S) = 0.22} $$
+}
+
+\noindent \textbf{Question 2} : Calculer la probabilité qu'il habite le pays A sachant qu'il est favorable à la guerre.
+
+\corr{
+\textbf{Étape 1 : Application de la formule de Bayes.}\\
+On cherche $\mathbb{P}(A|G)$.
+$$ \mathbb{P}(A|G) = \frac{\mathbb{P}(G|A)\mathbb{P}(A)}{\mathbb{P}(G|A)\mathbb{P}(A) + \mathbb{P}(G|B)\mathbb{P}(B)} $$
+
+\textbf{Étape 2 : Application numérique.}\\
+$$ \mathbb{P}(A|G) = \frac{0.16 \times 0.5}{0.16 \times 0.5 + 0.68 \times 0.5} = \frac{0.16}{0.84} $$
+$$ \mathbf{\mathbb{P}(A|G) = \frac{4}{21} \approx 0.19} $$
+}
+
+\noindent \textbf{Question 3} : Calculer la probabilité qu'il habite le pays A sachant qu'il est favorable à la paix.
+
+\corr{
+\textbf{Étape 1 : Application de la formule de Bayes.}\\
+On cherche $\mathbb{P}(A|P)$.
+$$ \mathbb{P}(A|P) = \frac{\mathbb{P}(P|A)\mathbb{P}(A)}{\mathbb{P}(P|A)\mathbb{P}(A) + \mathbb{P}(P|B)\mathbb{P}(B)} $$
+
+\textbf{Étape 2 : Application numérique.}\\
+$$ \mathbb{P}(A|P) = \frac{0.60 \times 0.5}{0.60 \times 0.5 + 0.12 \times 0.5} = \frac{0.60}{0.72} $$
+$$ \mathbf{\mathbb{P}(A|P) = \frac{5}{6} \approx 0.83} $$
+}
+
+\newpage
+
+% ==================== EXERCICE 4 ====================
+\begin{center}
+    \textbf{\Large Exercice 4 - 6 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Soit $X \sim \mathcal{N}(75, 4^2)$. On pose $Z = \frac{X-75}{4} \sim \mathcal{N}(0,1)$.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 1} : Calculer $\mathbb{P}(X>80)$ et $\mathbb{P}(65<X<85)$.
+
+\corr{
+\textbf{Étape 1 : Centrage et réduction.}\\
+On centre et on réduit la variable $X$ pour utiliser la table de la loi normale centrée réduite $\Phi$.
+\begin{align*}
+\mathbb{P}(X > 80) &= \mathbb{P}\left(Z > \frac{80-75}{4}\right) \\
+&= \mathbb{P}(Z > 1.25) \\
+&= 1 - \Phi(1.25)
+\end{align*}
+
+\textbf{Étape 2 : Application numérique.}\\
+$$ \mathbf{\mathbb{P}(X > 80) \approx 1 - 0.8944 = 0.1056} $$
+
+\textbf{Étape 3 : Cas de l'intervalle.}\\
+\begin{align*}
+\mathbb{P}(65 < X < 85) &= \mathbb{P}\left(\frac{65-75}{4} < Z < \frac{85-75}{4}\right) \\
+&= \mathbb{P}(-2.5 < Z < 2.5) \\
+&= 2\Phi(2.5) - 1
+\end{align*}
+$$ \mathbf{\mathbb{P}(65 < X < 85) \approx 2(0.9938) - 1 = 0.9876} $$
+}
+
+\noindent \textbf{Question 2} : Donner la loi de $S_2$, $S_3$ et généraliser pour $S_n$.
+
+\corr{
+\textbf{Étape 1 : Stabilité de la loi normale.}\\
+La somme de variables aléatoires normales indépendantes suit une loi normale dont l'espérance est la somme des espérances et la variance est la somme des variances.
+
+\textbf{Étape 2 : Déduction des lois.}\\
+\begin{itemize}
+    \item $S_2 \sim \mathcal{N}(2 \times 75, 2 \times 16) \implies \mathbf{S_2 \sim \mathcal{N}(150, 32)}$
+    \item $S_3 \sim \mathcal{N}(3 \times 75, 3 \times 16) \implies \mathbf{S_3 \sim \mathcal{N}(225, 48)}$
+    \item Pour la somme de $n$ variables : $\mathbf{S_n \sim \mathcal{N}(75n, 16n)}$ (soit un écart-type de $4\sqrt{n}$).
+\end{itemize}
+}
+
+\noindent \textbf{Question 3} : Quel est le nombre maximum de personnes autorisées pour que la probabilité de dépasser 500 kg soit inférieure à 0.01 ?
+
+\corr{
+\textbf{Étape 1 : Inéquation de probabilité.}\\
+On cherche le plus grand $n$ tel que $\mathbb{P}(S_n > 500) < 0.01$. On exprime cette condition avec la variable centrée réduite $Z$.
+$$ \mathbb{P}\left(Z > \frac{500 - 75n}{4\sqrt{n}}\right) < 0.01 $$
+
+\textbf{Étape 2 : Utilisation des quantiles de la loi normale.}\\
+D'après la table de la loi normale, on sait que $\mathbb{P}(Z > 2.326) \approx 0.01$. Il faut donc résoudre l'inéquation :
+$$ \frac{500 - 75n}{4\sqrt{n}} > 2.326 $$
+
+\textbf{Étape 3 : Tests successifs pour $n$.}\\
+\begin{itemize}
+    \item Si $n=6$ : $\frac{500 - 450}{4\sqrt{6}} = \frac{50}{9.8} \approx 5.1 > 2.326$ (La condition est largement respectée).
+    \item Si $n=7$ : $\frac{500 - 525}{4\sqrt{7}} < 0$ (C'est impossible, l'argument est négatif donc la probabilité dépasserait 0.5).
+\end{itemize}
+$$ \mathbf{\text{Le nombre maximum de personnes autorisées est } 6} $$
+}
+
+\newpage
+
+% ==================== EXERCICE 5 ====================
+\begin{center}
+    \textbf{\Large Exercice 5 - 4 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Soit la densité de probabilité $f(x) = \frac{c}{x^4}$ si $x \ge 1$, 0 sinon.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 1} : Calculer c. Donner la fonction de répartition $F_X$.
+
+\corr{
+\textbf{Étape 1 : Calcul de la constante $c$.}\\
+L'intégrale sur $\mathbb{R}$ d'une densité de probabilité doit valoir 1.
+$$ \int_1^{+\infty} c x^{-4} dx = \left[ \frac{c}{-3} x^{-3} \right]_1^{+\infty} = \frac{c}{3} = 1 $$
+$$ \mathbf{c = 3} $$
+
+\textbf{Étape 2 : Fonction de répartition.}\\
+Pour $x \ge 1$ :
+$$ F_X(x) = \int_1^x 3t^{-4} dt = \left[ -t^{-3} \right]_1^x $$
+$$ \mathbf{F_X(x) = 1 - \frac{1}{x^3}} $$
+(Et $F_X(x) = 0$ pour $x < 1$).
+}
+
+\noindent \textbf{Question 2} : Calculer des probabilités.
+
+\corr{
+\textbf{Étape 1 : Calcul direct via la fonction de répartition.}\\
+\begin{itemize}
+    \item $\mathbf{\mathbb{P}(X < 2)} = F_X(2) = 1 - \frac{1}{8} = \mathbf{\frac{7}{8}}$
+    \item $\mathbf{\mathbb{P}(2 \le X \le 3)} = F_X(3) - F_X(2) = \left(1 - \frac{1}{27}\right) - \left(1 - \frac{1}{8}\right) = \mathbf{\frac{19}{216}}$
+    \item $\mathbf{\mathbb{P}(X = 4) = 0}$ (La probabilité qu'une variable continue prenne une valeur ponctuelle exacte est nulle).
+\end{itemize}
+}
+
+\noindent \textbf{Question 3} : Calculer $\mathbb{E}(X^n)$ pour $n \in \mathbb{N}$.
+
+\corr{
+\textbf{Étape 1 : Intégrale du moment d'ordre n.}\\
+Elle ne convergera que si la puissance finale est strictement négative pour intégrer en l'infini.
+$$ \mathbb{E}(X^n) = \int_1^{+\infty} x^n \frac{3}{x^4} dx = 3 \int_1^{+\infty} x^{n-4} dx $$
+
+\textbf{Étape 2 : Condition d'existence.}\\
+Pour que l'intégrale converge en l'infini, il faut $n-4 < -1 \implies n < 3$. Donc les seuls moments existants pour $n \in \mathbb{N}$ sont pour $n=0, 1, 2$.
+
+\textbf{Étape 3 : Résultat.}\\
+Pour $n < 3$ :
+$$ \mathbb{E}(X^n) = 3 \left[ \frac{x^{n-3}}{n-3} \right]_1^{+\infty} $$
+$$ \mathbf{\mathbb{E}(X^n) = \frac{3}{3-n}} $$
+}
+
+\noindent \textbf{Question 4} : Calculer l'espérance et la variance et les transformations linéaires.
+
+\corr{
+\textbf{Étape 1 : Calcul de l'espérance et de la variance de X.}\\
+En utilisant le résultat précédent avec $n=1$ et $n=2$ :
+$$ \mathbf{\mathbb{E}(X)} = \frac{3}{3-1} = \mathbf{\frac{3}{2}} $$
+$$ \mathbb{E}(X^2) = \frac{3}{3-2} = 3 \implies \mathbf{\mathbb{V}(X)} = \mathbb{E}(X^2) - (\mathbb{E}(X))^2 = 3 - \frac{9}{4} = \mathbf{\frac{3}{4}} $$
+
+\textbf{Étape 2 : Application des propriétés de linéarité.}\\
+\begin{itemize}
+    \item $\mathbf{\mathbb{E}(-3X-1)} = -3\mathbb{E}(X) - 1 = -3\left(\frac{3}{2}\right) - 1 = \mathbf{-\frac{11}{2}}$
+    \item $\mathbf{\mathbb{V}(-3X-1)} = (-3)^2 \mathbb{V}(X) = 9 \times \frac{3}{4} = \mathbf{\frac{27}{4}}$
+\end{itemize}
+}
+
+\newpage
+
+% ==================== EXERCICE 6 ====================
+\begin{center}
+    \textbf{\Large Exercice 6 - 4 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Soit $R \sim \mathcal{E}(2\lambda)$ et $B \sim \mathcal{E}(3\lambda)$ des variables indépendantes.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 1} : Quelle est la probabilité que Robert ait trouvé avant Brad ?
+
+\corr{
+\textbf{Étape 1 : Utilisation des propriétés de la loi exponentielle.}\\
+C'est une propriété classique des lois exponentielles indépendantes : la probabilité que la première variable soit inférieure à la seconde est le ratio de son paramètre sur la somme des paramètres.
+
+\textbf{Étape 2 : Application de la formule.}\\
+$$ \mathbb{P}(R < B) = \frac{\lambda_R}{\lambda_R + \lambda_B} = \frac{2\lambda}{2\lambda + 3\lambda} $$
+$$ \mathbf{\mathbb{P}(R < B) = \frac{2}{5}} $$
+}
+
+\noindent \textbf{Question 2} : Quelle est la loi du temps T avant le départ ?
+
+\corr{
+\textbf{Étape 1 : Définition de la variable T.}\\
+Le temps T avant leur départ correspond au moment où le \textit{premier} des deux trouve la solution. Donc $T = \min(R, B)$. 
+
+\textbf{Étape 2 : Calcul de la fonction de survie.}\\
+On calcule $\mathbb{P}(T > t)$ en sachant que le minimum est plus grand que $t$ si et seulement si toutes les variables le sont :
+\begin{align*}
+\mathbb{P}(T > t) &= \mathbb{P}(\min(R, B) > t) \\
+&= \mathbb{P}(R > t \cap B > t) \\
+&= \mathbb{P}(R > t)\mathbb{P}(B > t) \quad \text{(par indépendance)} \\
+&= e^{-2\lambda t} e^{-3\lambda t} \\
+&= e^{-5\lambda t}
+\end{align*}
+
+\textbf{Étape 3 : Conclusion sur la loi.}\\
+L'expression $e^{-5\lambda t}$ correspond exactement à la fonction de survie d'une loi exponentielle de paramètre $5\lambda$.
+$$ \mathbf{T \sim \mathcal{E}(5\lambda)} $$
+}
+
+\vfill
+% ==================== PIED DE PAGE ====================
+\hrule
+\vspace{0.1cm}
+\noindent
+Équipe Pédagogique \hfill Esisar \hfill Page 1/1
+
+\end{document}

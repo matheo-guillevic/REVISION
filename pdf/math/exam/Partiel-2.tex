@@ -1,0 +1,424 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+% Configuration des marges
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=1.5cm,
+    right=1.5cm
+}
+
+% Commande pour les placeholders d'images
+\newcommand{\imageplaceholder}[2]{
+    \begin{center}
+        \fbox{\begin{minipage}{#1}\centering\vspace{1cm}\textit{#2}\vspace{1cm}\end{minipage}}
+    \end{center}
+}
+
+% Commande pour afficher la correction avec explication
+\newcommand{\corr}[1]{
+    \vspace{0.3cm}
+    \begin{center}
+    \fcolorbox{blue}{blue!5}{
+    \begin{minipage}{0.95\textwidth}
+    \color{blue} \textbf{Correction \& Raisonnement :} \\
+    #1
+    \end{minipage}}
+    \end{center}
+    \vspace{0.3cm}
+}
+
+\begin{document}
+
+% ==================== EN-TÊTE ====================
+\noindent
+\begin{tabularx}{\textwidth}{@{}X c r@{}}
+\textbf{MA333} & \textbf{Année 2023-2024} & \textbf{Documents selon sujet} \\
+\textbf{Probabilités} & \textbf{Corrigé de l'Examen} & \textbf{Calculatrice selon sujet} \\
+\end{tabularx}
+\vspace{0.2cm}
+\hrule
+\vspace{0.4cm}
+
+% ==================== EXERCICE 1 ====================
+\begin{center}
+    \textbf{\Large Exercice 1 - 4 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Soit $X \sim \mathcal{N}(75, 4^2)$. On pose $Z = \frac{X-75}{4}$ la variable centrée réduite associée, avec $Z \sim \mathcal{N}(0,1)$. On note $\Phi$ la fonction de répartition de la loi normale centrée réduite.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 1} : Calculer $\mathbb{P}(X>80)$ et $\mathbb{P}(65<X<85)$.
+
+\corr{
+\textbf{Étape 1 : Centrage et réduction.}\\
+On passe à la variable centrée réduite $Z$ pour pouvoir lire les probabilités dans la table de la loi normale usuelle.
+$$ \mathbb{P}(X > 80) = \mathbb{P}\left(Z > \frac{80-75}{4}\right) = \mathbb{P}(Z > 1.25) $$
+$$ \mathbb{P}(X > 80) = 1 - \Phi(1.25) \approx 1 - 0.8944 $$
+$$ \mathbf{\mathbb{P}(X > 80) = 0.1056} $$
+
+\textbf{Étape 2 : Calcul pour l'intervalle.}\\
+De même pour la seconde probabilité :
+$$ \mathbb{P}(65 < X < 85) = \mathbb{P}\left(\frac{65-75}{4} < Z < \frac{85-75}{4}\right) = \mathbb{P}(-2.5 < Z < 2.5) $$
+Par symétrie de la loi normale :
+$$ \mathbb{P}(65 < X < 85) = 2\Phi(2.5) - 1 \approx 2(0.9938) - 1 $$
+$$ \mathbf{\mathbb{P}(65 < X < 85) = 0.9876} $$
+}
+
+\noindent On pose $S = \sum_{i=1}^n X_i$.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 2} : Déterminer la loi de $S$.
+
+\corr{
+\textbf{Étape 1 : Propriétés de la somme de lois normales.}\\
+La somme de $n$ variables aléatoires indépendantes suivant des lois normales suit elle-même une loi normale. L'espérance de la somme est la somme des espérances, et par indépendance, la variance de la somme est la somme des variances.
+
+\textbf{Étape 2 : Calcul des paramètres.}\\
+$$ \mathbb{E}(S) = \sum_{i=1}^n \mathbb{E}(X_i) = n \times 75 = 75n $$
+$$ \mathbb{V}(S) = \sum_{i=1}^n \mathbb{V}(X_i) = n \times 4^2 = 16n $$
+
+\textbf{Étape 3 : Conclusion sur la loi.}\\
+Donc, $S$ suit une loi normale d'espérance $75n$ et de variance $16n$ (soit un écart-type de $4\sqrt{n}$) :
+$$ \mathbf{S \sim \mathcal{N}(75n, 16n)} $$
+}
+
+\noindent \textbf{Question 3} : Quel est le nombre maximum de personnes pour un risque de surcharge $\le 10^{-3}$ (c'est-à-dire $\mathbb{P}(S > 500) \le 10^{-3}$) ?
+
+\corr{
+\textbf{Étape 1 : Formulation de l'inéquation.}\\
+On cherche le plus grand entier $n$ tel que $\mathbb{P}(S > 500) \le 10^{-3}$. On utilise à nouveau le centrage et la réduction, appliqués cette fois à $S$.
+$$ \mathbb{P}\left(\frac{S - 75n}{4\sqrt{n}} > \frac{500 - 75n}{4\sqrt{n}}\right) \le 0.001 $$
+$$ 1 - \Phi\left(\frac{500 - 75n}{4\sqrt{n}}\right) \le 0.001 \implies \Phi\left(\frac{500 - 75n}{4\sqrt{n}}\right) \ge 0.999 $$
+
+\textbf{Étape 2 : Utilisation des quantiles.}\\
+D'après la table de la loi normale, $\Phi(3.09) \approx 0.999$. Il faut donc :
+$$ \frac{500 - 75n}{4\sqrt{n}} \ge 3.09 $$
+
+\textbf{Étape 3 : Résolution et conclusion.}\\
+Testons les valeurs entières de $n$ :
+\begin{itemize}
+    \item Si $n=6$, l'espérance est $\mu = 450$ et l'écart-type est $\sigma = 4\sqrt{6} \approx 9.798$. On a $z = \frac{50}{9.798} \approx 5.10 \ge 3.09$. Le risque est largement inférieur à $10^{-3}$.
+    \item Si $n=7$, l'espérance est $\mu = 525$. L'espérance dépasse la charge limite, le risque de surcharge sera mathématiquement supérieur à $50\%$.
+\end{itemize}
+Le nombre maximum de personnes autorisées est donc :
+$$ \mathbf{n_{max} = 6 \text{ personnes}} $$
+}
+
+\newpage
+
+% ==================== EXERCICE 2 ====================
+\begin{center}
+    \textbf{\Large Exercice 2 - 4 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Soit $f(x,y) = 4y(1-x)\mathbb{I}_{[0;1]}(x)\mathbb{I}_{[0;1]}(y)$.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 1} : Montrer que $f$ est une densité de probabilité.
+
+\corr{
+\textbf{Étape 1 : Vérification de la positivité.}\\
+Il faut vérifier deux conditions : $f$ doit être positive ou nulle sur $\mathbb{R}^2$, et l'intégrale double de $f$ sur $\mathbb{R}^2$ doit être égale à 1. Pour tout $(x,y) \in [0,1]^2$, $y \ge 0$ et $1-x \ge 0$, donc $f(x,y) \ge 0$. Ailleurs, $f(x,y) = 0$.
+
+\textbf{Étape 2 : Calcul de l'intégrale double.}\\
+Calculons l'intégrale sur $\mathbb{R}^2$ :
+$$ \iint_{\mathbb{R}^2} f(x,y) \,dx\,dy = \int_0^1 \int_0^1 4y(1-x) \,dx\,dy $$
+Comme les variables sont séparables sur un domaine rectangulaire, on scinde l'intégrale :
+$$ \iint_{\mathbb{R}^2} f(x,y) \,dx\,dy = 4 \left( \int_0^1 (1-x) \,dx \right) \left( \int_0^1 y \,dy \right) $$
+$$ \iint_{\mathbb{R}^2} f(x,y) \,dx\,dy = 4 \left[ x - \frac{x^2}{2} \right]_0^1 \left[ \frac{y^2}{2} \right]_0^1 = 4 \times \frac{1}{2} \times \frac{1}{2} $$
+$$ \mathbf{\iint_{\mathbb{R}^2} f(x,y) \,dx\,dy = 1} $$
+La fonction $f$ vérifie les deux propriétés, c'est bien une densité de probabilité.
+}
+
+\noindent \textbf{Question 2} : Calculer $\mathbb{P}(X < Y)$.
+
+\corr{
+\textbf{Étape 1 : Définition du domaine d'intégration.}\\
+Il s'agit d'intégrer la densité sur le domaine défini par $0 \le x < y \le 1$.
+$$ \mathbb{P}(X < Y) = \int_0^1 \left( \int_0^y 4y(1-x) \,dx \right) dy $$
+
+\textbf{Étape 2 : Calcul de l'intégrale interne (par rapport à x).}\\
+$$ \int_0^y 4y(1-x) \,dx = 4y \left[ x - \frac{x^2}{2} \right]_0^y = 4y \left( y - \frac{y^2}{2} \right) = 4y^2 - 2y^3 $$
+
+\textbf{Étape 3 : Calcul de l'intégrale externe (par rapport à y).}\\
+$$ \mathbb{P}(X < Y) = \int_0^1 (4y^2 - 2y^3) \,dy = \left[ \frac{4y^3}{3} - \frac{2y^4}{4} \right]_0^1 $$
+$$ \mathbb{P}(X < Y) = \frac{4}{3} - \frac{1}{2} = \frac{8}{6} - \frac{3}{6} $$
+$$ \mathbf{\mathbb{P}(X < Y) = \frac{5}{6}} $$
+}
+
+\noindent \textbf{Question 3} : Déterminer les lois de X et de Y.
+
+\corr{
+\textbf{Étape 1 : Densité marginale de X.}\\
+Pour obtenir la densité marginale de X, on intègre la densité conjointe par rapport à Y sur son domaine de définition $\mathbb{R}$. Pour $x \in [0,1]$ :
+$$ f_X(x) = \int_0^1 4y(1-x) \,dy = 4(1-x) \left[ \frac{y^2}{2} \right]_0^1 = 2(1-x) $$
+Donc pour tout $x \in \mathbb{R}$ :
+$$ \mathbf{f_X(x) = 2(1-x) \mathbb{I}_{[0;1]}(x)} $$
+
+\textbf{Étape 2 : Densité marginale de Y.}\\
+De même, pour obtenir la densité marginale de Y, on intègre par rapport à X. Pour $y \in [0,1]$ :
+$$ f_Y(y) = \int_0^1 4y(1-x) \,dx = 4y \left[ x - \frac{x^2}{2} \right]_0^1 = 2y $$
+Donc pour tout $y \in \mathbb{R}$ :
+$$ \mathbf{f_Y(y) = 2y \mathbb{I}_{[0;1]}(y)} $$
+}
+
+\noindent \textbf{Question 4} : Les variables aléatoires X et Y sont-elles indépendantes ?
+
+\corr{
+\textbf{Étape 1 : Condition d'indépendance.}\\
+Deux variables à densité sont indépendantes si et seulement si leur densité conjointe est le produit exact de leurs densités marginales.
+
+\textbf{Étape 2 : Vérification.}\\
+On calcule le produit des densités marginales trouvées précédemment :
+$$ f_X(x) \times f_Y(y) = 2(1-x)\mathbb{I}_{[0;1]}(x) \times 2y\mathbb{I}_{[0;1]}(y) = 4y(1-x)\mathbb{I}_{[0;1]}(x)\mathbb{I}_{[0;1]}(y) $$
+On remarque que ce produit correspond à la densité conjointe initiale :
+$$ f_X(x) \times f_Y(y) = f(x,y) $$
+Conclusion : \textbf{Oui, les variables $X$ et $Y$ sont indépendantes.}
+}
+
+\newpage
+
+% ==================== EXERCICE 3 ====================
+\begin{center}
+    \textbf{\Large Exercice 3 - 6 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent Pour la pièce A, on définit le "succès" comme l'obtention de "face", de probabilité $1-a$. Pour la pièce B, le succès est "face" avec probabilité $1-b$. Les variables $X$ et $Y$ représentent le nombre d'essais nécessaires pour obtenir le premier succès pour chaque pièce.
+
+\vspace{0.3cm}
+\noindent \textbf{Question 1} : Quelles sont les lois de probabilités de X et de Y ? Donner $\mathbb{E}(X)$ et $\mathbb{E}(Y)$.
+
+\corr{
+\textbf{Étape 1 : Identification des lois.}\\
+$X$ et $Y$ représentent le nombre d'essais nécessaires pour obtenir le premier succès lors d'une succession d'épreuves de Bernoulli indépendantes. Elles suivent donc des lois géométriques de paramètre égal à la probabilité de succès.
+$$ \mathbf{X \sim \mathcal{G}(1-a)} \quad \text{et} \quad \mathbf{Y \sim \mathcal{G}(1-b)} $$
+
+\textbf{Étape 2 : Expression des probabilités ponctuelles.}\\
+Pour tout $k \in \mathbb{N}^*$ :
+$$ \mathbb{P}(X=k) = a^{k-1}(1-a) \quad \text{et} \quad \mathbb{P}(Y=k) = b^{k-1}(1-b) $$
+
+\textbf{Étape 3 : Calcul des espérances.}\\
+L'espérance d'une loi géométrique de paramètre $p$ est définie par $1/p$.
+$$ \mathbf{\mathbb{E}(X) = \frac{1}{1-a}} \quad \text{et} \quad \mathbf{\mathbb{E}(Y) = \frac{1}{1-b}} $$
+}
+
+\noindent \textbf{Question 2} : Calculer la probabilité de l'évènement $(X=Y)$.
+
+\corr{
+\textbf{Étape 1 : Sommation sur l'univers des possibles.}\\
+Les lancers des deux pièces étant indépendants, les variables $X$ et $Y$ le sont aussi. On somme sur tous les cas possibles $k \in \mathbb{N}^*$.
+$$ \mathbb{P}(X=Y) = \sum_{k=1}^{+\infty} \mathbb{P}(X=k \cap Y=k) = \sum_{k=1}^{+\infty} \mathbb{P}(X=k)\mathbb{P}(Y=k) $$
+
+\textbf{Étape 2 : Application des lois et factorisation.}\\
+$$ \mathbb{P}(X=Y) = \sum_{k=1}^{+\infty} a^{k-1}(1-a) b^{k-1}(1-b) = (1-a)(1-b) \sum_{k=1}^{+\infty} (ab)^{k-1} $$
+
+\textbf{Étape 3 : Calcul de la série géométrique.}\\
+Par changement d'indice $j = k-1$ :
+$$ \mathbb{P}(X=Y) = (1-a)(1-b) \sum_{j=0}^{+\infty} (ab)^j $$
+Comme $|ab| < 1$, la série converge vers $\frac{1}{1-ab}$ :
+$$ \mathbf{\mathbb{P}(X=Y) = \frac{(1-a)(1-b)}{1-ab}} $$
+}
+
+\noindent \textbf{Question 3} : Trouver, pour $k \in \mathbb{N}$, la valeur de $\mathbb{P}(X>k)$. En déduire $\mathbb{P}(X>Y)$ et $\mathbb{P}(X \ge Y)$.
+
+\corr{
+\textbf{Étape 1 : Calcul de $\mathbb{P}(X>k)$.}\\
+Dire que l'on a besoin de plus de $k$ lancers pour obtenir le premier "face" revient à dire que les $k$ premiers lancers ont tous donné "pile" (probabilité $a$). Par indépendance des lancers :
+$$ \mathbf{\mathbb{P}(X>k) = a^k} $$
+
+\textbf{Étape 2 : Calcul de $\mathbb{P}(X>Y)$.}\\
+On utilise la formule des probabilités totales en fixant la valeur de $Y$ et en utilisant l'indépendance :
+$$ \mathbb{P}(X>Y) = \sum_{k=1}^{+\infty} \mathbb{P}(Y=k) \mathbb{P}(X>k) = \sum_{k=1}^{+\infty} b^{k-1}(1-b) a^k $$
+$$ \mathbb{P}(X>Y) = a(1-b) \sum_{k=1}^{+\infty} (ab)^{k-1} = \mathbf{\frac{a(1-b)}{1-ab}} $$
+
+\textbf{Étape 3 : Calcul de $\mathbb{P}(X \ge Y)$.}\\
+On utilise la partition $\mathbb{P}(X \ge Y) = \mathbb{P}(X>Y) + \mathbb{P}(X=Y)$ :
+$$ \mathbb{P}(X \ge Y) = \frac{a(1-b)}{1-ab} + \frac{(1-a)(1-b)}{1-ab} = \frac{(1-b)(a + 1 - a)}{1-ab} $$
+$$ \mathbf{\mathbb{P}(X \ge Y) = \frac{1-b}{1-ab}} $$
+}
+
+\noindent \textbf{Question 4} : Soit $M = \min(X,Y)$. Calculer la probabilité $\mathbb{P}(M \ge k)$. En déduire la loi de M.
+
+\corr{
+\textbf{Étape 1 : Calcul de la fonction de survie $\mathbb{P}(M \ge k)$.}\\
+Le minimum de deux variables est supérieur ou égal à $k$ si et seulement si les deux variables sont simultanément supérieures ou égales à $k$.
+Pour $k \in \mathbb{N}^*$, $\mathbb{P}(M \ge k) = \mathbb{P}(X \ge k \cap Y \ge k) = \mathbb{P}(X \ge k)\mathbb{P}(Y \ge k)$ par indépendance.
+Or $\mathbb{P}(X \ge k) = \mathbb{P}(X > k-1) = a^{k-1}$.
+$$ \mathbf{\mathbb{P}(M \ge k) = a^{k-1}b^{k-1} = (ab)^{k-1}} $$
+
+\textbf{Étape 2 : Déduction de la loi ponctuelle.}\\
+On en déduit la loi ponctuelle de $M$ par différence :
+$$ \mathbb{P}(M=k) = \mathbb{P}(M \ge k) - \mathbb{P}(M \ge k+1) = (ab)^{k-1} - (ab)^k $$
+$$ \mathbf{\mathbb{P}(M=k) = (ab)^{k-1}(1-ab)} $$
+
+\textbf{Étape 3 : Identification de la loi.}\\
+On reconnaît l'expression exacte de la probabilité d'une loi géométrique où la probabilité de "succès" est $(1-ab)$.
+$$ \mathbf{M \sim \mathcal{G}(1-ab)} $$
+}
+
+\newpage
+
+% ==================== EXERCICE 4 ====================
+\begin{center}
+    \textbf{\Large Exercice 4 - 16 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent \textbf{Question 1(a)} : Calculer la probabilité de l'évènement "Robert tombe sur la piste qu'il a choisie".
+
+\corr{
+\textbf{Étape 1 : Définition des évènements et extraction des données.}\\
+On note $B, R, N$ les évènements de choix de la piste (Bleue, Rouge, Noire) et $T$ l'évènement "tomber".
+Données : $\mathbb{P}(B)=1/4$, $\mathbb{P}(R)=1/2$, $\mathbb{P}(N)=1/4$.
+Probabilités conditionnelles : $\mathbb{P}(T|B)=1/10$, $\mathbb{P}(T|R)=1/6$, $\mathbb{P}(T|N)=2/5$.
+
+\textbf{Étape 2 : Formule des probabilités totales.}\\
+Les choix de piste forment un système complet d'évènements.
+$$ \mathbb{P}(T) = \mathbb{P}(T|B)\mathbb{P}(B) + \mathbb{P}(T|R)\mathbb{P}(R) + \mathbb{P}(T|N)\mathbb{P}(N) $$
+$$ \mathbb{P}(T) = \left(\frac{1}{10} \times \frac{1}{4}\right) + \left(\frac{1}{6} \times \frac{1}{2}\right) + \left(\frac{2}{5} \times \frac{1}{4}\right) $$
+$$ \mathbb{P}(T) = \frac{1}{40} + \frac{1}{12} + \frac{1}{10} = \frac{3 + 10 + 12}{120} $$
+$$ \mathbf{\mathbb{P}(T) = \frac{25}{120} = \frac{5}{24}} $$
+}
+
+\noindent \textbf{Question 1(b)} : Sachant cela, quelle est la probabilité que Robert ait choisi la piste noire ?
+
+\corr{
+\textbf{Étape 1 : Application de la formule de Bayes.}\\
+Il s'agit d'une inversion de probabilité : on cherche $\mathbb{P}(N|T)$.
+$$ \mathbb{P}(N|T) = \frac{\mathbb{P}(T|N)\mathbb{P}(N)}{\mathbb{P}(T)} $$
+
+\textbf{Étape 2 : Application numérique.}\\
+$$ \mathbb{P}(N|T) = \frac{\frac{2}{5} \times \frac{1}{4}}{\frac{5}{24}} = \frac{\frac{1}{10}}{\frac{5}{24}} = \frac{1}{10} \times \frac{24}{5} $$
+$$ \mathbf{\mathbb{P}(N|T) = \frac{24}{50} = \frac{12}{25} = 0.48} $$
+}
+
+\noindent \textbf{Question 2(a)} : Soit $Z=X+Y$, déterminer la loi de Z. (Avec $X \sim \mathcal{E}(1/5)$ et $Y \sim \mathcal{U}[10; 15]$ indépendantes).
+
+\corr{
+\textbf{Étape 1 : Définition du produit de convolution.}\\
+La loi de la somme de deux variables aléatoires indépendantes continues s'obtient par la convolution de leurs densités :
+$$ f_Z(z) = \int_{-\infty}^{+\infty} f_X(z-y)f_Y(y) \,dy $$
+Avec $f_X(x) = \frac{1}{5}e^{-x/5}\mathbb{I}_{\{x \ge 0\}}$ et $f_Y(y) = \frac{1}{5}\mathbb{I}_{\{10 \le y \le 15\}}$.
+
+\textbf{Étape 2 : Bornes de l'intégrale.}\\
+$$ f_Z(z) = \int_{10}^{15} \frac{1}{5}e^{-\frac{1}{5}(z-y)} \mathbb{I}_{\{z-y \ge 0\}} \times \frac{1}{5} \,dy = \frac{1}{25}e^{-\frac{z}{5}} \int_{10}^{15} e^{\frac{y}{5}} \mathbb{I}_{\{y \le z\}} \,dy $$
+
+\textbf{Étape 3 : Intégration selon les valeurs de $z$.}\\
+\begin{itemize}
+    \item \textbf{Si $\mathbf{z < 10}$} : l'intervalle d'intégration est vide (car $y \le z < 10$), $\mathbf{f_Z(z) = 0}$.
+    \item \textbf{Si $\mathbf{10 \le z \le 15}$} : on intègre $y$ de 10 à $z$.
+    $$ f_Z(z) = \frac{1}{25}e^{-\frac{z}{5}} \left[ 5e^{\frac{y}{5}} \right]_{10}^z = \frac{1}{5}e^{-\frac{z}{5}} \left( e^{\frac{z}{5}} - e^2 \right) = \mathbf{\frac{1}{5} \left( 1 - e^{-\frac{z-10}{5}} \right)} $$
+    \item \textbf{Si $\mathbf{z > 15}$} : on intègre $y$ de 10 à 15.
+    $$ f_Z(z) = \frac{1}{25}e^{-\frac{z}{5}} \left[ 5e^{\frac{y}{5}} \right]_{10}^{15} = \mathbf{\frac{1}{5} \left( e^3 - e^2 \right) e^{-\frac{z}{5}}} $$
+\end{itemize}
+}
+
+\noindent \textbf{Question 2(b)} : Déterminer la probabilité que Robert ne soit pas en retard.
+
+\corr{
+\textbf{Étape 1 : Mise en place de l'intégrale.}\\
+Entre 10h45 et 11h, Robert dispose de 15 minutes. Il ne sera pas en retard si $Z \le 15$. On intègre la densité $f_Z$ sur l'intervalle utile $[10; 15]$.
+$$ \mathbb{P}(Z \le 15) = \int_{10}^{15} f_Z(z) \,dz = \int_{10}^{15} \frac{1}{5} \left( 1 - e^{-\frac{z-10}{5}} \right) dz $$
+
+\textbf{Étape 2 : Calcul de la primitive et évaluation.}\\
+$$ \mathbb{P}(Z \le 15) = \left[ \frac{z}{5} + e^{-\frac{z-10}{5}} \right]_{10}^{15} = \left(\frac{15}{5} + e^{-\frac{5}{5}}\right) - \left(\frac{10}{5} + e^0\right) $$
+$$ \mathbb{P}(Z \le 15) = (3 + e^{-1}) - (2 + 1) = 3 + e^{-1} - 3 $$
+$$ \mathbf{\mathbb{P}(Z \le 15) = e^{-1} \approx 0.368} $$
+}
+
+\noindent \textbf{Question 2(c)} : Probabilité que Stéphanie arrive avant Robert ($\mathbb{P}(T_2 < T_1)$).
+
+\corr{
+\textbf{Étape 1 : Définition du domaine total.}\\
+On cherche $\mathbb{P}(T_2 < T_1)$. L'aire totale de la zone des temps possibles est l'aire du rectangle $[55;85] \times [65;75]$, soit $\text{Aire}_{totale} = 30 \times 10 = 300$.
+
+\textbf{Étape 2 : Calcul géométrique de la zone favorable.}\\
+On calcule géométriquement l'aire du sous-domaine où $t_2 < t_1$. Ce domaine dans le rectangle est composé :
+\begin{itemize}
+    \item D'un triangle pour $t_1 \in [65;75]$ : aire = $\frac{10 \times 10}{2} = 50$.
+    \item D'un rectangle complet pour $t_1 \in [75;85]$ : aire = $10 \times 10 = 100$.
+\end{itemize}
+L'aire favorable est donc de $150$.
+
+\textbf{Étape 3 : Calcul de la probabilité uniforme.}\\
+La probabilité est le rapport des aires (probabilité uniforme sur ce domaine) :
+$$ \mathbb{P}(T_2 < T_1) = \frac{\text{Aire}_{favorable}}{\text{Aire}_{totale}} = \frac{150}{300} $$
+$$ \mathbf{\mathbb{P}(T_2 < T_1) = \frac{1}{2}} $$
+}
+
+\noindent \textbf{Question 3(a)} : Quelle est la loi exacte de $S_n$ ?
+
+\corr{
+\textbf{Étape 1 : Identification du schéma de Bernoulli.}\\
+On compte le nombre de succès (skis Castafiore de probabilité $p$) parmi $n$ skieurs interrogés de manière indépendante.
+
+\textbf{Étape 2 : Loi de probabilité.}\\
+Il s'agit donc d'un schéma binomial classique.
+$$ \mathbf{S_n \sim \mathcal{B}(n, p)} $$
+}
+
+\noindent \textbf{Question 3(b)} : Déterminer $n$ pour une précision à $10^{-2}$ près au risque $0.05$.
+
+\corr{
+\textbf{Étape 1 : Formule de la marge d'erreur.}\\
+La demi-amplitude de l'intervalle de confiance asymptotique au risque $5\%$ est donnée par $1.96 \sqrt{\frac{p(1-p)}{n}}$. On veut que cette erreur soit inférieure ou égale à $0.01$.
+$$ 1.96 \sqrt{\frac{p(1-p)}{n}} \le 0.01 $$
+
+\textbf{Étape 2 : Majoration de la variance.}\\
+Pour garantir cette marge d'erreur sans connaître la vraie proportion $p$, on se place dans le cas le plus défavorable où la variance est maximale, c'est-à-dire $p=0.5$.
+$$ 1.96 \sqrt{\frac{0.5 \times 0.5}{n}} \le 0.01 \iff \frac{1.96}{2\sqrt{n}} \le 0.01 $$
+
+\textbf{Étape 3 : Résolution.}\\
+$$ \sqrt{n} \ge \frac{0.98}{0.01} = 98 $$
+En élevant au carré :
+$$ n \ge 98^2 = 9604 $$
+Il faut donc au minimum $\mathbf{9604 \text{ skieurs}}$.
+}
+
+\noindent \textbf{Question 3(c)} : Intervalle de confiance de $p$ au risque $5\%$.
+
+\corr{
+\textbf{Étape 1 : Estimation ponctuelle.}\\
+La proportion estimée $\hat{p}$ sur l'échantillon est le rapport du nombre de succès sur la taille de l'échantillon :
+$$ \hat{p} = \frac{2500}{8500} = \frac{25}{85} = \frac{5}{17} \approx 0.2941 $$
+
+\textbf{Étape 2 : Calcul de la marge d'erreur empirique.}\\
+On applique la formule de l'intervalle de confiance avec la variance empirique :
+$$ E = 1.96 \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} = 1.96 \sqrt{\frac{\frac{5}{17} \times \frac{12}{17}}{8500}} \approx 1.96 \times 0.00494 \approx 0.0097 $$
+
+\textbf{Étape 3 : Construction de l'intervalle.}\\
+L'intervalle de confiance est centré sur $\hat{p}$ avec un rayon $E$ :
+$$ IC_{95\%} = [\hat{p} - E ; \hat{p} + E] = [0.2941 - 0.0097 ; 0.2941 + 0.0097] $$
+$$ \mathbf{IC_{95\%} = [0.284 ; 0.304]} $$
+}
+
+\vfill
+% ==================== PIED DE PAGE ====================
+\hrule
+\vspace{0.1cm}
+\noindent
+Équipe Pédagogique \hfill Esisar \hfill Page 1/1
+
+\end{document}

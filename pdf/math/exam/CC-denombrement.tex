@@ -1,0 +1,294 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+% Configuration des marges
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=1.5cm,
+    right=1.5cm
+}
+
+% Commande pour les placeholders d'images
+\newcommand{\imageplaceholder}[2]{
+    \begin{center}
+        \fbox{\begin{minipage}{#1}\centering\vspace{1cm}\textit{#2}\vspace{1cm}\end{minipage}}
+    \end{center}
+}
+
+% Commande pour afficher la correction avec explication
+\newcommand{\corr}[1]{
+    \vspace{0.3cm}
+    \begin{center}
+    \fcolorbox{blue}{blue!5}{
+    \begin{minipage}{0.95\textwidth}
+    \color{blue} \textbf{Correction \& Raisonnement :} \\
+    #1
+    \end{minipage}}
+    \end{center}
+    \vspace{0.3cm}
+}
+
+\begin{document}
+
+% ==================== EN-TÊTE ====================
+\noindent
+\begin{tabularx}{\textwidth}{@{}X c r@{}}
+\textbf{MT331} & \textbf{Lundi 4 mai 2026} & \textbf{Sans documents} \\
+\textbf{Probabilités / Dénombrement} & \textbf{Durée : 45 min} & \textbf{Année 2025-2026} \\
+\end{tabularx}
+\vspace{0.2cm}
+\hrule
+\vspace{0.4cm}
+
+% ==================== PROBLÈME I ====================
+\begin{center}
+    \textbf{\Large Problème I - Questions de cours}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent \textbf{1.} Soit $k$ un entier naturel et $A$ et $B$ deux ensembles avec $|A|=n$ et $|B|=p$.
+
+\noindent (a) le cardinal de $A \times B$ est : 
+\corr{
+\textbf{Étape 1 : Définition du produit cartésien.}\\
+Par définition, le cardinal du produit cartésien de deux ensembles finis est égal au produit des cardinaux de ces deux ensembles.
+$$ \mathbf{|A \times B| = n \times p} $$
+}
+
+\noindent (b) le cardinal de $A^k$ est : 
+\corr{
+\textbf{Étape 1 : Applications vers un ensemble.}\\
+$A^k$ désigne l'ensemble des applications d'un ensemble à $k$ éléments vers $A$. Pour chacun des $k$ éléments de l'ensemble de départ, on a $n$ choix possibles dans $A$.
+$$ \mathbf{|A^k| = n^k} $$
+}
+
+\noindent (c) le nombre de k-listes d'éléments de A est : 
+\corr{
+\textbf{Étape 1 : k-listes avec remise.}\\
+Une k-liste (ou k-uplet) est une suite ordonnée de $k$ éléments où les répétitions sont autorisées. C'est mathématiquement équivalent à un élément de $A^k$.
+$$ \mathbf{n^k} $$
+}
+
+\noindent (d) si $k \le n$, le nombre de k-listes sans répétition d'éléments de A est : 
+\corr{
+\textbf{Étape 1 : Arrangements.}\\
+Il s'agit du nombre d'arrangements de $k$ éléments parmi $n$ (noté $A_n^k$). On a $n$ choix pour le premier élément, $(n-1)$ pour le second... jusqu'à $(n-k+1)$ pour le $k$-ième.
+$$ \mathbf{\frac{n!}{(n-k)!}} $$
+}
+
+\noindent (e) le nombre de façons différentes d'ordonner les n éléments de A est : 
+\corr{
+\textbf{Étape 1 : Permutations.}\\
+Ordonner $n$ éléments distincts revient à chercher le nombre de permutations de cet ensemble. Le résultat est la factorielle de $n$.
+$$ \mathbf{n!} $$
+}
+
+\noindent (f) si $k \le n$, le nombre de parties à k éléments de A est : 
+\corr{
+\textbf{Étape 1 : Combinaisons.}\\
+Choisir un sous-ensemble (une partie) de $k$ éléments parmi $n$ revient à calculer le nombre de combinaisons. Ici, contrairement aux listes, l'ordre n'a pas d'importance.
+$$ \mathbf{\binom{n}{k} = \frac{n!}{k!(n-k)!}} $$
+}
+
+\noindent (g) le nombre de parties de A est : 
+\corr{
+\textbf{Étape 1 : Ensemble des parties.}\\
+L'ensemble de toutes les parties de $A$ (noté $\mathcal{P}(A)$) a pour cardinal $2^{|A|}$. On peut le comprendre en disant que pour construire une partie, chaque élément de $A$ a exactement 2 choix : appartenir ou ne pas appartenir à cette partie.
+$$ \mathbf{2^n} $$
+}
+
+\vspace{0.3cm}
+\noindent \textbf{2.} Soit $(\Omega, \mathcal{P}(\Omega), \mathbb{P})$ un espace probabilisé fini, et A et B deux événements de $\Omega$.
+
+\noindent (a) $\mathbb{P}(\Omega) = $
+\corr{
+\textbf{Étape 1 : Axiome de probabilité.}\\
+C'est l'axiome fondamental de la définition d'une probabilité : la probabilité de l'univers entier (l'événement certain) est égale à 1.
+$$ \mathbf{1} $$
+}
+
+\noindent (b) $\mathbb{P}(\emptyset) = $
+\corr{
+\textbf{Étape 1 : Événement impossible.}\\
+Propriété directe découlant des axiomes : l'événement impossible a une probabilité nulle.
+$$ \mathbf{0} $$
+}
+
+\noindent (c) Si $A \cap B = \emptyset$, alors $\mathbb{P}(A \cup B) = $
+\corr{
+\textbf{Étape 1 : Additivité.}\\
+C'est l'axiome d'additivité pour des événements incompatibles (disjoints). Comme ils ne peuvent pas se produire en même temps, la probabilité de la réunion est la somme des probabilités.
+$$ \mathbf{\mathbb{P}(A) + \mathbb{P}(B)} $$
+}
+
+\noindent (d) $\mathbb{P}(\overline{A}) = $
+\corr{
+\textbf{Étape 1 : Événement contraire.}\\
+Un événement et son contraire forment une partition de l'univers $\Omega$. La somme de leurs probabilités vaut donc 1.
+$$ \mathbf{1 - \mathbb{P}(A)} $$
+}
+
+\noindent (e) $\mathbb{P}(A \cup B) = $
+\corr{
+\textbf{Étape 1 : Principe d'inclusion-exclusion.}\\
+C'est la formule générale de l'additivité. On doit soustraire $\mathbb{P}(A \cap B)$ car les éléments communs à $A$ et $B$ ont été comptés deux fois (une fois dans $\mathbb{P}(A)$ et une fois dans $\mathbb{P}(B)$).
+$$ \mathbf{\mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)} $$
+}
+
+\noindent (f) Par définition, $\mathbb{P}_A(B) = \mathbb{P}(B|A) = $
+\corr{
+\textbf{Étape 1 : Probabilité conditionnelle.}\\
+C'est la définition formelle de la probabilité conditionnelle de $B$ sachant que l'événement $A$ est déjà réalisé (sous réserve que $\mathbb{P}(A) > 0$).
+$$ \mathbf{\frac{\mathbb{P}(A \cap B)}{\mathbb{P}(A)}} $$
+}
+
+\noindent (g) Si $(A_i)_{1\le i\le n}$ est un système complet d'événements de $\Omega$, alors $\sum_{i=1}^{n}\mathbb{P}(B|A_i)\mathbb{P}(A_i) = $
+\corr{
+\textbf{Étape 1 : Probabilités totales.}\\
+Il s'agit de la formule des probabilités totales. Le système complet d'événements partitionne l'univers de manière disjointe, permettant de décomposer le calcul selon les différents scénarios $A_i$.
+$$ \mathbf{\mathbb{P}(B)} $$
+}
+
+\newpage
+
+% ==================== PROBLÈME II ====================
+\begin{center}
+    \textbf{\Large Problème II - Rangement de livres}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent On souhaite ranger sur une étagère 4 livres de mathématiques, 6 livres de physique, et 3 de chimie. De combien de façons peut-on effectuer ce rangement :
+
+\vspace{0.3cm}
+\noindent \textbf{1. si les livres doivent être groupés par matières.}
+
+\corr{
+\textbf{Étape 1 : Ordre des blocs de matières.}\\
+On a 3 blocs distincts à agencer sur l'étagère (le bloc de Maths, le bloc de Physique et le bloc de Chimie). Il y a $3!$ façons d'ordonner ces 3 blocs.
+
+\textbf{Étape 2 : Ordre interne des livres.}\\
+À l'intérieur de chaque bloc, on doit ordonner les livres distincts :
+\begin{itemize}
+    \item $4!$ possibilités pour les livres de mathématiques.
+    \item $6!$ possibilités pour les livres de physique.
+    \item $3!$ possibilités pour les livres de chimie.
+\end{itemize}
+
+\textbf{Étape 3 : Principe multiplicatif.}\\
+Comme ces choix s'effectuent de manière successive et indépendante, on multiplie le nombre de possibilités de chaque étape.
+$$ \mathbf{3! \times 4! \times 6! \times 3!} $$
+}
+
+\noindent \textbf{2. si seuls les livres de mathématiques doivent être groupés.}
+
+\corr{
+\textbf{Étape 1 : Création d'un bloc.}\\
+On peut considérer le bloc indissociable des 4 livres de mathématiques comme un seul "super-livre". On a alors à ranger 9 livres isolés (les 6 de physique + les 3 de chimie) ainsi que ce super-livre, soit un total de 10 éléments. Il y a $10!$ façons d'ordonner ces éléments sur l'étagère.
+
+\textbf{Étape 2 : Ordre interne du bloc.}\\
+On multiplie ensuite par les façons de permuter les livres de mathématiques à l'intérieur de leur bloc, soit $4!$.
+$$ \mathbf{10! \times 4!} $$
+}
+
+\vspace{0.5cm}
+
+% ==================== PROBLÈME III ====================
+\begin{center}
+    \textbf{\Large Problème III - Anagrammes}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent On considère les lettres du mot EVENEMENT (sans accents). 
+
+\vspace{0.3cm}
+\noindent \textbf{1. Combien d'anagrammes différents peut-on former ?}
+
+\corr{
+\textbf{Étape 1 : Analyse des lettres.}\\
+Le mot contient 9 lettres en tout. Certaines lettres se répètent : la lettre 'E' apparaît 4 fois, et la lettre 'N' apparaît 2 fois. Les lettres 'V', 'M', 'T' sont uniques.
+
+\textbf{Étape 2 : Choix successifs des positions.}\\
+\begin{itemize}
+    \item On choisit d'abord les emplacements des 'E' parmi les 9 cases vides : $\binom{9}{4}$.
+    \item Il reste 5 cases vides. On choisit les emplacements pour les 'N' : $\binom{5}{2}$.
+    \item Il reste exactement 3 cases pour les 3 lettres distinctes ('V', 'M', 'T'), on les permute : $3!$.
+\end{itemize}
+
+\textbf{Étape 3 : Principe multiplicatif (ou permutations avec répétitions).}\\
+Le nombre total d'anagrammes s'écrit $\binom{9}{4} \times \binom{5}{2} \times 3!$, ce qui correspond directement à la formule des permutations avec répétitions (on divise le total des permutations par les factorielles des doublons) :
+$$ \mathbf{\frac{9!}{4! \times 2!}} $$
+}
+
+\noindent \textbf{2. Parmi ces anagrammes, combien commencent et se terminent par la même lettre ?}
+
+\corr{
+\textbf{Étape 1 : Identification des lettres possibles.}\\
+Pour qu'un anagramme commence et finisse par la même lettre, cette lettre doit être présente au moins deux fois dans le mot d'origine. Les seuls choix possibles sont donc la lettre 'N' ou la lettre 'E'.
+
+\textbf{Étape 2 : Cas de la lettre N aux extrémités.}\\
+On place un 'N' en première et en dernière position. Il reste 7 places au centre pour les lettres restantes (4 'E', 1 'V', 1 'M', 1 'T').
+Le nombre de structures possibles au milieu est calculé en permutant ces 7 lettres et en divisant par les répétitions des 'E' : $\frac{7!}{4!}$.
+
+\textbf{Étape 3 : Cas de la lettre E aux extrémités.}\\
+On place un 'E' au début et à la fin. Il reste 7 places au centre pour les lettres restantes (2 'E', 2 'N', 1 'V', 1 'M', 1 'T').
+Le nombre d'anagrammes de ce bloc central est : $\frac{7!}{2! \times 2!}$.
+
+\textbf{Étape 4 : Somme des cas.}\\
+Les deux cas étant mutuellement exclusifs, on additionne les probabilités (principe additif) :
+$$ \frac{7!}{4!} + \frac{7!}{2! \times 2!} = \frac{7!}{24} + \frac{7!}{4} = \frac{7! + 6 \times 7!}{24} $$
+$$ \mathbf{\frac{7 \times 7!}{24}} $$
+}
+
+\newpage
+
+% ==================== PROBLÈME IV ====================
+\begin{center}
+    \textbf{\Large Problème IV - Tirage de cartes}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent On prend 5 cartes simultanément dans un jeu de 32 cartes. Quelle est la probabilité d'obtenir au moins un as ? On commencera par modéliser cette expérience aléatoire en donnant l'ensemble $\Omega$ des issues et en donnant la probabilité $\mathbb{P}$ sur $\Omega$.
+
+\corr{
+\textbf{Étape 1 : Modélisation de l'univers $\Omega$.}\\
+Le tirage étant simultané, l'ordre n'a aucune importance et il n'y a pas de remise. 
+L'univers $\Omega$ est donc l'ensemble de tous les sous-ensembles (combinaisons) possibles de 5 cartes choisies parmi 32. 
+Le nombre total d'issues est $|\Omega| = \binom{32}{5}$. Le tirage s'effectuant au hasard, on munit cet espace de la probabilité équirépartie.
+
+\textbf{Étape 2 : Définition de l'événement contraire.}\\
+Soit $A$ l'événement "obtenir au moins un as". Il est beaucoup plus rapide de passer par l'événement contraire $\overline{A}$ : "n'obtenir aucun as".
+Un jeu de 32 cartes contient 4 as. Les cartes qui ne sont pas des as sont au nombre de $32 - 4 = 28$. 
+Pour n'avoir aucun as, il faut choisir nos 5 cartes uniquement parmi ces 28 cartes :
+$$ \mathbb{P}(\overline{A}) = \frac{|\overline{A}|}{|\Omega|} = \frac{\binom{28}{5}}{\binom{32}{5}} $$
+
+\textbf{Étape 3 : Probabilité de l'événement A.}\\
+On applique la formule fondamentale des probabilités complémentaires : $\mathbb{P}(A) = 1 - \mathbb{P}(\overline{A})$.
+$$ \mathbf{\mathbb{P}(A) = 1 - \frac{\binom{28}{5}}{\binom{32}{5}}} $$
+}
+
+\vfill
+% ==================== PIED DE PAGE ====================
+\hrule
+\vspace{0.1cm}
+\noindent
+Équipe Pédagogique \hfill Esisar \hfill Page 1/1
+
+\end{document}
