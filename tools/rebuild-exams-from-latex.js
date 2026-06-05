@@ -46,6 +46,10 @@ function write(filePath, html) {
   fs.writeFileSync(filePath, `${html.trimEnd()}\n`, "utf8");
 }
 
+function toWebPath(filePath) {
+  return filePath.replace(/\\/g, "/");
+}
+
 function escapeHtml(text) {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
@@ -423,7 +427,15 @@ function extractUnits(latex, group) {
     const start = match.index + match[0].length;
     const end = matches[index + 1] ? matches[index + 1].index : source.length;
     const title = cleanTitle(match[1]);
-    const label = /exercice/i.test(title) ? "Exercice" : /partie/i.test(title) ? "Partie" : group.subject === "java" ? "Exercice" : "Probleme";
+    const label = /exercice/i.test(title)
+      ? "Exercice"
+      : /partie/i.test(title)
+        ? "Partie"
+        : /probl(?:[eè]|Ã¨)me/i.test(title)
+          ? "Probleme"
+          : group.subject === "java"
+            ? "Exercice"
+            : "Probleme";
 
     return {
       index: index + 1,
@@ -501,10 +513,10 @@ function renderPage(group, config, units) {
           <span class="eyebrow">${config.eyebrow}</span>
           <h1>${config.heading}</h1>
           <p>${config.summary}</p>
-          <p>Page reconstruite depuis <code>${path.relative(root, path.join(group.sourceDir, config.source))}</code>.</p>
+          <p>Page reconstruite depuis <code>${toWebPath(path.relative(root, path.join(group.sourceDir, config.source)))}</code>.</p>
         </div>
         <div class="td-actions">
-          <a class="primary-button" href="${path.relative(path.join(root, "out"), path.join(root, "pdf", group.subject, "exam", config.source)).replace(/^\.\.\//, "")}">Ouvrir le sujet LaTeX</a>
+          <a class="primary-button" href="${toWebPath(path.relative(path.join(root, "out"), path.join(root, "pdf", group.subject, "exam", config.source))).replace(/^\.\.\//, "")}">Ouvrir le sujet LaTeX</a>
           <a class="back-link" href="${group.courseHref}">${group.courseLabel}</a>
         </div>
       </header>

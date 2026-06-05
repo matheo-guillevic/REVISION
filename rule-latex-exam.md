@@ -20,6 +20,7 @@ Le document doit utiliser la classe `article` en taille `11pt` au format `a4pape
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{xcolor}
+\usepackage{listings}
 
 \geometry{
     top=2cm,
@@ -62,7 +63,54 @@ Génère un encadré sur fond bleu très clair (`blue!5`) avec une fine bordure 
 
 ---
 
-## 3. En-tête du Document
+## 3. Blocs de Code
+Tous les extraits de code doivent etre ecrits dans un environnement `lstlisting`. Ne pas ecrire du code ligne par ligne avec `\texttt{...}\\`, car ce format est difficile a convertir proprement en HTML et casse souvent les accolades, les chevrons generiques Java et l'indentation.
+
+**Configuration recommandee pour les listings :**
+```latex
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    columns=fullflexible,
+    keepspaces=true
+}
+```
+
+**Exemple de bloc de code Java dans une correction :**
+```latex
+\corr{
+\textbf{Etape 1 : Creation de la classe Categorie.}\\
+On definit une classe simple qui contient le nom de la categorie et son prix journalier.
+
+\begin{lstlisting}[language=Java]
+public class Categorie {
+    private String nom;
+    private double prixJour;
+
+    public Categorie(String nom, double prixJour) {
+        this.nom = nom;
+        this.prixJour = prixJour;
+    }
+
+    public double getPrixJour() {
+        return prixJour;
+    }
+}
+\end{lstlisting}
+}
+```
+
+**Regles a respecter :**
+* Utiliser `\texttt{...}` uniquement pour des noms courts dans une phrase, par exemple `\texttt{ArrayList}` ou `\texttt{getPrixLocation}`.
+* Utiliser `lstlisting` pour tout extrait de plusieurs lignes, toute classe, toute methode complete ou toute sortie console.
+* Garder l'indentation normale du langage dans le bloc `lstlisting`.
+* Pour Java, utiliser de preference `\begin{lstlisting}[language=Java]`.
+* Pour VHDL, utiliser de preference `\begin{lstlisting}[language=VHDL]`.
+
+---
+
+## 4. En-tête du Document
 L'en-tête de l'examen utilise un environnement `tabularx` sur toute la largeur de la page (`\textwidth`). Il est séparé du corps du sujet par une fine ligne horizontale (`\hrule`).
 
 **Structure standard de l'en-tête :**
@@ -79,7 +127,7 @@ L'en-tête de l'examen utilise un environnement `tabularx` sur toute la largeur 
 
 ---
 
-## 4. Titres des Problèmes et Sous-parties
+## 5. Titres des Problèmes et Sous-parties
 Chaque nouveau problème doit être clairement mis en évidence, centré, en gras et grande taille (`\Large`), puis séparé du reste par une ligne horizontale.
 
 **Format d'un Problème principal :**
@@ -101,7 +149,7 @@ S'il y a des parties distinctes à l'intérieur d'un même problème :
 
 ---
 
-## 5. Mise en Page des Questions et Textes
+## 6. Mise en Page des Questions et Textes
 * Utiliser `\noindent` au début des questions ou des paragraphes de texte pour éviter l'alinéa d'origine de LaTeX.
 * **Mise en colonnes (Texte + Image) :** Pour afficher une image ou un circuit à côté d'un bloc de texte/questions, utiliser deux environnements `minipage` alignés en haut `[t]` et séparés par un `\hfill`.
 
@@ -118,7 +166,7 @@ S'il y a des parties distinctes à l'intérieur d'un même problème :
 
 ---
 
-## 6. Structure Pédagogique du Bloc `\corr{...}`
+## 7. Structure Pédagogique du Bloc `\corr{...}`
 Le contenu à l'intérieur des balises `\corr{...}` doit suivre une norme pédagogique et visuelle stricte pour garantir la lisibilité du raisonnement.
 
 1. **Découpage par étapes :** Utiliser la notation en gras `\textbf{Étape X : Titre de l'étape.}\\` pour structurer le développement.
@@ -142,7 +190,7 @@ $$\mathbf{V_{out} = 15\,V}$$
 
 ---
 
-## 7. Pied de Page
+## 8. Pied de Page
 Le pied de page doit être repoussé tout en bas de la page à l'aide de la commande `\vfill`, séparé par une ligne fine et organisé en trois colonnes via `\hfill`.
 
 **Structure standard du pied de page :**

@@ -1,0 +1,428 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+
+% Configuration des marges pour correspondre à l'original
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=1.5cm,
+    right=1.5cm
+}
+
+% Configuration du style pour le code Java
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{red},
+    showstringspaces=false,
+    tabsize=4,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{black!30},
+    backgroundcolor=\color{black!5}
+}
+
+% Commande personnalisée pour les placeholders d'images
+\newcommand{\imageplaceholder}[2]{
+    \begin{center}
+        \fbox{\begin{minipage}{#1}\centering\vspace{1cm}\textit{#2}\vspace{1cm}\end{minipage}}
+    \end{center}
+}
+
+% Commande pour afficher la correction avec explication
+\newcommand{\corr}[1]{
+    \vspace{0.3cm}
+    \begin{center}
+    \fcolorbox{blue}{blue!5}{
+    \begin{minipage}{0.95\textwidth}
+    \color{blue} \textbf{Correction \& Raisonnement :} \\
+    #1
+    \end{minipage}}
+    \end{center}
+    \vspace{0.3cm}
+}
+
+\begin{document}
+
+% ==================== EN-TÊTE ====================
+\noindent
+\begin{tabularx}{\textwidth}{@{}X c r@{}}
+\textbf{IN 360} & \textbf{Session de mai 2026} & \textbf{Sans documents} \\
+\textbf{Programmation orienté objet} & \textbf{Examen 2h} & \textbf{Calculatrice non autorisée} \\
+\end{tabularx}
+\vspace{0.2cm}
+\hrule
+\vspace{0.4cm}
+
+% ==================== PROBLÈME 1 ====================
+\begin{center}
+    \textbf{\Large Problème 1 - Gestion de location - 6 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent
+Vous êtes loueur de voiture. Vous souhaitez informatiser la gestion de votre magasin.
+Chaque véhicule possède 3 caractéristiques : un numéro d'immatriculation (9 caractères, unique), un poids en kg, et un nombre total de places.
+Vous louez 3 types de véhicules : des voitures (on gère le nombre de places enfants), des camions (on gère la charge utile en kg) et des motos (on gère la cylindrée). 
+Chaque véhicule appartient à une catégorie (qui détermine le prix à la journée).
+
+\subsubsection*{Questions 1 et 2}
+Donnez le code des classes \texttt{Categorie}, \texttt{Vehicule}, \texttt{Camion}, \texttt{Moto}, \texttt{Voiture}. 
+La classe \texttt{Vehicule} doit contenir une méthode \texttt{getPrixLocation(int nbJour)}.
+
+\corr{
+\textbf{Étape 1 : Création de la classe Categorie.}\\
+Il s'agit d'une classe simple agissant comme un conteneur de données pour le nom et le prix.
+}
+\begin{lstlisting}
+public class Categorie {
+    private String nom;
+    private double prixJour;
+
+    public Categorie(String nom, double prixJour) {
+        this.nom = nom;
+        this.prixJour = prixJour;
+    }
+    public double getPrixJour() { return prixJour; }
+}
+\end{lstlisting}
+
+\corr{
+\textbf{Étape 2 : Création de la super-classe Vehicule.}\\
+On la déclare abstraite car un "Véhicule" générique n'est pas censé être instancié directement.
+}
+\begin{lstlisting}
+public abstract class Vehicule {
+    protected String immatriculation;
+    protected double poids;
+    protected int nbPlaces;
+    protected Categorie categorie;
+
+    public Vehicule(String imm, double p, int nb, Categorie c) {
+        this.immatriculation = imm; 
+        this.poids = p; 
+        this.nbPlaces = nb; 
+        this.categorie = c;
+    }
+
+    public String getImmatriculation() { return immatriculation; }
+    
+    public double getPrixLocation(int nbJour) { 
+        return categorie.getPrixJour() * nbJour; 
+    }
+}
+\end{lstlisting}
+
+\corr{
+\textbf{Étape 3 : Création des classes filles.}\\
+Elles héritent de Vehicule et utilisent \texttt{super()} pour initialiser les attributs communs.
+}
+\begin{lstlisting}
+public class Voiture extends Vehicule {
+    private int placesEnfants;
+
+    public Voiture(String imm, double p, int nb, Categorie c, int pe) {
+        super(imm, p, nb, c); 
+        this.placesEnfants = pe;
+    }
+}
+
+// Le principe est exactement le meme pour Moto (cylindree) et Camion (chargeUtile).
+\end{lstlisting}
+
+\subsubsection*{Question 3}
+Créez une classe \texttt{Parc} possédant les méthodes \texttt{addVehicule}, \texttt{removeVehicule}, \texttt{displayParc} et \texttt{getPrixTotalLocation}. Les ajouts/suppressions doivent gérer les exceptions en cas d'erreurs (doublons ou introuvables).
+
+\corr{
+\textbf{Étape 1 : Implémentation du Parc et gestion de la collection.}\\
+On utilise une \texttt{ArrayList} pour stocker les objets.
+}
+\begin{lstlisting}
+import java.util.ArrayList;
+
+public class Parc {
+    private ArrayList<Vehicule> liste = new ArrayList<>();
+
+    public void addVehicule(Vehicule v) {
+        for(Vehicule existant : liste) {
+            if(existant.getImmatriculation().equals(v.getImmatriculation())) {
+                throw new RuntimeException("Vehicule deja existant");
+            }
+        }
+        liste.add(v);
+    }
+
+    public void removeVehicule(String immat) {
+        Vehicule vToRemove = null;
+        for(Vehicule v : liste) {
+            if(v.getImmatriculation().equals(immat)) {
+                vToRemove = v;
+                break;
+            }
+        }
+        if(vToRemove == null) throw new RuntimeException("Vehicule introuvable");
+        liste.remove(vToRemove);
+    }
+
+    public double getPrixTotalLocation(int nbJour) {
+        double total = 0;
+        for(Vehicule v : liste) total += v.getPrixLocation(nbJour);
+        return total;
+    }
+}
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+% ==================== PROBLÈME 2 ====================
+\begin{center}
+    \textbf{\Large Problème 2 - Tri de nombres - 2 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent
+Écrire un programme qui lit une suite de nombres au clavier et qui les affiche ensuite triés par ordre croissant. Le nombre de nombres sera fourni au départ.
+
+\corr{
+\textbf{Étape 1 : Utilisation du Scanner et des tableaux.}\\
+On importe \texttt{Scanner} pour la lecture et \texttt{Arrays} pour le tri automatique.
+}
+\begin{lstlisting}
+import java.util.Scanner; 
+import java.util.Arrays;
+
+public class Tri {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Combien de nombres ? ");
+        int nbl = sc.nextInt();
+        
+        int[] tab = new int[nbl];
+        System.out.println("Donnez vos nombres :");
+        for(int i=0; i<nbl; i++) {
+            tab[i] = sc.nextInt();
+        }
+        
+        Arrays.sort(tab);
+        
+        System.out.println("Liste par ordre croissant :");
+        for(int val : tab) {
+            System.out.print(val + " ");
+        }
+        sc.close();
+    }
+}
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+% ==================== PROBLÈME 3 ====================
+\begin{center}
+    \textbf{\Large Problème 3 - Héritage vs Composition - 2 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent
+On dispose d'une classe \texttt{Point(x, y)}. Écrire une classe \texttt{Cercle} avec constructeur, \texttt{deplaceCentre}, \texttt{changeRayon}, \texttt{getCentre} et \texttt{affiche}.
+\begin{itemize}
+    \item Question 1 : Comme classe dérivée de Point.
+    \item Question 2 : Possédant un membre de type Point.
+\end{itemize}
+
+\corr{
+\textbf{Étape 1 : Héritage (Cercle EST UN Point).}
+}
+\begin{lstlisting}
+public class Cercle extends Point {
+    private double rayon;
+
+    public Cercle(double x, double y, double r) { 
+        super(x, y); 
+        this.rayon = r; 
+    }
+    
+    public void deplaceCentre(double dx, double dy) { 
+        super.deplace(dx, dy); 
+    }
+    
+    public Point getCentre() { 
+        return new Point(getX(), getY()); 
+    }
+}
+\end{lstlisting}
+
+\corr{
+\textbf{Étape 2 : Composition (Cercle A UN Point).}
+}
+\begin{lstlisting}
+public class Cercle {
+    private Point centre;
+    private double rayon;
+
+    public Cercle(double x, double y, double r) { 
+        this.centre = new Point(x,y); 
+        this.rayon = r; 
+    }
+    
+    public void deplaceCentre(double dx, double dy) { 
+        centre.deplace(dx, dy); 
+    }
+    
+    public Point getCentre() { 
+        return centre; 
+    }
+}
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+% ==================== PROBLÈME 4 ====================
+\begin{center}
+    \textbf{\Large Problème 4 - Constructeurs - 2 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent
+On donne les classes \texttt{A} et \texttt{B extends A}. Quel est le résultat de l'exécution ?
+
+\corr{
+\textbf{Étape 1 : Trace de l'exécution.}\\
+Lors de l'appel à \texttt{new A(5)}, les attributs sont d'abord initialisés (\texttt{n=0, p=10}) puis le constructeur est exécuté. \\
+Lors de l'appel à \texttt{new B(5, 3)}, le constructeur de B appelle \texttt{super(n)} avant d'exécuter le reste de son code. L'attribut \texttt{q} de B est initialisé à 25.\\
+\textbf{Sortie Console :}\\
+\texttt{ENA n=0 p=10}\\
+\texttt{SOA n=5 p=10}\\
+\texttt{ENA n=0 p=10}\\
+\texttt{SOA n=5 p=10}\\
+\texttt{ENB n=5 p=10 q=25}\\
+\texttt{SOB n=5 p=3 q=25}
+}
+
+\vspace{0.5cm}
+
+% ==================== PROBLÈME 5 ====================
+\begin{center}
+    \textbf{\Large Problème 5 - Exceptions - 2 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent
+On donne un programme effectuant une boucle \texttt{for(i=0; i<=3; i++)} qui appelle une méthode jetant des exceptions \texttt{Erreur1}, \texttt{Erreur2} et \texttt{Erreur} selon la valeur de \texttt{i}. Quel est le résultat ?
+
+\corr{
+\textbf{Étape 1 : Analyse des itérations.}\\
+- $i=0$ : Aucune erreur, imprime "-----".\\
+- $i=1$ : \texttt{Erreur1} jetée. Attrapée dans \texttt{fn()}, affiche "fn1". Fin de boucle, affiche "-----".\\
+- $i=2$ : \texttt{Erreur2} jetée. \texttt{Erreur2} hérite d'\texttt{Erreur}. Attrapée dans \texttt{fn()} par le bloc \texttt{catch(Erreur)}, affiche "fn0", puis est relancée (\texttt{throw e;}). Attrapée dans le \texttt{main} par le bloc \texttt{catch(Erreur2)}, affiche "main2". Affiche "-----".\\
+- $i=3$ : \texttt{Erreur} jetée. Attrapée dans \texttt{fn()}, affiche "fn0", relancée. Attrapée dans le \texttt{main} par \texttt{catch(Erreur)}, affiche "main0". Affiche "-----". A la fin, "fin".
+
+\textbf{Sortie Console :}\\
+\texttt{-----}\\
+\texttt{fn1}\\
+\texttt{-----}\\
+\texttt{fn0}\\
+\texttt{main2}\\
+\texttt{-----}\\
+\texttt{fn0}\\
+\texttt{main0}\\
+\texttt{-----}\\
+\texttt{fin}
+}
+
+\vspace{0.5cm}
+
+% ==================== PROBLÈME 6 ====================
+\begin{center}
+    \textbf{\Large Problème 6 - Analyse de code - 6 pts}
+\end{center}
+\vspace{-0.2cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent
+Pour 12 petits extraits de code, indiquer s'il compile, s'il s'exécute, et donner sa sortie (ou l'erreur).
+
+\corr{
+\textbf{Question 1 :}\\
+Compile : Oui. Exécution : Oui. \textbf{Sortie :} \texttt{B} (Polymorphisme : appel de la méthode de l'objet réel).
+
+\vspace{0.1cm}
+\textbf{Question 2 :}\\
+Compile : \textbf{Non}. Incompatibilité de type : la référence \texttt{B} (fille) ne peut pas instancier un objet \texttt{A} (mère).
+
+\vspace{0.1cm}
+\textbf{Question 3 :}\\
+Compile : \textbf{Non}. La méthode \texttt{f(int)} n'est pas définie dans la classe \texttt{A} (qui est le type de déclaration de la référence).
+
+\vspace{0.1cm}
+\textbf{Question 4 :}\\
+Compile : \textbf{Non}. Incompatibilité de type : une référence de type \texttt{B} ne peut pas pointer vers une instance de type \texttt{A}.
+
+\vspace{0.1cm}
+\textbf{Question 5 :}\\
+Compile : Oui. Exécution : \textbf{Non}. \texttt{NullPointerException} (Appel de la méthode \texttt{length()} sur une String nulle).
+
+\vspace{0.1cm}
+\textbf{Question 6 :}\\
+Compile : Oui. Exécution : \textbf{Non}. Boucle infinie car la variable \texttt{i} n'est jamais incrémentée dans le \texttt{while}.
+
+\vspace{0.1cm}
+\textbf{Question 7 :}\\
+Compile : Oui. Exécution : Oui. \textbf{Sortie :} \texttt{A} puis \texttt{B} (Appel à \texttt{super.afficher()} depuis la classe fille).
+
+\vspace{0.1cm}
+\textbf{Question 8 :}\\
+Compile : Oui. Exécution : Oui. \textbf{Sortie :} \texttt{Erreur} puis \texttt{Finally}.
+
+\vspace{0.1cm}
+\textbf{Question 9 :}\\
+Compile : \textbf{Non}. La variable \texttt{c} est déclarée \texttt{final} et ne peut donc être affectée qu'une seule fois (erreur à la ligne du second \texttt{c=a+b;}).
+
+\vspace{0.1cm}
+\textbf{Question 10 :}\\
+Compile : Oui. Exécution : Oui. \textbf{Sortie :}\\
+\texttt{true} / \texttt{true} / \texttt{true} (Un Chien est un Animal, un Mammifere et un Chien).\\
+\texttt{true} / \texttt{true} / \texttt{true} (Idem pour la référence Mammifere).\\
+\texttt{false} (Un Animal pur n'est pas une instance de Chien).
+
+\vspace{0.1cm}
+\textbf{Question 11 :}\\
+Compile : Oui. Exécution : Oui. \textbf{Sortie :}\\
+\texttt{Indice 0 -> 0} (jusqu'à Indice 4 -> 40)\\
+\texttt{[0, 10, 30, 40]}\\
+\texttt{[1, 11, 31, 41]}
+
+\vspace{0.1cm}
+\textbf{Question 12 :}\\
+Compile : Oui. Exécution : Oui. \textbf{Sortie :} \texttt{a.x = 2.0 a.y=3.0} (Le passage de paramètre se fait par valeur de la référence, la réaffectation locale dans \texttt{fn1} ne modifie pas l'objet original dans le \texttt{main}).
+}
+
+\vfill
+% ==================== PIED DE PAGE ====================
+\hrule
+\vspace{0.1cm}
+\noindent
+JL Koning, E. Brun, JB Caignaert, S. Grivolat \hfill Esisar \hfill Page \thepage
+\end{document}

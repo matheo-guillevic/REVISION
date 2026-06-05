@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Examen Java 2026 - Java</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="java.html#java-exams">Retour aux examens</a>
+        <div>
+          <span class="eyebrow">IN360 - Examen 2026</span>
+          <h1>Correction examen Java 2026</h1>
+          <p>Gestion de location, tri de nombres, heritage, composition, constructeurs, exceptions et analyse de code.</p>
+          <p>Page reconstruite depuis <code>pdf/java/exam/java-exam-2026.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="primary-button" href="pdf/java/exam/java-exam-2026.tex">Ouvrir le sujet LaTeX</a>
+          <a class="back-link" href="java.html">Cours Java</a>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Probleme 1</span>
+              <h3>Problème 1 - Gestion de location</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Vous êtes loueur de voiture. Vous souhaitez informatiser la gestion de votre magasin. Chaque véhicule possède 3 caractéristiques : un numéro d'immatriculation (9 caractères, unique), un poids en kg, et un nombre total de places. Vous louez 3 types de véhicules : des voitures (on gère le nombre de places enfants), des camions (on gère la charge utile en kg) et des motos (on gère la cylindrée). Chaque véhicule appartient à une catégorie (qui détermine le prix à la journée).</p>
+          <h4>Questions 1 et 2</h4>
+          <p>Donnez le code des classes <code>Categorie</code>, <code>Vehicule</code>, <code>Camion</code>, <code>Moto</code>, <code>Voiture</code>. La classe <code>Vehicule</code> doit contenir une méthode <code>getPrixLocation(int nbJour)</code>.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Création de la classe Categorie.</strong><br> Il s'agit d'une classe simple agissant comme un conteneur de données pour le nom et le prix.</p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">public class Categorie {
+    private String nom;
+    private double prixJour;
+
+    public Categorie(String nom, double prixJour) {
+        this.nom = nom;
+        this.prixJour = prixJour;
+    }
+    public double getPrixJour() { return prixJour; }
+}</code></pre>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 2 : Création de la super-classe Vehicule.</strong><br> On la déclare abstraite car un "Véhicule" générique n'est pas censé être instancié directement.</p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">public abstract class Vehicule {
+    protected String immatriculation;
+    protected double poids;
+    protected int nbPlaces;
+    protected Categorie categorie;
+
+    public Vehicule(String imm, double p, int nb, Categorie c) {
+        this.immatriculation = imm; 
+        this.poids = p; 
+        this.nbPlaces = nb; 
+        this.categorie = c;
+    }
+
+    public String getImmatriculation() { return immatriculation; }
+    
+    public double getPrixLocation(int nbJour) { 
+        return categorie.getPrixJour() * nbJour; 
+    }
+}</code></pre>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 3 : Création des classes filles.</strong><br> Elles héritent de Vehicule et utilisent <code>super()</code> pour initialiser les attributs communs.</p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">public class Voiture extends Vehicule {
+    private int placesEnfants;
+
+    public Voiture(String imm, double p, int nb, Categorie c, int pe) {
+        super(imm, p, nb, c); 
+        this.placesEnfants = pe;
+    }
+}
+
+// Le principe est exactement le meme pour Moto (cylindree) et Camion (chargeUtile).</code></pre>
+          <h4>Question 3</h4>
+          <p>Créez une classe <code>Parc</code> possédant les méthodes <code>addVehicule</code>, <code>removeVehicule</code>, <code>displayParc</code> et <code>getPrixTotalLocation</code>. Les ajouts/suppressions doivent gérer les exceptions en cas d'erreurs (doublons ou introuvables).</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Implémentation du Parc et gestion de la collection.</strong><br> On utilise une <code>ArrayList</code> pour stocker les objets.</p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">import java.util.ArrayList;
+
+public class Parc {
+    private ArrayList&lt;Vehicule&gt; liste = new ArrayList&lt;&gt;();
+
+    public void addVehicule(Vehicule v) {
+        for(Vehicule existant : liste) {
+            if(existant.getImmatriculation().equals(v.getImmatriculation())) {
+                throw new RuntimeException("Vehicule deja existant");
+            }
+        }
+        liste.add(v);
+    }
+
+    public void removeVehicule(String immat) {
+        Vehicule vToRemove = null;
+        for(Vehicule v : liste) {
+            if(v.getImmatriculation().equals(immat)) {
+                vToRemove = v;
+                break;
+            }
+        }
+        if(vToRemove == null) throw new RuntimeException("Vehicule introuvable");
+        liste.remove(vToRemove);
+    }
+
+    public double getPrixTotalLocation(int nbJour) {
+        double total = 0;
+        for(Vehicule v : liste) total += v.getPrixLocation(nbJour);
+        return total;
+    }
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Probleme 2</span>
+              <h3>Problème 2 - Tri de nombres</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Écrire un programme qui lit une suite de nombres au clavier et qui les affiche ensuite triés par ordre croissant. Le nombre de nombres sera fourni au départ.</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Utilisation du Scanner et des tableaux.</strong><br> On importe <code>Scanner</code> pour la lecture et <code>Arrays</code> pour le tri automatique.</p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">import java.util.Scanner; 
+import java.util.Arrays;
+
+public class Tri {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Combien de nombres ? ");
+        int nbl = sc.nextInt();
+        
+        int[] tab = new int[nbl];
+        System.out.println("Donnez vos nombres :");
+        for(int i=0; i&lt;nbl; i++) {
+            tab[i] = sc.nextInt();
+        }
+        
+        Arrays.sort(tab);
+        
+        System.out.println("Liste par ordre croissant :");
+        for(int val : tab) {
+            System.out.print(val + " ");
+        }
+        sc.close();
+    }
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Probleme 3</span>
+              <h3>Problème 3 - Héritage vs Composition</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>On dispose d'une classe <code>Point(x, y)</code>. Écrire une classe <code>Cercle</code> avec constructeur, <code>deplaceCentre</code>, <code>changeRayon</code>, <code>getCentre</code> et <code>affiche</code>.</p>
+          <ul class="formula-list">
+            <li>Question 1 : Comme classe dérivée de Point.</li>
+            <li>Question 2 : Possédant un membre de type Point.</li>
+          </ul>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Héritage (Cercle EST UN Point).</strong></p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">public class Cercle extends Point {
+    private double rayon;
+
+    public Cercle(double x, double y, double r) { 
+        super(x, y); 
+        this.rayon = r; 
+    }
+    
+    public void deplaceCentre(double dx, double dy) { 
+        super.deplace(dx, dy); 
+    }
+    
+    public Point getCentre() { 
+        return new Point(getX(), getY()); 
+    }
+}</code></pre>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 2 : Composition (Cercle A UN Point).</strong></p>
+          </div>
+          <pre class="code-block language-java"><code class="language-java">public class Cercle {
+    private Point centre;
+    private double rayon;
+
+    public Cercle(double x, double y, double r) { 
+        this.centre = new Point(x,y); 
+        this.rayon = r; 
+    }
+    
+    public void deplaceCentre(double dx, double dy) { 
+        centre.deplace(dx, dy); 
+    }
+    
+    public Point getCentre() { 
+        return centre; 
+    }
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Probleme 4</span>
+              <h3>Problème 4 - Constructeurs</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>On donne les classes <code>A</code> et <code>B extends A</code>. Quel est le résultat de l'exécution ?</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Trace de l'exécution.</strong><br> Lors de l'appel à <code>new A(5)</code>, les attributs sont d'abord initialisés (<code>n=0, p=10</code>) puis le constructeur est exécuté. <br> Lors de l'appel à <code>new B(5, 3)</code>, le constructeur de B appelle <code>super(n)</code> avant d'exécuter le reste de son code. L'attribut <code>q</code> de B est initialisé à 25.<br> <strong>Sortie Console :</strong><br> <code>ENA n=0 p=10</code><br> <code>SOA n=5 p=10</code><br> <code>ENA n=0 p=10</code><br> <code>SOA n=5 p=10</code><br> <code>ENB n=5 p=10 q=25</code><br> <code>SOB n=5 p=3 q=25</code></p>
+          </div>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Probleme 5</span>
+              <h3>Problème 5 - Exceptions</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>On donne un programme effectuant une boucle <code>for(i=0; i&lt;=3; i++)</code> qui appelle une méthode jetant des exceptions <code>Erreur1</code>, <code>Erreur2</code> et <code>Erreur</code> selon la valeur de <code>i</code>. Quel est le résultat ?</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Étape 1 : Analyse des itérations.</strong><br> - \(i=0\) : Aucune erreur, imprime "-----".<br> - \(i=1\) : <code>Erreur1</code> jetée. Attrapée dans <code>fn()</code>, affiche "fn1". Fin de boucle, affiche "-----".<br> - \(i=2\) : <code>Erreur2</code> jetée. <code>Erreur2</code> hérite d'<code>Erreur</code>. Attrapée dans <code>fn()</code> par le bloc <code>catch(Erreur)</code>, affiche "fn0", puis est relancée (<code>throw e;</code>). Attrapée dans le <code>main</code> par le bloc <code>catch(Erreur2)</code>, affiche "main2". Affiche "-----".<br> - \(i=3\) : <code>Erreur</code> jetée. Attrapée dans <code>fn()</code>, affiche "fn0", relancée. Attrapée dans le <code>main</code> par <code>catch(Erreur)</code>, affiche "main0". Affiche "-----". A la fin, "fin".</p>
+          <p><strong>Sortie Console :</strong><br> <code>-----</code><br> <code>fn1</code><br> <code>-----</code><br> <code>fn0</code><br> <code>main2</code><br> <code>-----</code><br> <code>fn0</code><br> <code>main0</code><br> <code>-----</code><br> <code>fin</code></p>
+          </div>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Probleme 6</span>
+              <h3>Problème 6 - Analyse de code</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div class="answer-block">
+          <p>Pour 12 petits extraits de code, indiquer s'il compile, s'il s'exécute, et donner sa sortie (ou l'erreur).</p>
+          <div class="td-step-block td-solution-block">
+            <strong>Correction et raisonnement</strong>
+          <p><strong>Question 1 :</strong><br> Compile : Oui. Exécution : Oui. <strong>Sortie :</strong> <code>B</code> (Polymorphisme : appel de la méthode de l'objet réel).</p>
+          <p><strong>Question 2 :</strong><br> Compile : <strong>Non</strong>. Incompatibilité de type : la référence <code>B</code> (fille) ne peut pas instancier un objet <code>A</code> (mère).</p>
+          <p><strong>Question 3 :</strong><br> Compile : <strong>Non</strong>. La méthode <code>f(int)</code> n'est pas définie dans la classe <code>A</code> (qui est le type de déclaration de la référence).</p>
+          <p><strong>Question 4 :</strong><br> Compile : <strong>Non</strong>. Incompatibilité de type : une référence de type <code>B</code> ne peut pas pointer vers une instance de type <code>A</code>.</p>
+          <p><strong>Question 5 :</strong><br> Compile : Oui. Exécution : <strong>Non</strong>. <code>NullPointerException</code> (Appel de la méthode <code>length()</code> sur une String nulle).</p>
+          <p><strong>Question 6 :</strong><br> Compile : Oui. Exécution : <strong>Non</strong>. Boucle infinie car la variable <code>i</code> n'est jamais incrémentée dans le <code>while</code>.</p>
+          <p><strong>Question 7 :</strong><br> Compile : Oui. Exécution : Oui. <strong>Sortie :</strong> <code>A</code> puis <code>B</code> (Appel à <code>super.afficher()</code> depuis la classe fille).</p>
+          <p><strong>Question 8 :</strong><br> Compile : Oui. Exécution : Oui. <strong>Sortie :</strong> <code>Erreur</code> puis <code>Finally</code>.</p>
+          <p><strong>Question 9 :</strong><br> Compile : <strong>Non</strong>. La variable <code>c</code> est déclarée <code>final</code> et ne peut donc être affectée qu'une seule fois (erreur à la ligne du second <code>c=a+b;</code>).</p>
+          <p><strong>Question 10 :</strong><br> Compile : Oui. Exécution : Oui. <strong>Sortie :</strong><br> <code>true</code> / <code>true</code> / <code>true</code> (Un Chien est un Animal, un Mammifere et un Chien).<br> <code>true</code> / <code>true</code> / <code>true</code> (Idem pour la référence Mammifere).<br> <code>false</code> (Un Animal pur n'est pas une instance de Chien).</p>
+          <p><strong>Question 11 :</strong><br> Compile : Oui. Exécution : Oui. <strong>Sortie :</strong><br> <code>Indice 0 -&gt; 0</code> (jusqu'à Indice 4 -&gt; 40)<br> <code>[0, 10, 30, 40]</code><br> <code>[1, 11, 31, 41]</code></p>
+          <p><strong>Question 12 :</strong><br> Compile : Oui. Exécution : Oui. <strong>Sortie :</strong> <code>a.x = 2.0 a.y=3.0</code> (Le passage de paramètre se fait par valeur de la référence, la réaffectation locale dans <code>fn1</code> ne modifie pas l'objet original dans le <code>main</code>).</p>
+          </div>
+          <p>\vfill</p>
+          <p>JL Koning, E. Brun, JB Caignaert, S. Grivolat Esisar Page \thepage</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

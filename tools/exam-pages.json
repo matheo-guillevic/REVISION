@@ -124,7 +124,16 @@
       "courseLabel": "Cours Java",
       "assetPrefix": null,
       "unitKind": "exercise",
+      "titlePattern": "\\\\textbf\\{\\\\Large\\s*((?:Exercice|Problème|ProblÃ¨me|Probleme)\\s+\\d+[^}]*)\\}",
       "exams": [
+        {
+          "source": "java-exam-2026.tex",
+          "target": "java-exam-2026.html",
+          "title": "Examen Java 2026",
+          "eyebrow": "IN360 - Examen 2026",
+          "heading": "Correction examen Java 2026",
+          "summary": "Gestion de location, tri de nombres, heritage, composition, constructeurs, exceptions et analyse de code."
+        },
         {
           "source": "java-exam1.tex",
           "target": "java-exam1.html",
