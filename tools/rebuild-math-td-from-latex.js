@@ -28,6 +28,22 @@ const tdConfig = [
     heading: "Variables aleatoires",
     intro: "Corrige reconstruit depuis le fichier LaTeX correspondant.",
   },
+  {
+    n: 4,
+    source: "pdf/math/TD/td4 math.tex",
+    title: "TD 4 corrige - Variables aleatoires continues",
+    eyebrow: "TD 4",
+    heading: "Variables aleatoires continues",
+    intro: "Corrige reconstruit depuis le fichier LaTeX correspondant.",
+  },
+  {
+    n: 5,
+    source: "pdf/math/TD/td5 math.tex",
+    title: "TD 5 corrige - Couples de variables aleatoires",
+    eyebrow: "TD 5",
+    heading: "Couples de variables aleatoires",
+    intro: "Corrige reconstruit depuis le fichier LaTeX correspondant.",
+  },
 ];
 
 function read(filePath) {
@@ -44,6 +60,7 @@ function cleanLatex(source) {
     .replace(/\[span_\d+\]\(start_span\)|\[span_\d+\]\(end_span\)/g, "")
     .replace(/\[cite:[^\]]+\]/g, "")
     .replace(/^[\s\S]*?\\maketitle/, "")
+    .replace(/^[\s\S]*?\\begin\{document\}/, "")
     .replace(/\\end\{document\}[\s\S]*$/g, "")
     .trim();
 }
@@ -58,7 +75,8 @@ function escapeText(text) {
 function convertInline(text) {
   const math = [];
   const dollarPlaceholder = "@@ESCAPED_DOLLAR@@";
-  let value = text.replace(/\\\$/g, dollarPlaceholder);
+  const ampPlaceholder = "@@ESCAPED_AMP@@";
+  let value = text.replace(/\\\$/g, dollarPlaceholder).replace(/\\&/g, ampPlaceholder);
 
   value = value.replace(/\$\$([\s\S]*?)\$\$/g, (_, body) => {
     math.push(`\\[${body.trim().replaceAll(dollarPlaceholder, "\\$")}\\]`);
@@ -73,12 +91,14 @@ function convertInline(text) {
   value = escapeText(value)
     .replace(/\\textbf\{([^{}]*)\}/g, "<strong>$1</strong>")
     .replace(/\\textit\{([^{}]*)\}/g, "<em>$1</em>")
+    .replace(/\\mathbf\{([^{}]*)\}/g, "<strong>$1</strong>")
     .replace(/\\bar\{([^{}]+)\}/g, "\\bar{$1}")
     .replace(/\\times/g, "\\times")
     .replace(/\\ldots/g, "\\ldots")
     .replace(/\\\\/g, "<br>");
 
   value = value.replaceAll(dollarPlaceholder, "$");
+  value = value.replaceAll(ampPlaceholder, "&amp;");
 
   math.forEach((fragment, index) => {
     value = value.replace(`@@MATH${index}@@`, fragment);
@@ -92,9 +112,83 @@ function normalizeLabel(label) {
 }
 
 function classifyLabel(label) {
-  if (/Raisonnement/i.test(label)) return "reasoning";
+  if (/Raisonnement|Correction/i.test(label)) return "reasoning";
   if (/Réponses?/i.test(label)) return "solution";
   return null;
+}
+
+function replaceBalancedCommand(source, command, replacer) {
+  let output = "";
+  let cursor = 0;
+  const needle = `\\${command}{`;
+
+  while (cursor < source.length) {
+    const start = source.indexOf(needle, cursor);
+    if (start === -1) {
+      output += source.slice(cursor);
+      break;
+    }
+
+    output += source.slice(cursor, start);
+    let index = start + needle.length;
+    let depth = 1;
+
+    while (index < source.length && depth > 0) {
+      if (source[index] === "{") depth += 1;
+      if (source[index] === "}") depth -= 1;
+      index += 1;
+    }
+
+    const body = source.slice(start + needle.length, index - 1);
+    output += replacer(body);
+    cursor = index;
+  }
+
+  return output;
+}
+
+function convertCorrBlocks(latex) {
+  return replaceBalancedCommand(latex, "corr", (body) => `\n\n\\textbf{Correction \\& Raisonnement :} ${body}\n\n`);
+}
+
+function renderLatexTable(body) {
+  const rows = body
+    .replace(/\\hline/g, "")
+    .split(/\\\\/)
+    .map((row) => row.trim())
+    .filter(Boolean);
+
+  if (!rows.length) return "";
+
+  const renderedRows = rows.map((row) => {
+    const cells = row
+      .split("&")
+      .map((cell) => cell.trim())
+      .filter(Boolean)
+      .map((cell) => `                    <td>${convertInline(cell)}</td>`)
+      .join("\n");
+
+    return `                  <tr>\n${cells}\n                  </tr>`;
+  });
+
+  return `          <div class="latex-table-wrap">
+            <table class="latex-table">
+              <tbody>
+${renderedRows.join("\n")}
+              </tbody>
+            </table>
+          </div>`;
+}
+
+function extractHtmlBlocks(latex) {
+  const blocks = [];
+  const source = latex.replace(/\\begin\{center\}\s*/g, "").replace(/\s*\\end\{center\}/g, "");
+  const value = source.replace(/\\begin\{tabular\}\{[^}]*\}([\s\S]*?)\\end\{tabular\}/g, (_, body) => {
+    blocks.push(renderLatexTable(body));
+    return `\n\n@@HTML_BLOCK_${blocks.length - 1}@@\n\n`;
+  });
+
+  return { value, blocks };
 }
 
 function renderParagraph(text) {
@@ -132,7 +226,16 @@ function renderParagraph(text) {
 
 function normalizeLines(latex) {
   return latex
+    .replace(/^%.*$/gm, "")
+    .replace(/^Équipe Pédagogique.*Page.*$/gm, "")
     .replace(/\\hrulefill/g, "\n\n")
+    .replace(/\\newpage/g, "\n\n")
+    .replace(/\\vfill/g, "\n")
+    .replace(/\\hfill/g, " ")
+    .replace(/\\noindent/g, "")
+    .replace(/\\vspace\{[^}]*\}/g, "\n")
+    .replace(/\\hrule/g, "\n")
+    .replace(/\\begin\{center\}|\\end\{center\}/g, "\n")
     .replace(/^\\subsection\*\{(.+)\}$/gm, "\n\n@@SUBSECTION:$1@@\n\n")
     .replace(/\\begin\{itemize\}/g, "\n\n@@UL_START@@\n")
     .replace(/\\end\{itemize\}/g, "\n@@UL_END@@\n\n")
@@ -142,7 +245,8 @@ function normalizeLines(latex) {
 }
 
 function convertBlock(latex) {
-  const lines = normalizeLines(latex).split("\n");
+  const { value, blocks: htmlBlocks } = extractHtmlBlocks(convertCorrBlocks(latex));
+  const lines = normalizeLines(value).split("\n");
   const html = [];
   let paragraph = [];
   let inList = false;
@@ -157,6 +261,13 @@ function convertBlock(latex) {
     const line = rawLine.trim();
     if (!line) {
       flushParagraph();
+      continue;
+    }
+
+    if (/^@@HTML_BLOCK_\d+@@$/.test(line)) {
+      flushParagraph();
+      const index = Number(line.match(/\d+/)[0]);
+      html.push(htmlBlocks[index]);
       continue;
     }
 
@@ -202,13 +313,18 @@ function convertBlock(latex) {
 
 function extractExercises(latex) {
   const clean = cleanLatex(latex);
-  const matches = [...clean.matchAll(/^\\section\*\{Exercice\s+(\d+)[^}]*\}/gm)];
+  const matches = [
+    ...clean.matchAll(/^\\section\*\{Exercice\s+(\d+)([^}]*)\}/gm),
+    ...clean.matchAll(/\\textbf\{\\Large\s+Exercice\s+(\d+)([^}]*)\}/g),
+  ].sort((a, b) => a.index - b.index);
 
   return matches.map((match, index) => {
     const start = match.index + match[0].length;
     const end = matches[index + 1] ? matches[index + 1].index : clean.length;
+    const titleSuffix = match[2] ? match[2].trim().replace(/^\s*-\s*/, "") : "";
     return {
       n: match[1],
+      title: titleSuffix ? `Exercice ${match[1]} - ${titleSuffix}` : `Exercice ${match[1]}`,
       body: clean.slice(start, end).trim(),
     };
   });
@@ -219,7 +335,7 @@ function renderExercise(tdNumber, exercise) {
           <header>
             <div>
               <span class="status-pill">Exercice ${exercise.n}</span>
-              <h3>Exercice ${exercise.n}</h3>
+              <h3>${convertInline(exercise.title)}</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>

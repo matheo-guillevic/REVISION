@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TD 4 corrige - Variables aleatoires continues</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body class="td-page">
+    <main class="main-content">
+      <header class="td-header">
+        <a class="back-link" href="math.html#probabilites-td">Retour aux TD</a>
+        <div>
+          <span class="eyebrow">TD 4</span>
+          <h1>Variables aleatoires continues</h1>
+          <p>Corrige reconstruit depuis le fichier LaTeX correspondant.</p>
+        </div>
+      </header>
+
+      <section class="page-section">
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 1</span>
+              <h3>Exercice 1</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td4-e1" class="answer-block">
+          <p>Soit \(X\) une variable aléatoire à densité suivant la loi uniforme sur \([-3, 5]\).</p>
+          <p><strong>Question 1</strong> : Donner la densité \(f_X\) de \(X\) ainsi que sa fonction de répartition \(F_X\).</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Densité d'une loi uniforme.</strong><br> La densité d'une loi uniforme sur un intervalle \([a, b]\) est constante et vaut \(\frac{1}{b-a}\) sur cet intervalle. \[f_X(x) = \frac{1}{5 - (-3)} = \frac{1}{8} \quad \text{pour } x \in [-3, 5]\] Et \(\mathbf{f_X(x) = 0}\) en dehors de cet intervalle.</p>
+          </div>
+          <p><strong>Étape 2 : Fonction de répartition.</strong><br> La fonction de répartition s'obtient en intégrant la densité : \(F_X(x) = \int_{-\infty}^x f_X(t)dt\).</p>
+          <ul class="formula-list">
+            <li>Pour \(x < -3\) : \(F_X(x) = 0\)</li>
+            <li>Pour \(x \in [-3, 5]\) : \(F_X(x) = \int_{-3}^x \frac{1}{8} dt = \frac{x+3}{8}\)</li>
+            <li>Pour \(x > 5\) : \(F_X(x) = 1\)</li>
+          </ul>
+          <p>\[\mathbf{F_X(x) = \frac{x+3}{8} \cdot \mathbb{I}_{[-3, 5]}(x) + \mathbb{I}_{]5, +\infty[}(x)}\]</p>
+          <p><strong>Question 2</strong> : Déterminer \(\mathbb{P}(X<1)\), \(\mathbb{P}(X\ge 3)\) et la probabilité, sachant que X est positif, d'avoir \(X\le 1\).</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Calcul des probabilités simples.</strong><br> On utilise la fonction de répartition trouvée précédemment. \[\mathbb{P}(X < 1) = F_X(1) = \frac{1+3}{8} = \frac{4}{8} \implies \mathbf{\mathbb{P}(X < 1) = \frac{1}{2}}\] \[\mathbb{P}(X \ge 3) = 1 - F_X(3) = 1 - \frac{3+3}{8} = 1 - \frac{6}{8} \implies \mathbf{\mathbb{P}(X \ge 3) = \frac{1}{4}}\]</p>
+          </div>
+          <p><strong>Étape 2 : Calcul de la probabilité conditionnelle.</strong><br> L'événement "X est positif" correspond à \((X \ge 0)\). On cherche \(\mathbb{P}(X \le 1 | X \ge 0)\). \[\mathbb{P}(X \le 1 | X \ge 0) = \frac{\mathbb{P}(0 \le X \le 1)}{\mathbb{P}(X \ge 0)}\] \[\mathbb{P}(0 \le X \le 1) = F_X(1) - F_X(0) = \frac{4}{8} - \frac{3}{8} = \frac{1}{8}\] \[\mathbb{P}(X \ge 0) = 1 - F_X(0) = 1 - \frac{3}{8} = \frac{5}{8}\] \[\mathbf{\mathbb{P}(X \le 1 | X \ge 0) = \frac{1/8}{5/8} = \frac{1}{5}}\]</p>
+          <p><strong>Question 3</strong> : On pose \(Y = 2X+3\). Calculer l'espérance et l'écart-type de Y. Quelle est la loi de Y ?</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Propriétés de X.</strong><br> Pour \(X \sim \mathcal{U}([-3, 5])\), l'espérance est le milieu de l'intervalle et la variance est \(\frac{(b-a)^2}{12}\). \[\mathbb{E}(X) = \frac{-3+5}{2} = 1 \quad \text{et} \quad \mathbb{V}(X) = \frac{(5 - (-3))^2}{12} = \frac{64}{12} = \frac{16}{3}\]</p>
+          </div>
+          <p><strong>Étape 2 : Espérance et écart-type de Y par linéarité.</strong><br> \[\mathbb{E}(Y) = 2\mathbb{E}(X) + 3 = 2(1) + 3 \implies \mathbf{\mathbb{E}(Y) = 5}\] \[\mathbb{V}(Y) = 2^2 \mathbb{V}(X) = 4 \times \frac{16}{3} = \frac{64}{3} \implies \mathbf{\sigma(Y) = \frac{8}{\sqrt{3}} = \frac{8\sqrt{3}}{3}}\]</p>
+          <p><strong>Étape 3 : Loi de Y.</strong><br> Une transformation affine d'une loi uniforme reste une loi uniforme. On détermine les nouvelles bornes : si \(X \in [-3, 5]\), alors \(2X+3 \in [2(-3)+3, 2(5)+3] = [-3, 13]\). \[\mathbf{Y \sim \mathcal{U}([-3, 13])}\]</p>
+          <p><strong>Question 4</strong> : Soit \(Z\) une variable aléatoire suivant la loi uniforme sur \([0,1]\). Montrer qu'on peut choisir \(a, b \in \mathbb{R}\) tels que \(aZ+b\) suive la loi uniforme sur \([-3,8]\).</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Application de la transformation affine.</strong><br> Si \(Z \sim \mathcal{U}([0,1])\), alors pour \(a > 0\), la variable \(aZ+b\) aura pour bornes \(a(0)+b = b\) et \(a(1)+b = a+b\). Elle suivra donc une loi uniforme \(\mathcal{U}([b, a+b])\).</p>
+          </div>
+          <p><strong>Étape 2 : Identification.</strong><br> On veut \(\mathcal{U}([-3, 8])\). Par identification des bornes : \[b = -3 \quad \text{et} \quad a+b = 8\] \[a - 3 = 8 \implies a = 11\] \[\mathbf{a = 11 \quad \text{et} \quad b = -3}\]</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 2</span>
+              <h3>Exercice 2</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td4-e2" class="answer-block">
+          <p>Soit \(X\) une variable aléatoire suivant la loi uniforme sur \([-1;1]\). Déterminer la loi de \(X^2\).</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Identification du support.</strong><br> Soit \(Y = X^2\). Puisque \(X \in [-1, 1]\), ses carrés seront nécessairement compris entre \(0\) et \(1\). Le support de la loi de \(Y\) est l'intervalle \([0, 1]\).</p>
+          </div>
+          <p><strong>Étape 2 : Calcul de la fonction de répartition de Y.</strong><br> Pour \(y \in [0, 1]\) : \[F_Y(y) = \mathbb{P}(Y \le y) = \mathbb{P}(X^2 \le y) = \mathbb{P}(-\sqrt{y} \le X \le \sqrt{y})\] Puisque la densité de \(X\) sur \([-1,1]\) vaut \(f_X(x) = \frac{1}{2}\) : \[F_Y(y) = \int_{-\sqrt{y}}^{\sqrt{y}} \frac{1}{2} dx = \frac{1}{2} \left( \sqrt{y} - (-\sqrt{y}) \right) = \frac{1}{2} (2\sqrt{y}) = \sqrt{y}\]</p>
+          <p><strong>Étape 3 : Déduction de la densité de Y.</strong><br> La densité s'obtient en dérivant la fonction de répartition par rapport à \(y\) sur \(]0, 1]\) : \[f_Y(y) = F_Y'(y) = \frac{d}{dy}(\sqrt{y})\] \[\mathbf{f_Y(y) = \frac{1}{2\sqrt{y}} \quad \text{pour } y \in ]0, 1] \text{ (et } 0 \text{ sinon)}.}\]</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 3</span>
+              <h3>Exercice 3</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td4-e3" class="answer-block">
+          <p>On considère la variable aléatoire \(X\) d'espérance 242 et de variance 144. On suppose que \(X\) est une variable gaussienne.</p>
+          <p><strong>Question 1</strong> : Indiquer, sans calcul, si les probabilités suivantes sont inférieures ou supérieures à 0,5.</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Symétrie de la loi normale.</strong><br> On a \(X \sim \mathcal{N}(242, 12^2)\). La courbe de densité est parfaitement symétrique autour de son espérance \(\mu = 242\). L'aire totale sous la courbe vaut 1, donc la probabilité d'être d'un côté de l'espérance est exactement 0,5.</p>
+          </div>
+          <p><strong>Étape 2 : Analyse des positions.</strong><br></p>
+          <ul class="formula-list">
+            <li>\(\mathbb{P}(X<230)\) : \(230\) est inférieur à \(\mu=242\). L'aire à gauche de 230 est une sous-partie de la moitié gauche, donc \(\mathbf{< 0,5}\).</li>
+            <li>\(\mathbb{P}(X<270)\) : \(270\) est supérieur à \(\mu=242\). L'aire englobe toute la moitié gauche plus une partie droite, donc \(\mathbf{> 0,5}\).</li>
+            <li>\(\mathbb{P}(X>250)\) : \(250\) est supérieur à \(\mu=242\). L'aire à droite de 250 est une sous-partie de la moitié droite, donc \(\mathbf{< 0,5}\).</li>
+            <li>\(\mathbb{P}(X>220)\) : \(220\) est inférieur à \(\mu=242\). L'aire à droite englobe toute la moitié droite plus une partie gauche, donc \(\mathbf{> 0,5}\).</li>
+          </ul>
+          <p><strong>Question 2</strong> : Donner, à 0,01 près, les probabilités suivantes.</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Utilisation des écarts-types (Règle des 68-95-99.7).</strong><br> On identifie les bornes en fonction de \(\mu=242\) et \(\sigma=12\).</p>
+          </div>
+          <ul class="formula-list">
+            <li>\(\mathbb{P}(206 \le X \le 278)\) : L'intervalle est \([\mu - 3\sigma, \mu + 3\sigma]\). La règle empirique donne \(\mathbf{\approx 0.99}\).</li>
+            <li>\(\mathbb{P}(230 \le X \le 254)\) : L'intervalle est \([\mu - 1\sigma, \mu + 1\sigma]\). La règle empirique donne \(\mathbf{\approx 0.68}\).</li>
+            <li>\(\mathbb{P}(218 < X < 266)\) : L'intervalle est \([\mu - 2\sigma, \mu + 2\sigma]\). La règle empirique donne \(\mathbf{\approx 0.95}\).</li>
+          </ul>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 4</span>
+              <h3>Exercice 4</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td4-e4" class="answer-block">
+          <p>Une imprimante permet d'imprimer 5000 copies avec un écart type de 1000 copies. Le nombre de copies suit une loi normale. Calculer de tête la probabilité de pouvoir imprimer plus de 6000 copies. Et pour moins de 3000 copies?</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Modélisation et centrage.</strong><br> Soit \(X\) le nombre de copies, on a \(X \sim \mathcal{N}(5000, 1000^2)\). L'espérance est \(\mu = 5000\) et l'écart-type est \(\sigma = 1000\).</p>
+          </div>
+          <p><strong>Étape 2 : Probabilité pour plus de 6000 copies.</strong><br> \(6000\) correspond exactement à \(\mu + 1\sigma\). D'après la règle empirique (68-95-99.7), environ 68\% des valeurs se situent entre \(\mu - \sigma\) et \(\mu + \sigma\). L'extérieur représente 32\%, partagé équitablement des deux côtés. Donc la probabilité d'être supérieur à \(\mu + \sigma\) est de \(32\% / 2 = 16\%\). \[\mathbf{\mathbb{P}(X > 6000) \approx 0.16}\]</p>
+          <p><strong>Étape 3 : Probabilité pour moins de 3000 copies.</strong><br> \(3000\) correspond exactement à \(\mu - 2\sigma\). Environ 95\% des valeurs se situent entre \(\mu - 2\sigma\) et \(\mu + 2\sigma\). L'extérieur représente 5\%, partagé équitablement (2.5\% de chaque côté). La probabilité d'être inférieur à \(\mu - 2\sigma\) est donc de \(2.5\%\). \[\mathbf{\mathbb{P}(X < 3000) \approx 0.025}\]</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 5</span>
+              <h3>Exercice 5</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td4-e5" class="answer-block">
+          <p>Soient \(T_1\) et \(T_2\) indépendantes de loi exponentielle de paramètre \(\lambda_1\) et \(\lambda_2\). Soit \(Z=\min(T_1,T_2)\).</p>
+          <p><strong>Question 1</strong> : Calculer la loi de Z.</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Fonction de survie du minimum.</strong><br> Le minimum de deux variables est supérieur à \(z\) si et seulement si les deux variables sont simultanément supérieures à \(z\). \[\mathbb{P}(Z > z) = \mathbb{P}(T_1 > z \cap T_2 > z)\] Par indépendance des variables : \[\mathbb{P}(Z > z) = \mathbb{P}(T_1 > z) \mathbb{P}(T_2 > z)\]</p>
+          </div>
+          <p><strong>Étape 2 : Application aux lois exponentielles.</strong><br> La fonction de survie d'une loi exponentielle est \(\mathbb{P}(T > t) = e^{-\lambda t}\). \[\mathbb{P}(Z > z) = e^{-\lambda_1 z} e^{-\lambda_2 z} = e^{-(\lambda_1 + \lambda_2)z}\] Cette expression est exactement la fonction de survie d'une loi exponentielle de paramètre \(\lambda_1 + \lambda_2\). \[\mathbf{Z \sim \mathcal{E}(\lambda_1 + \lambda_2)}\]</p>
+          <p><strong>Question 2</strong> : Généraliser au cas de n variables.</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Généralisation.</strong><br> En appliquant la même logique, le minimum de \(n\) variables exponentielles indépendantes suit une loi exponentielle dont le paramètre est la somme des paramètres de chaque loi. \[\mathbf{Z = \min(X_1, \dots, X_n) \sim \mathcal{E}\left(\sum_{i=1}^n \lambda_i\right)}\]</p>
+          </div>
+          <p><strong>Question 3</strong> : Robert attend au bureau de poste (2 guichets occupés avec temps de service \(Exp(\lambda_1)\) et \(Exp(\lambda_2)\)). Loi de son temps d'attente Y ?</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Modélisation du temps d'attente.</strong><br> Robert commencera à être servi dès qu'un des deux guichets se libère. Son temps d'attente \(Y\) correspond donc au plus court des deux temps de service en cours, soit \(Y = \min(X_1, X_2)\). D'après la question 1 : \[\mathbf{Y \sim \mathcal{E}(\lambda_1 + \lambda_2)}\]</p>
+          </div>
+          <p><strong>Question 4</strong> : Loi de la durée de vie de \(n\) composants \(Exp(\lambda)\) en parallèle (A) et en série (B).</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Système en Série (B).</strong><br> Un système en série tombe en panne dès qu'un seul de ses composants tombe en panne. La durée de vie est donc le minimum des durées de vie : \(T_B = \min(X_1, \dots, X_n)\). D'après la question 2 : \[\mathbf{T_B \sim \mathcal{E}(n\lambda)}\]</p>
+          </div>
+          <p><strong>Étape 2 : Système en Parallèle (A).</strong><br> Un système en parallèle ne tombe en panne que lorsque TOUS ses composants sont en panne. La durée de vie est le maximum des durées de vie : \(T_A = \max(X_1, \dots, X_n)\). La fonction de répartition du maximum est : \[F_{T_A}(t) = \mathbb{P}(\max \le t) = \mathbb{P}(X_1 \le t \cap \dots \cap X_n \le t)\] Par indépendance : \[F_{T_A}(t) = (\mathbb{P}(X_1 \le t))^n = \mathbf{(1 - e^{-\lambda t})^n}\] <em>(La densité s'obtient par dérivation : \(f_{T_A}(t) = n\lambda e^{-\lambda t}(1 - e^{-\lambda t})^{n-1}\)).</em></p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 6</span>
+              <h3>Exercice 6</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td4-e6" class="answer-block">
+          <p>\(X \in \{5, 15, 25\}\) (probabilités \(1/4, 1/2, 1/4\)). \(Y \sim \mathcal{E}(1/5)\). X et Y indépendantes. Toto prend le premier arrivé.</p>
+          <p><strong>Question 1</strong> : Quelle est la probabilité pour que Toto attende plus de 10 minutes ?</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Modélisation.</strong><br> Le temps d'attente \(T\) de Toto correspond au minimum entre le temps d'arrivée de l'autobus \(X\) et celui du taxi \(Y\) : \(T = \min(X, Y)\).</p>
+          </div>
+          <p><strong>Étape 2 : Calcul.</strong><br> \[\mathbb{P}(T > 10) = \mathbb{P}(X > 10 \cap Y > 10)\] Par indépendance : \[\mathbb{P}(T > 10) = \mathbb{P}(X > 10) \times \mathbb{P}(Y > 10)\] On a \(\mathbb{P}(X > 10) = \mathbb{P}(X=15) + \mathbb{P}(X=25) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4}\). Pour \(Y \sim \mathcal{E}(1/5)\), \(\mathbb{P}(Y > 10) = e^{-\frac{1}{5} \times 10} = e^{-2}\). \[\mathbf{\mathbb{P}(T > 10) = \frac{3}{4} e^{-2}}\]</p>
+          <p><strong>Question 2</strong> : Quelle est la probabilité pour que Toto prenne le taxi plutôt que l'autobus ?</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Formulation de l'évènement.</strong><br> Toto prend le taxi si ce dernier arrive avant l'autobus, donc on cherche \(\mathbb{P}(Y < X)\).</p>
+          </div>
+          <p><strong>Étape 2 : Loi des probabilités totales.</strong><br> On conditionne selon les valeurs discrètes prises par \(X\) : \[\mathbb{P}(Y < X) = \sum_{x \in \{5, 15, 25\}} \mathbb{P}(Y < x) \mathbb{P}(X=x)\] \[\mathbb{P}(Y < X) = \mathbb{P}(Y < 5)\frac{1}{4} + \mathbb{P}(Y < 15)\frac{1}{2} + \mathbb{P}(Y < 25)\frac{1}{4}\] \[\mathbb{P}(Y < X) = \frac{1}{4}(1 - e^{-1}) + \frac{1}{2}(1 - e^{-3}) + \frac{1}{4}(1 - e^{-5})\] \[\mathbf{\mathbb{P}(Y < X) = 1 - \frac{1}{4}e^{-1} - \frac{1}{2}e^{-3} - \frac{1}{4}e^{-5}}\]</p>
+          <p><strong>Question 3</strong> : Probabilité que Toto prenne le taxi, sachant qu'il a attendu plus de 10 min ?</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Formule de la probabilité conditionnelle.</strong><br> \[\mathbb{P}(Y < X | T > 10) = \frac{\mathbb{P}(Y < X \cap T > 10)}{\mathbb{P}(T > 10)}\] L'événement "prendre le taxi ET attendre plus de 10 min" se traduit par \((Y < X) \cap (X > 10) \cap (Y > 10)\). Ceci équivaut à \(10 < Y < X\).</p>
+          </div>
+          <p><strong>Étape 2 : Calcul du numérateur.</strong><br> En conditionnant à nouveau sur \(X\) (qui doit être strictement supérieur à 10, donc \(X \in \{15, 25\}\)) : \[\mathbb{P}(10 < Y < X) = \mathbb{P}(10 < Y < 15)\mathbb{P}(X=15) + \mathbb{P}(10 < Y < 25)\mathbb{P}(X=25)\] \[= \frac{1}{2} \int_{10}^{15} \frac{1}{5}e^{-y/5} dy + \frac{1}{4} \int_{10}^{25} \frac{1}{5}e^{-y/5} dy\] \[= \frac{1}{2} (e^{-2} - e^{-3}) + \frac{1}{4} (e^{-2} - e^{-5}) = \frac{3}{4}e^{-2} - \frac{1}{2}e^{-3} - \frac{1}{4}e^{-5}\]</p>
+          <p><strong>Étape 3 : Résultat final.</strong><br> On divise par \(\mathbb{P}(T > 10)\) calculé à la question 1 : \[\mathbb{P}(Y < X | T > 10) = \frac{\frac{3}{4}e^{-2} - \frac{1}{2}e^{-3} - \frac{1}{4}e^{-5}}{\frac{3}{4}e^{-2}}\] \[\mathbf{\mathbb{P}(Y < X | T > 10) = 1 - \frac{2}{3}e^{-1} - \frac{1}{3}e^{-3}}\]</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 7</span>
+              <h3>Exercice 7</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td4-e7" class="answer-block">
+          <p>Robert entre chez le coiffeur (occupé). La coupe dure exactement 30 min, début aléatoire uniformément réparti entre 0 et 30 min. Probabilité que \(t\) min après, le coiffeur n'ait pas fini ?</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Modélisation.</strong><br> Soit \(D\) le temps écoulé depuis le début de la coupe en cours lorsque Robert entre. D'après l'énoncé, \(D \sim \mathcal{U}([0, 30])\). La coupe totale dure 30 minutes, le temps restant pour le client actuel est donc \(R = 30 - D\).</p>
+          </div>
+          <p><strong>Étape 2 : Formulation de l'évènement.</strong><br> Dire que le coiffeur n'a pas fini la coupe \(t\) minutes après l'entrée de Robert signifie que le temps restant est supérieur à \(t\) : \[\mathbb{P}(R > t) = \mathbb{P}(30 - D > t) = \mathbb{P}(D < 30 - t)\]</p>
+          <p><strong>Étape 3 : Calcul selon \(t\).</strong><br> Si \(t \ge 30\), le coiffeur a forcément fini, la probabilité est 0. Si \(t \in [0, 30]\), on calcule la probabilité à l'aide de la fonction de répartition de la loi uniforme : \[\mathbb{P}(D < 30 - t) = \frac{(30 - t) - 0}{30}\] \[\mathbf{\mathbb{P}(\text{pas fini}) = 1 - \frac{t}{30} \quad \text{pour } t \in [0, 30] \text{ (et 0 sinon)}}\]</p>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-exercise>
+          <header>
+            <div>
+              <span class="status-pill">Exercice 8</span>
+              <h3>Exercice 8</h3>
+            </div>
+            <div class="button-row">
+              <button type="button" data-mark-done>Marquer comme fait</button>
+              <button type="button" data-toggle-redo>A refaire</button>
+            </div>
+          </header>
+          <div id="td4-e8" class="answer-block">
+          <p>Route \([0, l]\). Incendie en \(X \sim \mathcal{U}([0, l])\). Pompiers en \(p\). Distance \(D = |X-p|\).</p>
+          <p><strong>Question 1</strong> : Distance moyenne.</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Espérance avec valeur absolue.</strong><br> Par le théorème de transfert : \(\mathbb{E}(D) = \int_0^l |x-p| f_X(x) dx = \frac{1}{l} \int_0^l |x-p| dx\).</p>
+          </div>
+          <p><strong>Étape 2 : Séparation de l'intégrale.</strong><br> On découpe l'intégrale en \(p\) pour retirer la valeur absolue : \[\mathbb{E}(D) = \frac{1}{l} \left[ \int_0^p (p-x) dx + \int_p^l (x-p) dx \right]\] \[= \frac{1}{l} \left[ \left(px - \frac{x^2}{2}\right)_0^p + \left(\frac{x^2}{2} - px\right)_p^l \right]\] \[= \frac{1}{l} \left[ \frac{p^2}{2} + \left( \frac{l^2}{2} - pl - \frac{p^2}{2} + p^2 \right) \right] = \frac{1}{l} \left[ p^2 - pl + \frac{l^2}{2} \right]\] \[\mathbf{\mathbb{E}(D) = \frac{p^2 + (l-p)^2}{2l}}\]</p>
+          <p><strong>Question 2</strong> : Valeur de \(p\) pour minimiser cette distance.</p>
+          <div class="td-step-block td-reasoning-block">
+            <strong>Correction &amp; Raisonnement</strong>
+            <p><strong>Étape 1 : Minimisation de la fonction.</strong><br> On cherche le minimum de la fonction \(g(p) = \frac{1}{l}(p^2 - pl + l^2/2)\) en dérivant par rapport à \(p\) : \[g'(p) = \frac{1}{l} (2p - l)\]</p>
+          </div>
+          <p><strong>Étape 2 : Résolution.</strong><br> \[g'(p) = 0 \implies 2p - l = 0 \implies \mathbf{p = \frac{l}{2}}\] Les pompiers doivent être situés exactemen</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -34,6 +34,7 @@ const mathNav = [
   ["math.html#probabilites-chap2", "2. Espaces probabilises"],
   ["math.html#probabilites-chap3", "3. Variables discretes"],
   ["math.html#probabilites-chap4", "4. Variables continues"],
+  ["math.html#probabilites-chap5-discret", "5. Couples discrets"],
   ["math.html#probabilites-methodes", "Methodes"],
   ["math.html#probabilites-td", "TD"],
   ["math.html#probabilites-sujets", "Sujet type"],
@@ -376,7 +377,7 @@ write(pages.java, renderJavaCourse());
 write(pages.reseau, renderReseauCourse());
 write(pages.vhdl, renderVhdlCourse());
 
-for (const file of ["td1.html", "td2.html", "td3.html"]) {
+for (const file of fs.readdirSync(mathTdDir).filter((entry) => entry.endsWith(".html"))) {
   fs.copyFileSync(path.join(mathTdDir, file), path.join(outDir, file));
 }
 
