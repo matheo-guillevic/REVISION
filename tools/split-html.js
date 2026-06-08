@@ -5,7 +5,7 @@ const root = process.cwd();
 const mathPath = fs.existsSync(path.join(root, "math.html"))
   ? path.join(root, "math.html")
   : path.join(root, "out", "math.html");
-const coursePath = path.join(root, "src", "subjects", "probabilites", "cours.html");
+const coursePath = path.join(root, "src", "subjects", "math", "cours.html");
 
 if (!fs.existsSync(mathPath)) {
   throw new Error("math.html introuvable. Lance d'abord npm run build pour generer out/math.html.");
@@ -23,4 +23,4 @@ if (end === -1) throw new Error("Fin du cours de probabilites introuvable");
 
 fs.writeFileSync(coursePath, `${html.slice(start, end).trimEnd()}\n`, "utf8");
 
-console.log("Cours de math regroupe dans src/subjects/probabilites/cours.html.");
+console.log("Cours de mathématiques regroupé dans src/subjects/math/cours.html.");

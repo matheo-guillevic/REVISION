@@ -29,11 +29,11 @@
       "subject": "math",
       "label": "Probabilites",
       "sourceDir": "pdf/math/TD",
-      "targetDir": "src/subjects/probabilites/td",
+      "targetDir": "src/subjects/math/td",
       "backHref": "math.html#probabilites-td",
       "backLabel": "Retour aux TD",
       "courseHref": "math.html",
-      "courseLabel": "Cours de math",
+      "courseLabel": "Mathématiques",
       "idPrefix": "td",
       "pages": [
         {

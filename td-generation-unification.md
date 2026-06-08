@@ -93,7 +93,7 @@ Exemple de structure possible :
     {
       "subject": "math",
       "sourceDir": "pdf/math/TD",
-      "targetDir": "src/subjects/probabilites/td",
+      "targetDir": "src/subjects/math/td",
       "backHref": "math.html#probabilites-td",
       "backLabel": "Retour aux TD",
       "idPrefix": "td",

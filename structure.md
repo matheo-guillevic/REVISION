@@ -12,8 +12,8 @@
 - `tools/build-html.js` : script utilise pour reconstruire les pages statiques dans `out/`.
 - `tools/rebuild-td-from-latex.js` : script commun utilise pour reconstruire les pages TD depuis les fichiers LaTeX.
 - `tools/td-pages.json` : configuration des pages TD generees par matiere.
-- `src/subjects/probabilites/cours.html` : source HTML unique du cours de mathematiques/probabilites.
-- `src/subjects/probabilites/td/` : sources HTML des pages corrigees TD de probabilites.
+- `src/subjects/math/cours.html` : source HTML unique du cours de mathematiques/probabilites.
+- `src/subjects/math/td/` : sources HTML des pages corrigees TD de probabilites.
 - `src/subjects/auto/cours.html` : source HTML unique du cours d'automatique.
 - `td1.html` : page generee du TD 1 de denombrement.
 - `td2.html` : page generee du TD 2 d'espaces probabilises.
@@ -81,7 +81,7 @@ Sections de `math.html` :
 
 Pour enrichir un chapitre :
 
-1. Modifier la section correspondante dans `src/subjects/probabilites/cours.html`.
+1. Modifier la section correspondante dans `src/subjects/math/cours.html`.
 2. Ajuster les objectifs et la liste "ce qui est exigible".
 3. Completer les blocs `content-block` avec les definitions, theoremes, methodes et points d'attention.
 4. Ajouter ou remplacer les `exercise-card` avec les exercices du cours.
@@ -122,5 +122,5 @@ Pour recreer la source unique du cours de math a partir de `math.html` :
 npm run split
 ```
 
-Les sources des pages TD sont dans `src/subjects/probabilites/td/`. `npm run build` recopie ensuite `td1.html`, `td2.html` et `td3.html` a la racine pour garder des URLs simples. Leurs liens de retour pointent vers `math.html#probabilites-td`.
+Les sources des pages TD sont dans `src/subjects/math/td/`. `npm run build` recopie ensuite les pages TD vers `out/` avec des URLs simples comme `math-td1.html`. Leurs liens de retour pointent vers `math.html#probabilites-td`.
 

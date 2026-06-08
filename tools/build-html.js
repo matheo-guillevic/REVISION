@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = process.cwd();
 const outDir = path.join(root, "out");
-const mathCoursePath = path.join(root, "src", "subjects", "probabilites", "cours.html");
-const mathTdDir = path.join(root, "src", "subjects", "probabilites", "td");
-const mathExamDir = path.join(root, "src", "subjects", "probabilites", "exam");
+const mathCoursePath = path.join(root, "src", "subjects", "math", "cours.html");
+const mathTdDir = path.join(root, "src", "subjects", "math", "td");
+const mathExamDir = path.join(root, "src", "subjects", "math", "exam");
 const autoCoursePath = path.join(root, "src", "subjects", "auto", "cours.html");
 const autoTdDir = path.join(root, "src", "subjects", "auto", "td");
 const elecCoursePath = path.join(root, "src", "subjects", "elec", "cours.html");
@@ -27,67 +27,115 @@ const pages = {
   vhdl: path.join(outDir, "vhdl.html"),
 };
 
-const mathNav = [
-  ["math.html#probabilites", "Intro"],
-  ["math.html#probabilites-programme", "Programme"],
-  ["math.html#probabilites-chap1", "1. Denombrement"],
-  ["math.html#probabilites-chap2", "2. Espaces probabilises"],
-  ["math.html#probabilites-chap3", "3. Variables discretes"],
-  ["math.html#probabilites-chap4", "4. Variables continues"],
-  ["math.html#probabilites-chap5-discret", "5. Couples discrets"],
-  ["math.html#probabilites-methodes", "Methodes"],
-  ["math.html#probabilites-td", "TD"],
-  ["math.html#probabilites-sujets", "Sujet type"],
-  ["math.html#probabilites-revision", "Revision finale"],
-];
-
-const javaNav = [
-  ["java.html#java-intro", "Intro"],
-  ["java.html#java-bases", "1. Bases"],
-  ["java.html#java-collections", "2. Collections"],
-  ["java.html#java-objet", "3. Objet"],
-  ["java.html#java-heritage", "4. Heritage"],
-  ["java.html#java-interfaces", "5. Interfaces"],
-  ["java.html#java-exceptions", "6. Exceptions"],
-  ["java.html#java-exams", "Examens"],
-];
-
-const vhdlNav = [
-  ["vhdl.html#vhdl-intro", "Intro"],
-  ["vhdl.html#vhdl-cm1", "1. Introduction"],
-  ["vhdl.html#vhdl-cm2", "2. Nombres"],
-  ["vhdl.html#vhdl-cm3", "3. Combinatoire"],
-  ["vhdl.html#vhdl-cm4", "4. Sequentiel"],
-  ["vhdl.html#vhdl-cm5", "5. FSM"],
-  ["vhdl.html#vhdl-cm6", "6. HDL"],
-  ["vhdl.html#vhdl-cm7", "7. FPGA"],
-  ["vhdl.html#vhdl-td", "TD"],
-  ["vhdl.html#vhdl-exams", "Examens"],
-  ["vhdl.html#vhdl-pdfs", "PDF"],
-];
-
-const elecNav = [
-  ["elec.html#elec-intro", "Intro"],
-  ["elec.html#elec-quadripoles", "1. Quadripoles"],
-  ["elec.html#elec-filtres", "2. Filtres"],
-  ["elec.html#elec-amplis", "3. Amplis"],
-  ["elec.html#elec-oscillateurs", "4. Oscillateurs"],
-  ["elec.html#elec-exams", "Examens"],
-  ["elec.html#elec-revision", "Revision"],
-  ["elec.html#elec-pdfs", "PDF"],
-];
-
-const reseauNav = [
-  ["reseau.html#reseau-intro", "Intro"],
-  ["reseau.html#reseau-bases", "Bases"],
-  ["reseau.html#reseau-osi", "Modele OSI"],
-  ["reseau.html#reseau-couche1", "Couche 1"],
-  ["reseau.html#reseau-couche2", "Couche 2"],
-  ["reseau.html#reseau-couche3", "Couche 3"],
-  ["reseau.html#reseau-transport", "Transport"],
-  ["reseau.html#reseau-revision", "Revision"],
-  ["reseau.html#reseau-pdfs", "PDF"],
-];
+const courseStructures = {
+  math: {
+    page: "math.html",
+    subject: "math",
+    intro: "probabilites",
+    contentHref: "probabilites-programme",
+    content: [
+      ["probabilites-programme", "Programme"],
+      ["probabilites-chap1", "Dénombrement"],
+      ["probabilites-chap2", "Espaces probabilisés"],
+      ["probabilites-chap3", "Variables discrètes"],
+      ["probabilites-chap4", "Variables continues"],
+      ["probabilites-chap5-discret", "Couples discrets"],
+      ["probabilites-methodes", "Méthodes"],
+    ],
+    td: "probabilites-td",
+    exams: "probabilites-sujets",
+    revision: "probabilites-revision",
+    support: "math-supports",
+  },
+  auto: {
+    page: "auto.html",
+    subject: "auto",
+    intro: "auto-intro",
+    contentHref: "auto-modelisation",
+    content: [
+      ["auto-modelisation", "Modélisation"],
+      ["auto-analyse", "Analyse"],
+      ["auto-commande", "Commande"],
+      ["auto-marges", "Marges"],
+      ["auto-pid-rst", "PID/RST"],
+    ],
+    td: "auto-td",
+    exams: "auto-exams",
+    revision: "auto-revision",
+    support: "auto-supports",
+  },
+  elec: {
+    page: "elec.html",
+    subject: "elec",
+    intro: "elec-intro",
+    contentHref: "elec-quadripoles",
+    content: [
+      ["elec-quadripoles", "Quadripôles"],
+      ["elec-filtres", "Filtres"],
+      ["elec-amplis", "Amplificateurs"],
+      ["elec-oscillateurs", "Oscillateurs"],
+    ],
+    td: "elec-td",
+    exams: "elec-exams",
+    revision: "elec-revision",
+    support: "elec-pdfs",
+  },
+  java: {
+    page: "java.html",
+    subject: "java",
+    intro: "java-intro",
+    contentHref: "java-bases",
+    content: [
+      ["java-bases", "Bases"],
+      ["java-collections", "Collections"],
+      ["java-objet", "Objet"],
+      ["java-heritage", "Héritage"],
+      ["java-interfaces", "Interfaces"],
+      ["java-exceptions", "Exceptions"],
+    ],
+    td: "java-td",
+    exams: "java-exams",
+    revision: "java-revision",
+    support: "java-supports",
+  },
+  reseau: {
+    page: "reseau.html",
+    subject: "reseau",
+    intro: "reseau-intro",
+    contentHref: "reseau-bases",
+    content: [
+      ["reseau-bases", "Bases"],
+      ["reseau-osi", "Modèle OSI"],
+      ["reseau-couche1", "Couche 1"],
+      ["reseau-couche2", "Couche 2"],
+      ["reseau-couche3", "Couche 3"],
+      ["reseau-transport", "Transport"],
+    ],
+    td: "reseau-td",
+    exams: "reseau-exams",
+    revision: "reseau-revision",
+    support: "reseau-pdfs",
+  },
+  vhdl: {
+    page: "vhdl.html",
+    subject: "vhdl",
+    intro: "vhdl-intro",
+    contentHref: "vhdl-cm1",
+    content: [
+      ["vhdl-cm1", "Introduction"],
+      ["vhdl-cm2", "Nombres"],
+      ["vhdl-cm3", "Combinatoire"],
+      ["vhdl-cm4", "Séquentiel"],
+      ["vhdl-cm5", "FSM"],
+      ["vhdl-cm6", "HDL"],
+      ["vhdl-cm7", "FPGA"],
+    ],
+    td: "vhdl-td",
+    exams: "vhdl-exams",
+    revision: "vhdl-revision",
+    support: "vhdl-pdfs",
+  },
+};
 
 function read(filePath) {
   return fs.readFileSync(filePath, "utf8").trimEnd();
@@ -97,16 +145,130 @@ function write(filePath, html) {
   fs.writeFileSync(filePath, `${html.trimEnd()}\n`, "utf8");
 }
 
+function toWebPath(filePath) {
+  return filePath.split(path.sep).join("/");
+}
+
 function copyIfExists(source, target) {
   if (!fs.existsSync(source)) return;
   fs.cpSync(source, target, { recursive: true });
 }
 
+function toTitleFromFile(file) {
+  return file
+    .replace(/\.pdf$/i, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function listCoursePdfFiles(subject) {
+  const courseDir = path.join(root, "pdf", subject, "cours");
+  if (!fs.existsSync(courseDir)) return [];
+
+  return fs
+    .readdirSync(courseDir)
+    .filter((entry) => entry.toLowerCase().endsWith(".pdf"))
+    .sort((a, b) => a.localeCompare(b, "fr"))
+    .map((file) => ({
+      file,
+      title: toTitleFromFile(file),
+      href: toWebPath(path.join("pdf", subject, "cours", file)),
+    }));
+}
+
+function extractCourseSections(html) {
+  const starts = [...html.matchAll(/^ {8}<section id="([^"]+)" class="page-section">/gm)];
+  return starts.map((match, index) => {
+    const next = starts[index + 1];
+    const end = next ? next.index : html.length;
+    return {
+      id: match[1],
+      html: html.slice(match.index, end).trimEnd(),
+    };
+  });
+}
+
+function renderEmptySection(id, eyebrow, heading) {
+  return `        <section id="${id}" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">${eyebrow}</span>
+            <h2>${heading}</h2>
+            <p><span class="status-pill">∅</span> Aucun contenu pour cette section.</p>
+          </div>
+        </section>`;
+}
+
+function renderGeneratedSupportSection(id, subject) {
+  const files = listCoursePdfFiles(subject);
+  if (!files.length) return renderEmptySection(id, "Support de cours", "Support de cours");
+
+  return `        <section id="${id}" class="page-section">
+          <div class="section-heading">
+            <span class="eyebrow">Support de cours</span>
+            <h2>Support de cours</h2>
+            <p>PDF sources disponibles pour cette matière.</p>
+          </div>
+
+          <div class="dashboard-grid">
+${files
+  .map(
+    (file) => `            <article class="chapter-card">
+              <span class="status-pill">PDF</span>
+              <h3>${file.title}</h3>
+              <p class="secondary-link"><a href="${file.href}">Ouvrir le PDF</a></p>
+            </article>`
+  )
+  .join("\n")}
+          </div>
+        </section>`;
+}
+
+function renderCommonCourseNav(structure) {
+  const contentLinks = structure.content.map(([id, label]) => [`${structure.page}#${id}`, label, "sub"]);
+  return renderNav(
+    [
+      ["index.html", "Accueil"],
+      [`${structure.page}#${structure.intro}`, "Introduction"],
+      [`${structure.page}#${structure.contentHref}`, "Contenu du cours"],
+      ...contentLinks,
+      [`${structure.page}#${structure.td}`, "TD"],
+      [`${structure.page}#${structure.exams}`, "Examens"],
+      [`${structure.page}#${structure.revision}`, "Révision"],
+      [`${structure.page}#${structure.support}`, "Support de cours"],
+    ],
+    `${structure.page}#${structure.intro}`
+  );
+}
+
+function composeCourseBody(html, structure) {
+  const sections = extractCourseSections(html);
+  const byId = new Map(sections.map((section) => [section.id, section.html]));
+  const used = new Set();
+  const take = (id) => {
+    const section = byId.get(id);
+    if (section) used.add(id);
+    return section || "";
+  };
+
+  const intro = take(structure.intro) || renderEmptySection(structure.intro, "Introduction", "Introduction");
+  const content = structure.content.map(([id]) => take(id)).filter(Boolean);
+  const td = take(structure.td) || renderEmptySection(structure.td, "TD", "TD");
+  const exams = take(structure.exams) || renderEmptySection(structure.exams, "Examens", "Examens");
+  const revision = take(structure.revision) || renderEmptySection(structure.revision, "Révision", "Révision");
+  const support = take(structure.support) || renderGeneratedSupportSection(structure.support, structure.subject);
+  const leftovers = sections.filter((section) => !used.has(section.id)).map((section) => section.html);
+  const contentHtml = [...content, ...leftovers].join("\n\n") || renderEmptySection(structure.contentHref, "Contenu du cours", "Contenu du cours");
+
+  return [intro, contentHtml, td, exams, revision, support].join("\n\n");
+}
+
 function renderNav(items, activeHref) {
   return items
-    .map(([href, label]) => {
+    .map(([href, label, level]) => {
       const active = href === activeHref ? " active" : "";
-      return `          <a class="nav-link${active}" href="${href}">${label}</a>`;
+      const sub = level === "sub" ? " nav-link-sub" : "";
+      return `          <a class="nav-link${sub}${active}" href="${href}">${label}</a>`;
     })
     .join("\n");
 }
@@ -171,7 +333,7 @@ function renderHome() {
   const nav = renderNav(
     [
       ["index.html", "Accueil"],
-      ["math.html", "Cours de math"],
+      ["math.html", "Mathématiques"],
       ["auto.html", "Automatique"],
       ["elec.html", "Electronique"],
       ["java.html", "Java"],
@@ -191,7 +353,7 @@ function renderHome() {
           <div class="dashboard-grid">
             <article class="chapter-card">
               <span class="status-pill">Disponible</span>
-              <h3>Mathematiques</h3>
+              <h3>Mathématiques</h3>
               <p>Cours de probabilites, TD, methodes et fiche de revision finale.</p>
               <p class="secondary-link"><a href="math.html">Ouvrir le cours</a></p>
             </article>
@@ -236,22 +398,23 @@ function renderHome() {
     nav,
     eyebrow: "Revision",
     heading: "Revisions par cours",
-    cta: '<a class="primary-button" href="math.html">Cours de math</a>',
+    cta: '<a class="primary-button" href="math.html">Mathématiques</a>',
     body,
   });
 }
 
 function renderMath() {
-  const course = read(mathCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ...mathNav], "math.html#probabilites");
+  const structure = courseStructures.math;
+  const course = composeCourseBody(read(mathCoursePath), structure);
+  const nav = renderCommonCourseNav(structure);
 
   return renderShell({
-    title: "Cours de mathematiques - Revision ESISAR",
+    title: "Mathématiques - Revision ESISAR",
     brandMark: "M",
-    brandTitle: "Cours de math",
+    brandTitle: "Mathématiques",
     brandSubtitle: "Probabilites",
     nav,
-    eyebrow: "Mathematiques",
+    eyebrow: "Mathématiques",
     heading: "Cours de probabilites",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
     body: course,
@@ -260,21 +423,9 @@ function renderMath() {
 }
 
 function renderAutoCourse() {
-  const course = read(autoCoursePath);
-  const nav = renderNav(
-    [
-      ["index.html", "Accueil"],
-      ["#auto-intro", "Intro"],
-      ["#auto-modelisation", "Modelisation"],
-      ["#auto-analyse", "Analyse"],
-      ["#auto-commande", "Commande"],
-      ["#auto-marges", "Marges"],
-      ["#auto-pid-rst", "PID/RST"],
-      ["#auto-td", "TD"],
-      ["#auto-revision", "Revision finale"],
-    ],
-    "#auto-intro"
-  );
+  const structure = courseStructures.auto;
+  const course = composeCourseBody(read(autoCoursePath), structure);
+  const nav = renderCommonCourseNav(structure);
 
   return renderShell({
     title: "Automatique AU361 - Revision ESISAR",
@@ -291,8 +442,9 @@ function renderAutoCourse() {
 }
 
 function renderElecCourse() {
-  const course = read(elecCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ...elecNav], "elec.html#elec-intro");
+  const structure = courseStructures.elec;
+  const course = composeCourseBody(read(elecCoursePath), structure);
+  const nav = renderCommonCourseNav(structure);
 
   return renderShell({
     title: "Electronique EP361 - Revision ESISAR",
@@ -309,8 +461,9 @@ function renderElecCourse() {
 }
 
 function renderJavaCourse() {
-  const course = read(javaCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ...javaNav], "java.html#java-intro");
+  const structure = courseStructures.java;
+  const course = composeCourseBody(read(javaCoursePath), structure);
+  const nav = renderCommonCourseNav(structure);
 
   return renderShell({
     title: "Java - Revision ESISAR",
@@ -326,8 +479,9 @@ function renderJavaCourse() {
 }
 
 function renderReseauCourse() {
-  const course = read(reseauCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ...reseauNav], "reseau.html#reseau-intro");
+  const structure = courseStructures.reseau;
+  const course = composeCourseBody(read(reseauCoursePath), structure);
+  const nav = renderCommonCourseNav(structure);
 
   return renderShell({
     title: "Reseaux IN363 - Revision ESISAR",
@@ -344,8 +498,9 @@ function renderReseauCourse() {
 }
 
 function renderVhdlCourse() {
-  const course = read(vhdlCoursePath);
-  const nav = renderNav([["index.html", "Accueil"], ...vhdlNav], "vhdl.html#vhdl-intro");
+  const structure = courseStructures.vhdl;
+  const course = composeCourseBody(read(vhdlCoursePath), structure);
+  const nav = renderCommonCourseNav(structure);
 
   return renderShell({
     title: "VHDL SN361 - Revision ESISAR",
