@@ -32,7 +32,7 @@ Structure minimale recommandee :
 
 \title{Corrige - TD 1 : Titre du TD}
 \author{Module - Grenoble INP Esisar}
-\date{Annee 2025-2026}
+\date{Annee 2025-2026} % ou année courante si non précisée
 
 \begin{document}
 

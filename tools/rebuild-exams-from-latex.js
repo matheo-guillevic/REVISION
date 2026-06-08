@@ -37,8 +37,13 @@ function hydrateGroup(group) {
 
 const examGroups = pageConfig.groups.map(hydrateGroup);
 
+function repairMojibake(text) {
+  if (!/[ÃÂ]/.test(text)) return text;
+  return Buffer.from(text, "latin1").toString("utf8");
+}
+
 function read(filePath) {
-  return fs.readFileSync(filePath, "utf8");
+  return repairMojibake(fs.readFileSync(filePath, "utf8"));
 }
 
 function write(filePath, html) {
@@ -110,6 +115,19 @@ function cleanTitle(title) {
     .replace(/\s*-\s*\d+\s*pts?\.?$/i, "")
     .replace(/\s+\d+\s*pts?\.?$/i, "")
     .trim();
+}
+
+function extractMetadata(source) {
+  function matchCommand(command) {
+    const match = source.match(new RegExp(`\\\\${command}\\{([^{}]*)\\}`));
+    return match ? convertInline(match[1]) : "";
+  }
+
+  return {
+    title: matchCommand("title"),
+    author: matchCommand("author"),
+    date: matchCommand("date"),
+  };
 }
 
 function normalizeAccents(text) {
@@ -238,7 +256,8 @@ function normalizeLatex(latex) {
     .replace(/\\begin\{figure\}\[[^\]]*\][\s\S]*?\\end\{figure\}/g, "\n\n")
     .replace(/\\begin\{table\}\[[^\]]*\]/g, "\\begin{table}")
     .replace(/\\begin\{table\}|\\end\{table\}/g, "")
-    .replace(/\\begin\{tabularx\}\{[^{}]*\}\{[^{}]*\}/g, "\\begin{tabular}")
+    .replace(/^\\begin\{tabularx\}.*$/gm, "\\begin{tabular}{lll}")
+    .replace(/\\end\{tabularx\}/g, "\\end{tabular}")
     .replace(/(\\begin\{tabular\}\{[^}\n]*)p\{[^{}]*\}/g, "$1p")
     .replace(/(\\begin\{tabular\}\{[^}\n]*)p\{[^{}]*\}/g, "$1p");
 
@@ -447,6 +466,26 @@ function extractUnits(latex, group) {
   });
 }
 
+function extractDocumentHeader(latex, group) {
+  const clean = cleanLatex(latex);
+  const withCorrections = extractBalancedCommand(clean, "corr");
+  const source = withCorrections.value;
+  const firstMatch = [...source.matchAll(group.titlePattern)][0];
+  const headerLatex = firstMatch ? source.slice(0, firstMatch.index).trim() : "";
+  const metadata = extractMetadata(latex);
+  const metadataItems = [
+    metadata.author,
+    metadata.date,
+  ].filter(Boolean);
+
+  const convertedHeader = headerLatex ? convertBlock(headerLatex, group, withCorrections.blocks) : "";
+  return {
+    title: metadata.title,
+    metaHtml: metadataItems.length ? `          <p>${metadataItems.join(" · ")}</p>` : "",
+    bodyHtml: convertedHeader,
+  };
+}
+
 function insertAfterHeadingOrParagraph(html, pattern, figureHtml) {
   if (pattern) {
     const headings = [...html.matchAll(/          <h4>([\s\S]*?)<\/h4>/g)];
@@ -484,8 +523,9 @@ ${body}
         </article>`;
 }
 
-function renderPage(group, config, units) {
+function renderPage(group, config, units, documentHeader) {
   const state = { figureIndex: 0 };
+  const heading = documentHeader.title || config.heading;
   return `<!doctype html>
 <html lang="fr">
   <head>
@@ -511,7 +551,8 @@ function renderPage(group, config, units) {
         <a class="back-link" href="${group.backHref}">Retour aux examens</a>
         <div>
           <span class="eyebrow">${config.eyebrow}</span>
-          <h1>${config.heading}</h1>
+          <h1>${heading}</h1>
+${documentHeader.metaHtml ? `${documentHeader.metaHtml}\n` : ""}${documentHeader.bodyHtml ? `${documentHeader.bodyHtml}\n` : ""}
           <p>${config.summary}</p>
           <p>Page reconstruite depuis <code>${toWebPath(path.relative(root, path.join(group.sourceDir, config.source)))}</code>.</p>
         </div>
@@ -533,8 +574,10 @@ for (const group of examGroups) {
   for (const config of group.exams) {
     const sourcePath = path.join(group.sourceDir, config.source);
     const targetPath = path.join(group.targetDir, config.target);
-    const units = extractUnits(read(sourcePath), group);
-    write(targetPath, renderPage(group, config, units));
+    const latex = read(sourcePath);
+    const units = extractUnits(latex, group);
+    const documentHeader = extractDocumentHeader(latex, group);
+    write(targetPath, renderPage(group, config, units, documentHeader));
     console.log(`Reconstruit ${path.relative(root, targetPath)} (${units.length} sections).`);
   }
 }

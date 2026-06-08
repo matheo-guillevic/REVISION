@@ -39,7 +39,7 @@
         {
           "n": 1,
           "source": "MT331-TD1.tex",
-          "target": "td1.html",
+          "target": "math-td1.html",
           "title": "TD 1 corrige - Denombrement et probabilites",
           "eyebrow": "TD 1",
           "heading": "Denombrement et probabilites",
@@ -48,7 +48,7 @@
         {
           "n": 2,
           "source": "MT331-TD2.tex",
-          "target": "td2.html",
+          "target": "math-td2.html",
           "title": "TD 2 corrige - Espaces probabilises",
           "eyebrow": "TD 2",
           "heading": "Espaces probabilises",
@@ -57,7 +57,7 @@
         {
           "n": 3,
           "source": "MT331-TD3.tex",
-          "target": "td3.html",
+          "target": "math-td3.html",
           "title": "TD 3 corrige - Variables aleatoires",
           "eyebrow": "TD 3",
           "heading": "Variables aleatoires",
@@ -66,7 +66,7 @@
         {
           "n": 4,
           "source": "MT331-TD4.tex",
-          "target": "td4.html",
+          "target": "math-td4.html",
           "title": "TD 4 corrige - Variables aleatoires continues",
           "eyebrow": "TD 4",
           "heading": "Variables aleatoires continues",
@@ -75,7 +75,7 @@
         {
           "n": 5,
           "source": "MT331-TD5.tex",
-          "target": "td5.html",
+          "target": "math-td5.html",
           "title": "TD 5 corrige - Couples de variables aleatoires",
           "eyebrow": "TD 5",
           "heading": "Couples de variables aleatoires",

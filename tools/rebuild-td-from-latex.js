@@ -32,7 +32,8 @@ function repairMojibake(text) {
 }
 
 function read(filePath) {
-  return repairMojibake(fs.readFileSync(filePath, "utf8"));
+  const text = fs.readFileSync(filePath, "utf8");
+  return /[ÃÂ]/.test(text) ? Buffer.from(text, "latin1").toString("utf8") : repairMojibake(text);
 }
 
 function write(filePath, html) {
@@ -119,6 +120,19 @@ function replaceBalancedCommands(source, replacements) {
   }
   output += source.slice(cursor);
   return output;
+}
+
+function extractMetadata(source) {
+  function commandBody(command) {
+    const match = findBalancedCommands(source, `\\${command}{`)[0];
+    return match ? convertInline(match.body) : "";
+  }
+
+  return {
+    title: commandBody("title"),
+    author: commandBody("author"),
+    date: commandBody("date"),
+  };
 }
 
 function normalizeAccents(text) {
@@ -237,6 +251,8 @@ function normalizeLatex(latex) {
     .replace(/\\begin\{figure\}\[[^\]]*\][\s\S]*?\\end\{figure\}/g, "\n\n")
     .replace(/\\begin\{table\}\[[^\]]*\]/g, "\\begin{table}")
     .replace(/\\begin\{table\}|\\end\{table\}/g, "")
+    .replace(/^\\begin\{tabularx\}.*$/gm, "\\begin{tabular}{lll}")
+    .replace(/\\end\{tabularx\}/g, "\\end{tabular}")
     .replace(/\\centering/g, "")
     .replace(/\\caption\{[^}]*\}/g, "");
 
@@ -430,6 +446,26 @@ function extractUnits(latex, group) {
   });
 }
 
+function extractDocumentHeader(latex, group) {
+  const clean = cleanLatex(latex);
+  const withCorrections = extractBalancedCommand(clean, "corr");
+  const source = withCorrections.value;
+  const firstSection = findBalancedCommands(source, "\\section*{")[0];
+  const headerLatex = firstSection ? source.slice(0, firstSection.start).trim() : "";
+  const metadata = extractMetadata(latex);
+  const metadataItems = [
+    metadata.author,
+    metadata.date,
+  ].filter(Boolean);
+
+  const convertedHeader = headerLatex ? convertBlock(headerLatex, group, withCorrections.blocks) : "";
+  return {
+    title: metadata.title,
+    metaHtml: metadataItems.length ? `          <p>${metadataItems.join(" · ")}</p>` : "",
+    bodyHtml: convertedHeader,
+  };
+}
+
 function renderFigure(file, group) {
   const caption = figureCaptions[file] || "Figure du TD.";
   return `          <figure class="system-diagram td-figure">
@@ -475,7 +511,7 @@ ${body}
         </article>`;
 }
 
-function renderPage(group, page, units) {
+function renderPage(group, page, units, documentHeader) {
   const prism = group.withPrism
     ? '\n    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">'
     : "";
@@ -485,6 +521,7 @@ function renderPage(group, page, units) {
   const pdfLink = page.pdf
     ? `\n          <a class="primary-button" href="${toWebPath(path.join("pdf", group.subject, "TD", page.pdf))}">Ouvrir le PDF</a>`
     : "";
+  const heading = documentHeader.title || page.heading;
 
   return `<!doctype html>
 <html lang="fr">
@@ -508,7 +545,8 @@ function renderPage(group, page, units) {
         <a class="back-link" href="${group.backHref}">${group.backLabel}</a>
         <div>
           <span class="eyebrow">${page.eyebrow}</span>
-          <h1>${page.heading}</h1>
+          <h1>${heading}</h1>
+${documentHeader.metaHtml ? `${documentHeader.metaHtml}\n` : ""}${documentHeader.bodyHtml ? `${documentHeader.bodyHtml}\n` : ""}
           <p>${page.summary}</p>
           <p>Page reconstruite depuis <code>${toWebPath(path.relative(root, path.join(group.sourceDir, page.source)))}</code>.</p>
         </div>
@@ -529,8 +567,10 @@ for (const group of tdGroups) {
   for (const page of group.pages) {
     const sourcePath = path.join(group.sourceDir, page.source);
     const targetPath = path.join(group.targetDir, page.target);
-    const units = extractUnits(read(sourcePath), group);
-    write(targetPath, renderPage(group, page, units));
+    const latex = read(sourcePath);
+    const units = extractUnits(latex, group);
+    const documentHeader = extractDocumentHeader(latex, group);
+    write(targetPath, renderPage(group, page, units, documentHeader));
     console.log(`Reconstruit ${path.relative(root, targetPath)} (${units.length} sections).`);
   }
 }

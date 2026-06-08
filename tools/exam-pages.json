@@ -62,7 +62,7 @@
       "exams": [
         {
           "source": "vhdl-exam1.tex",
-          "target": "vhdl-exam1.html",
+          "target": "vhdl-exam-1.html",
           "title": "Examen VHDL 1",
           "eyebrow": "SN361 - Examen 1",
           "heading": "Registre generique et compteur modulo N",
@@ -70,7 +70,7 @@
         },
         {
           "source": "vhdl-exam2.tex",
-          "target": "vhdl-exam2.html",
+          "target": "vhdl-exam-2.html",
           "title": "Examen VHDL 2",
           "eyebrow": "SN361 - Examen 2",
           "heading": "Timer et controleur de porte de garage",
@@ -85,7 +85,7 @@
         },
         {
           "source": "vhdl-exam3.tex",
-          "target": "vhdl-exam3.html",
+          "target": "vhdl-exam-3.html",
           "title": "Examen VHDL 3",
           "eyebrow": "SN361 - Examen 3",
           "heading": "Questions de cours et registre a decalage SIPO",
@@ -96,7 +96,7 @@
         },
         {
           "source": "vhdl-exam4.tex",
-          "target": "vhdl-exam4.html",
+          "target": "vhdl-exam-4.html",
           "title": "Examen VHDL 4",
           "eyebrow": "SN361 - Examen 4",
           "heading": "Questions de cours, FSM, PWM et composants",
@@ -136,7 +136,7 @@
         },
         {
           "source": "java-exam1.tex",
-          "target": "java-exam1.html",
+          "target": "java-exam-1.html",
           "title": "Examen Java 1",
           "eyebrow": "IN361 - Examen 1",
           "heading": "Examen Java 1",
@@ -144,7 +144,7 @@
         },
         {
           "source": "java-exam2.tex",
-          "target": "java-exam2.html",
+          "target": "java-exam-2.html",
           "title": "Examen Java 2",
           "eyebrow": "IN361 - Examen 2",
           "heading": "Examen Java 2",
@@ -152,7 +152,7 @@
         },
         {
           "source": "java-exam3.tex",
-          "target": "java-exam3.html",
+          "target": "java-exam-3.html",
           "title": "Examen Java 3",
           "eyebrow": "IN361 - Examen 3",
           "heading": "Examen Java 3",
@@ -160,7 +160,7 @@
         },
         {
           "source": "java-exam4.tex",
-          "target": "java-exam4.html",
+          "target": "java-exam-4.html",
           "title": "Examen Java 4",
           "eyebrow": "IN361 - Examen 4",
           "heading": "Examen Java 4",
@@ -173,8 +173,8 @@
       "label": "Probabilites",
       "sourceDir": "pdf/math/exam",
       "targetDir": "src/subjects/probabilites/exam",
-      "backHref": "probabilites.html#probabilites-exams",
-      "courseHref": "probabilites.html",
+      "backHref": "math.html#probabilites-exams",
+      "courseHref": "math.html",
       "courseLabel": "Cours probabilites",
       "assetPrefix": null,
       "unitKind": "mixed",
@@ -182,7 +182,7 @@
       "exams": [
         {
           "source": "CC-denombrement.tex",
-          "target": "controle-denombrement.html",
+          "target": "math-exam-controle-denombrement.html",
           "title": "Controle corrige - Denombrement",
           "eyebrow": "MT331 - Controle",
           "heading": "Denombrement",
@@ -190,7 +190,7 @@
         },
         {
           "source": "CC-VA.tex",
-          "target": "controle-va.html",
+          "target": "math-exam-controle-va.html",
           "title": "Controle corrige - Variables aleatoires",
           "eyebrow": "MA337 - Controle",
           "heading": "Variables aleatoires",
@@ -198,7 +198,7 @@
         },
         {
           "source": "Partiel-1.tex",
-          "target": "partiel-1.html",
+          "target": "math-exam-partiel-1.html",
           "title": "Partiel corrige 1 - Probabilites",
           "eyebrow": "Partiel 1",
           "heading": "Corrige de partiel",
@@ -206,7 +206,7 @@
         },
         {
           "source": "Partiel-2.tex",
-          "target": "partiel-2.html",
+          "target": "math-exam-partiel-2.html",
           "title": "Partiel corrige 2 - Probabilites",
           "eyebrow": "Partiel 2",
           "heading": "Corrige de partiel",
@@ -214,7 +214,7 @@
         },
         {
           "source": "Partiel-3.tex",
-          "target": "partiel-3.html",
+          "target": "math-exam-partiel-3.html",
           "title": "Partiel corrige 3 - Probabilites",
           "eyebrow": "Partiel 3",
           "heading": "Corrige de partiel",
