@@ -10,6 +10,8 @@ lerna-debug.log*
 # Generated extraction output
 extracted/
 
+# Exam PDFs
+**/exam/*.pdf
 # Generated TD pages copied from src/subjects/probabilites/td
 /td1.html
 /td2.html
