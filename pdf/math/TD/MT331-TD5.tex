@@ -1,0 +1,295 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\geometry{margin=2.5cm}
+
+\title{Corrigé - TD 5 : Probabilités}
+\author{MT331 - INP Esisar Valence}
+\date{Année 2025-2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1 - Couple Discret}
+
+\subsection*{a) Déterminer les lois marginales du couple.}
+
+\textbf{Raisonnement :} 
+La probabilité marginale $\mathbb{P}(X=x)$ s'obtient en sommant les probabilités de la ligne correspondante à $x$.
+La probabilité marginale $\mathbb{P}(Y=y)$ s'obtient en sommant les probabilités de la colonne correspondante à $y$.
+
+\textbf{Reponse :}
+Loi marginale de X :
+\begin{itemize}
+    \item $\mathbf{\mathbb{P}(X=0)} = 0.03 + 0.05 + 0.05 + 0.04 + 0.03 = \mathbf{0.20}$
+    \item $\mathbf{\mathbb{P}(X=1)} = 0.07 + 0.08 + 0.10 + 0.05 + 0.05 = \mathbf{0.35}$
+    \item $\mathbf{\mathbb{P}(X=2)} = 0.05 + 0.07 + 0.09 + 0.08 + 0.01 = \mathbf{0.30}$
+    \item $\mathbf{\mathbb{P}(X=3)} = 0 + 0.05 + 0.06 + 0.03 + 0.01 = \mathbf{0.15}$
+\end{itemize}
+
+Loi marginale de Y :
+\begin{itemize}
+    \item $\mathbf{\mathbb{P}(Y=0)} = 0.03 + 0.07 + 0.05 + 0 = \mathbf{0.15}$
+    \item $\mathbf{\mathbb{P}(Y=1)} = 0.05 + 0.08 + 0.07 + 0.05 = \mathbf{0.25}$
+    \item $\mathbf{\mathbb{P}(Y=2)} = 0.05 + 0.10 + 0.09 + 0.06 = \mathbf{0.30}$
+    \item $\mathbf{\mathbb{P}(Y=3)} = 0.04 + 0.05 + 0.08 + 0.03 = \mathbf{0.20}$
+    \item $\mathbf{\mathbb{P}(Y=4)} = 0.03 + 0.05 + 0.01 + 0.01 = \mathbf{0.10}$
+\end{itemize}
+
+\subsection*{b) Calculer $\mathbb{E}(X)$, $\mathbb{V}(X)$, $\mathbb{E}(Y)$, $\mathbb{V}(Y)$ et $Cov(X;Y)$.}
+
+\textbf{Raisonnement :} 
+\textbf{Etape 1 : Espérance et Variance de X.}\\
+$\mathbb{E}(X) = 0(0.20) + 1(0.35) + 2(0.30) + 3(0.15) = 1.4$.
+$\mathbb{E}(X^2) = 0(0.20) + 1^2(0.35) + 2^2(0.30) + 3^2(0.15) = 2.9$.
+$\mathbb{V}(X) = \mathbb{E}(X^2) - (\mathbb{E}(X))^2$.
+
+\textbf{Etape 2 : Espérance et Variance de Y.}\\
+$\mathbb{E}(Y) = 0(0.15) + 1(0.25) + 2(0.30) + 3(0.20) + 4(0.10) = 1.85$.
+$\mathbb{E}(Y^2) = 0 + 1(0.25) + 4(0.30) + 9(0.20) + 16(0.10) = 4.85$.
+$\mathbb{V}(Y) = \mathbb{E}(Y^2) - (\mathbb{E}(Y))^2$.
+
+\textbf{Etape 3 : Calcul de la Covariance.}\\
+On calcule d'abord $\mathbb{E}(XY) = \sum_{x,y} x \cdot y \cdot \mathbb{P}(X=x, Y=y)$. Seuls les cas où $x \neq 0$ et $y \neq 0$ comptent :
+\begin{itemize}
+    \item $x=1$ : $1(0.08) + 2(0.10) + 3(0.05) + 4(0.05) = 0.63$
+    \item $x=2$ : $2(1(0.07) + 2(0.09) + 3(0.08) + 4(0.01)) = 2(0.53) = 1.06$
+    \item $x=3$ : $3(1(0.05) + 2(0.06) + 3(0.03) + 4(0.01)) = 3(0.30) = 0.90$
+\end{itemize}
+$\mathbb{E}(XY) = 0.63 + 1.06 + 0.90 = 2.59$.
+$Cov(X,Y) = \mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y) = 2.59 - (1.4 \times 1.85)$.
+
+\textbf{Reponse :}
+$$ \mathbf{\mathbb{E}(X) = 1.4} \quad \text{et} \quad \mathbf{\mathbb{V}(X) = 0.94} $$
+$$ \mathbf{\mathbb{E}(Y) = 1.85} \quad \text{et} \quad \mathbf{\mathbb{V}(Y) = 1.4275} $$
+$$ \mathbf{Cov(X,Y) = 0} $$
+
+\subsection*{c) Les variables aléatoires X et Y sont-elles indépendantes ?}
+
+\textbf{Raisonnement :} 
+Bien que la covariance soit nulle, cela ne suffit pas à prouver l'indépendance. On vérifie sur une case de la loi jointe. Prenons $X=3$ et $Y=0$.
+$\mathbb{P}(X=3, Y=0) = 0$.
+Pourtant, le produit des probabilités marginales donne : $\mathbb{P}(X=3) \times \mathbb{P}(Y=0) = 0.15 \times 0.15 = 0.0225$.
+Puisque $0 \neq 0.0225$, la définition n'est pas vérifiée.
+
+\textbf{Reponse :} 
+\textbf{Les variables X et Y ne sont pas indépendantes.}
+
+\subsection*{d) On pose $Z=X+2Y$. Déterminer l'espérance et la variance de Z.}
+
+\textbf{Raisonnement :} 
+Par la propriété de linéarité de l'espérance : $\mathbb{E}(Z) = \mathbb{E}(X) + 2\mathbb{E}(Y)$.
+Par la formule de la variance pour une somme : $\mathbb{V}(Z) = \mathbb{V}(X) + 4\mathbb{V}(Y) + 4 Cov(X, Y)$.
+Puisque $Cov(X, Y) = 0$, on remplace simplement par les valeurs trouvées en b).
+
+\textbf{Reponse :}
+$$ \mathbf{\mathbb{E}(Z) = 1.4 + 2(1.85) = 5.1} $$
+$$ \mathbf{\mathbb{V}(Z) = 0.94 + 4(1.4275) + 0 = 6.65} $$
+
+\subsection*{e) Déterminer la loi de Z.}
+
+\textbf{Raisonnement :} 
+$Z = x + 2y$. En balayant le tableau, les valeurs possibles vont de $0 + 0 = 0$ à $3 + 2(4) = 11$.
+On additionne les probabilités des cases $(x,y)$ du tableau initial qui donnent la même valeur pour $x+2y$.
+
+\textbf{Reponse :}
+\begin{itemize}
+    \item $\mathbf{\mathbb{P}(Z=0)} : (0,0) \implies \mathbf{0.03}$
+    \item $\mathbf{\mathbb{P}(Z=1)} : (1,0) \implies \mathbf{0.07}$
+    \item $\mathbf{\mathbb{P}(Z=2)} : (2,0), (0,1) \implies 0.05 + 0.05 = \mathbf{0.10}$
+    \item $\mathbf{\mathbb{P}(Z=3)} : (3,0), (1,1) \implies 0 + 0.08 = \mathbf{0.08}$
+    \item $\mathbf{\mathbb{P}(Z=4)} : (2,1), (0,2) \implies 0.07 + 0.05 = \mathbf{0.12}$
+    \item $\mathbf{\mathbb{P}(Z=5)} : (3,1), (1,2) \implies 0.05 + 0.10 = \mathbf{0.15}$
+    \item $\mathbf{\mathbb{P}(Z=6)} : (2,2), (0,3) \implies 0.09 + 0.04 = \mathbf{0.13}$
+    \item $\mathbf{\mathbb{P}(Z=7)} : (3,2), (1,3) \implies 0.06 + 0.05 = \mathbf{0.11}$
+    \item $\mathbf{\mathbb{P}(Z=8)} : (2,3), (0,4) \implies 0.08 + 0.03 = \mathbf{0.11}$
+    \item $\mathbf{\mathbb{P}(Z=9)} : (3,3), (1,4) \implies 0.03 + 0.05 = \mathbf{0.08}$
+    \item $\mathbf{\mathbb{P}(Z=10)} : (2,4) \implies \mathbf{0.01}$
+    \item $\mathbf{\mathbb{P}(Z=11)} : (3,4) \implies \mathbf{0.01}$
+\end{itemize}
+
+\subsection*{f) Déterminer $Cov(X;Z)$.}
+
+\textbf{Raisonnement :} 
+On utilise la propriété de bilinéarité de la covariance :
+$$ Cov(X, Z) = Cov(X, X+2Y) = Cov(X,X) + 2Cov(X,Y) $$
+Or, la covariance d'une variable avec elle-même est sa variance ($Cov(X,X) = \mathbb{V}(X)$), et nous avons déjà démontré que $Cov(X,Y) = 0$.
+
+\textbf{Reponse :}
+$$ \mathbf{Cov(X, Z) = \mathbb{V}(X) = 0.94} $$
+
+\hrulefill
+
+\section*{Exercice 2 - Couple Discret}
+
+\subsection*{a) Déterminer les lois marginales du couple et préciser si ces variables aléatoires sont indépendantes.}
+
+\textbf{Raisonnement :} 
+On somme les lignes pour obtenir la loi de X, et les colonnes pour obtenir la loi de Y.
+Ensuite, pour l'indépendance, on vérifie si chaque case du tableau correspond au produit exact de la probabilité de sa ligne et de sa colonne.
+Par exemple : $\mathbb{P}(X=1) \times \mathbb{P}(Y=1) = 0.40 \times 0.20 = 0.08 = \mathbb{P}(X=1,Y=1)$. C'est le cas pour toutes les valeurs.
+
+\textbf{Reponse :}
+Loi marginale de X :
+\begin{itemize}
+    \item $\mathbf{\mathbb{P}(X=1)} = 0.08 + 0.04 + 0.16 + 0.12 = \mathbf{0.40}$
+    \item $\mathbf{\mathbb{P}(X=2)} = 0.04 + 0.02 + 0.08 + 0.06 = \mathbf{0.20}$
+    \item $\mathbf{\mathbb{P}(X=3)} = 0.08 + 0.04 + 0.16 + 0.12 = \mathbf{0.40}$
+\end{itemize}
+Loi marginale de Y :
+\begin{itemize}
+    \item $\mathbf{\mathbb{P}(Y=1)} = 0.08 + 0.04 + 0.08 = \mathbf{0.20}$
+    \item $\mathbf{\mathbb{P}(Y=2)} = 0.04 + 0.02 + 0.04 = \mathbf{0.10}$
+    \item $\mathbf{\mathbb{P}(Y=3)} = 0.16 + 0.08 + 0.16 = \mathbf{0.40}$
+    \item $\mathbf{\mathbb{P}(Y=4)} = 0.12 + 0.06 + 0.12 = \mathbf{0.30}$
+\end{itemize}
+\textbf{Les variables X et Y sont indépendantes.}
+
+\subsection*{b) Calculer $Cov(X;Y)$.}
+
+\textbf{Raisonnement :} 
+D'après le cours, si deux variables aléatoires sont indépendantes, leur covariance est strictement nulle. Ayant prouvé l'indépendance à la question précédente, le calcul est direct.
+
+\textbf{Reponse :}
+$$ \mathbf{Cov(X, Y) = 0} $$
+
+\subsection*{c) Déterminer la loi du couple $(U, V)$ où $U = \min(X;Y)$ et $V = \max(X;Y)$.}
+
+\textbf{Raisonnement :} 
+$X \in \{1,2,3\}$ et $Y \in \{1,2,3,4\}$. Par définition, on a toujours $U \le V$. Les valeurs possibles pour $U$ sont $\{1,2,3\}$ et pour $V$ sont $\{1,2,3,4\}$.
+Pour construire les probabilités jointes $\mathbb{P}(U=u, V=v)$ :
+\begin{itemize}
+    \item Si $u = v$ : la probabilité est celle de la diagonale $\mathbb{P}(X=u, Y=u)$.
+    \item Si $u < v$ : on additionne les deux cas symétriques, car soit X est le min, soit Y est le min.
+    $\mathbb{P}(U=u, V=v) = \mathbb{P}(X=u, Y=v) + \mathbb{P}(X=v, Y=u)$.
+\end{itemize}
+
+\textbf{Reponse :}
+\begin{itemize}
+    \item $\mathbf{\mathbb{P}(U=1, V=1)} = \mathbb{P}(X=1,Y=1) = \mathbf{0.08}$
+    \item $\mathbf{\mathbb{P}(U=1, V=2)} = \mathbb{P}(X=1,Y=2) + \mathbb{P}(X=2,Y=1) = \mathbf{0.08}$
+    \item $\mathbf{\mathbb{P}(U=1, V=3)} = \mathbb{P}(X=1,Y=3) + \mathbb{P}(X=3,Y=1) = \mathbf{0.24}$
+    \item $\mathbf{\mathbb{P}(U=1, V=4)} = \mathbb{P}(X=1,Y=4) + \mathbb{P}(X=4,Y=1) = \mathbf{0.12}$
+    \item $\mathbf{\mathbb{P}(U=2, V=2)} = \mathbb{P}(X=2,Y=2) = \mathbf{0.02}$
+    \item $\mathbf{\mathbb{P}(U=2, V=3)} = \mathbb{P}(X=2,Y=3) + \mathbb{P}(X=3,Y=2) = \mathbf{0.12}$
+    \item $\mathbf{\mathbb{P}(U=2, V=4)} = \mathbb{P}(X=2,Y=4) + 0 = \mathbf{0.06}$
+    \item $\mathbf{\mathbb{P}(U=3, V=3)} = \mathbb{P}(X=3,Y=3) = \mathbf{0.16}$
+    \item $\mathbf{\mathbb{P}(U=3, V=4)} = \mathbb{P}(X=3,Y=4) + 0 = \mathbf{0.12}$
+\end{itemize}
+\textit{Toutes les autres combinaisons (notamment où $U>V$) ont une probabilité de 0.}
+
+\hrulefill
+
+\section*{Exercice 3 - Lancer de Pièces}
+
+\subsection*{a) Déterminer la loi du couple $(X;Y)$ puis les lois marginales de X et Y.}
+
+\textbf{Raisonnement :} 
+L'expérience consiste en 3 lancers consécutifs. L'univers comporte $2^3 = 8$ issues équiprobables (P=Pile, F=Face).
+$\Omega = \{PPP, PPF, PFP, PFF, FPP, FPF, FFP, FFF\}$.
+$X$ compte les "F" sur les pièces 1 et 2. $Y$ compte les "P" sur les pièces 2 et 3.
+En évaluant pour chaque issue (chacune ayant une probabilité de $1/8$) :
+\begin{itemize}
+    \item $PPP \implies X=0, Y=2$
+    \item $PPF \implies X=0, Y=1$
+    \item $PFP \implies X=1, Y=1$
+    \item $PFF \implies X=1, Y=0$
+    \item $FPP \implies X=1, Y=2$
+    \item $FPF \implies X=1, Y=1$
+    \item $FFP \implies X=2, Y=1$
+    \item $FFF \implies X=2, Y=0$
+\end{itemize}
+
+\textbf{Reponse :}
+On regroupe les probabilités dans un tableau :
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c||c|}
+    \hline
+    $\mathbf{X \setminus Y}$ & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{Loi de X} \\ \hline
+    \textbf{0}               & 0          & 1/8        & 1/8        & \textbf{2/8 = 1/4} \\ \hline
+    \textbf{1}               & 1/8        & 2/8        & 1/8        & \textbf{4/8 = 1/2} \\ \hline
+    \textbf{2}               & 1/8        & 1/8        & 0          & \textbf{2/8 = 1/4} \\ \hline \hline
+    \textbf{Loi de Y}        & \textbf{1/4} & \textbf{1/2} & \textbf{1/4} & \textbf{1} \\ \hline
+    \end{tabular}
+\end{table}
+
+\subsection*{b) Les variables aléatoires sont-elles indépendantes ?}
+
+\textbf{Raisonnement :} 
+Vérifions par exemple la case $X=0$ et $Y=0$. D'après le tableau, $\mathbb{P}(X=0, Y=0) = 0$.
+Or, le produit des marginales est : $\mathbb{P}(X=0) \times \mathbb{P}(Y=0) = \frac{1}{4} \times \frac{1}{4} = \frac{1}{16}$.
+
+\textbf{Reponse :}
+Puisque $0 \neq 1/16$ : \textbf{Les variables X et Y ne sont pas indépendantes.}
+
+\subsection*{c) Calculer $Cov(X;Y)$.}
+
+\textbf{Raisonnement :} 
+X suit une loi binomiale sur 2 lancers avec probabilité de succès 1/2. $\mathbb{E}(X) = 1$. De même, $\mathbb{E}(Y) = 1$.
+On calcule d'abord $\mathbb{E}(XY)$ en sommant le produit $x \cdot y \cdot p$ pour les cases non nulles du tableau :
+$$ \mathbb{E}(XY) = \left(1\cdot 1 \cdot \frac{2}{8}\right) + \left(1\cdot 2 \cdot \frac{1}{8}\right) + \left(2\cdot 1 \cdot \frac{1}{8}\right) = \frac{6}{8} = \frac{3}{4} $$
+On utilise ensuite la formule de la covariance.
+
+\textbf{Reponse :}
+$$ Cov(X, Y) = \mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y) = \frac{3}{4} - (1 \times 1) $$
+$$ \mathbf{Cov(X, Y) = -\frac{1}{4}} $$
+
+\hrulefill
+
+\section*{Exercice 4 - Lien déterministe non-linéaire}
+
+On considère $X$ telle que $\mathbb{P}(X=-1) = \mathbb{P}(X=0) = \mathbb{P}(X=1) = \frac{1}{3}$. On pose $Y = X^2$.
+
+\subsection*{a) Déterminer la loi de Y.}
+
+\textbf{Raisonnement :} 
+Puisque $X \in \{-1, 0, 1\}$, les valeurs possibles pour $Y = X^2$ sont $\{0, 1\}$.
+$\mathbb{P}(Y=0) = \mathbb{P}(X=0)$.
+$\mathbb{P}(Y=1) = \mathbb{P}(X=-1 \cup X=1) = \frac{1}{3} + \frac{1}{3}$.
+
+\textbf{Reponse :}
+\begin{itemize}
+    \item $\mathbf{\mathbb{P}(Y=0) = \frac{1}{3}}$
+    \item $\mathbf{\mathbb{P}(Y=1) = \frac{2}{3}}$
+\end{itemize}
+
+\subsection*{b) Calculer $Cov(X;Y)$.}
+
+\textbf{Raisonnement :} 
+\textbf{Etape 1 : Espérances des variables.}\\
+$\mathbb{E}(X) = -1\left(\frac{1}{3}\right) + 0 + 1\left(\frac{1}{3}\right) = 0$.
+$\mathbb{E}(Y) = 0\left(\frac{1}{3}\right) + 1\left(\frac{2}{3}\right) = \frac{2}{3}$.
+
+\textbf{Etape 2 : Produit des variables.}\\
+Le produit $XY$ correspond à $X \cdot X^2 = X^3$.
+$\mathbb{E}(XY) = \mathbb{E}(X^3) = (-1)^3\left(\frac{1}{3}\right) + 0^3 + 1^3\left(\frac{1}{3}\right) = 0$.
+
+\textbf{Etape 3 : Formule de la covariance.}\\
+$Cov(X,Y) = \mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y) = 0 - \left(0 \times \frac{2}{3}\right)$.
+
+\textbf{Reponse :}
+$$ \mathbf{Cov(X,Y) = 0} $$
+
+\subsection*{c) Les variables X et Y sont-elles indépendantes ?}
+
+\textbf{Raisonnement :} 
+Une covariance nulle n'implique pas l'indépendance (la covariance mesure uniquement la corrélation linéaire, or ici la relation est quadratique).
+Vérifions avec les probabilités jointes. Regardons l'événement conjoint $\{X=0 \cap Y=1\}$.
+Il est impossible d'avoir $X=0$ et $Y=X^2=1$ simultanément. Donc $\mathbb{P}(X=0, Y=1) = 0$.
+Cependant, le produit des probabilités marginales donne : $\mathbb{P}(X=0) \times \mathbb{P}(Y=1) = \frac{1}{3} \times \frac{2}{3} = \frac{2}{9}$.
+
+\textbf{Reponse :}
+Puisque $0 \neq 2/9$, \textbf{les variables X et Y ne sont pas indépendantes.} (\textit{Leur dépendance est même totale puisque Y est entièrement déterminée par X}).
+
+\end{document}

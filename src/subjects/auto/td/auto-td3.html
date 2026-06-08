@@ -21,7 +21,8 @@
         <div>
           <span class="eyebrow">AU361 - TD 3</span>
           <h1>Asservissement de position</h1>
-          <p>Corrige reconstruit depuis le fichier LaTeX <code>pdf/auto/TD/AU361-TD3.tex</code>.</p>
+          <p>Corrige reconstruit depuis le fichier LaTeX correspondant.</p>
+          <p>Page reconstruite depuis <code>pdf/auto/TD/AU361-TD3.tex</code>.</p>
         </div>
         <div class="td-actions">
           <a class="primary-button" href="pdf/auto/TD/AU361-TD3.pdf">Ouvrir le PDF</a>
@@ -34,7 +35,7 @@
           <header>
             <div>
               <span class="status-pill">Partie I</span>
-              <h3>Partie I : Analyse du processus à piloter</h3>
+              <h3>Partie I - Analyse du processus à piloter</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -48,17 +49,26 @@
             <figcaption class="diagram-caption">Boucle d'asservissement de position avec perturbation.</figcaption>
           </figure>
           <h4>I.1. Expression de la fonction de transfert \(H(p)\)</h4>
-          <p>La position \(pos(t)\) est l'intégrale de la vitesse \(vit(t)\). Dans le domaine de Laplace, on a \(POS(p) = \frac{VIT(p)}{p}\). La fonction de transfert entre \(U(p)\) et \(VIT(p)\) est \(\frac{5}{1+0.1p}\). Ainsi, la fonction de transfert du processus \(H(p)\) est: \[H(p) = \frac{POS(p)}{U(p)} = \frac{5}{p(1+0.1p)}\]</p>
+          <p><strong>Raisonnement :</strong> La position \(pos(t)\) est l'intégrale de la vitesse \(vit(t)\). Dans le domaine de Laplace, on a \(POS(p) = \frac{VIT(p)}{p}\). La fonction de transfert entre \(U(p)\) et \(VIT(p)\) est \(\frac{5}{1+0.1p}\).</p>
+          <p><strong>Reponse :</strong> Ainsi, la fonction de transfert du processus \(H(p)\) est : \[\mathbf{H(p) = \frac{POS(p)}{U(p)} = \frac{5}{p(1+0.1p)}}\]</p>
           <h4>I.2. Valeur des pôles du processus</h4>
-          <p>Les pôles annulent le dénominateur de \(H(p)\): \[p(1+0.1p) = 0 \implies p_1 = 0 \quad \text{et} \quad p_2 = -10 \text{ rad/s}\]</p>
+          <p><strong>Raisonnement :</strong> Les pôles annulent le dénominateur de \(H(p)\) : \[p(1+0.1p) = 0\]</p>
+          <p><strong>Reponse :</strong> \[\mathbf{p_1 = 0 \quad \text{et} \quad p_2 = -10 \text{ rad/s}}\]</p>
           <h4>I.3. Stabilité asymptotique</h4>
-          <p>Le système n'est <strong>pas asymptotiquement stable</strong> car il possède un pôle nul (à la limite de la stabilité), traduisant un comportement intégrateur pur.</p>
+          <p><strong>Raisonnement :</strong> Le système possède un pôle nul (à la limite de la stabilité), traduisant un comportement intégrateur pur.</p>
+          <p><strong>Reponse :</strong> Le système n'est <strong>pas asymptotiquement stable</strong>.</p>
           <h4>I.4. Expressions temporelles des réponses indicielles</h4>
-          <p>Pour un échelon de commande \(U(p) = \frac{1}{p}\):</p>
+          <p><strong>Raisonnement :</strong> Pour un échelon de commande \(U(p) = \frac{1}{p}\), on a :</p>
           <ul class="formula-list">
-            <li><strong>Vitesse :</strong> \(VIT(p) = \frac{5}{p(1+0.1p)} = 5 \left( \frac{1}{p} - \frac{0.1}{1+0.1p} \right) = \frac{5}{p} - \frac{5}{p+10}\). En passant dans le domaine temporel : \(vit(t) = 5(1 - e^{-10t}) \cdot \Gamma(t)\).</li>
-            <li><strong>Position :</strong> \(POS(p) = \frac{5}{p^2(1+0.1p)} = \frac{5}{p^2} - \frac{0.5}{p} + \frac{0.5}{p+10}\). En passant dans le domaine temporel : \(pos(t) = (5t - 0.5 + 0.5e^{-10t}) \cdot \Gamma(t)\).</li>
+            <li>Vitesse : \(VIT(p) = \frac{5}{p(1+0.1p)} = 5 \left( \frac{1}{p} - \frac{0.1}{1+0.1p} \right) = \frac{5}{p} - \frac{5}{p+10}\).</li>
+            <li>Position : \(POS(p) = \frac{5}{p^2(1+0.1p)} = \frac{5}{p^2} - \frac{0.5}{p} + \frac{0.5}{p+10}\).</li>
           </ul>
+          <p><strong>Reponse :</strong> En passant dans le domaine temporel :</p>
+          <ul class="formula-list">
+            <li>Vitesse : \(\mathbf{vit(t) = 5(1 - e^{-10t}) \cdot \Gamma(t)}\)</li>
+            <li>Position : \(\mathbf{pos(t) = (5t - 0.5 + 0.5e^{-10t}) \cdot \Gamma(t)}\)</li>
+          </ul>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -66,7 +76,7 @@
           <header>
             <div>
               <span class="status-pill">Partie II</span>
-              <h3>Partie II : Analyse du système asservi</h3>
+              <h3>Partie II - Analyse du système asservi</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -75,19 +85,26 @@
           </header>
           <div id="auto-td3-e2" class="answer-block">
           <h4>II.1. Fonction de transfert du régulateur</h4>
-          <p>Pour un régulateur proportionnel de gain K: \[R(p) = K\]</p>
+          <p><strong>Reponse :</strong> Pour un régulateur proportionnel de gain K : \[\mathbf{R(p) = K}\]</p>
           <h4>II.2. Fonction de transfert en boucle fermée (FTBF)</h4>
-          <p>\[FTBF(p) = \frac{R(p)H(p)}{1 + R(p)H(p)} = \frac{\frac{5K}{p(1+0.1p)}}{1 + \frac{5K}{p(1+0.1p)}} = \frac{5K}{0.1p^2 + p + 5K}\] En mettant sous forme canonique du second ordre \(\frac{1}{\frac{p^2}{\omega_n^2} + \frac{2\zeta}{\omega_n}p + 1}\): \[FTBF(p) = \frac{1}{\frac{0.1}{5K}p^2 + \frac{1}{5K}p + 1}\] Par identification: \[\omega_n = \sqrt{50K} \quad \text{et} \quad \zeta = \frac{1}{\sqrt{2K}}\]</p>
+          <p><strong>Raisonnement :</strong> On applique la formule de la boucle fermée : \[FTBF(p) = \frac{R(p)H(p)}{1 + R(p)H(p)} = \frac{\frac{5K}{p(1+0.1p)}}{1 + \frac{5K}{p(1+0.1p)}} = \frac{5K}{0.1p^2 + p + 5K}\] En mettant sous forme canonique du second ordre \(\frac{1}{\frac{p^2}{\omega_n^2} + \frac{2\zeta}{\omega_n}p + 1}\) : \[FTBF(p) = \frac{1}{\frac{0.1}{5K}p^2 + \frac{1}{5K}p + 1}\]</p>
+          <p><strong>Reponse :</strong> Par identification : \[\mathbf{\omega_n = \sqrt{50K} \quad \text{et} \quad \zeta = \frac{1}{\sqrt{2K}}}\]</p>
           <h4>II.3. Position en régime permanent (consigne échelon)</h4>
-          <p>Sans perturbation (\(\delta=0\)) et pour \(cons = 1/p\), on applique le théorème de la valeur finale: \[pos(\infty) = \lim_{p \to 0} p \cdot FTBF(p) \frac{1}{p} = FTBF(0) = 1\] Le système suit parfaitement la consigne, l'erreur de position est nulle.</p>
+          <p><strong>Raisonnement :</strong> Sans perturbation (\(\delta=0\)) et pour une consigne échelon \(cons = 1/p\), on applique le théorème de la valeur finale : \[pos(\infty) = \lim_{p \to 0} p \cdot FTBF(p) \frac{1}{p} = FTBF(0) = 1\]</p>
+          <p><strong>Reponse :</strong> Le système suit parfaitement la consigne, <strong>l'erreur de position est nulle</strong>.</p>
           <h4>II.4. Erreur statique due à la perturbation</h4>
-          <p>Avec \(cons=0\) et \(\delta=1/p\), le transfert entre la perturbation et la sortie est \(T_\delta(p) = \frac{H(p)}{1+R(p)H(p)} = \frac{5}{0.1p^2 + p + 5K}\). \[pos(\infty) = \lim_{p \to 0} p \cdot T_\delta(p) \frac{1}{p} = T_\delta(0) = \frac{5}{5K} = \frac{1}{K}\] L'erreur statique due à cette perturbation est donc \(\frac{1}{K}\).</p>
+          <p><strong>Raisonnement :</strong> Avec \(cons=0\) et \(\delta=1/p\), le transfert entre la perturbation et la sortie est \(T_\delta(p) = \frac{H(p)}{1+R(p)H(p)} = \frac{5}{0.1p^2 + p + 5K}\). \[pos(\infty) = \lim_{p \to 0} p \cdot T_\delta(p) \frac{1}{p} = T_\delta(0) = \frac{5}{5K} = \frac{1}{K}\]</p>
+          <p><strong>Reponse :</strong> L'erreur statique due à cette perturbation est donc \(\mathbf{\frac{1}{K}}\).</p>
           <h4>II.5. Minimisation de l'erreur statique sans dépassement</h4>
-          <p>Pour minimiser l'erreur (\(\frac{1}{K}\)), il faut maximiser \(K\). Cependant, pour garantir une réponse sans dépassement, il faut un amortissement \(\zeta \ge 1\). \[\frac{1}{\sqrt{2K}} \ge 1 \implies 2K \le 1 \implies K \le 0.5\] On choisit la valeur maximale \(K = 0.5\). L'erreur statique due à la perturbation vaut alors \(\frac{1}{0.5} = 2\).</p>
+          <p><strong>Raisonnement :</strong> Pour minimiser l'erreur (\(\frac{1}{K}\)), il faut maximiser \(K\). Cependant, pour garantir une réponse sans dépassement, il faut un amortissement \(\zeta \ge 1\). \[\frac{1}{\sqrt{2K}} \ge 1 \implies 2K \le 1 \implies K \le 0.5\] On choisit la valeur maximale \(K = 0.5\).</p>
+          <p><strong>Reponse :</strong> L'erreur statique due à la perturbation vaut alors : \[\mathbf{pos(\infty) = \frac{1}{0.5} = 2}\]</p>
           <h4>II.6. Diagramme de Bode de \(T_\delta(p)\) pour \(K=2\)</h4>
-          <p>Pour \(K=2\), \(T_\delta(p) = \frac{5}{0.1p^2 + p + 10}\). Les paramètres deviennent \(\omega_n = \sqrt{100} = 10\) rad/s et \(\zeta = 0.5\). La pulsation de résonance est: \[\omega_r = \omega_n \sqrt{1 - 2\zeta^2} = 10 \sqrt{1 - 0.5} = \frac{10}{\sqrt{2}} \approx 7.07 \text{ rad/s}\]</p>
+          <p><strong>Raisonnement :</strong> Pour \(K=2\), \(T_\delta(p) = \frac{5}{0.1p^2 + p + 10}\). Les paramètres deviennent \(\omega_n = \sqrt{100} = 10\) rad/s et \(\zeta = 0.5\). La pulsation de résonance est donnée par \(\omega_r = \omega_n \sqrt{1 - 2\zeta^2}\).</p>
+          <p><strong>Reponse :</strong> \[\mathbf{\omega_r = 10 \sqrt{1 - 0.5} = \frac{10}{\sqrt{2}} \approx 7.07 \text{ rad/s}}\]</p>
           <h4>II.7. Réponse à une perturbation sinusoïdale</h4>
-          <p>Fréquence \(f = 50\) Hz \(\implies \omega = 314\) rad/s. Amplitude \(= 0.1\). En régime permanent, la position a l'allure d'une sinusoïde de même pulsation. L'amplitude \(A\) de ces variations est: \[A = 0.1 \times |T_\delta(j\omega)| = \frac{0.5}{\sqrt{(5K - 0.1\omega^2)^2 + \omega^2}}\]</p>
+          <p><strong>Raisonnement :</strong> Fréquence \(f = 50\) Hz \(\implies \omega = 314\) rad/s. Amplitude \(= 0.1\). En régime permanent, la position a l'allure d'une sinusoïde de même pulsation. L'amplitude \(A\) de ces variations est \(A = 0.1 \times |T_\delta(j\omega)|\).</p>
+          <p><strong>Reponse :</strong> \[\mathbf{A = \frac{0.5}{\sqrt{(5K - 0.1\omega^2)^2 + \omega^2}}}\]</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -95,7 +112,7 @@
           <header>
             <div>
               <span class="status-pill">Partie III</span>
-              <h3>Partie III : Moteur asservi en position</h3>
+              <h3>Partie III - Moteur asservi en position</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -109,30 +126,59 @@
             <figcaption class="diagram-caption">Moteur asservi en position.</figcaption>
           </figure>
           <h4>1. Expressions de \(T_1(s)\) et \(T_2(s)\)</h4>
-          <p>D'après le schéma, \(V(s) = \frac{K}{1+Ts}[C(s)(CY(s) - Y(s)) - \Gamma_r(s)]\) et \(Y(s) = \frac{V(s)}{s}\). En réorganisant: \[Y(s) \left[ 1 + \frac{K C(s)}{s(1+Ts)} \right] = \frac{K C(s)}{s(1+Ts)} CY(s) - \frac{K}{s(1+Ts)} \Gamma_r(s)\] On identifie les deux fonctions de transfert: \[T_1(s) = \frac{K C(s)}{s(1+Ts) + K C(s)} \quad \text{et} \quad T_2(s) = \frac{-K}{s(1+Ts) + K C(s)}\]</p>
+          <p><strong>Raisonnement :</strong> D'après le schéma, \(V(s) = \frac{K}{1+Ts}[C(s)(CY(s) - Y(s)) - \Gamma_r(s)]\) et \(Y(s) = \frac{V(s)}{s}\). En réorganisant : \[Y(s) \left[ 1 + \frac{K C(s)}{s(1+Ts)} \right] = \frac{K C(s)}{s(1+Ts)} CY(s) - \frac{K}{s(1+Ts)} \Gamma_r(s)\]</p>
+          <p><strong>Reponse :</strong> On identifie les deux fonctions de transfert : \[\mathbf{T_1(s) = \frac{K C(s)}{s(1+Ts) + K C(s)} \quad \text{et} \quad T_2(s) = \frac{-K}{s(1+Ts) + K C(s)}}\]</p>
           <h4>2. Erreur en suivi de consigne échelon (\(C(s) = K_p\))</h4>
-          <p>Le transfert en boucle ouverte comporte un intégrateur pur (\(\frac{1}{s}\)). Le système est donc de classe 1, ce qui garantit une erreur statique de position <strong>nulle</strong> pour une consigne échelon.</p>
+          <p><strong>Raisonnement :</strong> Le transfert en boucle ouverte comporte un intégrateur pur (\(\frac{1}{s}\)). Le système est donc de classe 1.</p>
+          <p><strong>Reponse :</strong> Ce qui garantit une erreur statique de position <strong>nulle</strong> pour une consigne échelon.</p>
           <h4>3. Erreur en réponse à une perturbation unitaire</h4>
-          <p>L'erreur est \(\epsilon = -y\) (puisque \(cy=0\)). \[\lim_{s \to 0} s \cdot T_2(s) \frac{1}{s} = T_2(0) = \frac{-K}{K K_p} = -\frac{1}{K_p}\] L'erreur statique est donc \(\frac{1}{K_p}\).</p>
+          <p><strong>Raisonnement :</strong> L'erreur est \(\epsilon = -y\) (puisque \(cy=0\)). \[\lim_{s \to 0} s \cdot T_2(s) \frac{1}{s} = T_2(0) = \frac{-K}{K K_p} = -\frac{1}{K_p}\]</p>
+          <p><strong>Reponse :</strong> L'erreur statique est donc \(\mathbf{\frac{1}{K_p}}\).</p>
           <h4>4. Erreur de traînage (consigne rampe)</h4>
-          <p>Pour \(CY(s) = 1/s^2\) , l'erreur \(\epsilon(s) = CY(s)(1 - T_1(s)) = \frac{1+Ts}{s[s(1+Ts)+K K_p]}\). \[\epsilon(\infty) = \lim_{s \to 0} s \epsilon(s) = \frac{1}{K K_p}\]</p>
+          <p><strong>Raisonnement :</strong> Pour \(CY(s) = 1/s^2\), l'erreur est \(\epsilon(s) = CY(s)(1 - T_1(s)) = \frac{1+Ts}{s[s(1+Ts)+K K_p]}\).</p>
+          <p><strong>Reponse :</strong> \[\mathbf{\epsilon(\infty) = \lim_{s \to 0} s \epsilon(s) = \frac{1}{K K_p}}\]</p>
           <h4>5. Pas de surtension de gain (\(K=4, T=0.25\))</h4>
-          <p>\(T_1(s)\) est un 2nd ordre avec \(\omega_n^2 = \frac{4K_p}{0.25} = 16K_p\) et \(\frac{2\zeta}{\omega_n} = \frac{1}{4K_p}\), d'où \(\zeta = \frac{1}{2\sqrt{K_p}}\). Il n'y a pas de résonance si \(\zeta \ge \frac{1}{\sqrt{2}}\): \[\frac{1}{2\sqrt{K_p}} \ge \frac{1}{\sqrt{2}} \implies \sqrt{K_p} \le \frac{\sqrt{2}}{2} \implies K_p \le 0.5\]</p>
+          <p><strong>Raisonnement :</strong> \(T_1(s)\) est un second ordre avec \(\omega_n^2 = \frac{4K_p}{0.25} = 16K_p\) et \(\frac{2\zeta}{\omega_n} = \frac{1}{4K_p}\), d'où \(\zeta = \frac{1}{2\sqrt{K_p}}\). Il n'y a pas de résonance si \(\zeta \ge \frac{1}{\sqrt{2}}\).</p>
+          <p><strong>Reponse :</strong> \[\mathbf{\frac{1}{2\sqrt{K_p}} \ge \frac{1}{\sqrt{2}} \implies \sqrt{K_p} \le \frac{\sqrt{2}}{2} \implies K_p \le 0.5}\]</p>
           <h4>6. Marge de phase de 45°</h4>
-          <p>La FTBO est \(L(j\omega) = \frac{4K_p}{j\omega(1+0.25j\omega)}\). Phase : \(\phi = -90^\circ - \arctan(0.25\omega)\). Pour \(M_\phi = 45^\circ\), on a \(\phi = -135^\circ \implies \arctan(0.25\omega) = 45^\circ \implies \omega = 4\) rad/s. Le gain doit valoir 1 à cette pulsation : \[|L(j4)| = \frac{4K_p}{4\sqrt{1+1}} = \frac{K_p}{\sqrt{2}} = 1 \implies K_p = \sqrt{2} \approx 1.41\] Puisque la phase ne dépasse jamais \(-180^\circ\), la marge de gain est <strong>infinie</strong>.</p>
+          <p><strong>Raisonnement :</strong> La FTBO est \(L(j\omega) = \frac{4K_p}{j\omega(1+0.25j\omega)}\). Phase : \(\phi = -90^\circ - \arctan(0.25\omega)\). Pour \(M_\phi = 45^\circ\), on a \(\phi = -135^\circ \implies \arctan(0.25\omega) = 45^\circ \implies \omega = 4\) rad/s. Le gain doit valoir 1 à cette pulsation : \[|L(j4)| = \frac{4K_p}{4\sqrt{1+1}} = \frac{K_p}{\sqrt{2}} = 1\]</p>
+          <p><strong>Reponse :</strong> \[\mathbf{K_p = \sqrt{2} \approx 1.41}\] Puisque la phase ne dépasse jamais \(-180^\circ\), la marge de gain est <strong>infinie</strong>.</p>
           <h4>7. Marge de module pour \(K_p=1\)</h4>
-          <p>La marge de module \(\Delta M\) est la distance minimale entre le lieu de Nyquist de \(L(j\omega)\) et le point critique \(-1\). \(\Delta M = \min_{\omega} |1 + L(j\omega)| = \min_{\omega} |S(j\omega)|^{-1}\). En trouvant le minimum numérique, on obtient \(\Delta M \approx 0.68\).</p>
+          <p><strong>Raisonnement :</strong> La marge de module \(\Delta M\) est la distance minimale entre le lieu de Nyquist de \(L(j\omega)\) et le point critique \(-1\). \[\Delta M = \min_{\omega} |1 + L(j\omega)| = \min_{\omega} |S(j\omega)|^{-1}\]</p>
+          <p><strong>Reponse :</strong> En trouvant le minimum numérique, on obtient \(\mathbf{\Delta M \approx 0.68}\).</p>
           <h4>8. Stabilité avec correcteur PI</h4>
-          <p>Pour \(C(s) = \frac{1+sT_a}{sT_b}\), l'équation caractéristique de la boucle fermée est : \[D(s) = T T_b s^3 + T_b s^2 + K T_a s + K = 0\] Tableau de Routh:</p>
+          <p><strong>Raisonnement :</strong> Pour \(C(s) = \frac{1+sT_a}{sT_b}\), l'équation caractéristique de la boucle fermée est : \[D(s) = T T_b s^3 + T_b s^2 + K T_a s + K = 0\] Dressons le tableau de Routh :</p>
           <div class="latex-table-wrap">
             <table class="latex-table">
-              <tr><td>\(s^3\)</td><td>\(T T_b\)</td><td>\(K T_a\)</td></tr>
-              <tr><td>\(s^2\)</td><td>\(T_b\)</td><td>\(K\)</td></tr>
-              <tr><td>\(s^1\)</td><td>\(\frac{T_b K T_a - T T_b K}{T_b} = K(T_a - T)\)</td><td>0</td></tr>
-              <tr><td>\(s^0\)</td><td>\(K\)</td><td>0</td></tr>
+              <tr>
+                <th><strong>Puissance</strong></th>
+                <th><strong>Colonne 1</strong></th>
+                <th><strong>Colonne 2</strong></th>
+              </tr>
+              <tr>
+                <td>\(s^3\)</td>
+                <td>\(T T_b\)</td>
+                <td>\(K T_a\)</td>
+              </tr>
+              <tr>
+                <td>\(s^2\)</td>
+                <td>\(T_b\)</td>
+                <td>\(K\)</td>
+              </tr>
+              <tr>
+                <td>\(s^1\)</td>
+                <td>\(K(T_a - T)\)</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>\(s^0\)</td>
+                <td>\(K\)</td>
+                <td>0</td>
+              </tr>
             </table>
           </div>
-          <p>Pour que le système soit stable (en supposant \(K>0\) et \(T_b>0\)), tous les éléments de la première colonne doivent être positifs. La condition de stabilité est donc: \[T_a > T\]</p>
+          <p>Pour que le système soit stable (en supposant \(K>0\) et \(T_b>0\)), tous les éléments de la première colonne doivent être positifs.</p>
+          <p><strong>Reponse :</strong> La condition de stabilité est donc \(\mathbf{T_a > T}\).</p>
           </div>
         </article>
       </section>

@@ -1,0 +1,270 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\geometry{margin=2.5cm}
+
+\title{Corrigé - TD 2 : Espaces probabilisés}
+\author{MT 331 - INP Esisar / UGA}
+\date{Année 2025-2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1}
+
+On note les événements suivants : 
+$M_a$ : "la personne est prof de maths", 
+$M_e$ : "la personne est médecin", 
+$N$ : "la personne est normale".
+On note également $L$ : "le mot est lisible" et $\bar{L}$ : "le mot est illisible".
+
+D'après l'énoncé, on a : $P(M_a) = 0.15$, $P(M_e) = 0.08$ et $P(N) = 0.77$.
+Les probabilités conditionnelles d'écrire de façon illisible sont : $P(\bar{L}|M_a) = 0.5$, $P(\bar{L}|M_e) = 0.7$ et $P(\bar{L}|N) = 0.3$.
+
+\subsection*{1. Probabilité que le mot soit illisible}
+
+\textbf{Raisonnement :} La famille $\{M_a, M_e, N\}$ forme un système complet d'événements (SCE). On applique la formule des probabilités totales :
+$$P(\bar{L}) = P(M_a \cap \bar{L}) + P(M_e \cap \bar{L}) + P(N \cap \bar{L})$$
+$$P(\bar{L}) = P(M_a)P(\bar{L}|M_a) + P(M_e)P(\bar{L}|M_e) + P(N)P(\bar{L}|N)$$
+
+\textbf{Reponse :} 
+$$P(\bar{L}) = 0.15 \times 0.5 + 0.08 \times 0.7 + 0.77 \times 0.3 = 0.075 + 0.056 + 0.231 = \mathbf{0.362}$$
+
+\subsection*{2. Probabilité que l'auteur soit un prof de maths sachant que le mot est illisible}
+
+\textbf{Raisonnement :} Il s'agit de calculer la probabilité conditionnelle $P(M_a|\bar{L})$ à l'aide de la formule de Bayes.
+
+\textbf{Reponse :} 
+$$P(M_a|\bar{L}) = \frac{P(M_a \cap \bar{L})}{P(\bar{L})} = \frac{0.075}{0.362} = \mathbf{\frac{75}{362} \approx 0.207}$$
+
+\hrulefill
+
+\section*{Exercice 2}
+
+\subsection*{1. Démonstration par récurrence}
+
+\textbf{Raisonnement :} On procède par récurrence sur le nombre $n$ d'événements $A_1, A_2, \dots, A_n$.
+\begin{itemize}
+    \item \textbf{Initialisation :} Pour $n=2$, la définition de la probabilité conditionnelle donne bien $P(A_1 \cap A_2) = P(A_1)P(A_2|A_1)$.
+    \item \textbf{Hérédité :} Supposons la propriété vraie pour un entier $m \ge 2$.
+    Pour $m+1$ événements, on écrit :
+    $$P(A_1 \cap \dots \cap A_{m+1}) = P((A_1 \cap \dots \cap A_m) \cap A_{m+1}) = P(A_1 \cap \dots \cap A_m)P(A_{m+1} | A_1 \cap \dots \cap A_m)$$
+    En utilisant l'hypothèse de récurrence pour $P(A_1 \cap \dots \cap A_m)$, on obtient directement la formule souhaitée au rang $m+1$.
+\end{itemize}
+
+\textbf{Reponse :} L'hérédité est prouvée, la formule est donc vraie pour tout $n \ge 2$.
+
+\subsection*{2. Tirage dans l'urne}
+
+\textbf{Raisonnement :} Notons $A_k$ l'événement "au $k$-ième tirage, on obtient une boule blanche et une noire" (couleurs différentes) pour $k \in \{1, \dots, n\}$. On cherche $P(A_1 \cap A_2 \cap \dots \cap A_n)$.
+
+Au premier tirage, on choisit 2 boules parmi $2n$. Il y a $n^2$ façons de choisir une blanche et une noire :
+$$P(A_1) = \frac{n^2}{\binom{2n}{2}} = \frac{n^2}{n(2n-1)} = \frac{n}{2n-1}$$
+Sachant $A_1$, il reste $2n-2$ boules dont $n-1$ de chaque couleur. Donc :
+$$P(A_2|A_1) = \frac{(n-1)^2}{\binom{2n-2}{2}} = \frac{n-1}{2n-3}$$
+De manière générale, $P(A_k | A_1 \cap \dots \cap A_{k-1}) = \frac{n-k+1}{2(n-k+1)-1}$.
+
+\textbf{Reponse :} En appliquant la formule du 1., on a le produit :
+$$P(A_1 \cap \dots \cap A_n) = \frac{n}{2n-1} \times \frac{n-1}{2n-3} \times \dots \times \frac{1}{1}$$
+En multipliant le numérateur et le dénominateur par $(n!) \times 2^n$ pour reconstituer les paires manquantes au dénominateur, on trouve :
+$$ \mathbf{P = \frac{2^n(n!)^2}{(2n)!}} $$
+
+\hrulefill
+
+\section*{Exercice 3}
+
+On note $A$ : "l'auteur est anglais" et $V$ : "la lettre tirée est une voyelle".
+On a $P(A) = 0.40$ et $P(\bar{A}) = 0.60$.
+Pour le mot "rigour" (anglais, 6 lettres, 3 voyelles), $P(V|A) = \frac{3}{6} = 0.5$.
+Pour le mot "rigor" (américain, 5 lettres, 2 voyelles), $P(V|\bar{A}) = \frac{2}{5} = 0.4$.
+
+\textbf{Raisonnement :} Le système $\{A, \bar{A}\}$ est un SCE. Par la formule des probabilités totales :
+$$P(V) = P(A)P(V|A) + P(\bar{A})P(V|\bar{A}) = 0.4 \times 0.5 + 0.6 \times 0.4 = 0.44$$
+On cherche la probabilité $P(A|V)$ via la formule de Bayes : $P(A|V) = \frac{P(A \cap V)}{P(V)}$.
+
+\textbf{Reponse :} 
+$$P(A|V) = \frac{0.2}{0.44} = \mathbf{\frac{5}{11}}$$
+
+\hrulefill
+
+\section*{Exercice 4}
+
+\subsection*{1. Famille de trois enfants}
+
+\textbf{Raisonnement :} L'univers est $\Omega = \{F, G\}^3$ avec équiprobabilité, donc $|\Omega| = 8$.
+$A$ : "enfants des deux sexes" correspond à $\Omega$ privé de $\{(G,G,G), (F,F,F)\}$. Donc $|A| = 6$ et $P(A) = \frac{6}{8} = \frac{3}{4}$.
+$B$ : "au plus un garçon" correspond à $\{(F,F,F), (G,F,F), (F,G,F), (F,F,G)\}$. Donc $|B| = 4$ et $P(B) = \frac{4}{8} = \frac{1}{2}$.
+L'intersection $A \cap B$ correspond aux cas "exactement 1 garçon", soit $\{(G,F,F), (F,G,F), (F,F,G)\}$. $|A \cap B| = 3$, donc $P(A \cap B) = \frac{3}{8}$.
+
+\textbf{Reponse :} Puisque $P(A) \times P(B) = \frac{3}{4} \times \frac{1}{2} = \frac{3}{8} = P(A \cap B)$, les événements sont \textbf{indépendants}.
+
+\subsection*{2. Famille de deux enfants}
+
+\textbf{Raisonnement :} Ici $\Omega = \{F, G\}^2$ avec $|\Omega| = 4$.
+$A$ = $\{(G,F), (F,G)\}$ d'où $P(A) = \frac{2}{4} = \frac{1}{2}$.
+$B$ ("au plus un garçon") = $\{(F,F), (G,F), (F,G)\}$ d'où $P(B) = \frac{3}{4}$.
+L'intersection $A \cap B = \{(G,F), (F,G)\}$, d'où $P(A \cap B) = \frac{1}{2}$.
+
+\textbf{Reponse :} $P(A) \times P(B) = \frac{1}{2} \times \frac{3}{4} = \frac{3}{8} \neq P(A \cap B)$, les événements ne sont \textbf{pas indépendants}.
+
+\hrulefill
+
+\section*{Exercice 5}
+
+\textbf{Raisonnement :} C'est la répétition de $n$ épreuves de Bernoulli indépendantes (succès = marquer, avec probabilité $p$). L'univers est $\Omega = \{S, E\}^n$. Le nombre de tirages réussis suit une loi binomiale. L'événement "réussir $k$ tirs" correspond aux issues avec $k$ succès et $n-k$ échecs. Chaque issue a une probabilité $p^k(1-p)^{n-k}$. Il y a $\binom{n}{k}$ façons de placer ces succès.
+
+\textbf{Reponse :} La probabilité est :
+$$ \mathbf{P(X=k) = \binom{n}{k}p^k(1-p)^{n-k}} $$
+
+\hrulefill
+
+\section*{Exercice 6}
+
+\subsection*{1. Probabilité de découvrir le truquage}
+
+\textbf{Raisonnement :} Le jeu possède 33 cartes. L'univers $\Omega$ est l'ensemble des parties à $n$ éléments de ces 33 cartes, $|\Omega| = \binom{33}{n}$. Pour s'apercevoir que le jeu est truqué, il faut tirer \textit{simultanément} les 2 dames de cœur. Le nombre de tirages contenant ces 2 cartes est le choix des $n-2$ autres cartes parmi les 31 restantes, soit $\binom{31}{n-2}$.
+
+\textbf{Reponse :} 
+$$ P(\text{truqué}) = \frac{\binom{31}{n-2}}{\binom{33}{n}} = \frac{31!}{(n-2)!(33-n)!} \times \frac{n!(33-n)!}{33!} = \mathbf{\frac{n(n-1)}{33 \times 32}} $$
+
+\subsection*{2. Nombre d'expériences avec $n=4$}
+
+\textbf{Raisonnement :} Pour $n=4$, $P(\text{truqué}) = \frac{4 \times 3}{33 \times 32} = \frac{1}{88}$.
+En répétant $k$ fois, la probabilité de ne \textit{jamais} s'en apercevoir est $(1 - \frac{1}{88})^k = (\frac{87}{88})^k$.
+On cherche $k$ tel que $1 - (\frac{87}{88})^k \ge 0.95$, soit $(\frac{87}{88})^k \le 0.05$.
+En passant au logarithme : $k \ln(87/88) \le \ln(0.05) \implies k \ge \frac{\ln(0.05)}{\ln(87/88)}$ (le sens de l'inégalité change car $\ln(87/88) < 0$).
+
+\textbf{Reponse :} On trouve $\mathbf{k \ge 263}$.
+
+\hrulefill
+
+\section*{Exercice 7}
+
+\textbf{Raisonnement :} On note $V$ : "vacciné" et $M$ : "tombe malade".
+L'énoncé donne $P(V) = \frac{1}{4}$ (donc $P(\bar{V}) = \frac{3}{4}$) et $P(M|V) = \frac{1}{20}$.
+De plus, parmi les malades, 4 sont non-vaccinés pour 1 vacciné, ce qui signifie que $P(\bar{V}|M) = \frac{4}{5}$ et $P(V|M) = \frac{1}{5}$.
+
+On cherche $P(M|\bar{V})$.
+On sait que :
+$$ P(V|M) = \frac{P(M \cap V)}{P(M)} = \frac{P(M|V)P(V)}{P(M \cap V) + P(M \cap \bar{V})} = \frac{P(M|V)P(V)}{P(M|V)P(V) + P(M|\bar{V})P(\bar{V})} $$
+En injectant les valeurs : 
+$$ \frac{1}{5} = \frac{\frac{1}{20} \times \frac{1}{4}}{\frac{1}{20} \times \frac{1}{4} + P(M|\bar{V}) \times \frac{3}{4}} = \frac{\frac{1}{80}}{\frac{1}{80} + \frac{3}{4}P(M|\bar{V})} $$
+On obtient : 
+$$ \frac{1}{80} + \frac{3}{4}P(M|\bar{V}) = \frac{5}{80} \implies \frac{3}{4}P(M|\bar{V}) = \frac{4}{80} = \frac{1}{20} $$
+
+\textbf{Reponse :} 
+$$ P(M|\bar{V}) = \frac{1}{20} \times \frac{4}{3} = \mathbf{\frac{1}{15}} $$
+
+\hrulefill
+
+\section*{Exercice 8}
+
+On note $M$ : "être malade" ($P(M) = 0.01$), $T$ : "le test est positif", et $D$ : "décéder".
+On a $P(T|M) = 0.8$, $P(\bar{T}|M) = 0.2$, $P(T|\bar{M}) = 0.03$, $P(\bar{T}|\bar{M}) = 0.97$.
+Probabilités de décès selon le statut et le traitement (on est traité ssi le test est positif) :
+$P(D|M \cap \bar{T}) = 0.5$ (malade non traité), $P(D|M \cap T) = 0.1$ (malade traité), $P(D|\bar{M} \cap T) = 0.02$ (sain traité), $P(D|\bar{M} \cap \bar{T}) = 0$ (sain non traité).
+
+\subsection*{1. Sans test de dépistage}
+
+\textbf{Raisonnement :} Le décès ne survient que chez les malades avec probabilité $0.5$.
+
+\textbf{Reponse :} 
+$$ P(D) = P(M \cap D) = P(M)P(D|M) = 0.01 \times 0.5 = \mathbf{0.005} $$
+
+\subsection*{2. Avec dépistage généralisé}
+
+\textbf{Raisonnement :} La famille $\{M \cap T, M \cap \bar{T}, \bar{M} \cap T, \bar{M} \cap \bar{T}\}$ forme un SCE. La formule des probabilités totales donne :
+$$P(D) = P(M)P(T|M)P(D|M \cap T) + P(M)P(\bar{T}|M)P(D|M \cap \bar{T}) + P(\bar{M})P(T|\bar{M})P(D|\bar{M} \cap T) + 0$$
+
+\textbf{Reponse :} 
+$$ P(D) = 0.01 \times 0.8 \times 0.1 + 0.01 \times 0.2 \times 0.5 + 0.99 \times 0.03 \times 0.02 = 0.0008 + 0.001 + 0.000594 = \mathbf{0.002394} $$
+
+\hrulefill
+
+\section*{Exercice 9}
+
+\textbf{Raisonnement :} Il y a 9 personnes au total. On choisit 4 personnes. Le nombre de cas possibles est $\binom{9}{4} = 126$. L'événement "choisir 4 femmes" n'est possible que d'une seule façon, car il n'y a que 4 femmes dans le groupe (on les prend toutes) : $\binom{4}{4} = 1$.
+
+\textbf{Reponse :} 
+$$ P = \mathbf{\frac{1}{126}} $$
+
+\hrulefill
+
+\section*{Exercice 10}
+
+\textbf{Raisonnement :} Notons $S_1, S_2, S_3$ les événements "l'alliance est dans le secteur $i$". À l'origine, ces probabilités sont équiprobables : $P(S_1) = P(S_2) = P(S_3) = \frac{1}{3}$.
+Notons $E$ l'événement "les fouilles sur le secteur 1 ne donnent rien".
+D'après l'énoncé, $P(E|S_1) = p$ (probabilité de rater l'alliance si elle y est). Si l'alliance est ailleurs, on est sûr de ne rien trouver dans le secteur 1 : $P(E|S_2) = P(E|S_3) = 1$.
+On calcule la probabilité de $E$ par les probabilités totales :
+$$ P(E) = P(E|S_1)P(S_1) + P(E|S_2)P(S_2) + P(E|S_3)P(S_3) = p(\frac{1}{3}) + 1(\frac{1}{3}) + 1(\frac{1}{3}) = \frac{p+2}{3} $$
+On utilise ensuite le théorème de Bayes pour réévaluer les probabilités relatives.
+
+\textbf{Reponse :}
+\begin{itemize}
+    \item $P(S_1|E) = \frac{P(E|S_1)P(S_1)}{P(E)} = \mathbf{\frac{p}{p+2}}$
+    \item $P(S_2|E) = \frac{P(E|S_2)P(S_2)}{P(E)} = \mathbf{\frac{1}{p+2}}$
+    \item $P(S_3|E) = \frac{P(E|S_3)P(S_3)}{P(E)} = \mathbf{\frac{1}{p+2}}$
+\end{itemize}
+
+\hrulefill
+
+\section*{Exercice 11}
+
+\subsection*{1. Expressions des probabilités au jour $n+1$}
+
+\textbf{Raisonnement (a) :} Par la formule des probabilités totales avec le SCE $\{M_n, S_n, B_n\}$ :
+$$P(M_{n+1}) = P(M_{n+1}|M_n)P(M_n) + P(M_{n+1}|S_n)P(S_n) + P(M_{n+1}|B_n)P(B_n)$$
+On applique cette logique d'après les règles de transition données.
+
+\textbf{Reponse (a) :}
+\begin{itemize}
+    \item $\mathbf{p_{n+1} = (1-2a)p_n + a q_n + a r_n}$
+    \item $\mathbf{q_{n+1} = a p_n + (1-2a)q_n + a r_n}$
+\end{itemize}
+
+\textbf{Raisonnement (b) :} À tout jour $n$, le titre doit soit monter, soit être stable, soit baisser. Donc la somme des probabilités vaut 1.
+
+\textbf{Reponse (b) :}
+$$ \mathbf{p_n + q_n + r_n = 1} $$
+On en déduit $\mathbf{r_n = 1 - p_n - q_n}$.
+
+\subsection*{2. Suites arithmético-géométriques}
+
+\textbf{Raisonnement :} On injecte l'expression de $r_n$ dans $p_{n+1}$ et $q_{n+1}$ :
+$$p_{n+1} = (1-2a)p_n + a q_n + a(1 - p_n - q_n) = (1-2a)p_n - a p_n + a = (1-3a)p_n + a$$
+De même, $q_{n+1} = a p_n + (1-2a)q_n + a(1 - p_n - q_n) = (1-3a)q_n + a$.
+
+\textbf{Reponse :} Les suites $(p_n)$ et $(q_n)$ s'expriment sous la forme $u_{n+1} = \alpha u_n + \beta$, elles sont donc \textbf{arithmético-géométriques de raison} $\mathbf{1-3a}$.
+
+\subsection*{3. Expression explicite et limites}
+
+\textbf{Raisonnement :} Le point fixe de ces suites est la solution de $\ell = (1-3a)\ell + a \implies 3a\ell = a \implies \ell = \frac{1}{3}$ (puisque $a \neq 0$).
+On pose la suite auxiliaire $u_n = p_n - 1/3$ (resp. $v_n = q_n - 1/3$) qui est géométrique de raison $1-3a$.
+Donc $p_n = \frac{1}{3} + (p_1 - \frac{1}{3})(1-3a)^{n-1}$.
+L'énoncé stipule qu'au premier jour le titre est stable, donc $p_1 = 0$, $q_1 = 1$, $r_1 = 0$.
+
+\textbf{Reponse (Expressions) :}
+\begin{itemize}
+    \item $\mathbf{p_n = \frac{1}{3} - \frac{1}{3}(1-3a)^{n-1}}$
+    \item $\mathbf{q_n = \frac{1}{3} + \frac{2}{3}(1-3a)^{n-1}}$
+    \item $\mathbf{r_n = 1 - p_n - q_n = \frac{1}{3} - \frac{1}{3}(1-3a)^{n-1}}$
+\end{itemize}
+
+\textbf{Raisonnement (Limites) :} Puisque $a \in ]0, 1/2[$, on a $1-3a \in ]-1/2, 1[$. La suite $(1-3a)^{n-1}$ tend donc vers 0 quand $n \to +\infty$.
+
+\textbf{Reponse (Limites) :}
+Les limites des trois suites sont :
+$$ \mathbf{\lim_{n \to \infty} p_n = \frac{1}{3}, \quad \lim_{n \to \infty} q_n = \frac{1}{3}, \quad \lim_{n \to \infty} r_n = \frac{1}{3}} $$
+\textbf{Interprétation :} À long terme, le système "oublie" sa condition initiale et chaque comportement (monter, stagner, baisser) devient équiprobable.
+
+\end{document}

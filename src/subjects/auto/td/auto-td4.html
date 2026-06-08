@@ -21,7 +21,8 @@
         <div>
           <span class="eyebrow">AU361 - TD 4</span>
           <h1>Synthese RST</h1>
-          <p>Corrige reconstruit depuis le fichier LaTeX <code>pdf/auto/TD/AU361-TD4.tex</code>.</p>
+          <p>Corrige reconstruit depuis le fichier LaTeX correspondant.</p>
+          <p>Page reconstruite depuis <code>pdf/auto/TD/AU361-TD4.tex</code>.</p>
         </div>
         <div class="td-actions">
           <a class="primary-button" href="pdf/auto/TD/AU361-TD4.pdf">Ouvrir le PDF</a>
@@ -34,7 +35,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 1</span>
-              <h3>Exercice 1 : Synthèse RST pour un système du 1er ordre</h3>
+              <h3>Exercice 1 - Synthèse RST pour un système du 1er ordre</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -43,28 +44,28 @@
           </header>
           <div id="auto-td4-e1" class="answer-block">
           <h4>1. Modélisation et cahier des charges</h4>
-          <p>La fonction de transfert du processus est \(H(p) = \frac{1}{1+p}\). On identifie les polynômes du système : \(A(p) = p+1\) (degré \(n_A=1\)) et \(B(p) = 1\) (degré \(n_B=0\)). Le cahier des charges impose :</p>
+          <p><strong>Raisonnement :</strong> La fonction de transfert du processus est \(H(p) = \frac{1}{1+p}\). On identifie les polynômes du système : \(A(p) = p+1\) (degré \(n_A=1\)) et \(B(p) = 1\) (degré \(n_B=0\)).</p>
+          <p>Le cahier des charges impose :</p>
           <ul class="formula-list">
-            <li><strong>Rejet asymptotique des perturbations constantes en sortie :</strong> La fonction de sensibilité \(S_{yp}(p) = \frac{A(p)S(p)}{A(p)S(p)+B(p)R(p)}\) doit s'annuler pour \(p=0\).</li>
-          </ul>
-          <p>Puisque \(A(0) = 1 \neq 0\), il faut impérativement imposer \(S(0)=0\). On fixe donc une partie de \(S(p)\) : \(S(p) = p \cdot S'(p)\).</p>
-          <ul class="formula-list">
+            <li><strong>Rejet asymptotique des perturbations constantes en sortie :</strong> La fonction de sensibilité \(S_{yp}(p) = \frac{A(p)S(p)}{A(p)S(p)+B(p)R(p)}\) doit s'annuler pour \(p=0\). Puisque \(A(0) = 1 \neq 0\), il faut impérativement imposer \(S(0)=0\). On fixe donc une partie de \(S(p)\) : \(S(p) = p \cdot S'(p)\).</li>
             <li><strong>Pôle de poursuite :</strong> \(p_c = -4 \implies P_c(p) = p+4\).</li>
             <li><strong>Pôles de filtrage :</strong> \(p_f = -2 \implies P_f(p) = (p+2)^{n_f}\).</li>
           </ul>
           <h4>2. Degré des polynômes</h4>
-          <p>L'équation de Bezout est \(A(p)S(p) + B(p)R(p) = P(p)\).<br> Pour avoir un régulateur propre (ou strictement causal), on pose \(n_R = n_S\).<br> Le polynôme \(S(p)\) s'écrit \(S(p) = p\) (pour avoir le moins de degrés possibles, \(n_S=1\)).<br> On a donc \(n_R = 1 \implies R(p) = r_1 p + r_0\).<br> Le polynôme caractéristique \(P(p)\) a pour degré \(\deg(P) = n_A + n_S = 1+1=2\).<br> Ainsi, le polynôme de filtrage sera de degré 1 : \(P_f(p) = p+2\).<br> Le polynôme cible est donc \(P(p) = (p+4)(p+2) = p^2 + 6p + 8\).</p>
+          <p><strong>Raisonnement :</strong> L'équation de Bezout est \(A(p)S(p) + B(p)R(p) = P(p)\). Pour avoir un régulateur propre (ou strictement causal), on pose \(n_R = n_S\). Le polynôme \(S(p)\) s'écrit \(S(p) = p\) (pour avoir le moins de degrés possibles, \(n_S=1\)). On a donc \(n_R = 1 \implies R(p) = r_1 p + r_0\). Le polynôme caractéristique \(P(p)\) a pour degré \(\deg(P) = n_A + n_S = 1+1=2\). Ainsi, le polynôme de filtrage sera de degré 1 : \(P_f(p) = p+2\).</p>
+          <p><strong>Reponse :</strong> Le polynôme cible est donc : \[\mathbf{P(p) = (p+4)(p+2) = p^2 + 6p + 8}\]</p>
           <h4>3. Calcul des polynômes \(R\), \(S\) et \(T\)</h4>
-          <p>On résout l'équation de Bezout : \[(p+1)(p) + 1 \cdot (r_1 p + r_0) = p^2 + 6p + 8\] \[p^2 + p + r_1 p + r_0 = p^2 + (1+r_1)p + r_0\] Par identification avec \(P(p)\) :</p>
+          <p><strong>Raisonnement :</strong> On résout l'équation de Bezout : \[(p+1)(p) + 1 \cdot (r_1 p + r_0) = p^2 + 6p + 8\] \[p^2 + p + r_1 p + r_0 = p^2 + (1+r_1)p + r_0\] Par identification avec \(P(p)\) :</p>
           <ul class="formula-list">
             <li>\(1+r_1 = 6 \implies r_1 = 5\)</li>
             <li>\(r_0 = 8\)</li>
           </ul>
-          <p>Les polynômes du correcteur sont donc : \[S(p) = p\] \[R(p) = 5p + 8\] Pour obtenir un gain statique unitaire sans modifier la dynamique de poursuite, on annule les pôles de filtrage via : \[T(p) = \frac{P_c(0)P_f(p)}{B(0)} = 4(p+2) = 4p+8\] <em>(Note : le choix \(T(p) = \frac{P(0)}{B(0)} = 8\) est également valide mais ne compense pas le pôle de filtrage dans la poursuite).</em></p>
+          <p><strong>Reponse :</strong> Les polynômes du correcteur sont donc : \[\mathbf{S(p) = p}\] \[\mathbf{R(p) = 5p + 8}\] Pour obtenir un gain statique unitaire sans modifier la dynamique de poursuite, on annule les pôles de filtrage via : \[\mathbf{T(p) = \frac{P_c(0)P_f(p)}{B(0)} = 4(p+2) = 4p+8}\] <em>(Note : le choix \(T(p) = \frac{P(0)}{B(0)} = 8\) est également valide mais ne compense pas le pôle de filtrage dans la poursuite).</em></p>
           <h4>4. Transfert en boucle fermée et sensibilité</h4>
+          <p><strong>Reponse :</strong></p>
           <ul class="formula-list">
-            <li><strong>Transfert BF :</strong> \(\frac{Y(p)}{C(p)} = \frac{B(p)T(p)}{P(p)} = \frac{4(p+2)}{(p+4)(p+2)} = \frac{4}{p+4}\).</li>
-            <li><strong>Fonction de sensibilité :</strong> \(S_{yp}(p) = \frac{A(p)S(p)}{P(p)} = \frac{p(p+1)}{p^2+6p+8}\).</li>
+            <li><strong>Transfert BF :</strong> \(\mathbf{\frac{Y(p)}{C(p)} = \frac{B(p)T(p)}{P(p)} = \frac{4(p+2)}{(p+4)(p+2)} = \frac{4}{p+4}}\).</li>
+            <li><strong>Fonction de sensibilité :</strong> \(\mathbf{S_{yp}(p) = \frac{A(p)S(p)}{P(p)} = \frac{p(p+1)}{p^2+6p+8}}\).</li>
           </ul>
           <hr class="td-divider">
           </div>
@@ -74,7 +75,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 2</span>
-              <h3>Exercice 2 : Structure du correcteur pour un 2nd ordre</h3>
+              <h3>Exercice 2 - Structure du correcteur pour un 2nd ordre</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -83,12 +84,13 @@
           </header>
           <div id="auto-td4-e2" class="answer-block">
           <h4>1. Modélisation</h4>
-          <p>Le système est \(H(p) = \frac{K}{\frac{p^2}{\omega_n^2} + \frac{2\zeta}{\omega_n}p + 1} = \frac{B(p)}{A(p)}\).<br> Le degré de \(A(p)\) est \(n_A = 2\).</p>
+          <p><strong>Reponse :</strong> Le système est \(\mathbf{H(p) = \frac{K}{\frac{p^2}{\omega_n^2} + \frac{2\zeta}{\omega_n}p + 1} = \frac{B(p)}{A(p)}}\). Le degré de \(A(p)\) est \(\mathbf{n_A = 2}\).</p>
           <h4>2. Condition de rejet de perturbation</h4>
-          <p>On veut rejeter une perturbation de pulsation \(\omega = 1\) rad/s. La fonction de sensibilité \(S_{yp}(p)\) doit être nulle en \(p = \pm j\). Il faut donc que \(S(p)\) contienne le facteur \((p-j)(p+j) = p^2+1\).<br> On pose \(S(p) = (p^2+1)S'(p)\). Le degré minimal de \(S(p)\) est donc augmenté de 2.</p>
+          <p><strong>Raisonnement :</strong> On veut rejeter une perturbation de pulsation \(\omega = 1\) rad/s. La fonction de sensibilité \(S_{yp}(p)\) doit être nulle en \(p = \pm j\). Il faut donc que \(S(p)\) contienne le facteur \((p-j)(p+j) = p^2+1\). On pose \(S(p) = (p^2+1)S'(p)\).</p>
+          <p><strong>Reponse :</strong> Le degré minimal de \(S(p)\) est donc augmenté de <strong>2</strong>.</p>
           <h4>3. Détermination des degrés</h4>
-          <p>On cherche un correcteur causal (\(n_R = n_S\)).<br> L'équation de Bezout est de degré \(\deg(P) = n_A + n_S = 2 + n_S\).<br> Le nombre d'inconnues est \(n_{S'}\) (pour \(S'\) unitaire) \(+ n_R + 1\).<br> Or \(n_S = n_{S'} + 2\), donc \(n_R = n_{S'} + 2\).<br> Le nombre total d'inconnues est \(n_{S'} + n_{S'} + 2 + 1 = 2n_{S'} + 3\).<br> En égalisant le nombre d'équations et d'inconnues : \[\deg(P) = 2 + n_S = 2 + (n_{S'} + 2) = n_{S'} + 4\] \[n_{S'} + 4 = 2n_{S'} + 3 \implies n_{S'} = 1\]</p>
-          <h4>Conclusion sur la structure :</h4>
+          <p><strong>Raisonnement :</strong> On cherche un correcteur causal (\(n_R = n_S\)). L'équation de Bezout est de degré \(\deg(P) = n_A + n_S = 2 + n_S\). Le nombre d'inconnues est \(n_{S'}\) (pour \(S'\) unitaire) \(+ n_R + 1\). Or \(n_S = n_{S'} + 2\), donc \(n_R = n_{S'} + 2\). Le nombre total d'inconnues est \(n_{S'} + n_{S'} + 2 + 1 = 2n_{S'} + 3\). En égalisant le nombre d'équations et d'inconnues : \[\deg(P) = 2 + n_S = 2 + (n_{S'} + 2) = n_{S'} + 4\] \[n_{S'} + 4 = 2n_{S'} + 3 \implies n_{S'} = 1\]</p>
+          <p><strong>Reponse :</strong> Conclusion sur la structure :</p>
           <ul class="formula-list">
             <li>Le polynôme \(S(p)\) est de degré \(1 + 2 = \mathbf{3}\).</li>
             <li>Le polynôme \(R(p)\) est de degré \(\mathbf{3}\).</li>
@@ -102,7 +104,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 3</span>
-              <h3>Exercice 3 : Moteur asservi en position (Régulateur RST)</h3>
+              <h3>Exercice 3 - Moteur asservi en position (Régulateur RST)</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -111,34 +113,25 @@
           </header>
           <div id="auto-td4-e3" class="answer-block">
           <h4>1. Modélisation</h4>
-          <figure class="system-diagram td-figure">
-            <img src="assets/auto/TD/AU361-TD4-Ex3.svg" alt="Structure RST du moteur asservi en position." loading="lazy">
-            <figcaption class="diagram-caption">Structure RST du moteur asservi en position.</figcaption>
-          </figure>
-          <p>\(H(p) = \frac{K}{p(1+Tp)} = \frac{B(p)}{A(p)}\) avec \(n_A = 2\) et \(n_B = 0\).</p>
+          <p><strong>Reponse :</strong> \(\mathbf{H(p) = \frac{K}{p(1+Tp)} = \frac{B(p)}{A(p)}}\) avec \(\mathbf{n_A = 2}\) et \(\mathbf{n_B = 0}\).</p>
           <h4>2. Synthèse sans erreur statique et rejet perturbation sur mesure</h4>
+          <p><strong>Raisonnement :</strong></p>
           <ul class="formula-list">
             <li><strong>Suivi consigne constante :</strong> Implique un gain statique unitaire, obtenu par un choix approprié de \(T(p)\) (\(T(0) = P(0)/B(0)\)).</li>
-            <li><strong>Rejet perturbation constante additive sur la position :</strong> C'est une perturbation de sortie.</li>
+            <li><strong>Rejet perturbation constante additive sur la position :</strong> C'est une perturbation de sortie. Il faut \(S_{yp}(0) = 0 \implies A(0)S(0) = 0\). Puisque \(A(p)\) contient déjà un intégrateur (\(A(0)=0\)), la condition est naturellement remplie. Aucune partie fixe n'est requise pour \(S(p)\).</li>
+            <li><strong>Structure :</strong> On pose \(n_R = n_S\). \(\deg(P) = 2 + n_S\). Inconnues : \(n_S + n_R + 1 = 2n_S + 1\).</li>
           </ul>
-          <p>Il faut \(S_{yp}(0) = 0 \implies A(0)S(0) = 0\). Puisque \(A(p)\) contient déjà un intégrateur (\(A(0)=0\)), la condition est naturellement remplie. Aucune partie fixe n'est requise pour \(S(p)\).</p>
-          <ul class="formula-list">
-            <li><strong>Structure :</strong> On pose \(n_R = n_S\). \(\deg(P) = 2 + n_S\). Les polynômes \(R(p)\) et \(S(p)\) sont de <strong>degré 1</strong>, \(P(p)\) est de <strong>degré 3</strong>.</li>
-          </ul>
-          <p>Inconnues : \(n_S + n_R + 1 = 2n_S + 1\). \[2 + n_S = 2n_S + 1 \implies n_S = 1\]</p>
+          <p>\[2 + n_S = 2n_S + 1 \implies n_S = 1\]</p>
+          <p><strong>Reponse :</strong> Les polynômes \(R(p)\) et \(S(p)\) sont de <strong>degré 1</strong>, \(P(p)\) est de <strong>degré 3</strong>.</p>
           <h4>3. Rejet asymptotique des couples résistants</h4>
+          <p><strong>Raisonnement :</strong></p>
           <ul class="formula-list">
-            <li>La perturbation \(\Gamma_r\) agit sur l'entrée du système.</li>
-          </ul>
-          <p>L'annulation de l'erreur nécessite \(B(0)S(0) = 0\).</p>
-          <ul class="formula-list">
-            <li>Puisque \(B(0) = K \neq 0\), on doit imposer <strong>\(S(0)=0\)</strong>.</li>
-          </ul>
-          <p>Le polynôme \(S\) doit contenir un intégrateur : \(S(p) = p S'(p)\).</p>
-          <ul class="formula-list">
-            <li><strong>Conséquence sur les degrés :</strong> \(n_S = n_{S'} + 1\). Inconnues : \(n_{S'} + n_R + 1\). Les polynômes \(R(p)\) et \(S(p)\) sont de <strong>degré 2</strong>, \(P(p)\) de <strong>degré 4</strong>.</li>
+            <li>La perturbation \(\Gamma_r\) agit sur l'entrée du système. L'annulation de l'erreur nécessite \(B(0)S(0) = 0\).</li>
+            <li>Puisque \(B(0) = K \neq 0\), on doit imposer \(S(0)=0\). Le polynôme \(S\) doit contenir un intégrateur : \(S(p) = p S'(p)\).</li>
+            <li><strong>Conséquence sur les degrés :</strong> \(n_S = n_{S'} + 1\). Inconnues : \(n_{S'} + n_R + 1\).</li>
           </ul>
           <p>Pour \(n_R = n_S = n_{S'} + 1\), on a \(2n_{S'} + 2\) inconnues. Équations : \(\deg(P) = 2 + n_S = 3 + n_{S'}\). \[3 + n_{S'} = 2n_{S'} + 2 \implies n_{S'} = 1\]</p>
+          <p><strong>Reponse :</strong> Les polynômes \(R(p)\) et \(S(p)\) sont de <strong>degré 2</strong>, \(P(p)\) de <strong>degré 4</strong>.</p>
           <hr class="td-divider">
           </div>
         </article>
@@ -147,7 +140,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 4</span>
-              <h3>Exercice 4 : Synthèse RST stricte</h3>
+              <h3>Exercice 4 - Synthèse RST stricte</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -156,11 +149,7 @@
           </header>
           <div id="auto-td4-e4" class="answer-block">
           <h4>1. Modélisation et contraintes</h4>
-          <figure class="system-diagram td-figure">
-            <img src="assets/auto/TD/AU361-TD4-Ex4.svg" alt="Structure de synthese RST stricte." loading="lazy">
-            <figcaption class="diagram-caption">Structure de synthese RST stricte.</figcaption>
-          </figure>
-          <p>\(A(p) = p(1+Tp) \implies n_A = 2\). \(B(p) = G \implies n_B = 0\).</p>
+          <p><strong>Raisonnement :</strong> \(A(p) = p(1+Tp) \implies n_A = 2\). \(B(p) = G \implies n_B = 0\).</p>
           <ul class="formula-list">
             <li><strong>Strictement causal :</strong> \(n_R \le n_S - 1\).</li>
             <li><strong>Rejet \(d_1\) (sortie) :</strong> Naturellement rejeté car \(A(0)=0\).</li>
@@ -169,13 +158,14 @@
             <li><strong>Filtrage :</strong> Pôles à -1.</li>
           </ul>
           <h4>2. Détermination des degrés</h4>
-          <p>On pose \(n_R = n_S - 1\). Le nombre d'inconnues est \(n_{S'} + n_R + 1 = n_{S'} + (n_S - 1) + 1 = n_{S'} + (n_{S'} + 1 - 1) + 1 = 2n_{S'} + 1\). <br> Le nombre d'équations est \(\deg(P) = n_A + n_S = 2 + n_{S'} + 1 = n_{S'} + 3\). \[2n_{S'} + 1 = n_{S'} + 3 \implies n_{S'} = 2\] Si \(n_{S'} = 2\), alors \(n_S = 3\) et \(n_R = 2\). La condition de stricte causalité est bien respectée.</p>
+          <p><strong>Raisonnement :</strong> On pose \(n_R = n_S - 1\). Le nombre d'inconnues est \(n_{S'} + n_R + 1 = n_{S'} + (n_S - 1) + 1 = 2n_{S'} + 1\). Le nombre d'équations est \(\deg(P) = n_A + n_S = 2 + n_{S'} + 1 = n_{S'} + 3\). \[2n_{S'} + 1 = n_{S'} + 3 \implies n_{S'} = 2\] Si \(n_{S'} = 2\), alors \(n_S = 3\) et \(n_R = 2\). La condition de stricte causalité est bien respectée.</p>
+          <p><strong>Reponse :</strong></p>
           <ul class="formula-list">
             <li>\(\deg(S) = \mathbf{3}\)</li>
             <li>\(\deg(R) = \mathbf{2}\)</li>
             <li>\(\deg(P) = \mathbf{5}\)</li>
           </ul>
-          <p>Ainsi \(P_f(p) = (p+1)^3\). Les polynômes se déduisent par identification de Bezout : \(A(p)S(p) + B(p)R(p) = P_c(p)P_f(p)\).</p>
+          <p>Ainsi \(\mathbf{P_f(p) = (p+1)^3}\). Les polynômes se déduisent par identification de Bezout : \(\mathbf{A(p)S(p) + B(p)R(p) = P_c(p)P_f(p)}\).</p>
           <hr class="td-divider">
           </div>
         </article>
@@ -184,7 +174,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 5</span>
-              <h3>Exercice 5 : Régulation de température d'une enceinte thermique</h3>
+              <h3>Exercice 5 - Régulation de température d'une enceinte thermique</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -192,12 +182,12 @@
             </div>
           </header>
           <div id="auto-td4-e5" class="answer-block">
-          <h4>Partie 1 : Détermination du système à piloter</h4>
+          <h4>1.a - Liste des variables et des paramètres</h4>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD4-Ex5.svg" alt="Modele thermique de l'enceinte." loading="lazy">
             <figcaption class="diagram-caption">Modele thermique de l'enceinte.</figcaption>
           </figure>
-          <h4>1.a : Liste des variables et des paramètres</h4>
+          <p><strong>Reponse :</strong></p>
           <ul class="formula-list">
             <li><strong>Variables (qui évoluent avec le temps) :</strong></li>
           </ul>
@@ -213,92 +203,81 @@
           <ul class="formula-list">
             <li>\(\alpha_1\), \(\alpha_2\), et \(\alpha_3\) (constantes positives).</li>
           </ul>
-          <h4>1.b : Identification des rôles des variables</h4>
-          <p>Dans un système asservi :</p>
+          <h4>1.b - Identification des rôles des variables</h4>
+          <p><strong>Reponse :</strong> Dans un système asservi :</p>
           <ul class="formula-list">
-            <li><strong>Variable à piloter (ou grandeur réglée) :</strong> C'est ce que l'on souhaite contrôler.</li>
+            <li><strong>Variable à piloter (ou grandeur réglée) :</strong> C'est ce que l'on souhaite contrôler. Ici, c'est la température interne \(Tint(t)\).</li>
+            <li><strong>Variable de commande :</strong> C'est le moyen d'action pour modifier la grandeur réglée. Ici, c'est la puissance de chauffe \(Puis(t)\).</li>
+            <li><strong>Perturbation :</strong> C'est un phénomène extérieur non contrôlé qui influence le système. Ici, c'est la température extérieure \(Text(t)\).</li>
           </ul>
-          <p>Ici, c'est la température interne \(Tint(t)\).</p>
-          <ul class="formula-list">
-            <li><strong>Variable de commande :</strong> C'est le moyen d'action pour modifier la grandeur réglée.</li>
-          </ul>
-          <p>Ici, c'est la puissance de chauffe \(Puis(t)\).</p>
-          <ul class="formula-list">
-            <li><strong>Perturbation :</strong> C'est un phénomène extérieur non contrôlé qui influence le système.</li>
-          </ul>
-          <p>Ici, c'est la température extérieure \(Text(t)\).</p>
-          <h4>Partie 2 : Représentation externe</h4>
-          <p>Pour exprimer les fonctions de transfert, nous devons passer dans le domaine de Laplace en supposant les conditions initiales nulles. Les équations différentielles deviennent :</p>
+          <h4>2.a - Expressions de \(H(p)\) et \(Hd(p)\)</h4>
+          <p><strong>Raisonnement :</strong> Pour exprimer les fonctions de transfert, nous devons passer dans le domaine de Laplace en supposant les conditions initiales nulles. Les équations différentielles deviennent :</p>
           <ol class="solution-steps">
             <li>\(p \cdot Tpar(p) = \alpha_1(Tint(p) - Tpar(p)) + \alpha_2(Text(p) - Tpar(p)) + Puis(p)\)</li>
             <li>\(p \cdot Tint(p) = \alpha_3(Tpar(p) - Tint(p))\)</li>
           </ol>
-          <h4>2.a : Expressions de \(H(p)\) et \(Hd(p)\)</h4>
           <p>Isolons \(Tpar(p)\) dans la deuxième équation : \[Tpar(p) = \frac{p + \alpha_3}{\alpha_3} Tint(p)\]</p>
           <p>Substituons \(Tpar(p)\) dans la première équation : \[p \frac{p + \alpha_3}{\alpha_3} Tint(p) = \alpha_1 Tint(p) - (\alpha_1 + \alpha_2) \frac{p + \alpha_3}{\alpha_3} Tint(p) + \alpha_2 Text(p) + Puis(p)\]</p>
-          <p>Multiplions tout par \(\alpha_3\) pour simplifier et regroupons les termes en \(Tint(p)\) : \[[p(p + \alpha_3) - \alpha_1 \alpha_3 + (\alpha_1 + \alpha_2)(p + \alpha_3)] Tint(p) = \alpha_2 \alpha_3 Text(p) + \alpha_3 Puis(p)\] \[[p^2 + \alpha_3 p - \alpha_1 \alpha_3 + \alpha_1 p + \alpha_1 \alpha_3 + \alpha_2 p + \alpha_2 \alpha_3] Tint(p) = \alpha_2 \alpha_3 Text(p) + \alpha_3 Puis(p)\] \[[p^2 + (\alpha_1 + \alpha_2 + \alpha_3)p + \alpha_2 \alpha_3] Tint(p) = \alpha_2 \alpha_3 Text(p) + \alpha_3 Puis(p)\]</p>
+          <p>Multiplions tout par \(\alpha_3\) pour simplifier et regroupons les termes en \(Tint(p)\) : \[[p^2 + (\alpha_1 + \alpha_2 + \alpha_3)p + \alpha_2 \alpha_3] Tint(p) = \alpha_2 \alpha_3 Text(p) + \alpha_3 Puis(p)\]</p>
           <p>Par principe de superposition :</p>
           <ul class="formula-list">
-            <li><strong>Pour \(H(p)\)</strong>, on considère que la perturbation est nulle (\(Text(p) = 0\)) : \[ H(p) = \frac{Tint(p)}{Puis(p)} = \frac{\alpha_3}{p^2 + (\alpha_1 + \alpha_2 + \alpha_3)p + \alpha_2 \alpha_3} \]</li>
-            <li><strong>Pour \(Hd(p)\)</strong>, on considère que la commande est nulle (\(Puis(p) = 0\)) : \[ Hd(p) = \frac{Tint(p)}{Text(p)} = \frac{\alpha_2 \alpha_3}{p^2 + (\alpha_1 + \alpha_2 + \alpha_3)p + \alpha_2 \alpha_3} \]</li>
+            <li><strong>Pour \(H(p)\)</strong>, on considère que la perturbation est nulle (\(Text(p) = 0\)).</li>
+            <li><strong>Pour \(Hd(p)\)</strong>, on considère que la commande est nulle (\(Puis(p) = 0\)).</li>
           </ul>
-          <h4>2.b : Gain statique de \(Hd(p)\)</h4>
-          <p>Le gain statique s'obtient en posant \(p = 0\) (régime permanent) : \[Hd(0) = \frac{\alpha_2 \alpha_3}{\alpha_2 \alpha_3} = 1\] <em>Sens physique : Si on ne chauffe pas, à terme, la température intérieure sera exactement égale à la température extérieure.</em></p>
-          <h4>Partie 3 : Enceinte parfaitement isolée asservie (Gain K)</h4>
-          <p>"Parfaitement isolée" signifie qu'il n'y a pas d'échanges avec l'extérieur, donc \(\alpha_2 = 0\).</p>
-          <h4>3.a : Conclusion sur \(Hd(p)\)</h4>
-          <p>Si \(\alpha_2 = 0\), alors d'après l'expression calculée précédemment, \(\mathbf{Hd(p) = 0}\). La température extérieure n'a plus d'influence sur le système.</p>
-          <h4>3.b : Forme de la fonction de transfert \(H(p)\)</h4>
-          <p>En remplaçant \(\alpha_2 = 0\) dans \(H(p)\) : \[H(p) = \frac{\alpha_3}{p^2 + (\alpha_1 + \alpha_3)p} = \frac{\alpha_3}{p(p + \alpha_1 + \alpha_3)}\] Pour l'identifier à la forme canonique \(\frac{G}{p(1+Tp)}\), on factorise par \((\alpha_1 + \alpha_3)\) au dénominateur : \[H(p) = \frac{\frac{\alpha_3}{\alpha_1 + \alpha_3}}{p\left(1 + \frac{1}{\alpha_1 + \alpha_3}p\right)}\] Par identification, on trouve : \[G = \frac{\alpha_3}{\alpha_1 + \alpha_3} \quad \text{et} \quad T = \frac{1}{\alpha_1 + \alpha_3}\]</p>
-          <h4>3.c : Réponse indicielle de \(H(p)\)</h4>
-          <p>Une réponse indicielle correspond à une entrée en échelon, \(Puis(p) = \frac{1}{p}\). La sortie est donc \(Tint(p) = \frac{G}{p^2(1+Tp)}\). <br> C'est un système avec un pôle à l'origine (comportement intégrateur) et un pôle en \(-1/T\). Sa réponse temporelle combine une rampe et une exponentielle. L'allure de la courbe sera une tangente horizontale à l'origine qui va tendre asymptotiquement vers une droite de pente \(G\).</p>
-          <h4>3.d : Fonction de transfert en boucle fermée (FTBF)</h4>
-          <p>Avec un régulateur proportionnel de gain \(K\), la FTBF s'écrit : \[FTBF(p) = \frac{K \cdot H(p)}{1 + K \cdot H(p)} = \frac{\frac{K \cdot G}{p(1+Tp)}}{1 + \frac{K \cdot G}{p(1+Tp)}} = \frac{K \cdot G}{Tp^2 + p + K \cdot G}\] En divisant par \(K \cdot G\) pour avoir un gain unitaire au numérateur : \[FTBF(p) = \frac{1}{\frac{T}{K \cdot G}p^2 + \frac{1}{K \cdot G}p + 1}\]</p>
-          <h4>3.e : Erreur statique en suivi de consigne échelon</h4>
-          <p>Le système en boucle ouverte (\(K \cdot H(p)\)) possède un intégrateur pur (le \(p\) au dénominateur). Or, la théorie stipule qu'un système de classe 1 présente une <strong>erreur statique nulle</strong> pour une entrée en échelon.</p>
-          <h4>3.f : Réglage pour une réponse sans dépassement la plus rapide</h4>
-          <p>On identifie la FTBF au modèle du second ordre : \(\frac{1}{\frac{p^2}{\omega_n^2} + \frac{2\zeta}{\omega_n}p + 1}\). <br> On obtient \(\omega_n = \sqrt{\frac{K \cdot G}{T}}\) et \(\frac{2\zeta}{\omega_n} = \frac{1}{K \cdot G}\). Ce qui donne \(\zeta = \frac{1}{2\sqrt{K \cdot G \cdot T}}\). <br> La réponse est la plus rapide sans dépassement (amortissement critique) pour \(\mathbf{\zeta = 1}\). \[\frac{1}{2\sqrt{K \cdot G \cdot T}} = 1 \implies 4 \cdot K \cdot G \cdot T = 1 \implies K = \frac{1}{4 \cdot G \cdot T}\] En substituant \(G\) et \(T\) : \[K = \frac{1}{4 \cdot \left(\frac{\alpha_3}{\alpha_1 + \alpha_3}\right) \cdot \left(\frac{1}{\alpha_1 + \alpha_3}\right)} = \frac{(\alpha_1 + \alpha_3)^2}{4\alpha_3}\]</p>
-          <h4>3.g : Marge de phase de 45 degrés</h4>
-          <p>La fonction de transfert en boucle ouverte est \(FTBO(j\omega) = \frac{K \cdot G}{j\omega(1 + jT\omega)}\). <br> La marge de phase est \(\Delta\phi = 180^\circ + \arg(FTBO(j\omega_c)) = 45^\circ\). <br> L'argument est \(\arg(FTBO(j\omega)) = -90^\circ - \arctan(T\omega)\). \[-90^\circ - \arctan(T\omega_c) = -135^\circ \implies \arctan(T\omega_c) = 45^\circ \implies T\omega_c = 1 \implies \omega_c = \frac{1}{T}\] À la pulsation de coupure \(\omega_c\), le gain vaut 1 : \[|FTBO(j\omega_c)| = \frac{K \cdot G}{\omega_c \sqrt{1 + (T\omega_c)^2}} = 1\] En remplaçant \(\omega_c\) par \(1/T\) : \[\frac{K \cdot G}{\frac{1}{T} \sqrt{2}} = 1 \implies K = \frac{\sqrt{2}}{G \cdot T} = \sqrt{2} \frac{(\alpha_1 + \alpha_3)^2}{\alpha_3}\]</p>
-          <h4>Partie 4 : Enceinte avec pertes thermiques (Régulateur RST)</h4>
-          <p>Valeurs : \(\alpha_1=0.9\), \(\alpha_2=0.01\), \(\alpha_3=0.1\).</p>
-          <h4>4.a : Approximations du 1er ordre</h4>
-          <p>Sur les courbes indicielles :</p>
+          <p><strong>Reponse :</strong> \[\mathbf{H(p) = \frac{Tint(p)}{Puis(p)} = \frac{\alpha_3}{p^2 + (\alpha_1 + \alpha_2 + \alpha_3)p + \alpha_2 \alpha_3}}\] \[\mathbf{Hd(p) = \frac{Tint(p)}{Text(p)} = \frac{\alpha_2 \alpha_3}{p^2 + (\alpha_1 + \alpha_2 + \alpha_3)p + \alpha_2 \alpha_3}}\]</p>
+          <h4>2.b - Gain statique de \(Hd(p)\)</h4>
+          <p><strong>Raisonnement :</strong> Le gain statique s'obtient en posant \(p = 0\) (régime permanent) : \[Hd(0) = \frac{\alpha_2 \alpha_3}{\alpha_2 \alpha_3} = 1\]</p>
+          <p><strong>Reponse :</strong> \(\mathbf{Hd(0) = 1}\). <em>Sens physique : Si on ne chauffe pas, à terme, la température intérieure sera exactement égale à la température extérieure.</em></p>
+          <h4>3.a - Conclusion sur \(Hd(p)\) si enceinte parfaitement isolée</h4>
+          <p><strong>Raisonnement :</strong> "Parfaitement isolée" signifie qu'il n'y a pas d'échanges avec l'extérieur, donc \(\alpha_2 = 0\).</p>
+          <p><strong>Reponse :</strong> Si \(\alpha_2 = 0\), alors d'après l'expression calculée précédemment, \(\mathbf{Hd(p) = 0}\). La température extérieure n'a plus d'influence sur le système.</p>
+          <h4>3.b - Forme de la fonction de transfert \(H(p)\)</h4>
+          <p><strong>Raisonnement :</strong> En remplaçant \(\alpha_2 = 0\) dans \(H(p)\) : \[H(p) = \frac{\alpha_3}{p^2 + (\alpha_1 + \alpha_3)p} = \frac{\alpha_3}{p(p + \alpha_1 + \alpha_3)}\] Pour l'identifier à la forme canonique \(\frac{G}{p(1+Tp)}\), on factorise par \((\alpha_1 + \alpha_3)\) au dénominateur : \[H(p) = \frac{\frac{\alpha_3}{\alpha_1 + \alpha_3}}{p\left(1 + \frac{1}{\alpha_1 + \alpha_3}p\right)}\]</p>
+          <p><strong>Reponse :</strong> Par identification, on trouve : \[\mathbf{G = \frac{\alpha_3}{\alpha_1 + \alpha_3} \quad \text{et} \quad T = \frac{1}{\alpha_1 + \alpha_3}}\]</p>
+          <h4>3.c - Réponse indicielle de \(H(p)\)</h4>
+          <p><strong>Raisonnement :</strong> Une réponse indicielle correspond à une entrée en échelon, \(Puis(p) = \frac{1}{p}\). La sortie est donc \(Tint(p) = \frac{G}{p^2(1+Tp)}\). C'est un système avec un pôle à l'origine (comportement intégrateur) et un pôle en \(-1/T\). Sa réponse temporelle combine une rampe et une exponentielle.</p>
+          <p><strong>Reponse :</strong> L'allure de la courbe sera une <strong>tangente horizontale à l'origine</strong> qui va tendre asymptotiquement vers une <strong>droite de pente \(G\)</strong>.</p>
+          <h4>3.d - Fonction de transfert en boucle fermée (FTBF)</h4>
+          <p><strong>Raisonnement :</strong> Avec un régulateur proportionnel de gain \(K\), la FTBF s'écrit : \[FTBF(p) = \frac{K \cdot H(p)}{1 + K \cdot H(p)} = \frac{\frac{K \cdot G}{p(1+Tp)}}{1 + \frac{K \cdot G}{p(1+Tp)}} = \frac{K \cdot G}{Tp^2 + p + K \cdot G}\]</p>
+          <p><strong>Reponse :</strong> En divisant par \(K \cdot G\) pour avoir un gain unitaire au numérateur : \[\mathbf{FTBF(p) = \frac{1}{\frac{T}{K \cdot G}p^2 + \frac{1}{K \cdot G}p + 1}}\]</p>
+          <h4>3.e - Erreur statique en suivi de consigne échelon</h4>
+          <p><strong>Raisonnement :</strong> Le système en boucle ouverte (\(K \cdot H(p)\)) possède un intégrateur pur (le \(p\) au dénominateur). Or, la théorie stipule qu'un système de classe 1 présente une erreur statique nulle pour une entrée en échelon.</p>
+          <p><strong>Reponse :</strong> <strong>L'erreur statique est nulle</strong>.</p>
+          <h4>3.f - Réglage pour une réponse sans dépassement la plus rapide</h4>
+          <p><strong>Raisonnement :</strong> On identifie la FTBF au modèle du second ordre : \(\frac{1}{\frac{p^2}{\omega_n^2} + \frac{2\zeta}{\omega_n}p + 1}\). On obtient \(\omega_n = \sqrt{\frac{K \cdot G}{T}}\) et \(\frac{2\zeta}{\omega_n} = \frac{1}{K \cdot G}\). Ce qui donne \(\zeta = \frac{1}{2\sqrt{K \cdot G \cdot T}}\). La réponse est la plus rapide sans dépassement (amortissement critique) pour \(\zeta = 1\). \[\frac{1}{2\sqrt{K \cdot G \cdot T}} = 1 \implies 4 \cdot K \cdot G \cdot T = 1 \implies K = \frac{1}{4 \cdot G \cdot T}\]</p>
+          <p><strong>Reponse :</strong> En substituant \(G\) et \(T\) : \[\mathbf{K = \frac{(\alpha_1 + \alpha_3)^2}{4\alpha_3}}\]</p>
+          <h4>3.g - Marge de phase de 45 degrés</h4>
+          <p><strong>Raisonnement :</strong> La fonction de transfert en boucle ouverte est \(FTBO(j\omega) = \frac{K \cdot G}{j\omega(1 + jT\omega)}\). La marge de phase est \(\Delta\phi = 180^\circ + \arg(FTBO(j\omega_c)) = 45^\circ\). L'argument est \(\arg(FTBO(j\omega)) = -90^\circ - \arctan(T\omega)\). \[-90^\circ - \arctan(T\omega_c) = -135^\circ \implies \arctan(T\omega_c) = 45^\circ \implies T\omega_c = 1 \implies \omega_c = \frac{1}{T}\] À la pulsation de coupure \(\omega_c\), le gain vaut 1 : \[|FTBO(j\omega_c)| = \frac{K \cdot G}{\omega_c \sqrt{1 + (T\omega_c)^2}} = 1\]</p>
+          <p><strong>Reponse :</strong> En remplaçant \(\omega_c\) par \(1/T\) : \[\mathbf{K = \frac{\sqrt{2}}{G \cdot T} = \sqrt{2} \frac{(\alpha_1 + \alpha_3)^2}{\alpha_3}}\]</p>
+          <h4>4.a - Approximations du 1er ordre (Enceinte avec pertes)</h4>
+          <p><strong>Raisonnement :</strong> Valeurs : \(\alpha_1=0.9\), \(\alpha_2=0.01\), \(\alpha_3=0.1\). Sur les courbes indicielles :</p>
           <ul class="formula-list">
-            <li>\(H(p)\) tend vers 100 en régime permanent.</li>
+            <li>\(H(p)\) tend vers 100 en régime permanent. À \(63\%\) de la valeur finale, on lit un temps \(\tau \approx 1000\)s.</li>
+            <li>\(Hd(p)\) tend vers 1 en régime permanent avec la même dynamique.</li>
           </ul>
-          <p>À \(63\%\) de la valeur finale, on lit un temps \(\tau \approx 1000\)s. Donc \(\mathbf{H(p) \approx \frac{100}{1 + 1000p}}\).</p>
+          <p><strong>Reponse :</strong> \[\mathbf{H(p) \approx \frac{100}{1 + 1000p}} \quad \text{et} \quad \mathbf{Hd(p) \approx \frac{1}{1 + 1000p}}\]</p>
+          <h4>4.c - Synthèse du régulateur RST</h4>
+          <p><strong>Etape 1 : Pôles désirés \(P(p)\)</strong><br> On veut un comportement du 1er ordre avec \(tr_{95\%} = 900\)s. Or \(tr_{95\%} \approx 3\tau_{BF}\), donc \(\tau_{BF} = 300\)s. Le pôle de poursuite est \(P_c(p) = 1 + 300p\). Tous les pôles doivent être égaux, donc les pôles de filtrage seront aussi sous la forme \(1 + 300p\).</p>
+          <p><strong>Etape 2 : Structure de R(p) et S(p)</strong><br> Rejet asymptotique d'un échelon de perturbation sur \(Text\). Le régulateur doit contenir le modèle de la perturbation (un intégrateur). Donc \(R(p)\) doit contenir le facteur \(p\). Pour assurer la stricte causalité \(\deg(R) > \deg(S)\) et pouvoir résoudre l'équation de Bézout, on choisit : \[R(p) = p(r_1 p + r_0) \implies \deg(R)=2\] \[S(p) = s_1 p + s_0 \implies \deg(S)=1\] L'équation \(A(p)R(p) + B(p)S(p)\) sera de degré 3. Le polynôme désiré \(P(p)\) doit donc être de degré 3 : \[P(p) = (1 + 300p)^3 = 27\,000\,000 p^3 + 270\,000 p^2 + 900 p + 1\]</p>
+          <p><strong>Etape 3 : Résolution de l'équation de Diophante (Bézout)</strong><br> \[(1000p + 1)(r_1 p^2 + r_0 p) + 100(s_1 p + s_0) = 27\,000\,000 p^3 + 270\,000 p^2 + 900 p + 1\] En identifiant les coefficients :</p>
           <ul class="formula-list">
-            <li>\(Hd(p)\) tend vers 1 en régime permanent avec la même dynamique. Donc \(\mathbf{Hd(p) \approx \frac{1}{1 + 1000p}}\).</li>
+            <li>\(p^3\) : \(1000 r_1 = 27\,000\,000 \implies r_1 = 27\,000\)</li>
+            <li>\(p^2\) : \(1000 r_0 + r_1 = 270\,000 \implies r_0 = 243\)</li>
+            <li>\(p^1\) : \(r_0 + 100 s_1 = 900 \implies s_1 = 6.57\)</li>
+            <li>\(p^0\) : \(100 s_0 = 1 \implies s_0 = 0.01\)</li>
           </ul>
-          <h4>4.c : Synthèse du régulateur RST</h4>
-          <p>Modèle : \(A(p) = 1 + 1000p\) et \(B(p) = 100\).</p>
-          <h4>Pôles désirés \(P(p)\) :</h4>
-          <p>On veut un comportement du 1er ordre avec \(tr_{95\%} = 900\)s. Or \(tr_{95\%} \approx 3\tau_{BF}\), donc \(\tau_{BF} = 300\)s. Le pôle de poursuite est \(P_c(p) = 1 + 300p\). <br> Tous les pôles doivent être égaux, donc les pôles de filtrage seront aussi sous la forme \(1 + 300p\).</p>
-          <h4>Structure de R(p) et S(p) :</h4>
-          <p>Rejet asymptotique d'un échelon de perturbation sur \(Text\). Le régulateur doit contenir le modèle de la perturbation (un intégrateur). Donc \(R(p)\) doit contenir le facteur \(p\). <br> Pour assurer la stricte causalité \(\deg(R) > \deg(S)\) et pouvoir résoudre l'équation de Bézout, on choisit : \[R(p) = p(r_1 p + r_0) \implies \deg(R)=2\] \[S(p) = s_1 p + s_0 \implies \deg(S)=1\] L'équation \(A(p)R(p) + B(p)S(p)\) sera de degré 3. Le polynôme désiré \(P(p)\) doit donc être de degré 3 : \[P(p) = (1 + 300p)^3 = 27\,000\,000 p^3 + 270\,000 p^2 + 900 p + 1\]</p>
-          <h4>Résolution de l'équation de Diophante (Bézout) :</h4>
-          <p>\[(1000p + 1)(r_1 p^2 + r_0 p) + 100(s_1 p + s_0) = 27\,000\,000 p^3 + 270\,000 p^2 + 900 p + 1\] En identifiant les coefficients :</p>
-          <ul class="formula-list">
-            <li>\(p^3\) : \(1000 r_1 = 27\,000\,000 \implies \mathbf{r_1 = 27\,000}\)</li>
-            <li>\(p^2\) : \(1000 r_0 + r_1 = 270\,000 \implies 1000 r_0 + 27\,000 = 270\,000 \implies \mathbf{r_0 = 243}\)</li>
-            <li>\(p^1\) : \(r_0 + 100 s_1 = 900 \implies 243 + 100 s_1 = 900 \implies \mathbf{s_1 = 6.57}\)</li>
-            <li>\(p^0\) : \(100 s_0 = 1 \implies \mathbf{s_0 = 0.01}\)</li>
-          </ul>
-          <p>Donc \(\mathbf{R(p) = p(27000p + 243)}\) et \(\mathbf{S(p) = 6.57p + 0.01}\).</p>
-          <h4>Détermination de T(p) :</h4>
-          <p>On veut \(FTBF = \frac{B(p)T(p)}{P(p)} \equiv \frac{1}{1+300p}\). \[\frac{100 \cdot T(p)}{(1+300p)^3} = \frac{1}{1+300p} \implies 100 \cdot T(p) = (1+300p)^2 = 90000p^2 + 600p + 1\] Donc \(\mathbf{T(p) = 900p^2 + 6p + 0.01}\).</p>
-          <h4>4.d : Fonction de sensibilité</h4>
+          <p><strong>Reponse :</strong> Les polynômes du régulateur sont : \[\mathbf{R(p) = p(27000p + 243)} \quad \text{et} \quad \mathbf{S(p) = 6.57p + 0.01}\]</p>
+          <p><strong>Etape 4 : Détermination de T(p)</strong><br> On veut \(FTBF = \frac{B(p)T(p)}{P(p)} \equiv \frac{1}{1+300p}\). \[\frac{100 \cdot T(p)}{(1+300p)^3} = \frac{1}{1+300p} \implies 100 \cdot T(p) = (1+300p)^2 = 90000p^2 + 600p + 1\]</p>
+          <p><strong>Reponse (suite) :</strong> \[\mathbf{T(p) = 900p^2 + 6p + 0.01}\]</p>
+          <h4>4.d - Fonction de sensibilité</h4>
           <figure class="system-diagram td-figure">
             <img src="assets/auto/TD/AU361-TD4-Ex5-q4.svg" alt="Boucle RST pour la regulation de temperature." loading="lazy">
             <figcaption class="diagram-caption">Boucle RST pour la regulation de temperature.</figcaption>
           </figure>
-          <p>La fonction de sensibilité par rapport à une perturbation en sortie se définit par : \[S(p) = \frac{A(p)R(p)}{P(p)} = \frac{(1+1000p) \cdot 243p \cdot (1 + \frac{27000}{243}p)}{(1+300p)^3} \approx \frac{243p \cdot (1+1000p) \cdot (1+111.11p)}{(1+300p)^3}\] <strong>Analyse asymptotique pour le diagramme de Bode :</strong></p>
+          <p><strong>Raisonnement :</strong> La fonction de sensibilité par rapport à une perturbation en sortie se définit par : \[S(p) = \frac{A(p)R(p)}{P(p)} = \frac{(1+1000p) \cdot 243p \cdot (1 + \frac{27000}{243}p)}{(1+300p)^3} \approx \frac{243p \cdot (1+1000p) \cdot (1+111.11p)}{(1+300p)^3}\]</p>
+          <p>Analyse asymptotique pour le diagramme de Bode :</p>
           <ul class="formula-list">
-            <li><strong>Basses fréquences :</strong> Le terme \(243p\) domine (+20 dB/décade).</li>
-          </ul>
-          <p>Garantit le rejet asymptotique d'un échelon (gain \(\to -\infty\) dB quand \(\omega \to 0\)).</p>
-          <ul class="formula-list">
+            <li><strong>Basses fréquences :</strong> Le terme \(243p\) domine (+20 dB/décade). Garantit le rejet asymptotique d'un échelon (gain \(\to -\infty\) dB quand \(\omega \to 0\)).</li>
             <li><strong>Cassures :</strong></li>
           </ul>
           <ol class="solution-steps">
@@ -307,8 +286,9 @@
             <li>Zéro à \(\omega_3 \approx 0.009\) rad/s \(\implies\) Pente 0 dB/déc.</li>
           </ol>
           <ul class="formula-list">
-            <li><strong>Hautes fréquences :</strong> Le gain tend vers \(\frac{1000 \cdot 27000}{300^3} = 1\), soit <strong>0 dB</strong>.</li>
+            <li><strong>Hautes fréquences :</strong> Le gain tend vers \(\frac{1000 \cdot 27000}{300^3} = 1\), soit 0 dB.</li>
           </ul>
+          <p><strong>Reponse :</strong> Le tracé présentera un rejet parfait en statique et terminera à <strong>0 dB</strong> en hautes fréquences.</p>
           </div>
         </article>
       </section>

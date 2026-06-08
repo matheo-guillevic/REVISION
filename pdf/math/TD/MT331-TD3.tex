@@ -1,0 +1,405 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\geometry{margin=2.5cm}
+
+\title{Corrigé - TD 3 : Variables aléatoires}
+\author{MT 331 - INP Esisar / UGA}
+\date{Année 2025-2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1}
+
+Le jeu Chuck a Luck consiste à lancer 3 dés. On parie sur un chiffre (disons le 6). Les lancers sont indépendants.
+Soit $N$ la variable aléatoire désignant le nombre d'apparitions de notre chiffre. La probabilité qu'un dé tombe sur le chiffre choisi est $p = 1/6$. Ainsi, $N$ suit une loi binomiale $\mathcal{B}(3, 1/6)$.
+Le gain $X$ dépend de la valeur de $N$ :
+\begin{itemize}
+    \item Si $N=3$, $X=3$
+    \item Si $N=2$, $X=2$
+    \item Si $N=1$, $X=1$
+    \item Si $N=0$, $X=-1$
+\end{itemize}
+
+\subsection*{1. Loi de $X$}
+
+\textbf{Raisonnement :} On calcule la probabilité de chaque issue de $N$ via la formule de la loi binomiale : $P(N=k) = \binom{3}{k}(1/6)^k(5/6)^{3-k}$.
+
+\textbf{Reponse :}
+\begin{itemize}
+    \item $\mathbf{P(X=3) = P(N=3) = \binom{3}{3}(1/6)^3(5/6)^0 = \frac{1}{216}}$
+    \item $\mathbf{P(X=2) = P(N=2) = \binom{3}{2}(1/6)^2(5/6)^1 = \frac{15}{216}}$
+    \item $\mathbf{P(X=1) = P(N=1) = \binom{3}{1}(1/6)^1(5/6)^2 = \frac{75}{216}}$
+    \item $\mathbf{P(X=-1) = P(N=0) = \binom{3}{0}(1/6)^0(5/6)^3 = \frac{125}{216}}$
+\end{itemize}
+
+\subsection*{2. Espérance de gain}
+
+\textbf{Raisonnement :} L'espérance $\mathbb{E}(X)$ se calcule par $\sum x_i P(X=x_i)$.
+$$ \mathbb{E}(X) = 3\left(\frac{1}{216}\right) + 2\left(\frac{15}{216}\right) + 1\left(\frac{75}{216}\right) - 1\left(\frac{125}{216}\right) = \frac{3 + 30 + 75 - 125}{216} $$
+
+\textbf{Reponse :}
+$$
+\mathbf{\mathbb{E}(X) = \frac{-17}{216} \approx -0.0787\$}
+$$
+En moyenne, on perd près de 8 cents par partie.
+
+\hrulefill
+
+\section*{Exercice 2}
+
+Un quartet $Q$ est composé de 4 bits. Soit $X_0, X_1, X_2, X_3$ les 4 bits, valant 1 avec probabilité $p$ et 0 avec probabilité $1-p$.
+Les variables $X_i$ sont indépendantes et suivent des lois de Bernoulli $\mathcal{B}(p)$.
+Le nombre $Z$ vaut $Z = X_0 + 2X_1 + 4X_2 + 8X_3$ (on suppose ici $X_0$ le bit de poids faible).
+
+\subsection*{1. Espérance et variance de $Z$}
+
+\textbf{Raisonnement :} Par linéarité de l'espérance : $\mathbb{E}(Z) = \mathbb{E}(X_0) + 2\mathbb{E}(X_1) + 4\mathbb{E}(X_2) + 8\mathbb{E}(X_3)$. Comme $\mathbb{E}(X_i) = p$, on a $\mathbb{E}(Z) = p + 2p + 4p + 8p$.
+Les $X_i$ étant indépendantes, la variance de la somme est la somme des variances : $\mathbb{V}(aX) = a^2\mathbb{V}(X)$. Or $\mathbb{V}(X_i) = p(1-p)$.
+
+\textbf{Reponse :}
+$$
+\mathbf{\mathbb{E}(Z) = 15p}
+$$
+$$
+\mathbf{\mathbb{V}(Z) = \mathbb{V}(X_0) + 4\mathbb{V}(X_1) + 16\mathbb{V}(X_2) + 64\mathbb{V}(X_3) = 85p(1-p)}
+$$
+
+\subsection*{2. Probabilité que $Z$ soit pair}
+
+\textbf{Raisonnement :} $Z$ est pair si et seulement si son bit de poids faible $X_0$ vaut 0.
+
+\textbf{Reponse :}
+$$
+\mathbf{P(Z \text{ pair}) = P(X_0 = 0) = 1-p}
+$$
+
+\subsection*{3. Probabilité $P(Z>3)$}
+
+\textbf{Raisonnement :} $Z$ prend ses valeurs de 0 à 15. On passe par l'événement complémentaire : $P(Z \le 3)$.
+$Z \le 3 \iff X_3 = 0 \text{ et } X_2 = 0$. Donc $Z > 3 \iff X_3 = 1 \text{ ou } X_2 = 1$.
+En utilisant l'indépendance, $P(Z>3) = 1 - P(X_3=0 \cap X_2=0)$.
+
+\textbf{Reponse :}
+$$
+\mathbf{P(Z>3) = 1 - (1-p)^2}
+$$
+
+\hrulefill
+
+\section*{Exercice 3}
+
+\subsection*{1. Probabilité de non-fonctionnement de l'appareil}
+
+\textbf{Raisonnement :} L'appareil de 20 composants fonctionne si TOUS ses composants fonctionnent. La probabilité qu'un composant fonctionne est $1 - 0.0015 = 0.9985$. On suppose les pannes indépendantes. La probabilité que l'appareil fonctionne est $(0.9985)^{20}$.
+
+\textbf{Reponse :} La probabilité de non-fonctionnement est :
+$$
+\mathbf{p_{app} = 1 - (0.9985)^{20} \approx 0.0296}
+$$
+
+\subsection*{2. Loi de $X$ (10 appareils) et $P(\text{au moins 7 bons})$}
+
+\textbf{Raisonnement :} Soit $X$ le nombre d'appareils défectueux sur 10. Avoir au moins 7 bons appareils signifie avoir au maximum 3 appareils défectueux, donc $X \le 3$.
+$P(X \le 3) = P(X=0) + P(X=1) + P(X=2) + P(X=3)$.
+$P(X \le 3) = (1-p)^{10} + 10p(1-p)^9 + 45p^2(1-p)^8 + 120p^3(1-p)^7$.
+
+\textbf{Reponse :} En prenant $p \approx 0.03$,
+$$
+\mathbf{X \sim \mathcal{B}(10, 0.03)}
+$$
+$$
+\mathbf{P(X \le 3) \approx 0.9998}
+$$
+
+\subsection*{3. Nombre moyen (100 appareils)}
+
+\textbf{Raisonnement :} Pour 100 appareils, le nombre de défectueux $Z \sim \mathcal{B}(100, 0.03)$. L'espérance est $np$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{\mathbb{E}(Z) = 100 \times 0.03 = 3 \text{ appareils}}
+$$
+
+\hrulefill
+
+\section*{Exercice 4}
+
+\subsection*{1. Loi de $X$}
+
+\textbf{Raisonnement :} Le message comporte $n=32$ bits. La probabilité d'erreur par bit est $p=10^{-5}$. On suppose les erreurs indépendantes. C'est une répétition d'épreuves de Bernoulli.
+
+\textbf{Reponse :} 
+$$
+\mathbf{X \sim \mathcal{B}(32, 10^{-5})}
+$$
+
+\subsection*{2. Exactement une erreur}
+
+\textbf{Raisonnement :} Formule de la loi binomiale $P(X=1)$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{P(X=1) = \binom{32}{1}(10^{-5})^1(1-10^{-5})^{31} \approx 3.2 \times 10^{-4}}
+$$
+
+\subsection*{3. Exactement quatre erreurs}
+
+\textbf{Raisonnement :} Formule de la loi binomiale $P(X=4)$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{P(X=4) = \binom{32}{4}(10^{-5})^4(1-10^{-5})^{28} \approx 3.6 \times 10^{-16}}
+$$
+
+\subsection*{4. Au moins une erreur}
+
+\textbf{Raisonnement :} $P(X \ge 1) = 1 - P(X=0)$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{P(X \ge 1) = 1 - (1-10^{-5})^{32} \approx 3.2 \times 10^{-4}}
+$$
+
+\subsection*{5. Nombre moyen d'erreurs}
+
+\textbf{Raisonnement :} L'espérance d'une loi binomiale est $np$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{\mathbb{E}(X) = 32 \times 10^{-5} = 3.2 \times 10^{-4}}
+$$
+
+\hrulefill
+
+\section*{Exercice 5}
+
+\textbf{Raisonnement :} La probabilité qu'une personne soit centenaire est $p = 0.01$. Le nombre de centenaires dans un échantillon de $n$ personnes suit une loi binomiale $\mathcal{B}(n, 0.01)$.
+On cherche $P(X \ge 1) = 1 - P(X=0) = 1 - (1-p)^n$.
+
+\textbf{Reponse pour 100 personnes :}
+$$
+\mathbf{P(X \ge 1) = 1 - 0.99^{100} \approx 0.634}
+$$
+
+\textbf{Reponse pour 200 personnes :}
+$$
+\mathbf{P(X \ge 1) = 1 - 0.99^{200} \approx 0.866}
+$$
+
+\hrulefill
+
+\section*{Exercice 6}
+
+\subsection*{1. Relation entre $N, X, Y$}
+
+\textbf{Reponse :} $N$ est le nombre total d'enfants, donc :
+$$
+\mathbf{N = X + Y}
+$$
+
+\subsection*{2. Loi de $X$}
+
+\textbf{Raisonnement :} Sachant que la famille a $n$ enfants ($N=n$), le nombre d'enfants ayant le gène $A$ suit une loi binomiale $\mathcal{B}(n, p)$. Donc $P(X=k | N=n) = \binom{n}{k}p^k(1-p)^{n-k}$.
+Pour trouver la loi marginale de $X$, on utilise la formule des probabilités totales :
+$$ P(X=k) = \sum_{n=k}^{\infty} P(X=k | N=n)P(N=n) $$
+Or $N \sim \mathcal{P}(\lambda)$, donc $P(N=n) = e^{-\lambda}\frac{\lambda^n}{n!}$.
+En simplifiant l'expression, on obtient $P(X=k) = e^{-\lambda p} \frac{(\lambda p)^k}{k!}$.
+
+\textbf{Reponse :} $X$ suit une loi de Poisson de paramètre $\lambda p$ :
+$$
+\mathbf{X \sim \mathcal{P}(\lambda p)}
+$$
+
+\subsection*{3. Loi de $Y$}
+
+\textbf{Raisonnement :} Le raisonnement est symétrique pour $Y$, l'enfant n'ayant pas le gène avec la probabilité $1-p$.
+
+\textbf{Reponse :} $Y$ suit une loi de Poisson de paramètre $\lambda(1-p)$ :
+$$
+\mathbf{Y \sim \mathcal{P}(\lambda(1-p))}
+$$
+
+\subsection*{4. Indépendance de $X$ et $Y$}
+
+\textbf{Raisonnement :} On calcule la probabilité jointe $P(X=k \cap Y=j)$. Comme $N = X + Y$, l'événement $(X=k \cap Y=j)$ est équivalent à $(X=k \cap N=k+j)$.
+En simplifiant les termes, on obtient $P(X=k \cap Y=j) = \left(e^{-\lambda p}\frac{(\lambda p)^k}{k!}\right) \times \left(e^{-\lambda(1-p)}\frac{(\lambda(1-p))^j}{j!}\right)$.
+
+\textbf{Reponse :} Comme $P(X=k \cap Y=j) = P(X=k)P(Y=j)$, \textbf{X et Y sont indépendantes}.
+
+\subsection*{5. Application numérique}
+
+\textbf{Raisonnement :} On a $\lambda=2, p=0.4$. On cherche $P(X=3 \cap Y=2)$. Par indépendance, c'est $P(X=3) \times P(Y=2)$. Les paramètres sont $\lambda p = 0.8$ et $\lambda(1-p) = 1.2$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{P(X=3 \cap Y=2) = \left(e^{-0.8}\frac{0.8^3}{3!}\right) \left(e^{-1.2}\frac{1.2^2}{2!}\right) \approx 0.0083}
+$$
+
+\hrulefill
+
+\section*{Exercice 7}
+
+Urne de départ : 1 Blanche. À chaque étape $k$ : si on tire Blanche, on la remet et on ajoute une Noire. À l'étape $k$, il y a 1 Blanche et $k-1$ Noires. Le jeu s'arrête au tirage d'une Noire. $X$ est le nombre de parties jouées.
+
+\subsection*{1. Loi et espérance de $X$}
+
+\textbf{Raisonnement (Loi de $X$) :} Le jeu ne peut pas s'arrêter à la 1ère partie. Donc $P(X=1) = 0$.
+Le jeu s'arrête à l'étape $n \ge 2$ si on a tiré Blanche aux étapes 1 à $n-1$ et Noire à l'étape $n$. Probabilité de tirer Blanche à l'étape $k$ : $\frac{1}{k}$.
+
+\textbf{Reponse (Loi de $X$) :} Pour $n \ge 2$,
+$$
+\mathbf{P(X=n) = \left(\frac{1}{1} \times \frac{1}{2} \dots \times \frac{1}{n-1}\right) \times \frac{n-1}{n} = \frac{n-1}{n!}}
+$$
+
+\textbf{Raisonnement (Espérance) :} $\mathbb{E}(X) = \sum_{n=2}^{\infty} n \frac{n-1}{n!} = \sum_{n=2}^{\infty} \frac{1}{(n-2)!}$. On pose $k = n-2$, ce qui donne la série de l'exponentielle.
+
+\textbf{Reponse (Espérance) :} 
+$$
+\mathbf{\mathbb{E}(X) = e \approx 2.718 \text{ parties}}
+$$
+
+\subsection*{2. Loi de $Y$ (gain)}
+
+\textbf{Raisonnement :} À chaque partie, le candidat gagne 1000 euros s'il donne la bonne réponse (probabilité 1/2). Sachant que le jeu dure $n$ parties ($X=n$), le nombre de bonnes réponses $R$ suit une binomiale $\mathcal{B}(n, 1/2)$. Son gain est $Y = 1000 \times R$.
+Pour exprimer la loi marginale de $Y$ : $P(Y = 1000k) = \sum_{n=\max(2, k)}^{\infty} P(R=k | X=n)P(X=n)$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{P(Y = 1000k) = \sum_{n=\max(2, k)}^{\infty} \binom{n}{k} \left(\frac{1}{2}\right)^n \frac{n-1}{n!}}
+$$
+
+\hrulefill
+
+\section*{Exercice 8}
+
+Les probabilités sont : $p_a = 0.5$, $p_b = 0.25$, $p_c = 0.125$, $p_d = 0.125$.
+
+\subsection*{1 et 2. Codage $C_1$}
+
+\textbf{Raisonnement :} Le code $C_1$ utilise 2 bits pour chaque lettre. 
+
+\textbf{Reponse :} La variable "longueur" $L_1$ prend la valeur constante $\mathbf{2}$. La longueur moyenne est $\mathbf{\mathbb{E}(L_1) = 2 \text{ bits}}$. L'écart-type est $\mathbf{0}$.
+
+\subsection*{3. Codage $C_2$}
+
+\textbf{Raisonnement :} Longueurs $L_2$ : $l_a = 1$, $l_b = 2$, $l_c = 3$, $l_d = 3$. La loi de $L_2$ est $P(L_2 = 1) = 0.5$, $P(L_2 = 2) = 0.25$, $P(L_2 = 3) = 0.25$.
+Espérance : $\mathbb{E}(L_2) = 1(0.5) + 2(0.25) + 3(0.25) = 1.75$.
+Variance : $\mathbb{E}(L_2^2) = 1^2(0.5) + 2^2(0.25) + 3^2(0.25) = 3.75$. $\mathbb{V}(L_2) = 3.75 - (1.75)^2 = 0.6875$.
+
+\textbf{Reponse :} $\mathbf{\mathbb{E}(L_2) = 1.75 \text{ bits}}$. $\mathbf{\mathbb{V}(L_2) = 0.6875}$ et l'écart-type est $\mathbf{\approx 0.829}$.
+
+\subsection*{4. Choix du code}
+
+\textbf{Reponse :} \textbf{On choisit $C_2$} car sa longueur moyenne est plus faible (meilleure compression).
+
+\subsection*{5. Entropie $H(X)$}
+
+\textbf{Raisonnement :} $H(X) = - \sum p_i \log_2(p_i)$. Sachant que $\log_2(0.5) = -1$, $\log_2(0.25) = -2$, $\log_2(0.125) = -3$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{H(X) = 1.75 \text{ bits}}
+$$
+
+\subsection*{6. Conclusion}
+
+\textbf{Reponse :} Le code $C_2$ a une longueur moyenne exactement égale à l'entropie de $X$. \textbf{C'est un code optimal}.
+
+\hrulefill
+
+\section*{Exercice 9 (Paradoxe de St Petersbourg)}
+
+\subsection*{1. Paiement au 16ème lancer}
+
+\textbf{Raisonnement :} Si Face apparaît au 1er lancer : 2 euros ($2^1$). Au $n$-ième : $2^n$ euros.
+
+\textbf{Reponse :} Au 16ème lancer, le gain est :
+$$
+\mathbf{2^{16} = 65536 \text{ euros}}
+$$
+
+\subsection*{2. Loi de $X$}
+
+\textbf{Raisonnement :} La banque paie $2^n$ euros si Face apparait pour la 1ère fois au lancer $n$. Cela correspond à $n-1$ fois Pile, puis 1 fois Face. La probabilité est $(1/2)^{n-1} \times (1/2) = (1/2)^n$.
+
+\textbf{Reponse :} Pour tout $n \ge 1$ :
+$$
+\mathbf{P(X = 2^n) = \frac{1}{2^n}}
+$$
+
+\subsection*{3 et 4. Mises initiales (Approche subjective)}
+
+\textbf{Raisonnement :} Une mise de 150 euros est très élevée compte tenu qu'on a $1/2$ chance de ne gagner que 2 euros, et $3/4$ de gagner $\le 4$ euros. La plupart des gens refusent 150 euros. Pour 5 euros, la réponse est plus mitigée.
+
+\subsection*{5. Espérance mathématique}
+
+\textbf{Raisonnement :} $\mathbb{E}(X) = \sum_{n=1}^{\infty} 2^n \times \frac{1}{2^n} = \sum_{n=1}^{\infty} 1 = +\infty$.
+
+\textbf{Reponse :} \textbf{L'espérance de gain est infinie.} Un joueur rationnel devrait accepter de payer n'importe quelle somme finie pour jouer.
+
+\subsection*{6. Illustration}
+
+\textbf{Reponse :} Ce paradoxe illustre les limites de l'utilisation de la seule espérance mathématique pour modéliser le comportement humain rationnel. Il introduit l'idée d'aversion au risque et la théorie de l'utilité.
+
+\hrulefill
+
+\section*{Exercice 10}
+
+Capacité = 205. Réservations $n=210$. Probabilité de non-présentation $p = 1/70$. $X$ = nombre de non-présentations.
+
+\subsection*{1. Loi de $X$}
+
+\textbf{Raisonnement :} Il y a 210 passagers qui se présentent ou non de façon indépendante, avec une probabilité fixe $p = 1/70$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{X \sim \mathcal{B}(210, 1/70)}
+$$
+
+\subsection*{2. $P(X=0)$ et $P(X=1)$}
+
+\textbf{Raisonnement :} 
+$P(X=0) = (1 - 1/70)^{210} \approx 0.0483$.
+$P(X=1) = 210 (1/70) (69/70)^{209} \approx 0.1471$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{P(X=0) \approx 0.0483 \quad \text{et} \quad P(X=1) \approx 0.1471}
+$$
+
+\subsection*{3 et 4. Approximation par loi de Poisson}
+
+\textbf{Raisonnement :} Comme $n$ est grand et $p$ petit, la loi de $X$ peut être approchée par une loi de Poisson de paramètre $\lambda = np = 210 \times \frac{1}{70} = 3$. Donc $X' \sim \mathcal{P}(3)$.
+$P(X'=0) = e^{-3} \approx 0.0498$ et $P(X'=1) = 3e^{-3} \approx 0.1494$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{P(X'=0) \approx 0.0498 \quad \text{et} \quad P(X'=1) \approx 0.1494}
+$$
+Les résultats sont très proches de la loi binomiale, justifiant l'approximation.
+
+\subsection*{5. Probabilité de surbooking}
+
+\textbf{Raisonnement :} Il y a plus de passagers que de places si le nombre de passagers présents $Y = 210 - X$ est $> 205$. 
+On cherche $P(Y > 205) \iff P(210 - X > 205) \iff P(X \le 4)$.
+En utilisant l'approximation par Poisson $X' \sim \mathcal{P}(3)$, on somme de $X'=0$ à $X'=4$.
+
+\textbf{Reponse :} 
+$$
+\mathbf{P(X \le 4) \approx P(X' \le 4) \approx 0.815}
+$$
+Il y a environ \textbf{81.5\% de chances} qu'il y ait surbooking et que des passagers soient refusés.
+
+\end{document}

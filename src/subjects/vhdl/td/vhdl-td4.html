@@ -25,7 +25,7 @@
           <span class="eyebrow">SN361 - TD 4</span>
           <h1>Bascule Toggle, Moore, Mealy et synchronisation</h1>
           <p>FSM Moore/Mealy, reset asynchrone, nombre de bascules et synchronisation d'une entree asynchrone.</p>
-          <p>Page reconstruite depuis le fichier LaTeX <code>pdf/vhdl/TD/TD4_Correction_SN361.tex</code>.</p>
+          <p>Page reconstruite depuis <code>pdf/vhdl/TD/TD4_Correction_SN361.tex</code>.</p>
         </div>
         <div class="td-actions">
           <a class="primary-button" href="pdf/vhdl/TD/TD4_correction_vb.pdf">Ouvrir le PDF</a>
@@ -50,27 +50,43 @@
           <div class="latex-table-wrap">
             <table class="latex-table">
               <tr>
-                <th><strong>clk</strong></th>                <th><strong>t</strong></th>                <th><strong>reset</strong></th>                <th>\(\mathbf{q'}\)</th>
+                <th><strong>clk</strong></th>
+                <th><strong>t</strong></th>
+                <th><strong>reset</strong></th>
+                <th>\(\mathbf{q'}\)</th>
               </tr>
               <tr>
-                <td>Front montant</td>                <td>1</td>                <td>0</td>                <td>\(\overline{q}\)</td>
+                <td>Front montant</td>
+                <td>1</td>
+                <td>0</td>
+                <td>\(\overline{q}\)</td>
               </tr>
               <tr>
-                <td>Front montant</td>                <td>0</td>                <td>0</td>                <td>\(q\)</td>
+                <td>Front montant</td>
+                <td>0</td>
+                <td>0</td>
+                <td>\(q\)</td>
               </tr>
               <tr>
-                <td>X</td>                <td>X</td>                <td>1</td>                <td>0</td>
+                <td>X</td>
+                <td>X</td>
+                <td>1</td>
+                <td>0</td>
               </tr>
             </table>
           </div>
           <h4>1) Donner le diagramme de transitions d'une machine à états de Moore de ce circuit.</h4>
+          <figure class="system-diagram td-figure">
+            <img src="assets/vhdl/TD/SN361-TD4_2_Mealy.svg" alt="Machine de Mealy pour la bascule Toggle." loading="lazy">
+            <figcaption class="diagram-caption">Machine de Mealy pour la bascule Toggle.</figcaption>
+          </figure>
           <figure class="system-diagram td-figure">
             <img src="assets/vhdl/TD/SN361-TD4_1_Moore.svg" alt="Machine de Moore pour la bascule Toggle." loading="lazy">
             <figcaption class="diagram-caption">Machine de Moore pour la bascule Toggle.</figcaption>
           </figure>
           <p><em>(Le schéma SVG de la machine de Moore correspond aux états S0/S1 avec les transitions \(t=0\) et \(t=1\) et l'initialisation \(reset=1 \rightarrow q=0\)).</em></p>
           <h4>2) Donner le code VHDL de cette machine (décrire uniquement son architecture) avec 2 processus comme vu dans le cours.</h4>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity Toggle_FlipFlop_Moore is
@@ -116,12 +132,8 @@ begin
     end process;
 end Behavioral;</code></pre>
           <h4>3) Faire de même (questions 1 et 2) avec une machine de Mealy.</h4>
-          <figure class="system-diagram td-figure">
-            <img src="assets/vhdl/TD/SN361-TD4_2_Mealy.svg" alt="Machine de Mealy pour la bascule Toggle." loading="lazy">
-            <figcaption class="diagram-caption">Machine de Mealy pour la bascule Toggle.</figcaption>
-          </figure>
           <p><em>(Le schéma SVG de la machine de Mealy assigne les sorties sur les transitions).</em></p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL; 
 
 entity Toggle_FlipFlop_Mealy is 
@@ -176,7 +188,7 @@ end Behavioral;</code></pre>
           <p>Une bascule pour les deux.</p>
           <h4>On suppose maintenant que le signal t est asynchrone.</h4>
           <p>1. Afin d'éviter l'apparition de métastabilité, décrire en VHDL un unique processus permettant de synchroniser le signal asynchrone <code>t</code>.</p>
-          <pre class="code-block language-vhdl"><code>-- Processus de synchronisation (Double bascule)
+          <pre class="code-block language-vhdl"><code class="language-vhdl">-- Processus de synchronisation (Double bascule)
 process(clk, reset)
 begin
     if reset = '1' then
@@ -219,7 +231,7 @@ end process;</code></pre>
           <h4>2) Combien de bascules seront nécessaires au minimum pour implanter cette machine? Justifiez.</h4>
           <p>Le diagramme de transitions comporte <strong>4 états distincts</strong> (S0, S1, S2, S3). Le nombre minimum de bascules \(n\) nécessaires pour coder \(E\) états est donné par la relation \(2^n \ge E\). Ainsi, \(2^n \ge 4\), ce qui donne <strong>\(n = 2\) bascules au minimum</strong>.</p>
           <h4>3) Donner le code VHDL de cette machine.</h4>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity sequence_detector is

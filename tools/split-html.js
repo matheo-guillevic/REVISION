@@ -2,8 +2,14 @@ const fs = require("fs");
 const path = require("path");
 
 const root = process.cwd();
-const mathPath = path.join(root, "math.html");
+const mathPath = fs.existsSync(path.join(root, "math.html"))
+  ? path.join(root, "math.html")
+  : path.join(root, "out", "math.html");
 const coursePath = path.join(root, "src", "subjects", "probabilites", "cours.html");
+
+if (!fs.existsSync(mathPath)) {
+  throw new Error("math.html introuvable. Lance d'abord npm run build pour generer out/math.html.");
+}
 
 const html = fs.readFileSync(mathPath, "utf8");
 

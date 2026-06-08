@@ -1,0 +1,293 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\geometry{margin=2.5cm}
+
+\title{Corrigé - TD 1 : Dénombrement et Probabilités}
+\author{MT 331 - INP Esisar / UGA}
+\date{Année 2025-2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercice 1}
+
+\textbf{Raisonnement :} Le tirage se fait simultanément, l'ordre n'a donc pas d'importance[cite: 260]. Il s'agit de combinaisons[cite: 260]. On choisit 5 cartes parmi 32[cite: 261].
+
+\textbf{Reponse :} Le nombre total d'issues possibles est $\mathbf{\binom{32}{5} = 201376}$[cite: 261].
+
+\subsection*{1. Seulement des cartes noires}
+
+\textbf{Raisonnement :} Un jeu de 32 cartes contient 16 cartes noires (8 trèfles et 8 piques)[cite: 262]. Il faut choisir 5 cartes parmi ces 16[cite: 263].
+
+\textbf{Reponse :} $\mathbf{\binom{16}{5} = \frac{16!}{5!11!} = 4368}$ façons[cite: 263].
+
+\subsection*{2. Seulement des figures ou as}
+
+\textbf{Raisonnement :} Les "figures" précisées ici sont au nombre de 4 par couleur (valet, dame, roi, as), soit $4 \times 4 = 16$ cartes au total[cite: 264]. On en choisit 5 parmi 16[cite: 265].
+
+\textbf{Reponse :} $\mathbf{\binom{16}{5} = 4368}$ façons[cite: 265].
+
+\subsection*{3. Quatre as}
+
+\textbf{Raisonnement :} Il faut choisir les 4 as parmi les 4 disponibles, puis choisir la dernière carte parmi les 28 cartes restantes du jeu[cite: 266].
+
+\textbf{Reponse :} $\mathbf{\binom{4}{4} \times \binom{28}{1} = 1 \times 28 = 28}$ façons[cite: 266].
+
+\subsection*{4. Cinq figures, dont 3 noires}
+
+\textbf{Raisonnement :} Il y a 8 figures noires et 8 figures rouges[cite: 267]. Il faut choisir 3 figures parmi les 8 noires, et les 2 autres cartes doivent être des figures rouges (choisies parmi les 8) pour avoir exactement 5 figures dont 3 noires[cite: 268].
+
+\textbf{Reponse :} $\mathbf{\binom{8}{3} \times \binom{8}{2} = 56 \times 28 = 1568}$ façons[cite: 268].
+
+\subsection*{5. Trois as, 2 dames et 1 seul carreau}
+
+\textbf{Raisonnement :} On tire 5 cartes au total (3 as + 2 dames)[cite: 269]. L'unique carreau de la main doit obligatoirement être soit un as, soit une dame[cite: 270]. On sépare en deux cas disjoints[cite: 271]:
+\begin{itemize}
+    \item \textbf{Cas 1 : Le carreau est un as.} On choisit l'as de carreau (1 choix)[cite: 271]. Les 2 autres as sont choisis parmi les 3 as restants (non-carreau)[cite: 272]. Les 2 dames sont choisies parmi les 3 dames restantes (non-carreau)[cite: 273]. Soit $\binom{1}{1} \times \binom{3}{2} \times \binom{3}{2} = 1 \times 3 \times 3 = 9$[cite: 274].
+    \item \textbf{Cas 2 : Le carreau est une dame.} On choisit la dame de carreau (1 choix)[cite: 275]. L'autre dame est choisie parmi les 3 restantes (non-carreau)[cite: 276]. Les 3 as sont choisis parmi les 3 as non-carreau[cite: 276]. Soit $\binom{1}{1} \times \binom{3}{1} \times \binom{3}{3} = 1 \times 3 \times 1 = 3$[cite: 277].
+\end{itemize}
+
+\textbf{Reponse :} $\mathbf{9 + 3 = 12}$ façons[cite: 278].
+
+\hrulefill
+
+\section*{Exercice 2}
+
+\subsection*{1. Nombre total de comités}
+
+\textbf{Raisonnement :} Il y a au total $12 + 15 = 27$ personnes[cite: 279]. On choisit 6 membres sans distinction d'ordre[cite: 280].
+
+\textbf{Reponse :} $\mathbf{\binom{27}{6} = 296010}$ comités possibles[cite: 280].
+
+\subsection*{2. Comités respectant la parité}
+
+\textbf{Raisonnement :} La parité signifie 3 hommes et 3 femmes[cite: 281]. On choisit 3 hommes parmi 12, et 3 femmes parmi 15[cite: 282].
+
+\textbf{Reponse :} $\mathbf{\binom{12}{3} \times \binom{15}{3} = 220 \times 455 = 100100}$ comités[cite: 282].
+
+\subsection*{3. Condition de refus entre A et B}
+
+\textbf{Raisonnement :} Madame A et Monsieur B ne doivent pas siéger ensemble[cite: 283]. On compte le nombre de comités paritaires où ils siègent \textit{tous les deux}, et on le soustrait au total paritaire calculé précédemment[cite: 284]. S'ils y sont tous les deux, il reste à choisir 2 femmes parmi 14 (pour compléter avec Mme A) et 2 hommes parmi 11 (pour compléter avec M B)[cite: 285].
+
+\textbf{Reponse :} $\mathbf{100100 - \left( \binom{14}{2} \times \binom{11}{2} \right) = 100100 - (91 \times 55) = 100100 - 5005 = 95095}$ comités[cite: 285].
+
+\subsection*{4. Désignation du bureau}
+
+\textbf{Raisonnement :} Parmi les 6 membres, on désigne un président, un secrétaire et un trésorier (3 postes distincts)[cite: 286]. L'ordre compte, c'est un arrangement de 3 personnes parmi 6[cite: 287].
+
+\textbf{Reponse :} $\mathbf{A_6^3 = \frac{6!}{(6-3)!} = 6 \times 5 \times 4 = 120}$ bureaux possibles[cite: 287].
+
+\hrulefill
+
+\section*{Exercice 3}
+
+\textbf{Raisonnement :} On utilise l'événement contraire : "les $n$ personnes ont toutes des jours d'anniversaire différents"[cite: 288]. Il y a $365^n$ cas possibles au total (nombre d'applications de l'ensemble des personnes vers les jours de l'année, sans années bissextiles)[cite: 289]. Le nombre de cas favorables à l'événement contraire est le nombre d'arrangements de $n$ jours parmi 365, soit $A_{365}^n$[cite: 290].
+
+\textbf{Reponse :} La probabilité est $\mathbf{P = 1 - \frac{A_{365}^n}{365^n}}$[cite: 290].
+
+\hrulefill
+
+\section*{Exercice 4}
+
+\subsection*{1. Maths groupés et Physique groupés}
+
+\textbf{Raisonnement :} Il y a 2 "blocs" à ordonner : le bloc Maths et le bloc Physique (2! façons de les disposer)[cite: 291]. À l'intérieur du bloc Maths, il y a 12! façons de ranger les livres[cite: 292]. À l'intérieur du bloc Physique, il y a 10! façons[cite: 293].
+
+\textbf{Reponse :} $\mathbf{2! \times 12! \times 10!}$ rangements possibles[cite: 293].
+
+\subsection*{2. Seulement les Maths groupés}
+
+\textbf{Raisonnement :} On considère les 12 livres de maths comme un seul gros bloc[cite: 294]. Ce bloc s'ajoute aux 10 livres de physique, soit 11 éléments à permuter ($11!$ façons)[cite: 295]. À l'intérieur du bloc des maths, les 12 livres peuvent être permutés de $12!$ façons[cite: 296].
+
+\textbf{Reponse :} $\mathbf{11! \times 12!}$ rangements possibles[cite: 297].
+
+\hrulefill
+
+\section*{Exercice 5}
+
+\textbf{Raisonnement global :} L'armoire contient 20 gants au total (10 paires distinctes)[cite: 297]. Le nombre de tirages possibles de 4 gants est $\binom{20}{4} = 4845$[cite: 298].
+
+\subsection*{(i) Deux paires assorties}
+
+\textbf{Raisonnement :} Il faut tirer 2 paires complètes[cite: 299]. Il suffit de choisir 2 paires parmi les 10 paires disponibles[cite: 300].
+
+\textbf{Reponse :} Nombre de cas favorables : $\binom{10}{2} = 45$[cite: 300]. Probabilité = $\mathbf{\frac{45}{4845} = \frac{3}{323}}$[cite: 301].
+
+\subsection*{(ii) Au moins une paire}
+
+\textbf{Raisonnement :} "Au moins une paire" signifie soit "une paire exacte", soit "deux paires"[cite: 304]. Les deux événements sont incompatibles, on additionne leurs probabilités[cite: 305].
+
+\textbf{Reponse :} Probabilité = $\frac{45}{4845} + \frac{1440}{4845} = \frac{1485}{4845} = \mathbf{\frac{99}{323}}$[cite: 305].
+
+\subsection*{(iii) Une paire et une seule}
+
+\textbf{Raisonnement :} On choisit la paire assortie parmi 10 ($\binom{10}{1}$)[cite: 301]. Pour les 2 autres gants, il faut qu'ils proviennent de 2 paires différentes[cite: 302]. On choisit 2 paires parmi les 9 restantes ($\binom{9}{2}$) et pour chacune de ces deux paires, on choisit le gant gauche ou droit ($2^2$ choix)[cite: 303].
+
+\textbf{Reponse :} Nombre de cas = $10 \times 36 \times 4 = 1440$[cite: 303]. Probabilité = $\mathbf{\frac{1440}{4845} = \frac{96}{323}}$[cite: 304].
+
+\hrulefill
+
+\section*{Exercice 6}
+
+\textbf{Raisonnement :} C'est un tirage simultané (ou sans remise) de $r$ boules parmi $n$[cite: 306]. Le nombre total de tirages est $\binom{n}{r}$[cite: 307]. Pour obtenir exactement $k$ boules noires, on doit choisir $k$ boules parmi les $m$ noires, et les $r-k$ boules restantes parmi les $n-m$ boules blanches[cite: 307].
+
+\textbf{Reponse :} La probabilité est $\mathbf{P = \frac{\binom{m}{k} \times \binom{n-m}{r-k}}{\binom{n}{r}}}$ (Loi hypergéométrique)[cite: 307].
+
+\hrulefill
+
+\section*{Exercice 7}
+
+\textbf{Raisonnement global :} Nombre total de mains de 5 cartes parmi 32 : $\binom{32}{5} = 201376$[cite: 308]. Un jeu de 32 a 8 hauteurs distinctes[cite: 309].
+
+\begin{itemize}
+    \item \textbf{(i) Une seule paire :} On choisit la hauteur de la paire ($\binom{8}{1}$), puis 2 cartes de cette hauteur ($\binom{4}{2}$)[cite: 309]. On choisit ensuite 3 hauteurs distinctes parmi les 7 restantes ($\binom{7}{3}$), puis 1 carte pour chacune d'elles ($4^3$)[cite: 310].\\
+    \textbf{Reponse :} Probabilité : $\mathbf{\frac{\binom{8}{1}\binom{4}{2}\binom{7}{3} \times 4^3}{201376} = \frac{107520}{201376} \approx 0.5339}$[cite: 310].
+    
+    \item \textbf{(ii) Deux paires :} On choisit 2 hauteurs pour les paires ($\binom{8}{2}$), 2 cartes par hauteur ($\binom{4}{2}^2$)[cite: 311]. La cinquième carte est d'une autre hauteur ($\binom{6}{1} \times \binom{4}{1}$)[cite: 312].\\
+    \textbf{Reponse :} Probabilité : $\mathbf{\frac{\binom{8}{2}\binom{4}{2}^2 \times 6 \times 4}{201376} = \frac{24192}{201376} \approx 0.1201}$[cite: 312].
+    
+    \item \textbf{(iii) Un brelan :} On choisit la hauteur du brelan ($\binom{8}{1}$) et 3 cartes ($\binom{4}{3}$)[cite: 313]. Pour éviter un full, on prend 2 hauteurs distinctes pour les 2 cartes restantes ($\binom{7}{2}$) et 1 carte de chaque ($4^2$)[cite: 314].\\
+    \textbf{Reponse :} Probabilité : $\mathbf{\frac{\binom{8}{1}\binom{4}{3}\binom{7}{2} \times 4^2}{201376} = \frac{10752}{201376} \approx 0.0534}$[cite: 314].
+    
+    \item \textbf{(iv) Un carré :} On choisit la hauteur du carré ($\binom{8}{1}$), on prend les 4 cartes ($\binom{4}{4} = 1$), et 1 carte parmi les 28 autres[cite: 315].\\
+    \textbf{Reponse :} Probabilité : $\mathbf{\frac{\binom{8}{1} \times 1 \times 28}{201376} = \frac{224}{201376} \approx 0.0011}$[cite: 315].
+\end{itemize}
+
+\hrulefill
+
+\section*{Exercice 8}
+
+Composition de ANNIVERSAIRE (12 lettres) : A(2), N(2), I(2), V(1), E(2), R(2), S(1)[cite: 316].
+
+\subsection*{1. Nombre d'anagrammes}
+
+\textbf{Raisonnement :} Il y a 12 lettres avec des répétitions (5 paires de lettres identiques)[cite: 317]. C'est une permutation avec répétition[cite: 318].
+
+\textbf{Reponse :} $\mathbf{\frac{12!}{2!2!2!2!2!} = \frac{12!}{32} = 14968800}$ mots[cite: 318].
+
+\subsection*{2. Commençant et finissant par une voyelle}
+
+\textbf{Raisonnement :} Les voyelles sont A, I, E (chacune 2 fois, soit 6 voyelles)[cite: 319]. Il y a deux cas pour le choix des lettres aux extrémités[cite: 320]:
+\begin{itemize}
+    \item Même voyelle aux deux bouts (ex: A...A) : 3 choix pour la voyelle[cite: 320]. Les 10 lettres restantes ont 4 paires[cite: 321]. Permutations : $3 \times \frac{10!}{2!2!2!2!} = 3 \times 226800 = 680400$[cite: 321].
+    \item Voyelles différentes aux bouts (ex: A...E) : $A_3^2 = 6$ choix pour le couple ordonné[cite: 322]. Les 10 lettres restantes conservent 5 paires[cite: 323]. Permutations : $6 \times \frac{10!}{2!2!2!2!2!} = 6 \times 113400 = 680400$[cite: 323].
+\end{itemize}
+
+\textbf{Reponse :} $\mathbf{680400 + 680400 = 1360800}$ mots[cite: 324].
+
+\subsection*{3. Toutes les voyelles groupées}
+
+\textbf{Raisonnement :} On lie les 6 voyelles en 1 seul bloc[cite: 324]. Ce bloc + les 6 consonnes forment 7 éléments à permuter, avec les paires de N et R ($\frac{7!}{2!2!}$)[cite: 325]. À l'intérieur du bloc voyelles, on permute les 6 lettres avec les paires de A, I, E ($\frac{6!}{2!2!2!}$)[cite: 326].
+
+\textbf{Reponse :} $\mathbf{\frac{7!}{4} \times \frac{6!}{8} = 1260 \times 90 = 113400}$ mots[cite: 326].
+
+\hrulefill
+
+\section*{Exercice 9}
+
+\subsection*{1. Tirage simultané de 5 boules}
+
+\begin{itemize}
+    \item \textbf{(a)} $\Omega$ est l'ensemble des combinaisons de 5 boules parmi 16 (les boules étant discernables)[cite: 327]. 
+    \textbf{Reponse :} $\mathbf{\text{Card}(\Omega) = \binom{16}{5} = 4368}$[cite: 328].
+    \item \textbf{(b)} \textbf{Reponse :} $\mathbf{P(2B, 3N) = \frac{\binom{6}{2} \times \binom{10}{3}}{\binom{16}{5}}}$[cite: 328].
+\end{itemize}
+
+\subsection*{2. Tirage successif de 2 boules, sans remise}
+
+\begin{itemize}
+    \item \textbf{(a) Classé :} $\Omega$ est l'ensemble des arrangements de 2 boules parmi 16[cite: 329]. 
+    \textbf{Reponse :} $\mathbf{\text{Card}(\Omega) = A_{16}^2 = 16 \times 15 = 240}$[cite: 329].
+    \item \textbf{(b)} \textbf{Reponse :} $\mathbf{P(\text{1B puis 1N}) = \frac{6 \times 10}{240} = \frac{1}{4}}$[cite: 329].
+    \item \textbf{(c) Non classé :} $\Omega$ est l'ensemble des combinaisons[cite: 329]. $\text{Card}(\Omega) = \binom{16}{2} = 120$[cite: 330]. 
+    \textbf{Reponse :} $\mathbf{P(\text{1B et 1N}) = \frac{\binom{6}{1} \binom{10}{1}}{120} = \frac{60}{120} = \frac{1}{2}}$[cite: 330].
+\end{itemize}
+
+\subsection*{3. Tirage avec remise de 2 boules}
+
+\begin{itemize}
+    \item \textbf{(a) Classé :} $\Omega$ est l'ensemble des listes de 2 boules parmi 16[cite: 331]. 
+    \textbf{Reponse :} $\mathbf{\text{Card}(\Omega) = 16^2 = 256}$[cite: 331].
+    \item \textbf{(b)} \textbf{Reponse :} $\mathbf{P(\text{1B puis 1N}) = \frac{6 \times 10}{256} = \frac{60}{256} = \frac{15}{64}}$[cite: 331].
+    \item \textbf{(c) Non classé :} Il n'y a plus d'ordre imposé (la boule noire peut être la première ou la deuxième)[cite: 331]. 
+    \textbf{Reponse :} On a donc $\mathbf{P = 2 \times P(\text{1B puis 1N}) = 2 \times \frac{15}{64} = \frac{15}{32}}$[cite: 332].
+\end{itemize}
+
+\hrulefill
+
+\section*{Exercice 10}
+
+\textbf{Raisonnement :} On calcule la probabilité de l'événement contraire pour chaque scénario[cite: 333].
+\begin{itemize}
+    \item Au moins un 6 en 4 lancers : $P_1 = 1 - \left(\frac{5}{6}\right)^4 \approx 1 - 0.482 = 0.518$[cite: 334].
+    \item Au moins un double 6 en 24 lancers de 2 dés : La probabilité de ne pas faire un double 6 est de 35/36[cite: 335]. Donc $P_2 = 1 - \left(\frac{35}{36}\right)^{24} \approx 1 - 0.509 = 0.491$[cite: 336].
+\end{itemize}
+
+\textbf{Reponse :} Il est plus probable d'obtenir au moins un 6 en lançant 4 fois de suite un dé[cite: 337].
+
+\hrulefill
+
+\section*{Exercice 11}
+
+\textbf{Raisonnement :} Pour gagner, le joueur 2 doit remporter les 2 parties suivantes (probabilité de $\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$)[cite: 338]. Dans tous les autres cas (le joueur 1 gagne la partie 4, ou le joueur 2 gagne la 4 et le joueur 1 gagne la 5), le joueur 1 emporte la mise (probabilité de $1 - \frac{1}{4} = \frac{3}{4}$)[cite: 339].
+
+\textbf{Reponse :} La mise doit être répartie proportionnellement à leurs chances de victoire : $\mathbf{\frac{3}{4}}$ de la mise pour le premier joueur et $\mathbf{\frac{1}{4}}$ pour le second[cite: 339].
+
+\hrulefill
+
+\section*{Exercice 12}
+
+\subsection*{1. Choix possibles}
+
+\textbf{Reponse :} Il faut choisir 4 voitures parmi 20, soit $\mathbf{\binom{20}{4} = 4845}$ choix[cite: 340].
+
+\subsection*{2. Au moins une voiture en panne}
+
+\textbf{Raisonnement :} Il y a 5 voitures en panne et 15 qui fonctionnent[cite: 341].
+\begin{itemize}
+    \item \textbf{Façon 1 (Événement contraire) :} $1 - P(\text{0 panne}) = 1 - \frac{\binom{15}{4}}{\binom{20}{4}} = 1 - \frac{1365}{4845} \approx 0.718$[cite: 342].
+    \item \textbf{Façon 2 (Somme directe) :} $\frac{\binom{5}{1}\binom{15}{3} + \binom{5}{2}\binom{15}{2} + \binom{5}{3}\binom{15}{1} + \binom{5}{4}\binom{15}{0}}{\binom{20}{4}}$[cite: 343].
+\end{itemize}
+
+\subsection*{3. Exactement 2 voitures en panne}
+
+\textbf{Reponse :} On choisit 2 en panne parmi 5, et 2 qui fonctionnent parmi 15 : $\mathbf{\frac{\binom{5}{2} \times \binom{15}{2}}{\binom{20}{4}} = \frac{10 \times 105}{4845} = \frac{1050}{4845} \approx 0.217}$[cite: 344].
+
+\hrulefill
+
+\section*{Exercice 13}
+
+\textbf{Raisonnement :} C'est le nombre de partitions ordonnées d'un ensemble de 4 personnes (les nombres de Fubini)[cite: 345]. On sépare selon le nombre $k$ de places distinctes à l'arrivée (les ex-aequo forment des "blocs")[cite: 346]:
+\begin{itemize}
+    \item 1 bloc (tous 1er ex-aequo) : 1 façon[cite: 346].
+    \item 2 blocs : Les partitions possibles sont du type "3 et 1" (4 façons) ou "2 et 2" (3 façons), total 7 partitions[cite: 347]. Pour chacune, 2! ordres possibles d'arrivée[cite: 348]. $7 \times 2 = 14$ façons[cite: 348].
+    \item 3 blocs : Partitions "2, 1 et 1" (6 partitions)[cite: 349]. Ordonnées : $6 \times 3! = 36$ façons[cite: 349].
+    \item 4 blocs (aucun ex-aequo) : $4! = 24$ façons[cite: 350].
+\end{itemize}
+
+\textbf{Reponse :} $\mathbf{1 + 14 + 36 + 24 = 75}$ classements possibles[cite: 351].
+
+\hrulefill
+
+\section*{Exercice 14}
+
+\textbf{Raisonnement :} Bien qu'il y ait autant de combinaisons brutes donnant une somme de 9 (126, 135, 144, 225, 234, 333) que donnant 10 (136, 145, 226, 235, 244, 334), il faut tenir compte des permutations, les dés étant physiquement distincts[cite: 352].
+\begin{itemize}
+    \item Pour la somme de 9, les permutations donnent : $6 + 6 + 3 + 3 + 6 + 1 = 25$ façons[cite: 353].
+    \item Pour la somme de 10, les permutations donnent : $6 + 6 + 3 + 6 + 3 + 3 = 27$ façons[cite: 354].
+\end{itemize}
+
+\textbf{Reponse :} Il y a 27 cas favorables pour obtenir 10 contre 25 cas pour obtenir 9[cite: 355]. Le total de 10 est donc plus probable[cite: 355].
+
+\end{document}

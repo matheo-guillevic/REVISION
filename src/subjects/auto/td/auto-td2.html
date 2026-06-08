@@ -21,7 +21,8 @@
         <div>
           <span class="eyebrow">AU361 - TD 2</span>
           <h1>Stabilite, robustesse et correcteurs</h1>
-          <p>Corrige reconstruit depuis le fichier LaTeX <code>pdf/auto/TD/AU361-TD2.tex</code>.</p>
+          <p>Corrige reconstruit depuis le fichier LaTeX correspondant.</p>
+          <p>Page reconstruite depuis <code>pdf/auto/TD/AU361-TD2.tex</code>.</p>
         </div>
         <div class="td-actions">
           <a class="primary-button" href="pdf/auto/TD/AU361-TD2.pdf">Ouvrir le PDF</a>
@@ -34,7 +35,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 1</span>
-              <h3>Exercice 1 : Stabilité (Routh, Nyquist et Marge de gain)</h3>
+              <h3>Exercice 1 - Stabilité (Routh, Nyquist et Marge de gain)</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -43,25 +44,46 @@
           </header>
           <div id="auto-td2-e1" class="answer-block">
           <p>Soit la fonction de transfert en boucle ouverte (FTBO) avec le correcteur proportionnel \(K\) : \[FTBO(p) = K \cdot F(p) = \frac{K}{p(p^2+5p+6)} = \frac{K}{p^3+5p^2+6p}\]</p>
-          <figure class="system-diagram td-figure">
-            <img src="assets/auto/TD/AU361-TD2-Ex1.svg" alt="Lieu frequentiel et lecture de stabilite." loading="lazy">
-            <figcaption class="diagram-caption">Lieu frequentiel et lecture de stabilite.</figcaption>
-          </figure>
           <h4>1. Théorème de Routh</h4>
-          <p>La fonction de transfert en boucle fermée (FTBF) est : \[FTBF(p) = \frac{FTBO(p)}{1+FTBO(p)} = \frac{K}{p^3+5p^2+6p+K}\] L'équation caractéristique est : \(D(p) = p^3 + 5p^2 + 6p + K = 0\). Dressons le tableau de Routh :</p>
+          <p><strong>Raisonnement :</strong> La fonction de transfert en boucle fermée (FTBF) est : \[FTBF(p) = \frac{FTBO(p)}{1+FTBO(p)} = \frac{K}{p^3+5p^2+6p+K}\] L'équation caractéristique est : \(D(p) = p^3 + 5p^2 + 6p + K = 0\).</p>
+          <p>Dressons le tableau de Routh :</p>
           <div class="latex-table-wrap">
             <table class="latex-table">
-              <tr><td>\(p^3\)</td><td>1</td><td>6</td></tr>
-              <tr><td>\(p^2\)</td><td>5</td><td>\(K\)</td></tr>
-              <tr><td>\(p^1\)</td><td>\(\frac{30-K}{5}\)</td><td>0</td></tr>
-              <tr><td>\(p^0\)</td><td>\(K\)</td><td>0</td></tr>
+              <tr>
+                <th><strong>Puissance</strong></th>
+                <th><strong>Colonne 1</strong></th>
+                <th><strong>Colonne 2</strong></th>
+              </tr>
+              <tr>
+                <td>\(p^3\)</td>
+                <td>1</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>\(p^2\)</td>
+                <td>5</td>
+                <td>\(K\)</td>
+              </tr>
+              <tr>
+                <td>\(p^1\)</td>
+                <td>\(\frac{30-K}{5}\)</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>\(p^0\)</td>
+                <td>\(K\)</td>
+                <td>0</td>
+              </tr>
             </table>
           </div>
-          <p>Pour que le système soit stable, tous les termes de la première colonne doivent être strictement positifs : \[5 > 0 \quad ; \quad \frac{30-K}{5} > 0 \implies K < 30 \quad ; \quad K > 0\] Le système est stable pour <strong>\(0 < K < 30\)</strong>.</p>
+          <p>Pour que le système soit stable, tous les termes de la première colonne doivent être strictement positifs : \[5 > 0 \quad ; \quad \frac{30-K}{5} > 0 \implies K < 30 \quad ; \quad K > 0\]</p>
+          <p><strong>Reponse :</strong> Le système est stable pour \(\mathbf{0 < K < 30}\).</p>
           <h4>2. Critère de Nyquist</h4>
-          <p>Calculons \(FTBO(j\omega)\) : \[FTBO(j\omega) = \frac{K}{j\omega(-\omega^2+5j\omega+6)} = \frac{K}{-5\omega^2 + j\omega(6-\omega^2)}\] Le lieu coupe l'axe réel (phase de \(-180^\circ\)) lorsque la partie imaginaire du dénominateur s'annule (pour \(\omega \neq 0\)), c'est-à-dire : \[\omega(6-\omega^2) = 0 \implies \omega_{180} = \sqrt{6} \text{ rad/s}\] La valeur du gain à cette pulsation est : \[FTBO(j\sqrt{6}) = \frac{K}{-5(6)} = -\frac{K}{30}\] D'après le critère du revers (Nyquist simplifié, applicable car le système en BO n'a pas de pôles instables), le point critique \((-1, 0)\) doit laisser le lieu sur sa gauche. Le point d'intersection doit donc être à droite de \(-1\) : \[-\frac{K}{30} > -1 \implies K < 30\] On retrouve bien <strong>\(0 < K < 30\)</strong>.</p>
+          <p><strong>Raisonnement :</strong> Calculons \(FTBO(j\omega)\) : \[FTBO(j\omega) = \frac{K}{j\omega(-\omega^2+5j\omega+6)} = \frac{K}{-5\omega^2 + j\omega(6-\omega^2)}\] Le lieu coupe l'axe réel (phase de \(-180^\circ\)) lorsque la partie imaginaire du dénominateur s'annule (pour \(\omega \neq 0\)), c'est-à-dire : \[\omega(6-\omega^2) = 0 \implies \omega_{180} = \sqrt{6} \text{ rad/s}\] La valeur du gain à cette pulsation est : \[FTBO(j\sqrt{6}) = \frac{K}{-5(6)} = -\frac{K}{30}\] D'après le critère du revers (Nyquist simplifié, applicable car le système en BO n'a pas de pôles instables), le point critique \((-1, 0)\) doit laisser le lieu sur sa gauche. Le point d'intersection doit donc être à droite de \(-1\) : \[-\frac{K}{30} > -1 \implies K < 30\]</p>
+          <p><strong>Reponse :</strong> On retrouve bien \(\mathbf{0 < K < 30}\).</p>
           <h4>3. Marge de gain pour \(K=15\)</h4>
-          <p>La marge de gain (MG) se calcule à la pulsation \(\omega_{180} = \sqrt{6}\) rad/s : \[MG = -20 \log_{10} |FTBO(j\omega_{180})| = -20 \log_{10} \left( \frac{15}{30} \right) = -20 \log_{10}(0.5)\] \[MG = 20 \log_{10}(2) \approx \mathbf{6.02 dB}\]</p>
+          <p><strong>Raisonnement :</strong> La marge de gain (MG) se calcule à la pulsation \(\omega_{180} = \sqrt{6}\) rad/s : \[MG = -20 \log_{10} |FTBO(j\omega_{180})| = -20 \log_{10} \left( \frac{15}{30} \right) = -20 \log_{10}(0.5)\]</p>
+          <p><strong>Reponse :</strong> \[\mathbf{MG = 20 \log_{10}(2) \approx 6.02 \text{ dB}}\]</p>
           <hr class="td-divider">
           </div>
         </article>
@@ -70,7 +92,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 2</span>
-              <h3>Exercice 2 : Régulateur PI</h3>
+              <h3>Exercice 2 - Régulateur PI</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -79,12 +101,9 @@
           </header>
           <div id="auto-td2-e2" class="answer-block">
           <p>Le processus est \(F(p) = \frac{1-2p}{(1+p)(1+5p)}\). Ses pôles sont \(-1\) et \(-1/5\). Le pôle le plus lent est \(-1/5\), correspondant à une constante de temps de \(5\) s. On choisit donc \(T_i = 5\) s.</p>
-          <figure class="system-diagram td-figure">
-            <img src="assets/auto/TD/AU361-TD2-Ex2.svg" alt="Structure et lecture frequentielle du correcteur PI." loading="lazy">
-            <figcaption class="diagram-caption">Structure et lecture frequentielle du correcteur PI.</figcaption>
-          </figure>
           <h4>1. Fonction de transfert en boucle ouverte</h4>
-          <p>\[R(p) = K \left( 1 + \frac{1}{5p} \right) = K \frac{1+5p}{5p}\] \[FBO(p) = R(p)F(p) = K \frac{1+5p}{5p} \frac{1-2p}{(1+p)(1+5p)} = \mathbf{\frac{K(1-2p)}{5p(1+p)}}\]</p>
+          <p><strong>Raisonnement :</strong> On multiplie le correcteur \(R(p)\) par le processus \(F(p)\). \[R(p) = K \left( 1 + \frac{1}{5p} \right) = K \frac{1+5p}{5p}\]</p>
+          <p><strong>Reponse :</strong> \[\mathbf{FBO(p) = R(p)F(p) = K \frac{1+5p}{5p} \frac{1-2p}{(1+p)(1+5p)} = \frac{K(1-2p)}{5p(1+p)}}\]</p>
           <h4>2. Diagramme de Bode pour \(K=1\) (Description asymptotique)</h4>
           <p>Le transfert est composé de :</p>
           <ul class="formula-list">
@@ -92,9 +111,10 @@
             <li>Un zéro à partie réelle positive (déphasage non minimal) \((1-2p)\) : Cassure à \(\omega_1 = 0.5\) rad/s. Ajoute une pente de \(+20\) dB/déc au gain. Ajoute un retard de phase allant de \(0^\circ\) à \(-90^\circ\).</li>
             <li>Un pôle \((1+p)\) : Cassure à \(\omega_2 = 1\) rad/s. Ajoute une pente de \(-20\) dB/déc au gain. Ajoute un retard de phase allant de \(0^\circ\) à \(-90^\circ\).</li>
           </ul>
-          <p>En basses fréquences, la phase part de \(-90^\circ\). En hautes fréquences, la phase tend vers \(-90^\circ - 90^\circ - 90^\circ = -270^\circ\).</p>
+          <p><strong>Reponse :</strong> En basses fréquences, la phase part de \(-90^\circ\). En hautes fréquences, la phase tend vers \(-90^\circ - 90^\circ - 90^\circ = \mathbf{-270^\circ}\).</p>
           <h4>3. Valeur de \(K\) pour une marge de gain de 6 dB</h4>
-          <p>Cherchons \(\omega_{180}\) telle que \(\arg(FBO(j\omega)) = -180^\circ\). \[-90^\circ - \arctan(2\omega) - \arctan(\omega) = -180^\circ \implies \arctan(2\omega) + \arctan(\omega) = 90^\circ\] En appliquant la fonction tangente : \[\frac{2\omega + \omega}{1 - 2\omega^2} = \infty \implies 1 - 2\omega^2 = 0 \implies \omega_{180} = \frac{1}{\sqrt{2}} \text{ rad/s}\] Le module à cette pulsation pour \(K=1\) est : \[|FBO(j\omega_{180})|_{K=1} = \frac{\sqrt{1+4\omega^2}}{5\omega\sqrt{1+\omega^2}} = \frac{\sqrt{1+2}}{5\frac{1}{\sqrt{2}}\sqrt{1+0.5}} = \frac{\sqrt{3}}{\frac{5}{2}\sqrt{3}} = \frac{2}{5} = 0.4\] On veut \(MG = 6\) dB \(\approx\) un facteur \(2\). \[20\log_{10}\left(\frac{1}{K \times 0.4}\right) = 6 \implies \frac{1}{0.4 K} \approx 2 \implies K = \frac{1}{0.8} = \mathbf{1.25}\]</p>
+          <p><strong>Raisonnement :</strong> Cherchons \(\omega_{180}\) telle que \(\arg(FBO(j\omega)) = -180^\circ\). \[-90^\circ - \arctan(2\omega) - \arctan(\omega) = -180^\circ \implies \arctan(2\omega) + \arctan(\omega) = 90^\circ\] En appliquant la fonction tangente : \[\frac{2\omega + \omega}{1 - 2\omega^2} = \infty \implies 1 - 2\omega^2 = 0 \implies \omega_{180} = \frac{1}{\sqrt{2}} \text{ rad/s}\] Le module à cette pulsation pour \(K=1\) est : \[|FBO(j\omega_{180})|_{K=1} = \frac{\sqrt{1+4\omega^2}}{5\omega\sqrt{1+\omega^2}} = \frac{\sqrt{1+2}}{5\frac{1}{\sqrt{2}}\sqrt{1+0.5}} = \frac{\sqrt{3}}{\frac{5}{2}\sqrt{3}} = \frac{2}{5} = 0.4\] On veut \(MG = 6\) dB \(\approx\) un facteur \(2\). \[20\log_{10}\left(\frac{1}{K \times 0.4}\right) = 6 \implies \frac{1}{0.4 K} \approx 2\]</p>
+          <p><strong>Reponse :</strong> \[\mathbf{K = \frac{1}{0.8} = 1.25}\]</p>
           <hr class="td-divider">
           </div>
         </article>
@@ -103,7 +123,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 3</span>
-              <h3>Exercice 3 : Réponse et régulation d'un système du 3ème ordre</h3>
+              <h3>Exercice 3 - Réponse et régulation d'un système du 3ème ordre</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -111,19 +131,18 @@
             </div>
           </header>
           <div id="auto-td2-e3" class="answer-block">
-          <p>Soit \(F(p) = \frac{A}{(1+Tp)^3}\) et \(R(p) = k\). \(FTBO(p) = \frac{kA}{(1+Tp)^3}\).</p>
-          <figure class="system-diagram td-figure">
-            <img src="assets/auto/TD/AU361-TD2-Ex3.svg" alt="Reponse et limites de stabilite du troisieme ordre." loading="lazy">
-            <figcaption class="diagram-caption">Reponse et limites de stabilite du troisieme ordre.</figcaption>
-          </figure>
+          <p>Soit \(F(p) = \frac{A}{(1+Tp)^3}\) et \(R(p) = k\). On a \(FTBO(p) = \frac{kA}{(1+Tp)^3}\).</p>
           <h4>2. Valeur de \(k\) pour limite de stabilité</h4>
-          <p>Phase : \(-3\arctan(T\omega) = -180^\circ \implies \arctan(T\omega) = 60^\circ \implies \omega_{180} = \frac{\sqrt{3}}{T}\). Module à cette pulsation : \[|FTBO(j\omega_{180})| = \frac{kA}{(\sqrt{1+3})^3} = \frac{kA}{8}\] Limite de stabilité si gain = 1 \(\implies \frac{kA}{8} = 1 \implies \mathbf{k = \frac{8}{A}}\).</p>
+          <p><strong>Raisonnement :</strong> Phase : \(-3\arctan(T\omega) = -180^\circ \implies \arctan(T\omega) = 60^\circ \implies \omega_{180} = \frac{\sqrt{3}}{T}\). Module à cette pulsation : \[|FTBO(j\omega_{180})| = \frac{kA}{(\sqrt{1+3})^3} = \frac{kA}{8}\] Limite de stabilité si gain = 1 \(\implies \frac{kA}{8} = 1\).</p>
+          <p><strong>Reponse :</strong> \[\mathbf{k = \frac{8}{A}}\]</p>
           <h4>3. Marge de gain et de phase</h4>
-          <p>\[MG = 20\log_{10}\left(\frac{8}{kA}\right)\] Pour la marge de phase, soit \(\omega_c\) telle que \(|FTBO(j\omega_c)| = 1 \implies 1+T^2\omega_c^2 = (kA)^{2/3} \implies \omega_c = \frac{\sqrt{(kA)^{2/3}-1}}{T}\). \[M\varphi = 180^\circ - 3\arctan(T\omega_c) = 180^\circ - 3\arctan\left(\sqrt{(kA)^{2/3}-1}\right)\]</p>
+          <p><strong>Reponse :</strong> \[\mathbf{MG = 20\log_{10}\left(\frac{8}{kA}\right)}\] Pour la marge de phase, soit \(\omega_c\) telle que \(|FTBO(j\omega_c)| = 1 \implies 1+T^2\omega_c^2 = (kA)^{2/3} \implies \omega_c = \frac{\sqrt{(kA)^{2/3}-1}}{T}\). \[\mathbf{M\varphi = 180^\circ - 3\arctan(T\omega_c) = 180^\circ - 3\arctan\left(\sqrt{(kA)^{2/3}-1}\right)}\]</p>
           <h4>4. Fonction de transfert en boucle fermée (FTBF)</h4>
-          <p>\[FTBF(p) = \frac{kA}{(1+Tp)^3+kA} = \frac{kA}{T^3p^3+3T^2p^2+3Tp+1+kA}\] <em>Gain statique :</em> \(FTBF(0) = \frac{kA}{1+kA}\). L'erreur de position est \(1 - \frac{kA}{1+kA} = \frac{1}{1+kA}\). Pour une bonne précision, \(k\) doit être grand, mais \(k\) est limité à \(8/A\) pour la stabilité. Le système présente un conflit direct entre précision et stabilité.</p>
+          <p><strong>Raisonnement :</strong> \[FTBF(p) = \frac{kA}{(1+Tp)^3+kA} = \frac{kA}{T^3p^3+3T^2p^2+3Tp+1+kA}\] <em>Gain statique :</em> \(FTBF(0) = \frac{kA}{1+kA}\). L'erreur de position est \(1 - \frac{kA}{1+kA} = \frac{1}{1+kA}\). Pour une bonne précision, \(k\) doit être grand, mais \(k\) est limité à \(8/A\) pour la stabilité.</p>
+          <p><strong>Reponse :</strong> Le système présente un <strong>conflit direct entre précision et stabilité</strong>.</p>
           <h4>7. Réponse à l'échelon pour \(k = 8/A\)</h4>
-          <p>Pour \(k = 8/A\), le système est à la limite de stabilité. \[FTBF(p) = \frac{8}{(1+Tp)^3+8}\] Les pôles annulent le dénominateur : \((1+Tp)^3 = -8 \implies 1+Tp = 2e^{j(\pi+2n\pi)/3}\). Les pôles sont \(p_1 = -3/T\) et \(p_{2,3} = \pm j\sqrt{3}/T\). Puisque le système possède des pôles purement imaginaires, sa réponse temporelle à un échelon ne convergera pas et sera le siège d'<strong>oscillations entretenues</strong> (non amorties) à la pulsation \(\sqrt{3}/T\).</p>
+          <p><strong>Raisonnement :</strong> Pour \(k = 8/A\), le système est à la limite de stabilité. \[FTBF(p) = \frac{8}{(1+Tp)^3+8}\] Les pôles annulent le dénominateur : \((1+Tp)^3 = -8 \implies 1+Tp = 2e^{j(\pi+2n\pi)/3}\). Les pôles sont \(p_1 = -3/T\) et \(p_{2,3} = \pm j\sqrt{3}/T\).</p>
+          <p><strong>Reponse :</strong> Puisque le système possède des pôles purement imaginaires, sa réponse temporelle à un échelon ne convergera pas et sera le siège d'<strong>oscillations entretenues</strong> (non amorties) à la pulsation \(\mathbf{\sqrt{3}/T}\).</p>
           <hr class="td-divider">
           </div>
         </article>
@@ -132,7 +151,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 4</span>
-              <h3>Exercice 4 : Rejet de perturbation</h3>
+              <h3>Exercice 4 - Rejet de perturbation</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -141,30 +160,35 @@
           </header>
           <div id="auto-td2-e4" class="answer-block">
           <p>\(H(p) = \frac{G}{p(1+Tp)}\) et \(Hd(p) = \frac{1}{1+Tp}\).</p>
-          <figure class="system-diagram td-figure">
-            <img src="assets/auto/TD/AU361-TD2-Ex4.svg" alt="Schema de rejet de perturbation." loading="lazy">
-            <figcaption class="diagram-caption">Schema de rejet de perturbation.</figcaption>
-          </figure>
-          <h4>Partie I : Régulateur Proportionnel \(R(p)=K\)</h4>
-          <h4>I.1.a : Erreur statique en consigne échelon</h4>
-          <p>\(FTBO(p)\) contient un intégrateur pur (\(1/p\)). Le système est de classe 1, donc l'erreur statique de position est <strong>nulle</strong>.</p>
-          <h4>I.1.b : Valeur maximale de \(K\) sans dépassement</h4>
-          <p>\[FTBF(p) = \frac{KG}{Tp^2+p+KG} = \frac{1}{\frac{T}{KG}p^2 + \frac{1}{KG}p + 1}\] On identifie \(\omega_n = \sqrt{\frac{KG}{T}}\) et \(\frac{2\zeta}{\omega_n} = \frac{1}{KG} \implies \zeta = \frac{1}{2\sqrt{KGT}}\). Pour ne pas avoir de dépassement, il faut \(\zeta \ge 1\) : \[\frac{1}{2\sqrt{KGT}} \ge 1 \implies \mathbf{K \le \frac{1}{4GT}}\]</p>
-          <h4>I.2.a : Bande passante maximale sans résonance</h4>
-          <p>Limite de résonance : \(\zeta = \frac{1}{\sqrt{2}}\). \[\frac{1}{2\sqrt{KGT}} = \frac{1}{\sqrt{2}} \implies 4KGT = 2 \implies \mathbf{K = \frac{1}{2GT}}\]</p>
-          <h4>I.3.a : Erreur statique due à \(d_2\) échelon unitaire</h4>
-          <p>\[Y_{d2}(p) = \frac{H(p)}{1+KH(p)} \frac{1}{p} = \frac{G}{Tp^2+p+KG} \frac{1}{p}\] En régime permanent (théorème valeur finale) : \(y(\infty) = \frac{G}{KG} = \frac{1}{K}\). Puisque consigne \(c=0\), l'erreur est \(\epsilon = c - y = \mathbf{-1/K}\).</p>
-          <h4>I.3.b : Erreur statique due à \(d_1\) échelon unitaire</h4>
-          <p>\[Y_{d1}(p) = \frac{Hd(p)}{1+KH(p)} \frac{1}{p} = \frac{\frac{1}{1+Tp}}{1+\frac{KG}{p(1+Tp)}} \frac{1}{p} = \frac{p}{Tp^2+p+KG} \frac{1}{p}\] \(y(\infty) = \lim_{p\to0} p Y_{d1}(p) = \mathbf{0}\).</p>
-          <h4>I.3.c : \(d_1\) en rampe</h4>
-          <p>\[D_1(p) = \frac{1}{p^2} \implies Y_{d1}(p) = \frac{p}{Tp^2+p+KG} \frac{1}{p^2}\] \(y(\infty) = \lim_{p\to0} p \frac{1}{p(Tp^2+p+KG)} = \mathbf{\frac{1}{KG}}\).</p>
-          <h4>I.3.d : Minimisation de l'erreur sans dépassement</h4>
-          <p>L'erreur est proportionnelle à \(1/K\), il faut maximiser \(K\). Pour rester sans dépassement, \(K = \frac{1}{4GT}\). L'erreur en régime permanent vaut alors \(\mathbf{y(\infty) = 4T}\).</p>
-          <p><strong>Partie II : Régulateur PI \(R(p)=K(1+\frac{1}{T_ip})\)</strong></p>
+          <h4>Partie I - Régulateur Proportionnel \(R(p)=K\)</h4>
+          <h4>I.1.a - Erreur statique en consigne échelon</h4>
+          <p><strong>Raisonnement :</strong> \(FTBO(p)\) contient un intégrateur pur (\(1/p\)). Le système est de classe 1.</p>
+          <p><strong>Reponse :</strong> L'erreur statique de position est <strong>nulle</strong>.</p>
+          <h4>I.1.b - Valeur maximale de \(K\) sans dépassement</h4>
+          <p><strong>Raisonnement :</strong> \[FTBF(p) = \frac{KG}{Tp^2+p+KG} = \frac{1}{\frac{T}{KG}p^2 + \frac{1}{KG}p + 1}\] On identifie \(\omega_n = \sqrt{\frac{KG}{T}}\) et \(\frac{2\zeta}{\omega_n} = \frac{1}{KG} \implies \zeta = \frac{1}{2\sqrt{KGT}}\). Pour ne pas avoir de dépassement, il faut \(\zeta \ge 1\).</p>
+          <p><strong>Reponse :</strong> \[\frac{1}{2\sqrt{KGT}} \ge 1 \implies \mathbf{K \le \frac{1}{4GT}}\]</p>
+          <h4>I.2.a - Bande passante maximale sans résonance</h4>
+          <p><strong>Raisonnement :</strong> La limite de résonance correspond à \(\zeta = \frac{1}{\sqrt{2}}\).</p>
+          <p><strong>Reponse :</strong> \[\frac{1}{2\sqrt{KGT}} = \frac{1}{\sqrt{2}} \implies 4KGT = 2 \implies \mathbf{K = \frac{1}{2GT}}\]</p>
+          <h4>I.3.a - Erreur statique due à \(d_2\) échelon unitaire</h4>
+          <p><strong>Raisonnement :</strong> \[Y_{d2}(p) = \frac{H(p)}{1+KH(p)} \frac{1}{p} = \frac{G}{Tp^2+p+KG} \frac{1}{p}\] En régime permanent (théorème de la valeur finale) : \(y(\infty) = \frac{G}{KG} = \frac{1}{K}\). Puisque la consigne \(c=0\), l'erreur est \(\epsilon = c - y\).</p>
+          <p><strong>Reponse :</strong> \[\mathbf{\epsilon = -1/K}\]</p>
+          <h4>I.3.b - Erreur statique due à \(d_1\) échelon unitaire</h4>
+          <p><strong>Raisonnement :</strong> \[Y_{d1}(p) = \frac{Hd(p)}{1+KH(p)} \frac{1}{p} = \frac{\frac{1}{1+Tp}}{1+\frac{KG}{p(1+Tp)}} \frac{1}{p} = \frac{p}{Tp^2+p+KG} \frac{1}{p}\]</p>
+          <p><strong>Reponse :</strong> \[\mathbf{y(\infty) = \lim_{p\to0} p Y_{d1}(p) = 0}\]</p>
+          <h4>I.3.c - \(d_1\) en rampe</h4>
+          <p><strong>Raisonnement :</strong> \[D_1(p) = \frac{1}{p^2} \implies Y_{d1}(p) = \frac{p}{Tp^2+p+KG} \frac{1}{p^2}\]</p>
+          <p><strong>Reponse :</strong> \[\mathbf{y(\infty) = \lim_{p\to0} p \frac{1}{p(Tp^2+p+KG)} = \frac{1}{KG}}\]</p>
+          <h4>I.3.d - Minimisation de l'erreur sans dépassement</h4>
+          <p><strong>Raisonnement :</strong> L'erreur est proportionnelle à \(1/K\), il faut maximiser \(K\). Pour rester sans dépassement, \(K = \frac{1}{4GT}\).</p>
+          <p><strong>Reponse :</strong> L'erreur en régime permanent vaut alors \(\mathbf{y(\infty) = 4T}\).</p>
+          <h4>Partie II - Régulateur PI \(R(p)=K(1+\frac{1}{T_ip})\)</h4>
           <h4>II.2. \(T_i = T\)</h4>
-          <p>\[FTBO(p) = K\frac{1+Tp}{Tp} \frac{G}{p(1+Tp)} = \frac{KG}{Tp^2}\] Le diagramme de Black est une droite verticale à \(-180^\circ\). La marge de phase est toujours de \(0^\circ\). Le système est à la limite de l'instabilité (oscillateur pur).</p>
+          <p><strong>Raisonnement :</strong> \[FTBO(p) = K\frac{1+Tp}{Tp} \frac{G}{p(1+Tp)} = \frac{KG}{Tp^2}\] Le diagramme de Black est une droite verticale à \(-180^\circ\). La marge de phase est toujours de \(0^\circ\).</p>
+          <p><strong>Reponse :</strong> Le système est à la limite de l'instabilité (<strong>oscillateur pur</strong>).</p>
           <h4>II.4. \(T_i = 2T\), erreur due à \(d_2\) échelon</h4>
-          <p>\[Y(p) = \frac{H(p)}{1+FTBO(p)} \frac{1}{p} = \frac{2TGp}{2Tp^2(1+Tp)+KG(1+2Tp)}\frac{1}{p}\] En appliquant la limite \(p \to 0\), \(y(\infty) = 0\). Le régulateur PI annule l'erreur statique d'une perturbation constante appliquée en entrée du processus grâce à son action intégrale.</p>
+          <p><strong>Raisonnement :</strong> \[Y(p) = \frac{H(p)}{1+FTBO(p)} \frac{1}{p} = \frac{2TGp}{2Tp^2(1+Tp)+KG(1+2Tp)}\frac{1}{p}\] En appliquant la limite \(p \to 0\), \(y(\infty) = 0\).</p>
+          <p><strong>Reponse :</strong> Le régulateur PI annule l'erreur statique d'une perturbation constante appliquée en entrée du processus grâce à son <strong>action intégrale</strong>.</p>
           <hr class="td-divider">
           </div>
         </article>
@@ -173,7 +197,7 @@
           <header>
             <div>
               <span class="status-pill">Exercice 5</span>
-              <h3>Exercice 5 : Asservissement de position</h3>
+              <h3>Exercice 5 - Asservissement de position</h3>
             </div>
             <div class="button-row">
               <button type="button" data-mark-done>Marquer comme fait</button>
@@ -184,21 +208,41 @@
           <p>Processus vitesse : \(\frac{VIT(p)}{U(p)} = \frac{5}{1+0.1p}\). La position est l'intégrale de la vitesse, donc \(POS(p) = \frac{VIT(p)}{p}\).</p>
           <h4>I. Analyse du processus</h4>
           <ol class="solution-steps">
-            <li>\(H(p) = \frac{POS(p)}{U(p)} = \mathbf{\frac{5}{p(1+0.1p)}}\).</li>
-            <li>Pôles : \(p_1 = \mathbf{0}\) et \(p_2 = \mathbf{-10}\).</li>
-            <li>Le système possède un pôle nul (intégrateur). Il n'est donc <strong>pas asymptotiquement stable</strong>.</li>
-            <li>Réponses indicielles (\(U(p) = 1/p\)) : \[VIT(p) = \frac{5}{p(1+0.1p)} \implies \mathbf{vit(t) = 5(1-e^{-10t})}\] \[pos(t) = \int_0^t vit(\tau)d\tau = \left[ 5\tau + 0.5e^{-10\tau} \right]_0^t = \mathbf{5t + 0.5e^{-10t} - 0.5}\]</li>
+            <li><strong>Reponse :</strong> \(H(p) = \frac{POS(p)}{U(p)} = \mathbf{\frac{5}{p(1+0.1p)}}\).</li>
+            <li><strong>Reponse :</strong> Pôles : \(p_1 = \mathbf{0}\) et \(p_2 = \mathbf{-10}\).</li>
+            <li><strong>Raisonnement :</strong> Le système possède un pôle nul (intégrateur). <br></li>
           </ol>
+          <p><strong>Reponse :</strong> Il n'est donc <strong>pas asymptotiquement stable</strong>.</p>
+          <ul class="formula-list">
+            <li><strong>Raisonnement :</strong> Réponses indicielles (\(U(p) = 1/p\)) :</li>
+          </ul>
+          <p>\[VIT(p) = \frac{5}{p(1+0.1p)}\] <strong>Reponse :</strong> \[\mathbf{vit(t) = 5(1-e^{-10t})}\] \[pos(t) = \int_0^t vit(\tau)d\tau = \left[ 5\tau + 0.5e^{-10\tau} \right]_0^t = \mathbf{5t + 0.5e^{-10t} - 0.5}\]</p>
           <h4>II. Analyse du système asservi (\(R(p)=K\))</h4>
           <ol class="solution-steps">
-            <li>\(R(p) = K\).</li>
-            <li>\(FTBF(p) = \frac{\frac{5K}{p(1+0.1p)}}{1+\frac{5K}{p(1+0.1p)}} = \frac{5K}{0.1p^2+p+5K} = \frac{1}{\frac{0.1}{5K}p^2 + \frac{1}{5K}p + 1}\). Par identification avec la forme canonique : \[\omega_n = \mathbf{\sqrt{50K}} \quad \text{et} \quad \zeta = \mathbf{\frac{1}{\sqrt{2K}}}\]</li>
-            <li>Erreur pour consigne échelon (sans perturbation) : La FTBF a un gain statique de 1. L'erreur est nulle, la position atteint la consigne.</li>
-            <li>Erreur due à \(\delta\) échelon (\(C=0\), \(D=1/p\)) : \[POS(p) = \frac{H(p)}{1+KH(p)} \delta(p) = \frac{5}{0.1p^2+p+5K} \frac{1}{p}\] Théorème de la valeur finale : \(pos(\infty) = \mathbf{\frac{1}{K}}\).</li>
-            <li>Pour minimiser l'erreur \(1/K\), il faut maximiser \(K\). Pour n'avoir aucun dépassement, il faut \(\zeta \ge 1 \implies \frac{1}{\sqrt{2K}} \ge 1 \implies \mathbf{K \le 0.5}\). Avec \(K=0.5\), l'erreur en régime permanent vaut \(\mathbf{pos(\infty) = 2}\).</li>
-            <li>Pour \(K=2\), le transfert de la perturbation est \(T_d(p) = \frac{5}{0.1p^2+p+10}\). Paramètres : \(\omega_n = 10\) rad/s, \(\zeta = 0.5\). La pulsation de résonance est \(\omega_r = \omega_n\sqrt{1-2\zeta^2} = 10\sqrt{1-2(0.25)} = \mathbf{7.07 \text{ rad/s}}\).</li>
-            <li>Pour une perturbation sinusoïdale de fréquence 50 Hz (\(\omega \approx 314\) rad/s), on se situe très loin au-delà de la bande passante du système (10 rad/s). L'amplitude du signal de sortie en régime permanent sera très fortement atténuée (pente asymptotique de -40 dB/déc au-delà de \(\omega_n\)). L'allure de la position sera une très faible oscillation sinusoïdale centrée sur 0. L'amplitude est donnée par \(0.1 \times |T_d(j\omega)| = \mathbf{\frac{0.5}{\sqrt{(5K - 0.1\omega^2)^2 + \omega^2}}}\).</li>
+            <li><strong>Reponse :</strong> \(R(p) = K\).</li>
+            <li><strong>Raisonnement :</strong></li>
           </ol>
+          <p>\[FTBF(p) = \frac{\frac{5K}{p(1+0.1p)}}{1+\frac{5K}{p(1+0.1p)}} = \frac{5K}{0.1p^2+p+5K} = \frac{1}{\frac{0.1}{5K}p^2 + \frac{1}{5K}p + 1}\] Par identification avec la forme canonique : <br> <strong>Reponse :</strong> \[\mathbf{\omega_n = \sqrt{50K} \quad \text{et} \quad \zeta = \frac{1}{\sqrt{2K}}}\]</p>
+          <ul class="formula-list">
+            <li><strong>Raisonnement :</strong> Erreur pour consigne échelon (sans perturbation) : La FTBF a un gain statique de 1. <br></li>
+          </ul>
+          <p><strong>Reponse :</strong> L'erreur est nulle, la position atteint la consigne.</p>
+          <ul class="formula-list">
+            <li><strong>Raisonnement :</strong> Erreur due à \(\delta\) échelon (\(C=0\), \(D=1/p\)) :</li>
+          </ul>
+          <p>\[POS(p) = \frac{H(p)}{1+KH(p)} \delta(p) = \frac{5}{0.1p^2+p+5K} \frac{1}{p}\] Théorème de la valeur finale : <br> <strong>Reponse :</strong> \(pos(\infty) = \mathbf{\frac{1}{K}}\).</p>
+          <ul class="formula-list">
+            <li><strong>Raisonnement :</strong> Pour minimiser l'erreur \(1/K\), il faut maximiser \(K\). Pour n'avoir aucun dépassement, il faut \(\zeta \ge 1 \implies \frac{1}{\sqrt{2K}} \ge 1 \implies K \le 0.5\). <br></li>
+          </ul>
+          <p><strong>Reponse :</strong> La valeur de \(K\) choisie est \(\mathbf{K=0.5}\). Avec \(K=0.5\), l'erreur en régime permanent vaut \(\mathbf{pos(\infty) = 2}\).</p>
+          <ul class="formula-list">
+            <li><strong>Raisonnement :</strong> Pour \(K=2\), le transfert de la perturbation est \(T_d(p) = \frac{5}{0.1p^2+p+10}\).</li>
+          </ul>
+          <p>Paramètres : \(\omega_n = 10\) rad/s, \(\zeta = 0.5\). La pulsation de résonance est \(\omega_r = \omega_n\sqrt{1-2\zeta^2} = 10\sqrt{1-2(0.25)}\). <br> <strong>Reponse :</strong> \(\mathbf{\omega_r = 7.07 \text{ rad/s}}\).</p>
+          <ul class="formula-list">
+            <li><strong>Raisonnement :</strong> Pour une perturbation sinusoïdale de fréquence 50 Hz (\(\omega \approx 314\) rad/s), on se situe très loin au-delà de la bande passante du système (10 rad/s). L'amplitude du signal de sortie en régime permanent sera très fortement atténuée (pente asymptotique de -40 dB/déc au-delà de \(\omega_n\)). L'allure de la position sera une très faible oscillation sinusoïdale centrée sur 0. <br></li>
+          </ul>
+          <p><strong>Reponse :</strong> L'amplitude est donnée par \(0.1 \times |T_d(j\omega)| = \mathbf{\frac{0.5}{\sqrt{(5K - 0.1\omega^2)^2 + \omega^2}}}\).</p>
           </div>
         </article>
       </section>

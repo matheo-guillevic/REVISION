@@ -25,7 +25,7 @@
           <span class="eyebrow">SN361 - TD 3</span>
           <h1>Compteurs, resets, enable et test benches</h1>
           <p>Compteur 8 bits, reset asynchrone, activation synchrone, simulation VHDL/Verilog et evolution up/down.</p>
-          <p>Page reconstruite depuis le fichier LaTeX <code>pdf/vhdl/TD/TD3_Correction_SN361.tex</code>.</p>
+          <p>Page reconstruite depuis <code>pdf/vhdl/TD/TD3_Correction_SN361.tex</code>.</p>
         </div>
         <div class="td-actions">
           <a class="primary-button" href="pdf/vhdl/TD/TD3_Correction_SN361.pdf">Ouvrir le PDF</a>
@@ -59,7 +59,7 @@
           <p>Il s'agit d'un exemple de simulation avec Vivado pour un compteur utilisant une horloge d'une période de 10 ns. *(Le chronogramme affiche l'évolution de <code>count</code> de 00 à 13 en hexadécimal à chaque front d'horloge lorsque <code>Enable</code> est actif ).*</p>
           <h4>3) Écrivez le code de ce compteur en VHDL et en Verilog.</h4>
           <p><strong>VHDL :</strong></p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -89,7 +89,7 @@ begin
     count &lt;= std_logic_vector(count_internal);
 end Behavioral;</code></pre>
           <p><strong>Verilog :</strong></p>
-          <pre class="code-block language-vhdl"><code>module compteur (
+          <pre class="code-block language-vhdl"><code class="language-vhdl">module compteur (
     input wire clk,
     input wire rst,
     input wire Enable,
@@ -107,7 +107,7 @@ endmodule</code></pre>
           <h4>4) Créer le TestBench pour le compteur en VHDL et Verilog :</h4>
           <p>Le TestBench permet de vérifier le bon fonctionnement du système. Dans l'exemple suivant, on teste la réaction du système à une horloge avec une période de 10 ns. Le signal reset et le signal enable sont respectivement à 1 et 0 pendant 50 ns. Ensuite, reset passe à 0 et enable à 1 pendant 200 ns. Enfin, les deux signaux sont positionnés à 1.</p>
           <p><strong>TestBench VHDL :</strong></p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
@@ -156,7 +156,7 @@ begin
     end process;
 end Behavioral;</code></pre>
           <p><strong>TestBench Verilog :</strong></p>
-          <pre class="code-block language-vhdl"><code>`timescale 1ns/1ps
+          <pre class="code-block language-vhdl"><code class="language-vhdl">`timescale 1ns/1ps
 
 module tb_compteur();
     reg clk = 1;
@@ -191,7 +191,7 @@ endmodule</code></pre>
             <li><code>down</code> : Si active, le compteur se décrémente.</li>
           </ul>
           <p><strong>Modifiez le code VHDL pour intégrer cette nouvelle fonctionnalité :</strong></p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
@@ -247,12 +247,12 @@ end Behavioral;</code></pre>
             <img src="assets/vhdl/TD/SN361-TD3_2.1.svg" alt="Registre a decalage SIPO generique." loading="lazy">
             <figcaption class="diagram-caption">Registre a decalage SIPO generique.</figcaption>
           </figure>
-          <pre class="code-block language-vhdl"><code>entity bascule is
+          <pre class="code-block language-vhdl"><code class="language-vhdl">entity bascule is
 port(d, clk, reset, enable: in std_logic;
      q: out std_logic);
 end entity bascule;</code></pre>
           <p>Voici un TestBench conçu pour tester le système. L'objectif est de vérifier un maximum d'entrées, voire toutes si possible, afin d'observer la réaction de la sortie et de s'assurer qu'elle correspond aux attentes.</p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity tb_bascule is
@@ -322,7 +322,7 @@ end bhv;</code></pre>
           </ul>
           <p><strong>2.1. Dessinez le schéma de ce registre</strong> *(Le schéma est à inclure ici à l'aide du fichier SVG généré).*</p>
           <p><strong>2.2. Ecrivez la description structurelle du registre SIPO (entité + architecture) </strong></p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity SIPO is
@@ -354,7 +354,7 @@ begin
 end struct;</code></pre>
           <h4>3) Pour que le registre soit facilement réutilisable dans différents projets, on souhaite le rendre plus générique.</h4>
           <p>On veut qu'il soit paramétrable pour supporter différentes tailles de vecteurs de sortie. On veut donc construire un registre à décalage SIPO de N bits. Ecrivez l'entité de ce registre.</p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity SIPO_n is
@@ -396,7 +396,7 @@ begin
     dout &lt;= dout_temp(1 to N);
 end architecture;</code></pre>
           <p><strong>TestBench pour SIPO_n:</strong></p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity tb_SIPO_n is

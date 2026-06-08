@@ -22,6 +22,10 @@
           <span class="eyebrow">TD 2</span>
           <h1>Espaces probabilises</h1>
           <p>Corrige reconstruit depuis le fichier LaTeX correspondant.</p>
+          <p>Page reconstruite depuis <code>pdf/math/TD/MT331-TD2.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="back-link" href="math.html">Cours de math</a>
         </div>
       </header>
 
@@ -38,25 +42,15 @@
             </div>
           </header>
           <div id="td2-e1" class="answer-block">
-          <p>On note les événements suivants : \(M_a\) : "la personne est prof de maths", \(M_e\) : "la personne est médecin", \(N\) : "la personne est normale". On note également \(L\) : "le mot est lisible" et \(\bar{L}\) : "le mot est illisible". D'après l'énoncé, on a : \(P(M_a) = 0.15\), \(P(M_e) = 0.08\) et \(P(N) = 0.77\). Les probabilités conditionnelles d'écrire de façon illisible sont : \(P(\bar{L}|M_a) = 0.5\), \(P(\bar{L}|M_e) = 0.7\) et \(P(\bar{L}|N) = 0.3\).</p>
+          <p>On note les événements suivants : \(M_a\) : "la personne est prof de maths", \(M_e\) : "la personne est médecin", \(N\) : "la personne est normale". On note également \(L\) : "le mot est lisible" et \(\bar{L}\) : "le mot est illisible".</p>
+          <p>D'après l'énoncé, on a : \(P(M_a) = 0.15\), \(P(M_e) = 0.08\) et \(P(N) = 0.77\). Les probabilités conditionnelles d'écrire de façon illisible sont : \(P(\bar{L}|M_a) = 0.5\), \(P(\bar{L}|M_e) = 0.7\) et \(P(\bar{L}|N) = 0.3\).</p>
           <h4>1. Probabilité que le mot soit illisible</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>La famille \(\{M_a, M_e, N\}\) forme un système complet d'événements (SCE). On applique la formule des probabilités totales : \[P(\bar{L}) = P(M_a \cap \bar{L}) + P(M_e \cap \bar{L}) + P(N \cap \bar{L})\] \[P(\bar{L}) = P(M_a)P(\bar{L}|M_a) + P(M_e)P(\bar{L}|M_e) + P(N)P(\bar{L}|N) \text{}\]</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(P(\bar{L}) = 0.15 \times 0.5 + 0.08 \times 0.7 + 0.77 \times 0.3 = 0.075 + 0.056 + 0.231 = 0.362\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> La famille \(\{M_a, M_e, N\}\) forme un système complet d'événements (SCE). On applique la formule des probabilités totales : \[P(\bar{L}) = P(M_a \cap \bar{L}) + P(M_e \cap \bar{L}) + P(N \cap \bar{L})\] \[P(\bar{L}) = P(M_a)P(\bar{L}|M_a) + P(M_e)P(\bar{L}|M_e) + P(N)P(\bar{L}|N)\]</p>
+          <p><strong>Reponse :</strong> \[P(\bar{L}) = 0.15 \times 0.5 + 0.08 \times 0.7 + 0.77 \times 0.3 = 0.075 + 0.056 + 0.231 = \mathbf{0.362}\]</p>
           <h4>2. Probabilité que l'auteur soit un prof de maths sachant que le mot est illisible</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il s'agit de calculer la probabilité conditionnelle \(P(M_a|\bar{L})\) à l'aide de la formule de Bayes.</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(P(M_a|\bar{L}) = \frac{P(M_a \cap \bar{L})}{P(\bar{L})} = \frac{0.075}{0.362} = \frac{75}{362} \approx 0.207\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Il s'agit de calculer la probabilité conditionnelle \(P(M_a|\bar{L})\) à l'aide de la formule de Bayes.</p>
+          <p><strong>Reponse :</strong> \[P(M_a|\bar{L}) = \frac{P(M_a \cap \bar{L})}{P(\bar{L})} = \frac{0.075}{0.362} = \mathbf{\frac{75}{362} \approx 0.207}\]</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -73,23 +67,18 @@
           </header>
           <div id="td2-e2" class="answer-block">
           <h4>1. Démonstration par récurrence</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On procède par récurrence sur le nombre \(n\) d'événements \(A_1, A_2, \dots, A_n\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> On procède par récurrence sur le nombre \(n\) d'événements \(A_1, A_2, \dots, A_n\).</p>
           <ul class="formula-list">
             <li><strong>Initialisation :</strong> Pour \(n=2\), la définition de la probabilité conditionnelle donne bien \(P(A_1 \cap A_2) = P(A_1)P(A_2|A_1)\).</li>
-            <li><strong>Hérédité :</strong> Supposons la propriété vraie pour un entier \(m \ge 2\). Pour \(m+1\) événements, on écrit : \(P(A_1 \cap \dots \cap A_{m+1}) = P((A_1 \cap \dots \cap A_m) \cap A_{m+1}) = P(A_1 \cap \dots \cap A_m)P(A_{m+1} | A_1 \cap \dots \cap A_m)\). En utilisant l'hypothèse de récurrence pour \(P(A_1 \cap \dots \cap A_m)\), on obtient directement la formule souhaitée au rang \(m+1\). L'hérédité est prouvée.</li>
+            <li><strong>Hérédité :</strong> Supposons la propriété vraie pour un entier \(m \ge 2\).</li>
           </ul>
+          <p>Pour \(m+1\) événements, on écrit : \[P(A_1 \cap \dots \cap A_{m+1}) = P((A_1 \cap \dots \cap A_m) \cap A_{m+1}) = P(A_1 \cap \dots \cap A_m)P(A_{m+1} | A_1 \cap \dots \cap A_m)\] En utilisant l'hypothèse de récurrence pour \(P(A_1 \cap \dots \cap A_m)\), on obtient directement la formule souhaitée au rang \(m+1\).</p>
+          <p><strong>Reponse :</strong> L'hérédité est prouvée, la formule est donc vraie pour tout \(n \ge 2\).</p>
           <h4>2. Tirage dans l'urne</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Notons \(A_k\) l'événement "au \(k\)-ième tirage, on obtient une boule blanche et une noire" (couleurs différentes) pour \(k \in \{1, \dots, n\}\). On cherche \(P(A_1 \cap A_2 \cap \dots \cap A_n)\). Au premier tirage, on choisit 2 boules parmi \(2n\). Il y a \(n^2\) façons de choisir une blanche et une noire : \(P(A_1) = \frac{n^2}{\binom{2n}{2}} = \frac{n^2}{n(2n-1)} = \frac{n}{2n-1}\). Sachant \(A_1\), il reste \(2n-2\) boules dont \(n-1\) de chaque couleur. Donc : \(P(A_2|A_1) = \frac{(n-1)^2}{\binom{2n-2}{2}} = \frac{n-1}{2n-3}\). De manière générale, \(P(A_k | A_1 \cap \dots \cap A_{k-1}) = \frac{n-k+1}{2(n-k+1)-1}\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>En appliquant la formule du 1., on a le produit : \[P(A_1 \cap \dots \cap A_n) = \frac{n}{2n-1} \times \frac{n-1}{2n-3} \times \dots \times \frac{1}{1} \text{}\] En multipliant le numérateur et le dénominateur par \((n!) \times 2^n\) pour reconstituer les paires manquantes au dénominateur, on trouve \(P = \frac{2^n(n!)^2}{(2n)!}\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Notons \(A_k\) l'événement "au \(k\)-ième tirage, on obtient une boule blanche et une noire" (couleurs différentes) pour \(k \in \{1, \dots, n\}\). On cherche \(P(A_1 \cap A_2 \cap \dots \cap A_n)\).</p>
+          <p>Au premier tirage, on choisit 2 boules parmi \(2n\). Il y a \(n^2\) façons de choisir une blanche et une noire : \[P(A_1) = \frac{n^2}{\binom{2n}{2}} = \frac{n^2}{n(2n-1)} = \frac{n}{2n-1}\] Sachant \(A_1\), il reste \(2n-2\) boules dont \(n-1\) de chaque couleur. Donc : \[P(A_2|A_1) = \frac{(n-1)^2}{\binom{2n-2}{2}} = \frac{n-1}{2n-3}\] De manière générale, \(P(A_k | A_1 \cap \dots \cap A_{k-1}) = \frac{n-k+1}{2(n-k+1)-1}\).</p>
+          <p><strong>Reponse :</strong> En appliquant la formule du 1., on a le produit : \[P(A_1 \cap \dots \cap A_n) = \frac{n}{2n-1} \times \frac{n-1}{2n-3} \times \dots \times \frac{1}{1}\] En multipliant le numérateur et le dénominateur par \((n!) \times 2^n\) pour reconstituer les paires manquantes au dénominateur, on trouve : \[\mathbf{P = \frac{2^n(n!)^2}{(2n)!}}\]</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -105,15 +94,10 @@
             </div>
           </header>
           <div id="td2-e3" class="answer-block">
-          <p>On note \(A\) : "l'auteur est anglais" et \(V\) : "la lettre tirée est une voyelle". On a \(P(A) = 0.40\) et \(P(\bar{A}) = 0.60\). Pour le mot "rigour" (anglais, 6 lettres, 3 voyelles), \(P(V|A) = \frac{3}{6} = \frac{1}{2}\). Pour le mot "rigor" (américain, 5 lettres, 2 voyelles), \(P(V|\bar{A}) = \frac{2}{5} = 0.4\).</p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Le système \(\{A, \bar{A}\}\) est un SCE. Par la formule des probabilités totales : \(P(V) = P(A)P(V|A) + P(\bar{A})P(V|\bar{A}) = 0.4 \times 0.5 + 0.6 \times 0.4 = 0.44\). On cherche la probabilité \(P(A|V)\) via la formule de Bayes : \(P(A|V) = \frac{P(A \cap V)}{P(V)}\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(P(A|V) = \frac{0.2}{0.44} = \frac{5}{11}\).</p>
-          </div>
+          <p>On note \(A\) : "l'auteur est anglais" et \(V\) : "la lettre tirée est une voyelle". On a \(P(A) = 0.40\) et \(P(\bar{A}) = 0.60\). Pour le mot "rigour" (anglais, 6 lettres, 3 voyelles), \(P(V|A) = \frac{3}{6} = 0.5\). Pour le mot "rigor" (américain, 5 lettres, 2 voyelles), \(P(V|\bar{A}) = \frac{2}{5} = 0.4\).</p>
+          <p><strong>Raisonnement :</strong> Le système \(\{A, \bar{A}\}\) est un SCE. Par la formule des probabilités totales : \[P(V) = P(A)P(V|A) + P(\bar{A})P(V|\bar{A}) = 0.4 \times 0.5 + 0.6 \times 0.4 = 0.44\] On cherche la probabilité \(P(A|V)\) via la formule de Bayes : \(P(A|V) = \frac{P(A \cap V)}{P(V)}\).</p>
+          <p><strong>Reponse :</strong> \[P(A|V) = \frac{0.2}{0.44} = \mathbf{\frac{5}{11}}\]</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -130,23 +114,12 @@
           </header>
           <div id="td2-e4" class="answer-block">
           <h4>1. Famille de trois enfants</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>L'univers est \(\Omega = \{F, G\}^3\) avec équiprobabilité, donc \(|\Omega| = 8\). \(A\) : "enfants des deux sexes" correspond à \(\Omega\) privé de \(\{(G,G,G), (F,F,F)\}\). Donc \(|A| = 6\) et \(P(A) = \frac{6}{8} = \frac{3}{4}\). \(B\) : "au plus un garçon" correspond à \(\{(F,F,F), (G,F,F), (F,G,F), (F,F,G)\}\). Donc \(|B| = 4\) et \(P(B) = \frac{4}{8} = \frac{1}{2}\). L'intersection \(A \cap B\) correspond aux cas "exactement 1 garçon", soit \(\{(G,F,F), (F,G,F), (F,F,G)\}\). \(|A \cap B| = 3\), donc \(P(A \cap B) = \frac{3}{8}\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>Puisque \(P(A) \times P(B) = \frac{3}{4} \times \frac{1}{2} = \frac{3}{8} = P(A \cap B)\), les événements sont <strong>indépendants</strong>.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> L'univers est \(\Omega = \{F, G\}^3\) avec équiprobabilité, donc \(|\Omega| = 8\). \(A\) : "enfants des deux sexes" correspond à \(\Omega\) privé de \(\{(G,G,G), (F,F,F)\}\). Donc \(|A| = 6\) et \(P(A) = \frac{6}{8} = \frac{3}{4}\). \(B\) : "au plus un garçon" correspond à \(\{(F,F,F), (G,F,F), (F,G,F), (F,F,G)\}\). Donc \(|B| = 4\) et \(P(B) = \frac{4}{8} = \frac{1}{2}\). L'intersection \(A \cap B\) correspond aux cas "exactement 1 garçon", soit \(\{(G,F,F), (F,G,F), (F,F,G)\}\). \(|A \cap B| = 3\), donc \(P(A \cap B) = \frac{3}{8}\).</p>
+          <p><strong>Reponse :</strong> Puisque \(P(A) \times P(B) = \frac{3}{4} \times \frac{1}{2} = \frac{3}{8} = P(A \cap B)\), les événements sont <strong>indépendants</strong>.</p>
           <h4>2. Famille de deux enfants</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Ici \(\Omega = \{F, G\}^2\) avec \(|\Omega| = 4\). \(A\) = \(\{(G,F), (F,G)\}\) d'où \(P(A) = \frac{2}{4} = \frac{1}{2}\). \(B\) ("au plus un garçon") = \(\{(F,F), (G,F), (F,G)\}\) d'où \(P(B) = \frac{3}{4}\). L'intersection \(A \cap B = \{(G,F), (F,G)\}\), d'où \(P(A \cap B) = \frac{1}{2}\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(P(A) \times P(B) = \frac{1}{2} \times \frac{3}{4} = \frac{3}{8} \neq P(A \cap B)\), les événements ne sont <strong>pas indépendants</strong>.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Ici \(\Omega = \{F, G\}^2\) avec \(|\Omega| = 4\). \(A\) = \(\{(G,F), (F,G)\}\) d'où \(P(A) = \frac{2}{4} = \frac{1}{2}\). \(B\) ("au plus un garçon") = \(\{(F,F), (G,F), (F,G)\}\) d'où \(P(B) = \frac{3}{4}\). L'intersection \(A \cap B = \{(G,F), (F,G)\}\), d'où \(P(A \cap B) = \frac{1}{2}\).</p>
+          <p><strong>Reponse :</strong> \(P(A) \times P(B) = \frac{1}{2} \times \frac{3}{4} = \frac{3}{8} \neq P(A \cap B)\), les événements ne sont <strong>pas indépendants</strong>.</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -162,14 +135,9 @@
             </div>
           </header>
           <div id="td2-e5" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>C'est la répétition de \(n\) épreuves de Bernoulli indépendantes (succès = marquer, avec probabilité \(p\)). L'univers est \(\Omega = \{S, E\}^n\). Le nombre de tirages réussis suit une loi binomiale. L'événement "réussir \(k\) tirs" correspond aux issues avec \(k\) succès et \(n-k\) échecs. Chaque issue a une probabilité \(p^k(1-p)^{n-k}\). Il y a \(\binom{n}{k}\) façons de placer ces succès.</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>La probabilité est \(\binom{n}{k}p^k(1-p)^{n-k}\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> C'est la répétition de \(n\) épreuves de Bernoulli indépendantes (succès = marquer, avec probabilité \(p\)). L'univers est \(\Omega = \{S, E\}^n\). Le nombre de tirages réussis suit une loi binomiale. L'événement "réussir \(k\) tirs" correspond aux issues avec \(k\) succès et \(n-k\) échecs. Chaque issue a une probabilité \(p^k(1-p)^{n-k}\). Il y a \(\binom{n}{k}\) façons de placer ces succès.</p>
+          <p><strong>Reponse :</strong> La probabilité est : \[\mathbf{P(X=k) = \binom{n}{k}p^k(1-p)^{n-k}}\]</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -186,23 +154,12 @@
           </header>
           <div id="td2-e6" class="answer-block">
           <h4>1. Probabilité de découvrir le truquage</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Le jeu possède 33 cartes. L'univers \(\Omega\) est l'ensemble des parties à \(n\) éléments de ces 33 cartes, \(|\Omega| = \binom{33}{n}\). Pour s'apercevoir que le jeu est truqué, il faut tirer <em>simultanément</em> les 2 dames de cœur. Le nombre de tirages contenant ces 2 cartes est le choix des \(n-2\) autres cartes parmi les 31 restantes, soit \(\binom{31}{n-2}\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(P(truqué) = \frac{\binom{31}{n-2}}{\binom{33}{n}} = \frac{31!}{(n-2)!(33-n)!} \times \frac{n!(33-n)!}{33!} = \frac{n(n-1)}{33 \times 32}\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Le jeu possède 33 cartes. L'univers \(\Omega\) est l'ensemble des parties à \(n\) éléments de ces 33 cartes, \(|\Omega| = \binom{33}{n}\). Pour s'apercevoir que le jeu est truqué, il faut tirer <em>simultanément</em> les 2 dames de cœur. Le nombre de tirages contenant ces 2 cartes est le choix des \(n-2\) autres cartes parmi les 31 restantes, soit \(\binom{31}{n-2}\).</p>
+          <p><strong>Reponse :</strong> \[P(\text{truqué}) = \frac{\binom{31}{n-2}}{\binom{33}{n}} = \frac{31!}{(n-2)!(33-n)!} \times \frac{n!(33-n)!}{33!} = \mathbf{\frac{n(n-1)}{33 \times 32}}\]</p>
           <h4>2. Nombre d'expériences avec \(n=4\)</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Pour \(n=4\), \(P(truqué) = \frac{4 \times 3}{33 \times 32} = \frac{1}{88}\). En répétant \(k\) fois, la probabilité de ne <em>jamais</em> s'en apercevoir est \((1 - \frac{1}{88})^k = (\frac{87}{88})^k\). On cherche \(k\) tel que \(1 - (\frac{87}{88})^k \ge 0.95\), soit \((\frac{87}{88})^k \le 0.05\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>En passant au logarithme : \(k \ln(87/88) \le \ln(0.05) \implies k \ge \frac{\ln(0.05)}{\ln(87/88)}\) (le sens de l'inégalité change car \(\ln(87/88) < 0\)). On trouve \(k \ge 263\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Pour \(n=4\), \(P(\text{truqué}) = \frac{4 \times 3}{33 \times 32} = \frac{1}{88}\). En répétant \(k\) fois, la probabilité de ne <em>jamais</em> s'en apercevoir est \((1 - \frac{1}{88})^k = (\frac{87}{88})^k\). On cherche \(k\) tel que \(1 - (\frac{87}{88})^k \ge 0.95\), soit \((\frac{87}{88})^k \le 0.05\). En passant au logarithme : \(k \ln(87/88) \le \ln(0.05) \implies k \ge \frac{\ln(0.05)}{\ln(87/88)}\) (le sens de l'inégalité change car \(\ln(87/88) < 0\)).</p>
+          <p><strong>Reponse :</strong> On trouve \(\mathbf{k \ge 263}\).</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -218,15 +175,10 @@
             </div>
           </header>
           <div id="td2-e7" class="answer-block">
-          <p>On note \(V\) : "vacciné" et \(M\) : "tombe malade". L'énoncé donne \(P(V) = \frac{1}{4}\) (donc \(P(\bar{V}) = \frac{3}{4}\)) et \(P(M|V) = \frac{1}{20}\). De plus, parmi les malades, 4 sont non-vaccinés pour 1 vacciné, ce qui signifie que \(P(\bar{V}|M) = \frac{4}{5}\) et \(P(V|M) = \frac{1}{5}\).</p>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On cherche \(P(M|\bar{V})\). On sait que \(P(V|M) = \frac{P(M \cap V)}{P(M)} = \frac{P(M|V)P(V)}{P(M \cap V) + P(M \cap \bar{V})} = \frac{P(M|V)P(V)}{P(M|V)P(V) + P(M|\bar{V})P(\bar{V})}\). En injectant les valeurs : \(\frac{1}{5} = \frac{\frac{1}{20} \times \frac{1}{4}}{\frac{1}{20} \times \frac{1}{4} + P(M|\bar{V}) \times \frac{3}{4}} = \frac{\frac{1}{80}}{\frac{1}{80} + \frac{3}{4}P(M|\bar{V})}\). On obtient : \(\frac{1}{80} + \frac{3}{4}P(M|\bar{V}) = \frac{5}{80} \implies \frac{3}{4}P(M|\bar{V}) = \frac{4}{80} = \frac{1}{20}\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(P(M|\bar{V}) = \frac{1}{20} \times \frac{4}{3} = \frac{1}{15}\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> On note \(V\) : "vacciné" et \(M\) : "tombe malade". L'énoncé donne \(P(V) = \frac{1}{4}\) (donc \(P(\bar{V}) = \frac{3}{4}\)) et \(P(M|V) = \frac{1}{20}\). De plus, parmi les malades, 4 sont non-vaccinés pour 1 vacciné, ce qui signifie que \(P(\bar{V}|M) = \frac{4}{5}\) et \(P(V|M) = \frac{1}{5}\).</p>
+          <p>On cherche \(P(M|\bar{V})\). On sait que : \[P(V|M) = \frac{P(M \cap V)}{P(M)} = \frac{P(M|V)P(V)}{P(M \cap V) + P(M \cap \bar{V})} = \frac{P(M|V)P(V)}{P(M|V)P(V) + P(M|\bar{V})P(\bar{V})}\] En injectant les valeurs : \[\frac{1}{5} = \frac{\frac{1}{20} \times \frac{1}{4}}{\frac{1}{20} \times \frac{1}{4} + P(M|\bar{V}) \times \frac{3}{4}} = \frac{\frac{1}{80}}{\frac{1}{80} + \frac{3}{4}P(M|\bar{V})}\] On obtient : \[\frac{1}{80} + \frac{3}{4}P(M|\bar{V}) = \frac{5}{80} \implies \frac{3}{4}P(M|\bar{V}) = \frac{4}{80} = \frac{1}{20}\]</p>
+          <p><strong>Reponse :</strong> \[P(M|\bar{V}) = \frac{1}{20} \times \frac{4}{3} = \mathbf{\frac{1}{15}}\]</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -244,23 +196,12 @@
           <div id="td2-e8" class="answer-block">
           <p>On note \(M\) : "être malade" (\(P(M) = 0.01\)), \(T\) : "le test est positif", et \(D\) : "décéder". On a \(P(T|M) = 0.8\), \(P(\bar{T}|M) = 0.2\), \(P(T|\bar{M}) = 0.03\), \(P(\bar{T}|\bar{M}) = 0.97\). Probabilités de décès selon le statut et le traitement (on est traité ssi le test est positif) : \(P(D|M \cap \bar{T}) = 0.5\) (malade non traité), \(P(D|M \cap T) = 0.1\) (malade traité), \(P(D|\bar{M} \cap T) = 0.02\) (sain traité), \(P(D|\bar{M} \cap \bar{T}) = 0\) (sain non traité).</p>
           <h4>1. Sans test de dépistage</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Le décès ne survient que chez les malades avec probabilité \(0.5\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(P(D) = P(M \cap D) = P(M)P(D|M) = 0.01 \times 0.5 = 0.005\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Le décès ne survient que chez les malades avec probabilité \(0.5\).</p>
+          <p><strong>Reponse :</strong> \[P(D) = P(M \cap D) = P(M)P(D|M) = 0.01 \times 0.5 = \mathbf{0.005}\]</p>
           <h4>2. Avec dépistage généralisé</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>La famille \(\{M \cap T, M \cap \bar{T}, \bar{M} \cap T, \bar{M} \cap \bar{T}\}\) forme un SCE. La formule des probabilités totales donne: \(P(D) = P(M)P(T|M)P(D|M \cap T) + P(M)P(\bar{T}|M)P(D|M \cap \bar{T}) + P(\bar{M})P(T|\bar{M})P(D|\bar{M} \cap T) + 0\)</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(P(D) = 0.01 \times 0.8 \times 0.1 + 0.01 \times 0.2 \times 0.5 + 0.99 \times 0.03 \times 0.02 = 0.0008 + 0.001 + 0.000594 = 0.002394\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> La famille \(\{M \cap T, M \cap \bar{T}, \bar{M} \cap T, \bar{M} \cap \bar{T}\}\) forme un SCE. La formule des probabilités totales donne : \[P(D) = P(M)P(T|M)P(D|M \cap T) + P(M)P(\bar{T}|M)P(D|M \cap \bar{T}) + P(\bar{M})P(T|\bar{M})P(D|\bar{M} \cap T) + 0\]</p>
+          <p><strong>Reponse :</strong> \[P(D) = 0.01 \times 0.8 \times 0.1 + 0.01 \times 0.2 \times 0.5 + 0.99 \times 0.03 \times 0.02 = 0.0008 + 0.001 + 0.000594 = \mathbf{0.002394}\]</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -276,14 +217,9 @@
             </div>
           </header>
           <div id="td2-e9" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il y a 9 personnes au total. On choisit 4 personnes. Le nombre de cas possibles est \(\binom{9}{4} = 126\). L'événement "choisir 4 femmes" n'est possible que d'une seule façon, car il n'y a que 4 femmes dans le groupe (on les prend toutes) : \(\binom{4}{4} = 1\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(P = \frac{1}{126}\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Il y a 9 personnes au total. On choisit 4 personnes. Le nombre de cas possibles est \(\binom{9}{4} = 126\). L'événement "choisir 4 femmes" n'est possible que d'une seule façon, car il n'y a que 4 femmes dans le groupe (on les prend toutes) : \(\binom{4}{4} = 1\).</p>
+          <p><strong>Reponse :</strong> \[P = \mathbf{\frac{1}{126}}\]</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -299,18 +235,14 @@
             </div>
           </header>
           <div id="td2-e10" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Notons \(S_1, S_2, S_3\) les événements "l'alliance est dans le secteur \(i\)". À l'origine, ces probabilités sont équiprobables : \(P(S_1) = P(S_2) = P(S_3) = \frac{1}{3}\). Notons \(E\) l'événement "les fouilles sur le secteur 1 ne donnent rien". D'après l'énoncé, \(P(E|S_1) = p\) (probabilité de rater l'alliance si elle y est). Si l'alliance est ailleurs, on est sûr de ne rien trouver dans le secteur 1 : \(P(E|S_2) = P(E|S_3) = 1\). On calcule la probabilité de \(E\) par les probabilités totales : \(P(E) = P(E|S_1)P(S_1) + P(E|S_2)P(S_2) + P(E|S_3)P(S_3) = p(\frac{1}{3}) + 1(\frac{1}{3}) + 1(\frac{1}{3}) = \frac{p+2}{3}\). On utilise ensuite le théorème de Bayes pour réévaluer les probabilités :</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponses</strong>
-          </div>
+          <p><strong>Raisonnement :</strong> Notons \(S_1, S_2, S_3\) les événements "l'alliance est dans le secteur \(i\)". À l'origine, ces probabilités sont équiprobables : \(P(S_1) = P(S_2) = P(S_3) = \frac{1}{3}\). Notons \(E\) l'événement "les fouilles sur le secteur 1 ne donnent rien". D'après l'énoncé, \(P(E|S_1) = p\) (probabilité de rater l'alliance si elle y est). Si l'alliance est ailleurs, on est sûr de ne rien trouver dans le secteur 1 : \(P(E|S_2) = P(E|S_3) = 1\). On calcule la probabilité de \(E\) par les probabilités totales : \[P(E) = P(E|S_1)P(S_1) + P(E|S_2)P(S_2) + P(E|S_3)P(S_3) = p(\frac{1}{3}) + 1(\frac{1}{3}) + 1(\frac{1}{3}) = \frac{p+2}{3}\] On utilise ensuite le théorème de Bayes pour réévaluer les probabilités relatives.</p>
+          <p><strong>Reponse :</strong></p>
           <ul class="formula-list">
-            <li>\(P(S_1|E) = \frac{P(E|S_1)P(S_1)}{P(E)} = \frac{p/3}{(p+2)/3} = \frac{p}{p+2}\)</li>
-            <li>\(P(S_2|E) = \frac{P(E|S_2)P(S_2)}{P(E)} = \frac{1/3}{(p+2)/3} = \frac{1}{p+2}\)</li>
-            <li>\(P(S_3|E) = \frac{P(E|S_3)P(S_3)}{P(E)} = \frac{1/3}{(p+2)/3} = \frac{1}{p+2}\)</li>
+            <li>\(P(S_1|E) = \frac{P(E|S_1)P(S_1)}{P(E)} = \mathbf{\frac{p}{p+2}}\)</li>
+            <li>\(P(S_2|E) = \frac{P(E|S_2)P(S_2)}{P(E)} = \mathbf{\frac{1}{p+2}}\)</li>
+            <li>\(P(S_3|E) = \frac{P(E|S_3)P(S_3)}{P(E)} = \mathbf{\frac{1}{p+2}}\)</li>
           </ul>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -327,41 +259,27 @@
           </header>
           <div id="td2-e11" class="answer-block">
           <h4>1. Expressions des probabilités au jour \(n+1\)</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>(a) Raisonnement</strong>
-            <p>Par la formule des probabilités totales avec le SCE \(\{M_n, S_n, B_n\}\) : \(P(M_{n+1}) = P(M_{n+1}|M_n)P(M_n) + P(M_{n+1}|S_n)P(S_n) + P(M_{n+1}|B_n)P(B_n)\). D'après les règles de transition données:</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponses</strong>
-            <p>\(p_{n+1} = (1-2a)p_n + a q_n + a r_n\). \(q_{n+1} = a p_n + (1-2a)q_n + a r_n\).</p>
-          </div>
-          <div class="td-step-block td-reasoning-block">
-            <strong>(b) Raisonnement</strong>
-            <p>À tout jour \(n\), le titre doit soit monter, soit être stable, soit baisser. Donc la somme des probabilités vaut 1.</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(p_n + q_n + r_n = 1\). On en déduit \(r_n = 1 - p_n - q_n\).</p>
-          </div>
+          <p><strong>Raisonnement (a) :</strong> Par la formule des probabilités totales avec le SCE \(\{M_n, S_n, B_n\}\) : \[P(M_{n+1}) = P(M_{n+1}|M_n)P(M_n) + P(M_{n+1}|S_n)P(S_n) + P(M_{n+1}|B_n)P(B_n)\] On applique cette logique d'après les règles de transition données.</p>
+          <p><strong>Reponse (a) :</strong></p>
+          <ul class="formula-list">
+            <li>\(\mathbf{p_{n+1} = (1-2a)p_n + a q_n + a r_n}\)</li>
+            <li>\(\mathbf{q_{n+1} = a p_n + (1-2a)q_n + a r_n}\)</li>
+          </ul>
+          <p><strong>Raisonnement (b) :</strong> À tout jour \(n\), le titre doit soit monter, soit être stable, soit baisser. Donc la somme des probabilités vaut 1.</p>
+          <p><strong>Reponse (b) :</strong> \[\mathbf{p_n + q_n + r_n = 1}\] On en déduit \(\mathbf{r_n = 1 - p_n - q_n}\).</p>
           <h4>2. Suites arithmético-géométriques</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On injecte l'expression de \(r_n\) dans \(p_{n+1}\) et \(q_{n+1}\) : \(p_{n+1} = (1-2a)p_n + a q_n + a(1 - p_n - q_n) = (1-2a)p_n - a p_n + a = (1-3a)p_n + a\). De même, \(q_{n+1} = a p_n + (1-2a)q_n + a(1 - p_n - q_n) = (1-3a)q_n + a\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>Les suites \((p_n)\) et \((q_n)\) s'expriment sous la forme \(u_{n+1} = \alpha u_n + \beta\), elles sont donc arithmético-géométriques de raison \(1-3a\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> On injecte l'expression de \(r_n\) dans \(p_{n+1}\) et \(q_{n+1}\) : \[p_{n+1} = (1-2a)p_n + a q_n + a(1 - p_n - q_n) = (1-2a)p_n - a p_n + a = (1-3a)p_n + a\] De même, \(q_{n+1} = a p_n + (1-2a)q_n + a(1 - p_n - q_n) = (1-3a)q_n + a\).</p>
+          <p><strong>Reponse :</strong> Les suites \((p_n)\) et \((q_n)\) s'expriment sous la forme \(u_{n+1} = \alpha u_n + \beta\), elles sont donc <strong>arithmético-géométriques de raison</strong> \(\mathbf{1-3a}\).</p>
           <h4>3. Expression explicite et limites</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Le point fixe de ces suites est la solution de \(\ell = (1-3a)\ell + a \implies 3a\ell = a \implies \ell = \frac{1}{3}\) (puisque \(a \neq 0\)). On pose la suite auxiliaire \(u_n = p_n - 1/3\) (resp. \(v_n = q_n - 1/3\)) qui est géométrique de raison \(1-3a\). Donc \(p_n = \frac{1}{3} + (p_1 - \frac{1}{3})(1-3a)^{n-1}\). L'énoncé stipule qu'au premier jour le titre est stable, donc \(p_1 = 0\), \(q_1 = 1\), \(r_1 = 0\).</p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponses</strong>
-            <p>\(p_n = \frac{1}{3} - \frac{1}{3}(1-3a)^{n-1}\). \(q_n = \frac{1}{3} + \frac{2}{3}(1-3a)^{n-1}\). \(r_n = 1 - p_n - q_n = \frac{1}{3} - \frac{1}{3}(1-3a)^{n-1}\).</p>
-          </div>
-          <p><strong>Limites :</strong> Puisque \(a \in ]0, 1/2[\), on a \(1-3a \in ]-1/2, 1[\). La suite \((1-3a)^{n-1}\) tend donc vers 0 quand \(n \to +\infty\). Les limites des trois suites sont \(\lim_{n \to \infty} p_n = \frac{1}{3}\), \(\lim_{n \to \infty} q_n = \frac{1}{3}\), \(\lim_{n \to \infty} r_n = \frac{1}{3}\). <strong>Interprétation :</strong> À long terme, le système "oublie" sa condition initiale et chaque comportement (monter, stagner, baisser) devient équiprobable.</p>
+          <p><strong>Raisonnement :</strong> Le point fixe de ces suites est la solution de \(\ell = (1-3a)\ell + a \implies 3a\ell = a \implies \ell = \frac{1}{3}\) (puisque \(a \neq 0\)). On pose la suite auxiliaire \(u_n = p_n - 1/3\) (resp. \(v_n = q_n - 1/3\)) qui est géométrique de raison \(1-3a\). Donc \(p_n = \frac{1}{3} + (p_1 - \frac{1}{3})(1-3a)^{n-1}\). L'énoncé stipule qu'au premier jour le titre est stable, donc \(p_1 = 0\), \(q_1 = 1\), \(r_1 = 0\).</p>
+          <p><strong>Reponse (Expressions) :</strong></p>
+          <ul class="formula-list">
+            <li>\(\mathbf{p_n = \frac{1}{3} - \frac{1}{3}(1-3a)^{n-1}}\)</li>
+            <li>\(\mathbf{q_n = \frac{1}{3} + \frac{2}{3}(1-3a)^{n-1}}\)</li>
+            <li>\(\mathbf{r_n = 1 - p_n - q_n = \frac{1}{3} - \frac{1}{3}(1-3a)^{n-1}}\)</li>
+          </ul>
+          <p><strong>Raisonnement (Limites) :</strong> Puisque \(a \in ]0, 1/2[\), on a \(1-3a \in ]-1/2, 1[\). La suite \((1-3a)^{n-1}\) tend donc vers 0 quand \(n \to +\infty\).</p>
+          <p><strong>Reponse (Limites) :</strong> Les limites des trois suites sont : \[\mathbf{\lim_{n \to \infty} p_n = \frac{1}{3}, \quad \lim_{n \to \infty} q_n = \frac{1}{3}, \quad \lim_{n \to \infty} r_n = \frac{1}{3}}\] <strong>Interprétation :</strong> À long terme, le système "oublie" sa condition initiale et chaque comportement (monter, stagner, baisser) devient équiprobable.</p>
           </div>
         </article>
       </section>

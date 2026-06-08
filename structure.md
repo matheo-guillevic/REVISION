@@ -8,9 +8,10 @@
 - `styles.css` : design responsive, mise en page, couleurs pedagogiques et composants visuels.
 - `script.js` : interactions de navigation, boutons d'affichage, progression et etats des exercices.
 - `tools/extract-pdfs.js` : script local utilise pour extraire le texte des PDF.
-- `tools/split-html.js` : script utilise pour resynchroniser la source unique du cours de math depuis `math.html`.
-- `tools/build-html.js` : script utilise pour reconstruire `index.html`, `math.html` et `auto.html`.
-- `tools/restructure-td-answers.js` : script utilise pour separer les reponses TD par question avec raisonnement et solution independants.
+- `tools/split-html.js` : script utilise pour resynchroniser la source unique du cours de math depuis `math.html` ou `out/math.html`.
+- `tools/build-html.js` : script utilise pour reconstruire les pages statiques dans `out/`.
+- `tools/rebuild-td-from-latex.js` : script commun utilise pour reconstruire les pages TD depuis les fichiers LaTeX.
+- `tools/td-pages.json` : configuration des pages TD generees par matiere.
 - `src/subjects/probabilites/cours.html` : source HTML unique du cours de mathematiques/probabilites.
 - `src/subjects/probabilites/td/` : sources HTML des pages corrigees TD de probabilites.
 - `src/subjects/auto/cours.html` : source HTML unique du cours d'automatique.
@@ -123,8 +124,3 @@ npm run split
 
 Les sources des pages TD sont dans `src/subjects/probabilites/td/`. `npm run build` recopie ensuite `td1.html`, `td2.html` et `td3.html` a la racine pour garder des URLs simples. Leurs liens de retour pointent vers `math.html#probabilites-td`.
 
-Pour restructurer les TD en reponses par question :
-
-```powershell
-npm run restructure-td
-```

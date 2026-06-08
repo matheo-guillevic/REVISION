@@ -1,9 +1,15 @@
 \documentclass[11pt,a4paper]{article}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 \usepackage{amsmath, amssymb}
 \usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
 \geometry{margin=2.5cm}
 
 \title{Correction du TD 1 : Analyse et Commande des systèmes linéaires continus}
@@ -14,148 +20,272 @@
 
 \maketitle
 
-\section*{Exercice 1 : Régulation de niveau d'un réservoir d'eau}
+\section*{Exercice 1 - Régulation de niveau d'un réservoir d'eau}
 
-\textbf{1. Variables et paramètres du système} [cite: 516, 517, 518, 520, 521]\\
-\textit{Paramètre :} La section du réservoir $S$ (en $m^2$).\\
-\textit{Variables :}\\
-- L'entrée (ou commande) $u(t)$ : Le débit entrant $q_e(t)$.\\
-- La sortie à piloter $y(t)$ : Le niveau d'eau $n(t)$.\\
-- La perturbation $\delta_1(t)$ : Le débit de fuite ou de consommation $q_s(t)$.
+\subsection*{1. Variables et paramètres du système}
 
-\textbf{2. Équation différentielle} [cite: 522]\\
-La variation du volume d'eau dans le réservoir est égale à la différence entre le débit entrant et le débit sortant. Le volume étant $V(t) = S \cdot n(t)$, on a :
-$$ \frac{dV(t)}{dt} = S \frac{dn(t)}{dt} = q_e(t) - q_s(t) $$
+\textit{Paramètre :} La section du réservoir $S$ (en $m^2$).
 
-\textbf{3. Schéma fonctionnel du système asservi} [cite: 523, 524]\\
-Le régulateur proportionnel $R$ produit la commande telle que $q_e(t) = K(cn(t) - n(t))$.\\
-Le comparateur fait la différence entre $cn(t)$ (consigne) et $n(t)$ (mesure).\\
+\textit{Variables :}
+\begin{itemize}
+    \item L'entrée (ou commande) $u(t)$ : Le débit entrant $q_e(t)$.
+    \item La sortie à piloter $y(t)$ : Le niveau d'eau $n(t)$.
+    \item La perturbation $\delta_1(t)$ : Le débit de fuite ou de consommation $q_s(t)$.
+\end{itemize}
+
+\subsection*{2. Équation différentielle}
+
+\textbf{Raisonnement :} La variation du volume d'eau dans le réservoir est égale à la différence entre le débit entrant et le débit sortant. Le volume étant $V(t) = S \cdot n(t)$.
+
+\textbf{Reponse :} L'équation différentielle s'écrit :
+$$
+\mathbf{\frac{dV(t)}{dt} = S \frac{dn(t)}{dt} = q_e(t) - q_s(t)}
+$$
+
+\subsection*{3. Schéma fonctionnel du système asservi}
+
+Le régulateur proportionnel $R$ produit la commande telle que $q_e(t) = K(cn(t) - n(t))$.
+Le comparateur fait la différence entre $cn(t)$ (consigne) et $n(t)$ (mesure).
 La perturbation $q_s(t)$ est soustraite au débit $q_e(t)$ avant d'attaquer le processus $H$.
 
-\textbf{4. Équation différentielle en boucle fermée} [cite: 525]\\
-En remplaçant $q_e(t)$ par son expression dans l'équation du système :
-$$ S \frac{dn(t)}{dt} = K(cn(t) - n(t)) - q_s(t) \implies S \frac{dn(t)}{dt} + K n(t) = K cn(t) - q_s(t) $$
+\subsection*{4. Équation différentielle en boucle fermée}
 
-\textbf{5. Fonctions de transfert $R(p)$ et $H(p)$} [cite: 525, 526]\\
-- Régulateur proportionnel : $R(p) = K$.\\
-- Processus : En appliquant la transformée de Laplace avec conditions initiales nulles sur l'équation du réservoir $S p N(p) = Q_e(p) - Q_s(p)$. Si l'on ne considère que l'entrée $Q_e(p)$ (donc $Q_s=0$), on obtient $H(p) = \frac{N(p)}{Q_e(p)} = \frac{1}{S p}$.
+\textbf{Raisonnement :} On remplace $q_e(t)$ par son expression dans l'équation du système :
+$$
+S \frac{dn(t)}{dt} = K(cn(t) - n(t)) - q_s(t)
+$$
 
-\textbf{6. Diagramme de Bode de $H(p)$} [cite: 527]\\
+\textbf{Reponse :} En réorganisant les termes :
+$$
+\mathbf{S \frac{dn(t)}{dt} + K n(t) = K cn(t) - q_s(t)}
+$$
+
+\subsection*{5. Fonctions de transfert $R(p)$ et $H(p)$}
+
+\begin{itemize}
+    \item \textbf{Régulateur proportionnel :} $R(p) = K$.
+    \item \textbf{Processus :} En appliquant la transformée de Laplace avec conditions initiales nulles sur l'équation du réservoir, on obtient $S p N(p) = Q_e(p) - Q_s(p)$.
+\end{itemize}
+
+\textbf{Reponse :} Si l'on ne considère que l'entrée $Q_e(p)$ (donc $Q_s=0$), on obtient :
+$$
+\mathbf{H(p) = \frac{N(p)}{Q_e(p)} = \frac{1}{S p}}
+$$
+
+\subsection*{6. Diagramme de Bode de $H(p)$}
+
 La fonction $H(p) = \frac{1}{Sp}$ est un intégrateur pur.
-- Gain : Droite de pente -20 dB/décade, passant par 0 dB à la pulsation $\omega = 1/S$.
-- Phase : Constante et égale à $-90^\circ$.
+\begin{itemize}
+    \item \textbf{Gain :} Droite de pente -20 dB/décade, passant par 0 dB à la pulsation $\omega = 1/S$.
+    \item \textbf{Phase :} Constante et égale à $-90^\circ$.
+\end{itemize}
 
-\textbf{7. Fonctions de transfert en boucle fermée} [cite: 528, 529, 530]\\
-A partir du schéma fonctionnel : $N(p) = H(p) [R(p)(CN(p) - N(p)) - \Delta_1(p)]$.
-$$ N(p) = \frac{1}{Sp} [K(CN(p) - N(p)) - \Delta_1(p)] \implies N(p) \left(1 + \frac{K}{Sp}\right) = \frac{K}{Sp} CN(p) - \frac{1}{Sp} \Delta_1(p) $$
-En multipliant par $\frac{Sp}{K}$, on identifie :
-$$ T(p) = \frac{N(p)}{CN(p)} = \frac{1}{1 + \frac{S}{K}p} \quad \text{et} \quad T_{\delta 1}(p) = \frac{N(p)}{\Delta_1(p)} = \frac{-1/K}{1 + \frac{S}{K}p} $$
+\subsection*{7. Fonctions de transfert en boucle fermée}
 
-\textbf{8. Pôles et stabilité} [cite: 531]\\
-Les deux fonctions de transfert ont le même dénominateur. Le pôle est solution de $1 + \frac{S}{K}p = 0$, soit $p = -\frac{K}{S}$.
-Puisque $S > 0$ et $K > 0$, le pôle est strictement négatif. Le système asservi est donc **stable**.
+\textbf{Raisonnement :} A partir du schéma fonctionnel, on écrit $N(p) = H(p) [R(p)(CN(p) - N(p)) - \Delta_1(p)]$.
+$$
+N(p) = \frac{1}{Sp} [K(CN(p) - N(p)) - \Delta_1(p)] \implies N(p) \left(1 + \frac{K}{Sp}\right) = \frac{K}{Sp} CN(p) - \frac{1}{Sp} \Delta_1(p)
+$$
 
-\textbf{9. Diagrammes de Bode (comparaison)} [cite: 532]\\
-- Boucle ouverte $bH(p) = R(p)H(p) = \frac{K}{Sp}$ : intégrateur pur (pente -20dB/décade, phase $-90^\circ$).
-- Boucle fermée $T(p) = \frac{1}{1 + \frac{S}{K}p}$ : système du premier ordre (gain 0 dB en BF, puis cassure à $\omega_c = K/S$ avec pente -20 dB/décade ; phase de $0^\circ$ à $-90^\circ$).
+\textbf{Reponse :} En multipliant par $\frac{Sp}{K}$, on identifie les deux fonctions de transfert :
+$$
+\mathbf{T(p) = \frac{N(p)}{CN(p)} = \frac{1}{1 + \frac{S}{K}p}} \quad \text{et} \quad \mathbf{T_{\delta 1}(p) = \frac{N(p)}{\Delta_1(p)} = \frac{-1/K}{1 + \frac{S}{K}p}}
+$$
 
-\textbf{10. Régime permanent face à un échelon de perturbation} [cite: 533, 534]\\
-Ici, $CN(p) = 0$ et $q_s(t)$ est un échelon unitaire $\implies Q_s(p) = \frac{1}{p}$.
-$$ N(p) = T_{\delta 1}(p) Q_s(p) = \frac{-1/K}{1 + \frac{S}{K}p} \cdot \frac{1}{p} $$
+\subsection*{8. Pôles et stabilité}
+
+\textbf{Raisonnement :} Les deux fonctions de transfert ont le même dénominateur. Le pôle est solution de $1 + \frac{S}{K}p = 0$, soit $p = -\frac{K}{S}$.
+
+\textbf{Reponse :} Puisque $S > 0$ et $K > 0$, le pôle est strictement négatif. Le système asservi est donc \textbf{stable}.
+
+\subsection*{9. Diagrammes de Bode (comparaison)}
+
+\begin{itemize}
+    \item \textbf{Boucle ouverte} $bH(p) = R(p)H(p) = \frac{K}{Sp}$ : intégrateur pur (pente -20dB/décade, phase $-90^\circ$).
+    \item \textbf{Boucle fermée} $T(p) = \frac{1}{1 + \frac{S}{K}p}$ : système du premier ordre (gain 0 dB en BF, puis cassure à $\omega_c = K/S$ avec pente -20 dB/décade ; phase de $0^\circ$ à $-90^\circ$).
+\end{itemize}
+
+\subsection*{10. Régime permanent face à un échelon de perturbation}
+
+\textbf{Raisonnement :} Ici, $CN(p) = 0$ et $q_s(t)$ est un échelon unitaire $\implies Q_s(p) = \frac{1}{p}$.
+$$
+N(p) = T_{\delta 1}(p) Q_s(p) = \frac{-1/K}{1 + \frac{S}{K}p} \cdot \frac{1}{p}
+$$
 En appliquant le théorème de la valeur finale :
-$$ \lim_{t \to \infty} n(t) = \lim_{p \to 0} p N(p) = -\frac{1}{K} $$
+$$
+\lim_{t \to \infty} n(t) = \lim_{p \to 0} p N(p)
+$$
+
+\textbf{Reponse :}
+$$
+\mathbf{\lim_{t \to \infty} n(t) = -\frac{1}{K}}
+$$
 Le niveau baisse de $1/K$ en régime permanent pour compenser la fuite.
 
-\vspace{1cm}
+\hrulefill
 
-\section*{Exercice 2 : Asservissement de vitesse d'une scie}
+\section*{Exercice 2 - Asservissement de vitesse d'une scie}
 
-\textbf{1. Variables et paramètres} [cite: 538, 539, 540]\\
-- Entrée : Tension de commande $u(t)$.
-- Sortie : Vitesse angulaire $w(t)$.
-- Perturbation : Couple résistant $Cr(t)$.
-- Paramètres : $J, K_1, K_2, R$.
+\subsection*{1. Variables et paramètres}
 
-\textbf{2. Équation différentielle du système} [cite: 538, 541]\\
-- Électrique : $u(t) = R i(t) + e(t) \implies i(t) = \frac{u(t) - K_2 w(t)}{R}$.
-- Mécanique : $J \frac{dw(t)}{dt} = C_m(t) - Cr(t) = K_1 i(t) - Cr(t)$.
-En combinant :
-$$ J \frac{dw(t)}{dt} = \frac{K_1}{R}(u(t) - K_2 w(t)) - Cr(t) \implies J \frac{dw(t)}{dt} + \frac{K_1 K_2}{R} w(t) = \frac{K_1}{R} u(t) - Cr(t) $$
+\begin{itemize}
+    \item \textbf{Entrée :} Tension de commande $u(t)$.
+    \item \textbf{Sortie :} Vitesse angulaire $w(t)$.
+    \item \textbf{Perturbation :} Couple résistant $Cr(t)$.
+    \item \textbf{Paramètres :} $J, K_1, K_2, R$.
+\end{itemize}
 
-\textbf{3. Représentation d'état} [cite: 542]\\
-On choisit la variable d'état $x(t) = w(t)$ et le vecteur d'entrée $V(t) = \begin{bmatrix} u(t) \\ Cr(t) \end{bmatrix}$.
-$$ \dot{x}(t) = -\frac{K_1 K_2}{R J} x(t) + \begin{bmatrix} \frac{K_1}{R J} & -\frac{1}{J} \end{bmatrix} \begin{bmatrix} u(t) \\ Cr(t) \end{bmatrix} $$
-$$ y(t) = x(t) $$
+\subsection*{2. Équation différentielle du système}
 
-\textbf{4. Fonction de transfert $T(p)$} [cite: 543]\\
-Si $Cr(t) = 0$, la transformée de Laplace donne $(J p + \frac{K_1 K_2}{R}) W(p) = \frac{K_1}{R} U(p)$.
-$$ T(p) = \frac{W(p)}{U(p)} = \frac{K_1/R}{Jp + \frac{K_1 K_2}{R}} = \frac{1/K_2}{1 + \frac{RJ}{K_1 K_2}p} $$
+\textbf{Etape 1 : Équation électrique}\\
+On a $u(t) = R i(t) + e(t) \implies i(t) = \frac{u(t) - K_2 w(t)}{R}$.
 
-\textbf{5. Stabilité} [cite: 544]\\
-Le pôle est $p = -\frac{K_1 K_2}{R J}$. Comme toutes les grandeurs physiques sont positives, le pôle est réel strictement négatif. Le système est stable.
+\textbf{Etape 2 : Équation mécanique}\\
+On a $J \frac{dw(t)}{dt} = C_m(t) - Cr(t) = K_1 i(t) - Cr(t)$.
 
-\textbf{6. Application d'un échelon $u(t)=10V$} [cite: 545, 546, 547]\\
-- En régime permanent ($t \to \infty$) : $\lim_{t \to \infty} w(t) = \lim_{p \to 0} p \cdot T(p) \frac{10}{p} = \frac{10}{K_2}$.
-- A $t=0^+$ : La variable d'état $w(t)$ est continue. Etant initialement nulle, $w(0^+) = 0$.
-- Accélération à $t=0^+$ : À partir de l'équation différentielle, à $t=0^+$, $w(0^+)=0$ donc $J \cdot acc(0^+) + 0 = \frac{K_1}{R} \cdot 10 \implies acc(0^+) = \frac{10 K_1}{R J}$.
+\textbf{Reponse :} En combinant les deux relations :
+$$
+\mathbf{J \frac{dw(t)}{dt} + \frac{K_1 K_2}{R} w(t) = \frac{K_1}{R} u(t) - Cr(t)}
+$$
 
-\textbf{7. Prise en compte de la perturbation} [cite: 548, 549, 550]\\
-L'équation différentielle complète dans le domaine de Laplace est :
-$$ (J p + \frac{K_1 K_2}{R}) W(p) = \frac{K_1}{R} U(p) - CR(p) $$
-$$ W(p) = \frac{1/K_2}{1 + \frac{R J}{K_1 K_2} p} U(p) - \frac{R/(K_1 K_2)}{1 + \frac{R J}{K_1 K_2} p} CR(p) $$
-On identifie $T_\delta(p) = \frac{-R/(K_1 K_2)}{1 + \frac{R J}{K_1 K_2} p}$.
+\subsection*{3. Représentation d'état}
 
-\vspace{1cm}
+\textbf{Raisonnement :} On choisit la variable d'état $x(t) = w(t)$ et le vecteur d'entrée $V(t) = \begin{bmatrix} u(t) \\ Cr(t) \end{bmatrix}$.
 
-\section*{Exercice 3 : Régulation de température d'une enceinte}
+\textbf{Reponse :}
+$$
+\mathbf{\dot{x}(t) = -\frac{K_1 K_2}{R J} x(t) + \begin{bmatrix} \frac{K_1}{R J} & -\frac{1}{J} \end{bmatrix} \begin{bmatrix} u(t) \\ Cr(t) \end{bmatrix}}
+$$
+$$
+\mathbf{y(t) = x(t)}
+$$
 
-\textbf{1. Modélisation} [cite: 565, 567, 568]\\
-- Paramètres : $\alpha_1, \alpha_2, \alpha_3$.
-- Variables : $Tint(t), Text(t), Tpar(t), Puis(t)$.
-- Commande : $Puis(t)$ ; Sortie : $Tint(t)$ ; Perturbation : $Text(t)$.
+\subsection*{4. Fonction de transfert $T(p)$}
 
-\textbf{2. Représentation externe} [cite: 570, 571, 572, 573]\\
-Dans le domaine de Laplace :
-(1) $p \cdot Tpar = \alpha_1(Tint - Tpar) + \alpha_2(Text - Tpar) + Puis \implies (p + \alpha_1 + \alpha_2)Tpar = \alpha_1 Tint + \alpha_2 Text + Puis$
+\textbf{Raisonnement :} Si $Cr(t) = 0$, la transformée de Laplace donne $(J p + \frac{K_1 K_2}{R}) W(p) = \frac{K_1}{R} U(p)$.
+
+\textbf{Reponse :}
+$$
+\mathbf{T(p) = \frac{W(p)}{U(p)} = \frac{1/K_2}{1 + \frac{RJ}{K_1 K_2}p}}
+$$
+
+\subsection*{5. Stabilité}
+
+\textbf{Raisonnement :} Le pôle est $p = -\frac{K_1 K_2}{R J}$. Comme toutes les grandeurs physiques sont positives, le pôle est réel strictement négatif.
+
+\textbf{Reponse :} Le système est \textbf{stable}.
+
+\subsection*{6. Application d'un échelon $u(t)=10V$}
+
+\begin{itemize}
+    \item \textbf{En régime permanent ($t \to \infty$)} : $\lim_{t \to \infty} w(t) = \lim_{p \to 0} p \cdot T(p) \frac{10}{p} = \mathbf{\frac{10}{K_2}}$.
+    \item \textbf{A $t=0^+$} : La variable d'état $w(t)$ est continue. Étant initialement nulle, $\mathbf{w(0^+) = 0}$.
+    \item \textbf{Accélération à $t=0^+$} : À partir de l'équation différentielle, à $t=0^+$, $w(0^+)=0$ donc $J \cdot acc(0^+) + 0 = \frac{K_1}{R} \cdot 10 \implies \mathbf{acc(0^+) = \frac{10 K_1}{R J}}$.
+\end{itemize}
+
+\subsection*{7. Prise en compte de la perturbation}
+
+\textbf{Raisonnement :} L'équation différentielle complète dans le domaine de Laplace est :
+$$
+(J p + \frac{K_1 K_2}{R}) W(p) = \frac{K_1}{R} U(p) - CR(p)
+$$
+$$
+W(p) = \frac{1/K_2}{1 + \frac{R J}{K_1 K_2} p} U(p) - \frac{R/(K_1 K_2)}{1 + \frac{R J}{K_1 K_2} p} CR(p)
+$$
+
+\textbf{Reponse :} On identifie la fonction de transfert en perturbation :
+$$
+\mathbf{T_\delta(p) = \frac{-R/(K_1 K_2)}{1 + \frac{R J}{K_1 K_2} p}}
+$$
+
+\hrulefill
+
+\section*{Exercice 3 - Régulation de température d'une enceinte}
+
+\subsection*{1. Modélisation}
+
+\begin{itemize}
+    \item \textbf{Paramètres :} $\alpha_1, \alpha_2, \alpha_3$.
+    \item \textbf{Variables :} $Tint(t), Text(t), Tpar(t), Puis(t)$.
+    \item \textbf{Signaux :} Commande = $Puis(t)$ ; Sortie = $Tint(t)$ ; Perturbation = $Text(t)$.
+\end{itemize}
+
+\subsection*{2. Représentation externe}
+
+\textbf{Etape 1 : Passage dans le domaine de Laplace}\\
+(1) $p \cdot Tpar = \alpha_1(Tint - Tpar) + \alpha_2(Text - Tpar) + Puis \implies (p + \alpha_1 + \alpha_2)Tpar = \alpha_1 Tint + \alpha_2 Text + Puis$\\
 (2) $p \cdot Tint = \alpha_3(Tpar - Tint) \implies Tpar = \frac{p+\alpha_3}{\alpha_3} Tint$.
+
+\textbf{Etape 2 : Substitution}\\
 En injectant (2) dans (1), on trouve :
-$$ [p^2 + p(\alpha_1 + \alpha_2 + \alpha_3) + \alpha_2 \alpha_3] Tint = \alpha_3 Puis + \alpha_2 \alpha_3 Text $$
-Donc :
-$$ H(p) = \frac{\alpha_3}{p^2 + p(\alpha_1+\alpha_2+\alpha_3) + \alpha_2 \alpha_3} \quad \text{et} \quad Hd(p) = \frac{\alpha_2 \alpha_3}{p^2 + p(\alpha_1+\alpha_2+\alpha_3) + \alpha_2 \alpha_3} $$
-Gain statique de $Hd(p)$ (pour $p=0$) : $K_{Hd} = \frac{\alpha_2 \alpha_3}{\alpha_2 \alpha_3} = 1$.
+$$
+[p^2 + p(\alpha_1 + \alpha_2 + \alpha_3) + \alpha_2 \alpha_3] Tint = \alpha_3 Puis + \alpha_2 \alpha_3 Text
+$$
 
-\textbf{3. Enceinte parfaitement isolée ($\alpha_2 = 0$)} [cite: 575, 576, 577, 578, 579]\\
-- a) La fonction $Hd(p)$ devient nulle, l'extérieur n'a plus d'influence.
-- b) $H(p) = \frac{\alpha_3}{p^2 + p(\alpha_1+\alpha_3)} = \frac{\alpha_3}{p(p + \alpha_1 + \alpha_3)} = \frac{\frac{\alpha_3}{\alpha_1+\alpha_3}}{p(1 + \frac{1}{\alpha_1+\alpha_3} p)}$. On a bien la forme demandée avec $G = \frac{\alpha_3}{\alpha_1+\alpha_3}$ et $T = \frac{1}{\alpha_1+\alpha_3}$.
-- c) La réponse indicielle s'obtient en intégrant un système du 1er ordre. C'est une rampe amortie : $Tint(t) = G \cdot [t - T(1 - e^{-t/T})]$.
+\textbf{Reponse :}
+$$
+\mathbf{H(p) = \frac{\alpha_3}{p^2 + p(\alpha_1+\alpha_2+\alpha_3) + \alpha_2 \alpha_3}} \quad \text{et} \quad \mathbf{Hd(p) = \frac{\alpha_2 \alpha_3}{p^2 + p(\alpha_1+\alpha_2+\alpha_3) + \alpha_2 \alpha_3}}
+$$
+Le gain statique de $Hd(p)$ (pour $p=0$) est : $\mathbf{K_{Hd} = \frac{\alpha_2 \alpha_3}{\alpha_2 \alpha_3} = 1}$.
 
-\textbf{4. Enceinte avec pertes thermiques} [cite: 581, 583, 584, 585]\\
-- On calcule le dénominateur avec $\alpha_1=0.9, \alpha_2=0.01, \alpha_3=0.1$ : $p^2 + 1.01 p + 0.001$.
-- Ce polynôme admet deux racines : $p_1 \approx -0.001$ et $p_2 \approx -1$. Le pôle $p_1$ est dominant (constante de temps très grande), ce qui explique le comportement apparent du premier ordre.
-- Sur la Figure 2, on atteint $63\%$ de la valeur finale vers $t = 1000$s, d'où $\tau = 1000$s.
-- Le gain statique de $H(p)$ est $K_H = \frac{0.1}{0.001} = 100$. Le gain statique de $Hd(p)$ est 1.
+\subsection*{3. Enceinte parfaitement isolée ($\alpha_2 = 0$)}
 
-\vspace{1cm}
+\begin{enumerate}
+    \item[(a)] La fonction $Hd(p)$ devient nulle, l'extérieur n'a plus d'influence.
+    \item[(b)] \textbf{Calcul de $H(p)$ :}
+    $$
+    H(p) = \frac{\alpha_3}{p^2 + p(\alpha_1+\alpha_3)} = \frac{\alpha_3}{p(p + \alpha_1 + \alpha_3)} = \frac{\frac{\alpha_3}{\alpha_1+\alpha_3}}{p(1 + \frac{1}{\alpha_1+\alpha_3} p)}
+    $$
+    On a bien la forme demandée avec $\mathbf{G = \frac{\alpha_3}{\alpha_1+\alpha_3}}$ et $\mathbf{T = \frac{1}{\alpha_1+\alpha_3}}$.
+    \item[(c)] La réponse indicielle s'obtient en intégrant un système du 1er ordre. C'est une rampe amortie :
+    $$
+    \mathbf{Tint(t) = G \cdot [t - T(1 - e^{-t/T})]}
+    $$
+\end{enumerate}
 
-\section*{Exercice 4 : Régulation de température d'un cryostat}
+\subsection*{4. Enceinte avec pertes thermiques}
 
-\textbf{Identification des paramètres du modèle} [cite: 614, 619, 620, 623, 627, 630, 634, 635, 645, 650]\\
-L'essai indique que $Text(t) = 300K$ constant.
-Le système est à l'équilibre avant $t=100s$ (où $U=0$). $Temp(t<100) = Hd(0) \cdot 300 = 300 K$ (puisque $den(0)=1$). Cela correspond au graphe.
+\begin{itemize}
+    \item On calcule le dénominateur avec $\alpha_1=0.9, \alpha_2=0.01, \alpha_3=0.1$ : $p^2 + 1.01 p + 0.001$.
+    \item Ce polynôme admet deux racines : $p_1 \approx -0.001$ et $p_2 \approx -1$. Le pôle $p_1$ est dominant (constante de temps très grande), ce qui explique le comportement apparent du premier ordre.
+    \item Sur la Figure 2, on atteint $63\%$ de la valeur finale vers $t = 1000$s, d'où $\tau = 1000$s.
+    \item Le gain statique de $H(p)$ est $\mathbf{K_H = \frac{0.1}{0.001} = 100}$.
+    \item Le gain statique de $Hd(p)$ est \textbf{1}.
+\end{itemize}
 
+\hrulefill
+
+\section*{Exercice 4 - Régulation de température d'un cryostat}
+
+\subsection*{Identification des paramètres du modèle}
+
+\textbf{Etape 1 : Analyse de l'état initial}\\
+L'essai indique que $Text(t) = 300K$ constant. Le système est à l'équilibre avant $t=100s$ (où $U=0$).
+$$
+Temp(t<100) = Hd(0) \cdot 300 = 300 K
+$$
+Cela correspond au graphe (puisque $den(0)=1$).
+
+\textbf{Etape 2 : Analyse du gain $G$}\\
 À $t=100s$, un échelon de consigne de vitesse est appliqué : passage à 1000 tr/min.
-Sachant que 30V $\leftrightarrow$ rapport cyclique unitaire $U=1 \leftrightarrow$ 3000 tr/min, la vitesse est $3000 \cdot U(t)$.
-Pour 1000 tr/min, l'échelon de commande est donc $\Delta U = \frac{1000}{3000} = \frac{1}{3}$.
-
-Sur le graphe, la température passe de 300 K à 200 K en régime permanent. L'amplitude de la variation de la sortie est $\Delta Temp = -100 K$.
-L'équation en régime permanent pour cette variation donne : $\Delta Temp = H(0) \cdot \Delta U = \frac{G}{den(0)} \cdot \Delta U$.
+Sachant que 30V correspond à un rapport cyclique unitaire $U=1$ et à 3000 tr/min, la vitesse est $3000 \cdot U(t)$.
+Pour 1000 tr/min, l'échelon de commande est donc $\Delta U = \frac{1000}{3000} = \frac{1}{3}$.\\
+Sur le graphe, la température passe de 300 K à 200 K en régime permanent. L'amplitude de la variation de la sortie est $\Delta Temp = -100 K$.\\
+L'équation en régime permanent pour cette variation donne :
+$$
+\Delta Temp = H(0) \cdot \Delta U = \frac{G}{den(0)} \cdot \Delta U
+$$
 Ainsi, $-100 = G \cdot \frac{1}{3} \implies G = -300$.
 
+\textbf{Etape 3 : Analyse de la constante de temps $\tau$}\\
 Pour le dénominateur, la réponse a l'allure d'un premier ordre.
-La valeur finale de la variation est 200K. À $63\%$ de la transition (soit une chute de 63K, donc Temp=237K), on lit sur le graphe un temps d'environ $300s$. Sachant que l'échelon a démarré à $100s$, la constante de temps est $\tau = 300 - 100 = 200s$.
-
+La valeur finale de la variation est 200K. À $63\%$ de la transition (soit une chute de 63K, donc $Temp=237K$), on lit sur le graphe un temps d'environ $300s$.\\
+Sachant que l'échelon a démarré à $100s$, la constante de temps est $\tau = 300 - 100 = 200s$.\\
 Finalement, $den(p)$ pour un système du 1er ordre s'écrit $1 + \tau p$.
-Les paramètres sont donc :
-$$ G = -300 \quad \text{et} \quad den(p) = 1 + 200p $$
+
+\textbf{Reponse :} Les paramètres du modèle sont :
+$$
+\mathbf{G = -300 \quad \text{et} \quad den(p) = 1 + 200p}
+$$
 
 \end{document}

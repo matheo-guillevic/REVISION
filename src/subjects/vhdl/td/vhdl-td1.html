@@ -25,7 +25,7 @@
           <span class="eyebrow">SN361 - TD 1</span>
           <h1>Codage binaire, tables de verite et logique combinatoire</h1>
           <p>Conversions signees/non signees, complement a 2, portes logiques, XOR/XNOR et comparateurs.</p>
-          <p>Page reconstruite depuis le fichier LaTeX <code>pdf/vhdl/TD/TD1_Correction_SN361.tex</code>.</p>
+          <p>Page reconstruite depuis <code>pdf/vhdl/TD/TD1_Correction_SN361.tex</code>.</p>
         </div>
         <div class="td-actions">
           <a class="primary-button" href="pdf/vhdl/TD/TD1_Correction_SN361.pdf">Ouvrir le PDF</a>
@@ -53,31 +53,58 @@
           <div class="latex-table-wrap">
             <table class="latex-table">
               <tr>
-                <th><strong>Décimal</strong></th>                <th><strong>Signé</strong></th>                <th><strong>Non signé</strong></th>                <th><strong>Hexadécimale</strong></th>
+                <th><strong>Décimal</strong></th>
+                <th><strong>Signé</strong></th>
+                <th><strong>Non signé</strong></th>
+                <th><strong>Hexadécimale</strong></th>
               </tr>
               <tr>
-                <td>344</td>                <td>Oui, 0101011000</td>                <td>Oui, 0101011000</td>                <td>158</td>
+                <td>344</td>
+                <td>Oui, 0101011000</td>
+                <td>Oui, 0101011000</td>
+                <td>158</td>
               </tr>
               <tr>
-                <td>115</td>                <td>Oui, 0001110011</td>                <td>Oui, 0001110011</td>                <td>73</td>
+                <td>115</td>
+                <td>Oui, 0001110011</td>
+                <td>Oui, 0001110011</td>
+                <td>73</td>
               </tr>
               <tr>
-                <td>-42</td>                <td>Oui, 1111010110</td>                <td>Non</td>                <td>FD6</td>
+                <td>-42</td>
+                <td>Oui, 1111010110</td>
+                <td>Non</td>
+                <td>FD6</td>
               </tr>
               <tr>
-                <td>666</td>                <td>Non (hors de la plage)</td>                <td>Oui, 1010011010</td>                <td>29A</td>
+                <td>666</td>
+                <td>Non (hors de la plage)</td>
+                <td>Oui, 1010011010</td>
+                <td>29A</td>
               </tr>
               <tr>
-                <td>-950</td>                <td>Non (hors de la plage)</td>                <td>Non</td>                <td>X</td>
+                <td>-950</td>
+                <td>Non (hors de la plage)</td>
+                <td>Non</td>
+                <td>X</td>
               </tr>
               <tr>
-                <td>-496</td>                <td>Oui, 1000010000</td>                <td>Non</td>                <td>E10</td>
+                <td>-496</td>
+                <td>Oui, 1000010000</td>
+                <td>Non</td>
+                <td>E10</td>
               </tr>
               <tr>
-                <td>260</td>                <td>Oui, 0100000100</td>                <td>Oui, 0100000100</td>                <td>104</td>
+                <td>260</td>
+                <td>Oui, 0100000100</td>
+                <td>Oui, 0100000100</td>
+                <td>104</td>
               </tr>
               <tr>
-                <td>1515</td>                <td>Non (hors de la plage)</td>                <td>Non</td>                <td>X</td>
+                <td>1515</td>
+                <td>Non (hors de la plage)</td>
+                <td>Non</td>
+                <td>X</td>
               </tr>
             </table>
           </div>
@@ -92,7 +119,7 @@
           </ul>
           <h4>5) En VHDL et en Verilog, comment convertit-on les nombres décimaux 293993 et -293900 en nombres binaires signés et non signés ?</h4>
           <p><strong>VHDL :</strong></p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
@@ -114,7 +141,7 @@ begin
     resultat_signe &lt;= binary_value_signed;
 end Behavioral;</code></pre>
           <p><strong>Verilog :</strong></p>
-          <pre class="code-block language-vhdl"><code>module Convertisseur (
+          <pre class="code-block language-vhdl"><code class="language-vhdl">module Convertisseur (
     output reg [18:0] resultat_non_signe,
     output reg [19:0] resultat_signe
 );
@@ -143,102 +170,185 @@ endmodule</code></pre>
           <div class="latex-table-wrap">
             <table class="latex-table">
               <tr>
-                <th>\(a\)</th>                <th>\(b\)</th>                <th>\(a \text{ NAND } b\)</th>
+                <td>\(a\)</td>
+                <td>\(b\)</td>
+                <td>\(a \text{ NAND } b\)</td>
               </tr>
               <tr>
-                <td>0</td>                <td>0</td>                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>0</td>                <td>1</td>                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>1</td>                <td>0</td>                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>1</td>                <td>1</td>                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
               </tr>
             </table>
           </div>
-          <h4>2) Démontrer par les tables de vérité l'égalité suivante : $b = \overline{a</h4>
-          <p>\cdot b + a\cdot\overline{b}$}</p>
+          <h4>2) Démontrer par les tables de vérité l'égalité suivante : \(b = \overline{a}\cdot b + a\cdot\overline{b}\)</h4>
           <div class="latex-table-wrap">
             <table class="latex-table">
               <tr>
-                <th>\(a\)</th>                <th>\(b\)</th>                <th>\(\overline{a}\)</th>                <th>\(\overline{b}\)</th>                <th>\(\overline{a}\cdot b\)</th>                <th>\(a\cdot\overline{b}\)</th>                <th>\(\overline{a}\cdot b + a\cdot\overline{b}\)</th>                <th>\(a \text{ XOR } b\)</th>
+                <td>\(a\)</td>
+                <td>\(b\)</td>
+                <td>\(\overline{a}\)</td>
+                <td>\(\overline{b}\)</td>
+                <td>\(\overline{a}\cdot b\)</td>
+                <td>\(a\cdot\overline{b}\)</td>
+                <td>\(\overline{a}\cdot b + a\cdot\overline{b}\)</td>
+                <td>\(a \text{ XOR } b\)</td>
               </tr>
               <tr>
-                <td>0</td>                <td>0</td>                <td>1</td>                <td>1</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
               </tr>
               <tr>
-                <td>0</td>                <td>1</td>                <td>1</td>                <td>0</td>                <td>1</td>                <td>0</td>                <td>1</td>                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>1</td>                <td>0</td>                <td>0</td>                <td>1</td>                <td>0</td>                <td>1</td>                <td>1</td>                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>1</td>                <td>1</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
               </tr>
             </table>
           </div>
           <h4>3) En déduire l'expression et un circuit à base de AND, OR et NOT de la fonction XNOR</h4>
           <p>En utilisant le tableau de Karnaugh basé sur la table de vérité de l'opération XNOR : \((a\cdot b)+(\overline{a}\cdot\overline{b})\).<br> Remarque : Il est également possible d'appliquer la loi de Morgan à l'équation logique de l'opération XOR : \((a+b)\cdot(\overline{a}+\overline{b})\).</p>
           <p>Pour le circuit, on peut réaliser l'équation dérivée du tableau de Karnaugh.</p>
-          <h4>4) Donner les tables de vérités des fonctions suivantes : \(a+a\cdot b\), $a+\overline{a</h4>
-          <p>\cdot b$, multiplexeur 4 vers 1.}</p>
+          <h4>4) Donner les tables de vérités des fonctions suivantes : \(a+a\cdot b\), \(a+\overline{a}\cdot b\), multiplexeur 4 vers 1.</h4>
           <div class="latex-table-wrap">
             <table class="latex-table">
               <tr>
-                <th>\(a\)</th>                <th>\(b\)</th>                <th>\(a+a\cdot b\)</th>
+                <td>\(a\)</td>
+                <td>\(b\)</td>
+                <td>\(a+a\cdot b\)</td>
               </tr>
               <tr>
-                <td>0</td>                <td>0</td>                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
               </tr>
               <tr>
-                <td>0</td>                <td>1</td>                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
               </tr>
               <tr>
-                <td>1</td>                <td>0</td>                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>1</td>                <td>1</td>                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
               </tr>
             </table>
           </div>
           <div class="latex-table-wrap">
             <table class="latex-table">
               <tr>
-                <th>\(a\)</th>                <th>\(b\)</th>                <th>\(\overline{a}\)</th>                <th>\(\overline{a}\cdot b\)</th>                <th>\(a+\overline{a}\cdot b\)</th>
+                <td>\(a\)</td>
+                <td>\(b\)</td>
+                <td>\(\overline{a}\)</td>
+                <td>\(\overline{a}\cdot b\)</td>
+                <td>\(a+\overline{a}\cdot b\)</td>
               </tr>
               <tr>
-                <td>0</td>                <td>0</td>                <td>1</td>                <td>0</td>                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
               </tr>
               <tr>
-                <td>0</td>                <td>1</td>                <td>1</td>                <td>1</td>                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>1</td>                <td>0</td>                <td>0</td>                <td>0</td>                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>1</td>                <td>1</td>                <td>0</td>                <td>0</td>                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
               </tr>
             </table>
           </div>
           <div class="latex-table-wrap">
             <table class="latex-table">
               <tr>
-                <th>Sel1</th>                <th>Sel0</th>                <th>Sortie</th>
+                <td>Sel1</td>
+                <td>Sel0</td>
+                <td>Sortie</td>
               </tr>
               <tr>
-                <td>0</td>                <td>0</td>                <td>In0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>In0</td>
               </tr>
               <tr>
-                <td>0</td>                <td>1</td>                <td>In1</td>
+                <td>0</td>
+                <td>1</td>
+                <td>In1</td>
               </tr>
               <tr>
-                <td>1</td>                <td>0</td>                <td>In2</td>
+                <td>1</td>
+                <td>0</td>
+                <td>In2</td>
               </tr>
               <tr>
-                <td>1</td>                <td>1</td>                <td>In3</td>
+                <td>1</td>
+                <td>1</td>
+                <td>In3</td>
               </tr>
             </table>
           </div>
@@ -266,7 +376,7 @@ endmodule</code></pre>
           <h4>4) Faire le schéma de câblage</h4>
           <h4>5) Ecrire cette fonction en VHDL et Verilog comportemental.</h4>
           <p><strong>VHDL :</strong></p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity Comparateur_4bits is
@@ -282,7 +392,7 @@ begin
     Equal &lt;= (A(3) xnor B(3)) and (A(2) xnor B(2)) and (A(1) xnor B(1)) and (A(0) xnor B(0));
 end Behavioral;</code></pre>
           <p><strong>Verilog :</strong></p>
-          <pre class="code-block language-vhdl"><code>module Comparateur_4bits (
+          <pre class="code-block language-vhdl"><code class="language-vhdl">module Comparateur_4bits (
     input [3:0] A,
     input [3:0] B,
     output Equal
@@ -309,7 +419,7 @@ endmodule</code></pre>
           <h4>2) Codez en VHDL et Verilog les équations en comportemental.</h4>
           <p>On le fait pour l'équation 1:</p>
           <p><strong>VHDL :</strong></p>
-          <pre class="code-block language-vhdl"><code>library IEEE;
+          <pre class="code-block language-vhdl"><code class="language-vhdl">library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity Eq1 is
@@ -325,7 +435,7 @@ begin
     result &lt;= (a AND b) OR (NOT a AND NOT b);
 end Behavioral;</code></pre>
           <p><strong>Verilog :</strong></p>
-          <pre class="code-block language-vhdl"><code>module Eq1 (
+          <pre class="code-block language-vhdl"><code class="language-vhdl">module Eq1 (
     input wire a,
     input wire b,
     output wire result
@@ -351,37 +461,59 @@ endmodule</code></pre>
           <div class="latex-table-wrap">
             <table class="latex-table">
               <tr>
-                <th><strong>Decimal Digit</strong></th>                <th><strong>Input lines (ABCD)</strong></th>                <th><strong>Output lines (abcdefg)</strong></th>
+                <th><strong>Decimal Digit</strong></th>
+                <th><strong>Input lines (ABCD)</strong></th>
+                <th><strong>Output lines (abcdefg)</strong></th>
               </tr>
               <tr>
-                <td>0</td>                <td>0000</td>                <td>1111110</td>
+                <td>0</td>
+                <td>0000</td>
+                <td>1111110</td>
               </tr>
               <tr>
-                <td>1</td>                <td>0001</td>                <td>0110000</td>
+                <td>1</td>
+                <td>0001</td>
+                <td>0110000</td>
               </tr>
               <tr>
-                <td>2</td>                <td>0010</td>                <td>1101101</td>
+                <td>2</td>
+                <td>0010</td>
+                <td>1101101</td>
               </tr>
               <tr>
-                <td>3</td>                <td>0011</td>                <td>1111001</td>
+                <td>3</td>
+                <td>0011</td>
+                <td>1111001</td>
               </tr>
               <tr>
-                <td>4</td>                <td>0100</td>                <td>0110011</td>
+                <td>4</td>
+                <td>0100</td>
+                <td>0110011</td>
               </tr>
               <tr>
-                <td>5</td>                <td>0101</td>                <td>1011011</td>
+                <td>5</td>
+                <td>0101</td>
+                <td>1011011</td>
               </tr>
               <tr>
-                <td>6</td>                <td>0110</td>                <td>1011111</td>
+                <td>6</td>
+                <td>0110</td>
+                <td>1011111</td>
               </tr>
               <tr>
-                <td>7</td>                <td>0111</td>                <td>1110000</td>
+                <td>7</td>
+                <td>0111</td>
+                <td>1110000</td>
               </tr>
               <tr>
-                <td>8</td>                <td>1000</td>                <td>1111111</td>
+                <td>8</td>
+                <td>1000</td>
+                <td>1111111</td>
               </tr>
               <tr>
-                <td>9</td>                <td>1001</td>                <td>1111011</td>
+                <td>9</td>
+                <td>1001</td>
+                <td>1111011</td>
               </tr>
             </table>
           </div>

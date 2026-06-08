@@ -22,6 +22,10 @@
           <span class="eyebrow">TD 1</span>
           <h1>Denombrement et probabilites</h1>
           <p>Corrige reconstruit depuis le fichier LaTeX correspondant.</p>
+          <p>Page reconstruite depuis <code>pdf/math/TD/MT331-TD1.tex</code>.</p>
+        </div>
+        <div class="td-actions">
+          <a class="back-link" href="math.html">Cours de math</a>
         </div>
       </header>
 
@@ -38,56 +42,28 @@
             </div>
           </header>
           <div id="td1-e1" class="answer-block">
-          <p>Le tirage se fait simultanément, l'ordre n'a donc pas d'importance. Il s'agit de combinaisons. On choisit 5 cartes parmi 32. Le nombre total d'issues possibles est \(\binom{32}{5} = 201376\).</p>
+          <p><strong>Raisonnement :</strong> Le tirage se fait simultanément, l'ordre n'a donc pas d'importance. Il s'agit de combinaisons. On choisit 5 cartes parmi 32.</p>
+          <p><strong>Reponse :</strong> Le nombre total d'issues possibles est \(\mathbf{\binom{32}{5} = 201376}\).</p>
           <h4>1. Seulement des cartes noires</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Un jeu de 32 cartes contient 16 cartes noires (8 trèfles et 8 piques). Il faut choisir 5 cartes parmi ces 16.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(\binom{16}{5} = \frac{16!}{5!11!} = 4368\) façons.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Un jeu de 32 cartes contient 16 cartes noires (8 trèfles et 8 piques). Il faut choisir 5 cartes parmi ces 16.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{\binom{16}{5} = \frac{16!}{5!11!} = 4368}\) façons.</p>
           <h4>2. Seulement des figures ou as</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Les "figures" précisées ici sont au nombre de 4 par couleur (valet, dame, roi, as), soit \(4 \times 4 = 16\) cartes au total. On en choisit 5 parmi 16.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(\binom{16}{5} = 4368\) façons.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Les "figures" précisées ici sont au nombre de 4 par couleur (valet, dame, roi, as), soit \(4 \times 4 = 16\) cartes au total. On en choisit 5 parmi 16.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{\binom{16}{5} = 4368}\) façons.</p>
           <h4>3. Quatre as</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il faut choisir les 4 as parmi les 4 disponibles, puis choisir la dernière carte parmi les 28 cartes restantes du jeu.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(\binom{4}{4} \times \binom{28}{1} = 1 \times 28 = 28\) façons.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Il faut choisir les 4 as parmi les 4 disponibles, puis choisir la dernière carte parmi les 28 cartes restantes du jeu.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{\binom{4}{4} \times \binom{28}{1} = 1 \times 28 = 28}\) façons.</p>
           <h4>4. Cinq figures, dont 3 noires</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il y a 8 figures noires et 8 figures rouges. Il faut choisir 3 figures parmi les 8 noires, et les 2 autres cartes doivent être des figures rouges (choisies parmi les 8) pour avoir exactement 5 figures dont 3 noires.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(\binom{8}{3} \times \binom{8}{2} = 56 \times 28 = 1568\) façons.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Il y a 8 figures noires et 8 figures rouges. Il faut choisir 3 figures parmi les 8 noires, et les 2 autres cartes doivent être des figures rouges (choisies parmi les 8) pour avoir exactement 5 figures dont 3 noires.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{\binom{8}{3} \times \binom{8}{2} = 56 \times 28 = 1568}\) façons.</p>
           <h4>5. Trois as, 2 dames et 1 seul carreau</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On tire 5 cartes au total (3 as + 2 dames). L'unique carreau de la main doit obligatoirement être soit un as, soit une dame. On sépare en deux cas disjoints :</p>
-          </div>
+          <p><strong>Raisonnement :</strong> On tire 5 cartes au total (3 as + 2 dames). L'unique carreau de la main doit obligatoirement être soit un as, soit une dame. On sépare en deux cas disjoints:</p>
           <ul class="formula-list">
             <li><strong>Cas 1 : Le carreau est un as.</strong> On choisit l'as de carreau (1 choix). Les 2 autres as sont choisis parmi les 3 as restants (non-carreau). Les 2 dames sont choisies parmi les 3 dames restantes (non-carreau). Soit \(\binom{1}{1} \times \binom{3}{2} \times \binom{3}{2} = 1 \times 3 \times 3 = 9\).</li>
             <li><strong>Cas 2 : Le carreau est une dame.</strong> On choisit la dame de carreau (1 choix). L'autre dame est choisie parmi les 3 restantes (non-carreau). Les 3 as sont choisis parmi les 3 as non-carreau. Soit \(\binom{1}{1} \times \binom{3}{1} \times \binom{3}{3} = 1 \times 3 \times 1 = 3\).</li>
           </ul>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(9 + 3 = 12\) façons.</p>
-          </div>
+          <p><strong>Reponse :</strong> \(\mathbf{9 + 3 = 12}\) façons.</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -104,41 +80,18 @@
           </header>
           <div id="td1-e2" class="answer-block">
           <h4>1. Nombre total de comités</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il y a au total \(12 + 15 = 27\) personnes. On choisit 6 membres sans distinction d'ordre.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(\binom{27}{6} = 296010\) comités possibles.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Il y a au total \(12 + 15 = 27\) personnes. On choisit 6 membres sans distinction d'ordre.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{\binom{27}{6} = 296010}\) comités possibles.</p>
           <h4>2. Comités respectant la parité</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>La parité signifie 3 hommes et 3 femmes. On choisit 3 hommes parmi 12, et 3 femmes parmi 15.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(\binom{12}{3} \times \binom{15}{3} = 220 \times 455 = 100100\) comités.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> La parité signifie 3 hommes et 3 femmes. On choisit 3 hommes parmi 12, et 3 femmes parmi 15.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{\binom{12}{3} \times \binom{15}{3} = 220 \times 455 = 100100}\) comités.</p>
           <h4>3. Condition de refus entre A et B</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Madame A et Monsieur B ne doivent pas siéger ensemble. On compte le nombre de comités paritaires où ils siègent <em>tous les deux</em>, et on le soustrait au total paritaire calculé précédemment. S'ils y sont tous les deux, il reste à choisir 2 femmes parmi 14 (pour compléter avec Mme A) et 2 hommes parmi 11 (pour compléter avec M B).<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(100100 - \left( \binom{14}{2} \times \binom{11}{2} \right) = 100100 - (91 \times 55) = 100100 - 5005 = 95095\) comités.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Madame A et Monsieur B ne doivent pas siéger ensemble. On compte le nombre de comités paritaires où ils siègent <em>tous les deux</em>, et on le soustrait au total paritaire calculé précédemment. S'ils y sont tous les deux, il reste à choisir 2 femmes parmi 14 (pour compléter avec Mme A) et 2 hommes parmi 11 (pour compléter avec M B).</p>
+          <p><strong>Reponse :</strong> \(\mathbf{100100 - \left( \binom{14}{2} \times \binom{11}{2} \right) = 100100 - (91 \times 55) = 100100 - 5005 = 95095}\) comités.</p>
           <h4>4. Désignation du bureau</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Parmi les 6 membres, on désigne un président, un secrétaire et un trésorier (3 postes distincts). L'ordre compte, c'est un arrangement de 3 personnes parmi 6.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(A_6^3 = \frac{6!}{(6-3)!} = 6 \times 5 \times 4 = 120\) bureaux possibles.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Parmi les 6 membres, on désigne un président, un secrétaire et un trésorier (3 postes distincts). L'ordre compte, c'est un arrangement de 3 personnes parmi 6.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{A_6^3 = \frac{6!}{(6-3)!} = 6 \times 5 \times 4 = 120}\) bureaux possibles.</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -154,14 +107,9 @@
             </div>
           </header>
           <div id="td1-e3" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On utilise l'événement contraire : "les \(n\) personnes ont toutes des jours d'anniversaire différents". Il y a \(365^n\) cas possibles au total (nombre d'applications de l'ensemble des personnes vers les jours de l'année, sans années bissextiles). Le nombre de cas favorables à l'événement contraire est le nombre d'arrangements de \(n\) jours parmi 365, soit \(A_{365}^n\).<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>La probabilité est \(P = 1 - \frac{A_{365}^n}{365^n}\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> On utilise l'événement contraire : "les \(n\) personnes ont toutes des jours d'anniversaire différents". Il y a \(365^n\) cas possibles au total (nombre d'applications de l'ensemble des personnes vers les jours de l'année, sans années bissextiles). Le nombre de cas favorables à l'événement contraire est le nombre d'arrangements de \(n\) jours parmi 365, soit \(A_{365}^n\).</p>
+          <p><strong>Reponse :</strong> La probabilité est \(\mathbf{P = 1 - \frac{A_{365}^n}{365^n}}\).</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -178,23 +126,12 @@
           </header>
           <div id="td1-e4" class="answer-block">
           <h4>1. Maths groupés et Physique groupés</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il y a 2 "blocs" à ordonner : le bloc Maths et le bloc Physique (2! façons de les disposer). À l'intérieur du bloc Maths, il y a 12! façons de ranger les livres. À l'intérieur du bloc Physique, il y a 10! façons.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(2! \times 12! \times 10!\) rangements possibles.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Il y a 2 "blocs" à ordonner : le bloc Maths et le bloc Physique (2! façons de les disposer). À l'intérieur du bloc Maths, il y a 12! façons de ranger les livres. À l'intérieur du bloc Physique, il y a 10! façons.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{2! \times 12! \times 10!}\) rangements possibles.</p>
           <h4>2. Seulement les Maths groupés</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On considère les 12 livres de maths comme un seul gros bloc. Ce bloc s'ajoute aux 10 livres de physique, soit 11 éléments à permuter (\(11!\) façons). À l'intérieur du bloc des maths, les 12 livres peuvent être permutés de \(12!\) façons.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(11! \times 12!\) rangements possibles.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> On considère les 12 livres de maths comme un seul gros bloc. Ce bloc s'ajoute aux 10 livres de physique, soit 11 éléments à permuter (\(11!\) façons). À l'intérieur du bloc des maths, les 12 livres peuvent être permutés de \(12!\) façons.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{11! \times 12!}\) rangements possibles.</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -210,37 +147,17 @@
             </div>
           </header>
           <div id="td1-e5" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement global</strong>
-            <p>L'armoire contient 20 gants au total (10 paires distinctes). Le nombre de tirages possibles de 4 gants est \(\binom{20}{4} = 4845\).</p>
-          </div>
+          <p><strong>Raisonnement global :</strong> L'armoire contient 20 gants au total (10 paires distinctes). Le nombre de tirages possibles de 4 gants est \(\binom{20}{4} = 4845\).</p>
           <h4>(i) Deux paires assorties</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il faut tirer 2 paires complètes. Il suffit de choisir 2 paires parmi les 10 paires disponibles.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>Nombre de cas favorables : \(\binom{10}{2} = 45\). Probabilité = \(\frac{45}{4845} = \frac{3}{323}\).</p>
-          </div>
-          <h4>(iii) Une paire et une seule</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On choisit la paire assortie parmi 10 (\(\binom{10}{1}\)). Pour les 2 autres gants, il faut qu'ils proviennent de 2 paires différentes. On choisit 2 paires parmi les 9 restantes (\(\binom{9}{2}\)) et pour chacune de ces deux paires, on choisit le gant gauche ou droit (\(2^2\) choix).<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>Nombre de cas = \(10 \times 36 \times 4 = 1440\). Probabilité = \(\frac{1440}{4845} = \frac{96}{323}\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Il faut tirer 2 paires complètes. Il suffit de choisir 2 paires parmi les 10 paires disponibles.</p>
+          <p><strong>Reponse :</strong> Nombre de cas favorables : \(\binom{10}{2} = 45\). Probabilité = \(\mathbf{\frac{45}{4845} = \frac{3}{323}}\).</p>
           <h4>(ii) Au moins une paire</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>"Au moins une paire" signifie soit "une paire exacte", soit "deux paires". Les deux événements sont incompatibles, on additionne leurs probabilités.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>Probabilité = \(\frac{45}{4845} + \frac{1440}{4845} = \frac{1485}{4845} = \frac{99}{323}\).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> "Au moins une paire" signifie soit "une paire exacte", soit "deux paires". Les deux événements sont incompatibles, on additionne leurs probabilités.</p>
+          <p><strong>Reponse :</strong> Probabilité = \(\frac{45}{4845} + \frac{1440}{4845} = \frac{1485}{4845} = \mathbf{\frac{99}{323}}\).</p>
+          <h4>(iii) Une paire et une seule</h4>
+          <p><strong>Raisonnement :</strong> On choisit la paire assortie parmi 10 (\(\binom{10}{1}\)). Pour les 2 autres gants, il faut qu'ils proviennent de 2 paires différentes. On choisit 2 paires parmi les 9 restantes (\(\binom{9}{2}\)) et pour chacune de ces deux paires, on choisit le gant gauche ou droit (\(2^2\) choix).</p>
+          <p><strong>Reponse :</strong> Nombre de cas = \(10 \times 36 \times 4 = 1440\). Probabilité = \(\mathbf{\frac{1440}{4845} = \frac{96}{323}}\).</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -256,14 +173,9 @@
             </div>
           </header>
           <div id="td1-e6" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>C'est un tirage simultané (ou sans remise) de \(r\) boules parmi \(n\). Le nombre total de tirages est \(\binom{n}{r}\). Pour obtenir exactement \(k\) boules noires, on doit choisir \(k\) boules parmi les \(m\) noires, et les \(r-k\) boules restantes parmi les \(n-m\) boules blanches.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>La probabilité est \(P = \frac{\binom{m}{k} \times \binom{n-m}{r-k}}{\binom{n}{r}}\) (Loi hypergéométrique).</p>
-          </div>
+          <p><strong>Raisonnement :</strong> C'est un tirage simultané (ou sans remise) de \(r\) boules parmi \(n\). Le nombre total de tirages est \(\binom{n}{r}\). Pour obtenir exactement \(k\) boules noires, on doit choisir \(k\) boules parmi les \(m\) noires, et les \(r-k\) boules restantes parmi les \(n-m\) boules blanches.</p>
+          <p><strong>Reponse :</strong> La probabilité est \(\mathbf{P = \frac{\binom{m}{k} \times \binom{n-m}{r-k}}{\binom{n}{r}}}\) (Loi hypergéométrique).</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -279,16 +191,24 @@
             </div>
           </header>
           <div id="td1-e7" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement global</strong>
-            <p>Nombre total de mains de 5 cartes parmi 32 : \(\binom{32}{5} = 201376\). Un jeu de 32 a 8 hauteurs distinctes.</p>
-          </div>
+          <p><strong>Raisonnement global :</strong> Nombre total de mains de 5 cartes parmi 32 : \(\binom{32}{5} = 201376\). Un jeu de 32 a 8 hauteurs distinctes.</p>
           <ul class="formula-list">
-            <li><strong>(i) Une seule paire :</strong> On choisit la hauteur de la paire (\(\binom{8}{1}\)), puis 2 cartes de cette hauteur (\(\binom{4}{2}\)). On choisit ensuite 3 hauteurs distinctes parmi les 7 restantes (\(\binom{7}{3}\)), puis 1 carte pour chacune d'elles (\(4^3\)).<br> <strong>Probabilité :</strong> \(\frac{\binom{8}{1}\binom{4}{2}\binom{7}{3} \times 4^3}{201376} = \frac{107520}{201376} \approx 0.5339\).</li>
-            <li><strong>(ii) Deux paires :</strong> On choisit 2 hauteurs pour les paires (\(\binom{8}{2}\)), 2 cartes par hauteur (\(\binom{4}{2}^2\)). La cinquième carte est d'une autre hauteur (\(\binom{6}{1} \times \binom{4}{1}\)).<br> <strong>Probabilité :</strong> \(\frac{\binom{8}{2}\binom{4}{2}^2 \times 6 \times 4}{201376} = \frac{24192}{201376} \approx 0.1201\).</li>
-            <li><strong>(iii) Un brelan :</strong> On choisit la hauteur du brelan (\(\binom{8}{1}\)) et 3 cartes (\(\binom{4}{3}\)). Pour éviter un full, on prend 2 hauteurs distinctes pour les 2 cartes restantes (\(\binom{7}{2}\)) et 1 carte de chaque (\(4^2\)).<br> <strong>Probabilité :</strong> \(\frac{\binom{8}{1}\binom{4}{3}\binom{7}{2} \times 4^2}{201376} = \frac{10752}{201376} \approx 0.0534\).</li>
-            <li><strong>(iv) Un carré :</strong> On choisit la hauteur du carré (\(\binom{8}{1}\)), on prend les 4 cartes (\(\binom{4}{4} = 1\)), et 1 carte parmi les 28 autres.<br> <strong>Probabilité :</strong> \(\frac{\binom{8}{1} \times 1 \times 28}{201376} = \frac{224}{201376} \approx 0.0011\).</li>
+            <li><strong>(i) Une seule paire :</strong> On choisit la hauteur de la paire (\(\binom{8}{1}\)), puis 2 cartes de cette hauteur (\(\binom{4}{2}\)). On choisit ensuite 3 hauteurs distinctes parmi les 7 restantes (\(\binom{7}{3}\)), puis 1 carte pour chacune d'elles (\(4^3\)).<br></li>
           </ul>
+          <p><strong>Reponse :</strong> Probabilité : \(\mathbf{\frac{\binom{8}{1}\binom{4}{2}\binom{7}{3} \times 4^3}{201376} = \frac{107520}{201376} \approx 0.5339}\).</p>
+          <ul class="formula-list">
+            <li><strong>(ii) Deux paires :</strong> On choisit 2 hauteurs pour les paires (\(\binom{8}{2}\)), 2 cartes par hauteur (\(\binom{4}{2}^2\)). La cinquième carte est d'une autre hauteur (\(\binom{6}{1} \times \binom{4}{1}\)).<br></li>
+          </ul>
+          <p><strong>Reponse :</strong> Probabilité : \(\mathbf{\frac{\binom{8}{2}\binom{4}{2}^2 \times 6 \times 4}{201376} = \frac{24192}{201376} \approx 0.1201}\).</p>
+          <ul class="formula-list">
+            <li><strong>(iii) Un brelan :</strong> On choisit la hauteur du brelan (\(\binom{8}{1}\)) et 3 cartes (\(\binom{4}{3}\)). Pour éviter un full, on prend 2 hauteurs distinctes pour les 2 cartes restantes (\(\binom{7}{2}\)) et 1 carte de chaque (\(4^2\)).<br></li>
+          </ul>
+          <p><strong>Reponse :</strong> Probabilité : \(\mathbf{\frac{\binom{8}{1}\binom{4}{3}\binom{7}{2} \times 4^2}{201376} = \frac{10752}{201376} \approx 0.0534}\).</p>
+          <ul class="formula-list">
+            <li><strong>(iv) Un carré :</strong> On choisit la hauteur du carré (\(\binom{8}{1}\)), on prend les 4 cartes (\(\binom{4}{4} = 1\)), et 1 carte parmi les 28 autres.<br></li>
+          </ul>
+          <p><strong>Reponse :</strong> Probabilité : \(\mathbf{\frac{\binom{8}{1} \times 1 \times 28}{201376} = \frac{224}{201376} \approx 0.0011}\).</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -306,36 +226,19 @@
           <div id="td1-e8" class="answer-block">
           <p>Composition de ANNIVERSAIRE (12 lettres) : A(2), N(2), I(2), V(1), E(2), R(2), S(1).</p>
           <h4>1. Nombre d'anagrammes</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il y a 12 lettres avec des répétitions (5 paires de lettres identiques). C'est une permutation avec répétition.<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(\frac{12!}{2!2!2!2!2!} = \frac{12!}{32} = 14968800\) mots.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Il y a 12 lettres avec des répétitions (5 paires de lettres identiques). C'est une permutation avec répétition.</p>
+          <p><strong>Reponse :</strong> \(\mathbf{\frac{12!}{2!2!2!2!2!} = \frac{12!}{32} = 14968800}\) mots.</p>
           <h4>2. Commençant et finissant par une voyelle</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Les voyelles sont A, I, E (chacune 2 fois, soit 6 voyelles). Il y a deux cas pour le choix des lettres aux extrémités :</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Les voyelles sont A, I, E (chacune 2 fois, soit 6 voyelles). Il y a deux cas pour le choix des lettres aux extrémités:</p>
           <ul class="formula-list">
             <li>Même voyelle aux deux bouts (ex: A...A) : 3 choix pour la voyelle. Les 10 lettres restantes ont 4 paires. Permutations : \(3 \times \frac{10!}{2!2!2!2!} = 3 \times 226800 = 680400\).</li>
             <li>Voyelles différentes aux bouts (ex: A...E) : \(A_3^2 = 6\) choix pour le couple ordonné. Les 10 lettres restantes conservent 5 paires. Permutations : \(6 \times \frac{10!}{2!2!2!2!2!} = 6 \times 113400 = 680400\).</li>
           </ul>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(680400 + 680400 = 1360800\) mots.</p>
-          </div>
+          <p><strong>Reponse :</strong> \(\mathbf{680400 + 680400 = 1360800}\) mots.</p>
           <h4>3. Toutes les voyelles groupées</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On lie les 6 voyelles en 1 seul bloc. Ce bloc + les 6 consonnes forment 7 éléments à permuter, avec les paires de N et R (\(\frac{7!}{2!2!}\)). À l'intérieur du bloc voyelles, on permute les 6 lettres avec les paires de A, I, E (\(\frac{6!}{2!2!2!}\)).<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(\frac{7!}{4} \times \frac{6!}{8} = 1260 \times 90 = 113400\) mots.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> On lie les 6 voyelles en 1 seul bloc. Ce bloc + les 6 consonnes forment 7 éléments à permuter, avec les paires de N et R (\(\frac{7!}{2!2!}\)). À l'intérieur du bloc voyelles, on permute les 6 lettres avec les paires de A, I, E (\(\frac{6!}{2!2!2!}\)).</p>
+          <p><strong>Reponse :</strong> \(\mathbf{\frac{7!}{4} \times \frac{6!}{8} = 1260 \times 90 = 113400}\) mots.</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -352,11 +255,34 @@
           </header>
           <div id="td1-e9" class="answer-block">
           <h4>1. Tirage simultané de 5 boules</h4>
-          <p><strong>(a)</strong> \(\Omega\) est l'ensemble des combinaisons de 5 boules parmi 16 (les boules étant discernables). \(\text{Card}(\Omega) = \binom{16}{5} = 4368\).<br> <strong>(b)</strong> \(P(2B, 3N) = \frac{\binom{6}{2} \times \binom{10}{3}}{\binom{16}{5}}\).</p>
+          <ul class="formula-list">
+            <li><strong>(a)</strong> \(\Omega\) est l'ensemble des combinaisons de 5 boules parmi 16 (les boules étant discernables).</li>
+          </ul>
+          <p><strong>Reponse :</strong> \(\mathbf{\text{Card}(\Omega) = \binom{16}{5} = 4368}\).</p>
+          <ul class="formula-list">
+            <li><strong>(b)</strong> <strong>Reponse :</strong> \(\mathbf{P(2B, 3N) = \frac{\binom{6}{2} \times \binom{10}{3}}{\binom{16}{5}}}\).</li>
+          </ul>
           <h4>2. Tirage successif de 2 boules, sans remise</h4>
-          <p><strong>(a) Classé :</strong> \(\Omega\) est l'ensemble des arrangements de 2 boules parmi 16. \(\text{Card}(\Omega) = A_{16}^2 = 16 \times 15 = 240\).<br> <strong>(b)</strong> \(P(\text{1B puis 1N}) = \frac{6 \times 10}{240} = \frac{1}{4}\).<br> <strong>(c) Non classé :</strong> \(\Omega\) est l'ensemble des combinaisons. \(\text{Card}(\Omega) = \binom{16}{2} = 120\). \(P(\text{1B et 1N}) = \frac{\binom{6}{1} \binom{10}{1}}{120} = \frac{60}{120} = \frac{1}{2}\).</p>
+          <ul class="formula-list">
+            <li><strong>(a) Classé :</strong> \(\Omega\) est l'ensemble des arrangements de 2 boules parmi 16.</li>
+          </ul>
+          <p><strong>Reponse :</strong> \(\mathbf{\text{Card}(\Omega) = A_{16}^2 = 16 \times 15 = 240}\).</p>
+          <ul class="formula-list">
+            <li><strong>(b)</strong> <strong>Reponse :</strong> \(\mathbf{P(\text{1B puis 1N}) = \frac{6 \times 10}{240} = \frac{1}{4}}\).</li>
+            <li><strong>(c) Non classé :</strong> \(\Omega\) est l'ensemble des combinaisons. \(\text{Card}(\Omega) = \binom{16}{2} = 120\).</li>
+          </ul>
+          <p><strong>Reponse :</strong> \(\mathbf{P(\text{1B et 1N}) = \frac{\binom{6}{1} \binom{10}{1}}{120} = \frac{60}{120} = \frac{1}{2}}\).</p>
           <h4>3. Tirage avec remise de 2 boules</h4>
-          <p><strong>(a) Classé :</strong> \(\Omega\) est l'ensemble des listes de 2 boules parmi 16. \(\text{Card}(\Omega) = 16^2 = 256\).<br> <strong>(b)</strong> \(P(\text{1B puis 1N}) = \frac{6 \times 10}{256} = \frac{60}{256} = \frac{15}{64}\).<br> <strong>(c) Non classé :</strong> Il n'y a plus d'ordre imposé (la boule noire peut être la première ou la deuxième). On a donc \(P = 2 \times P(\text{1B puis 1N}) = 2 \times \frac{15}{64} = \frac{15}{32}\).</p>
+          <ul class="formula-list">
+            <li><strong>(a) Classé :</strong> \(\Omega\) est l'ensemble des listes de 2 boules parmi 16.</li>
+          </ul>
+          <p><strong>Reponse :</strong> \(\mathbf{\text{Card}(\Omega) = 16^2 = 256}\).</p>
+          <ul class="formula-list">
+            <li><strong>(b)</strong> <strong>Reponse :</strong> \(\mathbf{P(\text{1B puis 1N}) = \frac{6 \times 10}{256} = \frac{60}{256} = \frac{15}{64}}\).</li>
+            <li><strong>(c) Non classé :</strong> Il n'y a plus d'ordre imposé (la boule noire peut être la première ou la deuxième).</li>
+          </ul>
+          <p><strong>Reponse :</strong> On a donc \(\mathbf{P = 2 \times P(\text{1B puis 1N}) = 2 \times \frac{15}{64} = \frac{15}{32}}\).</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -372,18 +298,13 @@
             </div>
           </header>
           <div id="td1-e10" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>On calcule la probabilité de l'événement contraire pour chaque scénario.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> On calcule la probabilité de l'événement contraire pour chaque scénario.</p>
           <ul class="formula-list">
             <li>Au moins un 6 en 4 lancers : \(P_1 = 1 - \left(\frac{5}{6}\right)^4 \approx 1 - 0.482 = 0.518\).</li>
             <li>Au moins un double 6 en 24 lancers de 2 dés : La probabilité de ne pas faire un double 6 est de 35/36. Donc \(P_2 = 1 - \left(\frac{35}{36}\right)^{24} \approx 1 - 0.509 = 0.491\).</li>
           </ul>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>Il est plus probable d'obtenir au moins un 6 en lançant 4 fois de suite un dé.</p>
-          </div>
+          <p><strong>Reponse :</strong> Il est plus probable d'obtenir au moins un 6 en lançant 4 fois de suite un dé.</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -399,14 +320,9 @@
             </div>
           </header>
           <div id="td1-e11" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Pour gagner, le joueur 2 doit remporter les 2 parties suivantes (probabilité de \(\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}\)). Dans tous les autres cas (le joueur 1 gagne la partie 4, ou le joueur 2 gagne la 4 et le joueur 1 gagne la 5), le joueur 1 emporte la mise (probabilité de \(1 - \frac{1}{4} = \frac{3}{4}\)).<br></p>
-          </div>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>La mise doit être répartie proportionnellement à leurs chances de victoire : \(\frac{3}{4}\) de la mise pour le premier joueur et \(\frac{1}{4}\) pour le second.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Pour gagner, le joueur 2 doit remporter les 2 parties suivantes (probabilité de \(\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}\)). Dans tous les autres cas (le joueur 1 gagne la partie 4, ou le joueur 2 gagne la 4 et le joueur 1 gagne la 5), le joueur 1 emporte la mise (probabilité de \(1 - \frac{1}{4} = \frac{3}{4}\)).</p>
+          <p><strong>Reponse :</strong> La mise doit être répartie proportionnellement à leurs chances de victoire : \(\mathbf{\frac{3}{4}}\) de la mise pour le premier joueur et \(\mathbf{\frac{1}{4}}\) pour le second.</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -423,24 +339,16 @@
           </header>
           <div id="td1-e12" class="answer-block">
           <h4>1. Choix possibles</h4>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>Il faut choisir 4 voitures parmi 20, soit \(\binom{20}{4} = 4845\) choix.</p>
-          </div>
+          <p><strong>Reponse :</strong> Il faut choisir 4 voitures parmi 20, soit \(\mathbf{\binom{20}{4} = 4845}\) choix.</p>
           <h4>2. Au moins une voiture en panne</h4>
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Il y a 5 voitures en panne et 15 qui fonctionnent.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Il y a 5 voitures en panne et 15 qui fonctionnent.</p>
           <ul class="formula-list">
             <li><strong>Façon 1 (Événement contraire) :</strong> \(1 - P(\text{0 panne}) = 1 - \frac{\binom{15}{4}}{\binom{20}{4}} = 1 - \frac{1365}{4845} \approx 0.718\).</li>
             <li><strong>Façon 2 (Somme directe) :</strong> \(\frac{\binom{5}{1}\binom{15}{3} + \binom{5}{2}\binom{15}{2} + \binom{5}{3}\binom{15}{1} + \binom{5}{4}\binom{15}{0}}{\binom{20}{4}}\).</li>
           </ul>
           <h4>3. Exactement 2 voitures en panne</h4>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>On choisit 2 en panne parmi 5, et 2 qui fonctionnent parmi 15 : \(\frac{\binom{5}{2} \times \binom{15}{2}}{\binom{20}{4}} = \frac{10 \times 105}{4845} = \frac{1050}{4845} \approx 0.217\).</p>
-          </div>
+          <p><strong>Reponse :</strong> On choisit 2 en panne parmi 5, et 2 qui fonctionnent parmi 15 : \(\mathbf{\frac{\binom{5}{2} \times \binom{15}{2}}{\binom{20}{4}} = \frac{10 \times 105}{4845} = \frac{1050}{4845} \approx 0.217}\).</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -456,20 +364,15 @@
             </div>
           </header>
           <div id="td1-e13" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>C'est le nombre de partitions ordonnées d'un ensemble de 4 personnes (les nombres de Fubini). On sépare selon le nombre \(k\) de places distinctes à l'arrivée (les ex-aequo forment des "blocs"):</p>
-          </div>
+          <p><strong>Raisonnement :</strong> C'est le nombre de partitions ordonnées d'un ensemble de 4 personnes (les nombres de Fubini). On sépare selon le nombre \(k\) de places distinctes à l'arrivée (les ex-aequo forment des "blocs"):</p>
           <ul class="formula-list">
             <li>1 bloc (tous 1er ex-aequo) : 1 façon.</li>
             <li>2 blocs : Les partitions possibles sont du type "3 et 1" (4 façons) ou "2 et 2" (3 façons), total 7 partitions. Pour chacune, 2! ordres possibles d'arrivée. \(7 \times 2 = 14\) façons.</li>
             <li>3 blocs : Partitions "2, 1 et 1" (6 partitions). Ordonnées : \(6 \times 3! = 36\) façons.</li>
             <li>4 blocs (aucun ex-aequo) : \(4! = 24\) façons.</li>
           </ul>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>\(1 + 14 + 36 + 24 = 75\) classements possibles.</p>
-          </div>
+          <p><strong>Reponse :</strong> \(\mathbf{1 + 14 + 36 + 24 = 75}\) classements possibles.</p>
+          <hr class="td-divider">
           </div>
         </article>
 
@@ -485,18 +388,12 @@
             </div>
           </header>
           <div id="td1-e14" class="answer-block">
-          <div class="td-step-block td-reasoning-block">
-            <strong>Raisonnement</strong>
-            <p>Bien qu'il y ait autant de combinaisons brutes donnant une somme de 9 (126, 135, 144, 225, 234, 333) que donnant 10 (136, 145, 226, 235, 244, 334), il faut tenir compte des permutations, les dés étant physiquement distincts.</p>
-          </div>
+          <p><strong>Raisonnement :</strong> Bien qu'il y ait autant de combinaisons brutes donnant une somme de 9 (126, 135, 144, 225, 234, 333) que donnant 10 (136, 145, 226, 235, 244, 334), il faut tenir compte des permutations, les dés étant physiquement distincts.</p>
           <ul class="formula-list">
             <li>Pour la somme de 9, les permutations donnent : \(6 + 6 + 3 + 3 + 6 + 1 = 25\) façons.</li>
             <li>Pour la somme de 10, les permutations donnent : \(6 + 6 + 3 + 6 + 3 + 3 = 27\) façons.</li>
           </ul>
-          <div class="td-step-block td-solution-block">
-            <strong>Réponse</strong>
-            <p>Il y a 27 cas favorables pour obtenir 10 contre 25 cas pour obtenir 9. Le total de 10 est donc plus probable.</p>
-          </div>
+          <p><strong>Reponse :</strong> Il y a 27 cas favorables pour obtenir 10 contre 25 cas pour obtenir 9. Le total de 10 est donc plus probable.</p>
           </div>
         </article>
       </section>
