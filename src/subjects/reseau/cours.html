@@ -402,30 +402,76 @@
         <section id="reseau-revision" class="page-section">
           <div class="section-heading">
             <span class="eyebrow">Revision</span>
-            <h2>Fiche finale IN363</h2>
-            <p>Les reflexes a avoir devant une question de reseau ou une capture.</p>
+            <h2>Fiche de revision finale : reseaux et codage de l'information</h2>
+            <p>Les notions essentielles a revoir avant l'evaluation, avec les points pratiques a savoir refaire a la main.</p>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block definition">
+              <h4>Bloc 1 : representation et encodage physique</h4>
+              <ul class="formula-list">
+                <li><strong>Binaire base 2</strong> : langage natif de la machine, avec seulement \(0\) et \(1\).</li>
+                <li><strong>Decimal base 10</strong> : systeme classique utilise au quotidien.</li>
+                <li><strong>Hexadecimal base 16</strong> : chiffres de 0 a 9 puis A a F. Un chiffre hexadecimal vaut 4 bits ; on l'utilise pour raccourcir le binaire, notamment dans les adresses MAC et IPv6.</li>
+                <li><strong>NRZ</strong> : un \(1\) est code par une tension haute, un \(0\) par une tension basse. Probleme : une longue suite de \(0\) ou de \(1\) peut faire perdre la synchronisation au recepteur.</li>
+                <li><strong>Manchester</strong> : le signal change d'etat au milieu de chaque bit. Exemple : front montant = \(1\), front descendant = \(0\). Cette transition rend le signal auto-synchronisant.</li>
+              </ul>
+            </div>
+            <div class="content-block method">
+              <h4>Bloc 2 : controle d'erreur</h4>
+              <ul class="formula-list">
+                <li><strong>Bit de parite</strong> : on ajoute un bit pour que le nombre total de \(1\) soit pair en parite paire.</li>
+                <li><strong>Philosophie</strong> : il detecte une erreur simple, mais ne permet pas de la corriger.</li>
+                <li><strong>Hamming 7,4 [PRATIQUE]</strong> : 4 bits de donnees et 3 bits de controle places sur les positions puissances de 2.</li>
+                <li><strong>A savoir faire</strong> : calculer les parites croisees, extraire le syndrome, trouver la position de l'erreur, puis inverser le bit pour corriger le message.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content-grid two-col">
+            <div class="content-block theorem">
+              <h4>Bloc 2 : compression de donnees</h4>
+              <ul class="formula-list">
+                <li><strong>Sans perte</strong> : ZIP ou texte. Apres decompression, on retrouve le fichier original au bit pres.</li>
+                <li><strong>Avec perte</strong> : JPEG ou MP3. On supprime des donnees peu perceptibles par l'humain ; le fichier original exact ne peut pas etre retrouve.</li>
+                <li><strong>Huffman [PRATIQUE]</strong> : arbre binaire base sur les statistiques. Les symboles les plus frequents recoivent les codes binaires les plus courts.</li>
+                <li><strong>A savoir faire pour Huffman</strong> : compter les frequences, fusionner les plus petites valeurs pour construire l'arbre, puis lire les codes avec \(0\) a gauche et \(1\) a droite.</li>
+                <li><strong>LZ78 [PRATIQUE]</strong> : compression par dictionnaire dynamique. Les suites de caracteres repetees sont ajoutees au dictionnaire au fur et a mesure.</li>
+                <li><strong>A savoir faire pour LZ78</strong> : lire la chaine, creer les entrees du dictionnaire, puis produire les couples \((index\_du\_prefixe, nouveau\_caractere)\).</li>
+              </ul>
+            </div>
+            <div class="content-block definition">
+              <h4>Bloc 3 : architecture des reseaux</h4>
+              <ul class="formula-list">
+                <li><strong>Modele OSI</strong> : 7 couches, dans l'ordre physique, liaison, reseau, transport, session, presentation, application.</li>
+                <li><strong>Topologie etoile</strong> : toutes les machines sont reliees a un equipement central, souvent un switch. C'est la norme actuelle.</li>
+                <li><strong>Bus, anneau, maillee</strong> : autres formes historiques ou specifiques.</li>
+                <li><strong>Adresse MAC</strong> : couche 2 liaison. Adresse physique unique de la carte reseau, par exemple <code>00:1A:2B:3C:4D:5E</code>. Elle sert a communiquer sur le reseau local.</li>
+                <li><strong>Adresse IP</strong> : couche 3 reseau. Adresse logique, par exemple <code>192.168.1.15</code>. Elle sert au routage sur Internet ou entre reseaux.</li>
+                <li><strong>Masque de sous-reseau</strong> : il separe la partie reseau et la partie hote de l'adresse IP. Exemple : <code>255.255.255.0</code>.</li>
+              </ul>
+            </div>
           </div>
 
           <div class="content-grid two-col">
             <div class="content-block method">
-              <h4>Methode d'analyse</h4>
-              <ol class="solution-steps">
-                <li>Identifier la couche concernee : physique, liaison, reseau, transport ou application.</li>
-                <li>Reperer les adresses : MAC pour le local, IP pour le routage.</li>
-                <li>Lire les tailles en octets et convertir en hexadecimal/binaire si besoin.</li>
-                <li>Pour un masque, appliquer un ET binaire entre IP et masque.</li>
-                <li>Choisir TCP si la fiabilite prime, UDP si la latence et la simplicite priment.</li>
-              </ol>
+              <h4>Bloc 3 : decouverte d'un reseau [PRATIQUE]</h4>
+              <ul class="formula-list">
+                <li><strong>Objectif</strong> : identifier les machines presentes sur un reseau local.</li>
+                <li><strong>Ping</strong> : verifier si une machine repond.</li>
+                <li><strong>ARP</strong> : trouver l'adresse MAC associee a une adresse IP sur le reseau local.</li>
+                <li><strong>Scanner reseau ou ports</strong> : utiliser un outil comme <code>nmap</code> pour reperer des hotes ou des services ouverts.</li>
+              </ul>
             </div>
             <div class="content-block remember">
-              <h4>Questions qui tombent vite</h4>
-              <ul class="formula-list">
-                <li>Quelle est la difference entre MAC et IP ?</li>
-                <li>Qui emet et qui recoit cette trame Ethernet ?</li>
-                <li>Quelle adresse reseau correspond a cette IP et ce masque ?</li>
-                <li>Pourquoi ARP est necessaire entre IP et Ethernet ?</li>
-                <li>Dans quel cas choisir TCP plutot qu'UDP ?</li>
-              </ul>
+              <h4>Bloc 4 : TCP three-way handshake [PRATIQUE]</h4>
+              <p>TCP, en couche 4, est fiable. Avant l'envoi de donnees, il etablit une connexion propre entre client et serveur en trois etapes.</p>
+              <ol class="solution-steps">
+                <li><strong>SYN</strong> : le client demande l'ouverture de connexion et envoie son numero de sequence de depart.</li>
+                <li><strong>SYN-ACK</strong> : le serveur acquitte la demande du client et envoie son propre numero de sequence.</li>
+                <li><strong>ACK</strong> : le client confirme la reponse du serveur. La connexion est ouverte.</li>
+              </ol>
+              <p>Apres ce handshake, les donnees applicatives comme HTTP ou FTP peuvent commencer a circuler.</p>
             </div>
           </div>
         </section>
