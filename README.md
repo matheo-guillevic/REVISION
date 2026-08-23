@@ -1,14 +1,15 @@
 # REVISION
 
-Site statique de revision organise en pages de cours.
+Site statique de revision ESISAR genere depuis des sources Markdown.
 
-- `index.html` : accueil avec les liens vers les cours.
-- `math.html` : page dediee au cours de mathematiques.
-- `auto.html` : page dediee au cours d'automatique AU361.
-- `elec.html` : page dediee au cours d'electronique EP361.
+- `content/` : cours, TD et examens a modifier.
+- `public/` : assets, PDF, CSS et JavaScript copies dans le site final.
+- `src/build/` : scripts de generation.
+- `src/config/` : configuration des pages TD/examens.
+- `out/` : site genere.
 
-Pour reconstruire les pages :
+Pour reconstruire le site :
 
 ```powershell
-npm run build
+npm.cmd run build
 ```

@@ -1,12 +1,12 @@
 {
   "scripts": {
-    "build": "node tools/rebuild-td-from-latex.js && node tools/rebuild-exams-from-latex.js && node tools/build-html.js",
-    "split": "node tools/split-html.js",
-    "extract": "node tools/extract-pdfs.js",
-    "rebuild-td": "node tools/rebuild-td-from-latex.js",
-    "rebuild-exams": "node tools/rebuild-exams-from-latex.js"
+    "build": "node src/build/build-html.js && node src/build/build-pages-from-markdown.js",
+    "extract": "node src/build/extract-pdfs.js",
+    "rebuild-pages": "node src/build/build-pages-from-markdown.js"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^15.0.0",
     "pdf-parse": "^1.1.1"
   }
 }

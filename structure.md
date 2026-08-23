@@ -1,126 +1,59 @@
 # Structure du projet
 
-## Fichiers principaux
+Le projet est maintenant organise autour de sources Markdown.
 
-- `index.html` : page d'accueil avec les liens vers les cours.
-- `math.html` : page dediee au cours de mathematiques/probabilites.
-- `auto.html` : page dediee au cours d'automatique AU361.
-- `styles.css` : design responsive, mise en page, couleurs pedagogiques et composants visuels.
-- `script.js` : interactions de navigation, boutons d'affichage, progression et etats des exercices.
-- `tools/extract-pdfs.js` : script local utilise pour extraire le texte des PDF.
-- `tools/split-html.js` : script utilise pour resynchroniser la source unique du cours de math depuis `math.html` ou `out/math.html`.
-- `tools/build-html.js` : script utilise pour reconstruire les pages statiques dans `out/`.
-- `tools/rebuild-td-from-latex.js` : script commun utilise pour reconstruire les pages TD depuis les fichiers LaTeX.
-- `tools/td-pages.json` : configuration des pages TD generees par matiere.
-- `src/subjects/math/cours.html` : source HTML unique du cours de mathematiques/probabilites.
-- `src/subjects/math/td/` : sources HTML des pages corrigees TD de probabilites.
-- `src/subjects/auto/cours.html` : source HTML unique du cours d'automatique.
-- `td1.html` : page generee du TD 1 de denombrement.
-- `td2.html` : page generee du TD 2 d'espaces probabilises.
-- `td3.html` : page generee du TD 3 de variables aleatoires.
-- `pdf/math/cours/` : PDF des cours de mathematiques.
-- `pdf/math/TD/` : PDF des TD et corriges de mathematiques.
-- `pdf/auto/` : PDF du cours d'automatique et des TD.
-- `package.json` et `package-lock.json` : dependance locale `pdf-parse` utilisee pour l'extraction PDF.
-- `structure.md` : description de l'organisation du code.
+## Dossiers
 
-## Organisation de la page
+- `content/` : sources editables des cours, TD et examens.
+- `public/` : fichiers statiques copies tels quels dans `out/`.
+- `src/build/` : scripts de generation du site.
+- `src/config/` : configuration des pages TD et examens.
+- `docs/` : documentation du format Markdown enrichi.
+- `out/` : site genere, a ne pas modifier a la main.
 
-Le site est construit comme une application statique multi-pages simple.
-Le fichier `index.html` sert d'accueil, `math.html` contient le cours de mathematiques, et `auto.html` contient le cours d'automatique.
+## Sources Markdown
 
-Sections de `math.html` :
+Les cours principaux sont dans :
 
-- Accueil
-- Programme du semestre
-- Chapitre 1 : denombrement
-- Chapitre 2 : espaces probabilises
-- Chapitre 3 : variables aleatoires discretes
-- Chapitre 4 : variables aleatoires continues
-- Methodes obligatoires
-- TD
-- Sujets type examen
-- Revision finale
-
-## Composants visuels
-
-- `app-shell` : conteneur general de l'interface.
-- `sidebar` : menu lateral fixe sur ordinateur, compact sur mobile.
-- `topbar` : barre superieure avec action principale.
-- `progress-card` : suivi global de progression.
-- `chapter-card` : carte de chapitre avec etat et priorite.
-- `content-block` : bloc pedagogique type definition, theoreme, methode, remarque, attention ou a retenir.
-- `annotation` : encadre pedagogique visible ou masquable.
-- `exercise-card` : exercice avec objectif, notions, difficulte, temps, indice et correction.
-- `solution-steps` : liste ordonnee des etapes de correction dans les pages TD.
-- `td-actions` : zone des boutons d'affichage des corrections sur les pages TD.
-- `topic-tags` et `topic-tag` : etiquettes de notions traitees par chaque exercice TD.
-- `reasoning-note` : encadre expliquant le raisonnement avant les etapes de correction TD.
-- `question-notes` : encadre d'explications par question ou sous-question dans les corrections TD.
-- `question-block` : bloc visible listant les questions reecrites de l'exercice TD.
-- `answer-block` : bloc masquable contenant la reponse detaillee, le raisonnement et les explications.
-- `question-answer-card` : carte de reponse pour une question precise, avec deux boutons independants.
-- `reasoning-panel` : panneau masquable contenant seulement le raisonnement.
-- `solution-panel` : panneau masquable contenant seulement la solution finale et les calculs.
-- `exam-card` : sujet type examen.
-- `checklist` : liste de revision finale.
-- `chapter-card` dans la section TD : lien vers un PDF d'entrainement.
-
-## Interactions JavaScript
-
-- Navigation interne entre les sections.
-- Mise en evidence du lien actif.
-- Affichage ou masquage des indices.
-- Affichage ou masquage des corrections.
-- Affichage ou masquage global des annotations pedagogiques.
-- Marquage d'un exercice comme fait.
-- Marquage d'un exercice comme "a refaire".
-- Calcul simple de la progression globale.
-
-## Convention pour modifier un chapitre
-
-Pour enrichir un chapitre :
-
-1. Modifier la section correspondante dans `src/subjects/math/cours.html`.
-2. Ajuster les objectifs et la liste "ce qui est exigible".
-3. Completer les blocs `content-block` avec les definitions, theoremes, methodes et points d'attention.
-4. Ajouter ou remplacer les `exercise-card` avec les exercices du cours.
-5. Ajouter les annotations pedagogiques avec l'attribut `data-annotation`.
-6. Verifier les formules LaTeX entre `\\(` et `\\)` ou entre `\\[` et `\\]`.
-
-Pour enrichir le cours d'automatique, modifier directement `src/subjects/auto/cours.html`.
-
-## Evolution possible
-
-Si le site grossit, il sera pertinent de creer :
-
-- `data/chapters.js` pour stocker les chapitres.
-- `data/exercises.js` pour stocker les exercices.
-- `components/` si le projet passe vers React, Vue ou Astro.
-
-## Extraction des PDF
-
-Le texte des PDF a ete extrait avec :
-
-```powershell
-node tools/extract-pdfs.js
+```text
+content/<matiere>/cours.md
 ```
 
-Les fichiers extraits sont stockes dans `extracted/` quand la commande est lancee. Ce dossier est un support de travail regenerable, et le site ne le charge pas directement.
+Les TD et examens sont dans :
 
-## Reconstruction du HTML
-
-Apres modification d'un fichier dans `src/subjects`, reconstruire le site avec :
-
-```powershell
-npm run build
+```text
+content/<matiere>/td/*.md
+content/<matiere>/exam/*.md
 ```
 
-Pour recreer la source unique du cours de math a partir de `math.html` :
+## Fichiers Statiques
 
-```powershell
-npm run split
+Les assets et PDF restent references dans les Markdown avec des chemins web
+simples comme `assets/...` et `pdf/...`.
+
+Sur disque, ils sont ranges dans :
+
+```text
+public/assets/
+public/pdf/
+public/styles.css
+public/script.js
 ```
 
-Les sources des pages TD sont dans `src/subjects/math/td/`. `npm run build` recopie ensuite les pages TD vers `out/` avec des URLs simples comme `math-td1.html`. Leurs liens de retour pointent vers `math.html#probabilites-td`.
+Au build, le contenu de `public/` est copie a la racine de `out/`.
 
+## Build
+
+```powershell
+npm.cmd run build
+```
+
+Cette commande :
+
+1. vide et regenere `out/` ;
+2. copie les fichiers de `public/` ;
+3. genere les pages de cours depuis `content/*/cours.md` ;
+4. genere les pages TD/examens depuis `content/*/td` et `content/*/exam`.
+
+Les pages HTML ne sont plus des sources : elles sont uniquement produites dans
+`out/`.
