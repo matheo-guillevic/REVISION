@@ -33,7 +33,7 @@ function renderMarkdown(source) {
     /\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|\$\$[\s\S]*?\$\$|\$[^$\n]+\$/g,
     (fragment) => {
       const token = `@@MATH${math.length}@@`;
-      math.push(fragment);
+      math.push(normalizeMathFragment(fragment));
       return token;
     }
   );
@@ -41,10 +41,18 @@ function renderMarkdown(source) {
   let html = md.render(protectedSource).trim();
   html = html.replace(/<pre><code class="language-([^"]+)">/g, '<pre class="code-block language-$1"><code class="language-$1">');
   html = html.replace(/<pre><code>/g, '<pre class="code-block"><code>');
+  html = html.replace(/&lt;br&gt;/g, "<br>");
   math.forEach((fragment, index) => {
     html = html.replaceAll(`@@MATH${index}@@`, fragment);
   });
   return html;
+}
+
+function normalizeMathFragment(fragment) {
+  if (fragment.startsWith("$$") && fragment.endsWith("$$")) {
+    return `\\[${fragment.slice(2, -2).trim()}\\]`;
+  }
+  return fragment;
 }
 
 function unwrapParagraph(html) {

@@ -2,6 +2,12 @@ const body = document.body;
 const navLinks = Array.from(document.querySelectorAll(".nav-link"));
 const exercises = Array.from(document.querySelectorAll("[data-exercise]"));
 
+function openDetailsFromHash() {
+  if (!window.location.hash) return;
+  const target = document.querySelector(window.location.hash);
+  if (target && target.tagName === "DETAILS") target.open = true;
+}
+
 function updateProgress() {
   const mainProgress = document.querySelector("#main-progress");
   const sidebarProgress = document.querySelector("#sidebar-progress");
@@ -29,6 +35,14 @@ document.querySelectorAll("[data-toggle]").forEach((button) => {
     const isOpen = panel.classList.contains("open");
     const label = button.textContent.replace("Afficher", "").replace("Masquer", "").trim();
     button.textContent = `${isOpen ? "Masquer" : "Afficher"} ${label.toLowerCase()}`;
+  });
+});
+
+document.querySelectorAll('a[href^="#"], a[href^="index.html#"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    const hash = new URL(link.href, window.location.href).hash;
+    const target = hash ? document.querySelector(hash) : null;
+    if (target && target.tagName === "DETAILS") target.open = true;
   });
 });
 
@@ -73,4 +87,5 @@ const observer = new IntersectionObserver(
 );
 
 document.querySelectorAll(".page-section").forEach((section) => observer.observe(section));
+openDetailsFromHash();
 updateProgress();

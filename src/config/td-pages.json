@@ -26,17 +26,17 @@
   },
   "groups": [
     {
-      "subject": "math",
-      "label": "Probabilites",
-      "backHref": "math.html#probabilites-td",
-      "backLabel": "Retour aux TD",
-      "courseHref": "math.html",
-      "courseLabel": "MathÃ©matiques",
+      "subject": "MT331-Probabilites",
+      "label": "MT331-Probabilites",
+      "backHref": "MT331-Probabilites.html#probabilites-td",
+      "backLabel": "Retour aux TD MT331-Probabilites",
+      "courseHref": "MT331-Probabilites.html",
+      "courseLabel": "MT331-Probabilites",
       "idPrefix": "td",
       "pages": [
         {
           "n": 1,
-          "target": "math-td1.html",
+          "target": "MT331-Probabilites-td1.html",
           "title": "TD 1 corrige - Denombrement et probabilites",
           "eyebrow": "TD 1",
           "heading": "Denombrement et probabilites",
@@ -44,7 +44,7 @@
         },
         {
           "n": 2,
-          "target": "math-td2.html",
+          "target": "MT331-Probabilites-td2.html",
           "title": "TD 2 corrige - Espaces probabilises",
           "eyebrow": "TD 2",
           "heading": "Espaces probabilises",
@@ -52,7 +52,7 @@
         },
         {
           "n": 3,
-          "target": "math-td3.html",
+          "target": "MT331-Probabilites-td3.html",
           "title": "TD 3 corrige - Variables aleatoires",
           "eyebrow": "TD 3",
           "heading": "Variables aleatoires",
@@ -60,7 +60,7 @@
         },
         {
           "n": 4,
-          "target": "math-td4.html",
+          "target": "MT331-Probabilites-td4.html",
           "title": "TD 4 corrige - Variables aleatoires continues",
           "eyebrow": "TD 4",
           "heading": "Variables aleatoires continues",
@@ -68,7 +68,7 @@
         },
         {
           "n": 5,
-          "target": "math-td5.html",
+          "target": "MT331-Probabilites-td5.html",
           "title": "TD 5 corrige - Couples de variables aleatoires",
           "eyebrow": "TD 5",
           "heading": "Couples de variables aleatoires",
@@ -77,18 +77,18 @@
       ]
     },
     {
-      "subject": "auto",
-      "label": "Automatique",
-      "backHref": "auto.html#auto-td",
-      "backLabel": "Retour aux TD d'automatique",
-      "courseHref": "auto.html",
-      "courseLabel": "Cours d'automatique",
-      "assetPrefix": "assets/auto/TD",
-      "idPrefix": "auto-td",
+      "subject": "AU361-Automatique",
+      "label": "AU361-Automatique",
+      "backHref": "AU361-Automatique.html#AU361-Automatique-td",
+      "backLabel": "Retour aux TD AU361-Automatique",
+      "courseHref": "AU361-Automatique.html",
+      "courseLabel": "AU361-Automatique",
+      "assetPrefix": "assets/AU361-Automatique/TD",
+      "idPrefix": "AU361-Automatique-td",
       "pages": [
         {
           "n": 1,
-          "target": "auto-td1.html",
+          "target": "AU361-Automatique-td1.html",
           "pdf": "AU361-TD1.pdf",
           "title": "TD 1 corrige - Modelisation des systemes",
           "eyebrow": "AU361 - TD 1",
@@ -97,7 +97,7 @@
         },
         {
           "n": 2,
-          "target": "auto-td2.html",
+          "target": "AU361-Automatique-td2.html",
           "pdf": "AU361-TD2.pdf",
           "title": "TD 2 corrige - Stabilite et correcteurs",
           "eyebrow": "AU361 - TD 2",
@@ -106,7 +106,7 @@
         },
         {
           "n": 3,
-          "target": "auto-td3.html",
+          "target": "AU361-Automatique-td3.html",
           "pdf": "AU361-TD3.pdf",
           "title": "TD 3 corrige - Asservissement de position",
           "eyebrow": "AU361 - TD 3",
@@ -127,7 +127,7 @@
         },
         {
           "n": 4,
-          "target": "auto-td4.html",
+          "target": "AU361-Automatique-td4.html",
           "pdf": "AU361-TD4.pdf",
           "title": "TD 4 corrige - Synthese RST",
           "eyebrow": "AU361 - TD 4",
@@ -148,41 +148,41 @@
       ]
     },
     {
-      "subject": "elec",
-      "label": "Electronique",
-      "backHref": "elec.html#elec-td",
-      "backLabel": "Retour au TD d'electronique",
-      "courseHref": "elec.html",
-      "courseLabel": "Cours electronique",
-      "assetPrefix": "assets/elec/td",
-      "idPrefix": "elec-td",
+      "subject": "EP361-electonique",
+      "label": "EP361-electonique",
+      "backHref": "EP361-electonique.html#EP361-electonique-td",
+      "backLabel": "Retour au TD EP361-electonique",
+      "courseHref": "EP361-electonique.html",
+      "courseLabel": "EP361-electonique",
+      "assetPrefix": "assets/EP361-electonique/td",
+      "idPrefix": "EP361-electonique-td",
       "pages": [
         {
           "n": 1,
-          "target": "elec-td.html",
+          "target": "EP361-electonique-td.html",
           "pdf": "",
-          "title": "TD EP361 corrige",
+          "title": "TD EP361-electonique corrige",
           "eyebrow": "EP361 - TD",
-          "heading": "TD electronique corrige",
-          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d'electronique."
+          "heading": "TD EP361-electonique corrige",
+          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d'electonique."
         }
       ]
     },
     {
-      "subject": "vhdl",
-      "label": "VHDL",
-      "backHref": "vhdl.html#vhdl-td",
-      "backLabel": "Retour aux TD VHDL",
-      "courseHref": "vhdl.html",
-      "courseLabel": "Cours VHDL",
-      "assetPrefix": "assets/vhdl/TD",
-      "idPrefix": "vhdl-td",
+      "subject": "SN361-VHDL",
+      "label": "SN361-VHDL",
+      "backHref": "SN361-VHDL.html#SN361-VHDL-td",
+      "backLabel": "Retour aux TD SN361-VHDL",
+      "courseHref": "SN361-VHDL.html",
+      "courseLabel": "SN361-VHDL",
+      "assetPrefix": "assets/SN361-VHDL/TD",
+      "idPrefix": "SN361-VHDL-td",
       "codeLanguage": "vhdl",
       "withPrism": true,
       "pages": [
         {
           "n": 1,
-          "target": "vhdl-td1.html",
+          "target": "SN361-VHDL-td1.html",
           "pdf": "TD1_Correction_SN361.pdf",
           "title": "TD 1 corrige - Codage binaire et logique combinatoire",
           "eyebrow": "SN361 - TD 1",
@@ -191,7 +191,7 @@
         },
         {
           "n": 2,
-          "target": "vhdl-td2.html",
+          "target": "SN361-VHDL-td2.html",
           "pdf": "TD2_Correction_SN361.pdf",
           "title": "TD 2 corrige - Synthese logique et circuits sequentiels",
           "eyebrow": "SN361 - TD 2",
@@ -227,7 +227,7 @@
         },
         {
           "n": 3,
-          "target": "vhdl-td3.html",
+          "target": "SN361-VHDL-td3.html",
           "pdf": "TD3_Correction_SN361.pdf",
           "title": "TD 3 corrige - Compteurs et test benches",
           "eyebrow": "SN361 - TD 3",
@@ -244,7 +244,7 @@
         },
         {
           "n": 4,
-          "target": "vhdl-td4.html",
+          "target": "SN361-VHDL-td4.html",
           "pdf": "TD4_correction_vb.pdf",
           "title": "TD 4 corrige - Machines a etats finis",
           "eyebrow": "SN361 - TD 4",

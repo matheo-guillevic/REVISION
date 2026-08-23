@@ -8,18 +8,19 @@ const publicDir = path.join(root, "public");
 
 const pages = {
   home: path.join(outDir, "index.html"),
-  math: path.join(outDir, "math.html"),
-  auto: path.join(outDir, "auto.html"),
-  elec: path.join(outDir, "elec.html"),
-  java: path.join(outDir, "java.html"),
-  reseau: path.join(outDir, "reseau.html"),
-  vhdl: path.join(outDir, "vhdl.html"),
+  "AU331-Traitement-Signal": path.join(outDir, "AU331-Traitement-Signal.html"),
+  "MT331-Probabilites": path.join(outDir, "MT331-Probabilites.html"),
+  "AU361-Automatique": path.join(outDir, "AU361-Automatique.html"),
+  "EP361-electonique": path.join(outDir, "EP361-electonique.html"),
+  "IN361-JAVA": path.join(outDir, "IN361-JAVA.html"),
+  "IN363-Reseau": path.join(outDir, "IN363-Reseau.html"),
+  "SN361-VHDL": path.join(outDir, "SN361-VHDL.html"),
 };
 
 const courseStructures = {
-  math: {
-    page: "math.html",
-    subject: "math",
+  "MT331-Probabilites": {
+    page: "MT331-Probabilites.html",
+    subject: "MT331-Probabilites",
     intro: "probabilites",
     contentHref: "probabilites-programme",
     content: [
@@ -36,26 +37,26 @@ const courseStructures = {
     revision: "probabilites-revision",
     support: "math-supports",
   },
-  auto: {
-    page: "auto.html",
-    subject: "auto",
-    intro: "auto-intro",
-    contentHref: "auto-modelisation",
+  "AU361-Automatique": {
+    page: "AU361-Automatique.html",
+    subject: "AU361-Automatique",
+    intro: "AU361-Automatique-intro",
+    contentHref: "AU361-Automatique-modelisation",
     content: [
-      ["auto-modelisation", "Modélisation"],
-      ["auto-analyse", "Analyse"],
-      ["auto-commande", "Commande"],
-      ["auto-marges", "Marges"],
-      ["auto-pid-rst", "PID/RST"],
+      ["AU361-Automatique-modelisation", "Modélisation"],
+      ["AU361-Automatique-analyse", "Analyse"],
+      ["AU361-Automatique-commande", "Commande"],
+      ["AU361-Automatique-marges", "Marges"],
+      ["AU361-Automatique-pid-rst", "PID/RST"],
     ],
-    td: "auto-td",
-    exams: "auto-exams",
-    revision: "auto-revision",
-    support: "auto-supports",
+    td: "AU361-Automatique-td",
+    exams: "AU361-Automatique-exams",
+    revision: "AU361-Automatique-revision",
+    support: "AU361-Automatique-supports",
   },
-  elec: {
-    page: "elec.html",
-    subject: "elec",
+  "EP361-electonique": {
+    page: "EP361-electonique.html",
+    subject: "EP361-electonique",
     intro: "elec-intro",
     contentHref: "elec-quadripoles",
     content: [
@@ -65,14 +66,14 @@ const courseStructures = {
       ["elec-oscillateurs", "Oscillateurs"],
       ["elec-simulations", "CircuitJS"],
     ],
-    td: "elec-td",
-    exams: "elec-exams",
+    td: "EP361-electonique-td",
+    exams: "EP361-electonique-exams",
     revision: "elec-revision",
     support: "elec-pdfs",
   },
-  java: {
-    page: "java.html",
-    subject: "java",
+  "IN361-JAVA": {
+    page: "IN361-JAVA.html",
+    subject: "IN361-JAVA",
     intro: "java-intro",
     contentHref: "java-bases",
     content: [
@@ -83,14 +84,14 @@ const courseStructures = {
       ["java-interfaces", "Interfaces"],
       ["java-exceptions", "Exceptions"],
     ],
-    td: "java-td",
-    exams: "java-exams",
+    td: "IN361-JAVA-td",
+    exams: "IN361-JAVA-exams",
     revision: "java-revision",
     support: "java-supports",
   },
-  reseau: {
-    page: "reseau.html",
-    subject: "reseau",
+  "IN363-Reseau": {
+    page: "IN363-Reseau.html",
+    subject: "IN363-Reseau",
     intro: "reseau-intro",
     contentHref: "reseau-bases",
     content: [
@@ -101,14 +102,14 @@ const courseStructures = {
       ["reseau-couche3", "Couche 3"],
       ["reseau-transport", "Transport"],
     ],
-    td: "reseau-td",
-    exams: "reseau-exams",
+    td: "IN363-Reseau-td",
+    exams: "IN363-Reseau-exams",
     revision: "reseau-revision",
     support: "reseau-pdfs",
   },
-  vhdl: {
-    page: "vhdl.html",
-    subject: "vhdl",
+  "SN361-VHDL": {
+    page: "SN361-VHDL.html",
+    subject: "SN361-VHDL",
     intro: "vhdl-intro",
     contentHref: "vhdl-cm1",
     content: [
@@ -120,8 +121,8 @@ const courseStructures = {
       ["vhdl-cm6", "HDL"],
       ["vhdl-cm7", "FPGA"],
     ],
-    td: "vhdl-td",
-    exams: "vhdl-exams",
+    td: "SN361-VHDL-td",
+    exams: "SN361-VHDL-exams",
     revision: "vhdl-revision",
     support: "vhdl-pdfs",
   },
@@ -238,6 +239,15 @@ function readCourseBody(subject, structure) {
   return composeCourseBody(body, structure);
 }
 
+function readStandaloneCourseBody(subject) {
+  const markdownPath = path.join(root, "content", subject, "cours.md");
+  if (!fs.existsSync(markdownPath)) {
+    throw new Error(`Source Markdown introuvable : ${path.relative(root, markdownPath)}`);
+  }
+
+  return renderMarkdownCourse(markdownPath).body;
+}
+
 function composeCourseBody(html, structure) {
   const sections = extractCourseSections(html);
   const byId = new Map(sections.map((section) => [section.id, section.html]));
@@ -285,7 +295,7 @@ function renderShell({ title, brandMark, brandTitle, brandSubtitle, nav, eyebrow
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
     <script>
       window.MathJax = {
-        tex: { inlineMath: [["\\\\(", "\\\\)"], ["$", "$"]], displayMath: [["\\\\[", "\\\\]"]] },
+        tex: { inlineMath: [["\\\\(", "\\\\)"], ["$", "$"]], displayMath: [["\\\\[", "\\\\]"], ["$$", "$$"]] },
         svg: { fontCache: "global" }
       };
     </script>
@@ -327,64 +337,103 @@ ${body}
 }
 
 function renderHome() {
-  const nav = renderNav(
-    [
-      ["index.html", "Accueil"],
-      ["math.html", "Mathématiques"],
-      ["auto.html", "Automatique"],
-      ["elec.html", "Electronique"],
-      ["java.html", "Java"],
-      ["reseau.html", "Reseaux"],
-      ["vhdl.html", "VHDL"],
-    ],
-    "index.html"
-  );
+  const nav = `          <a class="nav-link active" href="index.html">Accueil</a>
+          <details class="sidebar-semester">
+            <summary>Semestre 5</summary>
+            <ul class="sidebar-semester-list">
+              <li><a href="index.html#semestre-5">Vue semestre</a></li>
+              <li><a href="AU331-Traitement-Signal.html">AU331-Traitement-Signal</a></li>
+            </ul>
+          </details>
+          <details class="sidebar-semester">
+            <summary>Semestre 6</summary>
+            <ul class="sidebar-semester-list">
+              <li><a href="index.html#semestre-6">Vue semestre</a></li>
+              <li><a href="MT331-Probabilites.html">MT331-Probabilites</a></li>
+              <li><a href="AU361-Automatique.html">AU361-Automatique</a></li>
+              <li><a href="EP361-electonique.html">EP361-electonique</a></li>
+              <li><a href="IN361-JAVA.html">IN361-JAVA</a></li>
+              <li><a href="IN363-Reseau.html">IN363-Reseau</a></li>
+              <li><a href="SN361-VHDL.html">SN361-VHDL</a></li>
+            </ul>
+          </details>`;
 
   const body = `        <section id="accueil" class="page-section">
           <div class="section-heading">
             <span class="eyebrow">Cours</span>
-            <h2>Choisir une matiere</h2>
-            <p>Le site est separe en pages dediees pour garder les revisions lisibles quand de nouveaux cours arrivent.</p>
+            <h2>Choisir un semestre</h2>
+            <p>Les matieres sont regroupees par semestre pour retrouver plus vite les cours, TD et examens.</p>
           </div>
+        </section>
 
-          <div class="dashboard-grid">
-            <article class="chapter-card">
-              <span class="status-pill">Disponible</span>
-              <h3>Mathématiques</h3>
-              <p>Cours de probabilites, TD, methodes et fiche de revision finale.</p>
-              <p class="secondary-link"><a href="math.html">Ouvrir le cours</a></p>
-            </article>
-            <article class="chapter-card">
-              <span class="status-pill">Disponible</span>
-              <h3>Automatique</h3>
-              <p>Cours AU361 construit a partir du poly, des supports PID/RST et des TD.</p>
-              <p class="secondary-link"><a href="auto.html">Ouvrir le cours</a></p>
-            </article>
-            <article class="chapter-card">
-              <span class="status-pill">Disponible</span>
-              <h3>Electronique</h3>
-              <p>Cours EP361 : quadripoles, filtres, amplificateurs et oscillateurs quasi-sinusoidaux.</p>
-              <p class="secondary-link"><a href="elec.html">Ouvrir le cours</a></p>
-            </article>
-            <article class="chapter-card">
-              <span class="status-pill">Disponible</span>
-              <h3>Java</h3>
-              <p>Bases du langage, collections, approche objet, heritage, interfaces et exceptions.</p>
-              <p class="secondary-link"><a href="java.html">Ouvrir le cours</a></p>
-            </article>
-            <article class="chapter-card">
-              <span class="status-pill">Disponible</span>
-              <h3>Reseaux</h3>
-              <p>Cours IN363 : modele OSI, Ethernet, IP, ARP, TCP/UDP, ICMP et HTTP.</p>
-              <p class="secondary-link"><a href="reseau.html">Ouvrir le cours</a></p>
-            </article>
-            <article class="chapter-card">
-              <span class="status-pill">Disponible</span>
-              <h3>VHDL</h3>
-              <p>Supports SN361 : logique reconfigurable, codage binaire, circuits combinatoires, sequentiels, FSM et FPGA.</p>
-              <p class="secondary-link"><a href="vhdl.html">Ouvrir le cours</a></p>
-            </article>
-          </div>
+        <section class="page-section semester-list">
+          <details id="semestre-5" class="semester-group">
+            <summary>
+              <span>
+                <span class="eyebrow">Semestre 5</span>
+                <strong>Semestre 5</strong>
+              </span>
+              <span class="semester-count">1 matiere</span>
+            </summary>
+
+            <div class="dashboard-grid semester-content">
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>AU331-Traitement-Signal</h3>
+                <p>Synthese de traitement du signal deterministe : signaux, Fourier, Laplace, echantillonnage et filtrage.</p>
+                <p class="secondary-link"><a href="AU331-Traitement-Signal.html">Ouvrir le cours</a></p>
+              </article>
+            </div>
+          </details>
+
+          <details id="semestre-6" class="semester-group">
+            <summary>
+              <span>
+                <span class="eyebrow">Semestre 6</span>
+                <strong>Semestre 6</strong>
+              </span>
+              <span class="semester-count">6 matieres</span>
+            </summary>
+
+            <div class="dashboard-grid semester-content">
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>MT331-Probabilites</h3>
+                <p>Cours de probabilites, TD, methodes et fiche de revision finale.</p>
+                <p class="secondary-link"><a href="MT331-Probabilites.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>AU361-Automatique</h3>
+                <p>AU361-Automatique construit a partir du poly, des supports PID/RST et des TD.</p>
+                <p class="secondary-link"><a href="AU361-Automatique.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>EP361-electonique</h3>
+                <p>Cours EP361 : quadripoles, filtres, amplificateurs et oscillateurs quasi-sinusoidaux.</p>
+                <p class="secondary-link"><a href="EP361-electonique.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>IN361-JAVA</h3>
+                <p>Bases du langage, collections, approche objet, heritage, interfaces et exceptions.</p>
+                <p class="secondary-link"><a href="IN361-JAVA.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>IN363-Reseau</h3>
+                <p>Cours IN363 : modele OSI, Ethernet, IP, ARP, TCP/UDP, ICMP et HTTP.</p>
+                <p class="secondary-link"><a href="IN363-Reseau.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>SN361-VHDL</h3>
+                <p>Supports SN361 : logique reconfigurable, codage binaire, circuits combinatoires, sequentiels, FSM et FPGA.</p>
+                <p class="secondary-link"><a href="SN361-VHDL.html">Ouvrir le cours</a></p>
+              </article>
+            </div>
+          </details>
         </section>`;
 
   return renderShell({
@@ -394,25 +443,54 @@ function renderHome() {
     brandSubtitle: "Cours separes",
     nav,
     eyebrow: "Revision",
-    heading: "Revisions par cours",
-    cta: '<a class="primary-button" href="math.html">Mathématiques</a>',
+    heading: "Revisions par semestre",
+    cta: '<a class="primary-button" href="#semestre-6">Semestre 6</a>',
     body,
   });
 }
 
+function renderSignalCourse() {
+  const nav = renderNav(
+    [
+      ["index.html", "Accueil"],
+      ["AU331-Traitement-Signal.html#au331-intro", "Introduction"],
+      ["AU331-Traitement-Signal.html#au331-objectifs", "Objectifs", "sub"],
+      ["AU331-Traitement-Signal.html#au331-signaux-continus", "Signaux continus", "sub"],
+      ["AU331-Traitement-Signal.html#au331-analyse-spectrale", "Analyse spectrale", "sub"],
+      ["AU331-Traitement-Signal.html#au331-echantillonnage", "Echantillonnage", "sub"],
+      ["AU331-Traitement-Signal.html#au331-systemes-rif", "Systemes discrets et RIF", "sub"],
+      ["AU331-Traitement-Signal.html#au331-revision", "Revision"],
+    ],
+    "AU331-Traitement-Signal.html#au331-intro"
+  );
+
+  return renderShell({
+    title: "AU331-Traitement-Signal - Revision ESISAR",
+    brandMark: "S",
+    brandTitle: "AU331-Traitement-Signal",
+    brandSubtitle: "Traitement du signal",
+    nav,
+    eyebrow: "Semestre 5",
+    heading: "Traitement du signal deterministe",
+    cta: '<a class="primary-button" href="index.html#semestre-5">Semestre 5</a>',
+    body: readStandaloneCourseBody("AU331-Traitement-Signal"),
+    showAnnotations: true,
+  });
+}
+
 function renderMath() {
-  const structure = courseStructures.math;
-  const course = readCourseBody("math", structure);
+  const structure = courseStructures["MT331-Probabilites"];
+  const course = readCourseBody("MT331-Probabilites", structure);
   const nav = renderCommonCourseNav(structure);
 
   return renderShell({
-    title: "Mathématiques - Revision ESISAR",
+    title: "MT331-Probabilites - Revision ESISAR",
     brandMark: "M",
-    brandTitle: "Mathématiques",
+    brandTitle: "MT331-Probabilites",
     brandSubtitle: "Probabilites",
     nav,
-    eyebrow: "Mathématiques",
-    heading: "Cours de probabilites",
+    eyebrow: "MT331-Probabilites",
+    heading: "Probabilites",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
     body: course,
     showAnnotations: true,
@@ -420,17 +498,17 @@ function renderMath() {
 }
 
 function renderAutoCourse() {
-  const structure = courseStructures.auto;
-  const course = readCourseBody("auto", structure);
+  const structure = courseStructures["AU361-Automatique"];
+  const course = readCourseBody("AU361-Automatique", structure);
   const nav = renderCommonCourseNav(structure);
 
   return renderShell({
-    title: "Automatique AU361 - Revision ESISAR",
+    title: "AU361-Automatique - Revision ESISAR",
     brandMark: "A",
-    brandTitle: "Automatique",
-    brandSubtitle: "AU361",
+    brandTitle: "AU361-Automatique",
+    brandSubtitle: "Automatique",
     nav,
-    eyebrow: "Automatique",
+    eyebrow: "AU361-Automatique",
     heading: "Analyse et commande des systemes lineaires",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
     body: course,
@@ -439,17 +517,17 @@ function renderAutoCourse() {
 }
 
 function renderElecCourse() {
-  const structure = courseStructures.elec;
-  const course = readCourseBody("elec", structure);
+  const structure = courseStructures["EP361-electonique"];
+  const course = readCourseBody("EP361-electonique", structure);
   const nav = renderCommonCourseNav(structure);
 
   return renderShell({
-    title: "Electronique EP361 - Revision ESISAR",
+    title: "EP361-electonique - Revision ESISAR",
     brandMark: "E",
-    brandTitle: "Electronique",
+    brandTitle: "EP361-electonique",
     brandSubtitle: "EP361",
     nav,
-    eyebrow: "Electronique",
+    eyebrow: "EP361-electonique",
     heading: "Circuits electroniques",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
     body: course,
@@ -458,17 +536,17 @@ function renderElecCourse() {
 }
 
 function renderJavaCourse() {
-  const structure = courseStructures.java;
-  const course = readCourseBody("java", structure);
+  const structure = courseStructures["IN361-JAVA"];
+  const course = readCourseBody("IN361-JAVA", structure);
   const nav = renderCommonCourseNav(structure);
 
   return renderShell({
-    title: "Java - Revision ESISAR",
+    title: "IN361-JAVA - Revision ESISAR",
     brandMark: "J",
-    brandTitle: "Java",
+    brandTitle: "IN361-JAVA",
     brandSubtitle: "Programmation objet",
     nav,
-    eyebrow: "Java",
+    eyebrow: "IN361-JAVA",
     heading: "Langage Java et programmation objet",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
     body: course,
@@ -476,17 +554,17 @@ function renderJavaCourse() {
 }
 
 function renderReseauCourse() {
-  const structure = courseStructures.reseau;
-  const course = readCourseBody("reseau", structure);
+  const structure = courseStructures["IN363-Reseau"];
+  const course = readCourseBody("IN363-Reseau", structure);
   const nav = renderCommonCourseNav(structure);
 
   return renderShell({
-    title: "Reseaux IN363 - Revision ESISAR",
+    title: "IN363-Reseau - Revision ESISAR",
     brandMark: "R",
-    brandTitle: "Reseaux",
-    brandSubtitle: "IN363",
+    brandTitle: "IN363-Reseau",
+    brandSubtitle: "Reseaux",
     nav,
-    eyebrow: "Reseaux",
+    eyebrow: "IN363-Reseau",
     heading: "Couches reseau et protocoles",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
     body: course,
@@ -495,17 +573,17 @@ function renderReseauCourse() {
 }
 
 function renderVhdlCourse() {
-  const structure = courseStructures.vhdl;
-  const course = readCourseBody("vhdl", structure);
+  const structure = courseStructures["SN361-VHDL"];
+  const course = readCourseBody("SN361-VHDL", structure);
   const nav = renderCommonCourseNav(structure);
 
   return renderShell({
-    title: "VHDL SN361 - Revision ESISAR",
+    title: "SN361-VHDL - Revision ESISAR",
     brandMark: "V",
-    brandTitle: "VHDL",
-    brandSubtitle: "SN361",
+    brandTitle: "SN361-VHDL",
+    brandSubtitle: "VHDL",
     nav,
-    eyebrow: "VHDL",
+    eyebrow: "SN361-VHDL",
     heading: "Conception de circuits numeriques",
     cta: '<a class="primary-button" href="index.html">Accueil</a>',
     body: course,
@@ -519,11 +597,12 @@ fs.mkdirSync(outDir, { recursive: true });
 copyPublicFiles();
 
 write(pages.home, renderHome());
-write(pages.math, renderMath());
-write(pages.auto, renderAutoCourse());
-write(pages.elec, renderElecCourse());
-write(pages.java, renderJavaCourse());
-write(pages.reseau, renderReseauCourse());
-write(pages.vhdl, renderVhdlCourse());
+write(pages["AU331-Traitement-Signal"], renderSignalCourse());
+write(pages["MT331-Probabilites"], renderMath());
+write(pages["AU361-Automatique"], renderAutoCourse());
+write(pages["EP361-electonique"], renderElecCourse());
+write(pages["IN361-JAVA"], renderJavaCourse());
+write(pages["IN363-Reseau"], renderReseauCourse());
+write(pages["SN361-VHDL"], renderVhdlCourse());
 
 console.log("Application construite dans out/.");

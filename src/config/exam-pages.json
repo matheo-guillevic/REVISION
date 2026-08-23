@@ -12,58 +12,58 @@
     "vhdl_exam2_moore_1.svg": "Diagramme de transition de la porte de garage avec remt impulsionnel.",
     "vhdl_exam2_moore_2.svg": "Diagramme de transition de la porte de garage avec remt continu.",
     "exam3-sipo-2.1.svg": "Schema du registre a decalage SIPO de l'examen 3.",
-    "vhdl-exam4-fsm.svg": "Diagramme de machine a etats de l'examen VHDL 4.",
-    "vhdl-exam4-fsm-chrono.svg": "Chronogramme associe a la machine a etats.",
-    "vhdl-exam4-pwm.svg": "Schema de generation PWM de l'examen VHDL 4.",
-    "vhdl-exam4-signal-s.svg": "Chronogramme du signal S."
+    "SN361-VHDL-exam4-fsm.svg": "Diagramme de machine a etats de l'examen VHDL 4.",
+    "SN361-VHDL-exam4-fsm-chrono.svg": "Chronogramme associe a la machine a etats.",
+    "SN361-VHDL-exam4-pwm.svg": "Schema de generation PWM de l'examen VHDL 4.",
+    "SN361-VHDL-exam4-signal-s.svg": "Chronogramme du signal S."
   },
   "groups": [
     {
-      "subject": "elec",
-      "label": "Electronique",
-      "backHref": "elec.html#elec-exams",
-      "courseHref": "elec.html",
-      "courseLabel": "Cours electronique",
-      "assetPrefix": "assets/elec/exam",
+      "subject": "EP361-electonique",
+      "label": "EP361-electonique",
+      "backHref": "EP361-electonique.html#EP361-electonique-exams",
+      "courseHref": "EP361-electonique.html",
+      "courseLabel": "EP361-electonique",
+      "assetPrefix": "assets/EP361-electonique/exam",
       "unitKind": "problem",
       "exams": [
         {
-          "target": "elec-exam-2025.html",
-          "title": "Examen electronique 2025",
+          "target": "EP361-electonique-exam-2025.html",
+          "title": "Examen EP361-electonique 2025",
           "eyebrow": "EP361 - Examen 2025",
-          "heading": "Correction examen electronique 2025",
+          "heading": "Correction examen EP361-electonique 2025",
           "summary": "Quadripoles, filtre actif passe-bas, filtre universel et AOP de puissance push-pull.",
           "figurePrefix": "ELEC-exam-2025-schema"
         },
         {
-          "target": "elec-exam-2026.html",
-          "title": "Examen electronique 2026",
+          "target": "EP361-electonique-exam-2026.html",
+          "title": "Examen EP361-electonique 2026",
           "eyebrow": "EP360 / EP361 - Examen 2026",
-          "heading": "Correction examen electronique 2026",
+          "heading": "Correction examen EP361-electonique 2026",
           "summary": "Darlington, filtres actifs, filtre universel et oscillateur a reseau de retour.",
           "figurePrefix": "ELEC-exam-2026-schema"
         }
       ]
     },
     {
-      "subject": "vhdl",
-      "label": "VHDL",
-      "backHref": "vhdl.html#vhdl-exams",
-      "courseHref": "vhdl.html",
-      "courseLabel": "Cours VHDL",
-      "assetPrefix": "assets/vhdl/exam",
+      "subject": "SN361-VHDL",
+      "label": "SN361-VHDL",
+      "backHref": "SN361-VHDL.html#SN361-VHDL-exams",
+      "courseHref": "SN361-VHDL.html",
+      "courseLabel": "SN361-VHDL",
+      "assetPrefix": "assets/SN361-VHDL/exam",
       "unitKind": "problem",
       "exams": [
         {
-          "target": "vhdl-exam-1.html",
-          "title": "Examen VHDL 1",
+          "target": "SN361-VHDL-exam-1.html",
+          "title": "Examen SN361-VHDL 1",
           "eyebrow": "SN361 - Examen 1",
           "heading": "Registre generique et compteur modulo N",
           "summary": "Register Transfer Level, description structurelle, generate, compteur modulo N et testbench."
         },
         {
-          "target": "vhdl-exam-2.html",
-          "title": "Examen VHDL 2",
+          "target": "SN361-VHDL-exam-2.html",
+          "title": "Examen SN361-VHDL 2",
           "eyebrow": "SN361 - Examen 2",
           "heading": "Timer et controleur de porte de garage",
           "summary": "Timer 32 bits, decompteur, multiplexeur, testbench et machine a etats de Moore.",
@@ -87,8 +87,8 @@
           }
         },
         {
-          "target": "vhdl-exam-3.html",
-          "title": "Examen VHDL 3",
+          "target": "SN361-VHDL-exam-3.html",
+          "title": "Examen SN361-VHDL 3",
           "eyebrow": "SN361 - Examen 3",
           "heading": "Questions de cours et registre a decalage SIPO",
           "summary": "Virgule fixe, Karnaugh, numeric_std, processus concurrents, registre SIPO RTL/structurel et chronogrammes.",
@@ -102,29 +102,29 @@
           }
         },
         {
-          "target": "vhdl-exam-4.html",
-          "title": "Examen VHDL 4",
+          "target": "SN361-VHDL-exam-4.html",
+          "title": "Examen SN361-VHDL 4",
           "eyebrow": "SN361 - Examen 4",
           "heading": "Questions de cours, FSM, PWM et composants",
           "summary": "Questions de cours VHDL, machines a etats, PWM, composants et chronogrammes.",
           "figures": {
             "2": [
               {
-                "file": "vhdl-exam4-fsm.svg",
+                "file": "SN361-VHDL-exam4-fsm.svg",
                 "after": "Question 2|etat|FSM|machine"
               },
               {
-                "file": "vhdl-exam4-fsm-chrono.svg",
+                "file": "SN361-VHDL-exam4-fsm-chrono.svg",
                 "after": "chronogramme|Question 2"
               }
             ],
             "3": [
               {
-                "file": "vhdl-exam4-pwm.svg",
+                "file": "SN361-VHDL-exam4-pwm.svg",
                 "after": "PWM|Question 3"
               },
               {
-                "file": "vhdl-exam4-signal-s.svg",
+                "file": "SN361-VHDL-exam4-signal-s.svg",
                 "after": "signal S|Question 3"
               }
             ]
@@ -133,93 +133,93 @@
       ]
     },
     {
-      "subject": "java",
-      "label": "Java",
-      "backHref": "java.html#java-exams",
-      "courseHref": "java.html",
-      "courseLabel": "Cours Java",
+      "subject": "IN361-JAVA",
+      "label": "IN361-JAVA",
+      "backHref": "IN361-JAVA.html#IN361-JAVA-exams",
+      "courseHref": "IN361-JAVA.html",
+      "courseLabel": "IN361-JAVA",
       "assetPrefix": null,
       "unitKind": "exercise",
       "titlePattern": "\\\\textbf\\{\\\\Large\\s*((?:Exercice|ProblÃ¨me|ProblÃƒÂ¨me|Probleme)\\s+\\d+[^}]*)\\}",
       "exams": [
         {
-          "target": "java-exam-2026.html",
-          "title": "Examen Java 2026",
+          "target": "IN361-JAVA-exam-2026.html",
+          "title": "Examen IN361-JAVA 2026",
           "eyebrow": "IN360 - Examen 2026",
-          "heading": "Correction examen Java 2026",
+          "heading": "Correction examen IN361-JAVA 2026",
           "summary": "Gestion de location, tri de nombres, heritage, composition, constructeurs, exceptions et analyse de code."
         },
         {
-          "target": "java-exam-1.html",
-          "title": "Examen Java 1",
+          "target": "IN361-JAVA-exam-1.html",
+          "title": "Examen IN361-JAVA 1",
           "eyebrow": "IN361 - Examen 1",
-          "heading": "Examen Java 1",
+          "heading": "Examen IN361-JAVA 1",
           "summary": "Programmation orientee objet, heritage, polymorphisme et classes."
         },
         {
-          "target": "java-exam-2.html",
-          "title": "Examen Java 2",
+          "target": "IN361-JAVA-exam-2.html",
+          "title": "Examen IN361-JAVA 2",
           "eyebrow": "IN361 - Examen 2",
-          "heading": "Examen Java 2",
+          "heading": "Examen IN361-JAVA 2",
           "summary": "Objets, collections, exceptions et conception de classes."
         },
         {
-          "target": "java-exam-3.html",
-          "title": "Examen Java 3",
+          "target": "IN361-JAVA-exam-3.html",
+          "title": "Examen IN361-JAVA 3",
           "eyebrow": "IN361 - Examen 3",
-          "heading": "Examen Java 3",
+          "heading": "Examen IN361-JAVA 3",
           "summary": "Programmation objet, interfaces, heritage et exceptions."
         },
         {
-          "target": "java-exam-4.html",
-          "title": "Examen Java 4",
+          "target": "IN361-JAVA-exam-4.html",
+          "title": "Examen IN361-JAVA 4",
           "eyebrow": "IN361 - Examen 4",
-          "heading": "Examen Java 4",
+          "heading": "Examen IN361-JAVA 4",
           "summary": "Conception Java, classes, polymorphisme, exceptions et code."
         }
       ]
     },
     {
-      "subject": "math",
-      "label": "Probabilites",
-      "backHref": "math.html#probabilites-exams",
-      "courseHref": "math.html",
-      "courseLabel": "MathÃ©matiques",
+      "subject": "MT331-Probabilites",
+      "label": "MT331-Probabilites",
+      "backHref": "MT331-Probabilites.html#probabilites-exams",
+      "courseHref": "MT331-Probabilites.html",
+      "courseLabel": "MT331-Probabilites",
       "assetPrefix": null,
       "unitKind": "mixed",
       "titlePattern": "\\\\textbf\\{\\\\Large\\s*((?:ProblÃ¨me|Exercice)\\s+(?:[IVX]+|\\d+)[^}]*)\\}",
       "exams": [
         {
-          "target": "math-exam-controle-denombrement.html",
+          "target": "MT331-Probabilites-exam-controle-denombrement.html",
           "title": "Controle corrige - Denombrement",
           "eyebrow": "MT331 - Controle",
           "heading": "Denombrement",
           "summary": "Questions de cours, denombrement, probabilites finies et calculs combinatoires."
         },
         {
-          "target": "math-exam-controle-va.html",
+          "target": "MT331-Probabilites-exam-controle-va.html",
           "title": "Controle corrige - Variables aleatoires",
           "eyebrow": "MA337 - Controle",
           "heading": "Variables aleatoires",
           "summary": "Esperance, variance, covariance, lois de reference et independance."
         },
         {
-          "target": "math-exam-partiel-1.html",
-          "title": "Partiel corrige 1 - Probabilites",
+          "target": "MT331-Probabilites-exam-partiel-1.html",
+          "title": "Partiel corrige 1 - MT331-Probabilites",
           "eyebrow": "Partiel 1",
           "heading": "Corrige de partiel",
           "summary": "Lois discretes, lois conjointes, esperance, variance et probabilites conditionnelles."
         },
         {
-          "target": "math-exam-partiel-2.html",
-          "title": "Partiel corrige 2 - Probabilites",
+          "target": "MT331-Probabilites-exam-partiel-2.html",
+          "title": "Partiel corrige 2 - MT331-Probabilites",
           "eyebrow": "Partiel 2",
           "heading": "Corrige de partiel",
           "summary": "Lois normales, densites, variables continues, lois marginales et transformations."
         },
         {
-          "target": "math-exam-partiel-3.html",
-          "title": "Partiel corrige 3 - Probabilites",
+          "target": "MT331-Probabilites-exam-partiel-3.html",
+          "title": "Partiel corrige 3 - MT331-Probabilites",
           "eyebrow": "Partiel 3",
           "heading": "Corrige de partiel",
           "summary": "QCM, densites, moments, fonctions de repartition et variables aleatoires continues."

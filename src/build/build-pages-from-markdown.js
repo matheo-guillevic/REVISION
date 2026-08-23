@@ -42,7 +42,7 @@ function renderPage(group, page, kind, markdownPath) {
   const pdfLink = pdfHref
     ? `<a class="primary-button" href="${escapeHtml(pdfHref)}">Ouvrir le PDF</a>`
     : "";
-  const prism = data.withPrism || group.withPrism || group.subject === "java" || group.subject === "vhdl";
+  const prism = data.withPrism || group.withPrism || group.subject === "IN361-JAVA" || group.subject === "SN361-VHDL";
   const prismLink = prism ? '\n    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">' : "";
   const prismScripts = prism
     ? '\n    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>\n    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>'

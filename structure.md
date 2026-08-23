@@ -19,6 +19,18 @@ Les cours principaux sont dans :
 content/<matiere>/cours.md
 ```
 
+Les matieres renommees utilisent des slugs sans accents :
+
+```text
+content/AU331-Traitement-Signal/
+content/AU361-Automatique/
+content/MT331-Probabilites/
+content/EP361-electonique/
+content/IN361-JAVA/
+content/IN363-Reseau/
+content/SN361-VHDL/
+```
+
 Les TD et examens sont dans :
 
 ```text
