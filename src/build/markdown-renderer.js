@@ -70,9 +70,16 @@ function renderContentMarkdown(source, listMode = "formula") {
 
 function findDirectiveEnd(lines, startIndex) {
   let depth = 0;
+  let inFence = false;
 
   for (let index = startIndex; index < lines.length; index += 1) {
     const line = lines[index].trim();
+    if (line.startsWith("```") || line.startsWith("~~~")) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) continue;
+
     if (/^:::\w+/.test(line)) depth += 1;
     if (line === ":::") {
       depth -= 1;
@@ -87,6 +94,7 @@ function splitBlocks(source) {
   const lines = source.replace(/\r\n/g, "\n").split("\n");
   const blocks = [];
   let markdown = [];
+  let inFence = false;
 
   function flushMarkdown() {
     const text = markdown.join("\n").trim();
@@ -96,6 +104,17 @@ function splitBlocks(source) {
 
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index];
+    const trimmed = line.trim();
+    if (trimmed.startsWith("```") || trimmed.startsWith("~~~")) {
+      inFence = !inFence;
+      markdown.push(line);
+      continue;
+    }
+    if (inFence) {
+      markdown.push(line);
+      continue;
+    }
+
     const match = line.trim().match(/^:::(\w+)(.*)$/);
 
     if (!match) {

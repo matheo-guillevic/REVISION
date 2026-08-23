@@ -302,15 +302,41 @@ CircuitJS aide à visualiser les comportements, mais la justification d'examen r
 :::
 :::
 
-:::section id="EP361-electonique-td" eyebrow="Travaux diriges" title="TD EP361-electonique corrige" summary="Une page dediee reprend le poly de TD ajoute dans pdf/EP361-electonique/td, avec corrections guidees et simulations CircuitJS."
+:::section id="EP361-electonique-td" eyebrow="Travaux diriges" title="TD EP361-electonique corriges" summary="Le poly de TD est decoupe en pages numerotees par theme, avec corrections guidees et simulations CircuitJS."
 :::dashboard
-:::card class="chapter-card" pill="TD" title="Electronique des signaux" href="EP361-electonique-td.html" link="Ouvrir la correction guidee"
-Quadripoles, filtres passifs et actifs, amplificateurs de puissance, oscillateurs, convertisseurs et sujets type DS.
+:::card class="chapter-card" pill="TD 1" title="Quadripoles" href="EP361-electonique-td1.html" link="Ouvrir la page corrigee"
+Corrections guidees et simulations CircuitJS pour les exercices d electronique.
 :::
 
+:::card class="chapter-card" pill="TD 2" title="Filtres" href="EP361-electonique-td2.html" link="Ouvrir la page corrigee"
+Corrections guidees et simulations CircuitJS pour les exercices d electronique.
+:::
+
+:::card class="chapter-card" pill="TD 3" title="Filtres actifs" href="EP361-electonique-td3.html" link="Ouvrir la page corrigee"
+Corrections guidees et simulations CircuitJS pour les exercices d electronique.
+:::
+
+:::card class="chapter-card" pill="TD 4" title="Puissance" href="EP361-electonique-td4.html" link="Ouvrir la page corrigee"
+Corrections guidees et simulations CircuitJS pour les exercices d electronique.
+:::
+
+:::card class="chapter-card" pill="TD 5" title="Oscillateurs" href="EP361-electonique-td5.html" link="Ouvrir la page corrigee"
+Corrections guidees et simulations CircuitJS pour les exercices d electronique.
+:::
+
+:::card class="chapter-card" pill="TD 6" title="Convertisseurs" href="EP361-electonique-td6.html" link="Ouvrir la page corrigee"
+Corrections guidees et simulations CircuitJS pour les exercices d electronique.
+:::
+
+:::card class="chapter-card" pill="TD 7" title="DS 2014" href="EP361-electonique-td7.html" link="Ouvrir la page corrigee"
+Corrections guidees et simulations CircuitJS pour les exercices d electronique.
+:::
+:::
+:::
+
+:::section id="EP361-electonique-td-pdf" eyebrow="Source" title="Poly original" summary="Support PDF conserve pour comparaison avec la version Markdown."
 :::card class="chapter-card" pill="PDF" muted="true" title="Poly original" href="pdf/EP361-electonique/td/EP361_Poly_TD.pdf" link="Ouvrir le PDF source"
 Source EP360/EP361 ajoutee au dossier des supports.
-:::
 :::
 :::
 

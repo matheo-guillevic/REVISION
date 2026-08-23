@@ -26,6 +26,7 @@ Des signaux continus jusqu aux filtres RIF, avec exercices resolus et formules c
 - [Analyse spectrale](#au331-analyse-spectrale)
 - [Echantillonnage](#au331-echantillonnage)
 - [Systemes discrets et RIF](#au331-systemes-rif)
+- [TD](#au331-td)
 - [Fiche finale](#au331-revision)
 :::
 
@@ -945,6 +946,26 @@ y(n) ={}& -0.0455 \left[ x(n-1) + x(n-15) \right] + 0.0637 \left[ x(n-3) + x(n-1
    *(Note : la factorisation des termes symétriques met en évidence la simplification matérielle permise par la phase linéaire).*
 :::
 
+:::
+:::
+
+:::section id="au331-td" eyebrow="Travaux diriges" title="TD AU331-Traitement-Signal corriges" summary="Les TD de traitement du signal sont accessibles separement pour travailler chaque bloc du cours."
+:::dashboard
+:::card class="chapter-card" pill="TD 1" title="Signaux deterministes a temps continu et convolution" href="AU331-Traitement-Signal-td1.html" link="Ouvrir la page corrigee"
+Energie, transformee de Fourier, brouillage spectral et convolution.
+:::
+
+:::card class="chapter-card" pill="TD 2" title="Analyse spectrale et correlation" href="AU331-Traitement-Signal-td2.html" link="Ouvrir la page corrigee"
+Intercorrelation, autocorrelation et theoreme de Parseval.
+:::
+
+:::card class="chapter-card" pill="TD 3" title="Echantillonnage, repliement et transformees discretes" href="AU331-Traitement-Signal-td3.html" link="Ouvrir la page corrigee"
+Repliement spectral, TFD, etalonnage de spectre et zero padding.
+:::
+
+:::card class="chapter-card" pill="TD 4" title="Systemes discrets, transformee en Z et filtres RIF" href="AU331-Traitement-Signal-td4.html" link="Ouvrir la page corrigee"
+Transformee en Z monolaterale et synthese de filtres RIF.
+:::
 :::
 :::
 

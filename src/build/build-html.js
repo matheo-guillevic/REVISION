@@ -9,6 +9,7 @@ const publicDir = path.join(root, "public");
 const pages = {
   home: path.join(outDir, "index.html"),
   "AU331-Traitement-Signal": path.join(outDir, "AU331-Traitement-Signal.html"),
+  "SN331-Architecture-processeur": path.join(outDir, "SN331-Architecture-processeur.html"),
   "EP331-Electronique-analogique": path.join(outDir, "EP331-Electronique-analogique.html"),
   "MT331-Probabilites": path.join(outDir, "MT331-Probabilites.html"),
   "AU361-Automatique": path.join(outDir, "AU361-Automatique.html"),
@@ -344,6 +345,7 @@ function renderHome() {
             <ul class="sidebar-semester-list">
               <li><a href="index.html#semestre-5">Vue semestre</a></li>
               <li><a href="AU331-Traitement-Signal.html">AU331-Traitement-Signal</a></li>
+              <li><a href="SN331-Architecture-processeur.html">SN331-Architecture-processeur</a></li>
               <li><a href="EP331-Electronique-analogique.html">EP331-Electronique-analogique</a></li>
             </ul>
           </details>
@@ -375,7 +377,7 @@ function renderHome() {
                 <span class="eyebrow">Semestre 5</span>
                 <strong>Semestre 5</strong>
               </span>
-              <span class="semester-count">2 matieres</span>
+              <span class="semester-count">3 matieres</span>
             </summary>
 
             <div class="dashboard-grid semester-content">
@@ -384,6 +386,12 @@ function renderHome() {
                 <h3>AU331-Traitement-Signal</h3>
                 <p>Synthese de traitement du signal deterministe : signaux, Fourier, Laplace, echantillonnage et filtrage.</p>
                 <p class="secondary-link"><a href="AU331-Traitement-Signal.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>SN331-Architecture-processeur</h3>
+                <p>Architecture processeur : abstractions, RISC-V, assembleur, pipeline, caches et memoire virtuelle.</p>
+                <p class="secondary-link"><a href="SN331-Architecture-processeur.html">Ouvrir le cours</a></p>
               </article>
               <article class="chapter-card">
                 <span class="status-pill">Disponible</span>
@@ -467,10 +475,7 @@ function renderSignalCourse() {
       ["AU331-Traitement-Signal.html#au331-analyse-spectrale", "Analyse spectrale", "sub"],
       ["AU331-Traitement-Signal.html#au331-echantillonnage", "Echantillonnage", "sub"],
       ["AU331-Traitement-Signal.html#au331-systemes-rif", "Systemes discrets et RIF", "sub"],
-      ["AU331-Traitement-Signal-td1.html", "TD 1"],
-      ["AU331-Traitement-Signal-td2.html", "TD 2"],
-      ["AU331-Traitement-Signal-td3.html", "TD 3"],
-      ["AU331-Traitement-Signal-td4.html", "TD 4"],
+      ["AU331-Traitement-Signal.html#au331-td", "TD"],
       ["AU331-Traitement-Signal.html#au331-revision", "Revision"],
     ],
     "AU331-Traitement-Signal.html#au331-intro"
@@ -490,6 +495,39 @@ function renderSignalCourse() {
   });
 }
 
+function renderProcessorCourse() {
+  const nav = renderNav(
+    [
+      ["index.html", "Accueil"],
+      ["SN331-Architecture-processeur.html#sn331-intro", "Introduction"],
+      ["SN331-Architecture-processeur.html#sn331-abstractions", "Abstractions", "sub"],
+      ["SN331-Architecture-processeur.html#sn331-donnees", "Donnees", "sub"],
+      ["SN331-Architecture-processeur.html#sn331-isa", "ISA RISC-V", "sub"],
+      ["SN331-Architecture-processeur.html#sn331-assembleur", "Assembleur", "sub"],
+      ["SN331-Architecture-processeur.html#sn331-pipeline", "Pipeline", "sub"],
+      ["SN331-Architecture-processeur.html#sn331-caches", "Caches", "sub"],
+      ["SN331-Architecture-processeur.html#sn331-memoire-virtuelle", "Memoire virtuelle", "sub"],
+      ["SN331-Architecture-processeur.html#sn331-exercices", "Exercices"],
+      ["SN331-Architecture-processeur.html#sn331-td", "TD"],
+      ["SN331-Architecture-processeur.html#sn331-revision", "Revision"],
+    ],
+    "SN331-Architecture-processeur.html#sn331-intro"
+  );
+
+  return renderShell({
+    title: "SN331-Architecture-processeur - Revision ESISAR",
+    brandMark: "P",
+    brandTitle: "SN331-Architecture-processeur",
+    brandSubtitle: "Architecture processeur",
+    nav,
+    eyebrow: "Semestre 5",
+    heading: "Architecture processeur et RISC-V",
+    cta: '<a class="primary-button" href="index.html#semestre-5">Semestre 5</a>',
+    body: readStandaloneCourseBody("SN331-Architecture-processeur"),
+    showAnnotations: true,
+  });
+}
+
 function renderAnalogElecCourse() {
   const nav = renderNav(
     [
@@ -502,6 +540,7 @@ function renderAnalogElecCourse() {
       ["EP331-Electronique-analogique.html#ep331-aop", "AOP", "sub"],
       ["EP331-Electronique-analogique.html#ep331-thermique", "Thermique", "sub"],
       ["EP331-Electronique-analogique.html#ep331-circuitjs", "CircuitJS", "sub"],
+      ["EP331-Electronique-analogique.html#ep331-td", "TD"],
       ["EP331-Electronique-analogique.html#ep331-revision", "Revision"],
     ],
     "EP331-Electronique-analogique.html#ep331-intro"
@@ -641,6 +680,7 @@ copyPublicFiles();
 
 write(pages.home, renderHome());
 write(pages["AU331-Traitement-Signal"], renderSignalCourse());
+write(pages["SN331-Architecture-processeur"], renderProcessorCourse());
 write(pages["EP331-Electronique-analogique"], renderAnalogElecCourse());
 write(pages["MT331-Probabilites"], renderMath());
 write(pages["AU361-Automatique"], renderAutoCourse());

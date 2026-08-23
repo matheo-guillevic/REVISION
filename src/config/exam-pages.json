@@ -140,7 +140,7 @@
       "courseLabel": "IN361-JAVA",
       "assetPrefix": null,
       "unitKind": "exercise",
-      "titlePattern": "\\\\textbf\\{\\\\Large\\s*((?:Exercice|ProblÃ¨me|ProblÃƒÂ¨me|Probleme)\\s+\\d+[^}]*)\\}",
+      "titlePattern": "\\\\textbf\\{\\\\Large\\s*((?:Exercice|Probleme)\\s+\\d+[^}]*)\\}",
       "exams": [
         {
           "target": "IN361-JAVA-exam-2026.html",
@@ -187,7 +187,7 @@
       "courseLabel": "MT331-Probabilites",
       "assetPrefix": null,
       "unitKind": "mixed",
-      "titlePattern": "\\\\textbf\\{\\\\Large\\s*((?:ProblÃ¨me|Exercice)\\s+(?:[IVX]+|\\d+)[^}]*)\\}",
+      "titlePattern": "\\\\textbf\\{\\\\Large\\s*((?:Probleme|Exercice)\\s+(?:[IVX]+|\\d+)[^}]*)\\}",
       "exams": [
         {
           "target": "MT331-Probabilites-exam-controle-denombrement.html",

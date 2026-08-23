@@ -1,6 +1,7 @@
 ---
 title: "EP331-Electronique-analogique"
 subject: "EP331-Electronique-analogique"
+type: "course"
 summary: "Composants electroniques, diodes, redressement, transistors bipolaires, AOP et thermique."
 ---
 
@@ -26,6 +27,7 @@ Ce cours est structuré de manière rigoureuse pour couvrir l'intégralité du p
 - [AOP](#ep331-aop)
 - [Thermique](#ep331-thermique)
 - [CircuitJS](#ep331-circuitjs)
+- [TD](#ep331-td)
 - [Revision](#ep331-revision)
 :::
 :::
@@ -218,12 +220,12 @@ i(t)=\frac{V_m}{Z}\left[\sin(\omega t-\phi)+\sin(\phi)e^{-\frac{t}{\tau}}\right]
 Z=\sqrt{R^2+(L\omega)^2}
 \]
 
-**Manipulation.** Faire varier la charge et observer la continuité du courant dans l'inductance. La diode de roue libre doit empêcher la tension de charge de devenir fortement négative.
+**Manipulation.** Ouvrir et fermer l'interrupteur : quand l'alimentation est coupée, l'inductance tente de maintenir le courant. La diode de roue libre fournit alors un chemin de circulation et limite la surtension.
 
-[Ouvrir en plein écran](https://www.falstad.com/circuit/circuitjs.html?cct=$+1+0.000005+10.24+50+5+50%0Ar+160+80+160+160+0+10%0Al+160+160+160+240+0+0.1+0.01%0Ad+160+240+160+300+0+0.8000000000000002%0Aw+160+300+320+300+0%0Aw+160+80+320+80+0%0Av+320+300+320+80+0+1+50+10+0+0+0.5%0Ad+160+80+160+240+1+0.8000000000000002%0A)
+[Ouvrir en plein écran](https://www.falstad.com/circuit/circuitjs.html?startCircuit=inductkick-block.txt)
 :::
 
-:::circuitjs label="Redressement" title="RL + roue libre" iframeTitle="Simulation CircuitJS d'un redresseur RL avec diode de roue libre" src="https://www.falstad.com/circuit/circuitjs.html?hideMenu=true&cct=$+1+0.000005+10.24+50+5+50%0Ar+160+80+160+160+0+10%0Al+160+160+160+240+0+0.1+0.01%0Ad+160+240+160+300+0+0.8000000000000002%0Aw+160+300+320+300+0%0Aw+160+80+320+80+0%0Av+320+300+320+80+0+1+50+10+0+0+0.5%0Ad+160+80+160+240+1+0.8000000000000002%0A"
+:::circuitjs label="Redressement" title="RL + roue libre" iframeTitle="Simulation CircuitJS d'une diode de roue libre sur charge inductive" src="https://www.falstad.com/circuit/circuitjs.html?hideMenu=true&startCircuit=inductkick-block.txt"
 :::
 :::
 
@@ -659,6 +661,30 @@ La datasheet d'un composant de puissance définit une zone appelée **SOA** (Saf
 
 :::block type="warning" title="Limite de simulation"
 CircuitJS aide à visualiser les phénomènes, mais la justification d'examen reste analytique : schéma équivalent, hypothèses, équations, unités et ordre de grandeur.
+:::
+:::
+:::
+
+:::section id="ep331-td" eyebrow="Travaux diriges" title="TD EP331-Electronique-analogique corriges" summary="Chaque TD dispose maintenant de sa page corrigee dediee avec les simulations CircuitJS utiles."
+:::dashboard
+:::card class="chapter-card" pill="TD 1" title="Physique, modelisation et commutation de la diode" href="EP331-Electronique-analogique-td1.html" link="Ouvrir la page corrigee"
+Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques.
+:::
+
+:::card class="chapter-card" pill="TD 2" title="Redressement de puissance et regulation Zener" href="EP331-Electronique-analogique-td2.html" link="Ouvrir la page corrigee"
+Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques.
+:::
+
+:::card class="chapter-card" pill="TD 3" title="Amplification a transistors bipolaires" href="EP331-Electronique-analogique-td3.html" link="Ouvrir la page corrigee"
+Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques.
+:::
+
+:::card class="chapter-card" pill="TD 4" title="AOP parfaits et circuits lineaires" href="EP331-Electronique-analogique-td4.html" link="Ouvrir la page corrigee"
+Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques.
+:::
+
+:::card class="chapter-card" pill="TD 5" title="AOP reels et limites dynamiques" href="EP331-Electronique-analogique-td5.html" link="Ouvrir la page corrigee"
+Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques.
 :::
 :::
 :::

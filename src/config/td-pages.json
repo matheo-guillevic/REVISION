@@ -191,10 +191,123 @@
       ]
     },
     {
+      "subject": "EP331-Electronique-analogique",
+      "label": "EP331-Electronique-analogique",
+      "backHref": "EP331-Electronique-analogique.html#ep331-td",
+      "backLabel": "Retour aux TD EP331-Electronique-analogique",
+      "courseHref": "EP331-Electronique-analogique.html",
+      "courseLabel": "EP331-Electronique-analogique",
+      "assetPrefix": "assets/EP331-Electronique-analogique/td",
+      "idPrefix": "EP331-Electronique-analogique-td",
+      "pages": [
+        {
+          "n": 1,
+          "target": "EP331-Electronique-analogique-td1.html",
+          "title": "TD I corrige - Physique, modelisation et commutation de la diode",
+          "eyebrow": "EP331 - TD 1",
+          "heading": "Physique, modelisation et commutation de la diode",
+          "summary": "Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques."
+        },
+        {
+          "n": 2,
+          "target": "EP331-Electronique-analogique-td2.html",
+          "title": "TD II corrige - Redressement de puissance et regulation Zener",
+          "eyebrow": "EP331 - TD 2",
+          "heading": "Redressement de puissance et regulation Zener",
+          "summary": "Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques."
+        },
+        {
+          "n": 3,
+          "target": "EP331-Electronique-analogique-td3.html",
+          "title": "TD III corrige - Amplification a transistors bipolaires",
+          "eyebrow": "EP331 - TD 3",
+          "heading": "Amplification a transistors bipolaires",
+          "summary": "Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques."
+        },
+        {
+          "n": 4,
+          "target": "EP331-Electronique-analogique-td4.html",
+          "title": "TD IV corrige - AOP parfaits et circuits lineaires",
+          "eyebrow": "EP331 - TD 4",
+          "heading": "AOP parfaits et circuits lineaires",
+          "summary": "Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques."
+        },
+        {
+          "n": 5,
+          "target": "EP331-Electronique-analogique-td5.html",
+          "title": "TD V corrige - AOP reels et limites dynamiques",
+          "eyebrow": "EP331 - TD 5",
+          "heading": "AOP reels et limites dynamiques",
+          "summary": "Correction guidee avec formules utiles et simulations CircuitJS pour les montages analogiques."
+        }
+      ]
+    },
+    {
+      "subject": "SN331-Architecture-processeur",
+      "label": "SN331-Architecture-processeur",
+      "backHref": "SN331-Architecture-processeur.html#sn331-td",
+      "backLabel": "Retour aux TD SN331-Architecture-processeur",
+      "courseHref": "SN331-Architecture-processeur.html",
+      "courseLabel": "SN331-Architecture-processeur",
+      "idPrefix": "SN331-Architecture-processeur-td",
+      "codeLanguage": "asm",
+      "withPrism": true,
+      "pages": [
+        {
+          "n": 1,
+          "target": "SN331-Architecture-processeur-td1.html",
+          "title": "TD 1 corrige - Vue d'ensemble d'un Ordinateur et Interconnexions",
+          "eyebrow": "SN331 - TD 1",
+          "heading": "Vue d'ensemble d'un Ordinateur et Interconnexions",
+          "summary": "Correction guidee avec methodes, calculs et points de vigilance."
+        },
+        {
+          "n": 2,
+          "target": "SN331-Architecture-processeur-td2.html",
+          "title": "TD 2 corrige - Programmation Assembleur RISC-V - Niveau 1",
+          "eyebrow": "SN331 - TD 2",
+          "heading": "Programmation Assembleur RISC-V - Niveau 1",
+          "summary": "Correction guidee avec methodes, calculs et points de vigilance."
+        },
+        {
+          "n": 3,
+          "target": "SN331-Architecture-processeur-td3.html",
+          "title": "TD 3 corrige - Programmation Assembleur - Gestion de la Pile et Fonctions",
+          "eyebrow": "SN331 - TD 3",
+          "heading": "Programmation Assembleur - Gestion de la Pile et Fonctions",
+          "summary": "Correction guidee avec methodes, calculs et points de vigilance."
+        },
+        {
+          "n": 4,
+          "target": "SN331-Architecture-processeur-td4.html",
+          "title": "TD 4 corrige - Fonctionnement et Analyse de la Mémoire Cache",
+          "eyebrow": "SN331 - TD 4",
+          "heading": "Fonctionnement et Analyse de la Mémoire Cache",
+          "summary": "Correction guidee avec methodes, calculs et points de vigilance."
+        },
+        {
+          "n": 5,
+          "target": "SN331-Architecture-processeur-td5.html",
+          "title": "TD 5 corrige - Microarchitecture Pipeline - Performance et Calibrage",
+          "eyebrow": "SN331 - TD 5",
+          "heading": "Microarchitecture Pipeline - Performance et Calibrage",
+          "summary": "Correction guidee avec methodes, calculs et points de vigilance."
+        },
+        {
+          "n": 6,
+          "target": "SN331-Architecture-processeur-td6.html",
+          "title": "TD 6 corrige - Hiérarchie Mémoire et Pagination (Mémoire Virtuelle)",
+          "eyebrow": "SN331 - TD 6",
+          "heading": "Hiérarchie Mémoire et Pagination (Mémoire Virtuelle)",
+          "summary": "Correction guidee avec methodes, calculs et points de vigilance."
+        }
+      ]
+    },
+    {
       "subject": "EP361-electonique",
       "label": "EP361-electonique",
       "backHref": "EP361-electonique.html#EP361-electonique-td",
-      "backLabel": "Retour au TD EP361-electonique",
+      "backLabel": "Retour aux TD EP361-electonique",
       "courseHref": "EP361-electonique.html",
       "courseLabel": "EP361-electonique",
       "assetPrefix": "assets/EP361-electonique/td",
@@ -202,12 +315,66 @@
       "pages": [
         {
           "n": 1,
-          "target": "EP361-electonique-td.html",
-          "pdf": "",
-          "title": "TD EP361-electonique corrige",
-          "eyebrow": "EP361 - TD",
-          "heading": "TD EP361-electonique corrige",
-          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d'electonique."
+          "target": "EP361-electonique-td1.html",
+          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
+          "title": "TD 1 corrige - Quadripoles",
+          "eyebrow": "EP361 - TD 1",
+          "heading": "Quadripoles",
+          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
+        },
+        {
+          "n": 2,
+          "target": "EP361-electonique-td2.html",
+          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
+          "title": "TD 2 corrige - Filtres",
+          "eyebrow": "EP361 - TD 2",
+          "heading": "Filtres",
+          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
+        },
+        {
+          "n": 3,
+          "target": "EP361-electonique-td3.html",
+          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
+          "title": "TD 3 corrige - Filtres actifs",
+          "eyebrow": "EP361 - TD 3",
+          "heading": "Filtres actifs",
+          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
+        },
+        {
+          "n": 4,
+          "target": "EP361-electonique-td4.html",
+          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
+          "title": "TD 4 corrige - Puissance",
+          "eyebrow": "EP361 - TD 4",
+          "heading": "Puissance",
+          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
+        },
+        {
+          "n": 5,
+          "target": "EP361-electonique-td5.html",
+          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
+          "title": "TD 5 corrige - Oscillateurs",
+          "eyebrow": "EP361 - TD 5",
+          "heading": "Oscillateurs",
+          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
+        },
+        {
+          "n": 6,
+          "target": "EP361-electonique-td6.html",
+          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
+          "title": "TD 6 corrige - Convertisseurs",
+          "eyebrow": "EP361 - TD 6",
+          "heading": "Convertisseurs",
+          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
+        },
+        {
+          "n": 7,
+          "target": "EP361-electonique-td7.html",
+          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
+          "title": "TD 7 corrige - DS 2014",
+          "eyebrow": "EP361 - TD 7",
+          "heading": "DS 2014",
+          "summary": "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
         }
       ]
     },

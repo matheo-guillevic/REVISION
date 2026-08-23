@@ -1,6 +1,7 @@
 {
   "scripts": {
     "build": "node src/build/build-html.js && node src/build/build-pages-from-markdown.js",
+    "check:content": "npm run build && node scripts/check-content-structure.js",
     "extract": "node src/build/extract-pdfs.js",
     "rebuild-pages": "node src/build/build-pages-from-markdown.js"
   },
