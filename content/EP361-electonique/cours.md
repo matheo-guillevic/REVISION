@@ -1,5 +1,5 @@
 ﻿---
-title: EP361-electonique - Revision ESISAR
+title: EP361-electonique
 subject: EP361-electonique
 type: course
 ---
@@ -187,6 +187,28 @@ Les structures a AOP evitent les selfs, permettent du gain et facilitent la mise
 :::block type="neutral" title="Structures a connaitre"
 Le support cite les filtres a contre-reactions multiples, Rauch, Sallen-Key, les filtres passe-tout et les filtres a capacites commutees.
 :::
+
+:::grid two-col
+:::block type="method" title="Filtre passe-bas"
+Changer la fréquence d'entrée et observer l'atténuation. Le point important est de retrouver la zone de coupure et la pente du premier ordre.
+
+[Ouvrir en plein écran](https://www.falstad.com/circuit/circuitjs.html?startCircuit=tllopass.txt)
+:::
+
+:::circuitjs label="Filtre" title="Passe-bas" iframeTitle="Simulation CircuitJS d'un filtre passe-bas" src="https://www.falstad.com/circuit/circuitjs.html?hideMenu=true&startCircuit=tllopass.txt"
+:::
+:::
+
+:::grid two-col
+:::block type="method" title="Filtre passe-haut RC"
+Comparer la tension d'entrée et la tension de sortie quand la fréquence varie. À basse fréquence, la sortie reste proche de zéro.
+
+[Ouvrir en plein écran](https://www.falstad.com/circuit/circuitjs.html?startCircuit=filt-hipass.txt)
+:::
+
+:::circuitjs label="Filtre" title="Passe-haut RC" iframeTitle="Simulation CircuitJS d'un filtre passe-haut RC" src="https://www.falstad.com/circuit/circuitjs.html?hideMenu=true&startCircuit=filt-hipass.txt"
+:::
+:::
 :::
 
 :::section id="elec-amplis" eyebrow="Chapitre 3" title="Amplificateurs" summary="Un amplificateur fournit de la puissance utile a la charge. On surveille gain, impedances, rendement, distorsion et dissipation."
@@ -253,40 +275,29 @@ Pour la boucle \(A(j\omega)B(j\omega)\), l'oscillation ideale se produit si :
 Les deux criteres pratiques sont la purete spectrale et la stabilite en frequence. Le quartz est privilegie quand la stabilite domine le cahier des charges.
 :::
 :::
-:::
 
-:::section id="elec-simulations" eyebrow="Interactif" title="Simulations CircuitJS" summary="Ces montages permettent de relier les formules du cours aux signaux observes : tension, courant, phase, coupure et demarrage d'oscillation."
 :::grid two-col
-:::block type="method" title="Filtre passe-bas"
-Changer la frequence d'entree et observer l'attenuation. Le point important est de retrouver la zone de coupure et la pente du premier ordre.
+:::block type="method" title="Oscillateur Colpitts"
+Observer le démarrage de l'oscillation, la stabilisation de l'amplitude et la fréquence imposée par le réseau LC.
 
-[Ouvrir en plein ecran](https://www.falstad.com/circuit/circuitjs.html?startCircuit=tllopass.txt)
-:::
-
-:::block type="method" title="Filtre passe-haut RC"
-Comparer la tension d'entree et la tension de sortie quand la frequence varie. A basse frequence, la sortie reste proche de zero.
-
-[Ouvrir en plein ecran](https://www.falstad.com/circuit/circuitjs.html?startCircuit=filt-hipass.txt)
-:::
-:::
-
-:::circuitgrid
-:::circuitjs label="Filtre" title="Passe-bas" iframeTitle="Simulation CircuitJS d'un filtre passe-bas" src="https://www.falstad.com/circuit/circuitjs.html?hideMenu=true&startCircuit=tllopass.txt"
+[Ouvrir en plein écran](https://www.falstad.com/circuit/circuitjs.html?startCircuit=colpitts.txt)
 :::
 
 :::circuitjs label="Oscillateur" title="Colpitts" iframeTitle="Simulation CircuitJS d'un oscillateur Colpitts" src="https://www.falstad.com/circuit/circuitjs.html?hideMenu=true&startCircuit=colpitts.txt"
 :::
 :::
+:::
 
+:::section id="elec-simulations" eyebrow="Interactif" title="Utiliser les simulations CircuitJS" summary="Les circuits interactifs sont intégrés directement dans les chapitres concernés."
 :::grid two-col
-:::block type="remember" title="Ce qu'il faut mesurer"
-- Sur un filtre : rapport \(V_s/V_e\), dephasage et frequence a -3 dB.
-- Sur un oscillateur : frequence, amplitude stabilisee et condition de demarrage.
-- Sur un AOP : saturation, limitation de bande passante et signe de la contre-reaction.
+:::block type="remember" title="Où retrouver les circuits"
+- Filtres passe-bas et passe-haut : chapitre 2, filtres analogiques.
+- Oscillateur Colpitts : chapitre 4, oscillateurs quasi-sinusoïdaux.
+- Les TD et examens conservent leurs simulations dédiées lorsqu'elles servent un exercice précis.
 :::
 
 :::block type="warning" title="Limite de simulation"
-CircuitJS aide a visualiser les comportements, mais la justification d'examen reste analytique : schema equivalent, equations, fonction de transfert et verification des hypotheses.
+CircuitJS aide à visualiser les comportements, mais la justification d'examen reste analytique : schéma équivalent, équations, fonction de transfert et vérification des hypothèses.
 :::
 :::
 :::

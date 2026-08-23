@@ -1,5 +1,5 @@
 ﻿---
-title: IN361-JAVA - Revision ESISAR
+title: IN361-JAVA
 subject: IN361-JAVA
 type: course
 ---

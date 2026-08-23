@@ -26,6 +26,49 @@
   },
   "groups": [
     {
+      "subject": "AU331-Traitement-Signal",
+      "label": "AU331-Traitement-Signal",
+      "backHref": "AU331-Traitement-Signal.html#au331-intro",
+      "backLabel": "Retour au cours AU331-Traitement-Signal",
+      "courseHref": "AU331-Traitement-Signal.html",
+      "courseLabel": "AU331-Traitement-Signal",
+      "idPrefix": "AU331-Traitement-Signal-td",
+      "pages": [
+        {
+          "n": 1,
+          "target": "AU331-Traitement-Signal-td1.html",
+          "title": "TD 1 corrige - Signaux deterministes a temps continu et convolution",
+          "eyebrow": "AU331 - TD 1",
+          "heading": "Signaux deterministes a temps continu et convolution",
+          "summary": "Energie, transformee de Fourier, brouillage spectral et convolution."
+        },
+        {
+          "n": 2,
+          "target": "AU331-Traitement-Signal-td2.html",
+          "title": "TD 2 corrige - Analyse spectrale et correlation",
+          "eyebrow": "AU331 - TD 2",
+          "heading": "Analyse spectrale et correlation",
+          "summary": "Intercorrelation, autocorrelation et theoreme de Parseval."
+        },
+        {
+          "n": 3,
+          "target": "AU331-Traitement-Signal-td3.html",
+          "title": "TD 3 corrige - Echantillonnage et transformees discretes",
+          "eyebrow": "AU331 - TD 3",
+          "heading": "Echantillonnage, repliement et transformees discretes",
+          "summary": "Repliement spectral, TFD, etalonnage de spectre et zero padding."
+        },
+        {
+          "n": 4,
+          "target": "AU331-Traitement-Signal-td4.html",
+          "title": "TD 4 corrige - Systemes discrets, transformee en Z et filtres RIF",
+          "eyebrow": "AU331 - TD 4",
+          "heading": "Systemes discrets, transformee en Z et filtres RIF",
+          "summary": "Transformee en Z monolaterale et synthese de filtres RIF."
+        }
+      ]
+    },
+    {
       "subject": "MT331-Probabilites",
       "label": "MT331-Probabilites",
       "backHref": "MT331-Probabilites.html#probabilites-td",

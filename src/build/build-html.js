@@ -9,6 +9,7 @@ const publicDir = path.join(root, "public");
 const pages = {
   home: path.join(outDir, "index.html"),
   "AU331-Traitement-Signal": path.join(outDir, "AU331-Traitement-Signal.html"),
+  "EP331-Electronique-analogique": path.join(outDir, "EP331-Electronique-analogique.html"),
   "MT331-Probabilites": path.join(outDir, "MT331-Probabilites.html"),
   "AU361-Automatique": path.join(outDir, "AU361-Automatique.html"),
   "EP361-electonique": path.join(outDir, "EP361-electonique.html"),
@@ -343,6 +344,7 @@ function renderHome() {
             <ul class="sidebar-semester-list">
               <li><a href="index.html#semestre-5">Vue semestre</a></li>
               <li><a href="AU331-Traitement-Signal.html">AU331-Traitement-Signal</a></li>
+              <li><a href="EP331-Electronique-analogique.html">EP331-Electronique-analogique</a></li>
             </ul>
           </details>
           <details class="sidebar-semester">
@@ -373,7 +375,7 @@ function renderHome() {
                 <span class="eyebrow">Semestre 5</span>
                 <strong>Semestre 5</strong>
               </span>
-              <span class="semester-count">1 matiere</span>
+              <span class="semester-count">2 matieres</span>
             </summary>
 
             <div class="dashboard-grid semester-content">
@@ -382,6 +384,12 @@ function renderHome() {
                 <h3>AU331-Traitement-Signal</h3>
                 <p>Synthese de traitement du signal deterministe : signaux, Fourier, Laplace, echantillonnage et filtrage.</p>
                 <p class="secondary-link"><a href="AU331-Traitement-Signal.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>EP331-Electronique-analogique</h3>
+                <p>Cours EP331 : diodes, redressement, Zener, transistors bipolaires, AOP, thermique et simulations CircuitJS.</p>
+                <p class="secondary-link"><a href="EP331-Electronique-analogique.html">Ouvrir le cours</a></p>
               </article>
             </div>
           </details>
@@ -444,7 +452,7 @@ function renderHome() {
     nav,
     eyebrow: "Revision",
     heading: "Revisions par semestre",
-    cta: '<a class="primary-button" href="#semestre-6">Semestre 6</a>',
+    cta: '<a class="primary-button" href="#semestre-5">Semestre 5</a>',
     body,
   });
 }
@@ -459,6 +467,10 @@ function renderSignalCourse() {
       ["AU331-Traitement-Signal.html#au331-analyse-spectrale", "Analyse spectrale", "sub"],
       ["AU331-Traitement-Signal.html#au331-echantillonnage", "Echantillonnage", "sub"],
       ["AU331-Traitement-Signal.html#au331-systemes-rif", "Systemes discrets et RIF", "sub"],
+      ["AU331-Traitement-Signal-td1.html", "TD 1"],
+      ["AU331-Traitement-Signal-td2.html", "TD 2"],
+      ["AU331-Traitement-Signal-td3.html", "TD 3"],
+      ["AU331-Traitement-Signal-td4.html", "TD 4"],
       ["AU331-Traitement-Signal.html#au331-revision", "Revision"],
     ],
     "AU331-Traitement-Signal.html#au331-intro"
@@ -474,6 +486,37 @@ function renderSignalCourse() {
     heading: "Traitement du signal deterministe",
     cta: '<a class="primary-button" href="index.html#semestre-5">Semestre 5</a>',
     body: readStandaloneCourseBody("AU331-Traitement-Signal"),
+    showAnnotations: true,
+  });
+}
+
+function renderAnalogElecCourse() {
+  const nav = renderNav(
+    [
+      ["index.html", "Accueil"],
+      ["EP331-Electronique-analogique.html#ep331-intro", "Introduction"],
+      ["EP331-Electronique-analogique.html#ep331-fondations", "Fondations", "sub"],
+      ["EP331-Electronique-analogique.html#ep331-diodes", "Diodes", "sub"],
+      ["EP331-Electronique-analogique.html#ep331-redressement-zener", "Redressement et Zener", "sub"],
+      ["EP331-Electronique-analogique.html#ep331-bjt", "Transistors bipolaires", "sub"],
+      ["EP331-Electronique-analogique.html#ep331-aop", "AOP", "sub"],
+      ["EP331-Electronique-analogique.html#ep331-thermique", "Thermique", "sub"],
+      ["EP331-Electronique-analogique.html#ep331-circuitjs", "CircuitJS", "sub"],
+      ["EP331-Electronique-analogique.html#ep331-revision", "Revision"],
+    ],
+    "EP331-Electronique-analogique.html#ep331-intro"
+  );
+
+  return renderShell({
+    title: "EP331-Electronique-analogique - Revision ESISAR",
+    brandMark: "E",
+    brandTitle: "EP331-Electronique-analogique",
+    brandSubtitle: "Electronique analogique",
+    nav,
+    eyebrow: "Semestre 5",
+    heading: "Electronique analogique",
+    cta: '<a class="primary-button" href="index.html#semestre-5">Semestre 5</a>',
+    body: readStandaloneCourseBody("EP331-Electronique-analogique"),
     showAnnotations: true,
   });
 }
@@ -598,6 +641,7 @@ copyPublicFiles();
 
 write(pages.home, renderHome());
 write(pages["AU331-Traitement-Signal"], renderSignalCourse());
+write(pages["EP331-Electronique-analogique"], renderAnalogElecCourse());
 write(pages["MT331-Probabilites"], renderMath());
 write(pages["AU361-Automatique"], renderAutoCourse());
 write(pages["EP361-electonique"], renderElecCourse());
