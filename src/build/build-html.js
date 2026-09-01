@@ -17,6 +17,7 @@ const pages = {
   "IN361-JAVA": path.join(outDir, "IN361-JAVA.html"),
   "IN363-Reseau": path.join(outDir, "IN363-Reseau.html"),
   "SN361-VHDL": path.join(outDir, "SN361-VHDL.html"),
+  "SN421-Dev-Micro": path.join(outDir, "SN421-Dev-Micro.html"),
 };
 
 const courseStructures = {
@@ -127,6 +128,23 @@ const courseStructures = {
     exams: "SN361-VHDL-exams",
     revision: "vhdl-revision",
     support: "vhdl-pdfs",
+  },
+  "SN421-Dev-Micro": {
+    page: "SN421-Dev-Micro.html",
+    subject: "SN421-Dev-Micro",
+    intro: "sn421-intro",
+    contentHref: "sn421-mcu",
+    content: [
+      ["sn421-mcu", "Microcontroleurs"],
+      ["sn421-software", "Logiciel embarque"],
+      ["sn421-periph", "Peripheriques"],
+      ["sn421-bus", "Bus et liaisons"],
+      ["sn421-se", "Genie logiciel"],
+    ],
+    td: "SN421-Dev-Micro-td",
+    exams: "SN421-Dev-Micro-exams",
+    revision: "SN421-Dev-Micro-revision",
+    support: "SN421-Dev-Micro-supports",
   },
 };
 
@@ -302,6 +320,12 @@ function renderShell({ title, brandMark, brandTitle, brandSubtitle, nav, eyebrow
       };
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.mermaid) window.mermaid.initialize({ startOnLoad: true, securityLevel: "loose" });
+      });
+    </script>
     <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
     <script defer src="script.js"></script>
@@ -359,6 +383,13 @@ function renderHome() {
               <li><a href="IN361-JAVA.html">IN361-JAVA</a></li>
               <li><a href="IN363-Reseau.html">IN363-Reseau</a></li>
               <li><a href="SN361-VHDL.html">SN361-VHDL</a></li>
+            </ul>
+          </details>
+          <details class="sidebar-semester">
+            <summary>Semestre 7</summary>
+            <ul class="sidebar-semester-list">
+              <li><a href="index.html#semestre-7">Vue semestre</a></li>
+              <li><a href="SN421-Dev-Micro.html">SN421-Dev-Micro</a></li>
             </ul>
           </details>`;
 
@@ -447,6 +478,25 @@ function renderHome() {
                 <h3>SN361-VHDL</h3>
                 <p>Supports SN361 : logique reconfigurable, codage binaire, circuits combinatoires, sequentiels, FSM et FPGA.</p>
                 <p class="secondary-link"><a href="SN361-VHDL.html">Ouvrir le cours</a></p>
+              </article>
+            </div>
+          </details>
+
+          <details id="semestre-7" class="semester-group" open>
+            <summary>
+              <span>
+                <span class="eyebrow">Semestre 7</span>
+                <strong>Semestre 7</strong>
+              </span>
+              <span class="semester-count">1 matiere</span>
+            </summary>
+
+            <div class="dashboard-grid semester-content">
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>SN421-Dev-Micro</h3>
+                <p>Programmation embarquee sur microcontroleur : architecture MCU, code bare-metal, peripheriques, bus et conception systeme.</p>
+                <p class="secondary-link"><a href="SN421-Dev-Micro.html">Ouvrir le cours</a></p>
               </article>
             </div>
           </details>
@@ -673,6 +723,25 @@ function renderVhdlCourse() {
   });
 }
 
+function renderDevMcuCourse() {
+  const structure = courseStructures["SN421-Dev-Micro"];
+  const course = readCourseBody("SN421-Dev-Micro", structure);
+  const nav = renderCommonCourseNav(structure);
+
+  return renderShell({
+    title: "SN421-Dev-Micro - Revision ESISAR",
+    brandMark: "µ",
+    brandTitle: "SN421-Dev-Micro",
+    brandSubtitle: "Microcontroleurs",
+    nav,
+    eyebrow: "Semestre 7",
+    heading: "Programmation embarquee sur microcontroleur",
+    cta: '<a class="primary-button" href="index.html#semestre-7">Semestre 7</a>',
+    body: course,
+    showAnnotations: true,
+  });
+}
+
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -688,5 +757,6 @@ write(pages["EP361-electonique"], renderElecCourse());
 write(pages["IN361-JAVA"], renderJavaCourse());
 write(pages["IN363-Reseau"], renderReseauCourse());
 write(pages["SN361-VHDL"], renderVhdlCourse());
+write(pages["SN421-Dev-Micro"], renderDevMcuCourse());
 
 console.log("Application construite dans out/.");

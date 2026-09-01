@@ -52,7 +52,29 @@ Contenu de la section.
 ## Figures
 
 ```md
-:::figure src="assets/elec/cellule-t.svg" alt="Cellule en T" caption="Legende optionnelle."
+:::figure src="assets/elec/cellule-t.svg" alt="Cellule en T" caption="Legende optionnelle." :::
+```
+
+## Mermaid
+
+Les diagrammes Mermaid peuvent etre ecrits dans un bloc de code classique :
+
+````md
+```mermaid
+flowchart TD
+  A[Source] --> B[Transformation]
+```
+````
+
+## Wokwi
+
+Les simulations Wokwi utilisent `:::wokwi`. Tant que l'URL contient un
+identifiant temporaire `YOUR_PROJECT_ID`, le site affiche un emplacement a
+connecter au lieu d'une iframe.
+
+```md
+:::wokwi label="Wokwi 01" title="Interruptions et volatile" src="https://wokwi.com/projects/YOUR_PROJECT_ID_01" height="520"
+Objectif court ou protocole de manipulation.
 :::
 ```
 

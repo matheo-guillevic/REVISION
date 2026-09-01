@@ -8,6 +8,16 @@ const md = new MarkdownIt({
   typographer: false,
 });
 
+const defaultFence = md.renderer.rules.fence;
+md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  const info = token.info ? token.info.trim().split(/\s+/)[0] : "";
+  if (info === "mermaid") {
+    return `<div class="mermaid">${escapeHtml(token.content)}</div>\n`;
+  }
+  return defaultFence(tokens, idx, options, env, self);
+};
+
 function escapeHtml(value = "") {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -29,7 +39,8 @@ function parseAttrs(source = "") {
 
 function renderMarkdown(source) {
   const math = [];
-  const protectedSource = source.trim().replace(
+  const withoutComments = source.replace(/<!--[\s\S]*?-->/g, "").trim();
+  const protectedSource = withoutComments.replace(
     /\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|\$\$[\s\S]*?\$\$|\$[^$\n]+\$/g,
     (fragment) => {
       const token = `@@MATH${math.length}@@`;
@@ -80,7 +91,10 @@ function findDirectiveEnd(lines, startIndex) {
     }
     if (inFence) continue;
 
-    if (/^:::\w+/.test(line)) depth += 1;
+    if (/^:::\w+/.test(line)) {
+      if (line.endsWith(":::")) continue;
+      depth += 1;
+    }
     if (line === ":::") {
       depth -= 1;
       if (depth === 0) return index;
@@ -123,11 +137,14 @@ function splitBlocks(source) {
     }
 
     flushMarkdown();
-    const end = findDirectiveEnd(lines, index);
+    const rawAttrs = match[2] || "";
+    const selfClosing = rawAttrs.trim().endsWith(":::");
+    const attrsSource = selfClosing ? rawAttrs.trim().replace(/:::$/, "").trim() : rawAttrs;
+    const end = selfClosing ? index : findDirectiveEnd(lines, index);
     blocks.push({
       type: match[1],
-      attrs: parseAttrs(match[2]),
-      body: lines.slice(index + 1, end).join("\n"),
+      attrs: parseAttrs(attrsSource),
+      body: selfClosing ? "" : lines.slice(index + 1, end).join("\n"),
     });
     index = end;
   }
@@ -250,6 +267,37 @@ ${attrs.caption ? `            <figcaption class="diagram-caption">${escapeHtml(
       return `          <div class="circuitjs-grid">
 ${renderBlocks(block.body, options)}
           </div>`;
+    }
+
+    case "wokwi": {
+      const src = (attrs.src || "").replace(/^"+|"+$/g, "");
+      const hasProject = src && !/YOUR_PROJECT_ID/i.test(src);
+      const height = attrs.height || "520";
+      const body = renderContentMarkdown(block.body, "card")
+        .split("\n")
+        .map((line) => `              ${line}`)
+        .join("\n");
+      const frame = hasProject
+        ? `              <iframe
+                title="${escapeHtml(attrs.iframeTitle || attrs.title || "Simulation Wokwi")}"
+                src="${escapeHtml(src)}"
+                height="${escapeHtml(height)}"
+                loading="lazy"
+                allow="accelerometer; camera; microphone; clipboard-write; encrypted-media; gyroscope; usb; serial"></iframe>`
+        : `              <div class="wokwi-placeholder">
+                <strong>Simulation Wokwi a connecter</strong>
+                <span>Renseigner un attribut <code>src</code> avec l'URL du projet Wokwi.</span>
+              </div>`;
+
+      return `            <article class="wokwi-panel"${attrs.id ? ` id="${escapeHtml(attrs.id)}"` : ""}>
+              <header>
+                <span class="status-pill">${escapeHtml(attrs.label || "Wokwi")}</span>
+                <h3>${escapeHtml(attrs.title || "Simulation embarquee")}</h3>
+                ${hasProject ? `<a class="secondary-link" href="${escapeHtml(src)}" target="_blank" rel="noopener">Ouvrir</a>` : ""}
+              </header>
+${body}
+${frame}
+            </article>`;
     }
 
     case "exercise": {

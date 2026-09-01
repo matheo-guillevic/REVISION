@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "author": "Cours SN421 Dev-Micro",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-stm32-bluepill", "id": "stm32", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-pushbutton", "id": "btn", "top": 42, "left": -185, "attrs": { "color": "green" } },
+    { "type": "wokwi-led", "id": "led", "top": -52, "left": 245, "attrs": { "color": "red" } },
+    { "type": "wokwi-resistor", "id": "rled", "top": -8, "left": 186, "attrs": { "value": "220" } }
+  ],
+  "connections": [
+    [ "stm32:A0", "btn:1.r", "green", [] ],
+    [ "stm32:GND.1", "btn:2.r", "black", [] ],
+    [ "stm32:B0", "rled:1", "red", [] ],
+    [ "rled:2", "led:A", "red", [] ],
+    [ "led:C", "stm32:GND.2", "black", [] ]
+  ],
+  "dependencies": {}
+}

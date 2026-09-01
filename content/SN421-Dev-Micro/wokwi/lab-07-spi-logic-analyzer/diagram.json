@@ -1,0 +1,216 @@
+{
+  "version": 1,
+  "author": "Cours SN421 Dev-Micro",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-stm32-bluepill",
+      "id": "stm32",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-74hc595",
+      "id": "sr",
+      "top": 20,
+      "left": 260,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led-bar-graph",
+      "id": "bar",
+      "top": -100,
+      "left": 430,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-logic-analyzer",
+      "id": "logic",
+      "top": 180,
+      "left": 260,
+      "attrs": {
+        "channels": "8"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "$serialMonitor:TX",
+      "stm32:A10",
+      "",
+      []
+    ],
+    [
+      "$serialMonitor:RX",
+      "stm32:A9",
+      "",
+      []
+    ],
+    [
+      "stm32:A7",
+      "sr:DS",
+      "green",
+      []
+    ],
+    [
+      "stm32:A5",
+      "sr:SHCP",
+      "blue",
+      []
+    ],
+    [
+      "stm32:A4",
+      "sr:STCP",
+      "orange",
+      []
+    ],
+    [
+      "sr:OE",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "sr:MR",
+      "stm32:3V3.1",
+      "red",
+      []
+    ],
+    [
+      "stm32:3V3.1",
+      "sr:VCC",
+      "red",
+      []
+    ],
+    [
+      "stm32:GND.1",
+      "sr:GND",
+      "black",
+      []
+    ],
+    [
+      "sr:Q0",
+      "bar:A1",
+      "green",
+      []
+    ],
+    [
+      "sr:Q1",
+      "bar:A2",
+      "green",
+      []
+    ],
+    [
+      "sr:Q2",
+      "bar:A3",
+      "green",
+      []
+    ],
+    [
+      "sr:Q3",
+      "bar:A4",
+      "green",
+      []
+    ],
+    [
+      "sr:Q4",
+      "bar:A5",
+      "green",
+      []
+    ],
+    [
+      "sr:Q5",
+      "bar:A6",
+      "green",
+      []
+    ],
+    [
+      "sr:Q6",
+      "bar:A7",
+      "green",
+      []
+    ],
+    [
+      "sr:Q7",
+      "bar:A8",
+      "green",
+      []
+    ],
+    [
+      "bar:C1",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "bar:C2",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "bar:C3",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "bar:C4",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "bar:C5",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "bar:C6",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "bar:C7",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "bar:C8",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "stm32:A5",
+      "logic:D0",
+      "blue",
+      []
+    ],
+    [
+      "stm32:A7",
+      "logic:D1",
+      "green",
+      []
+    ],
+    [
+      "stm32:A4",
+      "logic:D2",
+      "orange",
+      []
+    ],
+    [
+      "stm32:GND.1",
+      "logic:GND",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {}
+}

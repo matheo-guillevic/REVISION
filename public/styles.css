@@ -821,7 +821,8 @@ button:hover,
   margin: 16px 0;
 }
 
-.circuitjs-panel {
+.circuitjs-panel,
+.wokwi-panel {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -829,7 +830,8 @@ button:hover,
   box-shadow: var(--shadow);
 }
 
-.circuitjs-panel header {
+.circuitjs-panel header,
+.wokwi-panel header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -838,17 +840,62 @@ button:hover,
   border-bottom: 1px solid var(--border);
 }
 
-.circuitjs-panel h3 {
+.circuitjs-panel h3,
+.wokwi-panel h3 {
   margin: 0;
   font-size: 1rem;
 }
 
-.circuitjs-panel iframe {
+.wokwi-panel header .secondary-link {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.wokwi-panel header .secondary-link:hover {
+  color: var(--primary);
+}
+
+.circuitjs-panel iframe,
+.wokwi-panel iframe {
   display: block;
   width: 100%;
   height: 540px;
   border: 0;
   background: #ffffff;
+}
+
+.wokwi-panel > p,
+.wokwi-panel > ul,
+.wokwi-panel > ol {
+  margin: 14px 16px;
+}
+
+.wokwi-placeholder {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
+  gap: 8px;
+  padding: 22px;
+  border-top: 1px solid var(--border);
+  background: #f8fafc;
+  color: var(--muted);
+  text-align: center;
+}
+
+.wokwi-placeholder strong {
+  color: var(--text);
+}
+
+.mermaid {
+  overflow-x: auto;
+  margin: 18px 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--shadow);
 }
 
 .diagram-box {
@@ -1257,7 +1304,8 @@ button:hover,
     max-height: 300px;
   }
 
-  .circuitjs-panel iframe {
+  .circuitjs-panel iframe,
+  .wokwi-panel iframe {
     height: 460px;
   }
 }
@@ -1287,7 +1335,8 @@ button:hover,
     min-width: 520px;
   }
 
-  .circuitjs-panel iframe {
+  .circuitjs-panel iframe,
+  .wokwi-panel iframe {
     height: 420px;
   }
 }

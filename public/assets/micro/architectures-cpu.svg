@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">Comparaison von Neumann et Harvard modifiee</title>
+  <desc id="desc">Deux schemas montrent une architecture a bus unique et une architecture a bus instructions et donnees separes.</desc>
+  <defs>
+    <style>
+      .panel{fill:#fff;stroke:#d7dee8;stroke-width:2}
+      .box{fill:#eef6ff;stroke:#2563eb;stroke-width:2}
+      .mem{fill:#ecfdf3;stroke:#16803c;stroke-width:2}
+      .bus{stroke:#334155;stroke-width:5;stroke-linecap:round}
+      .label{font:700 18px Arial,sans-serif;fill:#0f172a}
+      .text{font:500 14px Arial,sans-serif;fill:#334155}
+    </style>
+  </defs>
+  <rect class="panel" x="24" y="28" width="402" height="304" rx="8"/>
+  <rect class="panel" x="474" y="28" width="402" height="304" rx="8"/>
+  <text class="label" x="52" y="66">Von Neumann</text>
+  <text class="label" x="502" y="66">Harvard modifiee</text>
+  <rect class="box" x="80" y="128" width="130" height="70" rx="8"/>
+  <text class="text" x="118" y="168">CPU</text>
+  <line class="bus" x1="210" y1="163" x2="286" y2="163"/>
+  <rect class="mem" x="286" y="118" width="104" height="90" rx="8"/>
+  <text class="text" x="307" y="156">Memoire</text>
+  <text class="text" x="300" y="178">code + data</text>
+  <text class="text" x="164" y="238">Un seul bus partage</text>
+  <rect class="box" x="522" y="132" width="120" height="66" rx="8"/>
+  <text class="text" x="558" y="170">CPU</text>
+  <line class="bus" x1="642" y1="144" x2="718" y2="112"/>
+  <line class="bus" x1="642" y1="184" x2="718" y2="236"/>
+  <rect class="mem" x="718" y="78" width="114" height="70" rx="8"/>
+  <text class="text" x="746" y="118">Flash</text>
+  <rect class="mem" x="718" y="210" width="114" height="70" rx="8"/>
+  <text class="text" x="756" y="250">SRAM</text>
+  <text class="text" x="568" y="238">Fetch et donnees en parallele</text>
+</svg>

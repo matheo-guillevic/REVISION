@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+  <title id="title">Double tampon DMA ping-pong</title>
+  <desc id="desc">Le DMA remplit un tampon pendant que le CPU traite l'autre tampon.</desc>
+  <defs>
+    <style>
+      .box{fill:#fff;stroke:#d7dee8;stroke-width:2}
+      .dma{fill:#eef6ff;stroke:#2563eb;stroke-width:2}
+      .buf{fill:#ecfdf3;stroke:#16803c;stroke-width:2}
+      .cpu{fill:#fff7ed;stroke:#c2410c;stroke-width:2}
+      .arrow{stroke:#334155;stroke-width:3;fill:none;marker-end:url(#a)}
+      .label{font:700 18px Arial,sans-serif;fill:#0f172a}
+      .text{font:500 14px Arial,sans-serif;fill:#334155}
+    </style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect class="box" x="24" y="24" width="852" height="252" rx="8"/>
+  <text class="label" x="52" y="62">Transfert DMA en double tampon</text>
+  <rect class="dma" x="70" y="120" width="150" height="64" rx="8"/>
+  <text class="text" x="112" y="156">ADC / UART</text>
+  <rect class="buf" x="340" y="82" width="150" height="64" rx="8"/>
+  <text class="text" x="385" y="119">PING</text>
+  <rect class="buf" x="340" y="174" width="150" height="64" rx="8"/>
+  <text class="text" x="386" y="211">PONG</text>
+  <rect class="cpu" x="660" y="128" width="150" height="64" rx="8"/>
+  <text class="text" x="706" y="165">CPU</text>
+  <path class="arrow" d="M220 142 C270 118 292 108 340 110"/>
+  <path class="arrow" d="M490 206 C560 204 600 178 660 164"/>
+  <path class="arrow" d="M660 146 C585 112 550 98 490 110"/>
+  <text class="text" x="272" y="72">remplissage</text>
+  <text class="text" x="525" y="230">traitement</text>
+  <text class="text" x="524" y="96">bascule a l'interruption</text>
+</svg>

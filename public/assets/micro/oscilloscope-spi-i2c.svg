@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" role="img" aria-labelledby="title desc">
+  <title id="title">Comparaison oscilloscope SPI et I2C</title>
+  <desc id="desc">Traces idealisees montrant des fronts SPI raides et des fronts I2C ralentis par la constante RC.</desc>
+  <defs>
+    <style>
+      .panel{fill:#fff;stroke:#d7dee8;stroke-width:2}
+      .grid{stroke:#e2e8f0;stroke-width:1}
+      .spi{stroke:#2563eb;stroke-width:4;fill:none}
+      .i2c{stroke:#16a34a;stroke-width:4;fill:none}
+      .label{font:700 18px Arial,sans-serif;fill:#0f172a}
+      .text{font:500 14px Arial,sans-serif;fill:#334155}
+    </style>
+  </defs>
+  <rect class="panel" x="24" y="24" width="852" height="282" rx="8"/>
+  <text class="label" x="52" y="62">Formes d'ondes mesurees</text>
+  <g>
+    <line class="grid" x1="70" y1="96" x2="830" y2="96"/>
+    <line class="grid" x1="70" y1="146" x2="830" y2="146"/>
+    <line class="grid" x1="70" y1="196" x2="830" y2="196"/>
+    <line class="grid" x1="70" y1="246" x2="830" y2="246"/>
+    <line class="grid" x1="140" y1="86" x2="140" y2="258"/>
+    <line class="grid" x1="260" y1="86" x2="260" y2="258"/>
+    <line class="grid" x1="380" y1="86" x2="380" y2="258"/>
+    <line class="grid" x1="500" y1="86" x2="500" y2="258"/>
+    <line class="grid" x1="620" y1="86" x2="620" y2="258"/>
+    <line class="grid" x1="740" y1="86" x2="740" y2="258"/>
+  </g>
+  <path class="spi" d="M80 128 H150 V94 H250 V128 H350 V94 H450 V128 H550 V94 H650 V128 H750 V94 H830"/>
+  <path class="i2c" d="M80 238 H145 C170 238 190 204 212 188 H265 V238 H342 C370 238 392 205 420 188 H478 V238 H566 C590 238 612 204 638 188 H700 V238 H830"/>
+  <text class="text" x="70" y="86">SPI : fronts push-pull raides</text>
+  <text class="text" x="70" y="284">I2C : montee RC avec pull-up</text>
+</svg>

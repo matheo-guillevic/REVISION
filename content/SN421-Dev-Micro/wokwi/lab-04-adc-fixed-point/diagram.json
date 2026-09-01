@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "author": "Cours SN421 Dev-Micro",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-stm32-bluepill",
+      "id": "stm32",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot",
+      "top": 48,
+      "left": -205,
+      "attrs": {
+        "value": "512"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "$serialMonitor:TX",
+      "stm32:A10",
+      "",
+      []
+    ],
+    [
+      "$serialMonitor:RX",
+      "stm32:A9",
+      "",
+      []
+    ],
+    [
+      "stm32:3V3.1",
+      "pot:VCC",
+      "red",
+      []
+    ],
+    [
+      "stm32:GND.1",
+      "pot:GND",
+      "black",
+      []
+    ],
+    [
+      "stm32:A0",
+      "pot:SIG",
+      "green",
+      []
+    ]
+  ],
+  "dependencies": {}
+}
