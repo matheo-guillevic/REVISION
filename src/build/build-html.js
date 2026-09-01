@@ -18,6 +18,7 @@ const pages = {
   "IN363-Reseau": path.join(outDir, "IN363-Reseau.html"),
   "SN361-VHDL": path.join(outDir, "SN361-VHDL.html"),
   "SN421-Dev-Micro": path.join(outDir, "SN421-Dev-Micro.html"),
+  "MT421-Methode-numerique": path.join(outDir, "MT421-Methode-numerique.html"),
 };
 
 const courseStructures = {
@@ -145,6 +146,21 @@ const courseStructures = {
     exams: "SN421-Dev-Micro-exams",
     revision: "SN421-Dev-Micro-revision",
     support: "SN421-Dev-Micro-supports",
+  },
+  "MT421-Methode-numerique": {
+    page: "MT421-Methode-numerique.html",
+    subject: "MT421-Methode-numerique",
+    intro: "mt421-intro",
+    contentHref: "mt421-module-1",
+    content: [
+      ["mt421-module-1", "Erreurs et flottants"],
+      ["mt421-module-2", "Equations non lineaires"],
+      ["mt421-module-3", "EDO"],
+    ],
+    td: "MT421-Methode-numerique-td",
+    exams: "MT421-Methode-numerique-exams",
+    revision: "mt421-synthese",
+    support: "MT421-Methode-numerique-supports",
   },
 };
 
@@ -328,6 +344,7 @@ function renderShell({ title, brandMark, brandTitle, brandSubtitle, nav, eyebrow
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3/plotly.min.js"></script>
     <script defer src="script.js"></script>
   </head>
   <body>
@@ -390,6 +407,7 @@ function renderHome() {
             <ul class="sidebar-semester-list">
               <li><a href="index.html#semestre-7">Vue semestre</a></li>
               <li><a href="SN421-Dev-Micro.html">SN421-Dev-Micro</a></li>
+              <li><a href="MT421-Methode-numerique.html">MT421-Methode-numerique</a></li>
             </ul>
           </details>`;
 
@@ -488,7 +506,7 @@ function renderHome() {
                 <span class="eyebrow">Semestre 7</span>
                 <strong>Semestre 7</strong>
               </span>
-              <span class="semester-count">1 matiere</span>
+              <span class="semester-count">2 matieres</span>
             </summary>
 
             <div class="dashboard-grid semester-content">
@@ -497,6 +515,12 @@ function renderHome() {
                 <h3>SN421-Dev-Micro</h3>
                 <p>Programmation embarquee sur microcontroleur : architecture MCU, code bare-metal, peripheriques, bus et conception systeme.</p>
                 <p class="secondary-link"><a href="SN421-Dev-Micro.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>MT421-Methode-numerique</h3>
+                <p>Calcul scientifique : erreurs, arithmetique flottante, solveurs non lineaires, EDO et stabilite numerique.</p>
+                <p class="secondary-link"><a href="MT421-Methode-numerique.html">Ouvrir le cours</a></p>
               </article>
             </div>
           </details>
@@ -742,6 +766,25 @@ function renderDevMcuCourse() {
   });
 }
 
+function renderNumericMethodsCourse() {
+  const structure = courseStructures["MT421-Methode-numerique"];
+  const course = readCourseBody("MT421-Methode-numerique", structure);
+  const nav = renderCommonCourseNav(structure);
+
+  return renderShell({
+    title: "MT421-Methode-numerique - Revision ESISAR",
+    brandMark: "M",
+    brandTitle: "MT421-Methode-numerique",
+    brandSubtitle: "Methodes numeriques",
+    nav,
+    eyebrow: "Semestre 7",
+    heading: "Analyse numerique et calcul scientifique",
+    cta: '<a class="primary-button" href="index.html#semestre-7">Semestre 7</a>',
+    body: course,
+    showAnnotations: true,
+  });
+}
+
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -758,5 +801,6 @@ write(pages["IN361-JAVA"], renderJavaCourse());
 write(pages["IN363-Reseau"], renderReseauCourse());
 write(pages["SN361-VHDL"], renderVhdlCourse());
 write(pages["SN421-Dev-Micro"], renderDevMcuCourse());
+write(pages["MT421-Methode-numerique"], renderNumericMethodsCourse());
 
 console.log("Application construite dans out/.");

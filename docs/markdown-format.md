@@ -66,6 +66,64 @@ flowchart TD
 ```
 ````
 
+## Graphiques interactifs Plotly
+
+Les graphiques interactifs utilisent `:::plotly`. Le corps du bloc est une
+specification JSON Plotly : `series`, `data`, `layout` et `config`.
+
+```md
+:::plotly id="mt421-exemple" label="Graphique interactif" title="Erreur d'une methode" height="420" caption="Zoomer ou deplacer la courbe pour lire les ordres de grandeur."
+{
+  "series": [
+    {
+      "generator": "function",
+      "range": [0, 4],
+      "points": 120,
+      "y": "exp(-x) * cos(4*x)",
+      "name": "exp(-x) cos(4x)"
+    },
+    {
+      "generator": "parametric",
+      "range": [0, "2*PI"],
+      "points": 160,
+      "x": "cos(t)",
+      "y": "sin(t)",
+      "name": "Cercle unite"
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": "x" },
+    "yaxis": { "title": "y" }
+  },
+  "config": {
+    "responsive": true
+  }
+}
+:::
+```
+
+Le rendu ajoute automatiquement le zoom, le deplacement, la legende et
+l'adaptation responsive. Pour un cours de maths, c'est le format conseille pour
+remplacer une image de courbe statique.
+
+`data` accepte le JSON Plotly standard si une courbe doit rester definie point
+par point. Pour les courbes mathematiques, preferer `series` :
+
+| Generateur | Usage |
+| :--- | :--- |
+| `function` | trace $y=f(x)$ sur `range: [xmin, xmax]` |
+| `parametric` | trace $(x(t), y(t))$ sur `range: [tmin, tmax]` |
+| `sequence` | trace une suite avec `nStart`, `nEnd` et `y` |
+| `point` | ajoute un point isole |
+| `fixed-point-staircase` | construit l'escalier d'une iteration `x_{n+1}=f(x_n)` |
+| `floating-distribution` | illustre une repartition flottante pedagogique |
+| `rk4-stability-boundary` | calcule la frontiere de stabilite absolue de RK4 |
+
+Les formules sont ecrites en syntaxe JavaScript : `exp(-x)`, `sqrt(2)`,
+`pow(0.7, n)`, `sin(t)`, `2*PI`.
+Pour un axe logarithmique, ajouter `scale: "log"` dans une serie `function`
+afin de repartir les points regulierement sur l'echelle log.
+
 ## Wokwi
 
 Les simulations Wokwi utilisent `:::wokwi`. Tant que l'URL contient un

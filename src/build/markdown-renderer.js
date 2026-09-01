@@ -26,6 +26,10 @@ function escapeHtml(value = "") {
     .replace(/"/g, "&quot;");
 }
 
+function escapeJsonScript(value = "") {
+  return String(value).replace(/</g, "\\u003c").replace(/>/g, "\\u003e");
+}
+
 function parseAttrs(source = "") {
   const attrs = {};
   const rest = source.trim();
@@ -69,6 +73,12 @@ function normalizeMathFragment(fragment) {
 function unwrapParagraph(html) {
   const match = html.match(/^<p>([\s\S]*)<\/p>$/);
   return match ? match[1] : html;
+}
+
+function stripJsonFence(source = "") {
+  const trimmed = source.trim();
+  const match = trimmed.match(/^```(?:json)?\s*\n([\s\S]*?)\n```$/);
+  return match ? match[1].trim() : trimmed;
 }
 
 function renderContentMarkdown(source, listMode = "formula") {
@@ -267,6 +277,18 @@ ${attrs.caption ? `            <figcaption class="diagram-caption">${escapeHtml(
       return `          <div class="circuitjs-grid">
 ${renderBlocks(block.body, options)}
           </div>`;
+    }
+
+    case "plotly": {
+      const json = stripJsonFence(block.body);
+      return `            <article class="plotly-panel"${attrs.id ? ` id="${escapeHtml(attrs.id)}"` : ""}>
+              <header>
+                <span class="status-pill">${escapeHtml(attrs.label || "Interactif")}</span>
+                <h3>${escapeHtml(attrs.title || "Graphique")}</h3>
+              </header>
+              <div class="plotly-chart" data-plotly-chart style="height: ${escapeHtml(attrs.height || "420")}px"></div>
+              <script type="application/json" data-plotly-config>${escapeJsonScript(json)}</script>
+${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.caption)}</p>\n` : ""}            </article>`;
     }
 
     case "wokwi": {

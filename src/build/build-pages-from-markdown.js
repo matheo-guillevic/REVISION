@@ -62,6 +62,7 @@ function renderPage(group, page, kind, markdownPath) {
       };
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>${prismScripts}
+    <script defer src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3/plotly.min.js"></script>
     <script defer src="script.js"></script>
   </head>
   <body class="td-page">

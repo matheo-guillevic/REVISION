@@ -822,7 +822,8 @@ button:hover,
 }
 
 .circuitjs-panel,
-.wokwi-panel {
+.wokwi-panel,
+.plotly-panel {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -831,7 +832,8 @@ button:hover,
 }
 
 .circuitjs-panel header,
-.wokwi-panel header {
+.wokwi-panel header,
+.plotly-panel header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -841,9 +843,36 @@ button:hover,
 }
 
 .circuitjs-panel h3,
-.wokwi-panel h3 {
+.wokwi-panel h3,
+.plotly-panel h3 {
   margin: 0;
   font-size: 1rem;
+}
+
+.plotly-panel {
+  margin: 18px 0;
+}
+
+.plotly-chart {
+  min-height: 320px;
+  padding: 10px;
+  background: #ffffff;
+}
+
+.plotly-panel .diagram-caption {
+  margin: 0;
+  padding: 10px 16px 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.plotly-error {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
+  color: #8a2d2d;
+  background: #fff5f5;
 }
 
 .wokwi-panel header .secondary-link {
@@ -1308,6 +1337,10 @@ button:hover,
   .wokwi-panel iframe {
     height: 460px;
   }
+
+  .plotly-chart {
+    min-height: 300px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1338,5 +1371,10 @@ button:hover,
   .circuitjs-panel iframe,
   .wokwi-panel iframe {
     height: 420px;
+  }
+
+  .plotly-chart {
+    min-height: 280px;
+    padding: 4px;
   }
 }
