@@ -3,84 +3,38 @@
   "author": "Cours SN421 Dev-Micro",
   "editor": "wokwi",
   "parts": [
-    {
-      "type": "board-stm32-bluepill",
-      "id": "stm32",
-      "top": 0,
-      "left": 0,
-      "attrs": {}
-    },
+    { "type": "board-stm32-bluepill", "id": "stm32", "top": 0, "left": 0, "attrs": {} },
     {
       "type": "wokwi-led",
       "id": "led",
-      "top": -62,
-      "left": 250,
-      "attrs": {
-        "color": "yellow"
-      }
+      "top": -80.4,
+      "left": -92.2,
+      "attrs": { "color": "yellow" }
     },
     {
       "type": "wokwi-resistor",
       "id": "rled",
-      "top": -16,
-      "left": 184,
-      "attrs": {
-        "value": "220"
-      }
+      "top": 3.4,
+      "left": -77.65,
+      "rotate": 270,
+      "attrs": { "value": "220" }
     },
     {
       "type": "wokwi-logic-analyzer",
       "id": "logic",
-      "top": 168,
-      "left": 230,
-      "attrs": {
-        "channels": "8"
-      }
+      "top": 144.35,
+      "left": 134.4,
+      "attrs": { "channels": "8" }
     }
   ],
   "connections": [
-    [
-      "$serialMonitor:TX",
-      "stm32:A10",
-      "",
-      []
-    ],
-    [
-      "$serialMonitor:RX",
-      "stm32:A9",
-      "",
-      []
-    ],
-    [
-      "stm32:A8",
-      "rled:1",
-      "orange",
-      []
-    ],
-    [
-      "rled:2",
-      "led:A",
-      "orange",
-      []
-    ],
-    [
-      "led:C",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "stm32:A8",
-      "logic:D0",
-      "orange",
-      []
-    ],
-    [
-      "stm32:GND.1",
-      "logic:GND",
-      "black",
-      []
-    ]
+    [ "$serialMonitor:TX", "stm32:A10", "", [] ],
+    [ "$serialMonitor:RX", "stm32:A9", "", [] ],
+    [ "stm32:A8", "rled:1", "orange", [ "h-61.23", "v-78.16" ] ],
+    [ "rled:2", "led:A", "orange", [ "v-19.2", "h-181.2" ] ],
+    [ "led:C", "stm32:GND.1", "black", [ "h0.4", "v222.16" ] ],
+    [ "stm32:A8", "logic:D0", "orange", [ "h-32.43", "v-116.56", "h249.2" ] ],
+    [ "stm32:GND.1", "logic:GND", "black", [ "h-61.23", "v104.24", "h278" ] ]
   ],
   "dependencies": {}
 }

@@ -3,129 +3,50 @@
   "author": "Cours SN421 Dev-Micro",
   "editor": "wokwi",
   "parts": [
-    {
-      "type": "board-stm32-bluepill",
-      "id": "stm32",
-      "top": 0,
-      "left": 0,
-      "attrs": {}
-    },
+    { "type": "board-stm32-bluepill", "id": "stm32", "top": -1.36, "left": -3.63, "attrs": {} },
     {
       "type": "wokwi-mpu6050",
       "id": "tmp",
-      "top": 28,
-      "left": 250,
-      "attrs": {
-        "temperature": "24"
-      }
+      "top": 32.62,
+      "left": 223.12,
+      "attrs": { "temperature": "24" }
     },
     {
       "type": "wokwi-logic-analyzer",
       "id": "logic",
-      "top": 170,
-      "left": 245,
-      "attrs": {
-        "channels": "8"
-      }
+      "top": 134.75,
+      "left": 345.6,
+      "attrs": { "channels": "8" }
     },
     {
       "type": "wokwi-resistor",
       "id": "rsda",
-      "top": -38,
-      "left": 162,
-      "attrs": {
-        "value": "4700"
-      }
+      "top": -63.25,
+      "left": 163.2,
+      "attrs": { "value": "4700" }
     },
     {
       "type": "wokwi-resistor",
       "id": "rscl",
-      "top": -8,
-      "left": 162,
-      "attrs": {
-        "value": "4700"
-      }
+      "top": -34.45,
+      "left": 163.2,
+      "attrs": { "value": "4700" }
     }
   ],
   "connections": [
-    [
-      "$serialMonitor:TX",
-      "stm32:A10",
-      "",
-      []
-    ],
-    [
-      "$serialMonitor:RX",
-      "stm32:A9",
-      "",
-      []
-    ],
-    [
-      "stm32:3V3.1",
-      "tmp:VCC",
-      "red",
-      []
-    ],
-    [
-      "stm32:GND.1",
-      "tmp:GND",
-      "black",
-      []
-    ],
-    [
-      "stm32:B7",
-      "tmp:SDA",
-      "green",
-      []
-    ],
-    [
-      "stm32:B6",
-      "tmp:SCL",
-      "blue",
-      []
-    ],
-    [
-      "stm32:3V3.1",
-      "rsda:1",
-      "red",
-      []
-    ],
-    [
-      "rsda:2",
-      "tmp:SDA",
-      "green",
-      []
-    ],
-    [
-      "stm32:3V3.1",
-      "rscl:1",
-      "red",
-      []
-    ],
-    [
-      "rscl:2",
-      "tmp:SCL",
-      "blue",
-      []
-    ],
-    [
-      "stm32:B7",
-      "logic:D0",
-      "green",
-      []
-    ],
-    [
-      "stm32:B6",
-      "logic:D1",
-      "blue",
-      []
-    ],
-    [
-      "stm32:GND.1",
-      "logic:GND",
-      "black",
-      []
-    ]
+    [ "$serialMonitor:TX", "stm32:A10", "", [] ],
+    [ "$serialMonitor:RX", "stm32:A9", "", [] ],
+    [ "stm32:3V3.1", "tmp:VCC", "red", [ "h-80.43", "v-279.76", "h364.72" ] ],
+    [ "stm32:GND.1", "tmp:GND", "black", [ "h307.2", "v-144" ] ],
+    [ "stm32:B7", "tmp:SDA", "green", [] ],
+    [ "stm32:B6", "tmp:SCL", "blue", [ "h-42.03", "v-144", "h310.75" ] ],
+    [ "stm32:3V3.1", "rsda:1", "red", [ "h-80.43", "v-249.6", "h234.03" ] ],
+    [ "rsda:2", "tmp:SDA", "green", [] ],
+    [ "stm32:3V3.1", "rscl:1", "red", [ "h-80.43", "v-195.71" ] ],
+    [ "rscl:2", "tmp:SCL", "blue", [] ],
+    [ "stm32:B7", "logic:D0", "green", [] ],
+    [ "stm32:B6", "logic:D1", "blue", [ "h-38.4", "v86.4", "h172.8", "v-67.2" ] ],
+    [ "stm32:GND.1", "logic:GND", "black", [ "h307.2", "v38.4" ] ]
   ],
   "dependencies": {}
 }

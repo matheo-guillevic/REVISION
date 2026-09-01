@@ -542,7 +542,7 @@ $$V_{out} = \frac{N}{2^n - 1} \times (V_{max} - V_{min}) + V_{min}$$
   3. Faire tourner le potentiomètre en cours de simulation et contrôler l'affichage en millivolts sur le moniteur série.
 :::
 
-:::wokwi id="sn421-wokwi-04" label="Wokwi 04" title="ADC et virgule fixe" src="https://wokwi.com/projects/YOUR_PROJECT_ID_04"
+:::wokwi id="sn421-wokwi-04" label="Wokwi 04" title="ADC et virgule fixe" src="https://wokwi.com/projects/473980693755180033"
 Lecture potentiomètre, conversion en millivolts et calcul sans FPU.
 :::
 
@@ -628,7 +628,7 @@ Liaison série point à point asynchrone full-duplex sur deux fils dédiés ($TX
   3. Dans la boucle `while(1)`, dépiler les caractères via le pointeur de lecture `tail` et calculer le ratio de débit utile ($80\%$ en configuration 8N1).
 :::
 
-:::wokwi id="sn421-wokwi-05" label="Wokwi 05" title="UART et ring buffer" src="https://wokwi.com/projects/YOUR_PROJECT_ID_05"
+:::wokwi id="sn421-wokwi-05" label="Wokwi 05" title="UART et ring buffer" src="https://wokwi.com/projects/473980817905554433"
 Réception asynchrone non bloquante via interruption et tampon circulaire.
 :::
 
@@ -706,7 +706,7 @@ Visualisation du temps de montée exponentiel (constante RC = R_pullup * C_bus) 
      * Vérifier la condition de **STOP** finale (front montant de SDA alors que SCL est à l'état haut).
 :::
 
-:::wokwi id="sn421-wokwi-06" label="Wokwi 06" title="I2C et analyseur logique" src="https://wokwi.com/projects/YOUR_PROJECT_ID_06"
+:::wokwi id="sn421-wokwi-06" label="Wokwi 06" title="I2C et analyseur logique" src="https://wokwi.com/projects/473980910688816129"
 Capture VCD, START, adresse, ACK et STOP.
 :::
 
@@ -769,7 +769,7 @@ sequenceDiagram
   3. Valider la robustesse des fronts raides du bus push-pull face aux contraintes de vitesse élevée.
 :::
 
-:::wokwi id="sn421-wokwi-07" label="Wokwi 07" title="SPI et modes CPOL/CPHA" src="https://wokwi.com/projects/YOUR_PROJECT_ID_07"
+:::wokwi id="sn421-wokwi-07" label="Wokwi 07" title="SPI et modes CPOL/CPHA" src="https://wokwi.com/projects/473981129931420673"
 Transfert synchrone, analyse SCK/MOSI/MISO/SS et modes d'horloge.
 :::
 
@@ -872,7 +872,7 @@ Pour garantir la prédictibilité temporelle et la robustesse du logiciel sans d
   3. Vérifier que l'appui sur le bouton d'urgence interrompt instantanément le traitement à tout moment, prouvant la réactivité du modèle événementiel face à une architecture séquentielle rigide.
 :::
 
-:::wokwi id="sn421-wokwi-08" label="Wokwi 08" title="FSM non bloquante" src="https://wokwi.com/projects/YOUR_PROJECT_ID_08"
+:::wokwi id="sn421-wokwi-08" label="Wokwi 08" title="FSM non bloquante" src="https://wokwi.com/projects/473981544373808129"
 Automate événementiel, boutons, LED RGB et tick périodique.
 :::
 

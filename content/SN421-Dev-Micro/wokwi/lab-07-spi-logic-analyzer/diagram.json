@@ -3,214 +3,53 @@
   "author": "Cours SN421 Dev-Micro",
   "editor": "wokwi",
   "parts": [
-    {
-      "type": "board-stm32-bluepill",
-      "id": "stm32",
-      "top": 0,
-      "left": 0,
-      "attrs": {}
-    },
-    {
-      "type": "wokwi-74hc595",
-      "id": "sr",
-      "top": 20,
-      "left": 260,
-      "attrs": {}
-    },
+    { "type": "board-stm32-bluepill", "id": "stm32", "top": -1.36, "left": 73.17, "attrs": {} },
+    { "type": "wokwi-74hc595", "id": "sr", "top": 56.4, "left": 264.64, "attrs": {} },
     {
       "type": "wokwi-led-bar-graph",
       "id": "bar",
       "top": -100,
       "left": 430,
-      "attrs": {
-        "color": "green"
-      }
+      "attrs": { "color": "green" }
     },
     {
       "type": "wokwi-logic-analyzer",
       "id": "logic",
-      "top": 180,
-      "left": 260,
-      "attrs": {
-        "channels": "8"
-      }
+      "top": 182.75,
+      "left": 412.8,
+      "attrs": { "channels": "8" }
     }
   ],
   "connections": [
-    [
-      "$serialMonitor:TX",
-      "stm32:A10",
-      "",
-      []
-    ],
-    [
-      "$serialMonitor:RX",
-      "stm32:A9",
-      "",
-      []
-    ],
-    [
-      "stm32:A7",
-      "sr:DS",
-      "green",
-      []
-    ],
-    [
-      "stm32:A5",
-      "sr:SHCP",
-      "blue",
-      []
-    ],
-    [
-      "stm32:A4",
-      "sr:STCP",
-      "orange",
-      []
-    ],
-    [
-      "sr:OE",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "sr:MR",
-      "stm32:3V3.1",
-      "red",
-      []
-    ],
-    [
-      "stm32:3V3.1",
-      "sr:VCC",
-      "red",
-      []
-    ],
-    [
-      "stm32:GND.1",
-      "sr:GND",
-      "black",
-      []
-    ],
-    [
-      "sr:Q0",
-      "bar:A1",
-      "green",
-      []
-    ],
-    [
-      "sr:Q1",
-      "bar:A2",
-      "green",
-      []
-    ],
-    [
-      "sr:Q2",
-      "bar:A3",
-      "green",
-      []
-    ],
-    [
-      "sr:Q3",
-      "bar:A4",
-      "green",
-      []
-    ],
-    [
-      "sr:Q4",
-      "bar:A5",
-      "green",
-      []
-    ],
-    [
-      "sr:Q5",
-      "bar:A6",
-      "green",
-      []
-    ],
-    [
-      "sr:Q6",
-      "bar:A7",
-      "green",
-      []
-    ],
-    [
-      "sr:Q7",
-      "bar:A8",
-      "green",
-      []
-    ],
-    [
-      "bar:C1",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "bar:C2",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "bar:C3",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "bar:C4",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "bar:C5",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "bar:C6",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "bar:C7",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "bar:C8",
-      "stm32:GND.1",
-      "black",
-      []
-    ],
-    [
-      "stm32:A5",
-      "logic:D0",
-      "blue",
-      []
-    ],
-    [
-      "stm32:A7",
-      "logic:D1",
-      "green",
-      []
-    ],
-    [
-      "stm32:A4",
-      "logic:D2",
-      "orange",
-      []
-    ],
-    [
-      "stm32:GND.1",
-      "logic:GND",
-      "black",
-      []
-    ]
+    [ "$serialMonitor:TX", "stm32:A10", "", [] ],
+    [ "$serialMonitor:RX", "stm32:A9", "", [] ],
+    [ "stm32:A7", "sr:DS", "green", [ "h65.27", "v-48", "h76.8" ] ],
+    [ "stm32:A5", "sr:SHCP", "blue", [ "h26.87", "v-105.6", "h144" ] ],
+    [ "stm32:A4", "sr:STCP", "orange", [ "h36.47", "v-67.2", "h124.8" ] ],
+    [ "sr:OE", "stm32:GND.1", "black", [ "v-75.6", "h-264.16", "v201.6" ] ],
+    [ "sr:MR", "stm32:3V3.1", "red", [ "v-8.4", "h28.8", "v201.6", "h-268.8" ] ],
+    [ "stm32:3V3.1", "sr:VCC", "red", [ "v48", "h172.8", "v-183.6" ] ],
+    [ "stm32:GND.1", "sr:GND", "black", [ "h-38.4", "v86.4", "h288" ] ],
+    [ "sr:Q0", "bar:A1", "green", [ "v-20", "h161.04" ] ],
+    [ "sr:Q1", "bar:A2", "green", [ "v67.2", "h166" ] ],
+    [ "sr:Q2", "bar:A3", "green", [ "v57.6", "h156.4" ] ],
+    [ "sr:Q3", "bar:A4", "green", [ "v48", "h146.8" ] ],
+    [ "sr:Q4", "bar:A5", "green", [ "v38.4", "h137.2" ] ],
+    [ "sr:Q5", "bar:A6", "green", [ "v28.8", "h127.6" ] ],
+    [ "sr:Q6", "bar:A7", "green", [ "v19.2", "h118" ] ],
+    [ "sr:Q7", "bar:A8", "green", [ "v9.6", "h108.4" ] ],
+    [ "bar:C1", "stm32:GND.1", "black", [ "h-434.58", "v277.6" ] ],
+    [ "bar:C2", "stm32:GND.1", "black", [ "h-434.58", "v268" ] ],
+    [ "bar:C3", "stm32:GND.1", "black", [ "h-434.58", "v258.4" ] ],
+    [ "bar:C4", "stm32:GND.1", "black", [ "h-434.58", "v248.8" ] ],
+    [ "bar:C5", "stm32:GND.1", "black", [ "h-434.58", "v239.19" ] ],
+    [ "bar:C6", "stm32:GND.1", "black", [ "h-434.58", "v229.59" ] ],
+    [ "bar:C7", "stm32:GND.1", "black", [ "h-434.58", "v219.99" ] ],
+    [ "bar:C8", "stm32:GND.1", "black", [ "h-434.58", "v210.39" ] ],
+    [ "stm32:A5", "logic:D0", "blue", [ "h55.67", "v86.4" ] ],
+    [ "stm32:A7", "logic:D1", "green", [ "h46.07", "v115.2" ] ],
+    [ "stm32:A4", "logic:D2", "orange", [ "h26.87", "v96" ] ],
+    [ "stm32:GND.1", "logic:GND", "black", [ "h-38.4", "v86.4" ] ]
   ],
   "dependencies": {}
 }
