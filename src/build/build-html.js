@@ -19,6 +19,7 @@ const pages = {
   "SN361-VHDL": path.join(outDir, "SN361-VHDL.html"),
   "SN421-Dev-Micro": path.join(outDir, "SN421-Dev-Micro.html"),
   "MT421-Methode-numerique": path.join(outDir, "MT421-Methode-numerique.html"),
+  "EP425-Capteur": path.join(outDir, "EP425-Capteur.html"),
 };
 
 const courseStructures = {
@@ -146,6 +147,25 @@ const courseStructures = {
     exams: "SN421-Dev-Micro-exams",
     revision: "SN421-Dev-Micro-revision",
     support: "SN421-Dev-Micro-supports",
+  },
+  "EP425-Capteur": {
+    page: "EP425-Capteur.html",
+    subject: "EP425-Capteur",
+    intro: "ep425-intro",
+    contentHref: "ep425-mesure",
+    content: [
+      ["ep425-mesure", "Mesure"],
+      ["ep425-metrologie", "Metrologie"],
+      ["ep425-erreurs-bruits", "Erreurs et bruits"],
+      ["ep425-conditionnement", "Conditionnement"],
+      ["ep425-temperature", "Temperature"],
+      ["ep425-position-inertiel", "Position et inertiel"],
+      ["ep425-instrumentation", "Instrumentation"],
+    ],
+    td: "EP425-Capteur-td",
+    exams: "EP425-Capteur-exams",
+    revision: "ep425-synthese",
+    support: "EP425-Capteur-supports",
   },
   "MT421-Methode-numerique": {
     page: "MT421-Methode-numerique.html",
@@ -506,7 +526,7 @@ function renderHome() {
                 <span class="eyebrow">Semestre 7</span>
                 <strong>Semestre 7</strong>
               </span>
-              <span class="semester-count">2 matieres</span>
+              <span class="semester-count">3 matieres</span>
             </summary>
 
             <div class="dashboard-grid semester-content">
@@ -521,6 +541,12 @@ function renderHome() {
                 <h3>MT421-Methode-numerique</h3>
                 <p>Calcul scientifique : erreurs, arithmetique flottante, solveurs non lineaires, EDO et stabilite numerique.</p>
                 <p class="secondary-link"><a href="MT421-Methode-numerique.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>EP425-Capteur</h3>
+                <p>Capteurs et instrumentation : metrologie, conditionnement, bruit, temperature, position et amplificateurs de precision.</p>
+                <p class="secondary-link"><a href="EP425-Capteur.html">Ouvrir le cours</a></p>
               </article>
             </div>
           </details>
@@ -785,6 +811,25 @@ function renderNumericMethodsCourse() {
   });
 }
 
+function renderSensorCourse() {
+  const structure = courseStructures["EP425-Capteur"];
+  const course = readCourseBody("EP425-Capteur", structure);
+  const nav = renderCommonCourseNav(structure);
+
+  return renderShell({
+    title: "EP425-Capteur - Revision ESISAR",
+    brandMark: "E",
+    brandTitle: "EP425-Capteur",
+    brandSubtitle: "Capteurs et instrumentation",
+    nav,
+    eyebrow: "Semestre 7",
+    heading: "Capteurs, mesure et instrumentation",
+    cta: '<a class="primary-button" href="index.html#semestre-7">Semestre 7</a>',
+    body: course,
+    showAnnotations: true,
+  });
+}
+
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -802,5 +847,6 @@ write(pages["IN363-Reseau"], renderReseauCourse());
 write(pages["SN361-VHDL"], renderVhdlCourse());
 write(pages["SN421-Dev-Micro"], renderDevMcuCourse());
 write(pages["MT421-Methode-numerique"], renderNumericMethodsCourse());
+write(pages["EP425-Capteur"], renderSensorCourse());
 
 console.log("Application construite dans out/.");
