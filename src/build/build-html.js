@@ -428,6 +428,7 @@ function renderHome() {
               <li><a href="index.html#semestre-7">Vue semestre</a></li>
               <li><a href="SN421-Dev-Micro.html">SN421-Dev-Micro</a></li>
               <li><a href="MT421-Methode-numerique.html">MT421-Methode-numerique</a></li>
+              <li><a href="EP425-Capteur.html">EP425-Capteur</a></li>
             </ul>
           </details>`;
 
