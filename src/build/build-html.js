@@ -11,6 +11,7 @@ const pages = {
   "AU331-Traitement-Signal": path.join(outDir, "AU331-Traitement-Signal.html"),
   "SN331-Architecture-processeur": path.join(outDir, "SN331-Architecture-processeur.html"),
   "EP331-Electronique-analogique": path.join(outDir, "EP331-Electronique-analogique.html"),
+  "IN331-Algo": path.join(outDir, "IN331-Algo.html"),
   "MT331-Probabilites": path.join(outDir, "MT331-Probabilites.html"),
   "AU361-Automatique": path.join(outDir, "AU361-Automatique.html"),
   "EP361-electonique": path.join(outDir, "EP361-electonique.html"),
@@ -18,11 +19,31 @@ const pages = {
   "IN363-Reseau": path.join(outDir, "IN363-Reseau.html"),
   "SN361-VHDL": path.join(outDir, "SN361-VHDL.html"),
   "SN421-Dev-Micro": path.join(outDir, "SN421-Dev-Micro.html"),
-  "MT421-Methode-numerique": path.join(outDir, "MT421-Methode-numerique.html"),
+  "MT461-Methode-numerique": path.join(outDir, "MT461-Methode-numerique.html"),
   "EP425-Capteur": path.join(outDir, "EP425-Capteur.html"),
 };
 
 const courseStructures = {
+  "IN331-Algo": {
+    page: "IN331-Algo.html",
+    subject: "IN331-Algo",
+    intro: "in331-intro",
+    contentHref: "in331-chap1-fondations",
+    content: [
+      ["in331-chap1-fondations", "Fondations C"],
+      ["in331-chap2-modularite", "Modularite et Make"],
+      ["in331-chap3-tableaux", "Tableaux"],
+      ["in331-chap4-fichiers-chaines", "Fichiers et chaines"],
+      ["in331-chap5-structures", "Structures lineaires"],
+      ["in331-chap6-pointeurs", "Pointeurs"],
+      ["in331-chap7-recursivite-debug", "Recursivite et debug"],
+      ["in331-chap8-allocation-listes", "Allocation et listes"],
+    ],
+    td: "IN331-Algo-td",
+    exams: "IN331-Algo-exams",
+    revision: "in331-revision",
+    support: "IN331-Algo-supports",
+  },
   "MT331-Probabilites": {
     page: "MT331-Probabilites.html",
     subject: "MT331-Probabilites",
@@ -167,20 +188,20 @@ const courseStructures = {
     revision: "ep425-synthese",
     support: "EP425-Capteur-supports",
   },
-  "MT421-Methode-numerique": {
-    page: "MT421-Methode-numerique.html",
-    subject: "MT421-Methode-numerique",
-    intro: "mt421-intro",
-    contentHref: "mt421-module-1",
+  "MT461-Methode-numerique": {
+    page: "MT461-Methode-numerique.html",
+    subject: "MT461-Methode-numerique",
+    intro: "mt461-intro",
+    contentHref: "mt461-module-1",
     content: [
-      ["mt421-module-1", "Erreurs et flottants"],
-      ["mt421-module-2", "Equations non lineaires"],
-      ["mt421-module-3", "EDO"],
+      ["mt461-module-1", "Erreurs et flottants"],
+      ["mt461-module-2", "Equations non lineaires"],
+      ["mt461-module-3", "EDO"],
     ],
-    td: "MT421-Methode-numerique-td",
-    exams: "MT421-Methode-numerique-exams",
-    revision: "mt421-synthese",
-    support: "MT421-Methode-numerique-supports",
+    td: "MT461-Methode-numerique-td",
+    exams: "MT461-Methode-numerique-exams",
+    revision: "mt461-synthese",
+    support: "MT461-Methode-numerique-supports",
   },
 };
 
@@ -197,29 +218,6 @@ function copyPublicFiles() {
   for (const entry of fs.readdirSync(publicDir)) {
     fs.cpSync(path.join(publicDir, entry), path.join(outDir, entry), { recursive: true });
   }
-}
-
-function toTitleFromFile(file) {
-  return file
-    .replace(/\.pdf$/i, "")
-    .replace(/[_-]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function listCoursePdfFiles(subject) {
-  const courseDir = path.join(publicDir, "pdf", subject, "cours");
-  if (!fs.existsSync(courseDir)) return [];
-
-  return fs
-    .readdirSync(courseDir)
-    .filter((entry) => entry.toLowerCase().endsWith(".pdf"))
-    .sort((a, b) => a.localeCompare(b, "fr"))
-    .map((file) => ({
-      file,
-      title: toTitleFromFile(file),
-      href: toWebPath(path.join("pdf", subject, "cours", file)),
-    }));
 }
 
 function extractCourseSections(html) {
@@ -244,27 +242,12 @@ function renderEmptySection(id, eyebrow, heading) {
         </section>`;
 }
 
-function renderGeneratedSupportSection(id, subject) {
-  const files = listCoursePdfFiles(subject);
-  if (!files.length) return renderEmptySection(id, "Support de cours", "Support de cours");
-
+function renderGeneratedSupportSection(id) {
   return `        <section id="${id}" class="page-section">
           <div class="section-heading">
-            <span class="eyebrow">Support de cours</span>
-            <h2>Support de cours</h2>
-            <p>PDF sources disponibles pour cette matière.</p>
-          </div>
-
-          <div class="dashboard-grid">
-${files
-  .map(
-    (file) => `            <article class="chapter-card">
-              <span class="status-pill">PDF</span>
-              <h3>${file.title}</h3>
-              <p class="secondary-link"><a href="${file.href}">Ouvrir le PDF</a></p>
-            </article>`
-  )
-  .join("\n")}
+            <span class="eyebrow">Sources integrees</span>
+            <h2>Sources integrees au Markdown</h2>
+            <p>Les supports bruts ne sont plus publies : le contenu utile est repris directement dans le cours et les exercices.</p>
           </div>
         </section>`;
 }
@@ -319,7 +302,7 @@ function composeCourseBody(html, structure) {
   const td = take(structure.td) || renderEmptySection(structure.td, "TD", "TD");
   const exams = take(structure.exams) || renderEmptySection(structure.exams, "Examens", "Examens");
   const revision = take(structure.revision) || renderEmptySection(structure.revision, "Révision", "Révision");
-  const support = take(structure.support) || renderGeneratedSupportSection(structure.support, structure.subject);
+  const support = take(structure.support) || renderGeneratedSupportSection(structure.support);
   const leftovers = sections.filter((section) => !used.has(section.id)).map((section) => section.html);
   const contentHtml = [...content, ...leftovers].join("\n\n") || renderEmptySection(structure.contentHref, "Contenu du cours", "Contenu du cours");
 
@@ -408,6 +391,7 @@ function renderHome() {
               <li><a href="AU331-Traitement-Signal.html">AU331-Traitement-Signal</a></li>
               <li><a href="SN331-Architecture-processeur.html">SN331-Architecture-processeur</a></li>
               <li><a href="EP331-Electronique-analogique.html">EP331-Electronique-analogique</a></li>
+              <li><a href="IN331-Algo.html">IN331-Algo</a></li>
             </ul>
           </details>
           <details class="sidebar-semester">
@@ -427,7 +411,7 @@ function renderHome() {
             <ul class="sidebar-semester-list">
               <li><a href="index.html#semestre-7">Vue semestre</a></li>
               <li><a href="SN421-Dev-Micro.html">SN421-Dev-Micro</a></li>
-              <li><a href="MT421-Methode-numerique.html">MT421-Methode-numerique</a></li>
+              <li><a href="MT461-Methode-numerique.html">MT461-Methode-numerique</a></li>
               <li><a href="EP425-Capteur.html">EP425-Capteur</a></li>
             </ul>
           </details>`;
@@ -447,7 +431,7 @@ function renderHome() {
                 <span class="eyebrow">Semestre 5</span>
                 <strong>Semestre 5</strong>
               </span>
-              <span class="semester-count">3 matieres</span>
+              <span class="semester-count">4 matieres</span>
             </summary>
 
             <div class="dashboard-grid semester-content">
@@ -468,6 +452,12 @@ function renderHome() {
                 <h3>EP331-Electronique-analogique</h3>
                 <p>Cours EP331 : diodes, redressement, Zener, transistors bipolaires, AOP, thermique et simulations CircuitJS.</p>
                 <p class="secondary-link"><a href="EP331-Electronique-analogique.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>IN331-Algo</h3>
+                <p>Programmation C et algorithmique : compilation, modularite, tableaux, fichiers, pointeurs et listes chainees.</p>
+                <p class="secondary-link"><a href="IN331-Algo.html">Ouvrir le cours</a></p>
               </article>
             </div>
           </details>
@@ -539,9 +529,9 @@ function renderHome() {
               </article>
               <article class="chapter-card">
                 <span class="status-pill">Disponible</span>
-                <h3>MT421-Methode-numerique</h3>
+                <h3>MT461-Methode-numerique</h3>
                 <p>Calcul scientifique : erreurs, arithmetique flottante, solveurs non lineaires, EDO et stabilite numerique.</p>
-                <p class="secondary-link"><a href="MT421-Methode-numerique.html">Ouvrir le cours</a></p>
+                <p class="secondary-link"><a href="MT461-Methode-numerique.html">Ouvrir le cours</a></p>
               </article>
               <article class="chapter-card">
                 <span class="status-pill">Disponible</span>
@@ -657,6 +647,25 @@ function renderAnalogElecCourse() {
     heading: "Electronique analogique",
     cta: '<a class="primary-button" href="index.html#semestre-5">Semestre 5</a>',
     body: readStandaloneCourseBody("EP331-Electronique-analogique"),
+    showAnnotations: true,
+  });
+}
+
+function renderAlgoCourse() {
+  const structure = courseStructures["IN331-Algo"];
+  const course = readCourseBody("IN331-Algo", structure);
+  const nav = renderCommonCourseNav(structure);
+
+  return renderShell({
+    title: "IN331-Algo - Revision ESISAR",
+    brandMark: "C",
+    brandTitle: "IN331-Algo",
+    brandSubtitle: "C et algorithmique",
+    nav,
+    eyebrow: "Semestre 5",
+    heading: "Programmation C et algorithmique",
+    cta: '<a class="primary-button" href="index.html#semestre-5">Semestre 5</a>',
+    body: course,
     showAnnotations: true,
   });
 }
@@ -794,14 +803,14 @@ function renderDevMcuCourse() {
 }
 
 function renderNumericMethodsCourse() {
-  const structure = courseStructures["MT421-Methode-numerique"];
-  const course = readCourseBody("MT421-Methode-numerique", structure);
+  const structure = courseStructures["MT461-Methode-numerique"];
+  const course = readCourseBody("MT461-Methode-numerique", structure);
   const nav = renderCommonCourseNav(structure);
 
   return renderShell({
-    title: "MT421-Methode-numerique - Revision ESISAR",
+    title: "MT461-Methode-numerique - Revision ESISAR",
     brandMark: "M",
-    brandTitle: "MT421-Methode-numerique",
+    brandTitle: "MT461-Methode-numerique",
     brandSubtitle: "Methodes numeriques",
     nav,
     eyebrow: "Semestre 7",
@@ -840,6 +849,7 @@ write(pages.home, renderHome());
 write(pages["AU331-Traitement-Signal"], renderSignalCourse());
 write(pages["SN331-Architecture-processeur"], renderProcessorCourse());
 write(pages["EP331-Electronique-analogique"], renderAnalogElecCourse());
+write(pages["IN331-Algo"], renderAlgoCourse());
 write(pages["MT331-Probabilites"], renderMath());
 write(pages["AU361-Automatique"], renderAutoCourse());
 write(pages["EP361-electonique"], renderElecCourse());
@@ -847,7 +857,7 @@ write(pages["IN361-JAVA"], renderJavaCourse());
 write(pages["IN363-Reseau"], renderReseauCourse());
 write(pages["SN361-VHDL"], renderVhdlCourse());
 write(pages["SN421-Dev-Micro"], renderDevMcuCourse());
-write(pages["MT421-Methode-numerique"], renderNumericMethodsCourse());
+write(pages["MT461-Methode-numerique"], renderNumericMethodsCourse());
 write(pages["EP425-Capteur"], renderSensorCourse());
 
 console.log("Application construite dans out/.");

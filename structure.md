@@ -41,14 +41,13 @@ content/<matiere>/exam/*.md
 
 ## Fichiers Statiques
 
-Les assets et PDF restent references dans les Markdown avec des chemins web
-simples comme `assets/...` et `pdf/...`.
+Les assets restent references dans les Markdown avec des chemins web simples
+comme `assets/...`.
 
 Sur disque, ils sont ranges dans :
 
 ```text
 public/assets/
-public/pdf/
 public/styles.css
 public/script.js
 ```

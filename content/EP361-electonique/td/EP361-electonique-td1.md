@@ -6,7 +6,6 @@ target: "EP361-electonique-td1.html"
 eyebrow: "EP361 - TD 1"
 heading: "Quadripoles"
 summary: "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
-pdfHref: "pdf/EP361-electonique/td/EP361_Poly_TD.pdf"
 ---
 :::section id="ep361-electonique-td1" eyebrow="TD 1" title="Quadripoles" summary="Corrections guidees et simulations CircuitJS pour cette partie du TD."
 

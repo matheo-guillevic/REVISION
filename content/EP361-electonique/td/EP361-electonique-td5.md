@@ -6,7 +6,6 @@ target: "EP361-electonique-td5.html"
 eyebrow: "EP361 - TD 5"
 heading: "Oscillateurs"
 summary: "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
-pdfHref: "pdf/EP361-electonique/td/EP361_Poly_TD.pdf"
 ---
 :::section id="ep361-electonique-td5" eyebrow="TD 5" title="Oscillateurs" summary="Corrections guidees et simulations CircuitJS pour cette partie du TD."
 

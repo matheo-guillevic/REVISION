@@ -6,7 +6,6 @@ target: "EP361-electonique-td6.html"
 eyebrow: "EP361 - TD 6"
 heading: "Convertisseurs"
 summary: "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
-pdfHref: "pdf/EP361-electonique/td/EP361_Poly_TD.pdf"
 ---
 :::section id="ep361-electonique-td6" eyebrow="TD 6" title="Convertisseurs" summary="Corrections guidees et simulations CircuitJS pour cette partie du TD."
 

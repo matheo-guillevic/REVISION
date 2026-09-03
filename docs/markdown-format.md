@@ -1,4 +1,4 @@
-# Format Markdown enrichi
+﻿# Format Markdown enrichi
 
 Les pages peuvent etre ecrites dans `content/<matiere>/*.md`.
 Le build garde le rendu du site en transformant des blocs Markdown enrichis en HTML.
@@ -72,7 +72,7 @@ Les graphiques interactifs utilisent `:::plotly`. Le corps du bloc est une
 specification JSON Plotly : `series`, `data`, `layout` et `config`.
 
 ```md
-:::plotly id="mt421-exemple" label="Graphique interactif" title="Erreur d'une methode" height="420" caption="Zoomer ou deplacer la courbe pour lire les ordres de grandeur."
+:::plotly id="mt461-exemple" label="Graphique interactif" title="Erreur d'une methode" height="420" caption="Zoomer ou deplacer la courbe pour lire les ordres de grandeur."
 {
   "series": [
     {
@@ -154,8 +154,8 @@ Objectif court ou protocole de manipulation.
 :::
 
 :::dashboard
-:::card class="chapter-card" pill="PDF" title="Support" href="pdf/elec/cours/support.pdf" link="Ouvrir le PDF"
-Description courte.
+:::card class="chapter-card" pill="Cours" title="Synthese" href="#elec-synthese" link="Ouvrir"
+Description courte ou lien vers une section du site.
 :::
 :::
 ```
@@ -204,6 +204,26 @@ P(A)=\frac{|A|}{|\Omega|}
 
 Pour les pages d'electronique, les simulations peuvent etre integrees au
 milieu d'un exercice avec `:::circuitjs`.
+
+## Exercices C autonomes
+
+Pour les petits exercices de programmation C sur GitHub Pages, utiliser
+`:::cplayground`. Le bloc est entierement execute cote navigateur : il sert a
+tester de courts fragments et a obtenir des diagnostics pedagogiques sans
+serveur.
+
+````md
+:::cplayground label="Exercice interactif" title="Premier programme C"
+```c
+#include <stdio.h>
+
+int main() {
+    printf("Bonjour\n");
+    return 0;
+}
+```
+:::
+````
 
 ## Source des cours
 

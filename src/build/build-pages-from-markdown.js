@@ -38,10 +38,6 @@ function renderPage(group, page, kind, markdownPath) {
   const data = { ...page, ...parsed.data };
   const isTd = kind === "td";
   const sourceLabel = toWebPath(path.relative(root, markdownPath));
-  const pdfHref = data.pdfHref || (data.pdf ? toWebPath(path.join("pdf", group.subject, "TD", data.pdf)) : "");
-  const pdfLink = pdfHref
-    ? `<a class="primary-button" href="${escapeHtml(pdfHref)}">Ouvrir le PDF</a>`
-    : "";
   const prism = data.withPrism || group.withPrism || group.subject === "IN361-JAVA" || group.subject === "SN361-VHDL";
   const prismLink = prism ? '\n    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">' : "";
   const prismScripts = prism
@@ -75,7 +71,7 @@ function renderPage(group, page, kind, markdownPath) {
           ${data.summary ? `<p>${escapeHtml(data.summary)}</p>` : ""}
           <p>Page reconstruite depuis <code>${escapeHtml(sourceLabel)}</code>.</p>
         </div>
-        <div class="td-actions">${pdfLink}
+        <div class="td-actions">
           <a class="back-link" href="${escapeHtml(group.courseHref)}">${escapeHtml(group.courseLabel)}</a>
         </div>
       </header>

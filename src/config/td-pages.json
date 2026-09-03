@@ -132,7 +132,6 @@
         {
           "n": 1,
           "target": "AU361-Automatique-td1.html",
-          "pdf": "AU361-TD1.pdf",
           "title": "TD 1 corrige - Modelisation des systemes",
           "eyebrow": "AU361 - TD 1",
           "heading": "Modelisation des systemes lineaires",
@@ -141,7 +140,6 @@
         {
           "n": 2,
           "target": "AU361-Automatique-td2.html",
-          "pdf": "AU361-TD2.pdf",
           "title": "TD 2 corrige - Stabilite et correcteurs",
           "eyebrow": "AU361 - TD 2",
           "heading": "Stabilite, robustesse et correcteurs",
@@ -150,7 +148,6 @@
         {
           "n": 3,
           "target": "AU361-Automatique-td3.html",
-          "pdf": "AU361-TD3.pdf",
           "title": "TD 3 corrige - Asservissement de position",
           "eyebrow": "AU361 - TD 3",
           "heading": "Asservissement de position",
@@ -171,7 +168,6 @@
         {
           "n": 4,
           "target": "AU361-Automatique-td4.html",
-          "pdf": "AU361-TD4.pdf",
           "title": "TD 4 corrige - Synthese RST",
           "eyebrow": "AU361 - TD 4",
           "heading": "Synthese RST",
@@ -316,7 +312,6 @@
         {
           "n": 1,
           "target": "EP361-electonique-td1.html",
-          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
           "title": "TD 1 corrige - Quadripoles",
           "eyebrow": "EP361 - TD 1",
           "heading": "Quadripoles",
@@ -325,7 +320,6 @@
         {
           "n": 2,
           "target": "EP361-electonique-td2.html",
-          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
           "title": "TD 2 corrige - Filtres",
           "eyebrow": "EP361 - TD 2",
           "heading": "Filtres",
@@ -334,7 +328,6 @@
         {
           "n": 3,
           "target": "EP361-electonique-td3.html",
-          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
           "title": "TD 3 corrige - Filtres actifs",
           "eyebrow": "EP361 - TD 3",
           "heading": "Filtres actifs",
@@ -343,7 +336,6 @@
         {
           "n": 4,
           "target": "EP361-electonique-td4.html",
-          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
           "title": "TD 4 corrige - Puissance",
           "eyebrow": "EP361 - TD 4",
           "heading": "Puissance",
@@ -352,7 +344,6 @@
         {
           "n": 5,
           "target": "EP361-electonique-td5.html",
-          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
           "title": "TD 5 corrige - Oscillateurs",
           "eyebrow": "EP361 - TD 5",
           "heading": "Oscillateurs",
@@ -361,7 +352,6 @@
         {
           "n": 6,
           "target": "EP361-electonique-td6.html",
-          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
           "title": "TD 6 corrige - Convertisseurs",
           "eyebrow": "EP361 - TD 6",
           "heading": "Convertisseurs",
@@ -370,7 +360,6 @@
         {
           "n": 7,
           "target": "EP361-electonique-td7.html",
-          "pdfHref": "pdf/EP361-electonique/td/EP361_Poly_TD.pdf",
           "title": "TD 7 corrige - DS 2014",
           "eyebrow": "EP361 - TD 7",
           "heading": "DS 2014",
@@ -393,7 +382,6 @@
         {
           "n": 1,
           "target": "SN361-VHDL-td1.html",
-          "pdf": "TD1_Correction_SN361.pdf",
           "title": "TD 1 corrige - Codage binaire et logique combinatoire",
           "eyebrow": "SN361 - TD 1",
           "heading": "Codage binaire, tables de verite et logique combinatoire",
@@ -402,7 +390,6 @@
         {
           "n": 2,
           "target": "SN361-VHDL-td2.html",
-          "pdf": "TD2_Correction_SN361.pdf",
           "title": "TD 2 corrige - Synthese logique et circuits sequentiels",
           "eyebrow": "SN361 - TD 2",
           "heading": "Synthese de schemas, bascules et detection d'evenements",
@@ -438,7 +425,6 @@
         {
           "n": 3,
           "target": "SN361-VHDL-td3.html",
-          "pdf": "TD3_Correction_SN361.pdf",
           "title": "TD 3 corrige - Compteurs et test benches",
           "eyebrow": "SN361 - TD 3",
           "heading": "Compteurs, resets, enable et test benches",
@@ -455,7 +441,6 @@
         {
           "n": 4,
           "target": "SN361-VHDL-td4.html",
-          "pdf": "TD4_correction_vb.pdf",
           "title": "TD 4 corrige - Machines a etats finis",
           "eyebrow": "SN361 - TD 4",
           "heading": "Bascule Toggle, Moore, Mealy et synchronisation",

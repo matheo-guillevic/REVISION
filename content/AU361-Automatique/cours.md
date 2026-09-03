@@ -4,7 +4,7 @@ subject: AU361-Automatique
 type: course
 ---
 
-:::section id="AU361-Automatique-intro" eyebrow="AU361-Automatique" title="Analyse et commande des systemes lineaires" summary="Ce cours reprend les supports d'automatique du dossier pdf/AU361-Automatique : representation entree-sortie, transformee de Laplace, fonctions de transfert, analyse temporelle et frequentielle, stabilite, robustesse, precision, PID et RST."
+:::section id="AU361-Automatique-intro" eyebrow="AU361-Automatique" title="Analyse et commande des systemes lineaires" summary="Ce cours rassemble les notions essentielles d'automatique : representation entree-sortie, transformee de Laplace, fonctions de transfert, analyse temporelle et frequentielle, stabilite, robustesse, precision, PID et RST."
 :::dashboard
 :::card class="progress-card" kicker="Objectif" title="AU361"
 Comprendre un systeme lineaire, analyser ses performances, puis choisir ou synthetiser un correcteur.
@@ -316,7 +316,7 @@ PID : rapide a regler et tres industriel. RST : plus calculatoire, mais permet d
 :::
 :::
 
-:::section id="AU361-Automatique-td" eyebrow="Entrainement" title="TD et exercices types" summary="Les TD du dossier pdf/AU361-Automatique/TD couvrent la modelisation, l'analyse de stabilite, les PID et la synthese RST."
+:::section id="AU361-Automatique-td" eyebrow="Entrainement" title="TD et exercices types" summary="Les TD couvrent la modelisation, l'analyse de stabilite, les PID et la synthese RST."
 :::layout class="chapter-layout"
 :::card class="chapter-card" pill="TD 1" title="Representation des processus" href="AU361-Automatique-td1.html" link="Ouvrir la page corrigee"
 Variables, perturbations, schemas fonctionnels, mise en equation et fonction de transfert.
@@ -336,10 +336,8 @@ Synthese RST, equation de Bezout, suivi sans erreur statique et rejet de perturb
 :::
 
 :::grid variant="two-col"
-:::block type="neutral" title="Supports de cours"
-*   [Poly AU361](pdf/AU361-Automatique/cours/AU361-poly.pdf)
-*   [Support PID](pdf/AU361-Automatique/cours/PIDcours.pdf)
-*   [Support RST](pdf/AU361-Automatique/cours/RSTcours.pdf)
+:::block type="neutral" title="Sources integrees"
+Les supports bruts ont ete retires du site public. Les notions utiles sont reprises dans le cours Markdown et les pages de TD.
 :::
 
 :::block type="remember" title="Ordre conseille"

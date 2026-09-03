@@ -6,7 +6,6 @@ target: "AU361-Automatique-td1.html"
 eyebrow: "AU361 - TD 1"
 heading: "Modelisation des systemes lineaires"
 summary: "Corrige maintenu en Markdown."
-pdf: "AU361-TD1.pdf"
 ---
 :::exercise label="Exercice 1" title="Exercice 1 - RÃ©gulation de niveau d'un rÃ©servoir d'eau"
 #### 1. Variables et paramÃ¨tres du systÃ¨me

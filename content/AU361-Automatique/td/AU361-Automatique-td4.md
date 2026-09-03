@@ -6,7 +6,6 @@ target: "AU361-Automatique-td4.html"
 eyebrow: "AU361 - TD 4"
 heading: "Synthese RST"
 summary: "Corrige maintenu en Markdown."
-pdf: "AU361-TD4.pdf"
 ---
 :::exercise label="Exercice 1" title="Exercice 1 - SynthÃ¨se RST pour un systÃ¨me du 1er ordre"
 #### 1. ModÃ©lisation et cahier des charges

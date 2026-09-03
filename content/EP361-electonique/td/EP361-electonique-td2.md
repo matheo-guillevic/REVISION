@@ -6,7 +6,6 @@ target: "EP361-electonique-td2.html"
 eyebrow: "EP361 - TD 2"
 heading: "Filtres"
 summary: "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
-pdfHref: "pdf/EP361-electonique/td/EP361_Poly_TD.pdf"
 ---
 :::section id="ep361-electonique-td2" eyebrow="TD 2" title="Filtres" summary="Corrections guidees et simulations CircuitJS pour cette partie du TD."
 

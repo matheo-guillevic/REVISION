@@ -4,7 +4,7 @@ subject: IN363-Reseau
 type: course
 ---
 
-:::section id="reseau-intro" eyebrow="IN363-Reseau" title="Cours reseaux" summary="Cette page reprend le support pdf/IN363-Reseau/cours/IN363_Reseau_3app_V4_2.pdf : bases de calcul, modele OSI, couches basses, Ethernet, adressage IP, protocoles de resolution, transport TCP/UDP et premiers protocoles applicatifs."
+:::section id="reseau-intro" eyebrow="IN363-Reseau" title="Cours reseaux" summary="Cette page rassemble les bases de calcul, le modele OSI, les couches basses, Ethernet, l'adressage IP, les protocoles de resolution, le transport TCP/UDP et les premiers protocoles applicatifs."
 :::dashboard
 :::card class="progress-card" kicker="Objectif" title="IN363"
 Comprendre comment une donnee devient une trame, traverse un reseau, puis remonte vers une application.
@@ -327,10 +327,10 @@ Apres ce handshake, les donnees applicatives comme HTTP ou FTP peuvent commencer
 :::
 :::
 
-:::section id="reseau-pdfs" eyebrow="Support" title="PDF original" summary="Le support ajoute dans pdf/IN363-Reseau/cours reste accessible directement."
+:::section id="reseau-pdfs" eyebrow="Sources integrees" title="Cours integre au Markdown" summary="Les supports bruts ne sont plus publies sur le site."
 :::dashboard
-:::card class="chapter-card" pill="IN363" title="Cours reseaux" href="pdf/IN363-Reseau/cours/IN363_Reseau_3app_V4_2.pdf" link="Ouvrir le PDF"
-Support complet : OSI, couches basses, Ethernet, IP, ARP, TCP/UDP, ICMP et HTTP.
+:::card class="chapter-card" pill="IN363" title="Contenu integre"
+OSI, couches basses, Ethernet, IP, ARP, TCP/UDP, ICMP et HTTP sont repris directement dans cette page.
 :::
 :::
 :::

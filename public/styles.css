@@ -913,6 +913,92 @@ button:hover,
   text-align: center;
 }
 
+.c-playground {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.c-playground header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 18px 0;
+}
+
+.c-playground h3 {
+  margin: 8px 0 0;
+}
+
+.c-playground textarea {
+  width: calc(100% - 36px);
+  min-height: 140px;
+  overflow: hidden;
+  margin: 0 18px;
+  resize: vertical;
+  border: 1px solid #223047;
+  border-radius: 8px;
+  padding: 16px;
+  background: #111827;
+  color: #e5e7eb;
+  font: 0.92rem/1.55 "Cascadia Code", "Fira Code", Consolas, monospace;
+  tab-size: 4;
+}
+
+.c-playground-results {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 14px;
+  padding: 0 18px 18px;
+}
+
+.c-playground-results > div {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.c-playground-results strong {
+  display: block;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 12px;
+}
+
+.c-playground pre,
+.c-playground ul {
+  margin: 0;
+  padding: 12px;
+}
+
+.c-playground pre {
+  min-height: 86px;
+  overflow: auto;
+  white-space: pre-wrap;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+}
+
+.c-playground ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 30px;
+  color: var(--muted);
+}
+
+.c-playground.has-error .c-playground-results > div:first-child {
+  border-color: #df7878;
+  background: #fffafa;
+}
+
+.c-playground > .diagram-caption {
+  margin: -6px 18px 18px;
+}
+
 .wokwi-placeholder strong {
   color: var(--text);
 }
@@ -1324,6 +1410,7 @@ button:hover,
   .revision-grid,
   .content-grid,
   .quick-grid,
+  .c-playground-results,
   .circuitjs-grid {
     grid-template-columns: 1fr;
   }
@@ -1357,6 +1444,10 @@ button:hover,
   }
 
   .exercise-card header {
+    flex-direction: column;
+  }
+
+  .c-playground header {
     flex-direction: column;
   }
 

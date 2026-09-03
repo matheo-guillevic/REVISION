@@ -6,7 +6,6 @@ target: "SN361-VHDL-td4.html"
 eyebrow: "SN361 - TD 4"
 heading: "Bascule Toggle, Moore, Mealy et synchronisation"
 summary: "FSM Moore/Mealy, reset asynchrone, nombre de bascules et synchronisation d'une entree asynchrone."
-pdf: "TD4_correction_vb.pdf"
 ---
 :::exercise label="Exercice 1" title="Exercice 1 :"
 Vous allez dÃ©crire en VHDL une bascule Toggle dont la sortie \(q\) change de valeur Ã  chaque nouveau front d'horloge `clk` quand `t` est actif. Le signal de remise Ã  zÃ©ro `reset` est asynchrone.

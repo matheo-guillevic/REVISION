@@ -6,7 +6,6 @@ target: "AU361-Automatique-td3.html"
 eyebrow: "AU361 - TD 3"
 heading: "Asservissement de position"
 summary: "Corrige maintenu en Markdown."
-pdf: "AU361-TD3.pdf"
 ---
 :::exercise label="Partie I" title="Partie I - Analyse du processus Ã  piloter"
 Le systÃ¨me mÃ©canique relie la commande \(u\) Ã  la vitesse \(vit\) par un premier ordre de gain statique \(G=5\) et de constante de temps \(\tau=0.1\) s.

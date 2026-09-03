@@ -81,6 +81,12 @@ function stripJsonFence(source = "") {
   return match ? match[1].trim() : trimmed;
 }
 
+function stripCodeFence(source = "") {
+  const trimmed = source.trim();
+  const match = trimmed.match(/^```(?:[a-zA-Z0-9_-]+)?\s*\n([\s\S]*?)\n```$/);
+  return match ? match[1].trim() : trimmed;
+}
+
 function renderContentMarkdown(source, listMode = "formula") {
   const ulClass = listMode === "plain" ? "" : ' class="formula-list"';
   const olClass = listMode === "card" ? ' class="ordered-list"' : ' class="solution-steps"';
@@ -289,6 +295,34 @@ ${renderBlocks(block.body, options)}
               <div class="plotly-chart" data-plotly-chart style="height: ${escapeHtml(attrs.height || "420")}px"></div>
               <script type="application/json" data-plotly-config>${escapeJsonScript(json)}</script>
 ${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.caption)}</p>\n` : ""}            </article>`;
+    }
+
+    case "cplayground": {
+      const code = stripCodeFence(block.body);
+      return `            <article class="c-playground"${attrs.id ? ` id="${escapeHtml(attrs.id)}"` : ""} data-c-playground>
+              <header>
+                <div>
+                  <span class="status-pill">${escapeHtml(attrs.label || "C autonome")}</span>
+                  <h3>${escapeHtml(attrs.title || "Exercice C interactif")}</h3>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-c-run>Analyser / simuler</button>
+                  <button type="button" class="ghost-button" data-c-reset>Reinitialiser</button>
+                </div>
+              </header>
+              <textarea spellcheck="false" data-c-editor>${escapeHtml(code)}</textarea>
+              <div class="c-playground-results" aria-live="polite">
+                <div>
+                  <strong>Sortie</strong>
+                  <pre data-c-output>En attente d'execution.</pre>
+                </div>
+                <div>
+                  <strong>Explications</strong>
+                  <ul data-c-explain></ul>
+                </div>
+              </div>
+              <p class="diagram-caption">Mode autonome GitHub Pages : analyse pedagogique locale, sans serveur de compilation.</p>
+            </article>`;
     }
 
     case "wokwi": {

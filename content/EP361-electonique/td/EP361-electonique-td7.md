@@ -6,7 +6,6 @@ target: "EP361-electonique-td7.html"
 eyebrow: "EP361 - TD 7"
 heading: "DS 2014"
 summary: "Corrections guidees et simulations CircuitJS pour les exercices d electronique."
-pdfHref: "pdf/EP361-electonique/td/EP361_Poly_TD.pdf"
 ---
 :::section id="ep361-electonique-td7" eyebrow="TD 7" title="DS 2014" summary="Corrections guidees et simulations CircuitJS pour cette partie du TD."
 

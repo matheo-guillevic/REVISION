@@ -6,7 +6,6 @@ target: "AU361-Automatique-td2.html"
 eyebrow: "AU361 - TD 2"
 heading: "Stabilite, robustesse et correcteurs"
 summary: "Corrige maintenu en Markdown."
-pdf: "AU361-TD2.pdf"
 ---
 :::exercise label="Exercice 1" title="Exercice 1 - StabilitÃ© (Routh, Nyquist et Marge de gain)"
 Soit la fonction de transfert en boucle ouverte (FTBO) avec le correcteur proportionnel \(K\) : \[FTBO(p) = K \cdot F(p) = \frac{K}{p(p^2+5p+6)} = \frac{K}{p^3+5p^2+6p}\]

@@ -4,7 +4,7 @@ subject: SN361-VHDL
 type: course
 ---
 
-:::section id="vhdl-intro" eyebrow="SN361-VHDL" title="VHDL et conception de circuits numeriques" summary="Cette page transforme les supports extraits de pdf/SN361-VHDL/cours en cours de revision : chaque chapitre reprend les notions principales, explique ce qu'il faut comprendre, puis isole les points importants a retenir pour l'examen et les TP."
+:::section id="vhdl-intro" eyebrow="SN361-VHDL" title="VHDL et conception de circuits numeriques" summary="Cette page transforme les supports de cours en revision structuree : chaque chapitre reprend les notions principales, explique ce qu'il faut comprendre, puis isole les points importants a retenir pour l'examen et les TP."
 :::dashboard
 :::card class="progress-card" kicker="Parcours" title="7 CM"
 Du choix FPGA/processeur jusqu'aux machines a etats et aux composants programmables.
@@ -837,38 +837,38 @@ Complement a 2, chronogramme VHDL, traduction Verilog, PWM et machine a etats de
 :::
 :::
 
-:::section id="vhdl-pdfs" eyebrow="Sources" title="PDF originaux et fiche syntaxe" summary="Ces liens servent a retrouver les schemas, chronogrammes et exercices complets des supports originaux."
+:::section id="vhdl-pdfs" eyebrow="Sources integrees" title="Cours integre au Markdown" summary="Les supports bruts ne sont plus publies sur le site."
 :::dashboard
-:::card class="chapter-card" pill="26 pages" title="CM1 - Introduction" href="pdf/SN361-VHDL/cours/SN361_CM1_Introduction_V2.3.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="CM1" title="Introduction"
 Logique reconfigurable, FPGA SRAM, HDL et flot de conception.
 :::
 
-:::card class="chapter-card" pill="19 pages" title="CM2 - Representation des nombres" href="pdf/SN361-VHDL/cours/SN361_CM2_Representation_des_nombres_V2.4.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="CM2" title="Representation des nombres"
 Binaire, hexadecimal, types VHDL et complement a 2.
 :::
 
-:::card class="chapter-card" pill="44 pages" title="CM3 - Circuits combinatoires" href="pdf/SN361-VHDL/cours/SN361_CM3_Circuits_combinatoires_V2.4.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="CM3" title="Circuits combinatoires"
 Portes logiques, equations, VHDL combinatoire et blocs usuels.
 :::
 
-:::card class="chapter-card" pill="52 pages" title="CM4 - Circuits sequentiels" href="pdf/SN361-VHDL/cours/SN361_CM4_Circuits_sequentiels_V2.5.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="CM4" title="Circuits sequentiels"
 Bascules, registres, compteurs, memoires et processus synchrones.
 :::
 
-:::card class="chapter-card" pill="22 pages" title="CM5 - Machines a etats finis" href="pdf/SN361-VHDL/cours/SN361_CM5_Machines_a_etats_finis_V2.4.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="CM5" title="Machines a etats finis"
 Moore, Mealy, transitions, sorties et codage VHDL des FSM.
 :::
 
-:::card class="chapter-card" pill="32 pages" title="CM6 - Complements HDL" href="pdf/SN361-VHDL/cours/SN361_CM6_Complements_HDL_V3.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="CM6" title="Complements HDL"
 Generiques, generate, signaux, variables et simulation evenementielle.
 :::
 
-:::card class="chapter-card" pill="37 pages" title="CM7 - Composants programmables" href="pdf/SN361-VHDL/cours/SN361_CM7_Les_composants_programmables_3_3.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="CM7" title="Composants programmables"
 CPLD, FPGA, LUT, technologies SRAM/Flash/anti-fusible et criteres de choix.
 :::
 
-:::card class="chapter-card" pill="Bonus" muted="true" title="Syntaxe VHDL" href="pdf/SN361-VHDL/cheatsheet/Syntaxe-VHDL-Esisar.pdf" link="Ouvrir la fiche"
-Fiche de syntaxe disponible dans le dossier `pdf/SN361-VHDL/cheatsheet`.
+:::card class="chapter-card" pill="Bonus" muted="true" title="Syntaxe VHDL"
+Les rappels de syntaxe utiles sont integres dans les chapitres et les exercices.
 :::
 :::
 :::

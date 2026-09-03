@@ -6,7 +6,6 @@ target: "SN361-VHDL-td3.html"
 eyebrow: "SN361 - TD 3"
 heading: "Compteurs, resets, enable et test benches"
 summary: "Compteur 8 bits, reset asynchrone, activation synchrone, simulation VHDL/Verilog et evolution up/down."
-pdf: "TD3_Correction_SN361.pdf"
 ---
 :::exercise label="Exercice 1" title="Exercice 1 : Conception d'un compteur Ã©lectronique"
 En Ã©lectronique, un compteur est un composant essentiel. ConsidÃ©rons ici un compteur 8 bits comportant:

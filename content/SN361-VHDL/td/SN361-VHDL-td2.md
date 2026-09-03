@@ -6,7 +6,6 @@ target: "SN361-VHDL-td2.html"
 eyebrow: "SN361 - TD 2"
 heading: "Synthese de schemas, bascules et detection d'evenements"
 summary: "Lecture de code VHDL, schemas de bascules, sorties synchrones/asynchrones et chronogrammes."
-pdf: "TD2_Correction_SN361.pdf"
 ---
 :::exercise label="Exercice 1.1" title="Exercice 1.1"
 On considÃ¨re le programme ci-dessous :

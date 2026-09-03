@@ -6,7 +6,6 @@ target: "SN361-VHDL-td1.html"
 eyebrow: "SN361 - TD 1"
 heading: "Codage binaire, tables de verite et logique combinatoire"
 summary: "Conversions signees/non signees, complement a 2, portes logiques, XOR/XNOR et comparateurs."
-pdf: "TD1_Correction_SN361.pdf"
 ---
 :::exercise label="Exercice 1" title="EXERCICE 1"
 #### 1) Rappeler les bornes minimale et maximale pour le codage des nombres signÃ©s et non signÃ©s sur \(n\) bits.

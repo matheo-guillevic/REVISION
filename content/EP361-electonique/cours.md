@@ -4,7 +4,7 @@ subject: EP361-electonique
 type: course
 ---
 
-:::section id="elec-intro" eyebrow="EP361-electonique" title="Circuits electroniques" summary="Cette page integre les quatre supports du dossier pdf/EP361-electonique/cours : quadripoles, filtres, amplificateurs et oscillateurs quasi-sinusoidaux."
+:::section id="elec-intro" eyebrow="EP361-electonique" title="Circuits electroniques" summary="Cette page integre les notions essentielles : quadripoles, filtres, amplificateurs et oscillateurs quasi-sinusoidaux."
 :::dashboard
 :::card class="progress-card" kicker="Objectif" title="EP361"
 Analyser des blocs analogiques evolues et concevoir des fonctions elementaires.
@@ -334,13 +334,13 @@ Corrections guidees et simulations CircuitJS pour les exercices d electronique.
 :::
 :::
 
-:::section id="EP361-electonique-td-pdf" eyebrow="Source" title="Poly original" summary="Support PDF conserve pour comparaison avec la version Markdown."
-:::card class="chapter-card" pill="PDF" muted="true" title="Poly original" href="pdf/EP361-electonique/td/EP361_Poly_TD.pdf" link="Ouvrir le PDF source"
-Source EP360/EP361 ajoutee au dossier des supports.
+:::section id="EP361-electonique-td-pdf" eyebrow="Sources integrees" title="TD integres au Markdown" summary="Les supports bruts ne sont plus publies sur le site."
+:::card class="chapter-card" pill="TD" muted="true" title="Contenu integre"
+Les enonces et corrections utiles sont repris dans les pages de TD Markdown.
 :::
 :::
 
-:::section id="EP361-electonique-exams" eyebrow="Entrainement" title="Examen corrige" summary="Une page dediee reprend les examens ajoutes dans pdf/EP361-electonique/exam, avec les schemas et la correction detaillee."
+:::section id="EP361-electonique-exams" eyebrow="Entrainement" title="Examen corrige" summary="Les pages dediees reprennent les sujets utiles, les schemas et la correction detaillee."
 :::dashboard
 :::card class="chapter-card" pill="2025" title="Examen EP361-electonique 2025" href="EP361-electonique-exam-2025.html" link="Ouvrir la correction"
 Quadripoles, filtre actif passe-bas, filtre universel et AOP de puissance push-pull.
@@ -370,21 +370,21 @@ Darlington, filtre actif, filtre universel et oscillateur avec critere de Barkha
 :::
 :::
 
-:::section id="elec-pdfs" eyebrow="Supports" title="PDF originaux" summary="Les supports ajoutes dans pdf/EP361-electonique/cours restent accessibles directement."
+:::section id="elec-pdfs" eyebrow="Sources integrees" title="Cours integre au Markdown" summary="Les supports bruts ne sont plus publies sur le site."
 :::dashboard
-:::card class="chapter-card" pill="I" title="Quadripoles" href="pdf/EP361-electonique/cours/EP361_I_Presentation_Quadripole.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="I" title="Quadripoles"
 Presentation du module, matrices et associations de quadripoles.
 :::
 
-:::card class="chapter-card" pill="II" title="Filtres" href="pdf/EP361-electonique/cours/EP361_II_Filtres.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="II" title="Filtres"
 Gabarits, approximations, filtres actifs et capacites commutees.
 :::
 
-:::card class="chapter-card" pill="III" title="Amplificateurs" href="pdf/EP361-electonique/cours/EP361_III_Amplificateurs.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="III" title="Amplificateurs"
 Classes A/B, rendement, distorsion, transistors, AOP et dissipation.
 :::
 
-:::card class="chapter-card" pill="IV" title="Oscillateurs" href="pdf/EP361-electonique/cours/EP361_IV_Oscillateurs.pdf" link="Ouvrir le PDF"
+:::card class="chapter-card" pill="IV" title="Oscillateurs"
 Barkhausen, pont de Wien, LC, quartz et VCO.
 :::
 :::

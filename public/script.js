@@ -259,6 +259,354 @@ function initPlotlyCharts() {
   });
 }
 
+function decodeCString(value) {
+  return value
+    .replace(/\\n/g, "\n")
+    .replace(/\\t/g, "\t")
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, "\\");
+}
+
+function splitCArguments(source) {
+  const args = [];
+  let current = "";
+  let inString = false;
+  let escaped = false;
+  let depth = 0;
+
+  for (const char of source) {
+    if (escaped) {
+      current += char;
+      escaped = false;
+      continue;
+    }
+    if (char === "\\") {
+      current += char;
+      escaped = true;
+      continue;
+    }
+    if (char === '"') inString = !inString;
+    if (!inString && ["(", "[", "{"].includes(char)) depth += 1;
+    if (!inString && [")", "]", "}"].includes(char)) depth -= 1;
+    if (!inString && depth === 0 && char === ",") {
+      args.push(current.trim());
+      current = "";
+      continue;
+    }
+    current += char;
+  }
+
+  if (current.trim()) args.push(current.trim());
+  return args;
+}
+
+function collectCVariables(code) {
+  const variables = {};
+  const declarations = code.matchAll(/\b(?:int|long|short|char)\s+([^;\n]+);/g);
+
+  for (const declaration of declarations) {
+    splitCArguments(declaration[1]).forEach((part) => {
+      const match = part.match(/\*?\s*([a-zA-Z_]\w*)\s*(?:=\s*(.+))?/);
+      if (!match) return;
+      const raw = match[2];
+      if (!raw) variables[match[1]] = 0;
+      else if (raw.trim().startsWith("'")) variables[match[1]] = raw.trim().charCodeAt(1);
+      else variables[match[1]] = evaluateCExpression(raw, variables);
+    });
+  }
+
+  return variables;
+}
+
+function extractCFunctionCalls(source, name) {
+  const calls = [];
+  let index = 0;
+
+  while (index < source.length) {
+    const start = source.indexOf(`${name}(`, index);
+    if (start === -1) break;
+
+    let cursor = start + name.length;
+    let depth = 0;
+    let inString = false;
+    let escaped = false;
+    let callStart = -1;
+
+    for (; cursor < source.length; cursor += 1) {
+      const char = source[cursor];
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+      if (char === "\\") {
+        escaped = true;
+        continue;
+      }
+      if (char === '"') {
+        inString = !inString;
+        continue;
+      }
+      if (inString) continue;
+      if (char === "(") {
+        if (depth === 0) callStart = cursor + 1;
+        depth += 1;
+      } else if (char === ")") {
+        depth -= 1;
+        if (depth === 0) {
+          calls.push(source.slice(callStart, cursor));
+          cursor += 1;
+          break;
+        }
+      }
+    }
+
+    index = Math.max(cursor, start + name.length + 1);
+  }
+
+  return calls;
+}
+
+function parsePrintfCall(callSource) {
+  const match = callSource.match(/^\s*"((?:\\.|[^"\\])*)"\s*(?:,\s*([\s\S]*))?\s*$/);
+  if (!match) return null;
+  return {
+    format: match[1],
+    args: splitCArguments(match[2] || ""),
+  };
+}
+
+function evaluateKnownRecursiveCall(expression, variables) {
+  const pgcdCall = expression.trim().match(/^pgcd\s*\(([^,]+),\s*([^)]+)\)$/);
+  if (!pgcdCall) return null;
+
+  let a = Number(evaluateCExpression(pgcdCall[1], variables));
+  let b = Number(evaluateCExpression(pgcdCall[2], variables));
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return null;
+
+  let guard = 0;
+  while (b !== 0 && guard < 100) {
+    const next = a % b;
+    a = b;
+    b = next;
+    guard += 1;
+  }
+
+  return a;
+}
+
+function evaluateCExpression(expression, variables) {
+  const normalized = expression.trim();
+  const knownRecursiveCall = evaluateKnownRecursiveCall(normalized, variables);
+  if (knownRecursiveCall !== null) return knownRecursiveCall;
+  if (/^-?\d+$/.test(normalized)) return Number(normalized);
+  if (Object.prototype.hasOwnProperty.call(variables, normalized)) return variables[normalized];
+  const substituted = normalized.replace(/\b[a-zA-Z_]\w*\b/g, (name) =>
+    Object.prototype.hasOwnProperty.call(variables, name) ? String(variables[name]) : name
+  );
+  if (/^[\d\s+\-*/%().]+$/.test(substituted)) {
+    try {
+      return Function(`"use strict"; return (${substituted});`)();
+    } catch {
+      return normalized;
+    }
+  }
+  return normalized;
+}
+
+function evaluateCCondition(expression, variables) {
+  const substituted = expression.trim().replace(/\b[a-zA-Z_]\w*\b/g, (name) =>
+    Object.prototype.hasOwnProperty.call(variables, name) ? String(variables[name]) : name
+  );
+  if (/^[\d\s+\-*/%().<>=!&|]+$/.test(substituted)) {
+    try {
+      return Boolean(Function(`"use strict"; return (${substituted});`)());
+    } catch {
+      return false;
+    }
+  }
+  return false;
+}
+
+function applySimpleAssignments(source, variables) {
+  source
+    .split("\n")
+    .map((line) => line.trim())
+    .forEach((line) => {
+      const assignment = line.match(/^([a-zA-Z_]\w*)\s*=\s*([^;]+);$/);
+      if (!assignment || /^(?:if|while|for|switch|printf|scanf|return)$/.test(assignment[1])) return;
+      variables[assignment[1]] = evaluateCExpression(assignment[2], variables);
+    });
+}
+
+function collectPrintfOutput(source, variables, output) {
+  for (const call of extractCFunctionCalls(source, "printf")) {
+    const parsed = parsePrintfCall(call);
+    if (parsed) output.push(renderPrintf(parsed.format, parsed.args, variables));
+  }
+}
+
+function renderPrintf(format, args, variables) {
+  let index = 0;
+  return decodeCString(format).replace(/%[dicsf]/g, (token) => {
+    const value = evaluateCExpression(args[index] || "0", variables);
+    index += 1;
+    if (token === "%c") return String.fromCharCode(Number(value) || 0);
+    if (token === "%f") return Number(value).toFixed(6);
+    return String(value);
+  });
+}
+
+function renderPgcdTrace(code, output) {
+  const variables = collectCVariables(code);
+  const mainBody = code.match(/\bint\s+main\s*\([^)]*\)\s*\{([\s\S]*)\}\s*$/);
+  const searchArea = mainBody ? mainBody[1] : code;
+  const mainCall = extractCFunctionCalls(searchArea, "pgcd")
+    .map((call) => splitCArguments(call))
+    .find((args) => args.length >= 2 && args.every((arg) => Number.isFinite(Number(evaluateCExpression(arg, variables)))));
+  if (!mainCall) return false;
+
+  let a = Number(evaluateCExpression(mainCall[0], variables));
+  let b = Number(evaluateCExpression(mainCall[1], variables));
+  let guard = 0;
+  output.push(`pgcd(${a}, ${b})\n`);
+
+  while (b !== 0 && guard < 100) {
+    const next = a % b;
+    output.push(`pgcd(${b}, ${next})\n`);
+    a = b;
+    b = next;
+    guard += 1;
+  }
+
+  output.push(`Resultat = ${a}\n`);
+  return true;
+}
+
+function simulateCProgram(code, variables) {
+  const output = [];
+  let compact = code.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+  const simpleFor = /for\s*\(\s*(?:int\s+)?([a-zA-Z_]\w*)\s*=\s*(-?\d+)\s*;\s*\1\s*<\s*(-?\d+)\s*;\s*\1\+\+\s*\)\s*\{([\s\S]*?)\}/g;
+
+  if (/\bint\s+pgcd\s*\(/.test(compact) && renderPgcdTrace(compact, output)) return output.join("");
+
+  compact = compact.replace(simpleFor, (fullMatch, name, start, end, body) => {
+    for (let value = Number(start); value < Number(end) && value < Number(start) + 100; value += 1) {
+      variables[name] = value;
+      applySimpleAssignments(body, variables);
+      collectPrintfOutput(body, variables, output);
+    }
+    return "";
+  });
+
+  compact = compact.replace(
+    /if\s*\(([^)]+)\)\s*\{([\s\S]*?)\}\s*else\s*\{([\s\S]*?)\}/g,
+    (fullMatch, condition, thenBody, elseBody) => {
+      const selectedBody = evaluateCCondition(condition, variables) ? thenBody : elseBody;
+      applySimpleAssignments(selectedBody, variables);
+      collectPrintfOutput(selectedBody, variables, output);
+      return "";
+    }
+  );
+
+  compact = compact.replace(/if\s*\(([^)]+)\)\s*\{([\s\S]*?)\}/g, (fullMatch, condition, thenBody) => {
+    if (evaluateCCondition(condition, variables)) {
+      applySimpleAssignments(thenBody, variables);
+      collectPrintfOutput(thenBody, variables, output);
+    }
+    return "";
+  });
+
+  applySimpleAssignments(compact, variables);
+  collectPrintfOutput(compact, variables, output);
+
+  return output.join("");
+}
+
+function analyzeCProgram(code) {
+  const diagnostics = [];
+  const explanations = [];
+  const stripped = code.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+
+  if (!/\bint\s+main\s*\(/.test(stripped)) diagnostics.push("Erreur : fonction main introuvable.");
+  if (/\bprintf\s*\(/.test(stripped) && !/#include\s*<stdio\.h>/.test(stripped)) {
+    diagnostics.push("Avertissement : printf necessite generalement #include <stdio.h>.");
+  }
+  if ((stripped.match(/{/g) || []).length !== (stripped.match(/}/g) || []).length) {
+    diagnostics.push("Erreur : accolades non equilibrees.");
+  }
+  stripped
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .forEach((line) => {
+      const needsSemicolon =
+        !/[;{}:]$/.test(line) &&
+        !/^(#|if\b|else\b|for\b|while\b|do\b|switch\b|int\s+main\b)/.test(line);
+      if (needsSemicolon) diagnostics.push(`Erreur probable : point-virgule manquant apres "${line}".`);
+    });
+  if (/\bscanf\s*\([^;]*,\s*[a-zA-Z_]\w*\s*\)/.test(stripped)) {
+    diagnostics.push("Erreur probable : scanf attend l'adresse de la variable, par exemple &x.");
+  }
+
+  const variables = collectCVariables(stripped);
+  const output = simulateCProgram(stripped, variables);
+
+  if (diagnostics.some((message) => message.startsWith("Erreur"))) {
+    explanations.push("Le programme ne peut pas etre simule tant que les erreurs de structure sont presentes.");
+  } else {
+    explanations.push("Structure generale correcte : main est present et les blocs semblent coherents.");
+    if (output) explanations.push("La sortie est reconstruite a partir des appels printf reconnus.");
+    else explanations.push("Aucun printf simple reconnu : ajoute un affichage pour observer le resultat.");
+  }
+  if (/\*/.test(stripped) || /&[a-zA-Z_]\w*/.test(stripped)) {
+    explanations.push("Pointeurs reperes : verifie toujours si tu manipules une adresse ou la valeur pointee.");
+  }
+  if (/\bmalloc\s*\(/.test(stripped) && !/==\s*NULL|!=\s*NULL/.test(stripped)) {
+    explanations.push("Allocation dynamique : pense a tester le retour de malloc avant d'utiliser le pointeur.");
+  }
+  if (/\bfor\s*\(/.test(stripped)) {
+    explanations.push("Boucle for : controle l'initialisation, la condition de continuation et le pas.");
+  }
+
+  return {
+    output: diagnostics.length ? diagnostics.join("\n") : output || "Programme termine sans sortie.",
+    explanations,
+    hasError: diagnostics.some((message) => message.startsWith("Erreur")),
+  };
+}
+
+function initCPlaygrounds() {
+  document.querySelectorAll("[data-c-playground]").forEach((playground) => {
+    const editor = playground.querySelector("[data-c-editor]");
+    const output = playground.querySelector("[data-c-output]");
+    const explain = playground.querySelector("[data-c-explain]");
+    const initialCode = editor?.value || "";
+    const resizeEditor = () => {
+      if (!editor) return;
+      editor.style.height = "auto";
+      editor.style.height = `${editor.scrollHeight + 2}px`;
+    };
+
+    resizeEditor();
+    editor?.addEventListener("input", resizeEditor);
+
+    playground.querySelector("[data-c-run]")?.addEventListener("click", () => {
+      const result = analyzeCProgram(editor.value);
+      playground.classList.toggle("has-error", result.hasError);
+      output.textContent = result.output;
+      explain.innerHTML = result.explanations.map((item) => `<li>${item}</li>`).join("");
+    });
+
+    playground.querySelector("[data-c-reset]")?.addEventListener("click", () => {
+      editor.value = initialCode;
+      resizeEditor();
+      playground.classList.remove("has-error");
+      output.textContent = "En attente d'execution.";
+      explain.innerHTML = "";
+    });
+  });
+}
+
 function openDetailsFromHash() {
   if (!window.location.hash) return;
   const target = document.querySelector(window.location.hash);
@@ -347,3 +695,4 @@ document.querySelectorAll(".page-section").forEach((section) => observer.observe
 openDetailsFromHash();
 updateProgress();
 initPlotlyCharts();
+initCPlaygrounds();
