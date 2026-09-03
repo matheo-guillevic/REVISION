@@ -46,8 +46,9 @@ La mesure consiste a attribuer un **nombre** a une **grandeur physique, chimique
 flowchart LR
   A[Grandeur physique<br/>mesurande m ou x] --> B[Capteur<br/>transduction]
   B --> C[Conditionneur<br/>excitation, adaptation, linearisation]
-  C --> D[Amplificateur<br/>differentiel ou instrumentation]
-  D --> E[Traitements<br/>CAN, filtrage, affichage]
+  C --> D[Filtre analogique<br/>reduction du bruit hors bande]
+  D --> E[Amplificateur<br/>differentiel ou instrumentation]
+  E --> F[Traitements<br/>CAN, traitement numerique, affichage]
 ```
 
 :::grid two-col
