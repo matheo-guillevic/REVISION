@@ -43,7 +43,7 @@ Un capteur ne donne jamais directement une information parfaite : il transforme 
 La mesure consiste a attribuer un **nombre** a une **grandeur physique, chimique ou biologique** a l'aide d'un instrument de mesure, par rapport a une echelle definie. Elle sert a quantifier objectivement un phenomene pour analyser, surveiller, commander ou prendre une decision.
 
 ```mermaid
-flowchart TD
+flowchart LR
   A[Grandeur physique<br/>mesurande m ou x] --> B[Capteur<br/>transduction]
   B --> C[Conditionneur<br/>excitation, adaptation, linearisation]
   C --> D[Amplificateur<br/>differentiel ou instrumentation]
@@ -110,10 +110,15 @@ La precision combine les deux criteres : un capteur precis est **a la fois fidel
 :::
 
 ```mermaid
-flowchart LR
-  A[Non fidele mais juste<br/>moyenne proche, forte dispersion]
-  B[Fidele mais non juste<br/>faible dispersion, biais]
-  C[Precis<br/>faible dispersion et faible biais]
+%%{init: {"quadrantChart": {"chartWidth": 1000, "chartHeight": 600, "pointLabelFontSize": 12}}}%%
+quadrantChart
+  title Fidelite et justesse d'un capteur
+  x-axis Fidelite faible --> Fidelite elevee
+  y-axis Justesse faible --> Justesse elevee
+  quadrant-1 Mesure idéale
+  quadrant-2 Mesure autour de la valeur idéale mais non répétable
+  quadrant-3 Mesure répétable mais loin de la valeur idéale
+  quadrant-4 Mesure non répétable et différente de la valeur idéale
 ```
 
 ### Grandeurs d'influence
