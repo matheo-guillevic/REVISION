@@ -267,7 +267,19 @@ ${attrs.caption ? `            <figcaption class="diagram-caption">${escapeHtml(
     }
 
     case "circuitjs": {
-      return `            <article class="circuitjs-panel">
+      const requestedHeight = String(attrs.height || "").trim().toLowerCase();
+      const autoHeight = requestedHeight === "auto";
+      const fixedHeight = /^\d+(?:\.\d+)?(?:px|rem|vh|vw)?$/.test(requestedHeight)
+        ? (/^\d+(?:\.\d+)?$/.test(requestedHeight) ? `${requestedHeight}px` : requestedHeight)
+        : "";
+      const classes = [
+        "circuitjs-panel",
+        autoHeight ? "circuitjs-panel--auto" : "",
+        fixedHeight ? "circuitjs-panel--fixed" : "",
+      ].filter(Boolean).join(" ");
+      const style = fixedHeight ? ` style="--circuitjs-height: ${escapeHtml(fixedHeight)}"` : "";
+
+      return `            <article class="${classes}"${style}>
               <header>
                 <span class="status-pill">${escapeHtml(attrs.label || "CircuitJS")}</span>
                 <h3>${escapeHtml(attrs.title || "Simulation")}</h3>

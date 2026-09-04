@@ -21,6 +21,7 @@ const pages = {
   "SN421-Dev-Micro": path.join(outDir, "SN421-Dev-Micro.html"),
   "MT461-Methode-numerique": path.join(outDir, "MT461-Methode-numerique.html"),
   "EP425-Capteur": path.join(outDir, "EP425-Capteur.html"),
+  "AU425-Automatique-avance": path.join(outDir, "AU425-Automatique-avance.html"),
 };
 
 const courseStructures = {
@@ -187,6 +188,26 @@ const courseStructures = {
     exams: "EP425-Capteur-exams",
     revision: "ep425-synthese",
     support: "EP425-Capteur-supports",
+  },
+  "AU425-Automatique-avance": {
+    page: "AU425-Automatique-avance.html",
+    subject: "AU425-Automatique-avance",
+    intro: "au425-intro",
+    contentHref: "au425-rappels",
+    content: [
+      ["au425-rappels", "Rappels et robustesse"],
+      ["au425-etat", "Representation d'etat"],
+      ["au425-structure", "Commandabilite et observabilite"],
+      ["au425-retour-etat", "Retour d'etat"],
+      ["au425-observateurs", "Observateurs"],
+      ["au425-lqr", "Commande LQR"],
+      ["au425-lqg", "LQG et ponderations"],
+      ["au425-cas", "Etudes de cas"],
+    ],
+    td: "AU425-Automatique-avance-td",
+    exams: "AU425-Automatique-avance-exams",
+    revision: "au425-revision",
+    support: "AU425-Automatique-avance-supports",
   },
   "MT461-Methode-numerique": {
     page: "MT461-Methode-numerique.html",
@@ -413,6 +434,7 @@ function renderHome() {
               <li><a href="SN421-Dev-Micro.html">SN421-Dev-Micro</a></li>
               <li><a href="MT461-Methode-numerique.html">MT461-Methode-numerique</a></li>
               <li><a href="EP425-Capteur.html">EP425-Capteur</a></li>
+              <li><a href="AU425-Automatique-avance.html">AU425-Automatique-avance</a></li>
             </ul>
           </details>`;
 
@@ -517,7 +539,7 @@ function renderHome() {
                 <span class="eyebrow">Semestre 7</span>
                 <strong>Semestre 7</strong>
               </span>
-              <span class="semester-count">3 matieres</span>
+              <span class="semester-count">4 matieres</span>
             </summary>
 
             <div class="dashboard-grid semester-content">
@@ -538,6 +560,12 @@ function renderHome() {
                 <h3>EP425-Capteur</h3>
                 <p>Capteurs et instrumentation : metrologie, conditionnement, bruit, temperature, position et amplificateurs de precision.</p>
                 <p class="secondary-link"><a href="EP425-Capteur.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>AU425-Automatique-avance</h3>
+                <p>Commande avancee : espace d'etat, proprietes structurelles, retour d'etat, observateurs et commande optimale LQR.</p>
+                <p class="secondary-link"><a href="AU425-Automatique-avance.html">Ouvrir le cours</a></p>
               </article>
             </div>
           </details>
@@ -840,6 +868,25 @@ function renderSensorCourse() {
   });
 }
 
+function renderAdvancedControlCourse() {
+  const structure = courseStructures["AU425-Automatique-avance"];
+  const course = readCourseBody("AU425-Automatique-avance", structure);
+  const nav = renderCommonCourseNav(structure);
+
+  return renderShell({
+    title: "AU425-Automatique-avance - Revision ESISAR",
+    brandMark: "A",
+    brandTitle: "AU425-Automatique-avance",
+    brandSubtitle: "Commande avancee",
+    nav,
+    eyebrow: "Semestre 7",
+    heading: "Commande avancee des systemes",
+    cta: '<a class="primary-button" href="index.html#semestre-7">Semestre 7</a>',
+    body: course,
+    showAnnotations: true,
+  });
+}
+
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -859,5 +906,6 @@ write(pages["SN361-VHDL"], renderVhdlCourse());
 write(pages["SN421-Dev-Micro"], renderDevMcuCourse());
 write(pages["MT461-Methode-numerique"], renderNumericMethodsCourse());
 write(pages["EP425-Capteur"], renderSensorCourse());
+write(pages["AU425-Automatique-avance"], renderAdvancedControlCourse());
 
 console.log("Application construite dans out/.");

@@ -527,6 +527,10 @@ button:hover,
   max-width: 920px;
 }
 
+.content-block.method p {
+  max-width: none;
+}
+
 .content-block table,
 .page-section > table,
 .answer-block table,
@@ -893,6 +897,22 @@ button:hover,
   height: 540px;
   border: 0;
   background: #ffffff;
+}
+
+.circuitjs-panel--auto {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.circuitjs-panel--auto iframe {
+  height: auto;
+  min-height: 540px;
+  flex: 1 1 540px;
+}
+
+.circuitjs-panel--fixed iframe {
+  height: var(--circuitjs-height);
 }
 
 .wokwi-panel > p,
@@ -1425,6 +1445,12 @@ button:hover,
     height: 460px;
   }
 
+  .circuitjs-panel--auto iframe {
+    height: auto;
+    min-height: 460px;
+    flex-basis: 460px;
+  }
+
   .plotly-chart {
     min-height: 300px;
   }
@@ -1462,6 +1488,12 @@ button:hover,
   .circuitjs-panel iframe,
   .wokwi-panel iframe {
     height: 420px;
+  }
+
+  .circuitjs-panel--auto iframe {
+    height: auto;
+    min-height: 420px;
+    flex-basis: 420px;
   }
 
   .plotly-chart {

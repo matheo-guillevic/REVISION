@@ -140,10 +140,15 @@ Objectif court ou protocole de manipulation.
 
 ```md
 :::circuitgrid
-:::circuitjs label="Filtre" title="Passe-bas" src="https://www.falstad.com/circuit/circuitjs.html?hideMenu=true&startCircuit=tllopass.txt"
+:::circuitjs label="Filtre" title="Passe-bas" height="auto" src="https://www.falstad.com/circuit/circuitjs.html?hideMenu=true&startCircuit=tllopass.txt"
 :::
 :::
 ```
+
+L'attribut `height="auto"` étire la simulation à la hauteur disponible dans sa
+ligne de grille, avec une hauteur minimale adaptée aux petits écrans. Une hauteur
+fixe peut aussi être indiquée en pixels, par exemple `height="700"` ou
+`height="700px"`. Sans cet attribut, la hauteur standard reste inchangée.
 
 ## Cartes et liens rapides
 

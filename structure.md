@@ -30,6 +30,9 @@ content/IN361-JAVA/
 content/IN363-Reseau/
 content/SN361-VHDL/
 content/SN421-Dev-Micro/
+content/MT461-Methode-numerique/
+content/EP425-Capteur/
+content/AU425-Automatique-avance/
 ```
 
 Les TD et examens sont dans :
