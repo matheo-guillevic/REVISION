@@ -23,6 +23,7 @@ Les matieres renommees utilisent des slugs sans accents :
 
 ```text
 content/AU331-Traitement-Signal/
+content/MT321-Mathematiques-general/
 content/AU361-Automatique/
 content/MT331-Probabilites/
 content/EP361-electonique/

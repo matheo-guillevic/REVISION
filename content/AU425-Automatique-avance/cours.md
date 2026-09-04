@@ -31,6 +31,18 @@ Avant toute synthèse, vérifier la stabilité, la commandabilité et l'observab
 :::block type="neutral" title="Source principale"
 Ce cours reprend et développe le support **Commande avancée — AC439 : placement de pôles et commande LQ**, Damien Koenig, 103 diapositives, septembre 2024 (`pdf/AU425-CM-temp.pdf`). La matière est intégrée au site sous le code AU425.
 :::
+
+```mermaid
+flowchart LR
+  M[Modéliser] --> S[Analyser la structure]
+  S --> C[Commander]
+  S --> O[Observer]
+  C --> V[Valider les performances]
+  O --> V
+  V --> R[Étudier la robustesse]
+```
+
+*Fil de lecture : le modèle précède l'étude de commandabilité et d'observabilité ; ces propriétés conditionnent ensuite la synthèse de la commande et de l'observateur.*
 :::
 
 :::section id="au425-rappels" eyebrow="Rappels" title="Systèmes asservis et stabilité" summary="Représentation externe, limites de l'approche fréquentielle et marges de robustesse."
@@ -942,6 +954,16 @@ y=Cx=CP^{-1}\hat x,
 d'où \(\hat C=CP^{-1}\). Le calcul matriciel redonne exactement les matrices \(\hat A\), \(\hat B\) et \(\hat C\) obtenues auparavant à partir des lois de Kirchhoff : c'est une vérification indépendante du modèle.
 :::
 
+```mermaid
+flowchart LR
+  E[Représentation externe<br/>G de p] -->|Réalisation<br/>forme canonique| I[Représentation interne<br/>A, B, C, D]
+  I -->|Transformée de Laplace<br/>C fois inverse de pI moins A fois B plus D| E
+  I -->|x chapeau égale P x| B[Autre base d'état<br/>A chapeau, B chapeau, C chapeau, D]
+  B -. même relation entrée-sortie .-> E
+```
+
+Ce schéma distingue deux opérations : **changer de représentation** modifie le type de modèle, tandis que **changer de base d'état** conserve une représentation interne équivalente.
+
 ### 4. Passage de la représentation interne (représentation d'état) à la représentation externe
 
 On connaît les matrices \((A,B,C,D)\) et l'on cherche la relation entrée-sortie \(G(p)=Y(p)/U(p)\). Une fonction de transfert décrit la réponse forcée du système : on pose donc les conditions initiales nulles, \(x(0)=0\).
@@ -1137,6 +1159,20 @@ y_k = C_d x_k + D_d u_k
 
 L'analyse de la commandabilité et de l'observabilité détermine si un système peut être contrôlé par ses entrées et reconstruit à partir de ses sorties.
 
+```mermaid
+flowchart LR
+  SYS[Modèle A, B, C] --> COM[Matrice de commandabilité]
+  SYS --> OBS[Matrice d'observabilité]
+  COM --> RC{Rang égal à n ?}
+  OBS --> RO{Rang égal à n ?}
+  RC -->|Oui| PP[Placement de pôles possible]
+  RC -->|Non| NC[Modes non commandables]
+  RO -->|Oui| EO[État reconstructible]
+  RO -->|Non| NO[Modes non observables]
+```
+
+La commandabilité suit le trajet **entrée vers état** ; l'observabilité suit le trajet **état vers sortie**. Les deux tests sont donc complémentaires.
+
 ### 1. Commandabilité (Contrôlabilité)
 :::block type="definition" title="Définition de la Commandabilité"
 Un système est dit **complètement commandable** si, pour tout état initial \(x(t_0)\) et tout état final désiré \(x(t_f)\), il existe une loi de commande admissible \(u(t)\) définie sur l'intervalle \([t_0, t_f]\) permettant de transférer l'état du système de \(x(t_0)\) à \(x(t_f)\) en un temps fini.
@@ -1327,6 +1363,22 @@ L'observateur est une simulation dynamique en temps réel du procédé, corrigé
 \]
 Où \(L \in \mathbb{R}^{n \times p}\) est la matrice de gain de l'observateur.
 
+```mermaid
+flowchart LR
+  U[Commande u] --> P[Procédé réel]
+  U --> O[Modèle de l'observateur]
+  P --> Y[Mesure y]
+  O --> YH[Sortie estimée ŷ]
+  Y --> INN[Innovation<br/>y moins ŷ]
+  YH --> INN
+  INN --> L[Correction par L]
+  L --> O
+  O --> XH[État estimé x̂]
+  XH --> K[Retour d'état K]
+```
+
+L'observateur fonctionne comme une copie du modèle corrigée par l'**innovation** \(y-\hat y\). Si cette différence est nulle, il évolue uniquement grâce au modèle et à la commande connue.
+
 ### 2. Dynamique de l'Erreur d'Estimation
 Définissons l'erreur d'estimation : \(e(t) = x(t) - \hat{x}(t)\). Sa dérivée temporelle est :
 \[
@@ -1394,6 +1446,42 @@ Où \(P = P^T > 0\) est l'unique solution définie positive de l'**Équation Alg
 \[
 A^T P + P A - P B R^{-1} B^T P + Q = 0
 \]
+:::
+
+:::plotly id="au425-lqr-compromis" label="Compromis LQR" title="Influence du rapport Q/R sur un système scalaire" height="440" caption="Pour ẋ = x + u, augmenter Q/R accélère le pôle bouclé mais augmente aussi le gain de commande K."
+{
+  "series": [
+    {
+      "generator": "function",
+      "range": [0.001, 1000],
+      "scale": "log",
+      "points": 180,
+      "y": "1 + sqrt(1 + x)",
+      "name": "Gain K",
+      "line": { "width": 3 }
+    },
+    {
+      "generator": "function",
+      "range": [0.001, 1000],
+      "scale": "log",
+      "points": 180,
+      "y": "sqrt(1 + x)",
+      "name": "Rapidité |pôle BF|",
+      "line": { "width": 3, "dash": "dash" }
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": "Rapport Q/R", "type": "log" },
+    "yaxis": { "title": "Gain ou module du pôle", "rangemode": "tozero" },
+    "legend": { "orientation": "h", "y": 1.12 },
+    "margin": { "l": 65, "r": 25, "t": 55, "b": 65 }
+  },
+  "config": { "responsive": true, "displaylogo": false }
+}
+:::
+
+:::block type="remember" title="Lire le compromis sur le graphique"
+Lorsque \(Q/R\) augmente, les écarts d'état coûtent relativement plus cher : le régulateur applique un gain plus élevé et ramène l'état plus vite vers zéro. À l'inverse, un grand \(R\) économise l'actionneur mais ralentit la correction.
 :::
 
 ### 2. Propriétés de Robustesse Exceptionnelles du LQR

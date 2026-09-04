@@ -12,6 +12,7 @@ const pages = {
   "SN331-Architecture-processeur": path.join(outDir, "SN331-Architecture-processeur.html"),
   "EP331-Electronique-analogique": path.join(outDir, "EP331-Electronique-analogique.html"),
   "IN331-Algo": path.join(outDir, "IN331-Algo.html"),
+  "MT321-Mathematiques-general": path.join(outDir, "MT321-Mathematiques-general.html"),
   "MT331-Probabilites": path.join(outDir, "MT331-Probabilites.html"),
   "AU361-Automatique": path.join(outDir, "AU361-Automatique.html"),
   "EP361-electonique": path.join(outDir, "EP361-electonique.html"),
@@ -413,6 +414,7 @@ function renderHome() {
               <li><a href="SN331-Architecture-processeur.html">SN331-Architecture-processeur</a></li>
               <li><a href="EP331-Electronique-analogique.html">EP331-Electronique-analogique</a></li>
               <li><a href="IN331-Algo.html">IN331-Algo</a></li>
+              <li><a href="MT321-Mathematiques-general.html">MT321-Mathematiques-general</a></li>
             </ul>
           </details>
           <details class="sidebar-semester">
@@ -453,7 +455,7 @@ function renderHome() {
                 <span class="eyebrow">Semestre 5</span>
                 <strong>Semestre 5</strong>
               </span>
-              <span class="semester-count">4 matieres</span>
+              <span class="semester-count">5 matieres</span>
             </summary>
 
             <div class="dashboard-grid semester-content">
@@ -480,6 +482,12 @@ function renderHome() {
                 <h3>IN331-Algo</h3>
                 <p>Programmation C et algorithmique : compilation, modularite, tableaux, fichiers, pointeurs et listes chainees.</p>
                 <p class="secondary-link"><a href="IN331-Algo.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>MT321-Mathematiques-general</h3>
+                <p>Nombres complexes, algebre lineaire, espaces prehilbertiens et series de Fourier, avec methodes detaillees.</p>
+                <p class="secondary-link"><a href="MT321-Mathematiques-general.html">Ouvrir le cours</a></p>
               </article>
             </div>
           </details>
@@ -610,6 +618,35 @@ function renderSignalCourse() {
     heading: "Traitement du signal deterministe",
     cta: '<a class="primary-button" href="index.html#semestre-5">Semestre 5</a>',
     body: readStandaloneCourseBody("AU331-Traitement-Signal"),
+    showAnnotations: true,
+  });
+}
+
+function renderGeneralMathCourse() {
+  const nav = renderNav(
+    [
+      ["index.html", "Accueil"],
+      ["MT321-Mathematiques-general.html#mt321-intro", "Introduction"],
+      ["MT321-Mathematiques-general.html#mt321-chap1-complexes", "Nombres complexes", "sub"],
+      ["MT321-Mathematiques-general.html#mt321-chap2-espaces-vectoriels", "Espaces vectoriels", "sub"],
+      ["MT321-Mathematiques-general.html#mt321-chap3-applications-lineaires-matrices", "Applications lineaires", "sub"],
+      ["MT321-Mathematiques-general.html#mt321-chap4-determinants-diagonalisation", "Diagonalisation", "sub"],
+      ["MT321-Mathematiques-general.html#mt321-chap5-espaces-prehilbertiens", "Espaces prehilbertiens", "sub"],
+      ["MT321-Mathematiques-general.html#mt321-chap6-series-fourier", "Series de Fourier", "sub"],
+    ],
+    "MT321-Mathematiques-general.html#mt321-intro"
+  );
+
+  return renderShell({
+    title: "MT321-Mathematiques-general - Revision ESISAR",
+    brandMark: "M",
+    brandTitle: "MT321-Mathematiques-general",
+    brandSubtitle: "Mathematiques generales",
+    nav,
+    eyebrow: "Semestre 5",
+    heading: "Mathematiques generales",
+    cta: '<a class="primary-button" href="index.html#semestre-5">Semestre 5</a>',
+    body: readStandaloneCourseBody("MT321-Mathematiques-general"),
     showAnnotations: true,
   });
 }
@@ -897,6 +934,7 @@ write(pages["AU331-Traitement-Signal"], renderSignalCourse());
 write(pages["SN331-Architecture-processeur"], renderProcessorCourse());
 write(pages["EP331-Electronique-analogique"], renderAnalogElecCourse());
 write(pages["IN331-Algo"], renderAlgoCourse());
+write(pages["MT321-Mathematiques-general"], renderGeneralMathCourse());
 write(pages["MT331-Probabilites"], renderMath());
 write(pages["AU361-Automatique"], renderAutoCourse());
 write(pages["EP361-electonique"], renderElecCourse());
