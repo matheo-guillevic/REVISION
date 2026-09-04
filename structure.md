@@ -34,6 +34,7 @@ content/SN421-Dev-Micro/
 content/MT461-Methode-numerique/
 content/EP425-Capteur/
 content/AU425-Automatique-avance/
+content/IN451-IA/
 ```
 
 Les TD et examens sont dans :

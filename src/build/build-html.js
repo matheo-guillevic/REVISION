@@ -23,6 +23,7 @@ const pages = {
   "MT461-Methode-numerique": path.join(outDir, "MT461-Methode-numerique.html"),
   "EP425-Capteur": path.join(outDir, "EP425-Capteur.html"),
   "AU425-Automatique-avance": path.join(outDir, "AU425-Automatique-avance.html"),
+  "IN451-IA": path.join(outDir, "IN451-IA.html"),
 };
 
 const courseStructures = {
@@ -437,6 +438,7 @@ function renderHome() {
               <li><a href="MT461-Methode-numerique.html">MT461-Methode-numerique</a></li>
               <li><a href="EP425-Capteur.html">EP425-Capteur</a></li>
               <li><a href="AU425-Automatique-avance.html">AU425-Automatique-avance</a></li>
+              <li><a href="IN451-IA.html">IN451-IA</a></li>
             </ul>
           </details>`;
 
@@ -547,7 +549,7 @@ function renderHome() {
                 <span class="eyebrow">Semestre 7</span>
                 <strong>Semestre 7</strong>
               </span>
-              <span class="semester-count">4 matieres</span>
+              <span class="semester-count">5 matieres</span>
             </summary>
 
             <div class="dashboard-grid semester-content">
@@ -574,6 +576,12 @@ function renderHome() {
                 <h3>AU425-Automatique-avance</h3>
                 <p>Commande avancee : espace d'etat, proprietes structurelles, retour d'etat, observateurs et commande optimale LQR.</p>
                 <p class="secondary-link"><a href="AU425-Automatique-avance.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>IN451-IA</h3>
+                <p>Intelligence artificielle : recherche adversariale, Min-Max, elagage alpha-beta, Gomoku et apprentissage profond.</p>
+                <p class="secondary-link"><a href="IN451-IA.html">Ouvrir le cours</a></p>
               </article>
             </div>
           </details>
@@ -924,6 +932,36 @@ function renderAdvancedControlCourse() {
   });
 }
 
+function renderArtificialIntelligenceCourse() {
+  const nav = renderNav(
+    [
+      ["index.html", "Accueil"],
+      ["IN451-IA.html#ia-organisation", "Introduction"],
+      ["IN451-IA.html#ia-definitions", "Concepts fondamentaux", "sub"],
+      ["IN451-IA.html#ia-historique", "Histoire de l'IA", "sub"],
+      ["IN451-IA.html#ia-jeux-echecs", "Min-Max et alpha-beta", "sub"],
+      ["IN451-IA.html#ia-gomoku", "Projet Gomoku", "sub"],
+      ["IN451-IA.html#ia-deep-learning", "Deep learning", "sub"],
+      ["IN451-IA.html#ia-exercice", "Exercice corrige"],
+      ["IN451-IA.html#ia-combinatoire", "Explosion combinatoire"],
+    ],
+    "IN451-IA.html#ia-organisation"
+  );
+
+  return renderShell({
+    title: "IN451-IA - Revision ESISAR",
+    brandMark: "IA",
+    brandTitle: "IN451-IA",
+    brandSubtitle: "Intelligence artificielle",
+    nav,
+    eyebrow: "Semestre 7",
+    heading: "Intelligence artificielle",
+    cta: '<a class="primary-button" href="index.html#semestre-7">Semestre 7</a>',
+    body: readStandaloneCourseBody("IN451-IA"),
+    showAnnotations: true,
+  });
+}
+
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -945,5 +983,6 @@ write(pages["SN421-Dev-Micro"], renderDevMcuCourse());
 write(pages["MT461-Methode-numerique"], renderNumericMethodsCourse());
 write(pages["EP425-Capteur"], renderSensorCourse());
 write(pages["AU425-Automatique-avance"], renderAdvancedControlCourse());
+write(pages["IN451-IA"], renderArtificialIntelligenceCourse());
 
 console.log("Application construite dans out/.");
