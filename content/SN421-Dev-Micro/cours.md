@@ -26,6 +26,7 @@ Des fondations matérielles jusqu'à la conception complète d'un système embar
 - [Chapitre 4 : Bus et liaisons](#sn421-bus)
 - [Chapitre 5 : Génie logiciel embarqué](#sn421-se)
 - [Premier labo Wokwi](#sn421-wokwi-01)
+- [TD 1 corrigé](#SN421-Dev-Micro-td)
 - [Révision](#SN421-Dev-Micro-revision)
 :::
 :::
@@ -880,6 +881,14 @@ Automate événementiel, boutons, LED RGB et tick périodique.
 Un développement embarqué fiable repose sur une séparation stricte entre la couche matérielle (pilotes de périphériques bas niveau) et la couche logique métier, l'usage discipliné des interruptions, l'anticipation des limites de précision numérique (virgule fixe) et la validation systématique de l'intégrité des signaux sur le matériel physique.
 :::
 
+:::
+
+:::section id="SN421-Dev-Micro-td" eyebrow="Travaux dirigés" title="TD SN421 corrigés" summary="Les exercices relient représentation des données, contraintes temporelles, traitement numérique et architecture des microcontrôleurs."
+:::dashboard
+:::card class="chapter-card" pill="TD 1" title="Bases de la programmation embarquée" href="SN421-Dev-Micro-td1.html" link="Ouvrir le TD corrigé"
+Conversions binaires et hexadécimales, indicateurs d'état, choix d'une cible temps réel, FFT, analyse de performances et plan mémoire STM32F4.
+:::
+:::
 :::
 
 :::section id="SN421-Dev-Micro-revision" eyebrow="Révision" title="Synthèse finale SN421" summary="Points à maîtriser avant de passer aux TD, aux TP ou à l'intégration Wokwi."
