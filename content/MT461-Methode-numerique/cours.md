@@ -86,6 +86,17 @@ Un mot mémoire flottant contient trois champs : un bit de signe \(s\), un expos
 E=e+\text{biais}
 \]
 
+Les deux codes extrêmes sont réservés : $E=0$ aux zéros et subnormaux, et $E=2^p-1$ aux infinis et NaN. Pour un **nombre normalisé**, on a donc :
+
+$$1 \le E \le 2^p-2.$$
+
+Après soustraction du biais :
+
+$$e_{\min}=1-(2^{p-1}-1)=2-2^{p-1},$$
+$$e_{\max}=(2^p-2)-(2^{p-1}-1)=2^{p-1}-1.$$
+
+Il reste **$2^p-2$ exposants utilisables pour les nombres normalisés**. On n’applique pas le débiaisage ordinaire aux codes réservés pour leur attribuer des exposants normaux.
+
 Pour les nombres normalisés, le bit de tête de la mantisse vaut 1 et n'est pas stocké en simple/double précision : la précision effective vaut donc \(t+1\) bits.
 
 | Format | Total bits | Base \(b\) | Fraction stockée \(t\) | Bits exposant \(p\) | Biais | \(e_{\min}\) normal | \(e_{\max}\) normal |
@@ -99,8 +110,63 @@ Pour les nombres normalisés, le bit de tête de la mantisse vaut 1 et n'est pas
 * **Overflow** : \(|x|\) dépasse le plus grand flottant fini représentable ; le résultat devient typiquement \(\pm\infty\).
 :::
 
+:::block type="definition" title="IEEE 754 : zéro, subnormaux, infinis et NaN"
+Pour les formats **binary32 et binary64**, on lit séparément les champs `signe | exposant E | fraction F`. Les exposants stockés tout à zéro et tout à un sont réservés : la formule des nombres normalisés ne s’y applique pas.
+
+| Exposant stocké $E$ | Fraction stockée $F$ | Valeur représentée |
+| :--- | :--- | :--- |
+| Tous les bits à `0` | Tous les bits à `0` | **Zéro signé** : $+0$ si $s=0$, $-0$ si $s=1$ |
+| Tous les bits à `0` | Au moins un bit à `1` | **Nombre subnormal** (dénormalisé) |
+| De $1$ à $2^p-2$ | Quelconque | **Nombre normalisé** |
+| Tous les bits à `1` | Tous les bits à `0` | **Infini signé** : $+infty$ ou $-infty$ |
+| Tous les bits à `1` | Au moins un bit à `1` | **NaN** (*Not a Number*), quel que soit le bit de signe |
+
+Source : [Oracle — IEEE Arithmetic, formats simple et double](https://docs.oracle.com/cd/E19422-01/819-3693-10/819-3693-10.pdf).
+:::
+
+:::block type="method" title="Lire des exemples en simple précision (32 bits)"
+Les séparateurs isolent **1 bit de signe, 8 bits d’exposant et 23 bits de fraction**.
+
+| Mot binaire : signe / exposant / fraction | Interprétation |
+| :--- | :--- |
+| `0 / 00000000 / 00000000000000000000000` | $+0$ : les 32 bits sont à zéro |
+| `1 / 00000000 / 00000000000000000000000` | $-0$ |
+| `0 / 00000000 / 00000000000000000000001` | Plus petit subnormal positif : $2^{-149}$ |
+| `0 / 01111111 / 00000000000000000000000` | $1$ : exposant réel $127-127=0$ et significande $1.0$ |
+| `0 / 11111111 / 00000000000000000000000` | $+infty$ |
+| `1 / 11111111 / 00000000000000000000000` | $-infty$ |
+| `0 / 11111111 / 10000000000000000000000` | Un encodage de NaN |
+| `1 / 11111111 / 11111111111111111111111` | Un autre NaN : les 32 bits sont à un |
+
+Un mot **tout à un représente donc bien un NaN**, mais ce n’est qu’un encodage parmi plusieurs. Pour reconnaître NaN, il suffit que l’exposant soit tout à un et que la fraction soit non nulle.
+:::
+
+:::block type="remember" title="Pourquoi les exposants extrêmes sont réservés"
+En simple précision, les exposants stockés des nombres normalisés vont de $E=1$ à $E=254$, donc les exposants réels vont de $1-127=-126$ à $254-127=127$.
+
+Pour un subnormal, le bit de tête implicite est **0** et l’exposant réel reste fixé à $1-\text{biais}$ :
+
+$$x=(-1)^s(0.F)_2\,2^{1-\text{biais}}.$$
+
+Les subnormaux permettent ainsi de représenter des valeurs plus proches de zéro que le plus petit normal. Ces règles concernent les formats binaires 32 et 64 bits ; le format étendu x87 sur 80 bits possède un bit de tête explicite.
+
+Dans l’arithmétique IEEE 754 avec traitement par défaut des exceptions, $1/(+0)$ donne $+\infty$, tandis que $0/0$ donne NaN. Les deux zéros sont égaux en comparaison ; NaN n’est égal à aucune valeur, même pas à lui-même.
+:::
+
+:::block type="warning" title="Distinguer exposant IEEE, subnormaux et modèle théorique"
+Les bornes du tableau IEEE étaient déjà celles des **nombres normalisés** : **−126 à +127** en binary32 et **−1022 à +1023** en binary64. Les subnormaux étendent les valeurs accessibles vers zéro, sans ajouter d’exposants stockés normaux : le plus petit positif vaut $2^{-149}$ en binary32 et $2^{-1074}$ en binary64.
+
+Attention à la position de la virgule : le modèle théorique utilise $0.m$, alors que l’écriture IEEE normalisée utilise $1.f$. En base 2 :
+
+$$1.f \times 2^{e_{IEEE}}=0.1f \times 2^{e_{IEEE}+1}.$$
+
+Pour décrire les mêmes nombres avec la convention $0.m$, il faut donc augmenter les deux bornes d’exposant de **1**. La longueur totale de mantisse du modèle théorique correspond aussi à la fraction IEEE **plus le bit implicite**.
+
+L’exercice 1 du TD reste en **base 7**. Sa correction adopte un codage pédagogique inspiré d’IEEE : exposant stocké sur 4 bits, biais 7 et codes 0 et 15 réservés. Elle définit directement $e=E-7$ dans l’écriture $0.m$, soit $e_m=-6$ et $e_M=7$. Cette convention explicite ne constitue pas un format IEEE 754 standard.
+:::
+
 :::block type="theorem" title="Cardinalité d'un système flottant normalisé"
-Pour une base \(b\), une mantisse normalisée de longueur \(t\), et des exposants compris entre \(e_m\) et \(e_M\), le nombre de valeurs représentables, zéro inclus et dénormalisés exclus, est :
+Pour une base \(b\), une mantisse normalisée de longueur \(t\), et des exposants compris entre \(e_m\) et \(e_M\), le nombre de valeurs représentables, zéro inclus une seule fois, dénormalisés, infinis et NaN exclus, est :
 
 \[
 N=1+2(b-1)b^{t-1}(e_M-e_m+1)
@@ -108,6 +174,20 @@ N=1+2(b-1)b^{t-1}(e_M-e_m+1)
 
 Le facteur 2 vient du signe, \((b-1)b^{t-1}\) compte les mantisses normalisées, et \((e_M-e_m+1)\) compte les exposants possibles.
 :::
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Application TD1 — Annoncer le codage avant de compter"
+Les notes CM3–TD1 emploient un exposant en **complément à deux**, alors que le TD corrigé adopte le **biais avec codes réservés** décrit plus haut. Pour $b=7$, $t=5$, quatre bits d’exposant et la même écriture $0.m\times7^e$ :
+
+| Convention | Exposants | Plus petit normal positif | Cardinal, zéro inclus |
+| :--- | :--- | :--- | :--- |
+| Complément à deux | $[-8,7]$ | $7^{-9}$ | $1+12\times2401\times16=460\,993$ |
+| Biais 7, codes 0 et 15 réservés | $[-6,7]$ | $7^{-7}$ | $1+12\times2401\times14=403\,369$ |
+
+Le plus grand normal vaut $7^7-7^2=823\,494$ dans les deux cas. Le cardinal $461\,001$ des notes est une erreur arithmétique. La mention « quatre bits » ne suffit donc pas à choisir les bornes : annoncer la convention. Voir l’[exercice 1](MT461-Methode-numerique-td1.html#mt461-td1-ex1).
+:::
+<!-- END MT461 CM3 ANNOTATION -->
 
 :::block type="method" title="Exemple jouet : flottants binaires"
 Pour un système binaire \(b=2\), avec \(t=3\) bits de mantisse et \(e\in[-2,1]\) :
@@ -460,6 +540,18 @@ L'erreur absolue d'arrondi vaut alors \(0{,}13\times10^{-5}\), inférieure à la
 :::
 
 
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Application TD1 — Pourquoi 1/3 est tronqué en base 7"
+Après l’exemple décimal précédent, le même raisonnement donne en base 7 :
+
+$$\frac13=0.22222\ldots_7,\qquad
+\operatorname{fl}(1/3)=2\sum_{j=1}^{5}7^{-j}=\frac13(1-7^{-5}).$$
+
+Avec les écarts **signés** définis plus haut, $\delta=-7^{-5}/3$ et $\rho=-7^{-5}$. Leur amplitude relative $7^{-5}$ respecte la borne $h=7^{-4}$. À l’inverse, $-4/7=-0.40000_7$ est exact : aucune troncature n’est nécessaire. Ces résultats ne dépendent pas du codage de l’exposant, car $e=0$ est disponible dans les deux modèles.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 ### 4. Arithmétique flottante et chiffres de garde
 
 L'ensemble machine $\mathbb{M}$ n'est pas stable pour les opérations usuelles : si $x, y \in \mathbb{M}$, alors $x * y \notin \mathbb{M}$ en général. L'évaluation suit le modèle :
@@ -574,6 +666,15 @@ Soit $x$ la valeur exacte et $\hat{x} = \text{fl}(x)$ sa représentation machine
 | **Multiplication** | $x\delta(y) + y\delta(x)$ | $\rho(x) + \rho(y)$ | Stationnaire |
 | **Division** | $\frac{\delta(x)}{y} - \frac{x}{y^2}\delta(y)$ | $\rho(x) - \rho(y)$ | Stationnaire |
 
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Lire le tableau : erreurs propagées et nouvel arrondi"
+Le tableau décrit la propagation **au premier ordre** des erreurs présentes sur les opérandes. Pour l’opération réellement effectuée en machine, ajouter son propre arrondi $\eta$ : par exemple, $\rho(\operatorname{fl}(xy))\simeq\rho(x)+\rho(y)+\eta$.
+
+Une addition de termes positifs fait une moyenne pondérée des écarts relatifs. Un produit additionne ces écarts : « stationnaire » ne signifie donc pas que leur amplitude ne peut pas augmenter. Les formules relatives supposent des dénominateurs non nuls et l’absence de dépassement de capacité ou de sous-flux.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 :::block type="warning" title="Phénomène d'annihilation (perte de chiffres significatifs)"
 Lorsque l'on soustrait deux nombres très proches entachés d'erreurs initiales ($x \approx y$), le dénominateur $x - y \to 0$ amplifie considérablement l'erreur relative.
 * **Exemple classique** : Calcul de $f(x, y) = x^2 - y^2$.
@@ -581,14 +682,101 @@ Lorsque l'on soustrait deux nombres très proches entachés d'erreurs initiales 
   * Algorithme 2 : $\alpha = x - y, \, \beta = x + y, \, \text{res} = \alpha \times \beta$ (formulation mathématiquement équivalente mais bien conditionnée).
 :::
 
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Précision — Une factorisation ne change pas le conditionnement"
+Dans l’exemple précédent, lire « formulation plus stable » pour la forme factorisée : **le problème mathématique reste le même**, donc son conditionnement ne change pas. Pour des perturbations relatives indépendantes de $x$ et $y$, il vaut
+
+$$\kappa_{\mathrm{rel}}=\frac{2(x^2+y^2)}{|x^2-y^2|}.$$
+
+Ce facteur reste grand lorsque $x\simeq y$. La factorisation évite surtout d’amplifier les arrondis introduits lors du calcul des carrés. Elle ne peut pas récupérer une différence déjà perdue dans les données.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 #### Fonctions scalaires et multivariables
 * Pour $f: \mathbb{R} \to \mathbb{R}$ dérivable : (à compléter avec l'exemple racine carré)
   $$\rho(f(x)) \simeq \frac{x f'(x)}{f(x)} \rho(x)$$
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Du développement de Taylor à la formule scalaire"
+Pour $\hat x=x+\delta x$, Taylor donne $f(\hat x)-f(x)=f'(x)\delta x+o(|\delta x|)$. En divisant par $f(x)$ puis en remplaçant $\delta x$ par $x\rho(x)$, on retrouve la formule précédente.
+
+Le coefficient **signé** $C_f(x)=xf'(x)/f(x)$ décrit le sens de propagation ; son amplitude $|C_f(x)|$ est le conditionnement relatif. Ce raisonnement suppose $x\ne0$ et $f(x)\ne0$ ; sinon, on travaille en erreur absolue.
+
+**Exemple demandé :** pour $f(x)=\sqrt{x}$, $x>0$, on a $C_f(x)=1/2$. Une donnée $100,01$ au lieu de $100$ présente $10^{-4}$ d’erreur relative ; sa racine est environ $10,0005$, soit $5\times10^{-5}$ d’erreur relative. Pour une puissance $x^p$, le même calcul donne $C_f=p$ ; pour l’inverse, $C_f=-1$.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
+
 * Pour une composée $f \circ g$ : (à compléter avec un exemple et détaillé l'utilisation du rond)
   $$\rho(f \circ g)(x) \simeq \left[\frac{g(x) f'(g(x))}{f(g(x))}\right] \left[\frac{x g'(x)}{g(x)}\right] \rho(x)$$
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Composition — Lire la formule de droite à gauche"
+Le symbole $\circ$ signifie **composer**, pas multiplier : $(f\circ g)(x)=f(g(x))$. On applique d’abord $g$ à $x$, puis $f$ au résultat. La dérivation en chaîne explique le produit $C_f(g(x))C_g(x)$.
+
+Par exemple, avec $g(x)=x^2$ et $f(u)=\sqrt{u}$, pour $x>0$, les coefficients donnent $\tfrac12\times2=1$, ce qui correspond bien à $f(g(x))=x$. Ce produit décrit l’erreur des données ; il n’efface pas les arrondis des opérations intermédiaires.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
+
 * Pour $f: \mathbb{R}^2 \to \mathbb{R}$ de classe $\mathcal{C}^2$ :
   $$\rho(f(x, y)) = \rho(x) \frac{x \frac{\partial f}{\partial x}(x, y)}{f(x, y)} + \rho(y) \frac{y \frac{\partial f}{\partial y}(x, y)}{f(x, y)}$$
 
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Plusieurs données — Passer des écarts signés à une borne"
+L’égalité multivariable ci-dessus se lit **au premier ordre**. En notant $C_x=x\partial_xf/f$ et $C_y=y\partial_yf/f$, des perturbations relatives d’amplitude au plus $\varepsilon$ donnent
+
+$$|\rho(f(x,y))|\lesssim(|C_x|+|C_y|)\varepsilon.$$
+
+On prend les valeurs absolues **après** avoir regroupé les coefficients : les erreurs signées peuvent se compenser, mais on ne compte pas sur cette compensation pour établir une borne.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Graphe de calcul — Ajouter un arrondi à chaque opération"
+Pour détailler l’exemple $z=a^2-b^2$, on écrit les opérations dans l’ordre, puis on propage leurs écarts avec le tableau précédent. Notons $\rho(a),\rho(b)$ les erreurs des données et $\eta_j$ les arrondis des opérations, avec $|\eta_j|\le u$ ($u=h$ en chopping, $u=h/2$ au plus proche).
+
+```mermaid
+flowchart LR
+    A["a"] --> A2["a² ; η1"]
+    B["b"] --> B2["b² ; η2"]
+    A2 --> D["Différence ; η3"]
+    B2 --> D
+    A --> M["a − b ; η̃1"]
+    B --> M
+    A --> P["a + b ; η̃2"]
+    B --> P
+    M --> R["Produit ; η̃3"]
+    P --> R
+```
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Forme directe — Localiser les erreurs amplifiées"
+Les deux premiers nœuds donnent $\rho(a^2)\simeq2\rho(a)+\eta_1$ et $\rho(b^2)\simeq2\rho(b)+\eta_2$. En les reportant dans la soustraction :
+
+$$\rho(z)\simeq\underbrace{\frac{2a^2}{z}\rho(a)-\frac{2b^2}{z}\rho(b)}_{E_i^{\mathrm{rel}}}
++\underbrace{\frac{a^2}{z}\eta_1-\frac{b^2}{z}\eta_2+\eta_3}_{E_{a,I}^{\mathrm{rel}}}.$$
+
+D’où $|E_{a,I}^{\mathrm{rel}}|\lesssim[(a^2+b^2)/|z|+1]u$. Ce sont les arrondis **des carrés** qui sont amplifiés par la soustraction ; son propre arrondi $\eta_3$ ne porte pas ce facteur. La borne peut devenir grande sans que l’erreur réelle atteigne systématiquement cette valeur.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Forme factorisée — Retrouver la même erreur des données"
+Pour $w_1=a-b$ et $w_2=a+b$, le tableau donne
+
+$$\rho(w_1)\simeq\frac{a}{a-b}\rho(a)-\frac{b}{a-b}\rho(b)+\tilde\eta_1,$$
+$$\rho(w_2)\simeq\frac{a}{a+b}\rho(a)+\frac{b}{a+b}\rho(b)+\tilde\eta_2.$$
+
+Le produit additionne ces deux expressions et $\tilde\eta_3$. En réduisant au même dénominateur, on retrouve **exactement les coefficients des données** $E_i^{\mathrm{rel}}$ calculés juste avant, mais l’erreur propre devient $E_{a,II}^{\mathrm{rel}}\simeq\tilde\eta_1+\tilde\eta_2+\tilde\eta_3$, d’où la borne $3u$. C’est le bénéfice numérique représenté sur le graphique suivant.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
 
 :::plotly id="mt461-plot-annihilation" title="Amplification par annihilation numerique" label="Graphique interactif" height="420" caption="Quand deux valeurs deviennent proches, le denominateur x-y devient petit et l erreur relative peut exploser."
 {
@@ -764,11 +952,44 @@ Lorsque l'on soustrait deux nombres très proches entachés d'erreurs initiales 
 
 **Interpretation.** Les deux formules sont mathematiquement identiques, mais elles ne sont pas equivalentes numeriquement. Dans $x^2-y^2$, on soustrait deux nombres presque egaux : les chiffres significatifs communs disparaissent, puis l'erreur relative explose car le resultat exact est petit. La factorisation isole directement le petit ecart $x-y$ et evite cette soustraction catastrophique. C'est l'exemple typique d'un algorithme instable pour un probleme pourtant simple.
 :::
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Lecture du graphique — Modèle illustratif"
+Les points du graphique conservé sont générés par des formules illustratives, pas par une exécution des algorithmes en arithmétique flottante. Ils concernent l’erreur **du calcul**, sans inclure l’incertitude initiale des données. Les expressions démontrées juste avant permettent d’interpréter la tendance et ses limites.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 :::block type="definition" title="Stabilité d'un algorithme et problème bien posé"
 Soit $E_a$ l'erreur introduite par l'algorithme numérique et $E_i$ l'erreur inévitable propre aux données du problème.
 1. Un algorithme est dit **numériquement stable** lorsque $|E_a| \le |E_i|$.
 2. Un problème est dit **mal posé** lorsque $E_i \gg 1$.
 :::
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Distinguer une erreur constatée de la sensibilité du problème"
+Pour préciser les deux notions du bloc précédent, on peut écrire exactement
+
+$$f^*(\hat x)-f(x)=\underbrace{f(\hat x)-f(x)}_{E_i}+\underbrace{f^*(\hat x)-f(\hat x)}_{E_a},\qquad |E_{\mathrm{total}}|\le|E_i|+|E_a|.$$
+
+La comparaison ponctuelle $|E_a|\le|E_i|$ n’est pas une définition générale de stabilité : pour des données exactes, $E_i=0$ sans rendre tout arrondi instable. Un calcul stable évite une amplification excessive par rapport à la sensibilité du problème.
+
+Un problème **bien posé** admet une solution unique dépendant continûment des données ; il peut néanmoins être **mal conditionné**, donc très sensible. Une grande erreur $E_i$ ne suffit pas à définir un problème mal posé. Voir les précisions de [Driscoll et Braun sur la stabilité](https://fncbook.com/stability/).
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Application TD1 — Un problème bien conditionné peut avoir une formule fragile"
+Pour la plus grande racine de $x^2+2px-q=0$, avec $q>0$, posons $r=\sqrt{p^2+q}$ et $x_M=r-p$. Les dérivées partielles donnent $C_p=-p/r$ et $C_q=(r+p)/(2r)$. Leurs amplitudes sont bornées par 1 : le problème est bien conditionné en perturbations relatives des données.
+
+En revanche, si $p>0$ et $p^2\gg q$, la formule directe soustrait deux valeurs presque égales. L’identité $(r-p)(r+p)=q$ conduit au choix
+
+$$x_M=\begin{cases}q/(r+p),&p>0,\\r-p,&p\le0.\end{cases}$$
+
+Pour $p=10^8$, $q=1$, la formule directe peut donner zéro en double précision, alors que la forme conjuguée donne environ $5\times10^{-9}$. Pour $q=0$, traiter directement $x_M=\max(0,-2p)$ ; une racine nulle n’a pas d’erreur relative définie. Voir l’[exercice 2 du TD1](MT461-Methode-numerique-td1.html#mt461-td1-ex2) pour la correction complète.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
 
 :::block type="remember" title="Règles d'or du calcul numérique"
 1. Éviter impérativement la soustraction de deux grandeurs quasi égales et imprécises.
@@ -892,6 +1113,15 @@ En sommant puis en faisant \(m\to\infty\) :
 Cette seconde estimation est souvent plus serrée, car elle utilise la dernière correction effectivement observée.
 :::
 
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Utiliser la borne de Banach pour décider de l’arrêt"
+La borne a posteriori qui vient d’être démontrée donne un critère exploitable sans connaître $s$ : arrêter lorsque $L|x_n-x_{n-1}|/(1-L)$ est inférieur à la tolérance souhaitée.
+
+Avec $L=0,9$, le facteur vaut $9$ : un pas de $10^{-6}$ ne garantit qu’une erreur inférieure à $9\times10^{-6}$. La différence entre deux itérés n’est donc pas toujours une estimation directe de l’erreur.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
 
 :::plotly id="mt461-plot-point-fixe" title="Iteration de point fixe" label="Graphique interactif" height="420" caption="Les marches montrent la suite x_{n+1}=g(x_n). Ici g est contractante : la suite converge vers l intersection avec y=x."
 {
@@ -1092,6 +1322,19 @@ Soit $e_n = x_n - s$ l'erreur à l'itération $n$, et $N_n = \log_{10}\left|\fra
   $$\lim_{n \to \infty} \frac{|e_{n+1}|}{|e_n|^p} = C \in ]0, +\infty[$$
   Le paramètre $p \ge 1$ n'est pas nécessairement entier.
 
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Ordre et chiffres gagnés — Les hypothèses derrière les formules"
+Pour le régime linéaire local, il faut $0<|f'(s)|<1$ et le gain est $-\log_{10}|f'(s)|$ ; la valeur absolue permet aussi les convergences alternées. Si $|f'(s)|>1$, le point fixe est répulsif ; pour $|f'(s)|=1$, le premier ordre ne suffit pas à conclure. Si $f'(s)=0$, l’ordre est au moins 2 sous les hypothèses de régularité, et exactement 2 si $f''(s)\ne0$.
+
+Pour l’indicateur **relatif** $N_n$ défini plus haut et $s\ne0$, la relation précise issue de $|e_{n+1}|\simeq C|e_n|^p$ est
+
+$$N_{n+1}\simeq pN_n-\log_{10}(C|s|^{p-1}).$$
+
+À l’ordre 1, un facteur $0,1$ fait gagner environ un chiffre par pas ; un facteur $0,9$ exige environ 22 pas par chiffre. À l’ordre 2, le nombre de chiffres double approximativement dans le régime asymptotique. Pour $s=0$, utiliser un indicateur d’erreur absolue.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 #### Accélération de convergence d'Aitken et Aitken-Steffensen
 
 :::block type="method" title="Procédé $\Delta^2$ d'Aitken (1926)"
@@ -1099,9 +1342,27 @@ Pour une suite à convergence linéaire ($e_{n+1}/e_n \to \lambda$ avec $|\lambd
 
 $$x'_n = x_n - \frac{(\Delta x_n)^2}{\Delta^2 x_n} = \frac{x_n x_{n+2} - x_{n+1}^2}{x_{n+2} - 2x_{n+1} + x_n}$$
 
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Pourquoi le procédé d’Aitken élimine l’erreur dominante"
+Pour le modèle $x_n=s+A\lambda^n$, avec $0<|\lambda|<1$, on a $\Delta x_n=A\lambda^n(\lambda-1)$ et $\Delta^2x_n=A\lambda^n(\lambda-1)^2$. Le quotient de la formule vaut donc exactement $A\lambda^n$ : il soustrait l’erreur et laisse $s$.
+
+Avec les trois valeurs $3$, $2,5$, $2,25$, on obtient ainsi $3-(-0,5)^2/0,25=2$. Pour une suite seulement asymptotiquement géométrique, l’erreur transformée est négligeable devant l’erreur initiale ; cela ne garantit pas l’ordre 2 pour toute suite transformée.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 * Accélération prouvée : $e'_n = o(e_n)$.
 * **Invariance par translation** : Poser $\tilde{x}_n = x_n - h \implies \tilde{x}'_n = x'_n - h$. Cela permet de stocker les chiffres stabilisés $h$, de poursuivre sur le résidu petit, et de s'affranchir des limites de précision machine.
 :::
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Translation — Ne pas confondre recentrage et gain de précision"
+L’invariance par translation du procédé est exacte. En revanche, soustraire une constante à des nombres **déjà arrondis** ne restaure pas leurs chiffres perdus : s’affranchir de la précision initiale exige aussi un calcul adapté des résidus, une représentation compensée ou une précision accrue.
+
+La quantité à surveiller est surtout $\Delta^2x_n$. Si elle est nulle ou trop petite face aux arrondis, ne pas effectuer la division : vérifier si la tolérance est atteinte, sinon revenir à l’itération de base ou revoir la précision.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
 
 :::block type="method" title="Algorithme d'Aitken-Steffensen (1933)"
 Applique le procédé $\Delta^2$ en cascade directement sur la récurrence de point fixe $x_{n+1} = f(x_n)$ :
@@ -1112,6 +1373,19 @@ $$x_{n+1} = g(x_n) \quad \text{avec} \quad g(x) = x - \frac{(f(x) - x)^2}{f(f(x)
 * **Avantage majeur** : Ne nécessite que 2 évaluations de $f$ par pas, et **aucune évaluation de dérivée $f'$**.
 :::
 
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Steffensen — Réutiliser immédiatement la valeur accélérée"
+À chaque pas, calculer $y=f(x_n)$ puis $z=f(y)$, appliquer la correction d’Aitken, et repartir du résultat obtenu. C’est la différence avec le simple post-traitement d’une suite déjà calculée.
+
+Pour justifier le gain local annoncé, écrivons $f(s+e)=s+\lambda e+ae^2+O(e^3)$, avec $a=f''(s)/2$ et $0<|\lambda|<1$. Le développement du schéma donne
+
+$$e_{n+1}=\frac{a\lambda}{\lambda-1}e_n^2+O(e_n^3).$$
+
+Le terme linéaire a disparu. La convergence est au moins quadratique sous ces hypothèses, et exactement quadratique si ce coefficient est non nul. Le mot « automatiquement » du bloc précédent suppose donc régularité et départ assez proche ; lorsque $\lambda$ approche 1, la différence seconde demande une attention particulière.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
 
 :::plotly id="mt461-plot-convergence" title="Comparaison des vitesses de convergence" label="Graphique interactif" height="420" caption="Passe l axe des ordonnees en log : une pente plus forte correspond a une convergence plus rapide."
 {
@@ -1252,12 +1526,26 @@ $$x_{n+1} = g(x_n) \quad \text{avec} \quad g(x) = x - \frac{(f(x) - x)^2}{f(f(x)
 
 **Interpretation.** Une convergence d'ordre 1 signifie que l'erreur est multipliee par un facteur presque constant a chaque pas : c'est fiable, mais lent. Les methodes d'ordre 2 doublent approximativement le nombre de decimales correctes a chaque iteration lorsque l'on est assez proche de la racine. Le graphe explique pourquoi Newton est spectaculaire localement, mais aussi pourquoi il ne sert a rien d'iterer indefiniment : une fois le seuil machine atteint, les arrondis dominent et la courbe ne peut plus descendre de maniere significative.
 :::
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Comparer les courbes sans confondre modèle et mesure"
+Les courbes précédentes sont des illustrations, pas des exécutions des quatre méthodes sur une même fonction. Dans le modèle pur $r_{n+1}=r_n^p$, avec $r_0=10^{-1}$, on aurait $r_n=10^{-p^n}$. Le plancher dessiné ne garantit pas une précision universelle ; le coût par pas et les constantes asymptotiques comptent aussi.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 ### 3. Méthodes itératives de résolution de $F(x) = 0$
 
 On modifie la recherche de racine sous forme sécante générale $x_{k+1} = x_k - \frac{F(x_k)}{\mu_k}$.
 
 #### Méthode de la corde parallèle
 La pente est maintenue constante : $\mu_k = \tan \phi$. La convergence est d'ordre 1 (linéaire).
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Corde parallèle — Vérifier que la pente attire vers la racine"
+Avec une pente constante $\mu\ne0$, la fonction d’itération est $f(x)=x-F(x)/\mu$, donc $f'(s)=1-F'(s)/\mu$. Une convergence locale linéaire exige $0<|1-F'(s)/\mu|<1$ : choisir une constante quelconque ne suffit pas.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
 
 #### Méthode de la sécante
 La pente est réévaluée à chaque pas par la corde joignant les deux derniers itérés :
@@ -1272,6 +1560,15 @@ $$x_{n+1} = x_n - F(x_n) \frac{x_n - x_{n-1}}{F(x_n) - F(x_{n-1})}$$
 * **Efficacité machine** : Ne demande qu'une seule nouvelle évaluation de $F(x_n)$ par pas (en conservant $F(x_{n-1})$ en mémoire). Deux pas de sécante coûtent 2 évaluations pour un ordre effectif $(1,618)^2 \approx 2,618 > 2$, surpassant souvent Newton-Raphson en temps de calcul sur les polynômes via le schéma de Horner.
 
 
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Sécante — Domaine de validité et coût réel"
+L’ordre usuel $1,618$ concerne une racine simple, une fonction suffisamment régulière et deux points de départ assez proches, avec $F''(s)\ne0$ dans le cas générique. Il faut aussi que $F(x_n)-F(x_{n-1})$ ne s’annule pas.
+
+La comparaison de coût précédente suppose que les évaluations ont un coût comparable. Une dérivée obtenue à peu de frais ou calculée conjointement avec $F$ peut rendre Newton compétitif : le seul nombre d’évaluations ne prédit pas le temps réel.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 ### 4. Étude approfondie de la méthode de Newton-Raphson
 
 La tangente locale définit la pente : $\mu_n = F'(x_n)$.
@@ -1283,12 +1580,38 @@ $$x_{n+1} = x_n - \frac{F(x_n)}{F'(x_n)} = f(x_n)$$
   La méthode est donc **d'ordre 2 (quadratique)** au voisinage d'une racine simple.
 :::
 
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Newton en action — Calculer √2"
+Pour $F(x)=x^2-2$, l’itération devient $x_{n+1}=\tfrac12(x_n+2/x_n)$ et vérifie exactement $e_{n+1}=e_n^2/(2x_n)$.
+
+| $n$ | $x_n$, arrondi pour l’affichage | Erreur avant arrondi d’affichage |
+| :---: | :--- | :--- |
+| 0 | $1$ | $4,14\times10^{-1}$ |
+| 1 | $1,5$ | $8,58\times10^{-2}$ |
+| 2 | $1,4166666667$ | $2,45\times10^{-3}$ |
+| 3 | $1,4142156863$ | $2,12\times10^{-6}$ |
+| 4 | $1,4142135624$ | $1,59\times10^{-12}$ |
+
+Plus généralement, près d’une racine simple, $e_{n+1}=F''(s)e_n^2/(2F'(s))+o(e_n^2)$ : l’ordre est exactement 2 lorsque $F''(s)\ne0$, et peut être supérieur sinon.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 :::block type="warning" title="Cas des racines multiples"
 Si $s$ est racine de multiplicité $p > 1$ ($F(s) = \dots = F^{(p-1)}(s) = 0$ et $F^{(p)}(s) \neq 0$) :
 * Newton classique retombe à un ordre 1 avec $f'(s) = 1 - \frac{1}{p} \neq 0$.
 * **Correction** : Pour restaurer la convergence quadratique ($p=2$), on utilise la formule pondérée :
   $$x_{n+1} = x_n - p \frac{F(x_n)}{F'(x_n)}$$
 :::
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Racine multiple — Distinguer multiplicité et ordre"
+Dans le bloc précédent, le $p$ qui multiplie $F/F'$ désigne la **multiplicité** ; le « $p=2$ » dans la phrase désigne l’**ordre de convergence retrouvé**. Pour les distinguer, on peut noter la multiplicité $m$.
+
+Exemple : avec $F(x)=(x-1)^3$, Newton donne $e_{n+1}=2e_n/3$, donc seulement une convergence linéaire. La formule modifiée avec le facteur $m=3$ atteint ici $1$ en un pas exact.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
 
 :::block type="theorem" title="Convergence globale de Newton-Raphson (Théorème de Fourier)"
 Soit $F \in \mathcal{C}^2([a, b])$ vérifiant :
@@ -1299,6 +1622,15 @@ Soit $F \in \mathcal{C}^2([a, b])$ vérifiant :
 Alors, pour tout $x_0 \in [a, b]$, la méthode de Newton-Raphson converge vers l'unique racine $s \in [a, b]$.
 :::
 
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Convergence globale — Ajouter la condition sur la dérivée"
+Le théorème précédent suppose également $F'(x)\ne0$ sur $[a,b]$, afin que les tangentes soient définies et la racine unique.
+
+Sans garanties sur le départ, Newton peut échouer : pour $F(x)=x^3-2x+2$ et $x_0=0$, on obtient successivement $1$, puis $0$, puis $1$. L’ordre quadratique près d’une racine n’empêche pas cette boucle loin de la solution.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
 :::block type="theorem" title="Propriété auto-correctrice de Newton-Raphson en machine"
 Considérons les itérations calculées en arithmétique flottante avec erreur relative $\sigma_k$ sur l'itéré $\bar{z}_k = z_k(1 + \sigma_k)$ et erreur locale d'opération $\tau_{k+1}$ :
 
@@ -1308,6 +1640,30 @@ Comme $f'(z_k) \xrightarrow[k \to \infty]{} f'(s) = 0$ et $\frac{z_k}{f(z_k)} \t
 $$\left|\frac{z_k f'(z_k)}{f(z_k)}\right| < 1$$
 Le coefficient de propagation de l'erreur antérieure s'annule asymptotiquement : **l'algorithme de Newton-Raphson est auto-correcteur**, effaçant au fil des itérations les erreurs d'arrondis injectées aux étapes précédentes.
 :::
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="Auto-correction — Les nouveaux arrondis restent présents"
+En notant $\xi_{n+1}$ l’erreur locale de calcul, le comportement près d’une racine simple s’écrit en erreur absolue
+
+$$\hat e_{n+1}=\frac{F''(s)}{2F'(s)}\hat e_n^2+o(\hat e_n^2)+\xi_{n+1}.$$
+
+L’erreur antérieure est fortement amortie, mais une nouvelle erreur apparaît à chaque pas. La précision finit donc par plafonner. Cette écriture reste utilisable si $s=0$, contrairement au raisonnement relatif du bloc précédent.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
+
+
+<!-- BEGIN MT461 CM3 ANNOTATION -->
+:::annotation title="En pratique — Résidu, erreur et critère d’arrêt"
+Le résidu $F(x_n)$ est calculable ; l’erreur $x_n-s$ ne l’est pas sans connaître $s$. Un petit résidu ne suffit pas : pour $F(x)=10^{-12}(x-1)$ et $x=2$, le résidu vaut $10^{-12}$ mais l’erreur vaut 1.
+
+Si $|F'(x)|\ge\mu>0$ entre $x_n$ et $s$, alors $|x_n-s|\le|F(x_n)|/\mu$. Sinon, la correction de Newton reste un indicateur local. Contrôler conjointement le résidu à l’échelle du problème et
+
+$$|x_{n+1}-x_n|\le\tau_{\mathrm{abs}}+\tau_{\mathrm{rel}}|x_{n+1}|.$$
+
+Un petit pas peut venir d’une stagnation machine : arrêter aussi en cas de valeur non finie, de dénominateur nul ou de limite d’itérations atteinte, sans annoncer à tort une convergence. Pour un point fixe contractant, préférer la borne certifiée de Banach expliquée après sa démonstration.
+:::
+<!-- END MT461 CM3 ANNOTATION -->
 
 #### Généralisation aux systèmes non linéaires multivariables
 Pour $f : \mathbb{R}^N \to \mathbb{R}^N$ de classe $\mathcal{C}^1$, on développe au premier ordre : $f(x_n) + Df(x_n) \cdot (x_{n+1} - x_n) = 0$ où $Df(x_n)$ est la **matrice jacobienne** :

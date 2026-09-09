@@ -46,12 +46,21 @@ On considère une représentation en virgule flottante normalisée en base $\bet
 
 #### 1. Détermination des exposants extrêmes $e_m$ et $e_M$
 
-:::block type="definition" title="Rappel : Codage d'un exposant signé sur $p$ bits"
-Sur $p$ bits, si l'exposant est représenté sous forme d'un entier signé (en complément à 2 ou par décalage avec un biais de $2^{p-1} = 8$), le domaine d'exposants possibles s'étend de :
-$$e_m = -2^{p-1} = -2^3 = -8 \quad \text{à} \quad e_M = 2^{p-1} - 1 = 2^3 - 1 = +7$$
+:::block type="warning" title="Convention retenue : exposant biaisé avec codes réservés"
+Pour cette correction, on adopte un codage pédagogique **inspiré d’IEEE 754** : biais $B=2^{p-1}-1=7$, code `0000` réservé aux zéros et subnormaux, code `1111` réservé aux infinis et NaN. Les codes des nombres normalisés vont de `0001` à `1110`.
+
+Le modèle reste en **base 7**, avec la mantisse $0.d_1d_2d_3d_4d_5$ de l’énoncé ; ce n’est pas un format IEEE 754 standard. On définit ici explicitement $e=E-B$ pour cette écriture. Voir les [conventions du cours](MT461-Methode-numerique.html#mt461-module-1).
 :::
 
-* **Plus petit exposant** : $e_m = -8$
+:::block type="definition" title="Bornes des exposants normalisés"
+Avec $p=4$, le biais vaut $B=7$ et les exposants stockés utilisables vérifient $1 \le E \le 14$. Ainsi :
+
+$$e_m=1-7=-6, \quad e_M=14-7=7.$$
+
+Il y a $14-1+1=14$ exposants normalisés, les deux autres codes étant réservés.
+:::
+
+* **Plus petit exposant** : $e_m = -6$
 * **Plus grand exposant** : $e_M = 7$
 
 ---
@@ -61,11 +70,11 @@ $$e_m = -2^{p-1} = -2^3 = -8 \quad \text{à} \quad e_M = 2^{p-1} - 1 = 2^3 - 1 =
 Tout nombre en virgule flottante normalisée non nul s'écrit :
 $$x = \pm 0.d_1 d_2 d_3 d_4 d_5 \times \beta^e \quad \text{avec } d_1 \in \{1, \dots, \beta-1\} \text{ et } d_i \in \{0, \dots, \beta-1\} \text{ pour } i \ge 2$$
 
-* **Plus petit nombre machine positif $x_m$** :
-  Il est obtenu avec le signe $+$, la plus petite mantisse normalisée possible ($d_1 = 1, d_2 = d_3 = d_4 = d_5 = 0$) et le plus petit exposant $e_m = -8$ :
-  $$x_m = 0.10000_7 \times 7^{-8} = 1 \cdot 7^{-1} \cdot 7^{-8} = 7^{-9}$$
+* **Plus petit nombre normalisé positif $x_m$** :
+  Il est obtenu avec le signe $+$, la plus petite mantisse normalisée possible ($d_1 = 1, d_2 = d_3 = d_4 = d_5 = 0$) et le plus petit exposant $e_m = -6$ :
+  $$x_m = 0.10000_7 \times 7^{-6} = 1 \cdot 7^{-1} \cdot 7^{-6} = 7^{-7}$$
   En base 10, sa valeur vaut :
-  $$x_m = 7^{-9} = \frac{1}{40353607} \approx 2.478 \times 10^{-8}$$
+  $$x_m = 7^{-7} = \frac{1}{823543} \approx 1.2143 \times 10^{-6}$$
 
 * **Plus grand nombre machine positif $x_M$** :
   Il est obtenu avec la plus grande mantisse possible ($d_1 = d_2 = d_3 = d_4 = d_5 = 6$) et le plus grand exposant $e_M = 7$ :
@@ -78,7 +87,7 @@ $$x = \pm 0.d_1 d_2 d_3 d_4 d_5 \times \beta^e \quad \text{avec } d_1 \in \{1, \
 #### 3. Cardinalité de l'ensemble machine $\#(\mathbb{M})$
 
 :::block type="theorem" title="Formule de dénombrement des nombres machines"
-Le nombre total de réels représentables dans un système $\text{FP}(\beta, t, e_m, e_M)$ est :
+On compte ici les nombres normalisés et zéro (une seule valeur réelle), en excluant les subnormaux, les infinis et NaN. Pour ce sous-ensemble d’un système $\text{FP}(\beta, t, e_m, e_M)$ le cardinal est :
 $$\#(\mathbb{M}) = 1 + 2 \cdot (\beta - 1) \cdot \beta^{t-1} \cdot (e_M - e_m + 1)$$
 * **$1$** représente le zéro.
 * **$2$** tient compte des deux signes ($\pm$).
@@ -87,16 +96,16 @@ $$\#(\mathbb{M}) = 1 + 2 \cdot (\beta - 1) \cdot \beta^{t-1} \cdot (e_M - e_m + 
 * **$e_M - e_m + 1$** est le nombre total d'exposants distincts.
 :::
 
-Application numérique avec $\beta = 7$, $t = 5$, $e_m = -8$, $e_M = 7$ ($e_M - e_m + 1 = 16$) :
-$$\#(\mathbb{M}) = 1 + 2 \times (7 - 1) \times 7^{5-1} \times (7 - (-8) + 1)$$
-$$\#(\mathbb{M}) = 1 + 2 \times 6 \times 7^4 \times 16 = 1 + 12 \times 2401 \times 16 = 1 + 460992 = 460993$$
+Application numérique avec $\beta = 7$, $t = 5$, $e_m = -6$, $e_M = 7$ ($e_M - e_m + 1 = 14$) :
+$$\#(\mathbb{M}) = 1 + 2 \times (7 - 1) \times 7^{5-1} \times (7 - (-6) + 1)$$
+$$\#(\mathbb{M}) = 1 + 2 \times 6 \times 7^4 \times 14 = 1 + 12 \times 2401 \times 14 = 1 + 403368 = 403369$$
 
 ---
 
 #### 4. Précision machine $h$
 
 :::block type="definition" title="Précision machine (unit roundoff)"
-En mode de troncature (*chopping*), la précision machine $h$ représente le majorant de l'erreur relative de représentation pour tout réel non nul :
+En mode de troncature (*chopping*), la précision machine $h$ représente le majorant de l'erreur relative de représentation pour les réels non nuls dans le domaine normalisé, hors dépassement de capacité et sous-flux :
 $$h = \beta^{1-t}$$
 :::
 
@@ -110,7 +119,7 @@ $$h = 7^{1-5} = 7^{-4} = \frac{1}{2401} \approx 4.1649 \times 10^{-4}$$
 Pour un exposant fixé $e$, la distance (ou pas de la grille de discrétisation) entre deux réels représentables consécutifs est constante et vaut :
 $$\Delta x(e) = \beta^{e-t} = 7^{e-5}$$
 
-* Pour le plus petit exposant $e_m = -8$ : $\Delta x(-8) = 7^{-13} \approx 1.032 \times 10^{-11}$.
+* Pour le plus petit exposant $e_m = -6$ : $\Delta x(-6) = 7^{-11} \approx 5.0573 \times 10^{-10}$.
 * Pour l'exposant $e = 0$ : $\Delta x(0) = 7^{-5} = \frac{1}{16807} \approx 5.95 \times 10^{-5}$.
 * Pour le plus grand exposant $e_M = 7$ : $\Delta x(7) = 7^{7-5} = 7^2 = 49$.
 
