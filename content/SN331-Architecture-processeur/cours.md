@@ -201,20 +201,131 @@ Une fonction non feuille doit sauvegarder `ra` si elle appelle une autre fonctio
 :::
 :::
 
-:::block type="method" title="Exemple push / pop"
-```asm
-# PUSH
-addi sp, sp, -12
-sw   x5, 8(sp)
-sw   x6, 4(sp)
-sw   x20, 0(sp)
+### Laboratoires WebRISC-V interactifs
 
-# POP
-lw   x20, 0(sp)
-lw   x6, 4(sp)
-lw   x5, 8(sp)
-addi sp, sp, 12
+:::block type="remember" title="Mode d'emploi"
+Modifiez le programme, puis utilisez **Assembler et exécuter** pour obtenir le résultat complet ou **Pas à pas** pour suivre le `PC`. Le registre écrit par la dernière instruction apparaît en vert. Les registres sont affichés en décimal et en hexadécimal.
+:::
+
+:::riscvplayground id="sn331-riscv-somme" label="WebRISC-V 01" title="Boucle : somme des entiers de 1 à 10"
+```asm
+# t0 = compteur, t1 = limite, t2 = somme
+li   t0, 1
+li   t1, 11
+li   t2, 0
+
+loop:
+add  t2, t2, t0
+addi t0, t0, 1
+blt  t0, t1, loop
+
+# Afficher 55 avec l'ecall pedagogique
+mv   a0, t2
+li   a7, 1
+ecall
+li   a0, 10
+li   a7, 11
+ecall
+li   a7, 10
+ecall
 ```
+:::
+
+:::block type="method" title="Ce qu'il faut observer"
+1. `t0` est incrémenté à chaque tour et `t2` joue le rôle d'accumulateur.
+2. `blt` modifie le `PC` tant que `t0 < t1`.
+3. `x0` reste toujours nul, même si une instruction tente de l'écrire.
+4. Le programme affiche `55`, soit \(1+2+\cdots+10\).
+:::
+
+:::riscvplayground id="sn331-riscv-pile" label="WebRISC-V 02" title="Pile : sauvegarder puis restaurer des registres"
+```asm
+li   t0, 21
+li   t1, 34
+
+# Reserver deux mots sur la pile
+addi sp, sp, -8
+sw   t0, 4(sp)
+sw   t1, 0(sp)
+
+# Ecraser les registres, puis les restaurer
+li   t0, 0
+li   t1, 0
+lw   t1, 0(sp)
+lw   t0, 4(sp)
+addi sp, sp, 8
+
+add  a0, t0, t1
+li   a7, 1
+ecall
+li   a7, 10
+ecall
+```
+:::
+
+:::block type="method" title="Ce qu'il faut observer"
+Les deux `sw` écrivent aux adresses `sp` et `sp+4`. Après les `lw`, `t0` et `t1` retrouvent respectivement 21 et 34, puis `sp` revient à sa valeur initiale. La sortie vaut donc `55`.
+:::
+
+:::riscvplayground id="sn331-riscv-fonction" label="WebRISC-V 03" title="Fonction : appel avec jal et retour avec ret"
+```asm
+# Les arguments sont places dans a0 et a1
+li   a0, 12
+li   a1, 30
+jal  ra, addition
+
+# a0 contient la valeur retournee : 42
+li   a7, 1
+ecall
+li   a7, 10
+ecall
+
+addition:
+add  a0, a0, a1
+ret
+```
+:::
+
+:::block type="method" title="Ce qu'il faut observer"
+`jal` place l'adresse de retour dans `ra`, puis charge le `PC` avec l'adresse de `addition`. La pseudo-instruction `ret` exécute `jalr x0, 0(ra)` : elle revient après l'appel sans conserver une nouvelle adresse.
+:::
+
+:::riscvplayground id="sn331-riscv-tableau" label="WebRISC-V 04" title="Mémoire : parcourir et sommer quatre mots"
+```asm
+# Construire un petit tableau sur la pile
+addi sp, sp, -16
+li   t0, 10
+sw   t0, 0(sp)
+li   t0, 20
+sw   t0, 4(sp)
+li   t0, 30
+sw   t0, 8(sp)
+li   t0, 40
+sw   t0, 12(sp)
+
+# t1 = adresse courante, t2 = compteur, t3 = somme
+mv   t1, sp
+li   t2, 4
+li   t3, 0
+
+sum_loop:
+lw   t0, 0(t1)
+add  t3, t3, t0
+addi t1, t1, 4
+addi t2, t2, -1
+bne  t2, zero, sum_loop
+
+addi sp, sp, 16
+mv   a0, t3
+li   a7, 1
+ecall
+li   a7, 10
+ecall
+```
+:::
+
+:::block type="method" title="Ce qu'il faut observer"
+L'adresse contenue dans `t1` avance de quatre octets après chaque `lw`, car un mot RV32I occupe 32 bits. `t2` impose quatre itérations et `t3` accumule la somme, égale à `100`.
 :::
 :::
 
