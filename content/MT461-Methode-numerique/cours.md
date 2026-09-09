@@ -23,6 +23,7 @@ Erreur numérique, solveurs non linéaires, puis méthodes numériques pour les 
 - [Module 1 : erreurs et arithmétique machine](#mt461-module-1)
 - [Module 2 : équations non linéaires](#mt461-module-2)
 - [Module 3 : EDO](#mt461-module-3)
+- [TD corrigés](#MT461-Methode-numerique-td)
 - [Synthèse](#mt461-synthese)
 :::
 
@@ -568,7 +569,7 @@ Soit $x$ la valeur exacte et $\hat{x} = \text{fl}(x)$ sa représentation machine
 
 | Opération | Écart absolu $\delta(x * y)$ | Écart relatif $\rho(x * y)$ | Comportement |
 | :---: | :---: | :---: | :--- |
-| **Addition** | $\delta(x) + \delta(y)$ | $\frac{x}{x+y}\rho(x) + \frac{y}{x+y}\rho(y)$ | Amortissement si $x, y > 0$ |
+| **Addition** | $\delta(x) + \delta(y)$ | $\frac{x}{x+y}\rho(x) + \frac{y}{x+y}\rho(y)$ | ammortissement si $x,y \gt 0$  |
 | **Soustraction** | $\delta(x) - \delta(y)$ | $\frac{x}{x-y}\rho(x) - \frac{y}{x-y}\rho(y)$ | **Amplification critique** si $x \approx y$ |
 | **Multiplication** | $x\delta(y) + y\delta(x)$ | $\rho(x) + \rho(y)$ | Stationnaire |
 | **Division** | $\frac{\delta(x)}{y} - \frac{x}{y^2}\delta(y)$ | $\rho(x) - \rho(y)$ | Stationnaire |
@@ -581,9 +582,9 @@ Lorsque l'on soustrait deux nombres très proches entachés d'erreurs initiales 
 :::
 
 #### Fonctions scalaires et multivariables
-* Pour $f: \mathbb{R} \to \mathbb{R}$ dérivable :
+* Pour $f: \mathbb{R} \to \mathbb{R}$ dérivable : (à compléter avec l'exemple racine carré)
   $$\rho(f(x)) \simeq \frac{x f'(x)}{f(x)} \rho(x)$$
-* Pour une composée $f \circ g$ :
+* Pour une composée $f \circ g$ : (à compléter avec un exemple et détaillé l'utilisation du rond)
   $$\rho(f \circ g)(x) \simeq \left[\frac{g(x) f'(g(x))}{f(g(x))}\right] \left[\frac{x g'(x)}{g(x)}\right] \rho(x)$$
 * Pour $f: \mathbb{R}^2 \to \mathbb{R}$ de classe $\mathcal{C}^2$ :
   $$\rho(f(x, y)) = \rho(x) \frac{x \frac{\partial f}{\partial x}(x, y)}{f(x, y)} + \rho(y) \frac{y \frac{\partial f}{\partial y}(x, y)}{f(x, y)}$$
@@ -1861,5 +1862,13 @@ Pour intégrer efficacement les problèmes raides, on a recours à des schémas 
 | **EDO (un pas)** | Runge-Kutta 4 (RK4) | 4 | Très haute précision, pas variable | Instabilité sur problèmes raides |
 | **EDO (multi-pas)** | Milne-Simpson | 4 | Ordre élevé avec peu d'évaluations | **Mode parasite explosif** si $\text{Re}(\lambda) < 0$ |
 | **EDO (raide)** | Trapèze implicite | 2 | **A-stabilité**, pas contraint par la raideur | Résolution implicite à chaque pas |
+:::
+:::
+
+:::section id="MT461-Methode-numerique-td" eyebrow="Travaux dirigés" title="TD MT461 corrigés" summary="Mise en pratique de l’analyse d’erreurs et de l’arithmétique machine du module 1."
+:::dashboard
+:::card class="chapter-card" pill="TD 1" title="Erreurs d’arrondi, stabilité et conditionnement" href="MT461-Methode-numerique-td1.html" link="Ouvrir le TD corrigé"
+Sept exercices avec énoncés et corrections détaillées : représentation en base 7, équation du second degré, sensibilité des fonctions, formules stables, ordre de sommation et instabilité par récurrence.
+:::
 :::
 :::
