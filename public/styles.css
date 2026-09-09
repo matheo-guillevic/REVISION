@@ -1019,6 +1019,284 @@ button:hover,
   margin: -6px 18px 18px;
 }
 
+.linux-playground {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.linux-playground header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 18px 0;
+}
+
+.linux-playground h3 {
+  margin: 8px 0 0;
+}
+
+.linux-playground-status {
+  margin: 0 18px;
+  color: var(--muted);
+}
+
+.linux-playground-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 1fr);
+  gap: 14px;
+  min-height: 620px;
+  padding: 0 18px;
+}
+
+.linux-playground-editor {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 8px;
+  min-width: 0;
+  font-weight: 700;
+}
+
+.linux-playground-editor textarea {
+  width: 100%;
+  min-height: 580px;
+  resize: vertical;
+  border: 1px solid #223047;
+  border-radius: 8px;
+  padding: 16px;
+  background: #111827;
+  color: #e5e7eb;
+  font: 0.9rem/1.5 "Cascadia Code", "Fira Code", Consolas, monospace;
+  tab-size: 4;
+}
+
+.linux-playground-terminal {
+  position: relative;
+  align-self: stretch;
+  min-width: 0;
+  min-height: 620px;
+  overflow: hidden;
+  border: 1px solid #223047;
+  border-radius: 8px;
+  background: #090f1c;
+}
+
+.linux-v86-screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  outline: none;
+  cursor: text;
+}
+
+.linux-v86-screen:focus {
+  box-shadow: inset 0 0 0 2px #60a5fa;
+}
+
+.linux-v86-text {
+  white-space: pre;
+  color: #e5e7eb;
+  font: 14px/16px "Cascadia Code", "Fira Code", Consolas, monospace;
+}
+
+.linux-v86-canvas {
+  display: none;
+  max-width: 100%;
+}
+
+.linux-playground-terminal pre {
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
+  margin: 0;
+  overflow: auto;
+  border: 0;
+  padding: 16px;
+  background: #090f1c;
+  color: #e5e7eb;
+  white-space: pre-wrap;
+  outline: none;
+  font: 0.9rem/1.5 "Cascadia Code", "Fira Code", Consolas, monospace;
+}
+
+.linux-playground-terminal pre:focus {
+  box-shadow: inset 0 0 0 2px #60a5fa;
+}
+
+.linux-playground [hidden] {
+  display: none !important;
+}
+
+.linux-playground-placeholder {
+  display: grid;
+  align-content: center;
+  min-height: 100%;
+  padding: 28px;
+  color: #cbd5e1;
+}
+
+.linux-playground-placeholder strong {
+  color: #f8fafc;
+  font-size: 1.1rem;
+}
+
+.linux-playground > .diagram-caption {
+  margin: 0 18px 18px;
+}
+
+.code-copy-wrapper {
+  position: relative;
+}
+
+.code-copy-wrapper > pre {
+  margin-top: 0;
+}
+
+.code-copy-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: rgb(15 23 42 / 88%);
+  color: #f8fafc;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.code-copy-button:hover {
+  background: #334155;
+}
+
+.riscv-playground {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.riscv-playground header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 18px 0;
+}
+
+.riscv-playground h3 {
+  margin: 8px 0 0;
+}
+
+.riscv-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.9fr);
+  align-items: stretch;
+  gap: 14px;
+  padding: 0 18px;
+}
+
+.riscv-playground textarea {
+  width: 100%;
+  min-height: 610px;
+  margin: 0;
+  resize: vertical;
+  border: 1px solid #223047;
+  border-radius: 8px;
+  padding: 16px;
+  background: #0f172a;
+  color: #e2e8f0;
+  font: 0.92rem/1.55 "Cascadia Code", "Fira Code", Consolas, monospace;
+  tab-size: 4;
+}
+
+.riscv-status {
+  margin: 0 18px;
+  border-left: 4px solid var(--primary);
+  padding: 9px 12px;
+  background: #eef6ff;
+  color: var(--muted);
+}
+
+.riscv-playground.has-error .riscv-status {
+  border-left-color: #c43d3d;
+  background: #fffafa;
+  color: #8a2d2d;
+}
+
+.riscv-results {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(230px, auto) minmax(0, 1fr);
+  gap: 14px;
+  padding: 0;
+}
+
+.riscv-results > div {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.riscv-results strong {
+  display: block;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 12px;
+}
+
+.riscv-results pre {
+  min-height: 220px;
+  max-height: 280px;
+  margin: 0;
+  overflow: auto;
+  padding: 12px;
+  white-space: pre-wrap;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+}
+
+.riscv-registers {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-height: 310px;
+  overflow: auto;
+  padding: 10px;
+  gap: 5px;
+}
+
+.riscv-registers span {
+  border-radius: 4px;
+  padding: 5px 7px;
+  background: #e8edf5;
+  font: 0.78rem/1.35 "Cascadia Code", "Fira Code", Consolas, monospace;
+  white-space: nowrap;
+}
+
+.riscv-registers span.changed {
+  background: #d7f0e2;
+  color: #17633b;
+  font-weight: 700;
+}
+
+.riscv-playground > .diagram-caption {
+  margin: -4px 18px 18px;
+}
+
 .wokwi-placeholder strong {
   color: var(--text);
 }
@@ -1431,8 +1709,23 @@ button:hover,
   .content-grid,
   .quick-grid,
   .c-playground-results,
+  .linux-playground-workspace,
+  .riscv-workspace,
   .circuitjs-grid {
     grid-template-columns: 1fr;
+  }
+
+  .riscv-playground textarea {
+    min-height: 340px;
+  }
+
+  .linux-playground-workspace {
+    min-height: 0;
+  }
+
+  .linux-playground-editor textarea,
+  .linux-playground-terminal {
+    min-height: 440px;
   }
 
   .system-diagram > img,
@@ -1475,6 +1768,18 @@ button:hover,
 
   .c-playground header {
     flex-direction: column;
+  }
+
+  .linux-playground header {
+    flex-direction: column;
+  }
+
+  .riscv-playground header {
+    flex-direction: column;
+  }
+
+  .riscv-registers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .system-diagram {

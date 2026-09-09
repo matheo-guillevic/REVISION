@@ -113,7 +113,7 @@ par point. Pour les courbes mathematiques, preferer `series` :
 | :--- | :--- |
 | `function` | trace $y=f(x)$ sur `range: [xmin, xmax]` |
 | `parametric` | trace $(x(t), y(t))$ sur `range: [tmin, tmax]` |
-| `sequence` | trace une suite avec `nStart`, `nEnd` et `y` |
+| `sequence` | trace une suite avec `nStart`, `nEnd`, `y` et, facultativement, une abscisse calculée `x` |
 | `point` | ajoute un point isole |
 | `fixed-point-staircase` | construit l'escalier d'une iteration `x_{n+1}=f(x_n)` |
 | `floating-distribution` | illustre une repartition flottante pedagogique |
@@ -217,6 +217,97 @@ Pour les petits exercices de programmation C sur GitHub Pages, utiliser
 tester de courts fragments et a obtenir des diagnostics pedagogiques sans
 serveur.
 
+Il ne convient pas aux appels système tels que `fork`, `exec`, `wait`,
+`sigaction` ou aux IPC. Pour ceux-ci, utiliser `:::linuxplayground` : le code
+reste éditable à côté d'une machine Linux v86 chargée à la demande.
+
+````md
+:::linuxplayground id="os-fork" label="Linux v86" title="fork / wait"
+```c
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(void) {
+    if (fork() == 0) _exit(0);
+    wait(NULL);
+    return 0;
+}
+```
+:::
+````
+
+Le bouton de démarrage lance v86 directement dans la page et démarre une image
+Arch Linux contenant Bash, GCC et Make. Le clavier est envoyé à Linux lorsque le
+terminal a le focus. Le fichier `/root/main.c` est créé automatiquement depuis
+l'éditeur ; le bouton **Envoyer vers main.c** permet de le mettre à jour.
+La saisie suit la disposition AZERTY détectée par le navigateur. Les boutons
+**Coller dans le terminal** et **Compiler et exécuter** permettent respectivement
+d'injecter le presse-papiers et de lancer directement GCC puis le programme.
+
+```bash
+gcc -Wall -Wextra /root/main.c -o /root/main
+/root/main
+```
+
+Cette variante fonctionne sur GitHub Pages sans serveur applicatif. Le build
+prépare une image Arch figée depuis les archives de `src/linux/` et copie le
+runtime npm dans `out/vendor/v86/<empreinte>/`. Le manifeste
+`out/linux/manifest.json` indique les URL du noyau, des BIOS épinglés et des
+ressources locales. Les fichiers Arch consultés sont téléchargés à la demande.
+Le build ne nécessite pas de réseau. Aucun snapshot mémoire v86 n'est restauré.
+
+L'initramfs évite le `fsck` d'une racine 9p, le répertoire attendu par OpenRC est
+créé et le script syslog non configuré est retiré. Le `fstab` adapté et le code C
+sont injectés avant le démarrage du processeur. Les boutons de compilation et de
+collage ne sont activés qu'après un marqueur émis par le shell Linux ; l'événement
+`emulator-ready` ne suffit pas à prouver que Linux est prêt. Un échec ou une
+attente de démarrage dépassant trois minutes permet de réessayer.
+
+Le Service Worker doit contrôler la page et annoncer la version attendue avant
+le chargement de l'image. Il utilise deux caches limités au périmètre du site :
+
+- ressources locales versionnées et BIOS épinglés ;
+- fichiers Arch identifiés par leur nom de contenu, réutilisés entre builds.
+
+Seules les réponses complètes HTTP 200 lisibles sont conservées. Les téléchargements
+simultanés d'un même fichier sont regroupés, les erreurs réessayées et les
+requêtes `Range` servies depuis les fichiers complets. Une erreur de stockage
+n'empêche pas Linux de démarrer, mais l'interface signale que le cache est
+indisponible. Le manifeste mutable et les pages ne sont pas servis en cache-first.
+Le serveur local ne donne un cache HTTP immutable qu'aux URL contenant l'empreinte.
+
+L'interface affiche le nombre de fichiers conservés et un bouton
+**Réinitialiser le cache Linux**. Ce bouton supprime les téléchargements Linux,
+pas les autres caches du site, ni les fichiers de la machine en mémoire. Le
+cache n'est pas une sauvegarde du travail : redémarrer Linux remet la machine
+à son état initial. Il ne garantit pas non plus un site entièrement hors connexion :
+seuls les fichiers déjà téléchargés sont disponibles. Un redémarrage de la VM
+depuis une page restée ouverte peut fonctionner hors connexion après utilisation.
+Le navigateur peut évincer son stockage local.
+
+Les sources, correctifs et instructions de mise à jour sont décrits dans
+`src/linux/README.md`. Vérifications : `node scripts/check-linux-cache.js` et
+`node scripts/check-linux-keyboard.js`, puis démarrage réel et compilation C.
+
+En développement local, ne pas ouvrir directement `out/IN333-OS.html` avec une
+URL `file://` : le navigateur bloquerait le fichier WebAssembly. Utiliser le
+serveur de prévisualisation intégré :
+
+```bash
+npm run preview
+```
+
+Puis ouvrir `http://localhost:4173/IN333-OS.html`. Sur GitHub Pages, la page est
+déjà distribuée en HTTPS et ne nécessite aucune action supplémentaire.
+
+Les attributs `filesystem` et `basefs` permettent de fournir un miroir ou un
+index compatible avec le noyau et l’initramfs Arch figés. Ils ne permettent pas
+de démarrer arbitrairement une autre distribution. Le cache automatique des
+fichiers distants est limité aux URL Arch et BIOS reconnues par le Service Worker.
+
+Les blocs de code Markdown classiques reçoivent également automatiquement un
+bouton **Copier** lors du chargement de la page.
+
 ````md
 :::cplayground label="Exercice interactif" title="Premier programme C"
 ```c
@@ -229,6 +320,31 @@ int main() {
 ```
 :::
 ````
+
+## Assembleur RISC-V interactif
+
+Le bloc `:::riscvplayground` fournit un assembleur et un simulateur pédagogique
+RV32I entièrement local. Il permet l'exécution complète ou pas à pas et affiche
+le PC, la trace et les 32 registres.
+
+````md
+:::riscvplayground label="WebRISC-V" title="Somme avec une boucle"
+```asm
+li t0, 1
+li t1, 6
+li a0, 0
+loop:
+add a0, a0, t0
+addi t0, t0, 1
+blt t0, t1, loop
+```
+:::
+````
+
+Instructions prises en charge : `add`, `sub`, `and`, `or`, `xor`, `sll`,
+`srl`, `sra`, `slt`, `sltu`, variantes immédiates, `lw`, `sw`, `beq`, `bne`,
+`blt`, `bge`, `jal`, `jalr` et `ecall`. Les pseudo-instructions `li`, `mv`,
+`j`, `ret` et `nop` sont également reconnues.
 
 ## Source des cours
 

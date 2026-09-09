@@ -368,6 +368,26 @@
       ]
     },
     {
+      "subject": "SN421-Dev-Micro",
+      "label": "SN421-Dev-Micro",
+      "backHref": "SN421-Dev-Micro.html#SN421-Dev-Micro-td",
+      "backLabel": "Retour aux TD SN421-Dev-Micro",
+      "courseHref": "SN421-Dev-Micro.html",
+      "courseLabel": "SN421-Dev-Micro",
+      "idPrefix": "SN421-Dev-Micro-td",
+      "withPrism": true,
+      "pages": [
+        {
+          "n": 1,
+          "target": "SN421-Dev-Micro-td1.html",
+          "title": "TD 1 corrigé - Bases de la programmation embarquée",
+          "eyebrow": "SN421 - TD 1",
+          "heading": "Bases et introduction à la programmation embarquée",
+          "summary": "Conversions, calculs hexadécimaux, contraintes temps réel, FFT, adéquation algorithme-architecture et plan mémoire STM32F4."
+        }
+      ]
+    },
+    {
       "subject": "SN361-VHDL",
       "label": "SN361-VHDL",
       "backHref": "SN361-VHDL.html#SN361-VHDL-td",
@@ -463,6 +483,25 @@
               }
             ]
           }
+        }
+      ]
+    },
+    {
+      "subject": "MT461-Methode-numerique",
+      "label": "MT461-Methode-numerique",
+      "backHref": "MT461-Methode-numerique.html#MT461-Methode-numerique-td",
+      "backLabel": "Retour aux TD MT461",
+      "courseHref": "MT461-Methode-numerique.html",
+      "courseLabel": "Cours MT461",
+      "idPrefix": "MT461-Methode-numerique-td",
+      "pages": [
+        {
+          "n": 1,
+          "target": "MT461-Methode-numerique-td1.html",
+          "title": "TD 1 corrigé - Erreurs d’arrondi, stabilité et conditionnement",
+          "eyebrow": "MT461 - TD 1",
+          "heading": "Représentation des nombres, erreurs d’arrondi, stabilité et conditionnement",
+          "summary": "Sept exercices corrigés sur les flottants, la propagation des erreurs, les formules stables, la sommation et les récurrences."
         }
       ]
     }

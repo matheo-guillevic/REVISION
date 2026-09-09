@@ -2,10 +2,12 @@
   "scripts": {
     "build": "node src/build/build-html.js && node src/build/build-pages-from-markdown.js",
     "check:content": "npm run build && node scripts/check-content-structure.js",
+    "preview": "npm run build && node scripts/serve-out.js",
     "rebuild-pages": "node src/build/build-pages-from-markdown.js"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
-    "markdown-it": "^15.0.0"
+    "markdown-it": "^15.0.0",
+    "v86": "^0.5.458"
   }
 }

@@ -43,6 +43,15 @@ function renderPage(group, page, kind, markdownPath) {
   const prismScripts = prism
     ? '\n    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>\n    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>'
     : "";
+  const mermaidScripts = /^```mermaid\s*$/m.test(parsed.content)
+    ? `
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.mermaid) window.mermaid.initialize({ startOnLoad: true });
+      });
+    </script>`
+    : "";
 
   return `<!doctype html>
 <html lang="fr">
@@ -57,7 +66,7 @@ function renderPage(group, page, kind, markdownPath) {
         svg: { fontCache: "global" }
       };
     </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>${prismScripts}
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>${prismScripts}${mermaidScripts}
     <script defer src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3/plotly.min.js"></script>
     <script defer src="script.js"></script>
   </head>

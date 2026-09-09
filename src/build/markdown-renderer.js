@@ -337,6 +337,70 @@ ${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.c
             </article>`;
     }
 
+    case "linuxplayground": {
+      const code = stripCodeFence(block.body);
+      return `            <article class="linux-playground"${attrs.id ? ` id="${escapeHtml(attrs.id)}"` : ""} data-linux-playground data-linux-fs="${escapeHtml(attrs.filesystem || "https://i.copy.sh/arch/")}" data-linux-basefs="${escapeHtml(attrs.basefs || "")}">
+              <header>
+                <div>
+                  <span class="status-pill">${escapeHtml(attrs.label || "Linux v86")}</span>
+                  <h3>${escapeHtml(attrs.title || "Programme C sous Linux")}</h3>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-linux-copy>Copier le code C</button>
+                  <button type="button" class="ghost-button" data-linux-send disabled>Envoyer vers main.c</button>
+                  <button type="button" class="ghost-button" data-linux-paste disabled>Coller dans le terminal</button>
+                  <button type="button" data-linux-run disabled>Compiler et exécuter</button>
+                  <button type="button" class="ghost-button" data-linux-start>Démarrer Linux</button>
+                </div>
+              </header>
+              <p class="linux-playground-status" data-linux-status>Démarrez la machine v86. Le code sera placé automatiquement dans <code>/root/main.c</code>.</p>
+              <p class="linux-playground-status" data-linux-cache-status>Le cache sera préparé au démarrage de Linux.</p>
+              <button type="button" class="ghost-button" data-linux-cache-clear>Réinitialiser le cache Linux</button>
+              <div class="linux-playground-workspace">
+                <label class="linux-playground-editor">Source C<textarea spellcheck="false" data-linux-editor>${escapeHtml(code)}</textarea></label>
+                <div class="linux-playground-terminal" data-linux-terminal>
+                  <div class="linux-playground-placeholder">
+                    <strong>Arch Linux dans v86</strong>
+                    <p>L'image d'essai contient Bash, GCC, Make et les commandes Linux usuelles.</p>
+                    <p>Après le démarrage, cliquez dans le terminal puis compilez avec <code>gcc -Wall -Wextra /root/main.c -o /root/main</code>.</p>
+                  </div>
+                </div>
+              </div>
+${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.caption)}</p>\n` : ""}            </article>`;
+    }
+
+    case "riscvplayground": {
+      const code = stripCodeFence(block.body);
+      return `            <article class="riscv-playground"${attrs.id ? ` id="${escapeHtml(attrs.id)}"` : ""} data-riscv-playground>
+              <header>
+                <div>
+                  <span class="status-pill">${escapeHtml(attrs.label || "WebRISC-V")}</span>
+                  <h3>${escapeHtml(attrs.title || "Assembleur RISC-V interactif")}</h3>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-riscv-run>Assembler et executer</button>
+                  <button type="button" class="ghost-button" data-riscv-step>Pas a pas</button>
+                  <button type="button" class="ghost-button" data-riscv-reset>Reinitialiser</button>
+                </div>
+              </header>
+              <div class="riscv-status" data-riscv-status>Modifiez le programme, puis lancez l'assemblage ou l'execution pas a pas.</div>
+              <div class="riscv-workspace">
+                <textarea spellcheck="false" aria-label="Code assembleur RISC-V" data-riscv-editor>${escapeHtml(code)}</textarea>
+                <div class="riscv-results" aria-live="polite">
+                  <div>
+                    <strong>Sortie et trace</strong>
+                    <pre data-riscv-output>En attente d'execution.</pre>
+                  </div>
+                  <div>
+                    <strong>Registres RV32I</strong>
+                    <div class="riscv-registers" data-riscv-registers></div>
+                  </div>
+                </div>
+              </div>
+              <p class="diagram-caption">Simulateur pedagogique RV32I execute localement dans le navigateur. Sous-ensemble : calcul entier, branchements, sauts, acces mot memoire et pseudo-instructions usuelles.</p>
+            </article>`;
+    }
+
     case "wokwi": {
       const src = (attrs.src || "").replace(/^"+|"+$/g, "");
       const hasProject = src && !/YOUR_PROJECT_ID/i.test(src);
