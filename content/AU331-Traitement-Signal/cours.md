@@ -34,8 +34,25 @@ Des signaux continus jusqu aux filtres RIF, avec exercices resolus et formules c
 Ce document propose une synthèse exhaustive et rigoureuse des cours de **Traitement du Signal Déterministe (AU331)**. Chaque chapitre intègre les définitions théoriques, les justifications physiques, les formulations mathématiques complètes (notations conformes aux cours) et des exercices types résolus en guise d'exemples d'application.
 :::
 
+:::block type="warning" title="Version de comparaison : images et graphiques interactifs"
+Les illustrations d'origine sont temporairement conservées au-dessus de leur reconstruction interactive. Cette double présentation permet de vérifier les formes, les échelles et les conclusions avant de supprimer définitivement les images statiques. Dans les graphiques, il est possible de zoomer, de déplacer la vue et de masquer une courbe en cliquant sur son nom dans la légende.
+:::
+
 :::figure src="assets/AU331-Traitement-Signal/au331-synthese.svg" alt="Chaine de traitement du signal : modelisation, analyse, echantillonnage et filtrage." label="Vue d'ensemble du cours AU331" caption="Le cours suit une progression naturelle : partir du signal physique, l'analyser, l'echantillonner, puis construire un filtrage exploitable."
 :::
+
+```mermaid
+flowchart LR
+    A[Signal physique] --> B[Modélisation]
+    B --> C[Analyse temporelle]
+    C --> D[Transformée de Fourier]
+    D --> E[Échantillonnage]
+    E --> F[TFD et FFT]
+    F --> G[Filtrage numérique]
+    G --> H[Signal exploitable]
+```
+
+*Reconstruction vectorielle : la chaîne reste lisible lors d'un zoom et chaque étape correspond à une partie du cours.*
 :::
 
 :::section id="au331-objectifs" eyebrow="Cours 0" title="Presentation et objectifs" summary="Situer le traitement du signal, ses outils mathematiques et ses usages industriels."
@@ -136,6 +153,26 @@ La Transformée de Fourier (TF) permet de passer d'une description temporelle $x
 :::figure src="assets/AU331-Traitement-Signal/dualite_temps_frequence.png" alt="Signal temporel et representation frequentielle par transformee de Fourier." class="td-figure" caption="La transformee de Fourier change le point de vue : on ne regarde plus la forme temporelle, mais la repartition des frequences et des phases."
 :::
 
+:::plotly id="au331-dualite-interactive" label="Reconstruction interactive" title="Dualité largeur temporelle / largeur fréquentielle" height="560" caption="Les courbes étroites dans le temps sont larges en fréquence, et inversement. Les amplitudes sont normalisées pour comparer les largeurs."
+{
+  "series": [
+    { "generator": "function", "range": [-3, 3], "points": 401, "y": "exp(-8*x*x)", "name": "Signal temporel court", "xaxis": "x", "yaxis": "y" },
+    { "generator": "function", "range": [-3, 3], "points": 401, "y": "exp(-0.5*x*x)", "name": "Signal temporel étalé", "xaxis": "x", "yaxis": "y" },
+    { "generator": "function", "range": [-3, 3], "points": 401, "y": "exp(-0.125*x*x)", "name": "Spectre du signal court", "xaxis": "x2", "yaxis": "y2" },
+    { "generator": "function", "range": [-3, 3], "points": 401, "y": "exp(-2*x*x)", "name": "Spectre du signal étalé", "xaxis": "x2", "yaxis": "y2" }
+  ],
+  "layout": {
+    "grid": { "rows": 1, "columns": 2, "pattern": "independent" },
+    "xaxis": { "title": "Temps t" }, "yaxis": { "title": "Amplitude" },
+    "xaxis2": { "title": "Fréquence f" }, "yaxis2": { "title": "Module normalisé" },
+    "annotations": [
+      { "text": "Domaine temporel", "x": 0.18, "y": 1.12, "xref": "paper", "yref": "paper", "showarrow": false },
+      { "text": "Domaine fréquentiel", "x": 0.82, "y": 1.12, "xref": "paper", "yref": "paper", "showarrow": false }
+    ]
+  }
+}
+:::
+
 *   **Formule directe (Analyse) :**
 
     $$X(f) = \text{TF}[x(t)] = \int_{-\infty}^{+\infty} x(t) e^{-j2\pi ft} dt$$
@@ -160,6 +197,30 @@ Pour deux signaux $x(t)$ et $y(t)$ de transformées respectives $X(f)$ et $Y(f)$
 | **Dilatation / contraction temporelle**<br>$\text{TF}[x(at)] = \frac{1}{|a|} X\left(\frac{f}{a}\right)$<br><br>Comprimer dans le temps élargit le spectre, et inversement. | ![Illustration de la dilatation temporelle et de la contraction frequentielle.](assets/AU331-Traitement-Signal/tf_propriete_dilatation_contraction.png) |
 | **Dérivation temporelle**<br>$\text{TF}\left[\frac{dx(t)}{dt}\right] = j2\pi f X(f)$<br><br>La dérivation accentue les hautes fréquences, comme un effet passe-haut. | ![Illustration de la derivation temporelle et du gain proportionnel a la frequence.](assets/AU331-Traitement-Signal/tf_propriete_derivation.png) |
 
+:::plotly id="au331-proprietes-tf-interactives" label="Reconstruction interactive" title="Propriétés de la transformée de Fourier" height="620" caption="Utiliser la légende pour isoler une propriété. Les couples temps/fréquence partagent les mêmes couleurs et peuvent être examinés précisément au survol."
+{
+  "series": [
+    { "generator": "function", "range": [-3, 3], "points": 501, "y": "exp(-2*x*x)", "name": "x(t) gaussien", "legendgroup": "base", "xaxis": "x", "yaxis": "y" },
+    { "generator": "function", "range": [-3, 3], "points": 501, "y": "exp(-2*(x-1)*(x-1))", "name": "x(t-1) : retard", "legendgroup": "retard", "xaxis": "x", "yaxis": "y" },
+    { "generator": "function", "range": [-3, 3], "points": 501, "y": "exp(-8*x*x)", "name": "x(2t) : contraction", "legendgroup": "echelle", "xaxis": "x", "yaxis": "y" },
+    { "generator": "function", "range": [-3, 3], "points": 501, "y": "-4*x*exp(-2*x*x)", "name": "dx/dt", "legendgroup": "derivee", "xaxis": "x", "yaxis": "y" },
+    { "generator": "function", "range": [-4, 4], "points": 501, "y": "exp(-0.5*x*x)", "name": "|X(f)|", "legendgroup": "base", "xaxis": "x2", "yaxis": "y2" },
+    { "generator": "function", "range": [-4, 4], "points": 501, "y": "exp(-0.5*x*x)", "name": "Retard : module inchangé", "legendgroup": "retard", "line": { "dash": "dash" }, "xaxis": "x2", "yaxis": "y2" },
+    { "generator": "function", "range": [-4, 4], "points": 501, "y": "0.5*exp(-0.125*x*x)", "name": "TF{x(2t)}", "legendgroup": "echelle", "xaxis": "x2", "yaxis": "y2" },
+    { "generator": "function", "range": [-4, 4], "points": 501, "y": "abs(2*PI*x)*exp(-0.5*x*x)", "name": "|TF{dx/dt}|", "legendgroup": "derivee", "xaxis": "x2", "yaxis": "y2" }
+  ],
+  "layout": {
+    "grid": { "rows": 1, "columns": 2, "pattern": "independent" },
+    "xaxis": { "title": "Temps t" }, "yaxis": { "title": "Amplitude" },
+    "xaxis2": { "title": "Fréquence f" }, "yaxis2": { "title": "Module" },
+    "annotations": [
+      { "text": "Effets dans le temps", "x": 0.18, "y": 1.12, "xref": "paper", "yref": "paper", "showarrow": false },
+      { "text": "Effets correspondants en fréquence", "x": 0.82, "y": 1.12, "xref": "paper", "yref": "paper", "showarrow": false }
+    ]
+  }
+}
+:::
+
 :::
 
 :::exercise label="Exercice 2" title="Calcul de la TF d'une fenêtre rectangle et d'une exponentielle causale"
@@ -182,6 +243,20 @@ Pour deux signaux $x(t)$ et $y(t)$ de transformées respectives $X(f)$ et $Y(f)$
    Le spectre d'une porte temporelle est donc un sinus cardinal en fréquence. On remarque la dualité : plus la porte est étroite (T petit), plus le spectre est large (les zéros du sinus cardinal sont situés aux multiples de $1/T$).
 
 :::figure src="assets/AU331-Traitement-Signal/porte_vers_sinc.png" alt="Une fenetre rectangle dans le temps devient un sinus cardinal en frequence." class="td-figure" caption="Exercice 2 : la fenetre rectangulaire illustre directement la dualite largeur temporelle / largeur spectrale."
+:::
+
+:::plotly id="au331-porte-sinc-interactive" label="Reconstruction interactive" title="Paire de Fourier : porte et sinus cardinal" height="520" caption="Pour T = 1 s, les premiers zéros du spectre sont à f = ±1 Hz. Zoomez autour d'un zéro pour le vérifier."
+{
+  "series": [
+    { "generator": "function", "range": [-1.5, 1.5], "points": 601, "y": "abs(x) <= 0.5 ? 1 : 0", "name": "rect₁(t)", "xaxis": "x", "yaxis": "y", "line": { "shape": "hv" } },
+    { "generator": "function", "range": [-4, 4], "points": 1201, "y": "abs(x) < 1e-9 ? 1 : sin(PI*x)/(PI*x)", "name": "sinc(πf)", "xaxis": "x2", "yaxis": "y2" }
+  ],
+  "layout": {
+    "grid": { "rows": 1, "columns": 2, "pattern": "independent" },
+    "xaxis": { "title": "Temps t (s)" }, "yaxis": { "title": "Amplitude", "range": [-0.1, 1.2] },
+    "xaxis2": { "title": "Fréquence f (Hz)" }, "yaxis2": { "title": "X(f)" }
+  }
+}
 :::
 
 2. Pour calculer la TF de $z(t) = t e^{-at} u(t)$, on utilise la propriété de dérivation par rapport à la fréquence.
@@ -278,6 +353,16 @@ Le produit de convolution de deux rectangles de largeur $T$ donne un signal tria
 :::figure src="assets/AU331-Traitement-Signal/convolution_rectangles_detail.png" alt="Deux fenetres rectangles convoluees donnent une fenetre triangulaire." class="td-figure wide-figure" caption="Exercice 3 : la convolution vaut la longueur de recouvrement entre les deux fenetres."
 :::
 
+:::plotly id="au331-convolution-rectangles-interactive" label="Reconstruction interactive" title="Convolution de deux portes de largeur T = 1" height="480" caption="La hauteur du triangle est exactement la longueur de recouvrement des deux portes. Le curseur permet de lire s(0) = 1 et s(±1) = 0."
+{
+  "series": [
+    { "generator": "function", "range": [-2, 2], "points": 801, "y": "abs(x) <= 0.5 ? 1 : 0", "name": "rect₁(t)", "line": { "shape": "hv", "dash": "dot" } },
+    { "generator": "function", "range": [-2, 2], "points": 801, "y": "abs(x) <= 1 ? 1-abs(x) : 0", "name": "s(t) = rect₁ * rect₁", "fill": "tozeroy", "line": { "width": 4 } }
+  ],
+  "layout": { "xaxis": { "title": "Décalage t (s)" }, "yaxis": { "title": "Amplitude / recouvrement", "range": [-0.05, 1.15] } }
+}
+:::
+
 $$\begin{cases}
 
 s(t) = t + T & \text{pour } t \in [-T, 0] \\
@@ -338,6 +423,18 @@ $$x_{obs}(t) = x(t) \cdot w(t) \iff X_{obs}(f) = X(f) * W(f)$$
 L'apodisation consiste à choisir une fenêtre de pondération adéquate pour réduire le phénomène de débordement spectral (les lobes secondaires du sinus cardinal de la fenêtre rectangulaire qui viennent polluer le spectre du signal utile).
 
 :::figure src="assets/AU331-Traitement-Signal/fenetres_apodisation.png" alt="Comparaison de fenetres d'apodisation et de leurs effets spectraux." class="td-figure" caption="Le choix de la fenetre regle le compromis entre largeur du lobe principal et attenuation des lobes secondaires."
+:::
+
+:::plotly id="au331-fenetres-interactive" label="Reconstruction interactive" title="Fenêtres d'apodisation dans le domaine temporel" height="480" caption="Les fenêtres sont normalisées sur N = 31 échantillons. Masquez certaines séries pour comparer précisément leur élargissement aux bords."
+{
+  "series": [
+    { "generator": "sequence", "nStart": 0, "nEnd": 30, "y": "1", "name": "Rectangulaire", "line": { "shape": "hv" } },
+    { "generator": "sequence", "nStart": 0, "nEnd": 30, "y": "0.5-0.5*cos(2*PI*n/30)", "name": "Hann" },
+    { "generator": "sequence", "nStart": 0, "nEnd": 30, "y": "0.54-0.46*cos(2*PI*n/30)", "name": "Hamming" },
+    { "generator": "sequence", "nStart": 0, "nEnd": 30, "y": "0.42-0.5*cos(2*PI*n/30)+0.08*cos(4*PI*n/30)", "name": "Blackman" }
+  ],
+  "layout": { "xaxis": { "title": "Échantillon n" }, "yaxis": { "title": "w[n]", "range": [-0.05, 1.1] } }
+}
 :::
 
 **Comparaison des fenêtres de pondération usuelles**
@@ -464,6 +561,23 @@ Un radar émet un signal impulsionnel gaussien bref $u(t)$. Le signal réfléchi
 :::figure src="assets/AU331-Traitement-Signal/detection_correlation.png" alt="La correlation extrait un pic de retard dans un signal bruite." class="td-figure" caption="Exercice 4 : la correlation transforme un echo peu visible dans le bruit en pic de detection localisable."
 :::
 
+:::plotly id="au331-correlation-interactive" label="Reconstruction interactive" title="Détection d'un écho par corrélation" height="600" caption="Le signal reçu est volontairement dominé par un bruit déterministe reproductible. La corrélation fait néanmoins apparaître un maximum au retard t₂ = 4,5 s."
+{
+  "series": [
+    { "generator": "function", "range": [0, 10], "points": 1001, "y": "exp(-18*(x-1.5)*(x-1.5))*cos(32*(x-1.5))", "name": "Impulsion émise u(t)", "xaxis": "x", "yaxis": "y" },
+    { "generator": "function", "range": [0, 10], "points": 1001, "y": "0.4*exp(-18*(x-6)*(x-6))*cos(32*(x-6)) + 0.7*sin(71*x) + 0.45*sin(113*x+0.8) + 0.3*sin(157*x+1.7)", "name": "Signal reçu bruité x(t)", "xaxis": "x2", "yaxis": "y2" },
+    { "generator": "function", "range": [0, 8], "points": 801, "y": "exp(-10*(x-4.5)*(x-4.5)) + 0.07*sin(24*x)", "name": "Cₓᵤ(τ)", "xaxis": "x3", "yaxis": "y3", "line": { "width": 4 } }
+  ],
+  "layout": {
+    "grid": { "rows": 3, "columns": 1, "pattern": "independent" },
+    "xaxis": { "title": "Temps t (s)" }, "yaxis": { "title": "u(t)" },
+    "xaxis2": { "title": "Temps t (s)" }, "yaxis2": { "title": "x(t)" },
+    "xaxis3": { "title": "Décalage τ (s)" }, "yaxis3": { "title": "Corrélation" },
+    "shapes": [{ "type": "line", "x0": 4.5, "x1": 4.5, "y0": 0, "y1": 1, "xref": "x3", "yref": "y3", "line": { "dash": "dash", "color": "#dc2626" } }]
+  }
+}
+:::
+
    Même si dans le domaine temporel le signal utile est totalement noyé dans le bruit (impossible à distinguer à l'œil nu sur un oscilloscope à $SNR = 0.4$), l'opération d'intercorrélation accumule l'énergie cohérente du signal sur toute sa durée tout en moyennant le bruit incohérent vers zéro, faisant ressortir le pic de détection avec une grande précision.
 :::
 
@@ -539,6 +653,16 @@ $$X_e(f) = F_e \sum_{n=-\infty}^{+\infty} X(f - n F_e)$$
 :::figure src="assets/AU331-Traitement-Signal/echantillonnage_shannon_temporel.png" alt="Echantillonnage temporel et periodisation du spectre sans recouvrement." class="td-figure" caption="L'echantillonnage cree des copies du spectre tous les multiples de $F_e$. Shannon impose d'eviter leur recouvrement."
 :::
 
+:::plotly id="au331-echantillonnage-interactive" label="Reconstruction interactive" title="Signal analogique et échantillons — Shannon respecté" height="500" caption="Le signal contient 5 Hz et est échantillonné à 14 Hz : Fe > 2Fmax. Les marqueurs coïncident avec la sinusoïde et permettent une reconstruction idéale."
+{
+  "series": [
+    { "generator": "function", "range": [0, 1], "points": 1001, "y": "sin(2*PI*5*x)", "name": "x(t), Fmax = 5 Hz", "line": { "width": 3 } },
+    { "generator": "sequence", "nStart": 0, "nEnd": 14, "x": "n/14", "y": "sin(2*PI*5*n/14)", "name": "x[n], Fe = 14 Hz", "mode": "markers", "marker": { "size": 10 } }
+  ],
+  "layout": { "xaxis": { "title": "Temps (s)", "range": [0, 1] }, "yaxis": { "title": "Amplitude" } }
+}
+:::
+
 *   **Effet physique de l'échantillonnage :** Le spectre du signal échantillonné est composé du spectre d'origine périodisé (répété à l'infini) tous les multiples de la fréquence d'échantillonnage $F_e = 1/T_e$.
 
 :::
@@ -561,6 +685,25 @@ Pour pouvoir reconstruire parfaitement le signal continu $x(t)$ à partir de ses
 Si le signal contient des composantes fréquentielles ou des bruits parasites au-delà de $F_e/2$, l'échantillonnage va les replier dans la bande utile sous forme d'harmoniques fantômes indésirables (aliasing).
 
 :::figure src="assets/AU331-Traitement-Signal/repliement_spectral.png" alt="Repliement spectral d'une frequence parasite dans la bande utile." class="td-figure" caption="Le repliement spectral transforme une composante hors bande en frequence apparente dans la bande utile."
+:::
+
+:::plotly id="au331-repliement-interactive" label="Reconstruction interactive" title="Repliement spectral pour Fe = 8 kHz" height="450" caption="Les raies à 27,5 kHz et 3,5 kHz produisent exactement les mêmes échantillons : 27,5 − 3×8 = 3,5 kHz."
+{
+  "data": [
+    { "type": "bar", "x": [3.5, 27.5], "y": [1, 1], "width": [0.18, 0.18], "name": "Composantes", "marker": { "color": ["#dc2626", "#2563eb"] }, "text": ["Alias 3,5 kHz", "Parasite 27,5 kHz"], "textposition": "outside" }
+  ],
+  "layout": {
+    "xaxis": { "title": "Fréquence (kHz)", "range": [0, 31], "dtick": 4 },
+    "yaxis": { "title": "Amplitude", "range": [0, 1.25] },
+    "shapes": [
+      { "type": "line", "x0": 4, "x1": 4, "y0": 0, "y1": 1.18, "line": { "dash": "dash", "color": "#f59e0b" } },
+      { "type": "line", "x0": 8, "x1": 8, "y0": 0, "y1": 1.18, "line": { "dash": "dot", "color": "#64748b" } },
+      { "type": "line", "x0": 16, "x1": 16, "y0": 0, "y1": 1.18, "line": { "dash": "dot", "color": "#64748b" } },
+      { "type": "line", "x0": 24, "x1": 24, "y0": 0, "y1": 1.18, "line": { "dash": "dot", "color": "#64748b" } }
+    ],
+    "annotations": [{ "text": "Nyquist Fe/2", "x": 4, "y": 1.2, "showarrow": false }]
+  }
+}
 :::
 
 *   *Exemple concret :* En téléphonie numérique, la parole est limitée à $3.4 \text{ kHz}$. On échantillonne à $F_e = 8 \text{ kHz}$. Si un parasite non audible à $27.5 \text{ kHz}$ est présent et qu'on échantillonne sans filtrage, il va se replier à :
@@ -593,6 +736,17 @@ Si le signal contient des composantes fréquentielles ou des bruits parasites au
 Le zero padding consiste à ajouter des zéros à la fin d'un signal temporel de taille $N$ avant de calculer sa TFD sur $N' > N$ points.
 
 :::figure src="assets/AU331-Traitement-Signal/zero_padding_effect.png" alt="Le zero padding ajoute des points de calcul sur la courbe spectrale." class="td-figure" caption="Le zero padding densifie l'affichage du spectre ; il n'augmente pas la duree d'observation du signal."
+:::
+
+:::plotly id="au331-zero-padding-interactive" label="Reconstruction interactive" title="Zero padding : mêmes lobes, davantage de points" height="500" caption="Les deux TFD échantillonnent la même enveloppe spectrale. Le zero padding N' = 128 rend seulement son tracé plus dense."
+{
+  "series": [
+    { "generator": "function", "range": [0.001, 0.5], "points": 1001, "y": "abs(sin(16*PI*x)/sin(PI*x))", "name": "Enveloppe de la TF à temps discret", "line": { "width": 2 } },
+    { "generator": "sequence", "nStart": 0, "nEnd": 8, "x": "n/16", "y": "n === 0 ? 16 : abs(sin(16*PI*n/16)/sin(PI*n/16))", "name": "TFD N = 16", "mode": "markers", "marker": { "size": 11 } },
+    { "generator": "sequence", "nStart": 0, "nEnd": 64, "x": "n/128", "y": "n === 0 ? 16 : abs(sin(16*PI*n/128)/sin(PI*n/128))", "name": "TFD après zero padding N' = 128", "mode": "markers", "marker": { "size": 5 } }
+  ],
+  "layout": { "xaxis": { "title": "Indice fréquentiel normalisé" }, "yaxis": { "title": "Module" } }
+}
 :::
 
 *   *Effet :* Il interpole le spectre continu de la TFd en calculant des points intermédiaires. Cela améliore la **résolution visuelle** du tracé du spectre.
@@ -799,6 +953,21 @@ Le calcul de la sortie nécessite uniquement des opérations d'addition, de mult
 
 :::figure src="assets/AU331-Traitement-Signal/structure_directe_rif.png" alt="Structure directe d'un filtre RIF avec retards, coefficients et sommateur." class="td-figure" caption="Un filtre RIF est une somme ponderee de versions retardees de l'entree."
 :::
+
+```mermaid
+flowchart LR
+    X["x(n)"] --> T0((•))
+    T0 --> Z1["z⁻¹"] --> T1((•))
+    T1 --> Z2["z⁻¹"] --> T2((•))
+    T2 --> Z3["z⁻¹"] --> T3((•))
+    T0 --> B0["× b₀"] --> S((Σ))
+    T1 --> B1["× b₁"] --> S
+    T2 --> B2["× b₂"] --> S
+    T3 --> B3["× b₃"] --> S
+    S --> Y["y(n)"]
+```
+
+*Reconstruction vectorielle de la structure directe : les branches matérialisent les quatre termes de la somme pondérée.*
 
 :::
 
