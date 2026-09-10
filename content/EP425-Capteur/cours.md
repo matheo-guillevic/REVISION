@@ -94,6 +94,72 @@ s=f(x)
 
 L'**etalonnage** consiste a determiner experimentalement cette relation a partir de valeurs de reference connues. Il peut etre direct, par comparaison avec un etalon de meme nature, ou indirect lorsque l'on passe par une autre grandeur mesurable.
 
+### Sensibilite, etendue et FSO
+
+La **sensibilite** indique de combien varie le signal de sortie lorsque le mesurande varie. Autour d'un point de fonctionnement (x_0), c'est la pente locale de la courbe d'etalonnage :
+
+\[
+S(x_0)=\left.\frac{\mathrm ds}{\mathrm dx}\right|_{x_0}
+\]
+
+Son unite est toujours une unite de sortie par unite du mesurande : par exemple \(\mathrm{mV}/^\circ\mathrm C\), \(\Omega/^\circ\mathrm C\) ou \(\mathrm{mV}/\mathrm{kPa}\). Pour un capteur lineaire, (s=Sx+s_0) et la sensibilite est constante. Pour une CTN ou un capteur optique, elle depend du point de fonctionnement : il faut donc employer la pente **locale**, et non seulement une pente moyenne.
+
+:::grid two-col
+:::block type="definition" title="Etendue de mesure"
+L'etendue de mesure est l'intervalle dans lequel le constructeur garantit les performances :
+
+\[
+\text{EM}=[x_{\min},x_{\max}],\qquad \Delta x_{\text{FS}}=x_{\max}-x_{\min}
+\]
+
+En dehors de cette plage, le capteur peut saturer, etre non lineaire ou etre endommage.
+:::
+
+:::block type="definition" title="FSO : Full-Scale Output"
+Le **FSO** est l'excursion de sortie associee a toute l'etendue de mesure :
+
+\[
+\mathrm{FSO}=s(x_{\max})-s(x_{\min})
+\]
+
+Dans une fiche technique, verifier la convention : certains fabricants indiquent la sortie au plein echelle, d'autres l'ecart entre sortie minimale et maximale.
+:::
+:::
+
+La sensibilite moyenne se deduit alors simplement du FSO :
+
+\[
+S_{\text{moy}}=\frac{\mathrm{FSO}}{\Delta x_{\text{FS}}}
+\]
+
+**Exemple.** Un capteur de pression 0--100 kPa de sensibilite ratiometrique \(2\,\mathrm{mV/V}\) alimente sous \(10\,\mathrm V\) fournit un FSO de \(20\,\mathrm{mV}\). Sa sensibilite moyenne vaut donc \(0{,}20\,\mathrm{mV/kPa}\). Le terme « ratiometrique » signifie que le FSO est proportionnel a la tension d'excitation : une variation de l'alimentation devient une erreur si elle n'est pas compensee par une mesure ratiometrique.
+
+:::block type="method" title="Lire une specification en pourcentage FSO"
+Une erreur de linearite, d'hysteresis ou de repetabilite de \(\pm0{,}5\,\%\) FSO se convertit en erreur absolue par \(\pm0{,}005\times\mathrm{FSO}\). Dans l'exemple precedent, cela fait \(\pm0{,}10\,\mathrm{mV}\), soit \(\pm0{,}5\,\mathrm{kPa}\) apres conversion par la sensibilite moyenne.
+:::
+
+:::plotly id="ep425-sensibilite" label="Courbe d'etalonnage" title="Pente locale, pente moyenne et FSO" height="440" caption="Le FSO est la difference de sortie entre les deux bornes de l'etendue. Pour la courbe non lineaire, la pente et donc la sensibilite varient avec le point de fonctionnement."
+{
+  "data": [
+    { "type": "scatter", "mode": "lines+markers", "x": [0, 25, 50, 75, 100], "y": [0, 5, 10, 15, 20], "name": "Capteur lineaire", "line": { "color": "#0077b6", "width": 3 } },
+    { "type": "scatter", "mode": "lines+markers", "x": [0, 25, 50, 75, 100], "y": [0, 2.2, 6.2, 12.5, 20], "name": "Capteur non lineaire", "line": { "color": "#e76f51", "width": 3 } }
+  ],
+  "layout": {
+    "margin": { "t": 50, "r": 34, "b": 68, "l": 76 },
+    "xaxis": { "title": "Mesurande x (kPa)", "range": [-5, 105] },
+    "yaxis": { "title": "Sortie s (mV)", "range": [-1, 23] },
+    "shapes": [
+      { "type": "line", "x0": 0, "x1": 100, "y0": 20.9, "y1": 20.9, "line": { "color": "#495057", "dash": "dot" } },
+      { "type": "line", "x0": 0, "x1": 100, "y0": 0, "y1": 0, "line": { "color": "#495057", "dash": "dot" } }
+    ],
+    "annotations": [
+      { "x": 50, "y": 21.1, "text": "FSO = 20 mV", "showarrow": false },
+      { "x": 50, "y": 10, "text": "S moyenne = 0,20 mV/kPa", "showarrow": true, "ax": -70, "ay": -42 }
+    ]
+  }
+}
+:::
+
 ### Fidelite, justesse et precision
 
 :::grid two-col
@@ -348,6 +414,66 @@ Le conditionneur distant convertit la grandeur en courant : \(4\,\text{mA}\) pou
 ### Contact thermique
 
 La mesure de temperature par contact suppose un equilibre thermique : deux corps en contact prolonge atteignent la meme temperature lorsqu'il n'y a plus de transfert net de chaleur.
+
+### Zone thermique et dynamique de mesure
+
+La **zone thermique** est la region du systeme dont le capteur represente effectivement la temperature. Elle ne se reduit pas au point geometrique ou se trouve la sonde : elle depend des chemins de conduction, de convection et de rayonnement qui relient l'objet, la sonde et son environnement.
+
+```mermaid
+flowchart LR
+  M[Milieu ou piece<br/>temperature Tm] -->|conduction / convection<br/>resistance Rth| S[Element sensible<br/>temperature Ts]
+  S -->|pertes parasites| A[Air ambiant<br/>temperature Ta]
+  S -->|fixation, cable, support| P[Paroi ou carte]
+  style M fill:#dbeafe,stroke:#2563eb
+  style S fill:#fef3c7,stroke:#d97706
+  style A fill:#e5e7eb,stroke:#6b7280
+  style P fill:#e5e7eb,stroke:#6b7280
+```
+
+Une sonde posee sur une paroi mesure donc un compromis entre la temperature de la paroi, celle de l'air et celle du support. Pour que la zone thermique corresponde bien au mesurande, il faut maximiser le couplage avec la zone visee (bon contact, pate thermique, immersion suffisante) et limiter les fuites vers l'environnement (isolation, fils fins, ecran radiatif si necessaire).
+
+:::grid two-col
+:::block type="theorem" title="Modele thermique du premier ordre"
+En assimilant la sonde a une capacite thermique \(C_{th}\) reliee au milieu par une resistance thermique \(R_{th}\) :
+
+\[
+C_{th}\frac{\mathrm dT_s}{\mathrm dt}=\frac{T_m-T_s}{R_{th}}+P_{\text{auto}}
+\qquad
+\tau=R_{th}C_{th}
+\]
+
+\(P_{\text{auto}}\) est l'echauffement produit par la mesure elle-meme.
+:::
+
+:::block type="remember" title="Constante de temps"
+Pour un saut de temperature et sans auto-echauffement, la sonde atteint 63 % de l'ecart final apres \(\tau\), 95 % apres environ \(3\tau\) et 99 % apres environ \(5\tau\). Une faible inertie thermique accelere la mesure, mais peut rendre la sonde plus fragile.
+:::
+:::
+
+:::plotly id="ep425-zone-thermique" label="Dynamique thermique" title="Reponse d'une sonde apres un saut de temperature" height="410" caption="Exemple : le milieu passe de 20 °C a 80 °C. La ligne pointillee indique la valeur atteinte a une constante de temps."
+{
+  "series": [
+    { "generator": "function", "range": [0, 25], "points": 200, "y": "80-60*exp(-x/5)", "name": "Temperature de la sonde Ts", "line": { "color": "#e76f51", "width": 3 } },
+    { "generator": "function", "range": [0, 25], "points": 2, "y": 80, "name": "Temperature du milieu Tm", "line": { "color": "#0077b6", "width": 2, "dash": "dash" } }
+  ],
+  "layout": {
+    "margin": { "t": 48, "r": 34, "b": 65, "l": 76 },
+    "xaxis": { "title": "Temps (s)" },
+    "yaxis": { "title": "Temperature (°C)", "range": [15, 85] },
+    "shapes": [
+      { "type": "line", "x0": 5, "x1": 5, "y0": 20, "y1": 80, "line": { "color": "#495057", "dash": "dot" } },
+      { "type": "line", "x0": 0, "x1": 5, "y0": 57.9, "y1": 57.9, "line": { "color": "#495057", "dash": "dot" } }
+    ],
+    "annotations": [
+      { "x": 5, "y": 57.9, "text": "t = τ : 63 % de l'ecart", "showarrow": true, "ax": 78, "ay": -28 }
+    ]
+  }
+}
+:::
+
+:::block type="warning" title="Auto-echauffement"
+Un courant de mesure dans une PT100 ou une CTN dissipe une puissance \(P\). A l'equilibre, il cree approximativement une erreur \(\Delta T\approx R_{th}P\). Reduire le courant d'excitation, mesurer par impulsions ou ameliorer l'echange thermique limite cette erreur.
+:::
 
 ### RTD et PT100
 
