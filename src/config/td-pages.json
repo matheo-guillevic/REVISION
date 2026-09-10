@@ -487,6 +487,26 @@
       ]
     },
     {
+      "subject": "EP425-Capteur",
+      "label": "EP425-Capteur",
+      "backHref": "EP425-Capteur.html#EP425-Capteur-td",
+      "backLabel": "Retour aux TD EP425-Capteur",
+      "courseHref": "EP425-Capteur.html",
+      "courseLabel": "Cours EP425-Capteur",
+      "idPrefix": "EP425-Capteur-td",
+      "pages": [
+        {
+          "n": 1,
+          "target": "EP425-Capteur-td1.html",
+          "source": "td-solutions-complet-ep425.md",
+          "title": "TD corrige - Capteurs et instrumentation",
+          "eyebrow": "EP425 - TD corrige",
+          "heading": "Capteurs et instrumentation : 13 exercices corriges",
+          "summary": "Etalonnage, Pt100, incertitudes, temperature, jauges, capteurs optiques et capacitifs."
+        }
+      ]
+    },
+    {
       "subject": "MT461-Methode-numerique",
       "label": "MT461-Methode-numerique",
       "backHref": "MT461-Methode-numerique.html#MT461-Methode-numerique-td",

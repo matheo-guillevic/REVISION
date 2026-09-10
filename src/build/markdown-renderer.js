@@ -433,9 +433,11 @@ ${frame}
     }
 
     case "exercise": {
+      const heading = block.body.match(/^#{2,6}\s+(.+?)\s*\n+/);
       const label = attrs.label || "Exercice";
-      const title = attrs.title || "";
-      return `        <article class="exercise-card" data-exercise>
+      const title = attrs.title || (heading ? heading[1] : "");
+      const body = heading ? block.body.slice(heading[0].length) : block.body;
+      return `        <article class="exercise-card" data-exercise${attrs.id ? ` id="${escapeHtml(attrs.id)}"` : ""}>
           <header>
             <div>
               <span class="status-pill">${escapeHtml(label)}</span>
@@ -447,9 +449,20 @@ ${frame}
             </div>
           </header>
           <div class="answer-block">
-${renderBlocks(block.body, options)}
+${renderBlocks(body, options)}
           </div>
         </article>`;
+    }
+
+    case "solution": {
+      const title = attrs.title || "Correction détaillée";
+      return `            <div class="content-block solution-panel">
+              <h4>${escapeHtml(title)}</h4>
+${renderBlocks(block.body, { markdown: renderContentMarkdown })
+        .split("\n")
+        .map((line) => `              ${line}`)
+        .join("\n")}
+            </div>`;
     }
 
     case "html": {

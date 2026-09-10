@@ -68,7 +68,8 @@ function checkConfiguredPages(configFile, kind, subjects, targets) {
       assert(!targets.has(target), `Target HTML dupliquee: ${target}`);
       targets.add(target);
 
-      const markdownPath = path.join(contentDir, group.subject, kind, target.replace(/\.html$/i, ".md"));
+      const source = page.source || target.replace(/\.html$/i, ".md");
+      const markdownPath = path.join(contentDir, group.subject, kind, source);
       assert(fs.existsSync(markdownPath), `${configFile}: source Markdown introuvable ${rel(markdownPath)}`);
       if (!fs.existsSync(markdownPath)) continue;
 
@@ -87,12 +88,12 @@ function checkOrphanMarkdown(subjects, tdConfig, examConfig) {
   const configured = new Set();
   for (const group of tdConfig.groups || []) {
     for (const page of group.pages || []) {
-      configured.add(rel(path.join(contentDir, group.subject, "td", page.target.replace(/\.html$/i, ".md"))));
+      configured.add(rel(path.join(contentDir, group.subject, "td", page.source || page.target.replace(/\.html$/i, ".md"))));
     }
   }
   for (const group of examConfig.groups || []) {
     for (const page of group.exams || []) {
-      configured.add(rel(path.join(contentDir, group.subject, "exam", page.target.replace(/\.html$/i, ".md"))));
+      configured.add(rel(path.join(contentDir, group.subject, "exam", page.source || page.target.replace(/\.html$/i, ".md"))));
     }
   }
 

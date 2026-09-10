@@ -42,8 +42,8 @@ function write(filePath, html) {
 }
 
 function markdownPathFor(group, page, kind) {
-  const target = page.target.replace(/\.html$/i, ".md");
-  return path.join(root, "content", group.subject, kind, target);
+  const source = page.source || page.target.replace(/\.html$/i, ".md");
+  return path.join(root, "content", group.subject, kind, source);
 }
 
 function renderPage(group, page, kind, markdownPath) {

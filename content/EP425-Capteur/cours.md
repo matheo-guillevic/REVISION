@@ -729,6 +729,15 @@ Pour \(T_0=100\) et une precision de \(1\%\), passer de 1 etage a 2 etages multi
 :::
 
 
+:::section id="EP425-Capteur-td" eyebrow="Travaux diriges" title="TD corrige — Capteurs et instrumentation" summary="Treize exercices d'application avec corrections detaillees."
+:::card class="chapter-card" kicker="TD 1" title="Recueil d'exercices corriges"
+Etalonnage, sensibilite et FSO, Pt100, propagation d'incertitudes, temperature, jauges de contrainte, capteurs optiques et capacitifs.
+
+[Ouvrir le TD corrige](EP425-Capteur-td1.html)
+:::
+:::
+
+
 :::section id="ep425-synthese" eyebrow="Revision finale" title="Ce qu'il faut savoir refaire sans le cours" summary="Liste courte des automatismes attendus en instrumentation."
 
 :::grid two-col
