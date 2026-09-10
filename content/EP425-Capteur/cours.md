@@ -54,7 +54,9 @@ flowchart LR
 :::grid two-col
 :::block type="definition" title="Elements de la chaine"
 - **Mesurande** : grandeur physique que l'on cherche a mesurer.
-- **Capteur** : corps d'epreuve et transducteur qui convertit le mesurande en grandeur electrique.
+- **Corps d'epreuve** : element qui subit directement l'action du mesurande et la transforme en une grandeur intermediaire ; une membrane peut ainsi transformer une pression en deformation.
+- **Transducteur** : element qui convertit cette grandeur intermediaire en signal electrique ; une jauge piezoresistive sur la membrane transforme par exemple la deformation en variation de resistance.
+- **Capteur** : ensemble corps d'epreuve et transducteur, qui fournit un signal exploitable.
 - **Conditionneur** : circuit qui alimente, adapte, compense ou linearise le signal du capteur.
 - **Amplificateur d'instrumentation** : etage qui amplifie la difference utile et rejette le mode commun.
 :::
@@ -258,6 +260,21 @@ Pour \(N\) mesures repetees, on estime la valeur par la moyenne et la dispersion
 \qquad
 \sigma_x=\sqrt{\frac{1}{N-1}\sum_{i=1}^{N}(x_i-\bar{x})^2}
 \]
+
+:::grid two-col
+:::block type="definition" title="Erreurs systematiques"
+Elles deplacent la moyenne de facon reproductible : offset, erreur de gain, non-linearite ou derive thermique. Un etalonnage peut souvent les identifier et les corriger.
+:::
+
+:::block type="definition" title="Erreurs aleatoires"
+Elles font fluctuer les mesures autour de leur moyenne : bruit thermique, bruit de grenaille, perturbations variables. Les repetitions permettent d'en estimer la dispersion.
+:::
+:::
+
+:::block type="method" title="Incertitudes de type A et B"
+- **Type A** : evaluee statistiquement sur des repetitions, par exemple \(s/\sqrt{N}\) pour l'incertitude sur une moyenne.
+- **Type B** : evaluee a partir d'une specification, d'une resolution ou d'un certificat. Pour une borne uniforme de demi-largeur \(a\), on prend souvent \(u=a/\sqrt3\).
+:::
 
 ### Propagation des erreurs
 
@@ -567,6 +584,16 @@ La tension d'une jonction p-n polarisee a courant constant decroit presque linea
 I=CT^m e^{-\frac{E_g}{k_BT}}\left(e^{\frac{qV}{mk_BT}}-1\right)
 \]
 
+### Thermocouples et compensation de soudure froide
+
+Un thermocouple associe deux metaux differents. Il produit une force electromotrice liee a la **difference** entre la jonction chaude et la jonction de reference :
+
+\[
+e_{AB}\approx S_{AB}(T_h-T_c)
+\]
+
+Il ne mesure donc pas directement \(T_h\). La compensation de soudure froide mesure \(T_c\), par exemple avec une PT100 ou un circuit integre, puis ajoute numeriquement ou analogiquement la f.e.m. equivalente. Cette technologie convient aux temperatures elevees ; elle exige de soigner les raccordements et la compensation.
+
 ### Pyrometrie optique
 
 La pyrometrie mesure sans contact le rayonnement thermique emis par un corps.
@@ -724,6 +751,16 @@ G_{mc}\approx \frac{4\epsilon G_d}{1+G_d}
 \[
 \tau_{rmc}\approx \frac{1+G_d}{4\epsilon}
 \]
+
+### Amplificateur d'instrumentation a trois AOP
+
+La structure classique a trois AOP isole d'abord chacune des entrees par deux amplificateurs non-inverseurs, puis soustrait leurs sorties dans un etage differentiel. Elle donne une grande impedance d'entree et permet de regler le gain avec une seule resistance :
+
+\[
+G_d=\left(1+\frac{2R_1}{R_g}\right)\frac{R_3}{R_2}
+\]
+
+Le gain reel reste limite par l'offset, la bande passante et surtout l'appariement des rapports \(R_3/R_2\) dans l'etage soustracteur, qui conditionne le TRMC.
 
 :::circuitgrid
 :::circuitjs label="Instrumentation" title="Amplificateur differentiel" iframeTitle="Simulation CircuitJS d'un amplificateur differentiel" src="https://www.falstad.com/circuit/circuitjs.html?hideMenu=true&startCircuit=amp-diff.txt"

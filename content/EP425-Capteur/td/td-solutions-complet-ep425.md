@@ -79,6 +79,16 @@ Un technicien est chargé d'étalonner un capteur de position magnétique dont l
    - **Erreur totale maximale (pire des cas) :**
      $$\Delta x_{max} = 30\text{ }\mu\text{m} + 20\text{ }\mu\text{m} = 50\text{ }\mu\text{m} \quad (0{,}050\text{ mm})$$
    - *Alternative statistique (quadratique) :* $\Delta x_{quad} = \sqrt{30^2 + 20^2} \approx 36{,}05\text{ }\mu\text{m}$.
+
+:::plotly id="ep425-td-etalonnage-courbe" label="Courbe d'étalonnage" title="Position et tension avec incertitudes" height="410" caption="Les barres horizontales représentent ± 20 µm et les barres verticales ± 0,1 V. La droite d'étalonnage est V(x) = 10x + 0,2, avec x en mm."
+{
+  "data": [
+    { "type": "scatter", "mode": "lines", "x": [0, 1], "y": [0.2, 10.2], "name": "Modèle linéaire", "line": { "color": "#0077b6", "width": 3 } },
+    { "type": "scatter", "mode": "markers", "x": [0.09, 0.94], "y": [1.1, 9.6], "name": "Points d'étalonnage", "marker": { "color": "#e76f51", "size": 10 }, "error_x": { "type": "data", "array": [0.02, 0.02], "visible": true }, "error_y": { "type": "data", "array": [0.1, 0.1], "visible": true } }
+  ],
+  "layout": { "margin": { "t": 42, "r": 32, "b": 65, "l": 74 }, "xaxis": { "title": "Position x (mm)", "range": [-0.05, 1.05] }, "yaxis": { "title": "Tension V (V)", "range": [0, 10.8] } }
+}
+:::
 :::
 :::
 
@@ -207,6 +217,17 @@ avec $a = 0{,}0125\text{ V/bar}^2$, $b = -0{,}05\text{ V/bar}$ et $c = -0{,}75\t
      $$\Delta V = V(16) - V_{lin}(16) = 1{,}65\text{ V} - 1{,}6375\text{ V} = 0{,}0125\text{ V} = 12{,}5\text{ mV}$$
    - **Erreur équivalente en pression :**
      $$\Delta P = \frac{\Delta V}{S} = \frac{0{,}0125\text{ V}}{0{,}325\text{ V/bar}} \approx 0{,}0385\text{ bar}$$
+
+:::plotly id="ep425-td-pression-courbe" label="Linéarisation locale" title="Courbe quadratique et tangente à 15 bar" height="410" caption="La droite tangente est très proche de la courbe autour de 15 bar. À 16 bar, l'écart vertical vaut 12,5 mV."
+{
+  "series": [
+    { "generator": "function", "range": [10, 20], "points": 180, "y": "0.0125*x*x-0.05*x-0.75", "name": "Réponse exacte V(P)", "line": { "color": "#0077b6", "width": 3 } },
+    { "generator": "function", "range": [10, 20], "points": 180, "y": "0.325*x-3.5625", "name": "Tangente Vlin(P)", "line": { "color": "#e76f51", "width": 2, "dash": "dash" } },
+    { "type": "scatter", "mode": "markers", "x": [15, 16], "y": [1.3125, 1.65], "name": "Points exacts", "marker": { "color": "#23845a", "size": 9 } }
+  ],
+  "layout": { "margin": { "t": 42, "r": 32, "b": 65, "l": 74 }, "xaxis": { "title": "Pression P (bar)" }, "yaxis": { "title": "Tension V (V)" }, "shapes": [{ "type": "line", "x0": 16, "x1": 16, "y0": 1.6375, "y1": 1.65, "line": { "color": "#495057", "dash": "dot" } }] }
+}
+:::
 :::
 :::
 
@@ -399,6 +420,16 @@ On linéarise la réponse autour de $0^\circ\text{C}$ en plaçant une résistanc
    - Sensibilité équivalente :
      $$S_e(25^\circ\text{C}) = \left(\frac{R_1}{R_1 + R_N(25)}\right)^2 \cdot S_N(25^\circ\text{C})$$
      $$S_e(25^\circ\text{C}) = \left(\frac{175}{175 + 57{,}08}\right)^2 \times 0{,}2915 = (0{,}754)^2 \times 0{,}2915 \approx 0{,}166\,\Omega/^\circ\text{C}$$
+
+:::plotly id="ep425-td-nickel-courbe" label="Linéarisation" title="Sonde nickel seule et résistance équivalente" height="410" caption="La résistance en parallèle réduit la sensibilité mais diminue la courbure de la réponse autour de 0 °C."
+{
+  "series": [
+    { "generator": "function", "range": [0, 100], "points": 180, "y": "50*(1+0.0055*x+0.0000067*x*x)", "name": "Sonde nickel RN", "line": { "color": "#0077b6", "width": 3 } },
+    { "generator": "function", "range": [0, 100], "points": 180, "y": "175.7*(50*(1+0.0055*x+0.0000067*x*x))/(175.7+50*(1+0.0055*x+0.0000067*x*x))", "name": "Équivalent Re avec R1 = 175,7 Ω", "line": { "color": "#e76f51", "width": 3 } }
+  ],
+  "layout": { "margin": { "t": 42, "r": 32, "b": 65, "l": 74 }, "xaxis": { "title": "Température (°C)" }, "yaxis": { "title": "Résistance (Ω)" } }
+}
+:::
 :::
 :::
 
@@ -460,6 +491,15 @@ Un gyromètre optique est constitué d'une fibre optique enroulée $N = 1200$ fo
 3. **Résolution avec un CAN 8 bits ($256$ niveaux) :**
    La plus petite variation de tension détectable est $1\text{ LSB} = \frac{1\text{ V}}{256} \approx 3{,}9\text{ mV}$.
    En divisant par la sensibilité max, on extrait la vitesse angulaire minimale détectable $\Omega_{min}$.
+
+:::plotly id="ep425-td-sagnac-courbe" label="Point de fonctionnement" title="Signal interferométrique du gyromètre" height="400" caption="La pente est maximale au voisinage de Δφ = π/2 : une petite rotation y produit alors la plus grande variation de tension."
+{
+  "series": [
+    { "generator": "function", "range": [0, 6.283185], "points": 240, "y": "pow(cos(x/2),2)", "name": "V/Vmax = cos²(Δφ/2)", "line": { "color": "#0077b6", "width": 3 } }
+  ],
+  "layout": { "margin": { "t": 42, "r": 32, "b": 65, "l": 74 }, "xaxis": { "title": "Déphasage Δφ (rad)", "tickvals": [0, 1.5708, 3.1416, 4.7124, 6.2832], "ticktext": ["0", "π/2", "π", "3π/2", "2π"] }, "yaxis": { "title": "Tension normalisée V/Vmax", "range": [-0.05, 1.05] }, "shapes": [{ "type": "line", "x0": 1.5708, "x1": 1.5708, "y0": 0, "y1": 1, "line": { "color": "#e76f51", "dash": "dash" } }] }
+}
+:::
 :::
 :::
 
