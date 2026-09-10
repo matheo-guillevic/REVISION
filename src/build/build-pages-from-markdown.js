@@ -1,11 +1,24 @@
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const matter = require("gray-matter");
 const { renderBlocks } = require("./markdown-renderer");
 
 const root = process.cwd();
 const outDir = path.join(root, "out");
 const configDir = path.join(root, "src", "config");
+const publicDir = path.join(root, "public");
+
+function publicAssetRevision() {
+  const hash = crypto.createHash("sha256");
+  for (const file of ["styles.css", "script.js", "service-worker.js"]) {
+    hash.update(file);
+    hash.update(fs.readFileSync(path.join(publicDir, file)));
+  }
+  return hash.digest("hex").slice(0, 16);
+}
+
+const assetRevision = publicAssetRevision();
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(path.join(configDir, file), "utf8").replace(/^\uFEFF/, ""));
@@ -59,7 +72,8 @@ function renderPage(group, page, kind, markdownPath) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${escapeHtml(data.title)} - ${escapeHtml(group.label)}</title>
-    <link rel="stylesheet" href="styles.css">${prismLink}
+    <link rel="stylesheet" href="styles.css?v=${assetRevision}">${prismLink}
+    <script>window.REVISION_ASSET_VERSION = "${assetRevision}";</script>
     <script>
       window.MathJax = {
         tex: { inlineMath: [["\\\\(", "\\\\)"], ["$", "$"]], displayMath: [["\\\\[", "\\\\]"]] },
@@ -68,7 +82,7 @@ function renderPage(group, page, kind, markdownPath) {
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>${prismScripts}${mermaidScripts}
     <script defer src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3/plotly.min.js"></script>
-    <script defer src="script.js"></script>
+    <script defer src="script.js?v=${assetRevision}"></script>
   </head>
   <body class="td-page">
     <main class="main-content">

@@ -700,7 +700,11 @@ function initLinuxPlaygrounds() {
   const prepareCache = async (version) => {
     if (!("serviceWorker" in navigator)) { cacheWarning = true; return; }
     try {
-      await navigator.serviceWorker.register("service-worker.js", { updateViaCache: "none" });
+      const workerUrl = new URL("service-worker.js", window.location.href);
+      if (window.REVISION_ASSET_VERSION) {
+        workerUrl.searchParams.set("v", window.REVISION_ASSET_VERSION);
+      }
+      await navigator.serviceWorker.register(workerUrl.href, { updateViaCache: "none" });
       // ready alone does not mean this document is controlled. Also wait for
       // the newly installed worker, not an older controller left by an update.
       const deadline = Date.now() + 15000;
@@ -737,7 +741,14 @@ function initLinuxPlaygrounds() {
     const editor = playground.querySelector("[data-linux-editor]");
     const status = playground.querySelector("[data-linux-status]");
     const bytes = new TextEncoder().encode(editor.value.replace(/\r\n/g, "\n"));
-    await emulator.create_file("/root/main.c", bytes);
+    const filesystem = emulator.fs9p;
+    const file = filesystem?.SearchPath?.("/root/main.c");
+    if (file && file.id >= 0 && filesystem.ChangeSize && filesystem.Write) {
+      await filesystem.ChangeSize(file.id, bytes.length);
+      if (bytes.length) await filesystem.Write(file.id, 0, bytes.length, bytes);
+    } else {
+      await emulator.create_file("/root/main.c", bytes);
+    }
     status.innerHTML = "Source enregistrée dans <code>/root/main.c</code>. Compilez avec <code>gcc -Wall -Wextra /root/main.c -o /root/main</code>, puis lancez <code>/root/main</code>.";
   };
 

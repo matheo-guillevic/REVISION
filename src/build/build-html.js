@@ -1,10 +1,22 @@
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const { renderMarkdownCourse } = require("./markdown-renderer");
 
 const root = process.cwd();
 const outDir = path.join(root, "out");
 const publicDir = path.join(root, "public");
+
+function publicAssetRevision() {
+  const hash = crypto.createHash("sha256");
+  for (const file of ["styles.css", "script.js", "service-worker.js"]) {
+    hash.update(file);
+    hash.update(fs.readFileSync(path.join(publicDir, file)));
+  }
+  return hash.digest("hex").slice(0, 16);
+}
+
+const assetRevision = publicAssetRevision();
 
 const pages = {
   home: path.join(outDir, "index.html"),
@@ -358,7 +370,8 @@ function renderShell({ title, brandMark, brandTitle, brandSubtitle, nav, eyebrow
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${title}</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=${assetRevision}">
+    <script>window.REVISION_ASSET_VERSION = "${assetRevision}";</script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
     <script>
       window.MathJax = {
@@ -376,7 +389,7 @@ function renderShell({ title, brandMark, brandTitle, brandSubtitle, nav, eyebrow
     <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3/plotly.min.js"></script>
-    <script defer src="script.js"></script>
+    <script defer src="script.js?v=${assetRevision}"></script>
   </head>
   <body>
     <div class="app-shell">
