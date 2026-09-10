@@ -178,18 +178,6 @@ Un capteur est juste si la moyenne des mesures \(\bar{x}\) est proche de la vale
 La precision combine les deux criteres : un capteur precis est **a la fois fidele et juste**.
 :::
 
-```mermaid
-%%{init: {"quadrantChart": {"chartWidth": 1000, "chartHeight": 600, "pointLabelFontSize": 12}}}%%
-quadrantChart
-  title Fidelite et justesse d'un capteur
-  x-axis Fidelite faible --> Fidelite elevee
-  y-axis Justesse faible --> Justesse elevee
-  quadrant-1 Mesure idéale
-  quadrant-2 Mesure autour de la valeur idéale mais non répétable
-  quadrant-3 Mesure répétable mais loin de la valeur idéale
-  quadrant-4 Mesure non répétable et différente de la valeur idéale
-```
-
 :::plotly id="ep425-fidelite-justesse" label="Mesures répétées" title="Lire fidélité, justesse et précision sur des séries de mesures" height="650" caption="La ligne pointillée représente la valeur de référence, ici 10,00 unités. La fidélité se lit sur la dispersion verticale ; la justesse se lit sur l'écart entre la moyenne des points et cette ligne."
 {
   "data": [
