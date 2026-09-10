@@ -188,6 +188,47 @@ quadrantChart
   quadrant-4 Mesure non répétable et différente de la valeur idéale
 ```
 
+:::plotly id="ep425-fidelite-justesse" label="Mesures répétées" title="Lire fidélité, justesse et précision sur des séries de mesures" height="650" caption="La ligne pointillée représente la valeur de référence, ici 10,00 unités. La fidélité se lit sur la dispersion verticale ; la justesse se lit sur l'écart entre la moyenne des points et cette ligne."
+{
+  "data": [
+    { "type": "scatter", "mode": "lines+markers", "x": [1, 2, 3, 4, 5, 6], "y": [9.96, 10.03, 10.01, 9.98, 10.04, 9.99], "name": "Fidèle et juste", "xaxis": "x", "yaxis": "y", "line": { "color": "#23845a", "width": 2 } },
+    { "type": "scatter", "mode": "lines+markers", "x": [1, 2, 3, 4, 5, 6], "y": [9.16, 9.23, 9.21, 9.18, 9.24, 9.19], "name": "Fidèle, mais biaisé", "xaxis": "x2", "yaxis": "y2", "line": { "color": "#e76f51", "width": 2 } },
+    { "type": "scatter", "mode": "lines+markers", "x": [1, 2, 3, 4, 5, 6], "y": [8.7, 11.1, 9.6, 10.8, 8.9, 10.9], "name": "Juste en moyenne, peu fidèle", "xaxis": "x3", "yaxis": "y3", "line": { "color": "#0077b6", "width": 2 } },
+    { "type": "scatter", "mode": "lines+markers", "x": [1, 2, 3, 4, 5, 6], "y": [7.8, 10.5, 8.4, 11.4, 7.3, 10.2], "name": "Ni fidèle ni juste", "xaxis": "x4", "yaxis": "y4", "line": { "color": "#6c757d", "width": 2 } }
+  ],
+  "layout": {
+    "margin": { "t": 44, "r": 30, "b": 60, "l": 66 },
+    "showlegend": false,
+    "xaxis": { "domain": [0, 0.46], "anchor": "y", "showticklabels": false },
+    "yaxis": { "domain": [0.57, 1], "title": "Valeur mesurée", "range": [7, 12] },
+    "xaxis2": { "domain": [0.54, 1], "anchor": "y2", "showticklabels": false },
+    "yaxis2": { "domain": [0.57, 1], "title": "Valeur mesurée", "range": [7, 12] },
+    "xaxis3": { "domain": [0, 0.46], "anchor": "y3", "title": "Numéro de mesure" },
+    "yaxis3": { "domain": [0, 0.40], "title": "Valeur mesurée", "range": [7, 12] },
+    "xaxis4": { "domain": [0.54, 1], "anchor": "y4", "title": "Numéro de mesure" },
+    "yaxis4": { "domain": [0, 0.40], "title": "Valeur mesurée", "range": [7, 12] },
+    "shapes": [
+      { "type": "line", "xref": "x domain", "yref": "y", "x0": 0, "x1": 1, "y0": 10, "y1": 10, "line": { "color": "#495057", "dash": "dot" } },
+      { "type": "line", "xref": "x2 domain", "yref": "y2", "x0": 0, "x1": 1, "y0": 10, "y1": 10, "line": { "color": "#495057", "dash": "dot" } },
+      { "type": "line", "xref": "x3 domain", "yref": "y3", "x0": 0, "x1": 1, "y0": 10, "y1": 10, "line": { "color": "#495057", "dash": "dot" } },
+      { "type": "line", "xref": "x4 domain", "yref": "y4", "x0": 0, "x1": 1, "y0": 10, "y1": 10, "line": { "color": "#495057", "dash": "dot" } }
+    ],
+    "annotations": [
+      { "xref": "paper", "yref": "paper", "x": 0.23, "y": 1.06, "text": "Fidèle et juste : précis", "showarrow": false, "font": { "color": "#23845a" } },
+      { "xref": "paper", "yref": "paper", "x": 0.77, "y": 1.06, "text": "Fidèle, mais pas juste", "showarrow": false, "font": { "color": "#e76f51" } },
+      { "xref": "paper", "yref": "paper", "x": 0.23, "y": 0.46, "text": "Juste en moyenne, peu fidèle", "showarrow": false, "font": { "color": "#0077b6" } },
+      { "xref": "paper", "yref": "paper", "x": 0.77, "y": 0.46, "text": "Ni fidèle ni juste", "showarrow": false, "font": { "color": "#6c757d" } }
+    ]
+  }
+}
+:::
+
+:::block type="method" title="Méthode de lecture"
+1. Comparer la moyenne \(\bar{x}\) à la référence : un écart constant révèle un **biais**, donc un défaut de justesse.
+2. Observer l'étalement des mesures ou calculer \(\sigma\) : un faible \(\sigma\) traduit une bonne **fidélité**.
+3. Qualifier de **précise** une chaîne qui réunit ces deux propriétés sur la plage d'utilisation demandée.
+:::
+
 ### Grandeurs d'influence
 
 Une grandeur d'influence \(x_p\) est une grandeur autre que le mesurande qui perturbe la reponse du capteur. Exemple classique : la temperature modifie la resistance d'une jauge utilisee pour mesurer un deplacement.
