@@ -24,6 +24,7 @@ Erreur numérique, solveurs non linéaires, puis méthodes numériques pour les 
 - [Module 2 : équations non linéaires](#mt461-module-2)
 - [Module 3 : EDO](#mt461-module-3)
 - [TD corrigés](#MT461-Methode-numerique-td)
+- [TP interactifs](#MT461-Methode-numerique-tp)
 - [Synthèse](#mt461-synthese)
 :::
 
@@ -2225,6 +2226,14 @@ Pour intégrer efficacement les problèmes raides, on a recours à des schémas 
 :::dashboard
 :::card class="chapter-card" pill="TD 1" title="Erreurs d’arrondi, stabilité et conditionnement" href="MT461-Methode-numerique-td1.html" link="Ouvrir le TD corrigé"
 Sept exercices avec énoncés et corrections détaillées : représentation en base 7, équation du second degré, sensibilité des fonctions, formules stables, ordre de sommation et instabilité par récurrence.
+:::
+:::
+:::
+
+:::section id="MT461-Methode-numerique-tp" eyebrow="Travaux pratiques" title="TP MT461 interactifs" summary="Expérimentations numériques avec des playgrounds R exécutés directement dans le navigateur via WebR."
+:::dashboard
+:::card class="chapter-card" pill="TP 1" title="Arithmétique flottante et stabilité numérique" href="MT461-Methode-numerique-tp1.html" link="Ouvrir le TP interactif"
+Méthode d’Archimède, moyenne arithmético-géométrique, série de l’exponentielle et comparaison forward/backward sur les intégrales $I_n$ avec des blocs R exécutables.
 :::
 :::
 :::

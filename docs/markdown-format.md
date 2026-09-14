@@ -136,6 +136,99 @@ Objectif court ou protocole de manipulation.
 :::
 ```
 
+## R playground avec WebR
+
+Les TPs de calcul numerique peuvent contenir des blocs `:::rplayground`.
+Le code R est execute directement dans le navigateur avec WebR, sans serveur
+applicatif. Le premier lancement charge le runtime WebAssembly, puis les blocs
+partagent la meme session R sur la page.
+
+````md
+:::rplayground id="mt461-archimede" label="WebR" title="Comparer deux formules"
+```r
+archimede_naif <- function(K) {
+  y <- 2
+  for (k in 1:(K - 1)) {
+    y <- 2^k * sqrt(2 * (1 - sqrt(1 - (2^(-k) * y)^2)))
+  }
+  y
+}
+
+archimede_naif(20)
+pi
+```
+:::
+````
+
+Le bloc affiche :
+
+- un editeur R modifiable ;
+- un bouton **Executer R** ;
+- une console capturant `print`, `data.frame`, messages et erreurs ;
+- une zone graphique capturant les sorties graphiques de base R.
+
+Attributs utiles :
+
+| Attribut | Usage |
+| :--- | :--- |
+| `id` | ancre HTML stable |
+| `label` | pastille du bloc, par defaut `WebR` |
+| `title` | titre visible du playground |
+| `graphics="false"` | desactive la capture graphique pour un bloc purement console |
+| `caption` | ajoute une courte indication sous le bloc |
+
+Les packages R doivent etre compatibles WebAssembly. Pour les TPs autonomes, on
+privilegie donc les fonctions de base R ou les packages disponibles en binaire
+WebR.
+
+## Quiz interactif
+
+Les cours de type entrainement peuvent utiliser `:::toeicquiz`. Le bloc prend
+un JSON contenant les fiches et les questions. Le rendu genere une interface
+complete : score, filtres, recherche, correction immediate et fiche de notion
+associee a la question.
+
+````md
+:::toeicquiz id="toeic-part5-part6" title="TOEIC Part 5 & Part 6"
+```json
+{
+  "title": "Quiz TOEIC",
+  "fiches": [
+    {
+      "id": "fiche-1",
+      "n": 1,
+      "title": "Word choice",
+      "body": "Regle de synthese..."
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "theme": "Word choice",
+      "stem": "When I got home I was ______ tired.",
+      "options": [
+        { "letter": "A", "text": "such" },
+        { "letter": "B", "text": "such a" },
+        { "letter": "C", "text": "so" },
+        { "letter": "D", "text": "too" }
+      ],
+      "answer": "C",
+      "answerText": "so",
+      "explanation": "`so + adjectif` exprime l'intensite.",
+      "ficheId": "fiche-1",
+      "ficheTitle": "Word choice"
+    }
+  ]
+}
+```
+:::
+````
+
+Pour les gros corpus, preferer un script de conversion qui produit ce JSON
+depuis une source plus lisible. Le script `scripts/convert-toeic-quiz.js`
+genere actuellement `content/ANGLAIS-TOEIC/cours.md` depuis
+`content/ANGLAIS-TOEIC/cours-quizz.md`.
+
 ## CircuitJS
 
 ```md
@@ -167,12 +260,13 @@ Description courte ou lien vers une section du site.
 
 Les formules LaTeX restent traitees par MathJax dans la page finale.
 
-## TD et examens
+## TD, TP et examens
 
-Les TD et examens utilisent aussi Markdown :
+Les TD, TP et examens utilisent aussi Markdown :
 
 ```text
 content/<matiere>/td/<page>.md
+content/<matiere>/tp/<page>.md
 content/<matiere>/exam/<page>.md
 ```
 
@@ -189,6 +283,9 @@ heading: Denombrement et probabilites
 summary: Correction guidee.
 ---
 ```
+
+Pour un TP, utiliser `type: tp` et une cible HTML de type
+`MT461-Methode-numerique-tp1.html`.
 
 Une carte d'exercice s'ecrit avec `:::exercise` :
 

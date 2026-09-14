@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "author": "SN421 TP1",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-led", "id": "led13", "top": -56, "left": 278, "attrs": { "color": "red" } },
+    { "type": "wokwi-resistor", "id": "r13", "top": -4, "left": 249, "rotate": 90, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "led9", "top": -106, "left": 278, "attrs": { "color": "yellow" } },
+    { "type": "wokwi-resistor", "id": "r9", "top": -54, "left": 249, "rotate": 90, "attrs": { "value": "220" } },
+    { "type": "wokwi-logic-analyzer", "id": "logic", "top": 192, "left": 342, "attrs": { "channels": "8" } }
+  ],
+  "connections": [
+    [ "uno:13", "r13:1", "orange", [ "v-60", "h80" ] ],
+    [ "r13:2", "led13:A", "orange", [ "h30" ] ],
+    [ "led13:C", "uno:GND.1", "black", [ "v72", "h-250" ] ],
+    [ "uno:9", "r9:1", "gold", [ "v-105", "h92" ] ],
+    [ "r9:2", "led9:A", "gold", [ "h30" ] ],
+    [ "led9:C", "uno:GND.1", "black", [ "v122", "h-250" ] ],
+    [ "uno:13", "logic:D0", "orange", [ "v34", "h210" ] ],
+    [ "uno:9", "logic:D1", "gold", [ "v58", "h230" ] ],
+    [ "uno:GND.1", "logic:GND", "black", [ "v84", "h250" ] ]
+  ],
+  "dependencies": {}
+}

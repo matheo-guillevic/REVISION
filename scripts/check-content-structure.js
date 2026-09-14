@@ -57,7 +57,7 @@ function checkConfiguredPages(configFile, kind, subjects, targets) {
 
   for (const group of config.groups || []) {
     assert(subjects.includes(group.subject), `${configFile}: subject "${group.subject}" absent de content/`);
-    const pages = kind === "td" ? group.pages : group.exams;
+    const pages = kind === "exam" ? group.exams : group.pages;
     assert(Array.isArray(pages), `${configFile}: pages manquantes pour ${group.subject}`);
 
     for (const page of pages || []) {
@@ -84,21 +84,19 @@ function checkConfiguredPages(configFile, kind, subjects, targets) {
   }
 }
 
-function checkOrphanMarkdown(subjects, tdConfig, examConfig) {
+function checkOrphanMarkdown(subjects, pageConfigs) {
   const configured = new Set();
-  for (const group of tdConfig.groups || []) {
-    for (const page of group.pages || []) {
-      configured.add(rel(path.join(contentDir, group.subject, "td", page.source || page.target.replace(/\.html$/i, ".md"))));
-    }
-  }
-  for (const group of examConfig.groups || []) {
-    for (const page of group.exams || []) {
-      configured.add(rel(path.join(contentDir, group.subject, "exam", page.source || page.target.replace(/\.html$/i, ".md"))));
+  for (const { config, kind } of pageConfigs) {
+    for (const group of config.groups || []) {
+      const pages = kind === "exam" ? group.exams : group.pages;
+      for (const page of pages || []) {
+        configured.add(rel(path.join(contentDir, group.subject, kind, page.source || page.target.replace(/\.html$/i, ".md"))));
+      }
     }
   }
 
   for (const subject of subjects) {
-    for (const kind of ["td", "exam"]) {
+    for (const kind of ["td", "tp", "exam"]) {
       const dir = path.join(contentDir, subject, kind);
       if (!fs.existsSync(dir)) continue;
       for (const file of fs.readdirSync(dir).filter((entry) => entry.endsWith(".md"))) {
@@ -125,12 +123,18 @@ function main() {
   const subjects = listSubjectDirs();
   const targets = new Set();
   const tdConfig = readJson("td-pages.json");
+  const tpConfig = readJson("tp-pages.json");
   const examConfig = readJson("exam-pages.json");
 
   checkCourseFrontmatter(subjects);
   checkConfiguredPages("td-pages.json", "td", subjects, targets);
+  checkConfiguredPages("tp-pages.json", "tp", subjects, targets);
   checkConfiguredPages("exam-pages.json", "exam", subjects, targets);
-  checkOrphanMarkdown(subjects, tdConfig, examConfig);
+  checkOrphanMarkdown(subjects, [
+    { config: tdConfig, kind: "td" },
+    { config: tpConfig, kind: "tp" },
+    { config: examConfig, kind: "exam" },
+  ]);
   checkCourseHtml(subjects);
 
   for (const message of warnings) console.warn(`WARN: ${message}`);
@@ -139,7 +143,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`Content structure OK: ${subjects.length} cours, ${targets.size} pages TD/exam verifiees.`);
+  console.log(`Content structure OK: ${subjects.length} cours, ${targets.size} pages TD/TP/exam verifiees.`);
 }
 
 main();

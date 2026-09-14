@@ -1308,6 +1308,370 @@ function initRiscvPlaygrounds() {
   });
 }
 
+let webRSessionPromise = null;
+
+async function loadWebRSession() {
+  if (!webRSessionPromise) {
+    webRSessionPromise = import("https://webr.r-wasm.org/latest/webr.mjs").then(async ({ WebR }) => {
+      const webR = new WebR();
+      await webR.init();
+      return webR;
+    });
+  }
+  return webRSessionPromise;
+}
+
+function formatROutputItem(item) {
+  if (!item) return "";
+  if (typeof item.data === "string") return item.data;
+  if (item.data && typeof item.data.message === "string") return item.data.message;
+  return String(item.data ?? "");
+}
+
+function escapeHtmlText(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function highlightRCode(code) {
+  const tokenPattern = /("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|#[^\n]*|\b\d+(?:\.\d+)?(?:e[+-]?\d+)?\b|\b(?:function|for|in|if|else|return|while|repeat|TRUE|FALSE|NULL|NA|NaN|Inf|library|require|print|plot|lines|points|data\.frame|sprintf|abs|sqrt|log|exp|seq|c|length|numeric|cat|legend|grid)\b|\b[A-Za-z.][\w.]*\s*(?=\()|<-|->|==|!=|<=|>=|&&|\|\||[+\-*/^=<>~:$])/gi;
+  let cursor = 0;
+  let html = "";
+
+  for (const match of code.matchAll(tokenPattern)) {
+    const value = match[0];
+    const index = match.index || 0;
+    html += escapeHtmlText(code.slice(cursor, index));
+
+    let tokenClass = "operator";
+    if (value.startsWith("#")) tokenClass = "comment";
+    else if (value.startsWith("\"") || value.startsWith("'")) tokenClass = "string";
+    else if (/^\d/.test(value)) tokenClass = "number";
+    else if (/^[A-Za-z.][\w.]*\s*$/.test(value)) tokenClass = "function";
+    else if (/^[A-Za-z.]/.test(value)) tokenClass = "keyword";
+
+    html += `<span class="r-token-${tokenClass}">${escapeHtmlText(value)}</span>`;
+    cursor = index + value.length;
+  }
+
+  html += escapeHtmlText(code.slice(cursor));
+  return html || "\n";
+}
+
+function initRCodeHighlight(editor, highlight) {
+  const shell = editor.closest(".r-code-shell");
+  if (!shell || !highlight) return;
+
+  const sync = () => {
+    highlight.innerHTML = highlightRCode(editor.value);
+    highlight.scrollTop = editor.scrollTop;
+    highlight.scrollLeft = editor.scrollLeft;
+  };
+
+  shell.classList.add("is-highlighted");
+  editor.addEventListener("input", sync);
+  editor.addEventListener("scroll", () => {
+    highlight.scrollTop = editor.scrollTop;
+    highlight.scrollLeft = editor.scrollLeft;
+  });
+  sync();
+}
+
+function renderROutput(container, items) {
+  container.replaceChildren();
+  if (!items.length) {
+    container.textContent = "Code execute sans sortie console.";
+    return;
+  }
+
+  items.forEach((item) => {
+    const text = formatROutputItem(item);
+    if (!text) return;
+    const line = document.createElement("span");
+    const type = String(item.type || "R").toLowerCase();
+    line.className = `r-output-line r-output-${type.replace(/[^a-z0-9_-]/g, "")}`;
+    line.innerHTML = `<span class="r-output-type">[${escapeHtmlText(item.type || "R")}]</span> ${escapeHtmlText(text)}`;
+    container.appendChild(line);
+  });
+
+  if (!container.childElementCount) container.textContent = "Code execute sans sortie console.";
+}
+
+function renderRImages(container, images) {
+  container.replaceChildren();
+  if (!images.length) {
+    container.textContent = "Aucun graphique genere.";
+    return;
+  }
+
+  images.forEach((image) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+    canvas.getContext("2d").drawImage(image, 0, 0, image.width, image.height);
+    container.appendChild(canvas);
+  });
+}
+
+function initRPlaygrounds() {
+  document.querySelectorAll("[data-r-playground]").forEach((playground) => {
+    const editor = playground.querySelector("[data-r-editor]");
+    const output = playground.querySelector("[data-r-output]");
+    const plotOutput = playground.querySelector("[data-r-plots]");
+    const status = playground.querySelector("[data-r-status]");
+    const runButton = playground.querySelector("[data-r-run]");
+    const resetButton = playground.querySelector("[data-r-reset]");
+    const highlight = playground.querySelector("[data-r-highlight]");
+    const initialCode = editor?.value || "";
+
+    if (!editor || !output || !plotOutput || !status || !runButton || !resetButton) return;
+    initRCodeHighlight(editor, highlight);
+
+    resetButton.addEventListener("click", () => {
+      editor.value = initialCode;
+      output.textContent = "En attente d'execution.";
+      plotOutput.textContent = "Aucun graphique pour le moment.";
+      playground.classList.remove("has-error");
+      status.textContent = "Code restaure. WebR sera charge au prochain lancement si necessaire.";
+      editor.dispatchEvent(new Event("input"));
+    });
+
+    runButton.addEventListener("click", async () => {
+      runButton.disabled = true;
+      playground.classList.remove("has-error");
+      status.textContent = "Chargement de WebR et execution du code...";
+      output.textContent = "Execution en cours...";
+      plotOutput.textContent = "Generation des graphiques...";
+
+      try {
+        const webR = await loadWebRSession();
+        const shelter = await new webR.Shelter();
+        const capture = await shelter.captureR(editor.value, {
+          captureGraphics: playground.dataset.captureGraphics !== "false"
+            ? { width: 900, height: 540, bg: "white" }
+            : false,
+        });
+        renderROutput(output, capture.output || []);
+        renderRImages(plotOutput, capture.images || []);
+        status.textContent = "Execution terminee dans le navigateur.";
+        shelter.purge();
+      } catch (error) {
+        playground.classList.add("has-error");
+        output.textContent = error?.message || String(error);
+        plotOutput.textContent = "Aucun graphique genere.";
+        status.textContent = "Erreur pendant l'execution R.";
+      } finally {
+        runButton.disabled = false;
+      }
+    });
+  });
+}
+
+function renderToeicInline(text) {
+  return escapeHtmlText(text)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*([^*\n]+)\*/g, "<em>$1</em>");
+}
+
+function renderToeicMarkdown(text = "") {
+  const lines = String(text).trim().split(/\n+/);
+  const html = [];
+  let list = [];
+  const flushList = () => {
+    if (!list.length) return;
+    html.push(`<ul>${list.map((item) => `<li>${renderToeicInline(item)}</li>`).join("")}</ul>`);
+    list = [];
+  };
+
+  lines.forEach((rawLine) => {
+    const line = rawLine.trim();
+    if (!line) {
+      flushList();
+      return;
+    }
+    const bullet = line.match(/^[-*]\s+(.+)/);
+    if (bullet) {
+      list.push(bullet[1]);
+      return;
+    }
+    flushList();
+    html.push(`<p>${renderToeicInline(line)}</p>`);
+  });
+  flushList();
+  return html.join("");
+}
+
+function initToeicQuizzes() {
+  document.querySelectorAll("[data-toeic-quiz]").forEach((quiz) => {
+    const dataNode = quiz.querySelector("[data-toeic-data]");
+    const panel = quiz.querySelector("[data-toeic-panel]");
+    const modeSelect = quiz.querySelector("[data-toeic-mode]");
+    const ficheSelect = quiz.querySelector("[data-toeic-fiche]");
+    const scoreNode = quiz.querySelector("[data-toeic-score]");
+    const scoreLabel = quiz.querySelector("[data-toeic-score-label]");
+    const progressNode = quiz.querySelector("[data-toeic-progress]");
+    const resetButton = quiz.querySelector("[data-toeic-reset]");
+    if (!dataNode || !panel || !modeSelect || !ficheSelect || !scoreNode || !scoreLabel || !progressNode || !resetButton) return;
+
+    const data = JSON.parse(dataNode.textContent || "{}");
+    const questions = Array.isArray(data.questions) ? data.questions : [];
+    const fiches = new Map((data.fiches || []).map((fiche) => [fiche.id, fiche]));
+    const storageKey = `toeic-quiz:${quiz.id || data.title || "default"}`;
+    let answers = {};
+    try {
+      answers = JSON.parse(localStorage.getItem(storageKey) || "{}");
+    } catch {
+      answers = {};
+    }
+    let currentIndex = 0;
+    let helpOpen = false;
+
+    ficheSelect.innerHTML = [
+      '<option value="all">Toutes les fiches</option>',
+      ...(data.fiches || []).map((fiche) => `<option value="${escapeHtmlText(fiche.id)}">Fiche ${fiche.n} - ${escapeHtmlText(fiche.title)}</option>`),
+    ].join("");
+
+    const save = () => localStorage.setItem(storageKey, JSON.stringify(answers));
+    const getAnswer = (question) => answers[question.id];
+    const isRight = (question) => getAnswer(question) === question.answer;
+    const isAnswered = (question) => Boolean(getAnswer(question));
+
+    const filteredQuestions = () => {
+      const mode = modeSelect.value;
+      const ficheId = ficheSelect.value;
+      return questions.filter((question) => {
+        if (mode === "unanswered" && isAnswered(question)) return false;
+        if (mode === "wrong" && (!isAnswered(question) || isRight(question))) return false;
+        if (mode === "right" && !isRight(question)) return false;
+        if (ficheId !== "all" && question.ficheId !== ficheId) return false;
+        return true;
+      });
+    };
+
+    const currentQuestionSet = () => filteredQuestions();
+    const currentQuestion = () => {
+      const visible = currentQuestionSet();
+      if (!visible.length) return undefined;
+      currentIndex = Math.min(Math.max(currentIndex, 0), visible.length - 1);
+      return visible[currentIndex];
+    };
+
+    const renderScore = () => {
+      const answered = questions.filter(isAnswered).length;
+      const correct = questions.filter(isRight).length;
+      const percent = questions.length ? Math.round((answered / questions.length) * 100) : 0;
+      scoreNode.textContent = `${correct} / ${answered}`;
+      scoreLabel.textContent = answered ? `${Math.round((correct / answered) * 100)}% de reussite` : "Aucune reponse";
+      progressNode.style.width = `${percent}%`;
+    };
+
+    const renderFicheHtml = (question) => {
+      const fiche = fiches.get(question.ficheId);
+      if (!fiche) {
+        return '<div class="toeic-help-panel"><p>Aucune fiche associee.</p></div>';
+      }
+      return `
+        <aside class="toeic-help-panel">
+        <span class="status-pill">Fiche ${fiche.n}</span>
+        <h4>${escapeHtmlText(fiche.title)}</h4>
+        <div class="toeic-fiche-body">${renderToeicMarkdown(fiche.body)}</div>
+        </aside>
+      `;
+    };
+
+    const renderQuestion = () => {
+      const question = currentQuestion();
+      if (!question) {
+        panel.innerHTML = '<p class="toeic-empty">Aucune question disponible avec ces filtres.</p>';
+        return;
+      }
+
+      const visible = currentQuestionSet();
+      const selected = getAnswer(question);
+      const answered = Boolean(selected);
+      const correction = answered
+        ? `<div class="toeic-correction ${isRight(question) ? "is-right" : "is-wrong"}">
+            <strong>${isRight(question) ? "Bonne reponse" : "A revoir"}</strong>
+            <p>Reponse attendue : <b>${escapeHtmlText(question.answer)}</b>${question.answerText ? ` - ${escapeHtmlText(question.answerText)}` : ""}</p>
+            <p>${renderToeicInline(question.explanation || "Pas d'explication disponible.")}</p>
+          </div>`
+        : `<p class="toeic-hint">Choisis une reponse pour afficher la correction et relier la question a sa fiche.</p>`;
+
+      panel.innerHTML = `
+        <article class="toeic-card">
+        <div class="toeic-question-heading">
+          <div>
+            <span class="status-pill">Question ${question.id}</span>
+            <h4>${escapeHtmlText(question.theme || question.section || "Entrainement TOEIC")}</h4>
+          </div>
+          <span>${currentIndex + 1} / ${visible.length}</span>
+        </div>
+        <div class="toeic-stem">${renderToeicMarkdown(question.stem)}</div>
+        <div class="toeic-options">
+          ${question.options.map((option) => {
+            const classes = ["toeic-option"];
+            if (answered && option.letter === question.answer) classes.push("is-correct");
+            if (answered && option.letter === selected && selected !== question.answer) classes.push("is-selected-wrong");
+            if (!answered && option.letter === selected) classes.push("is-selected");
+            return `<button type="button" class="${classes.join(" ")}" data-toeic-answer="${escapeHtmlText(option.letter)}">
+              <span>${escapeHtmlText(option.letter)}</span>
+              <strong>${escapeHtmlText(option.text)}</strong>
+            </button>`;
+          }).join("")}
+        </div>
+        ${correction}
+        <div class="toeic-card-actions">
+          <button type="button" class="ghost-button" data-toeic-help>${helpOpen ? "Masquer la fiche" : "Help"}</button>
+          <button type="button" data-toeic-next>Next</button>
+        </div>
+        ${helpOpen ? renderFicheHtml(question) : ""}
+        </article>
+      `;
+
+      panel.querySelectorAll("[data-toeic-answer]").forEach((button) => {
+        button.addEventListener("click", () => {
+          answers[question.id] = button.dataset.toeicAnswer;
+          save();
+          renderAll();
+        });
+      });
+      panel.querySelector("[data-toeic-help]")?.addEventListener("click", () => {
+        helpOpen = !helpOpen;
+        renderQuestion();
+      });
+      panel.querySelector("[data-toeic-next]")?.addEventListener("click", () => {
+        const nextSet = currentQuestionSet();
+        if (nextSet.length) currentIndex = (currentIndex + 1) % nextSet.length;
+        helpOpen = false;
+        renderAll();
+      });
+    };
+
+    function renderAll() {
+      renderScore();
+      renderQuestion();
+    }
+
+    [modeSelect, ficheSelect].forEach((control) => control.addEventListener("input", () => {
+      currentIndex = 0;
+      helpOpen = false;
+      renderAll();
+    }));
+    resetButton.addEventListener("click", () => {
+      answers = {};
+      currentIndex = 0;
+      helpOpen = false;
+      save();
+      renderAll();
+    });
+
+    renderAll();
+  });
+}
+
 function openDetailsFromHash() {
   if (!window.location.hash) return;
   const target = document.querySelector(window.location.hash);
@@ -1396,6 +1760,8 @@ document.querySelectorAll(".page-section").forEach((section) => observer.observe
 openDetailsFromHash();
 updateProgress();
 initPlotlyCharts();
+initRPlaygrounds();
+initToeicQuizzes();
 initCPlaygrounds();
 initCodeCopyButtons();
 initLinuxPlaygrounds();

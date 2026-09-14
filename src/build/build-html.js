@@ -1,4 +1,4 @@
-const fs = require("fs");
+﻿const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const { renderMarkdownCourse } = require("./markdown-renderer");
@@ -37,6 +37,7 @@ const pages = {
   "EP425-Capteur": path.join(outDir, "EP425-Capteur.html"),
   "AU425-Automatique-avance": path.join(outDir, "AU425-Automatique-avance.html"),
   "IN451-IA": path.join(outDir, "IN451-IA.html"),
+  "ANGLAIS-TOEIC": path.join(outDir, "ANGLAIS-TOEIC.html"),
 };
 
 const courseStructures = {
@@ -67,12 +68,12 @@ const courseStructures = {
     contentHref: "probabilites-programme",
     content: [
       ["probabilites-programme", "Programme"],
-      ["probabilites-chap1", "Dénombrement"],
-      ["probabilites-chap2", "Espaces probabilisés"],
-      ["probabilites-chap3", "Variables discrètes"],
+      ["probabilites-chap1", "DÃ©nombrement"],
+      ["probabilites-chap2", "Espaces probabilisÃ©s"],
+      ["probabilites-chap3", "Variables discrÃ¨tes"],
       ["probabilites-chap4", "Variables continues"],
       ["probabilites-chap5-discret", "Couples discrets"],
-      ["probabilites-methodes", "Méthodes"],
+      ["probabilites-methodes", "MÃ©thodes"],
     ],
     td: "probabilites-td",
     exams: "probabilites-sujets",
@@ -85,7 +86,7 @@ const courseStructures = {
     intro: "AU361-Automatique-intro",
     contentHref: "AU361-Automatique-modelisation",
     content: [
-      ["AU361-Automatique-modelisation", "Modélisation"],
+      ["AU361-Automatique-modelisation", "ModÃ©lisation"],
       ["AU361-Automatique-analyse", "Analyse"],
       ["AU361-Automatique-commande", "Commande"],
       ["AU361-Automatique-marges", "Marges"],
@@ -102,7 +103,7 @@ const courseStructures = {
     intro: "elec-intro",
     contentHref: "elec-quadripoles",
     content: [
-      ["elec-quadripoles", "Quadripôles"],
+      ["elec-quadripoles", "QuadripÃ´les"],
       ["elec-filtres", "Filtres"],
       ["elec-amplis", "Amplificateurs"],
       ["elec-oscillateurs", "Oscillateurs"],
@@ -122,7 +123,7 @@ const courseStructures = {
       ["java-bases", "Bases"],
       ["java-collections", "Collections"],
       ["java-objet", "Objet"],
-      ["java-heritage", "Héritage"],
+      ["java-heritage", "HÃ©ritage"],
       ["java-interfaces", "Interfaces"],
       ["java-exceptions", "Exceptions"],
     ],
@@ -138,7 +139,7 @@ const courseStructures = {
     contentHref: "reseau-bases",
     content: [
       ["reseau-bases", "Bases"],
-      ["reseau-osi", "Modèle OSI"],
+      ["reseau-osi", "ModÃ¨le OSI"],
       ["reseau-couche1", "Couche 1"],
       ["reseau-couche2", "Couche 2"],
       ["reseau-couche3", "Couche 3"],
@@ -158,7 +159,7 @@ const courseStructures = {
       ["vhdl-cm1", "Introduction"],
       ["vhdl-cm2", "Nombres"],
       ["vhdl-cm3", "Combinatoire"],
-      ["vhdl-cm4", "Séquentiel"],
+      ["vhdl-cm4", "SÃ©quentiel"],
       ["vhdl-cm5", "FSM"],
       ["vhdl-cm6", "HDL"],
       ["vhdl-cm7", "FPGA"],
@@ -181,6 +182,7 @@ const courseStructures = {
       ["sn421-se", "Genie logiciel"],
     ],
     td: "SN421-Dev-Micro-td",
+    tp: "SN421-Dev-Micro-tp",
     exams: "SN421-Dev-Micro-exams",
     revision: "SN421-Dev-Micro-revision",
     support: "SN421-Dev-Micro-supports",
@@ -235,9 +237,21 @@ const courseStructures = {
       ["mt461-module-3", "EDO"],
     ],
     td: "MT461-Methode-numerique-td",
+    tp: "MT461-Methode-numerique-tp",
     exams: "MT461-Methode-numerique-exams",
     revision: "mt461-synthese",
     support: "MT461-Methode-numerique-supports",
+  },
+  "ANGLAIS-TOEIC": {
+    page: "ANGLAIS-TOEIC.html",
+    subject: "ANGLAIS-TOEIC",
+    intro: "toeic-intro",
+    contentHref: "toeic-fiches",
+    content: [
+      ["toeic-fiches", "Fiches"],
+      ["toeic-quiz", "Quiz"],
+      ["toeic-method", "Methode"],
+    ],
   },
 };
 
@@ -277,7 +291,7 @@ function renderEmptySection(id, eyebrow, heading) {
           <div class="section-heading">
             <span class="eyebrow">${eyebrow}</span>
             <h2>${heading}</h2>
-            <p><span class="status-pill">∅</span> Aucun contenu pour cette section.</p>
+            <p><span class="status-pill">âˆ…</span> Aucun contenu pour cette section.</p>
           </div>
         </section>`;
 }
@@ -300,10 +314,11 @@ function renderCommonCourseNav(structure) {
       [`${structure.page}#${structure.intro}`, "Introduction"],
       [`${structure.page}#${structure.contentHref}`, "Contenu du cours"],
       ...contentLinks,
-      [`${structure.page}#${structure.td}`, "TD"],
-      [`${structure.page}#${structure.exams}`, "Examens"],
-      [`${structure.page}#${structure.revision}`, "Révision"],
-      [`${structure.page}#${structure.support}`, "Support de cours"],
+      ...(structure.td ? [[`${structure.page}#${structure.td}`, "TD"]] : []),
+      ...(structure.tp ? [[`${structure.page}#${structure.tp}`, "TP"]] : []),
+      ...(structure.exams ? [[`${structure.page}#${structure.exams}`, "Examens"]] : []),
+      ...(structure.revision ? [[`${structure.page}#${structure.revision}`, "Revision"]] : []),
+      ...(structure.support ? [[`${structure.page}#${structure.support}`, "Support de cours"]] : []),
     ],
     `${structure.page}#${structure.intro}`
   );
@@ -339,14 +354,15 @@ function composeCourseBody(html, structure) {
 
   const intro = take(structure.intro) || renderEmptySection(structure.intro, "Introduction", "Introduction");
   const content = structure.content.map(([id]) => take(id)).filter(Boolean);
-  const td = take(structure.td) || renderEmptySection(structure.td, "TD", "TD");
-  const exams = take(structure.exams) || renderEmptySection(structure.exams, "Examens", "Examens");
-  const revision = take(structure.revision) || renderEmptySection(structure.revision, "Révision", "Révision");
-  const support = take(structure.support) || renderGeneratedSupportSection(structure.support);
+  const td = structure.td ? take(structure.td) || renderEmptySection(structure.td, "TD", "TD") : "";
+  const tp = structure.tp ? take(structure.tp) || renderEmptySection(structure.tp, "TP", "TP") : "";
+  const exams = structure.exams ? take(structure.exams) || renderEmptySection(structure.exams, "Examens", "Examens") : "";
+  const revision = structure.revision ? take(structure.revision) || renderEmptySection(structure.revision, "Revision", "Revision") : "";
+  const support = structure.support ? take(structure.support) || renderGeneratedSupportSection(structure.support) : "";
   const leftovers = sections.filter((section) => !used.has(section.id)).map((section) => section.html);
   const contentHtml = [...content, ...leftovers].join("\n\n") || renderEmptySection(structure.contentHref, "Contenu du cours", "Contenu du cours");
 
-  return [intro, contentHtml, td, exams, revision, support].join("\n\n");
+  return [intro, contentHtml, td, tp, exams, revision, support].filter(Boolean).join("\n\n");
 }
 
 function renderNav(items, activeHref) {
@@ -458,6 +474,7 @@ function renderHome() {
               <li><a href="EP425-Capteur.html">EP425-Capteur</a></li>
               <li><a href="AU425-Automatique-avance.html">AU425-Automatique-avance</a></li>
               <li><a href="IN451-IA.html">IN451-IA</a></li>
+              <li><a href="ANGLAIS-TOEIC.html">ANGLAIS-TOEIC</a></li>
             </ul>
           </details>`;
 
@@ -574,7 +591,7 @@ function renderHome() {
                 <span class="eyebrow">Semestre 7</span>
                 <strong>Semestre 7</strong>
               </span>
-              <span class="semester-count">5 matieres</span>
+              <span class="semester-count">6 matieres</span>
             </summary>
 
             <div class="dashboard-grid semester-content">
@@ -607,6 +624,12 @@ function renderHome() {
                 <h3>IN451-IA</h3>
                 <p>Intelligence artificielle : recherche adversariale, Min-Max, elagage alpha-beta, Gomoku et apprentissage profond.</p>
                 <p class="secondary-link"><a href="IN451-IA.html">Ouvrir le cours</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Disponible</span>
+                <h3>ANGLAIS-TOEIC</h3>
+                <p>Preparation TOEIC : fiches de grammaire, vocabulaire business et quiz interactif Part 5 / Part 6.</p>
+                <p class="secondary-link"><a href="ANGLAIS-TOEIC.html">Ouvrir le quiz</a></p>
               </article>
             </div>
           </details>
@@ -919,7 +942,7 @@ function renderDevMcuCourse() {
 
   return renderShell({
     title: "SN421-Dev-Micro - Revision ESISAR",
-    brandMark: "µ",
+    brandMark: "Âµ",
     brandTitle: "SN421-Dev-Micro",
     brandSubtitle: "Microcontroleurs",
     nav,
@@ -1018,6 +1041,25 @@ function renderArtificialIntelligenceCourse() {
   });
 }
 
+function renderToeicCourse() {
+  const structure = courseStructures["ANGLAIS-TOEIC"];
+  const course = readCourseBody("ANGLAIS-TOEIC", structure);
+  const nav = renderCommonCourseNav(structure);
+
+  return renderShell({
+    title: "ANGLAIS-TOEIC - Revision ESISAR",
+    brandMark: "EN",
+    brandTitle: "ANGLAIS-TOEIC",
+    brandSubtitle: "Preparation TOEIC",
+    nav,
+    eyebrow: "Semestre 7",
+    heading: "Preparation TOEIC",
+    cta: '<a class="primary-button" href="index.html#semestre-7">Semestre 7</a>',
+    body: course,
+    showAnnotations: true,
+  });
+}
+
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -1042,5 +1084,6 @@ write(pages["MT461-Methode-numerique"], renderNumericMethodsCourse());
 write(pages["EP425-Capteur"], renderSensorCourse());
 write(pages["AU425-Automatique-avance"], renderAdvancedControlCourse());
 write(pages["IN451-IA"], renderArtificialIntelligenceCourse());
+write(pages["ANGLAIS-TOEIC"], renderToeicCourse());
 
 console.log("Application construite dans out/.");

@@ -337,6 +337,41 @@ ${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.c
             </article>`;
     }
 
+    case "rplayground": {
+      const code = stripCodeFence(block.body);
+      return `            <article class="r-playground"${attrs.id ? ` id="${escapeHtml(attrs.id)}"` : ""} data-r-playground data-capture-graphics="${escapeHtml(attrs.graphics || "true")}">
+              <header>
+                <div>
+                  <span class="status-pill">${escapeHtml(attrs.label || "WebR")}</span>
+                  <h3>${escapeHtml(attrs.title || "Playground R")}</h3>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-r-run>Executer R</button>
+                  <button type="button" class="ghost-button" data-r-reset>Reinitialiser</button>
+                </div>
+              </header>
+              <p class="r-playground-status" data-r-status>WebR sera charge au premier lancement. Le code s'execute localement dans le navigateur.</p>
+              <div class="r-playground-workspace">
+                <label class="r-playground-editor">Code R
+                  <span class="r-code-shell">
+                    <pre class="r-code-highlight" aria-hidden="true" data-r-highlight></pre>
+                    <textarea spellcheck="false" data-r-editor>${escapeHtml(code)}</textarea>
+                  </span>
+                </label>
+                <div class="r-playground-results" aria-live="polite">
+                  <div>
+                    <strong>Console</strong>
+                    <pre data-r-output>En attente d'execution.</pre>
+                  </div>
+                  <div>
+                    <strong>Graphiques</strong>
+                    <div class="r-plot-output" data-r-plots>Aucun graphique pour le moment.</div>
+                  </div>
+                </div>
+              </div>
+${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.caption)}</p>\n` : ""}            </article>`;
+    }
+
     case "linuxplayground": {
       const code = stripCodeFence(block.body);
       return `            <article class="linux-playground"${attrs.id ? ` id="${escapeHtml(attrs.id)}"` : ""} data-linux-playground data-linux-fs="${escapeHtml(attrs.filesystem || "https://i.copy.sh/arch/")}" data-linux-basefs="${escapeHtml(attrs.basefs || "")}">
@@ -429,6 +464,52 @@ ${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.c
               </header>
 ${body}
 ${frame}
+            </article>`;
+    }
+
+    case "toeicquiz": {
+      const quizId = attrs.id || "toeic-quiz";
+      let data;
+      try {
+        data = JSON.parse(stripJsonFence(block.body));
+      } catch (error) {
+        throw new Error(`Quiz TOEIC invalide (${quizId}): ${error.message}`);
+      }
+      const questionCount = Array.isArray(data.questions) ? data.questions.length : 0;
+      const ficheCount = Array.isArray(data.fiches) ? data.fiches.length : 0;
+      return `            <article class="toeic-quiz" id="${escapeHtml(quizId)}" data-toeic-quiz>
+              <script type="application/json" data-toeic-data>${escapeJsonScript(JSON.stringify(data))}</script>
+              <header>
+                <div>
+                  <span class="status-pill">${escapeHtml(attrs.label || "Quiz TOEIC")}</span>
+                  <h3>${escapeHtml(attrs.title || data.title || "Quiz interactif")}</h3>
+                  <p>${questionCount} questions, ${ficheCount} fiches de notion et correction immediate.</p>
+                </div>
+                <div class="toeic-score-card">
+                  <strong data-toeic-score>0 / 0</strong>
+                  <span data-toeic-score-label>Aucune reponse</span>
+                </div>
+              </header>
+              <div class="toeic-toolbar">
+                <label>Série
+                  <select data-toeic-mode>
+                    <option value="all">Toutes les questions</option>
+                    <option value="unanswered">Non repondues</option>
+                    <option value="wrong">Erreurs</option>
+                    <option value="right">Reussies</option>
+                  </select>
+                </label>
+                <label>Fiche
+                  <select data-toeic-fiche></select>
+                </label>
+                <button type="button" data-toeic-reset>Reinitialiser</button>
+              </div>
+              <div class="toeic-progress">
+                <span data-toeic-progress></span>
+              </div>
+              <div class="toeic-layout">
+                <section class="toeic-question-panel" data-toeic-panel aria-live="polite"></section>
+              </div>
             </article>`;
     }
 

@@ -27,6 +27,7 @@ Des fondations matérielles jusqu'à la conception complète d'un système embar
 - [Chapitre 5 : Génie logiciel embarqué](#sn421-se)
 - [Premier labo Wokwi](#sn421-wokwi-01)
 - [TD 1 corrigé](#SN421-Dev-Micro-td)
+- [TP 1 Wokwi](#SN421-Dev-Micro-tp)
 - [Révision](#SN421-Dev-Micro-revision)
 :::
 :::
@@ -887,6 +888,14 @@ Un développement embarqué fiable repose sur une séparation stricte entre la c
 :::dashboard
 :::card class="chapter-card" pill="TD 1" title="Bases de la programmation embarquée" href="SN421-Dev-Micro-td1.html" link="Ouvrir le TD corrigé"
 Conversions binaires et hexadécimales, indicateurs d'état, choix d'une cible temps réel, FFT, analyse de performances et plan mémoire STM32F4.
+:::
+:::
+:::
+
+:::section id="SN421-Dev-Micro-tp" eyebrow="Travaux pratiques" title="TP SN421 interactifs" summary="Manipulations guidees avec montages Wokwi importables pour tester les GPIO, interruptions et timers."
+:::dashboard
+:::card class="chapter-card" pill="TP 1" title="GPIO et mesures de performances" href="SN421-Dev-Micro-tp1.html" link="Ouvrir le TP"
+Arduino Uno, registres ATmega328P, comparaison `digitalWrite` / acces direct, interruption INT0 et Timer1 avec analyseur logique Wokwi.
 :::
 :::
 :::

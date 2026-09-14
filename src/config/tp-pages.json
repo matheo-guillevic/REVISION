@@ -1,0 +1,46 @@
+{
+  "groups": [
+    {
+      "subject": "MT461-Methode-numerique",
+      "label": "MT461-Methode-numerique",
+      "backHref": "MT461-Methode-numerique.html#MT461-Methode-numerique-tp",
+      "backLabel": "Retour aux TP MT461",
+      "courseHref": "MT461-Methode-numerique.html",
+      "courseLabel": "Cours MT461",
+      "idPrefix": "MT461-Methode-numerique-tp",
+      "withPrism": true,
+      "pages": [
+        {
+          "n": 1,
+          "target": "MT461-Methode-numerique-tp1.html",
+          "title": "TP 1 corrige - Arithmetique flottante et stabilite numerique",
+          "source": "MT461-Methode-numerique-tp1.md",
+          "eyebrow": "MT461 - TP 1",
+          "heading": "Arithmetique en virgule flottante et stabilite numerique",
+          "summary": "Preparation theorique et experimentations R interactives avec WebR."
+        }
+      ]
+    },
+    {
+      "subject": "SN421-Dev-Micro",
+      "label": "SN421-Dev-Micro",
+      "backHref": "SN421-Dev-Micro.html#SN421-Dev-Micro-tp",
+      "backLabel": "Retour aux TP SN421-Dev-Micro",
+      "courseHref": "SN421-Dev-Micro.html",
+      "courseLabel": "Cours SN421",
+      "idPrefix": "SN421-Dev-Micro-tp",
+      "withPrism": true,
+      "pages": [
+        {
+          "n": 1,
+          "target": "SN421-Dev-Micro-tp1.html",
+          "title": "TP 1 corrige - GPIO et mesures de performances",
+          "source": "SN421-Dev-Micro-tp1.md",
+          "eyebrow": "SN421 - TP 1",
+          "heading": "GPIO, interruptions et timers sur ATmega328P",
+          "summary": "TP guide avec manipulations Wokwi autour de l'Arduino Uno et des registres AVR."
+        }
+      ]
+    }
+  ]
+}

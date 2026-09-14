@@ -20,6 +20,9 @@ Ces dossiers contiennent les montages et programmes correspondant aux emplacemen
 - `lab-06-i2c-logic-analyzer` : transaction I2C vers TMP102 et capture SDA/SCL.
 - `lab-07-spi-logic-analyzer` : SPI vers 74HC595 et capture SCK/MOSI/LATCH.
 - `lab-08-fsm-non-blocking` : automate non bloquant avec boutons et LED RGB.
+- `tp1-01-gpio-performance` : Arduino Uno, comparaison `digitalWrite`, acces registre et toggle par `PINB`.
+- `tp1-02-int0-response` : Arduino Uno, bouton sur `D2/INT0`, reponse LED et mesure logique.
+- `tp1-03-timer1-ctc-pwm` : Arduino Uno, Timer1 en CTC puis PWM materielle sur `D9/OC1A`.
 
 ## Remarque
 

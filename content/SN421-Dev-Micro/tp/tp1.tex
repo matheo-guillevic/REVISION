@@ -1,0 +1,821 @@
+\documentclass[a4paper,11pt]{article}
+
+% Packages essentiels
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{siunitx} % Pour les unités physiques
+\usepackage[european, straightvoltages, RPvoltages]{circuitikz} % Pour dessiner des circuits
+\usepackage{multicol}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstset{
+  language=matlab,
+  backgroundcolor=\color{backcolour},   
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{magenta},
+  stringstyle=\color{blue},
+  commentstyle=\color{gray},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=5pt,
+  frame=single,
+  breaklines=true,
+  captionpos=b,
+  tabsize=1,
+  showspaces=false,
+  showstringspaces=false
+}
+
+
+% Configuration de la page
+\geometry{margin=2.5cm}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{TP Programmation des Microcontroleurs}
+\rhead{Préparation}
+
+\fancyfoot{}
+\lfoot{SN421 TP1}
+\rfoot{Mathéo Guillevic \& Eva Berhault}
+\cfoot{\thepage}
+
+% Environnements personnalisés
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\usetikzlibrary{babel}
+
+% Boîte pour les exercices
+\newtcolorbox{exercice}[1]{
+	colback=blue!5!white,
+	colframe=blue!75!black,
+	title=Exercice #1,
+	fonttitle=\bfseries
+}
+
+% Boîte pour les solutions
+\newtcolorbox{solution}{
+	colback=green!5!white,
+	colframe=green!50!black,
+	title=Solution,
+	fonttitle=\bfseries
+}
+
+% Boîte pour les rappels
+\newtcolorbox{rappel}{
+	colback=orange!5!white,
+	colframe=orange!75!black,
+	title=Rappel,
+	fonttitle=\bfseries
+}
+
+% Boîte pour les infos
+\newtcolorbox{info}{
+	colback=blue!5!white,
+	colframe=blue!75!black,
+	title=Info,
+	fonttitle=\bfseries
+}
+
+% Boîte pour les notes
+\newtcolorbox{note}{
+	colback=cyan!5!white,
+	colframe=cyan!75!black,
+	title=Note,
+	fonttitle=\bfseries
+}
+
+% Informations du document
+\title{\textbf{TP1 }\\
+	\large }
+\author{Mathéo Guillevic \& Eva Berhault\\4APP TP1}
+\date{\today}
+
+\begin{document}
+
+    \begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+        % --- Noms (Haut Gauche) ---
+        \node[anchor=north west, align=left] at ([shift={(1.2cm,-1.5cm)}]current page.north west) {
+            \large Eva Berhault \\
+            \large Mathéo Guillevic
+        };
+
+        % --- Infos (Haut Droite) ---
+        \node[anchor=north east, align=right] at ([shift={(-1.2cm,-1.5cm)}]current page.north east) {
+            \large Date : 14/09/2026\\
+            \large Gpe : 1
+        };
+
+        % --- Numéro de TP (Haut Centre) ---
+        \node[anchor=north] at ([shift={(0cm,-2.5cm)}]current page.north) {
+            \large TP n$^\circ$ 1
+        };
+
+        % --- Titre ---
+        \node[anchor=center] at ([shift={(0cm,5cm)}]current page.center) {
+            \fontsize{50}{60}\selectfont \textbf{GPIO et mesures de performances}
+        };
+
+        % --- Cadre de Note (Rouge) ---
+        \node[anchor=north west] at ([shift={(1.2cm,-12.2cm)}]current page.north west) {
+            \large Note :
+        };
+
+        % --- Logo (Bas Centre) ---
+        % Remplace "logo-esisar" par le nom de ton fichier image
+        \node[anchor=south] at ([shift={(0cm,3cm)}]current page.south) {
+            \includegraphics[width=8cm]{figure/ESISAR-LOGO.png} 
+        };
+        
+        \end{tikzpicture}
+    \end{titlepage}
+
+	\thispagestyle{fancy}
+	
+
+	%\section{Notions}
+	
+	%\begin{rappel}
+		%\textbf{Loi d'Ohm :} $U = RI$
+		
+		%\textbf{Resistance de charge} : résistance qui limite le courant pendant le chargement/déchargement des condensateurs
+		
+		%\textbf{Circuit RC :} La constante de temps est donnée par $\tau = RC$
+	%\end{rappel}
+	
+\newpage
+\section{Préparation individuelle}
+
+\begin{itemize}
+    \item À partir de la documentation de la carte, identifier la référence du microcontrôleur ainsi que le port et le pin sur lequel est branché la LED.
+    \begin{solution}
+        \noindent
+        \parbox[t]{6cm}{
+            \textbf{Microcontrôleur :} ATmega328P \\
+            \textbf{Port LED :} PB5 \\
+            \textbf{Pin LED :} D13
+        }
+        \hfill
+        \raisebox{-\height+\ht\strutbox}{
+            \includegraphics[width=7.5cm]{figure/Port LED.png}
+        }\\\\
+        \textbf{Source :} Doc pinout.pdf Page 1
+    \end{solution}
+
+    \item Quelle est la différence entre le port PB5 et le port D13 ?
+    \begin{solution}
+        PB5 est le pin du bloc ATmega328P (adresse matérielle réelle), D13 celui de l'arduino (alias logique def par la carte).
+    \end{solution}
+
+    \item À partir de la documentation du microcontrôleur (chapitre 13), identifier les registres à configurer et les valeurs associées pour avoir le pin de la LED en sortie haute.
+    \begin{solution}
+        Pour mettre la broche PB5 à l'état haut, il faut configurer 2 bits :\\
+        \begin{enumerate}
+            \item DDB5 (bit 5 du registre DDRB) --> mettre à 1
+                \begin{lstlisting}[language=C++] 
+DDRB |= (1 << DDB5); // PB5 en sortie
+                \end{lstlisting}\\
+            \item PORTB5 (bit 5 du port PORTB) --> mettre à 1
+                \begin{lstlisting}[language=C++] 
+PORTB |= (1 << PORTB5); // PB5 a l'etat haut
+                \end{lstlisting}\\
+        \end{enumerate}
+        Code arduino : 
+        \begin{lstlisting}[language=c++]
+pinMode(13, OUTPUT); digitalWrite(13, HIGH);
+        \end{lstlisting}\\\\
+        \textbf{Source :} Doc ATmega328P\_Datasheet.pdf Section 13.2.1 \& 13.4.2 
+    \end{solution}
+
+    \item À partir de la documentation assembleur et de la documentation microcontrôleur, comment utiliser l'instruction SBI pour inverser le port PB5 ? Donner la ligne assembleur correspondante.
+    \begin{solution}
+        D'après la datasheet ATmega328P (section 13.2.2), écrire 1 dans le bit du registre PINB fait basculer physiquement la sortie, quel que soit son état actuel.
+        \begin{lstlisting}[language=asm]
+SBI 0x03, 5
+        \end{lstlisting}\\\\
+        \textbf{Source :} Doc assembleur Section 99 \& Doc ATmega328P\_Datasheet.pdf Section 13.2.2
+    \end{solution}
+
+    \item À partir de la documentation de la carte, identifier la référence de l'oscillateur cristal.
+    \begin{solution}
+        Il s'agit d'un ECS-160-20-4X-DU Oscillator, correspondant à la ref Y1 de la carte.\\\\
+        \textbf{Source :} Doc ArduinoUnoR3\_Datasheet.pdf Section 3.1
+    \end{solution}
+
+    \item À partir de la documentation de l'oscillateur (à chercher vous même), identifier ce à quoi chacun des champs de la référence correspond. Quelle est la précision du cristal à 25\,\textdegree{}C au bout de 1 an ?
+    \begin{solution}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Champ & Valeur & Signification \\
+            \hline
+            \hline
+            ECS & NA & Fabricant (ECS Inc.)\\
+            \hline
+            160 & 16.000 MHz & Code fréquence (160 --> 16.000 MHz)\\
+            \hline
+            20 & 20 pF & Capacité de charge \\
+            \hline
+            4X & 3,5 mm & Hauteur du boîtier \\
+            \hline
+            D & $\pm$ 100 ppm & Stabilité en fréquence \\
+            \hline
+            U & -55°C \~ +125°C & Plage de température de fonctionnement \\
+            \hline
+        \end{tabular}\\
+        \textbf{Précision à 25°C au bout d'un an :} `Aging (First Year) @+25°C$\pm$3°C:$\pm$5ppm`\\
+        C'est-à-dire que le cristal varie au maximum de $\pm$5ppm par rapport à sa fréquence nominale (16 MHz). Soit une dérive maximale de $\pm$80Hz.\\\\
+        \textbf{Source :} Doc ECS-160-20-4X-DU\_Datasheet.pdf Section "Part Numbering Guide" & "Operation Conditions/Electrical Characteristics"
+    \end{solution}
+\end{itemize}
+
+\section{GPIO}
+
+Nous allons comparer la différence de performance entre 4 méthodes pour faire clignoter une LED : deux méthodes en C avec les registres matériels, une en assembleur avec les registres également et la dernière en C avec une librairie plus haut-niveau (plus abstraite).
+
+\begin{itemize}
+    \item Faire la configuration des registres pour obtenir le mode Push-Pull et allumer la LED. Pour cela, il faut inclure l'en-tête spécifique à notre Arduino UNO R3 pour avoir accès aux registres. Le compilateur avr-gcc fournit une interface unique \texttt{\#include <avr/io.h>} qui lui même inclut le bon en-tête de notre cible (ici \texttt{avr/iom328p.h}).
+    \begin{solution}
+        \begin{lstlisting}[language=C++]
+    void setup(){
+        DDRB |= (1 << DDB5);
+        PORTB |= (1 << PORTB5);
+    }
+    void loop(){
+        
+    }
+        \end{lstlisting}
+    \end{solution}
+
+    \item Dans une boucle, faire clignoter la LED en utilisant le registre d'écriture et mesurer la fréquence à l'oscilloscope.
+    \begin{solution}
+        \begin{lstlisting}[language=C++]
+   void setup(){
+        pinMode(13, OUTPUT);        
+    }
+    void loop(){
+        digitalWrite(13, HIGH);
+        delay(500);
+        digitalWrite(13, LOW);
+        delay(500);
+    }
+        \end{lstlisting}
+    \end{solution}
+
+    \item De même en utilisant cette fois le registre permettant d'inverser l'état du pin (toggle).
+    \begin{solution}
+            \begin{lstlisting}[language=C++]
+   void setup(){
+        DDRB |= (1 << DDB5);
+        
+    }
+    void loop(){
+        PORTB |= (1 << PORTB5);
+        delay(500);
+        PORTB &= (0 << PORTB5);
+        delay(500);
+    }
+        \end{lstlisting}
+    \end{solution}
+
+    \item Laquelle des 2 méthodes est la plus rapide ? Pourquoi ? Vous pouvez regarder le code assembleur de votre binaire en utilisant l'utilitaire \texttt{avr-objdump}. L'IDE Arduino génère le binaire compilé en faisant \texttt{Sketch > Export compiled binary} dans le dossier de votre projet Arduino :
+    \begin{verbatim}
+avr-objdump -DS yourprogram.ino.elf > yourprogram.txt
+    \end{verbatim}
+    Le drapeau \texttt{-D} indique de désassembler toutes les sections (y compris les données) et le drapeau \texttt{-S} entremêle l'assembleur généré avec votre code source.
+    \begin{solution}
+        La deuxième méthode est la plus rapide car nous utilisons simplement un bit shift alors que avec \texttt{digitalWrite} nous faisons beaucoup plus d'instructions.
+    \end{solution}
+
+    \item De même en utilisant les instructions \texttt{sbi} et \texttt{rjmp} dans un bout de code assembleur inline. La syntaxe est :
+    \begin{verbatim}
+asm volatile("ligne asm1\n"
+             "ligne asm2\n"
+             "ligne asm3\n");
+    \end{verbatim}
+    \begin{solution}
+        \begin{lstlisting}[language=C++]
+void setup(){
+    pinMode(13, OUTPUT);
+}
+void loop(){
+    asmvolatile(
+        "sbi 0x03, 5 \n\t"
+        "rjmp .-4 \n\t"
+    );
+}
+        \end{lstlisting}
+    \end{solution}
+
+    \item Faire clignoter la LED en utilisant la librairie Arduino et la fonction \texttt{digitalWrite} et mesurer la fréquence. En sachant que le microcontrôleur fonctionne à 16\,MHz, combien de cycles d'horloge sont nécessaires pour un simple toggle ? Comparer avec les solutions précédentes.
+    \begin{solution}
+    Avec la fonction \texttt{digitalWrite}, nous mesurons une fréquence de 150\,kHz et de 2\,MHz avec l'accès direct des registres (fréquence max de 4\,MHz).
+
+    \begin{itemize}
+        \item Période du signal : \( T = \frac{1}{f} \)
+        \item Un toggle = une demi-période : \( T_{\text{toggle}} = \frac{T}{2} \)
+    \end{itemize}
+
+    \medskip
+    \textbf{Calcul des cycles par toggle :}
+
+    \begin{itemize}
+        \item \texttt{digitalWrite} : \( f = 150\,\text{kHz} \)
+        \[
+        N = \frac{T_{\text{toggle}}}{T_{\text{CPU}}}
+        = \frac{1}{2 f \cdot f_{\text{CPU}}}
+        = \frac{1}{2 \times 150\times10^{3} \times 16\times10^{6}}
+        \approx \boxed{208 \text{ cycles}}
+        \]
+
+        \item Accès direct registre : \( f = 2\,\text{MHz} \)
+        \[
+        N = \frac{1}{2 \times 2\times10^{6} \times 16\times10^{6}}
+        = \boxed{4 \text{ cycles}}
+        \]
+
+        \item Fréquence max : \( f = 4\,\text{MHz} \)
+        \[
+        N = \frac{1}{2 \times 4\times10^{6} \times 16\times10^{6}}
+        = \boxed{2 \text{ cycles}}
+        \]
+    \end{itemize}
+
+    \begin{center}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Méthode} & \textbf{Cycles / toggle} & \textbf{Fréquence} \\
+        \hline
+        \texttt{digitalWrite} & \(\sim 208\) & 150\,kHz \\
+        Accès direct registre & 4 & 2\,MHz \\
+        Assembleur & 4 & 2\,MHz \\
+        Limite théorique & 2 & 4\,MHz \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    \medskip
+    \textbf{Conclusion :} L'accès direct au registre est environ \( \frac{208}{4} \approx 52 \) fois plus rapide que \texttt{digitalWrite}, ce qui illustre le coût de l'abstraction Arduino.
+\end{solution}
+
+    \item Faire clignoter la LED en utilisant la librairie Arduino et une attente logicielle pour obtenir une fréquence de 1\,kHz. De manière aléatoire (par exemple 1 fois sur 2), ajouter une sortie sur le port série réglé à 9\,600 bauds d'un message quelconque (au moins 10 caractères). Quel est l'effet sur la fréquence de clignotement de la LED ?
+    \begin{solution}
+            \begin{lstlisting}[language=C++]
+   void setup(){
+        DDRB |= (1 << DDB5);
+        Serial.begin(9600);
+        
+    }
+    void loop(){
+        PORTB |= (1 << PORTB5);
+        delayMicroseconds(500);
+        PORTB &= (0 << PORTB5);
+        delayMicroseconds(500);
+
+        //Serial.println("abcdefghijk");
+    }
+        \end{lstlisting}
+    Avec l'affichage d'une chaine de charactère fait passer la fréquence de 1kHz à 70Hz.
+    \end{solution}
+
+    \item Même chose que précédemment mais sans attente logicielle.
+    \begin{solution}
+        Sans les attente logicielle, nous avons toujours une fréquence de 70Hz.
+    \end{solution}
+
+    \item Comparer les 2 codes précédents. Quels sont les avantages et inconvénients de ces 2 codes ?
+    \begin{solution}
+        \texttt{millis()} n'interrompt pas le code et permet de faire plusieurs tâches en parallèle. Le \texttt{delay()} interrompt tout le code.
+    \end{solution}
+\end{itemize}
+
+\section{Préparation individuelle}
+
+\begin{itemize}
+    \item À partir de la documentation de la librairie de la fonction \texttt{attachInterrupt}, quels pins sont disponibles pour des interruptions ? Identifier les pins correspondants du microcontrôleur.
+    \begin{solution}
+    les interruptions externes de l'arduino sont sur les pins numériques D2 et D3.
+    
+    \end{solution}
+
+    \item À partir de la documentation du microcontrôleur, quelles sont les interruptions disponibles sur les pins précédemment identifiés ? Sur quel pin se trouve l'interruption externe 0 ?
+
+    
+    \textit{Indice : regarder les fonctions alternatives des GPIO.}
+    \begin{solution}
+    
+    \centering 
+    \begin{tabular}{|c|c|c|c|} \hline 
+    \textbf{Pin Arduino} & \textbf{Pin ATmega328P} & \textbf{INT externe} & \textbf{Alt pinout} \\ \hline 
+    D2 & PD2 & INT0 & PCINT18 \\ \hline 
+    D3 & PD3 & INT1 & PCINT19 \\ \hline 
+    \end{tabular} \\ 
+    Lien entre Arduino et les interruptions de l'ATmega328P.
+    
+    \end{solution}
+
+    \item Quelle est la différence entre les interruptions INT0 et PCINT0 ?
+    \begin{solution}
+    INT0 est une interruption externe dédiée. Elle est associée à la broche PD2 et dispose de son propre vecteur d'interruption. Son mode de déclenchement peut être configuré afin de détecter : 
+    \begin{itemize} 
+        \item un niveau bas ; 
+        \item un changement d'état logique ; 
+        \item un front descendant ; 
+        \item un front montant.
+    \end{itemize} 
+    Le choix du mode de déclenchement est réalisé à l'aide des bits \texttt{ISC01} et \texttt{ISC00} dans le registre \texttt{EICRA}. 
+    \texttt{PCINT0} est une interruption de type \textit{Pin Change Interrupt}. Elle est située sur la pin PB0, correspondant au pin numérique D8 de l'Arduino Uno. 
+    Les interruptions \textit{Pin Change} sont regroupées. Ainsi, \texttt{PCINT0} partage son vecteur d'interruption avec les autres interruptions du même groupe (8 interruptions). Si une interruption est toggle, un des trois pin \texttt{PCIx} correspondant est set à 1.
+    \begin{itemize}
+        \item \texttt{PCICR} : activer/désactiver le groupe d'interruptions
+        \item \texttt{PCIFR} : Flag par groupement d'interruptions
+        \item \texttt{PCMSKx} : activer/désactiver unitairement les interruptions 
+    \end{itemize}
+    
+    Elles permettent de détecter un changement d'état logique, mais ne permettent pas directement de sélectionner uniquement un front montant ou uniquement un front descendant.
+    \\
+    
+    \centering 
+    \begin{tabular}{|l|c|c|} \hline
+        & \textbf{INT0} & \textbf{PCINT0} \\ \hline
+        Broche & PD2 / D2 & PB0 / D8 \\ \hline
+        Type & Interruption dédiée & Pin Change Interrupt \\ \hline
+        Déclenchement & Niveau ou front configurable & Changement logique \\ \hline
+        Vecteur & Vecteur dédié & Vecteur partagé \\ \hline
+        Registres principaux & EICRA, EIMSK & PCICR, PCMSK0 \\ \hline
+    \end{tabular} \\
+    Comparaison entre INT0 et PCINT0.
+        
+    \end{solution}
+
+    \item À partir du chapitre sur les interruptions externes dans la documentation microcontrôleur, identifier les registres et les valeurs requises pour configurer l'interruption externe 0 (INT0) sur front montant.
+    \begin{solution}
+    Dans le registre \texttt{EICRA} les bits \texttt{ISC01} \&  \texttt{ISC00} en rising edge donc 1 et 1 respectivement. Il faut aussi penser à configurer tous les autres registres nécessaire à l'interruption souhaitée \texttt{EIMSK}...\\
+
+    \centering
+    \begin{tabular}{|c|c|l|} \hline 
+    \textbf{ISC01} & \textbf{ISC00} & \textbf{Déclenchement} \\ \hline
+        0 & 0 & Niveau bas \\ \hline 
+        0 & 1 & Changement logique \\ \hline
+        1 & 0 & Front descendant \\ \hline
+        1 & 1 & Front montant \\ \hline
+    \end{tabular} \\
+    Configuration du déclenchement de l'interruption INT0.
+    
+    \end{solution}
+
+    \item À partir de la documentation du compilateur avr-gcc, identifier les noms des vecteurs d'interruption pour les interruptions INT0 et PCINT2.
+    \begin{solution}
+    
+    \begin{itemize}
+        \item \textbf{INT0}  le nom du vecteur est : \texttt{INT0\_vect}
+        \item \textbf{PCINT2} le nom du vecteur est : \texttt{PCINT2\_vect}
+    \end{itemize}
+    
+    Les fonction d'interruption peuvent être écrite sous la forme : 
+    \begin{verbatim} 
+    ISR(Nom_Vecteur) 
+    {
+    // Traitement de l'interruption INT0 
+    } 
+    \end{verbatim}
+    
+    \end{solution}
+\end{itemize}
+
+\section{Interruption}
+
+\begin{itemize}
+    \item Configurer l'interruption externe 0 sur front montant.
+    \begin{solution}
+        \begin{lstlisting}[language=C++]
+void setup(){
+    pinMode(13, OUTPUT);
+    EICRA |= (1 << ISC00);  //front
+    EICRA |= (1 << ISC01);  //montant
+    EIMSK |= (1 << INT0);   //Enable
+    EIFR |= (1 << INTF0);   //flag
+}
+void loop(){
+
+}    
+        \end{lstlisting}
+    \end{solution}
+
+    \item Écrire la fonction d'interruption telle que : \texttt{ISR([vector\_name]) \{...\}}, en remplaçant \texttt{[vector\_name]} par le nom identifié dans la préparation, et allumer la LED dans cette fonction. Éteindre la LED depuis la fonction \texttt{loop}.
+    \begin{solution}
+        \begin{lstlisting}[language=C++]
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+ISR(INT0_vect) {
+    PORTB |= (1 << PORTB5); 
+}
+
+void setup() {
+    pinMode(13, OUTPUT);
+    PORTB |= (1 << PORTB5); 
+    EICRA |= (1 << ISC01) 
+    EICRA |= (1 << ISC00);
+    EIMSK |= (1 << INT0); 
+    EIFR  |= (1 << INTF0);
+    sei();
+}
+
+void loop() {
+    PORTB &= (0 << PORTB5); 
+}
+        \end{lstlisting}
+    \end{solution}
+
+    \item Mesurer le temps de réponse à l'oscilloscope en faisant l'écriture du registre et en passant par la fonction \texttt{digitalWrite}.
+    \begin{solution}
+        Le temps de réponse de l'oscilloscope est de 1,4$\micro$s.\\
+        Ce qui correspond à 22 cycles.\\
+        Avec \texttt{digitalWrite}, le temsp de réponse est de 4,1.\\
+        Ce qui correspond à 65 cycle.
+    \end{solution}
+
+    \item Commenter votre code précédent et faire l'interruption en utilisant la fonction \texttt{attachInterrupt}.
+    \begin{solution}
+        \begin{lstlisting}[language=C++]
+void ISR(){    
+    PORTB &= (0 << PORTB5);
+}
+void setup(){
+    pinMode(13, OUTPUT);
+    EICRA |= (1 << ISC00);  //front
+    EICRA |= (1 << ISC01);  //montant
+    EIMSK |= (1 << INT0);   //Enable
+    EIFR |= (1 << INTF0);   //flag
+    PORTB &= (0 << PORTB5);
+    attachInterrupt(digitalPinToInterrupt(2), ISR, RISING);
+    sei();
+}
+void loop(){
+    PORTB |= (1 << PORTB5);
+}    
+        \end{lstlisting}
+    \end{solution}
+
+    \item Mesurer le temps de réponse à l'oscilloscope. Conclure.
+    \begin{solution}
+        Le temps de réponse de l'oscilloscope est 3,1$\micro$s. Ce qui correspond à 50 cycles.\\\\
+        Ainsi, le \texttt{attachInterrupt} utilise 23 cycles de plus.
+    \end{solution}
+\end{itemize}
+
+\section{Timers}
+
+\begin{itemize}
+    \item Quelle est la taille du timer 1 ? Quelle est la division d'horloge maximale du prescaler ? En déduire la période maximale du timer 1.
+    \begin{solution}
+        Le timer 1 est un timer 16 bits (il peut compter de 0 à 65 535). Il possède plusieurs valeurs de prescaler : 1, 8, 64, 256 et 1024. La plus grande est donc 1024.\\
+        $P_{ériode_{max}} = 1024 * \frac{65535}{16*10^{6}}=4,19 s$
+    \end{solution}
+
+    \item En utilisant le mode normal du timer 1, quelle doit-être la division d'horloge pour être le plus proche d'une base de temps de 1 seconde ? Implémenter le mode normal et mesurer la fréquence à l'oscilloscope. La fonction d'interruption se déclare comme suit : \texttt{ISR(TIMER1\_OVF\_vect) \{...\}}
+    \begin{solution}
+        $P_{ériode_{1s}} = 256*\frac{65535}{16*10^{6}} = 1,05 s$
+        Le prescaler qu'il faut est 256 pour avoir un basse de temps de environ 1 seconde.
+        \begin{lstlisting}[language=C++]
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+volatile uint16_t compteur = 0;
+
+void setup() {
+    TCCR1A = 0;
+    TCCR1B = 0;
+    TCCR1B |= (1 << CS12);
+    TIMSK1 |= (1 << TOIE1);
+    sei();
+}
+ISR(TIMER1_OVF_vect) {
+    PORTB ^= (1 << PORTB5);
+}
+        \end{lstlisting}
+        Il y a un débordement car notre période n'est pas exactement de 1s.
+    \end{solution}
+
+    \begin{solution}
+        En mode CTC (\textit{Clear Timer on Compare Match}), le compteur \texttt{TCNT1}
+        est remis à zéro lorsqu'il atteint la valeur contenue dans le registre
+        \texttt{OCR1A}. La période entre deux comparaisons vaut donc :
+        \[
+            T_{\mathrm{CTC}}
+            = \frac{N\left(\mathrm{OCR1A}+1\right)}{f_{\mathrm{CPU}}},
+        \]
+        où \(N\) est le facteur de division du prescaler et
+        \(f_{\mathrm{CPU}}=16\,\mathrm{MHz}\).
+
+        On souhaite obtenir une base de temps de \(1\,\mathrm{s}\), donc :
+        \[
+            1
+            = \frac{N\left(\mathrm{OCR1A}+1\right)}{16\times 10^6}.
+        \]
+        D'où :
+        \[
+            \mathrm{OCR1A}+1=\frac{16\times 10^6}{N}.
+        \]
+
+        Avec un prescaler de \(256\) :
+        \[
+            \mathrm{OCR1A}+1
+            = \frac{16\times 10^6}{256}
+            = 62500,
+        \]
+        et donc :
+        \[
+            \boxed{\mathrm{OCR1A}=62499}.
+        \]
+
+        Cette valeur est inférieure à \(65535\), donc elle est compatible avec
+        le Timer~1 qui est un timer 16 bits. On obtient alors exactement :
+        \[
+            T_{\mathrm{CTC}}
+            = \frac{256\times 62500}{16\times 10^6}
+            = \boxed{1\,\mathrm{s}}.
+        \]
+
+        Le registre qui contient la valeur maximale en mode CTC 4 est donc
+        \boxed{\texttt{OCR1A}}.
+
+        Pour sélectionner le mode CTC 4, il faut configurer
+        \(WGM13:0=0100\), donc mettre \texttt{WGM12} à 1 et laisser les autres
+        bits WGM à 0.
+        
+        \end{solution}
+        
+        \begin{solution}
+        \begin{lstlisting}[language=C++]
+void setup() {
+    // LED D13 = PB5 en sortie
+    DDRB |= (1 << DDB5);
+
+    // Timer1 : mode CTC (mode 4)
+    TCCR1A = 0;
+    TCCR1B = 0;
+    TCCR1B |= (1 << WGM12);
+
+    OCR1A = 62499; //  interruption toutes les 1 s
+    // Prescaler = 256
+    TCCR1B |= (1 << CS12);
+    // Autorisation de l'interruption Compare Match A
+    TIMSK1 |= (1 << OCIE1A);
+    sei();
+}
+
+ISR(TIMER1_COMPA_vect) {
+    PINB |= (1 << PINB5);
+}
+
+void loop() {}
+        \end{lstlisting}
+
+        L'interruption est déclenchée toutes les \(1\,\mathrm{s}\).
+        Comme la LED est inversée à chaque interruption, il faut deux
+        interruptions pour obtenir une période complète du signal de sortie :
+        \[
+            T_{\mathrm{LED}}=2\,\mathrm{s},
+            \qquad
+            f_{\mathrm{LED}}=\boxed{0{,}5\,\mathrm{Hz}}.
+        \]
+        L'oscilloscope doit donc mesurer environ \(0{,}5\,\mathrm{Hz}\) sur la
+        LED, tandis que les évènements de comparaison ont lieu à \(1\,\mathrm{Hz}\).
+
+        \medskip
+        \textbf{Remarque :} si l'on souhaite directement obtenir un signal carré
+        de \(1\,\mathrm{Hz}\) en inversant la sortie à chaque interruption, il
+        faut provoquer une interruption toutes les \(0{,}5\,\mathrm{s}\), soit
+        \(\mathrm{OCR1A}=31249\) avec le même prescaler de 256.
+    \end{solution}
+
+    \item Faire de même sans interruption et en utilisant l'un des modes PWM.
+    \begin{solution}
+        L'objectif est maintenant de générer directement un signal périodique
+        d'environ \(1\,\mathrm{Hz}\) sans utiliser d'interruption. Pour cela,
+        on peut exploiter une sortie matérielle du Timer~1.
+
+        \medskip
+        On choisit le mode \textbf{Fast PWM 14}, pour lequel :
+        \[
+            WGM13:0 = 1110
+        \]
+        et la valeur maximale du compteur (\textit{TOP}) est contenue dans
+        \texttt{ICR1}.
+
+        Dans ce mode, la fréquence PWM vaut :
+        \[
+            f_{\mathrm{PWM}}
+            =
+            \frac{f_{\mathrm{CPU}}}
+                 {N\left(1+\mathrm{ICR1}\right)}.
+        \]
+
+        Avec \(f_{\mathrm{CPU}}=16\,\mathrm{MHz}\), un prescaler
+        \(N=256\) et une fréquence souhaitée de \(1\,\mathrm{Hz}\), on obtient :
+        \[
+            1
+            =
+            \frac{16\times10^6}
+                 {256\left(1+\mathrm{ICR1}\right)}.
+        \]
+        Donc :
+        \[
+            1+\mathrm{ICR1}
+            =
+            \frac{16\times10^6}{256}
+            =
+            62500,
+        \]
+        soit :
+        \[
+            \boxed{\mathrm{ICR1}=62499}.
+        \]
+
+        Pour obtenir un rapport cyclique de \(50\,\%\), on choisit :
+        \[
+            \mathrm{OCR1A}+1
+            =
+            \frac{\mathrm{ICR1}+1}{2}
+            =
+            31250,
+        \]
+        donc :
+        \[
+            \boxed{\mathrm{OCR1A}=31249}.
+        \]
+
+        \textbf{Attention :} la LED intégrée de l'Arduino Uno est connectée à
+        PB5 (D13), mais PB5 n'est pas une sortie PWM matérielle du Timer~1.
+        La sortie \texttt{OC1A} du Timer~1 est située sur PB1, c'est-à-dire sur
+        la broche Arduino \textbf{D9}. Pour observer le signal sans
+        interruption, il faut donc mesurer sur D9 (ou utiliser OC1B sur D10).
+        \end{solution}
+        \begin{solution}
+        
+        \begin{lstlisting}[language=C++]
+void setup() {
+    // D9 = PB1 = OC1A en sortie
+    DDRB |= (1 << DDB1);
+
+    // Remise a zero de la configuration du Timer1
+    TCCR1A = 0;
+    TCCR1B = 0;
+
+    // PWM mode 14 :
+    TCCR1A |= (1 << WGM11);
+    TCCR1B |= (1 << WGM13) | (1 << WGM12);
+
+    // Sortie OC1A non-inversee :
+    TCCR1A |= (1 << COM1A1);
+    ICR1 = 62499;
+    // Rapport cyclique = 50 %
+    OCR1A = 31249;
+    // Prescaler = 256
+    TCCR1B |= (1 << CS12);
+}
+
+void loop() {}
+        \end{lstlisting}
+
+        La fréquence obtenue est :
+        \[
+            f_{\mathrm{PWM}}
+            =
+            \frac{16\times10^6}
+                 {256\times62500}
+            =
+            \boxed{1\,\mathrm{Hz}}.
+        \]
+
+        La période est donc :
+        \[
+            \boxed{T=1\,\mathrm{s}},
+        \]
+        avec un rapport cyclique d'environ \(50\,\%\).
+
+        \medskip
+        \textbf{Conclusion :} cette solution est plus efficace que la solution
+        avec interruption car le signal est entièrement généré par le matériel
+        du Timer~1. Le processeur n'a pas besoin d'exécuter une ISR à chaque
+        période et reste disponible pour d'autres traitements.
+    \end{solution}
+\end{itemize}
+    
+\end{document}

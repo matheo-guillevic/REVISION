@@ -49,7 +49,11 @@ function markdownPathFor(group, page, kind) {
 function renderPage(group, page, kind, markdownPath) {
   const parsed = matter(fs.readFileSync(markdownPath, "utf8"));
   const data = { ...page, ...parsed.data };
-  const isTd = kind === "td";
+  const kindLabels = {
+    td: group.backLabel || "Retour aux TD",
+    tp: group.backLabel || "Retour aux TP",
+    exam: group.backLabel || "Retour aux examens",
+  };
   const sourceLabel = toWebPath(path.relative(root, markdownPath));
   const prism = data.withPrism || group.withPrism || group.subject === "IN361-JAVA" || group.subject === "SN361-VHDL";
   const prismLink = prism ? '\n    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">' : "";
@@ -87,7 +91,7 @@ function renderPage(group, page, kind, markdownPath) {
   <body class="td-page">
     <main class="main-content">
       <header class="td-header">
-        <a class="back-link" href="${escapeHtml(group.backHref)}">${isTd ? escapeHtml(group.backLabel || "Retour aux TD") : "Retour aux examens"}</a>
+        <a class="back-link" href="${escapeHtml(group.backHref)}">${escapeHtml(kindLabels[kind] || "Retour au cours")}</a>
         <div>
           <span class="eyebrow">${escapeHtml(data.eyebrow || "")}</span>
           <h1>${escapeHtml(data.heading || data.title || "")}</h1>
@@ -110,7 +114,7 @@ ${renderBlocks(parsed.content)}
 function buildKind(configFile, kind) {
   const config = readJson(configFile);
   for (const group of config.groups) {
-    const pages = kind === "td" ? group.pages : group.exams;
+    const pages = kind === "exam" ? group.exams : group.pages;
     for (const page of pages) {
       const markdownPath = markdownPathFor(group, page, kind);
       if (!fs.existsSync(markdownPath)) {
@@ -124,4 +128,5 @@ function buildKind(configFile, kind) {
 }
 
 buildKind("td-pages.json", "td");
+buildKind("tp-pages.json", "tp");
 buildKind("exam-pages.json", "exam");
