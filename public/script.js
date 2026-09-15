@@ -1415,6 +1415,13 @@ function renderRImages(container, images) {
   });
 }
 
+function rConsoleWidth(output) {
+  const measuredWidth = output.clientWidth || output.getBoundingClientRect().width || 900;
+  const fontSize = window.getComputedStyle(output).fontSize || "14px";
+  const charWidth = Math.max(Number.parseFloat(fontSize) * 0.62, 8);
+  return Math.max(100, Math.min(240, Math.floor((measuredWidth - 48) / charWidth)));
+}
+
 function initRPlaygrounds() {
   document.querySelectorAll("[data-r-playground]").forEach((playground) => {
     const editor = playground.querySelector("[data-r-editor]");
@@ -1423,6 +1430,7 @@ function initRPlaygrounds() {
     const status = playground.querySelector("[data-r-status]");
     const runButton = playground.querySelector("[data-r-run]");
     const resetButton = playground.querySelector("[data-r-reset]");
+    const plotPopupButton = playground.querySelector("[data-r-plot-popup]");
     const highlight = playground.querySelector("[data-r-highlight]");
     const initialCode = editor?.defaultValue || editor?.textContent || editor?.value || "";
 
@@ -1439,6 +1447,54 @@ function initRPlaygrounds() {
       editor.dispatchEvent(new Event("input"));
     });
 
+    plotPopupButton?.addEventListener("click", () => {
+      const canvases = Array.from(plotOutput.querySelectorAll("canvas"));
+      if (!canvases.length) {
+        status.textContent = "Execute le code R pour generer un graphique a agrandir.";
+        return;
+      }
+
+      const dialog = document.createElement("div");
+      dialog.className = "r-plot-modal";
+      dialog.setAttribute("role", "dialog");
+      dialog.setAttribute("aria-modal", "true");
+      dialog.innerHTML = `
+        <div class="r-plot-modal-panel">
+          <header>
+            <strong>Graphiques R</strong>
+            <button type="button" class="ghost-button" data-r-plot-close>Fermer</button>
+          </header>
+          <div class="r-plot-modal-body"></div>
+        </div>
+      `;
+
+      const body = dialog.querySelector(".r-plot-modal-body");
+      canvases.forEach((canvas) => {
+        const copy = document.createElement("canvas");
+        copy.width = canvas.width;
+        copy.height = canvas.height;
+        copy.getContext("2d").drawImage(canvas, 0, 0);
+        body.appendChild(copy);
+      });
+
+      const close = () => {
+        dialog.remove();
+        document.body.classList.remove("modal-open");
+        document.removeEventListener("keydown", onKeydown);
+      };
+      const onKeydown = (event) => {
+        if (event.key === "Escape") close();
+      };
+
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) close();
+      });
+      dialog.querySelector("[data-r-plot-close]")?.addEventListener("click", close);
+      document.addEventListener("keydown", onKeydown);
+      document.body.classList.add("modal-open");
+      document.body.appendChild(dialog);
+    });
+
     runButton.addEventListener("click", async () => {
       runButton.disabled = true;
       playground.classList.remove("has-error");
@@ -1449,7 +1505,8 @@ function initRPlaygrounds() {
       try {
         const webR = await loadWebRSession();
         const shelter = await new webR.Shelter();
-        const capture = await shelter.captureR(editor.value, {
+        const code = `options(width = ${rConsoleWidth(output)})\n${editor.value}`;
+        const capture = await shelter.captureR(code, {
           captureGraphics: playground.dataset.captureGraphics !== "false"
             ? { width: 900, height: 540, bg: "white" }
             : false,

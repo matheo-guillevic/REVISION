@@ -358,15 +358,16 @@ ${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.c
                     <textarea spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" data-r-editor>${escapeHtml(code)}</textarea>
                   </span>
                 </label>
-                <div class="r-playground-results" aria-live="polite">
-                  <div>
-                    <strong>Console</strong>
-                    <pre data-r-output>En attente d'execution.</pre>
-                  </div>
-                  <div>
+                <div class="r-playground-panel r-graphics-panel">
+                  <div class="r-panel-heading">
                     <strong>Graphiques</strong>
-                    <div class="r-plot-output" data-r-plots>Aucun graphique pour le moment.</div>
+                    <button type="button" class="ghost-button" data-r-plot-popup>Agrandir</button>
                   </div>
+                  <div class="r-plot-output" data-r-plots>Aucun graphique pour le moment.</div>
+                </div>
+                <div class="r-playground-panel r-console-panel" aria-live="polite">
+                  <strong>Console</strong>
+                  <pre data-r-output>En attente d'execution.</pre>
                 </div>
               </div>
 ${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.caption)}</p>\n` : ""}            </article>`;

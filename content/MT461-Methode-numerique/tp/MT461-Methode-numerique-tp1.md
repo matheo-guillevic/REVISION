@@ -53,7 +53,23 @@ y_k \to \pi.
 :::
 
 :::block type="method" title="Demonstration de la recurrence"
-Au rang $k$, le polygone inscrit a $2^k$ cotes. Son demi-perimetre vaut donc :
+**Raisonnement geometrique.** On travaille dans le cercle unite, donc le rayon vaut $1$. Un cote du polygone inscrit est une corde du cercle. Si le polygone a $2^k$ cotes, l'angle au centre correspondant a un cote vaut :
+
+\[
+\theta_k=\frac{2\pi}{2^k}.
+\]
+
+En coupant le triangle isoscele forme par deux rayons et une corde, on obtient un triangle rectangle. Son hypotenuse vaut $1$, son angle au centre vaut $\theta_k/2=\pi/2^k$, et son cote oppose vaut $\ell_k/2$. Ainsi :
+
+\[
+\frac{\ell_k}{2}
+=
+\sin\left(\frac{\theta_k}{2}\right)
+=
+\sin\left(\frac{\pi}{2^k}\right).
+\]
+
+Le demi-perimetre du polygone est la moitie de son perimetre total :
 
 \[
 y_k = \frac{2^k\ell_k}{2}
@@ -61,34 +77,104 @@ y_k = \frac{2^k\ell_k}{2}
 \ell_k = 2^{1-k}y_k.
 \]
 
-La moitie d'un cote est la corde associee a l'angle $\pi/2^k$, donc :
+En combinant les deux relations :
 
 \[
-\frac{\ell_k}{2}=\sin\left(\frac{\pi}{2^k}\right).
+y_k
+=
+2^k\sin\left(\frac{\pi}{2^k}\right).
 \]
 
-Pour passer au polygone suivant, on coupe cet angle en deux. La formule de demi-angle donne :
+Comme $\sin u\sim u$ lorsque $u\to0$, on obtient :
 
 \[
-\sin\left(\frac{\theta}{2}\right)
+y_k
 =
-\sqrt{\frac{1-\cos\theta}{2}}
+2^k\sin\left(\frac{\pi}{2^k}\right)
+\longrightarrow
+2^k\frac{\pi}{2^k}
 =
-\sqrt{\frac{1-\sqrt{1-\sin^2\theta}}{2}}.
+\pi.
 \]
 
-Avec $\sin\theta=\ell_k/2=2^{-k}y_k$, le nouveau demi-perimetre devient :
+Cette partie explique pourquoi la methode approxime $\pi$ : plus le polygone a de cotes, plus son perimetre se rapproche de la circonference du cercle unite, qui vaut $2\pi$. Son demi-perimetre se rapproche donc de $\pi$.
+
+**Resolution par calcul a partir de la geometrie.** Pour passer du rang $k$ au rang $k+1$, on double le nombre de cotes. Geometriquement, cela revient a couper chaque angle au centre en deux.
+
+On pose :
+
+\[
+u_k=\frac{\ell_k}{2}=2^{-k}y_k.
+\]
+
+Le nouveau demi-cote vaut :
+
+\[
+\frac{\ell_{k+1}}{2}
+=
+\sin\left(\frac{\theta_k}{2}\right),
+\qquad
+\text{avec}
+\qquad
+\sin\theta_k=u_k.
+\]
+
+La formule de demi-angle donne :
+
+\[
+\sin\left(\frac{\theta_k}{2}\right)
+=
+\sqrt{\frac{1-\cos\theta_k}{2}}.
+\]
+
+Dans le triangle rectangle, $\cos\theta_k=\sqrt{1-\sin^2\theta_k}=\sqrt{1-u_k^2}$, donc :
+
+\[
+\frac{\ell_{k+1}}{2}
+=
+\sqrt{\frac{1-\sqrt{1-u_k^2}}{2}}.
+\]
+
+Le demi-perimetre au rang suivant vaut :
 
 \[
 y_{k+1}
 =
-2^{k+1}\sin\left(\frac{\theta}{2}\right)
+\frac{2^{k+1}\ell_{k+1}}{2}
 =
-2^k\sqrt{2\left(1-\sqrt{1-(2^{-k}y_k)^2}\right)}.
+2^{k+1}\frac{\ell_{k+1}}{2}.
+\]
+
+Ainsi :
+
+\[
+\begin{aligned}
+y_{k+1}
+&=
+2^{k+1}
+\sqrt{\frac{1-\sqrt{1-u_k^2}}{2}}\\
+&=
+2^k
+\sqrt{2\left(1-\sqrt{1-u_k^2}\right)}\\
+&=
+2^k
+\sqrt{2\left(1-\sqrt{1-(2^{-k}y_k)^2}\right)}.
+\end{aligned}
 \]
 
 Cette demonstration sert a identifier le point fragile du calcul : la recurrence est vraie en mathematiques exactes, mais elle contient la soustraction $1-\sqrt{1-u_k^2}$, qui devient dangereuse en machine.
 :::
+
+```mermaid
+flowchart TD
+  A["Cercle unite"] --> B["Polygone inscrit a 2^k cotes"]
+  B --> C["Un cote = une corde de longueur l_k"]
+  C --> D["Triangle isoscele avec deux rayons"]
+  D --> E["On coupe en deux : triangle rectangle"]
+  E --> F["l_k / 2 = sin(pi / 2^k)"]
+  F --> G["y_k = 2^k sin(pi / 2^k)"]
+  G --> H["Quand k augmente, y_k tend vers pi"]
+```
 
 :::block type="warning" title="Point numerique sensible"
 La quantite
@@ -552,23 +638,26 @@ print(resultats, digits = 17)
 ancien_affichage <- par(no.readonly = TRUE)
 par(mfrow = c(2, 1), mar = c(4, 4, 2.5, 1), oma = c(0, 0, 0, 0))
 
-# Premier graphique : convergence au debut,
-# puis perte de precision par annulation.
-plot(K, erreurs_abs, type = "b", log = "y",
+# Premier graphique : l'erreur absolue vaut la distance verticale
+# entre l'approximation y_K et la droite de reference pi.
+plot(K, erreurs_abs, type = "l", lwd = 3, log = "y",
      xlab = "K", ylab = "|y_K - pi|",
-     main = "Archimede naive : l'erreur finit par remonter")
+     main = "Erreur = distance entre y_K et pi")
 abline(h = .Machine$double.eps, col = "red", lty = 2)
 legend("bottomleft", legend = "precision machine",
        col = "red", lty = 2, bty = "n")
 
 # Deuxieme graphique : valeur de l'approximation.
 # La ligne rouge indique la valeur exacte de pi fournie par R.
-plot(K, approximation, type = "b",
+plot(K, approximation, type = "l", lwd = 3,
      xlab = "K", ylab = "y_K",
      main = "Archimede naive : approximation de pi")
 abline(h = pi, col = "red", lty = 2)
-legend("bottomright", legend = c("approximation y_K", "pi"),
-       col = c("black", "red"), lty = c(1, 2), pch = c(1, NA),
+# Les segments gris materialisent |y_K - pi| pour quelques valeurs de K.
+points(K_affiche, approximation[K_affiche], pch = 16)
+legend("bottomright", legend = c("approximation y_K", "pi", "erreur"),
+       col = c("black", "red", "gray50"),
+       lty = c(1, 2, 1), lwd = c(3, 1, 2), pch = c(NA, NA, NA),
        bty = "n")
 
 # On restaure les reglages graphiques par defaut pour les essais suivants.
@@ -615,16 +704,21 @@ flowchart LR
 :::rplayground id="tp1-r-archimede-stable" title="Archimede - formule stabilisee"
 ```r
 archimede_naif <- function(K) {
+  # Formule directe : elle sert de comparaison.
   y <- 2
   if (K == 1) return(y)
 
   for (k in 1:(K - 1)) {
-    y <- 2^k * sqrt(2 * (1 - sqrt(1 - (2^(-k) * y)^2)))
+    u <- 2^(-k) * y
+    y <- 2^k * sqrt(2 * (1 - sqrt(1 - u^2)))
   }
+
   y
 }
 
 archimede_stable <- function(K) {
+  # Meme recurrence mathematique, mais reecrite pour eviter
+  # la soustraction 1 - sqrt(1-u^2).
   y <- 2
   if (K == 1) return(y)
 
@@ -635,24 +729,48 @@ archimede_stable <- function(K) {
   y
 }
 
+# On compare les deux versions sur une plage assez grande.
 K <- 1:100
-stable <- sapply(K, archimede_stable)
-naif <- sapply(K, archimede_naif)
+approximation_stable <- sapply(K, archimede_stable)
+approximation_naive <- sapply(K, archimede_naif)
+erreur_stable <- abs(approximation_stable - pi)
+erreur_naive <- abs(approximation_naive - pi)
 
 print(data.frame(
   K = c(20, 50, 100),
-  naive = sapply(c(20, 50, 100), archimede_naif),
-  stable = sapply(c(20, 50, 100), archimede_stable),
-  pi = pi
-))
+  naive = approximation_naive[c(20, 50, 100)],
+  stable = approximation_stable[c(20, 50, 100)],
+  pi_reference = pi,
+  erreur_naive = erreur_naive[c(20, 50, 100)],
+  erreur_stable = erreur_stable[c(20, 50, 100)]
+), digits = 17)
 
-plot(K, abs(stable - pi), type = "l", log = "y",
-     col = "darkgreen", lwd = 2,
+# Deux panneaux :
+# 1. erreur absolue ;
+# 2. approximations comparees a pi.
+ancien_affichage <- par(no.readonly = TRUE)
+par(mfrow = c(2, 1), mar = c(4, 4, 2.5, 1), oma = c(0, 0, 0, 0))
+
+plot(K, erreur_stable, type = "l", log = "y",
+     col = "darkgreen", lwd = 3,
      xlab = "K", ylab = "Erreur absolue",
-     main = "Formule stabilisee")
-lines(K, abs(naif - pi), col = "orange", lwd = 2)
+     main = "Erreur = distance entre approximation et pi")
+lines(K, erreur_naive, col = "orange", lwd = 3)
 legend("bottomleft", legend = c("stable", "naive"),
-       col = c("darkgreen", "orange"), lwd = 2)
+       col = c("darkgreen", "orange"), lwd = 3, bty = "n")
+
+plot(K, approximation_stable, type = "l",
+     col = "darkgreen", lwd = 3,
+     xlab = "K", ylab = "y_K",
+     main = "Archimede : approximation de pi")
+lines(K, approximation_naive, col = "orange", lwd = 3)
+abline(h = pi, col = "red", lty = 2)
+# Les segments materialisent l'erreur de chaque methode aux K affiches.
+legend("bottomright", legend = c("stable", "naive", "pi", "erreur"),
+       col = c("darkgreen", "orange", "red", "gray50"),
+       lwd = c(3, 3, 1, 2), lty = c(1, 1, 2, 1), bty = "n")
+
+par(ancien_affichage)
 ```
 :::
 
@@ -744,10 +862,31 @@ res <- data.frame(
 
 print(res, digits = 17)
 
-plot(iterations, erreur, type = "b", log = "y",
+# Deux panneaux :
+# 1. erreur absolue ;
+# 2. approximations successives comparees a pi.
+ancien_affichage <- par(no.readonly = TRUE)
+par(mfrow = c(2, 1), mar = c(4, 4, 2.5, 1), oma = c(0, 0, 0, 0))
+
+plot(iterations, erreur, type = "l", lwd = 3, log = "y",
      xlab = "iteration", ylab = "|pi_n - pi|",
-     main = "AGM Brent-Salamin : convergence tres rapide")
+     main = "Erreur = distance entre pi_n et pi")
 grid()
+
+plot(iterations, approximation, type = "l", lwd = 3,
+     xlab = "iteration", ylab = "pi_n",
+     main = "AGM Brent-Salamin : approximation de pi")
+abline(h = pi, col = "red", lty = 2)
+segments(iterations, approximation, iterations, pi,
+         col = "gray50", lwd = 2)
+points(iterations, approximation, pch = 16)
+legend("bottomright", legend = c("approximation", "pi", "erreur"),
+       col = c("black", "red", "gray50"),
+       lwd = c(3, 1, 2), lty = c(1, 2, 1),
+       bty = "n")
+grid()
+
+par(ancien_affichage)
 ```
 :::
 
@@ -806,9 +945,12 @@ S_n=\sum_{k=0}^{n}t_k.
 :::rplayground id="tp1-r-exp-serie" title="Exponentielle - serie directe"
 ```r
 exp_serie <- function(x, n) {
+  # Premier terme de la serie : x^0 / 0! = 1.
   terme <- 1
   somme <- 1
 
+  # On evite de recalculer x^k / k! depuis zero :
+  # t_k = t_{k-1} * x / k.
   for (k in 1:n) {
     terme <- terme * x / k
     somme <- somme + terme
@@ -817,23 +959,78 @@ exp_serie <- function(x, n) {
   somme
 }
 
+exp_serie_partielle <- function(x, n_max) {
+  # Renvoie toutes les sommes partielles S_0, S_1, ..., S_n_max.
+  terme <- 1
+  somme <- 1
+  approximations <- numeric(n_max + 1)
+  approximations[1] <- somme
+
+  for (k in 1:n_max) {
+    terme <- terme * x / k
+    somme <- somme + terme
+    approximations[k + 1] <- somme
+  }
+
+  approximations
+}
+
+# Nombre de termes gardes dans la somme partielle.
 n <- 60
+x_values <- c(20, -20)
+approximation <- sapply(x_values, exp_serie, n = n)
+reference <- exp(x_values)
+erreur_absolue <- abs(approximation - reference)
+erreur_relative <- erreur_absolue / abs(reference)
 
 comparaison <- data.frame(
-  x = c(20, -20),
-  serie = c(exp_serie(20, n), exp_serie(-20, n)),
-  reference = c(exp(20), exp(-20))
+  x = x_values,
+  approximation = approximation,
+  reference = reference,
+  erreur_absolue = erreur_absolue,
+  erreur_relative = erreur_relative
 )
-comparaison$erreur_absolue <- abs(comparaison$serie - comparaison$reference)
-comparaison$erreur_relative <- comparaison$erreur_absolue / abs(comparaison$reference)
-print(comparaison)
+print(comparaison, digits = 17)
 
+# Les termes de exp(-20) alternent :
+# de grands nombres de signes opposes se compensent.
 k <- 0:n
 termes_m20 <- (-20)^k / factorial(k)
-plot(k, termes_m20, type = "h",
-     xlab = "k", ylab = "Terme de la serie",
+approximations_m20 <- exp_serie_partielle(-20, n)
+reference_m20 <- exp(-20)
+erreur_m20 <- abs(approximations_m20 - reference_m20)
+n_zoom <- 35:n
+
+# Trois panneaux :
+# 1. erreur des sommes partielles pour exp(-20) ;
+# 2. zoom sur les approximations comparees a la reference exp(-20) ;
+# 3. termes alternes responsables des compensations.
+ancien_affichage <- par(no.readonly = TRUE)
+par(mfrow = c(3, 1), mar = c(4, 4, 2.5, 1), oma = c(0, 0, 0, 0))
+
+plot(k, erreur_m20, type = "l", lwd = 3, log = "y",
+     xlab = "nombre de termes n", ylab = "|S_n - exp(-20)|",
+     main = "Erreur = distance entre S_n et exp(-20)")
+grid()
+
+plot(n_zoom, approximations_m20[n_zoom + 1], type = "l", lwd = 3,
+     xlab = "nombre de termes n", ylab = "S_n",
+     main = "Serie directe : zoom sur l'approximation de exp(-20)")
+abline(h = reference_m20, col = "red", lty = 2)
+segments(seq(40, n, by = 5), approximations_m20[seq(40, n, by = 5) + 1],
+         seq(40, n, by = 5), reference_m20, col = "gray50", lwd = 2)
+legend("topright", legend = c("approximation S_n", "reference exp(-20)", "erreur"),
+       col = c("black", "red", "gray50"),
+       lwd = c(3, 1, 2), lty = c(1, 2, 1),
+       bty = "n")
+
+# Graphique complementaire : structure des termes alternes.
+plot(k, termes_m20, type = "h", lwd = 3,
+     xlab = "k", ylab = "terme",
      main = "Termes alternes pour exp(-20)")
 abline(h = 0, col = "gray40")
+
+par(ancien_affichage)
 ```
 :::
 
@@ -862,9 +1059,12 @@ flowchart LR
 :::rplayground id="tp1-r-exp-stable" title="Exponentielle - version stable"
 ```r
 exp_serie <- function(x, n) {
+  # Somme directe de la serie de Taylor de exp(x).
   terme <- 1
   somme <- 1
 
+  # Recurrence stable pour calculer les termes :
+  # t_k = t_{k-1} * x / k.
   for (k in 1:n) {
     terme <- terme * x / k
     somme <- somme + terme
@@ -874,19 +1074,73 @@ exp_serie <- function(x, n) {
 }
 
 exp_stable <- function(x, n = 60) {
+  # Pour x positif, la serie directe additionne des termes positifs.
   if (x >= 0) {
     exp_serie(x, n)
   } else {
+    # Pour x negatif, on evite l'annulation :
+    # exp(x) = 1 / exp(-x), avec -x positif.
     1 / exp_serie(-x, n)
   }
 }
 
-print(data.frame(
-  x = c(-20, -10, 10, 20),
-  serie_directe = sapply(c(-20, -10, 10, 20), exp_serie, n = 60),
-  stable = sapply(c(-20, -10, 10, 20), exp_stable, n = 60),
-  reference = exp(c(-20, -10, 10, 20))
-))
+x_values <- c(-20, -10, 10, 20)
+serie_directe <- sapply(x_values, exp_serie, n = 60)
+approximation_stable <- sapply(x_values, exp_stable, n = 60)
+reference <- exp(x_values)
+erreur_directe <- abs(serie_directe - reference)
+erreur_stable <- abs(approximation_stable - reference)
+
+comparaison <- data.frame(
+  x = x_values,
+  serie_directe = serie_directe,
+  stable = approximation_stable,
+  reference = reference,
+  erreur_directe = erreur_directe,
+  erreur_stable = erreur_stable
+)
+
+print(comparaison, digits = 17)
+
+# Pour les graphes, on utilise une grille de x plus dense.
+x_graphe <- seq(-20, 20, length.out = 81)
+approximation_directe_graphe <- sapply(x_graphe, exp_serie, n = 60)
+approximation_stable_graphe <- sapply(x_graphe, exp_stable, n = 60)
+reference_graphe <- exp(x_graphe)
+erreur_directe_graphe <- abs(approximation_directe_graphe - reference_graphe)
+erreur_stable_graphe <- abs(approximation_stable_graphe - reference_graphe)
+erreur_directe_graphe <- pmax(erreur_directe_graphe, .Machine$double.xmin)
+erreur_stable_graphe <- pmax(erreur_stable_graphe, .Machine$double.xmin)
+x_erreur <- c(-20, -10, 10, 20)
+
+# Deux panneaux :
+# 1. comparaison des erreurs ;
+# 2. approximation stable comparee a exp(x).
+ancien_affichage <- par(no.readonly = TRUE)
+par(mfrow = c(2, 1), mar = c(4, 4, 2.5, 1), oma = c(0, 0, 0, 0))
+
+plot(x_graphe, erreur_directe_graphe, type = "l", lwd = 3, log = "y",
+     col = "orange",
+     xlab = "x", ylab = "Erreur absolue",
+     main = "Erreur = distance entre approximation et exp(x)")
+lines(x_graphe, erreur_stable_graphe, col = "darkgreen", lwd = 3)
+legend("topleft", legend = c("serie directe", "version stable"),
+       col = c("orange", "darkgreen"), lwd = 3, bty = "n")
+grid()
+
+plot(x_graphe, approximation_stable_graphe, type = "l", lwd = 3, log = "y",
+     col = "darkgreen",
+     xlab = "x", ylab = "valeur",
+     main = "Exponentielle stable : approximation")
+lines(x_graphe, reference_graphe, col = "red", lwd = 2, lty = 2)
+points(x_erreur, sapply(x_erreur, exp_stable, n = 60), pch = 16)
+legend("topleft", legend = c("approximation stable", "reference exp(x)"),
+       col = c("darkgreen", "red"),
+       lwd = c(3, 2, 2), lty = c(1, 2, 1),
+       bty = "n")
+grid()
+
+par(ancien_affichage)
 ```
 :::
 
@@ -910,9 +1164,13 @@ flowchart LR
 :::rplayground id="tp1-r-forward" title="Recurrence forward"
 ```r
 forward <- function(a, N) {
+  # I contient I_0, I_1, ..., I_N.
+  # En R, la case 1 correspond a l'indice mathematique 0.
   I <- numeric(N + 1)
   I[1] <- log((1 + a) / a)
 
+  # Recurrence forward : on avance de I_{n-1} vers I_n.
+  # Pour a = 10, une erreur est multipliee par 10 a chaque pas.
   for (n in 1:N) {
     I[n + 1] <- 1 / n - a * I[n]
   }
@@ -921,31 +1179,70 @@ forward <- function(a, N) {
 }
 
 I_reference <- function(a, n) {
+  # Valeur de reference calculee par integration numerique.
   integrate(function(x) x^n / (a + x), 0, 1,
             rel.tol = 1e-12)$value
 }
 
+# Parametres du test.
 a <- 10
 N <- 25
-Ifwd <- forward(a, N)
-Iref <- sapply(0:N, function(n) I_reference(a, n))
+n_values <- 0:N
+approximation_forward <- forward(a, N)
+reference <- sapply(n_values, function(n) I_reference(a, n))
+erreur_forward <- abs(approximation_forward - reference)
+erreur_forward_log <- pmax(erreur_forward, .Machine$double.xmin)
+modele_amplification <- erreur_forward_log[1] * a^n_values
+premier_negatif <- which(approximation_forward < 0)[1] - 1
+zoom <- 0:16
+n_segments <- c(0, 5, 10, 15)
 
 print(data.frame(
-  n = 0:N,
-  I_forward = Ifwd,
-  I_reference = Iref,
-  erreur = abs(Ifwd - Iref)
-))
+  n = n_values,
+  I_forward = approximation_forward,
+  I_reference = reference,
+  erreur = erreur_forward
+), digits = 17)
 
-plot(0:N, abs(Ifwd - Iref), type = "b", log = "y",
+# Deux panneaux :
+# 1. erreur absolue ;
+# 2. valeurs calculees comparees a la reference.
+ancien_affichage <- par(no.readonly = TRUE)
+par(mfrow = c(2, 1), mar = c(4, 4, 2.5, 1), oma = c(0, 0, 0, 0))
+
+plot(n_values, erreur_forward_log, type = "l", lwd = 3, log = "y",
+     col = "orange",
      xlab = "n", ylab = "Erreur absolue",
-     main = "Forward : amplification des erreurs pour a=10")
+     main = "Forward : l'erreur est multipliee par a = 10")
+lines(n_values, modele_amplification, col = "gray40", lwd = 2, lty = 2)
+abline(v = premier_negatif, col = "red", lty = 3)
+legend("topleft",
+       legend = c("|I_forward - I_reference|", "modele ~ 10^n", "premiere valeur negative"),
+       col = c("orange", "gray40", "red"),
+       lwd = c(3, 2, 1), lty = c(1, 2, 3),
+       bty = "n")
 grid()
+
+plot(zoom, approximation_forward[zoom + 1], type = "l", lwd = 3,
+     col = "orange",
+     xlab = "n", ylab = "I_n",
+     main = "Forward : zoom avant divergence")
+lines(zoom, reference[zoom + 1], col = "red", lwd = 2, lty = 2)
+abline(h = 0, col = "gray40", lty = 3)
+legend("topright", legend = c("forward", "reference"),
+       col = c("orange", "red"),
+       lwd = c(3, 2, 2), lty = c(1, 2, 1),
+       bty = "n")
+grid()
+
+par(ancien_affichage)
 ```
 :::
 
 :::block type="warning" title="Observation"
 Les valeurs devraient rester positives et tendre vers $0$. Le schema forward finit pourtant par produire des valeurs negatives puis tres grandes en valeur absolue, car les erreurs sont multipliees par $a=10$ a chaque pas.
+
+Sur le premier graphique, la courbe orange montre l'erreur mesuree et la courbe grise rappelle le modele d'amplification en $10^n$. Sur le second graphique, les segments gris representent directement la distance verticale entre la valeur calculee et la reference.
 :::
 :::
 
@@ -961,6 +1258,7 @@ flowchart RL
 :::rplayground id="tp1-r-backward" title="Recurrence backward et strategie stable"
 ```r
 forward <- function(a, N) {
+  # Methode forward utile lorsque 0 < a <= 1.
   I <- numeric(N + 1)
   I[1] <- log((1 + a) / a)
 
@@ -972,9 +1270,13 @@ forward <- function(a, N) {
 }
 
 backward <- function(a, m) {
+  # On initialise loin, avec I_m approx 0.
+  # Cette approximation devient peu dangereuse quand on remonte,
+  # car l'erreur est divisee par a a chaque pas si a > 1.
   I <- numeric(m + 1)
   I[m + 1] <- 0
 
+  # La case I[n] contient la valeur mathematique I_{n-1}.
   for (n in m:1) {
     I[n] <- (1 / n - I[n + 1]) / a
   }
@@ -983,11 +1285,13 @@ backward <- function(a, m) {
 }
 
 I_reference <- function(a, n) {
+  # Reference independante obtenue par integration numerique.
   integrate(function(x) x^n / (a + x), 0, 1,
             rel.tol = 1e-12)$value
 }
 
 In_stable <- function(a, N, marge = 30) {
+  # Choix automatique du sens stable.
   if (a <= 0) stop("a doit etre strictement positif")
 
   if (a <= 1) {
@@ -999,6 +1303,8 @@ In_stable <- function(a, N, marge = 30) {
 }
 
 In_stable_tol <- function(a, N, tol = 1e-12) {
+  # Meme idee, mais on choisit m pour controler l'erreur
+  # introduite par l'initialisation I_m = 0.
   if (a <= 0) stop("a doit etre strictement positif")
 
   if (a <= 1) return(forward(a, N)[N + 1])
@@ -1006,6 +1312,7 @@ In_stable_tol <- function(a, N, tol = 1e-12) {
   m <- max(N + 1, 2)
   borne <- 1 / (a^(m - N + 1) * (m + 1))
 
+  # On pousse m tant que la borne theorique est trop grande.
   while (borne > tol) {
     m <- m + 1
     borne <- 1 / (a^(m - N + 1) * (m + 1))
@@ -1018,20 +1325,48 @@ a <- 10
 m <- 30
 Ibwd <- backward(a, m)
 
+# Premier affichage : quelques valeurs de la recurrence backward brute.
 print(data.frame(
   n = 0:15,
   backward = Ibwd[1:16],
   reference = sapply(0:15, function(n) I_reference(a, n))
-))
+), digits = 17)
 
-N <- 0:25
-stable <- sapply(N, function(n) In_stable_tol(10, n))
-ref <- sapply(N, function(n) I_reference(10, n))
+n_values <- 0:25
+approximation_stable <- sapply(n_values, function(n) In_stable_tol(10, n))
+reference <- sapply(n_values, function(n) I_reference(10, n))
+erreur_stable <- abs(approximation_stable - reference)
+erreur_stable_log <- pmax(erreur_stable, .Machine$double.xmin)
+n_segments <- c(0, 5, 10, 15, 20, 25)
 
-plot(N, abs(stable - ref), type = "b", log = "y",
+# Deux panneaux :
+# 1. erreur absolue ;
+# 2. valeurs calculees comparees a la reference.
+ancien_affichage <- par(no.readonly = TRUE)
+par(mfrow = c(2, 1), mar = c(4, 4, 2.5, 1), oma = c(0, 0, 0, 0))
+
+plot(n_values, erreur_stable_log, type = "l", lwd = 3, log = "y",
+     col = "darkgreen",
      xlab = "n", ylab = "Erreur absolue",
-     main = "Backward : erreur attenuee")
+     main = "Backward : l'erreur reste attenuee")
+abline(h = 1e-12, col = "purple", lty = 3)
+legend("topright", legend = c("|I_backward - I_reference|", "tolerance 1e-12"),
+       col = c("darkgreen", "purple"), lwd = c(3, 1), lty = c(1, 3),
+       bty = "n")
 grid()
+
+plot(n_values, approximation_stable, type = "l", lwd = 3,
+     col = "darkgreen",
+     xlab = "n", ylab = "I_n",
+     main = "Backward : approximation et reference superposees")
+lines(n_values, reference, col = "red", lwd = 2, lty = 2)
+legend("topright", legend = c("backward stable", "reference"),
+       col = c("darkgreen", "red"),
+       lwd = c(3, 2, 2), lty = c(1, 2, 1),
+       bty = "n")
+grid()
+
+par(ancien_affichage)
 ```
 :::
 
@@ -1046,6 +1381,8 @@ a>1 :& \text{backward}.
 \]
 
 On choisit le sens qui multiplie les erreurs par un facteur strictement inferieur a $1$.
+
+Dans les graphes backward, la courbe verte reste sous la tolerance choisie et la courbe calculee est presque confondue avec la reference rouge. C'est exactement l'effet attendu lorsque l'erreur est divisee par $a$ a chaque pas.
 :::
 :::
 :::

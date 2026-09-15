@@ -1055,7 +1055,8 @@ button:hover,
 
 .r-playground-workspace {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+  grid-template-columns: minmax(360px, 0.95fr) minmax(420px, 1.05fr);
+  align-items: stretch;
   gap: 14px;
   padding: 0 18px 18px;
 }
@@ -1071,7 +1072,7 @@ button:hover,
 .r-code-shell {
   position: relative;
   display: block;
-  min-height: 360px;
+  min-height: clamp(360px, 54vh, 620px);
   overflow: hidden;
   border: 1px solid #1d4ed8;
   border-radius: 8px;
@@ -1085,7 +1086,7 @@ button:hover,
 
 .r-playground-editor textarea {
   width: 100%;
-  min-height: 360px;
+  min-height: clamp(360px, 54vh, 620px);
   resize: vertical;
   border: 0;
   border-radius: 0;
@@ -1100,7 +1101,7 @@ button:hover,
 .r-code-shell.is-highlighted textarea {
   position: absolute;
   inset: 0;
-  min-height: 360px;
+  min-height: clamp(360px, 54vh, 620px);
   margin: 0;
   padding: 16px;
   overflow: auto;
@@ -1157,14 +1158,7 @@ button:hover,
   color: #f472b6;
 }
 
-.r-playground-results {
-  display: grid;
-  grid-template-rows: minmax(140px, auto) minmax(220px, 1fr);
-  gap: 14px;
-  min-width: 0;
-}
-
-.r-playground-results > div {
+.r-playground-panel {
   min-width: 0;
   overflow: hidden;
   border: 1px solid #cbd5e1;
@@ -1172,7 +1166,18 @@ button:hover,
   background: #ffffff;
 }
 
-.r-playground-results strong {
+.r-graphics-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: clamp(360px, 54vh, 620px);
+}
+
+.r-console-panel {
+  grid-column: 1 / -1;
+}
+
+.r-panel-heading,
+.r-playground-panel > strong {
   display: block;
   border-bottom: 1px solid #cbd5e1;
   padding: 10px 12px;
@@ -1180,9 +1185,25 @@ button:hover,
   color: #0f172a;
 }
 
+.r-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.r-panel-heading > strong {
+  color: #0f172a;
+}
+
+.r-panel-heading .ghost-button {
+  padding: 7px 10px;
+  font-size: 0.82rem;
+}
+
 .r-playground pre {
-  min-height: 110px;
-  max-height: 260px;
+  min-height: 120px;
+  max-height: clamp(180px, 24vh, 320px);
   overflow: auto;
   margin: 0;
   padding: 12px;
@@ -1192,8 +1213,16 @@ button:hover,
   font: 0.88rem/1.55 "Cascadia Code", "Fira Code", Consolas, monospace;
 }
 
+.r-console-panel pre {
+  white-space: pre;
+  overflow-x: auto;
+  word-break: normal;
+}
+
 .r-output-line {
   display: block;
+  width: max-content;
+  min-width: 100%;
   margin-bottom: 4px;
 }
 
@@ -1219,7 +1248,10 @@ button:hover,
 .r-plot-output {
   display: grid;
   gap: 12px;
-  min-height: 180px;
+  align-content: start;
+  min-height: 0;
+  max-height: clamp(360px, 54vh, 620px);
+  overflow: auto;
   padding: 12px;
   background: #f8fafc;
   color: #475569;
@@ -1233,7 +1265,61 @@ button:hover,
   background: #ffffff;
 }
 
-.r-playground.has-error .r-playground-results > div:first-child {
+.r-plot-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.68);
+}
+
+.r-plot-modal-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(1180px, calc(100vw - 48px));
+  height: min(860px, calc(100vh - 48px));
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.35);
+}
+
+.r-plot-modal-panel header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.r-plot-modal-body {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  overflow: auto;
+  padding: 18px;
+  background: #f8fafc;
+}
+
+.r-plot-modal-body canvas {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.r-playground.has-error .r-console-panel {
   border-color: #df7878;
   background: #fffafa;
 }
