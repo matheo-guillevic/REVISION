@@ -1424,9 +1424,10 @@ function initRPlaygrounds() {
     const runButton = playground.querySelector("[data-r-run]");
     const resetButton = playground.querySelector("[data-r-reset]");
     const highlight = playground.querySelector("[data-r-highlight]");
-    const initialCode = editor?.value || "";
+    const initialCode = editor?.defaultValue || editor?.textContent || editor?.value || "";
 
     if (!editor || !output || !plotOutput || !status || !runButton || !resetButton) return;
+    editor.value = initialCode;
     initRCodeHighlight(editor, highlight);
 
     resetButton.addEventListener("click", () => {

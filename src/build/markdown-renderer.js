@@ -355,7 +355,7 @@ ${attrs.caption ? `              <p class="diagram-caption">${escapeHtml(attrs.c
                 <label class="r-playground-editor">Code R
                   <span class="r-code-shell">
                     <pre class="r-code-highlight" aria-hidden="true" data-r-highlight></pre>
-                    <textarea spellcheck="false" data-r-editor>${escapeHtml(code)}</textarea>
+                    <textarea spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" data-r-editor>${escapeHtml(code)}</textarea>
                   </span>
                 </label>
                 <div class="r-playground-results" aria-live="polite">

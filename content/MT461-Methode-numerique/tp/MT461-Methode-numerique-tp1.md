@@ -52,6 +52,44 @@ y_k \to \pi.
 \]
 :::
 
+:::block type="method" title="Demonstration de la recurrence"
+Au rang $k$, le polygone inscrit a $2^k$ cotes. Son demi-perimetre vaut donc :
+
+\[
+y_k = \frac{2^k\ell_k}{2}
+\qquad\Longrightarrow\qquad
+\ell_k = 2^{1-k}y_k.
+\]
+
+La moitie d'un cote est la corde associee a l'angle $\pi/2^k$, donc :
+
+\[
+\frac{\ell_k}{2}=\sin\left(\frac{\pi}{2^k}\right).
+\]
+
+Pour passer au polygone suivant, on coupe cet angle en deux. La formule de demi-angle donne :
+
+\[
+\sin\left(\frac{\theta}{2}\right)
+=
+\sqrt{\frac{1-\cos\theta}{2}}
+=
+\sqrt{\frac{1-\sqrt{1-\sin^2\theta}}{2}}.
+\]
+
+Avec $\sin\theta=\ell_k/2=2^{-k}y_k$, le nouveau demi-perimetre devient :
+
+\[
+y_{k+1}
+=
+2^{k+1}\sin\left(\frac{\theta}{2}\right)
+=
+2^k\sqrt{2\left(1-\sqrt{1-(2^{-k}y_k)^2}\right)}.
+\]
+
+Cette demonstration sert a identifier le point fragile du calcul : la recurrence est vraie en mathematiques exactes, mais elle contient la soustraction $1-\sqrt{1-u_k^2}$, qui devient dangereuse en machine.
+:::
+
 :::block type="warning" title="Point numerique sensible"
 La quantite
 
@@ -62,6 +100,44 @@ u_k=2^{-k}y_k
 \]
 
 devient une soustraction entre deux nombres presque egaux lorsque $k$ augmente. C'est une situation typique d'annulation catastrophique.
+:::
+
+```mermaid
+flowchart LR
+  A["Polygone inscrit<br/>2^k cotes"] --> B["On double les cotes"]
+  B --> C["Calcul de sqrt(1-u_k^2)"]
+  C --> D["Soustraction<br/>1 - sqrt(1-u_k^2)"]
+  D --> E["Perte de chiffres<br/>si u_k est petit"]
+  E --> F["y_k cesse de se rapprocher de pi"]
+```
+
+:::plotly id="tp1-archimede-annulation" label="Ordres de grandeur" title="La quantite instable devient minuscule" height="420" caption="Quand u devient petit, 1 - sqrt(1-u^2) est de l'ordre de u^2/2. La soustraction se fait alors entre deux nombres proches de 1, ce qui rend l'arrondi visible."
+{
+  "series": [
+    {
+      "generator": "function",
+      "range": [1e-8, 0.5],
+      "scale": "log",
+      "points": 180,
+      "y": "1 - sqrt(1 - x*x)",
+      "name": "1 - sqrt(1-u^2)",
+      "line": { "color": "#f59e0b", "width": 3 }
+    },
+    {
+      "generator": "function",
+      "range": [1e-8, 0.5],
+      "scale": "log",
+      "points": 180,
+      "y": "(x*x) / 2",
+      "name": "approximation u^2/2",
+      "line": { "color": "#2563eb", "dash": "dash", "width": 2 }
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": "u", "type": "log" },
+    "yaxis": { "title": "valeur", "type": "log" }
+  }
+}
 :::
 :::
 
@@ -93,6 +169,87 @@ a_{n+1}-b_{n+1}
 
 L'ecart est donc essentiellement mis au carre a chaque etape : c'est une convergence quadratique.
 :::
+
+:::block type="method" title="Demonstration des suites adjacentes"
+On suppose $a_n\ge b_n>0$. Par l'inegalite arithmetico-geometrique :
+
+\[
+\sqrt{a_nb_n}\le \frac{a_n+b_n}{2},
+\]
+
+donc $b_{n+1}\le a_{n+1}$. Les suites restent positives.
+
+Pour la monotonie de $(a_n)$ :
+
+\[
+a_{n+1}=\frac{a_n+b_n}{2}\le a_n.
+\]
+
+Pour la monotonie de $(b_n)$ :
+
+\[
+b_{n+1}=\sqrt{a_nb_n}\ge \sqrt{b_n^2}=b_n.
+\]
+
+Ainsi $(a_n)$ decroit, $(b_n)$ croit et $b_n\le a_n$. Elles sont bornees et convergent. Si leurs limites sont $\alpha$ et $\beta$, alors :
+
+\[
+\alpha=\frac{\alpha+\beta}{2},
+\qquad
+\beta=\sqrt{\alpha\beta}.
+\]
+
+La premiere egalite impose $\alpha=\beta$. Les deux suites ont donc une limite commune, notee $\operatorname{agm}(a,b)$.
+:::
+
+:::block type="method" title="Demonstration de la convergence quadratique"
+On calcule directement l'ecart suivant :
+
+\[
+\begin{aligned}
+a_{n+1}-b_{n+1}
+&=\frac{a_n+b_n}{2}-\sqrt{a_nb_n}\\
+&=\frac{a_n+b_n-2\sqrt{a_nb_n}}{2}\\
+&=\frac{(\sqrt{a_n}-\sqrt{b_n})^2}{2}.
+\end{aligned}
+\]
+
+Or :
+
+\[
+\sqrt{a_n}-\sqrt{b_n}
+=
+\frac{a_n-b_n}{\sqrt{a_n}+\sqrt{b_n}}.
+\]
+
+Donc :
+
+\[
+a_{n+1}-b_{n+1}
+=
+\frac{(a_n-b_n)^2}{2(\sqrt{a_n}+\sqrt{b_n})^2}.
+\]
+
+Comme $b_n\ge b$, on a $\sqrt{a_n}+\sqrt{b_n}\ge2\sqrt{b}$, puis :
+
+\[
+a_{n+1}-b_{n+1}
+\le
+\frac{(a_n-b_n)^2}{8b}.
+\]
+
+Cette demonstration sert a comprendre pourquoi l'AGM est tres efficace dans le TP : quand l'ecart est petit, l'iteration suivante le remplace par une quantite de l'ordre de son carre.
+:::
+
+```mermaid
+flowchart TD
+  A["a_n et b_n"] --> B["Moyenne arithmetique<br/>a_{n+1} = (a_n+b_n)/2"]
+  A --> C["Moyenne geometrique<br/>b_{n+1} = sqrt(a_n b_n)"]
+  B --> D["Les deux valeurs se rapprochent"]
+  C --> D
+  D --> E["L'ecart suivant est proportionnel a (a_n-b_n)^2"]
+  E --> F["Peu d'iterations suffisent"]
+```
 :::
 
 :::exercise label="Preparation 3" title="Serie de l'exponentielle"
@@ -113,6 +270,65 @@ Pour $n>2|x|$, la queue de serie verifie :
 
 Cette borne mesure l'erreur de troncature en arithmetique exacte. Elle ne controle pas les pertes de precision dues aux annulations en machine.
 :::
+
+:::block type="method" title="Demonstration de la borne de troncature"
+Le reste s'ecrit :
+
+\[
+R_n(x)=\sum_{k=n+1}^{+\infty}\frac{x^k}{k!}.
+\]
+
+On majore sa valeur absolue :
+
+\[
+|R_n(x)|\le
+\sum_{k=n+1}^{+\infty}\frac{|x|^k}{k!}.
+\]
+
+Pour $k\ge n+1$, deux termes successifs de cette serie positive verifient :
+
+\[
+\frac{|x|^{k+1}/(k+1)!}{|x|^k/k!}
+=
+\frac{|x|}{k+1}
+\le
+\frac{|x|}{n+2}.
+\]
+
+Si $n>2|x|$, alors $|x|/(n+2)<1/2$. La queue est donc majoree par une serie geometrique de raison au plus $1/2$ :
+
+\[
+|R_n(x)|
+\le
+\frac{|x|^{n+1}}{(n+1)!}
+\left(1+\frac12+\frac14+\cdots\right)
+\le
+2\frac{|x|^{n+1}}{(n+1)!}.
+\]
+
+Comme $n+1>2|x|$, on a $2|x|/(n+1)<1$, donc :
+
+\[
+2\frac{|x|^{n+1}}{(n+1)!}
+=
+\frac{|x|^n}{n!}\frac{2|x|}{n+1}
+\le
+\frac{|x|^n}{n!}.
+\]
+
+Cette demonstration sert a separer deux erreurs : la troncature de la serie, bien controlee par la borne, et l'erreur d'arrondi, qui peut devenir dominante pour $x<0$.
+:::
+
+```mermaid
+flowchart LR
+  A["Somme partielle S_n"] --> B{Signe de x}
+  B -->|x > 0| C["Termes positifs<br/>pas de compensation massive"]
+  B -->|x < 0| D["Termes alternes"]
+  D --> E["Grands termes de signes opposes"]
+  E --> F["Resultat final petit"]
+  F --> G["Les erreurs d'arrondi dominent"]
+  C --> H["Erreur surtout liee a la troncature"]
+```
 :::
 
 :::exercise label="Preparation 4" title="Recurrence forward / backward"
@@ -149,6 +365,92 @@ e_n=-ae_{n-1}.
 Il est donc instable si $a>1$.
 :::
 
+:::block type="method" title="Demonstration des relations integrales"
+Pour $n=0$ :
+
+\[
+I_0=\int_0^1\frac{1}{a+x}\,dx
+=
+\left[\ln(a+x)\right]_0^1
+=
+\ln\left(\frac{1+a}{a}\right).
+\]
+
+Pour $n\ge1$, on ecrit :
+
+\[
+\frac{x^n}{a+x}
+=
+\frac{x^{n-1}(a+x)-ax^{n-1}}{a+x}
+=
+x^{n-1}-a\frac{x^{n-1}}{a+x}.
+\]
+
+En integrant sur $[0,1]$ :
+
+\[
+I_n
+=
+\int_0^1 x^{n-1}\,dx
+-aI_{n-1}
+=
+\frac1n-aI_{n-1}.
+\]
+
+Enfin, comme $a+x\ge a$ et $x^n\ge0$ sur $[0,1]$ :
+
+\[
+0\le \frac{x^n}{a+x}\le \frac{x^n}{a}.
+\]
+
+Donc :
+
+\[
+0\le I_n\le \frac1a\int_0^1x^n\,dx
+=
+\frac{1}{a(n+1)}
+\longrightarrow 0.
+\]
+
+Cette demonstration sert a construire une reference qualitative : les valeurs exactes doivent rester positives et tendre vers $0$. Si le calcul forward produit autre chose, c'est un artefact numerique.
+:::
+
+:::block type="method" title="Demonstration de la propagation d'erreur"
+Notons $\widehat I_n$ la valeur calculee et $I_n$ la valeur exacte. L'erreur vaut :
+
+\[
+e_n=\widehat I_n-I_n.
+\]
+
+Avec le schema forward :
+
+\[
+\widehat I_n=\frac1n-a\widehat I_{n-1},
+\qquad
+I_n=\frac1n-aI_{n-1}.
+\]
+
+En soustrayant les deux egalites :
+
+\[
+e_n
+=
+\widehat I_n-I_n
+=
+-a(\widehat I_{n-1}-I_{n-1})
+=
+-ae_{n-1}.
+\]
+
+Pour le backward, la meme idee donne :
+
+\[
+e_{n-1}=-\frac{1}{a}e_n.
+\]
+
+Cette demonstration sert a choisir le sens de calcul : pour $a=10$, avancer multiplie l'erreur par $10$, alors que remonter la divise par $10$.
+:::
+
 :::block type="remember" title="Schema backward"
 La recurrence inverse est :
 
@@ -157,6 +459,44 @@ I_{n-1}=\frac{1}{a}\left(\frac{1}{n}-I_n\right).
 \]
 
 Si on initialise $I_m^{(m)}=0$ pour $m$ assez grand, l'erreur est multipliee a chaque pas par $1/a$. Pour $a>1$, le backward attenue donc les erreurs.
+:::
+
+```mermaid
+flowchart TD
+  A["On veut I_n"] --> B{a petit ou egal a 1 ?}
+  B -->|oui| C["Forward<br/>I_n = 1/n - a I_{n-1}"]
+  B -->|non| D["Backward<br/>I_{n-1} = (1/n - I_n)/a"]
+  C --> E["Facteur d'erreur : a"]
+  D --> F["Facteur d'erreur : 1/a"]
+  E --> G["Choisir le sens qui attenue les erreurs"]
+  F --> G
+```
+
+:::plotly id="tp1-forward-backward-erreur" label="Stabilite" title="Propagation theorique d'une erreur pour a = 10" height="420" caption="En forward, une petite erreur est multipliee par 10 a chaque pas. En backward, elle est divisee par 10 a chaque pas."
+{
+  "series": [
+    {
+      "generator": "sequence",
+      "nStart": 0,
+      "nEnd": 12,
+      "y": "pow(10, n)",
+      "name": "forward : 10^n",
+      "line": { "color": "#dc2626", "width": 3 }
+    },
+    {
+      "generator": "sequence",
+      "nStart": 0,
+      "nEnd": 12,
+      "y": "pow(0.1, n)",
+      "name": "backward : 10^{-n}",
+      "line": { "color": "#16a34a", "width": 3 }
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": "nombre de pas" },
+    "yaxis": { "title": "facteur sur l'erreur", "type": "log" }
+  }
+}
 :::
 :::
 :::
@@ -169,28 +509,70 @@ Calculer $y_{20}$ et $y_{100}$ avec la recurrence directe.
 :::rplayground id="tp1-r-archimede-naif" title="Archimede - formule naive" caption="Modifier K ou tracer l'erreur pour observer la degradation numerique."
 ```r
 archimede_naif <- function(K) {
+  # y_k est le demi-perimetre du polygone inscrit.
+  # Au depart, k = 1 et le polygone a 2 cotes : y_1 = 2.
   y <- 2
   if (K == 1) return(y)
 
+  # A chaque iteration, on double le nombre de cotes.
+  # Cette formule est exacte mathematiquement, mais elle contient
+  # la soustraction instable 1 - sqrt(1 - u^2).
   for (k in 1:(K - 1)) {
-    y <- 2^k * sqrt(2 * (1 - sqrt(1 - (2^(-k) * y)^2)))
+    u <- 2^(-k) * y
+    y <- 2^k * sqrt(2 * (1 - sqrt(1 - u^2)))
   }
+
   y
 }
 
+# On calcule toutes les approximations de y_K pour observer
+# a quel moment l'erreur commence a remonter.
 K <- 1:60
 valeurs <- sapply(K, archimede_naif)
+approximation <- valeurs
+erreurs_abs <- abs(approximation - pi)
+erreurs_rel <- erreurs_abs / abs(pi)
 
-print(data.frame(
-  K = c(20, 30, 40, 50, 60),
-  approximation = sapply(c(20, 30, 40, 50, 60), archimede_naif),
-  erreur = abs(sapply(c(20, 30, 40, 50, 60), archimede_naif) - pi)
-))
+# Affichage des valeurs demandees : approximation et erreur.
+# K = 20 montre une bonne approximation ; K grand montre la degradation.
+K_affiche <- c(20, 30, 40, 50, 60)
+resultats <- data.frame(
+  K = K_affiche,
+  approximation = approximation[K_affiche],
+  pi_reference = pi,
+  erreur_absolue = erreurs_abs[K_affiche],
+  erreur_relative = erreurs_rel[K_affiche]
+)
 
-plot(K, abs(valeurs - pi), type = "b", log = "y",
+print(resultats, digits = 17)
+
+# On force deux graphiques dans la meme sortie :
+# 1. l'erreur absolue ;
+# 2. l'approximation y_K comparee a pi.
+ancien_affichage <- par(no.readonly = TRUE)
+par(mfrow = c(2, 1), mar = c(4, 4, 2.5, 1), oma = c(0, 0, 0, 0))
+
+# Premier graphique : convergence au debut,
+# puis perte de precision par annulation.
+plot(K, erreurs_abs, type = "b", log = "y",
      xlab = "K", ylab = "|y_K - pi|",
      main = "Archimede naive : l'erreur finit par remonter")
 abline(h = .Machine$double.eps, col = "red", lty = 2)
+legend("bottomleft", legend = "precision machine",
+       col = "red", lty = 2, bty = "n")
+
+# Deuxieme graphique : valeur de l'approximation.
+# La ligne rouge indique la valeur exacte de pi fournie par R.
+plot(K, approximation, type = "b",
+     xlab = "K", ylab = "y_K",
+     main = "Archimede naive : approximation de pi")
+abline(h = pi, col = "red", lty = 2)
+legend("bottomright", legend = c("approximation y_K", "pi"),
+       col = c("black", "red"), lty = c(1, 2), pch = c(1, NA),
+       bty = "n")
+
+# On restaure les reglages graphiques par defaut pour les essais suivants.
+par(ancien_affichage)
 ```
 :::
 
@@ -219,6 +601,16 @@ y_k
 {1+\sqrt{1-(2^{-k}y_k)^2}}
 }.
 \]
+
+```mermaid
+flowchart LR
+  A["Formule naive"] --> B["1 - X"]
+  B --> C["Soustraction instable si X proche de 1"]
+  C --> D["Rationalisation"]
+  D --> E["1 - X = (1 - X^2)/(1 + X)"]
+  E --> F["Le terme minuscule est calcule comme u_k^2/(1+X)"]
+  F --> G["Formule stabilisee"]
+```
 
 :::rplayground id="tp1-r-archimede-stable" title="Archimede - formule stabilisee"
 ```r
@@ -270,50 +662,97 @@ Les deux formules sont algebriquement equivalentes. La seconde est pourtant beau
 :::
 
 :::exercise label="Manipulation 3" title="Calcul de pi par AGM"
-On utilise l'approximation asymptotique :
+On utilise l'algorithme de Brent-Salamin, fonde sur l'AGM. Il est beaucoup plus rapide que les methodes precedentes : la convergence est quadratique, donc le nombre de chiffres corrects double presque a chaque iteration.
 
 \[
-\pi_N=\frac{2\ln(N)\operatorname{agm}(N,4)}{N}.
+\begin{aligned}
+a_0&=1,
+&
+b_0&=\frac{1}{\sqrt2},
+&
+t_0&=\frac14,
+&
+p_0&=1,\\
+a_{n+1}&=\frac{a_n+b_n}{2},
+&
+b_{n+1}&=\sqrt{a_nb_n},\\
+t_{n+1}&=t_n-p_n(a_n-a_{n+1})^2,
+&
+p_{n+1}&=2p_n.
+\end{aligned}
 \]
+
+L'approximation de $\pi$ est ensuite :
+
+\[
+\pi_{n+1}
+=
+\frac{(a_{n+1}+b_{n+1})^2}{4t_{n+1}}.
+\]
+
+```mermaid
+flowchart TD
+  A["Initialiser a, b, t, p"] --> B["Moyenne arithmetique<br/>a_{n+1}"]
+  A --> C["Moyenne geometrique<br/>b_{n+1}"]
+  B --> D["Correction t_{n+1}"]
+  C --> D
+  D --> E["Doubler p_n"]
+  E --> F["Calculer pi_n"]
+  F --> G["Erreur presque mise au carre"]
+```
 
 :::rplayground id="tp1-r-agm" title="AGM - convergence rapide vers pi"
 ```r
-agm <- function(a, b, tol = 1e-15, maxit = 100) {
-  for (i in 1:maxit) {
-    an <- (a + b) / 2
-    bn <- sqrt(a * b)
+# Algorithme de Brent-Salamin.
+# C'est une vraie methode rapide pour calculer pi avec l'AGM.
+pi_agm <- function(iterations = 5) {
+  a <- 1
+  b <- 1 / sqrt(2)
+  t <- 1 / 4
+  p <- 1
 
-    if (abs(an - bn) <= tol * max(1, abs(an))) {
-      return((an + bn) / 2)
-    }
+  approximation <- numeric(iterations)
 
-    a <- an
-    b <- bn
+  for (n in 1:iterations) {
+    # On garde l'ancien a_n pour corriger t_n.
+    a_avant <- a
+
+    # Etape AGM : moyenne arithmetique et moyenne geometrique.
+    a <- (a + b) / 2
+    b <- sqrt(a_avant * b)
+
+    # Correction qui transforme l'AGM en approximation de pi.
+    t <- t - p * (a_avant - a)^2
+    p <- 2 * p
+
+    approximation[n] <- (a + b)^2 / (4 * t)
   }
-  (a + b) / 2
+
+  approximation
 }
 
-pi_agm <- function(N) {
-  2 * log(N) * agm(N, 4) / N
-}
+iterations <- 1:6
+approximation <- pi_agm(length(iterations))
+erreur <- abs(approximation - pi)
 
-Nvalues <- c(10, 100, 1000, 10000, 1e6)
 res <- data.frame(
-  N = Nvalues,
-  approximation = sapply(Nvalues, pi_agm),
-  erreur = abs(sapply(Nvalues, pi_agm) - pi)
+  iteration = iterations,
+  approximation = approximation,
+  erreur_absolue = erreur,
+  chiffres_corrects = -log10(erreur)
 )
-print(res)
 
-plot(res$N, res$erreur, type = "b", log = "xy",
-     xlab = "N", ylab = "|pi_N - pi|",
-     main = "Erreur de la formule AGM")
+print(res, digits = 17)
+
+plot(iterations, erreur, type = "b", log = "y",
+     xlab = "iteration", ylab = "|pi_n - pi|",
+     main = "AGM Brent-Salamin : convergence tres rapide")
 grid()
 ```
 :::
 
 :::block type="method" title="Lecture"
-Lorsque $N$ est multiplie par $10$, l'erreur est environ divisee par $100$ dans la zone asymptotique. Le calcul de l'AGM lui-meme converge en tres peu d'iterations grace a la convergence quadratique.
+L'erreur chute beaucoup plus vite que dans la methode d'Archimede : quelques iterations suffisent pour atteindre la precision machine. C'est le comportement attendu d'une methode quadratique fondee sur l'AGM.
 :::
 :::
 :::
@@ -330,6 +769,39 @@ t_k=t_{k-1}\frac{x}{k},
 \qquad
 S_n=\sum_{k=0}^{n}t_k.
 \]
+
+:::plotly id="tp1-exp-croissance" label="Intuition" title="Pourquoi x = -20 est plus fragile" height="420" caption="Le resultat exact exp(-20) est minuscule. La serie directe l'obtient par compensation de termes de grande amplitude, alors que exp(20) reste une somme de termes positifs."
+{
+  "series": [
+    {
+      "generator": "function",
+      "range": [-20, 20],
+      "points": 180,
+      "y": "exp(x)",
+      "name": "exp(x)",
+      "line": { "color": "#2563eb", "width": 3 }
+    },
+    {
+      "generator": "point",
+      "x": -20,
+      "y": "exp(-20)",
+      "name": "exp(-20)",
+      "marker": { "color": "#dc2626", "size": 9 }
+    },
+    {
+      "generator": "point",
+      "x": 20,
+      "y": "exp(20)",
+      "name": "exp(20)",
+      "marker": { "color": "#16a34a", "size": 9 }
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": "x" },
+    "yaxis": { "title": "exp(x)", "type": "log" }
+  }
+}
+:::
 
 :::rplayground id="tp1-r-exp-serie" title="Exponentielle - serie directe"
 ```r
@@ -377,6 +849,16 @@ Pour $x<0$, on calcule :
 e^x=\frac{1}{e^{-x}}.
 \]
 
+```mermaid
+flowchart LR
+  A["Entree x"] --> B{x positif ou nul ?}
+  B -->|oui| C["Calculer la serie directe de exp(x)"]
+  B -->|non| D["Calculer la serie directe de exp(-x)"]
+  D --> E["Prendre l'inverse"]
+  C --> F["Resultat stable"]
+  E --> F
+```
+
 :::rplayground id="tp1-r-exp-stable" title="Exponentielle - version stable"
 ```r
 exp_serie <- function(x, n) {
@@ -417,6 +899,14 @@ La correction est simple mais fondamentale : on choisit l'expression qui evite l
 :::section id="tp1-forward-backward" eyebrow="Travail en seance" title="Schemas forward et backward" summary="Observer l'amplification des erreurs dans une recurrence et choisir le sens stable."
 
 :::exercise label="Manipulation 6" title="Forward instable pour a=10"
+```mermaid
+flowchart LR
+  A["Erreur initiale e_0"] --> B["e_1 = -10 e_0"]
+  B --> C["e_2 = 100 e_0"]
+  C --> D["e_3 = -1000 e_0"]
+  D --> E["La recurrence finit par suivre l'erreur"]
+```
+
 :::rplayground id="tp1-r-forward" title="Recurrence forward"
 ```r
 forward <- function(a, N) {
@@ -460,6 +950,14 @@ Les valeurs devraient rester positives et tendre vers $0$. Le schema forward fin
 :::
 
 :::exercise label="Manipulation 7" title="Backward stable pour a=10"
+```mermaid
+flowchart RL
+  A["Condition finale artificielle I_m = 0"] --> B["Remonter vers I_{m-1}"]
+  B --> C["Erreur divisee par 10"]
+  C --> D["Remonter vers I_N"]
+  D --> E["Plus m est loin, plus l'erreur initiale est amortie"]
+```
+
 :::rplayground id="tp1-r-backward" title="Recurrence backward et strategie stable"
 ```r
 forward <- function(a, N) {

@@ -54,8 +54,21 @@ const server = http.createServer((request, response) => {
   });
 });
 
+server.on("error", (error) => {
+  if (error.code === "EADDRINUSE") {
+    console.error(`Le port ${host}:${port} est deja utilise.`);
+    console.error(`Une preview est probablement deja ouverte : http://${host}:${port}/`);
+    console.error("Recharge la page dans le navigateur pour voir le dernier build.");
+    console.error("Pour lancer une autre preview : REVISION_PORT=4174 npm run preview");
+    process.exit(1);
+  }
+
+  throw error;
+});
+
 server.listen(port, host, () => {
   console.log(`Prévisualisation disponible sur http://${host}:${port}/`);
+  console.log(`TP MT461 : http://${host}:${port}/MT461-Methode-numerique-tp1.html`);
   console.log(`Cours IN333 : http://${host}:${port}/IN333-OS.html`);
   console.log("Arrêt : Ctrl+C");
 });
