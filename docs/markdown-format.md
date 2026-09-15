@@ -453,3 +453,60 @@ content/<matiere>/cours.md
 
 Le build echoue si le Markdown d'une matiere ou d'une page TD/examen manque.
 Les anciens fichiers HTML ou LaTeX ne sont plus utilises comme sources.
+
+## Index de recherche
+
+Le site genere un index statique dans `out/search-index.json` avec :
+
+```bash
+npm run build
+```
+
+Le script `src/build/build-search-index.js` parcourt les cours, TD, TP et
+examens Markdown references par les configurations. Il indexe les sections
+`:::section id="..." title="..."` quand elles existent, puis cree des liens vers
+la bonne page et la bonne ancre.
+
+Le moteur cote navigateur charge cet index au premier usage du champ
+`Recherche`, normalise les accents, puis classe les resultats selon les
+correspondances dans le titre, la matiere et le contenu.
+
+## Liens entre notions
+
+Les passerelles entre cours sont centralisees dans :
+
+```text
+src/config/concept-links.json
+```
+
+Chaque groupe represente une notion transversale et contient des liens vers les
+sections utiles :
+
+```json
+{
+  "id": "signal-fourier-filtres",
+  "title": "Signaux, Fourier et filtres",
+  "description": "Relie les outils spectraux entre mathematiques, signal, electronique et automatique.",
+  "links": [
+    {
+      "href": "AU331-Traitement-Signal.html#au331-analyse-spectrale",
+      "label": "Analyse spectrale",
+      "subject": "AU331-Traitement-Signal"
+    }
+  ]
+}
+```
+
+Au build, le renderer insere automatiquement un bloc **Notions liees** dans la
+section concernee quand une entree `href` pointe vers cette ancre. Pour une page
+TD/TP/examen entiere, utiliser une cible sans ancre, par exemple
+`MT461-Methode-numerique-tp1.html`.
+
+`src/build/build-concept-links.js` genere aussi `out/concept-links.json` afin de
+verifier et publier l'index des passerelles.
+
+Pour ajouter une notion :
+
+1. creer ou completer un groupe dans `concept-links.json` ;
+2. utiliser des liens vers une page HTML et, si possible, une ancre stable ;
+3. lancer `npm run build` pour verifier les pages et les ancres.

@@ -6,6 +6,7 @@ const { renderMarkdownCourse } = require("./markdown-renderer");
 const root = process.cwd();
 const outDir = path.join(root, "out");
 const publicDir = path.join(root, "public");
+const conceptLinksPath = path.join(root, "src", "config", "concept-links.json");
 
 function publicAssetRevision() {
   const hash = crypto.createHash("sha256");
@@ -17,6 +18,7 @@ function publicAssetRevision() {
 }
 
 const assetRevision = publicAssetRevision();
+const conceptGroups = JSON.parse(fs.readFileSync(conceptLinksPath, "utf8").replace(/^\uFEFF/, "")).groups || [];
 
 const pages = {
   home: path.join(outDir, "index.html"),
@@ -329,7 +331,7 @@ function readCourseBody(subject, structure) {
   if (!fs.existsSync(markdownPath)) {
     throw new Error(`Source Markdown introuvable : ${path.relative(root, markdownPath)}`);
   }
-  const body = renderMarkdownCourse(markdownPath).body;
+  const body = renderMarkdownCourse(markdownPath, { currentPage: structure.page, conceptGroups }).body;
   return composeCourseBody(body, structure);
 }
 
@@ -339,7 +341,7 @@ function readStandaloneCourseBody(subject) {
     throw new Error(`Source Markdown introuvable : ${path.relative(root, markdownPath)}`);
   }
 
-  return renderMarkdownCourse(markdownPath).body;
+  return renderMarkdownCourse(markdownPath, { currentPage: `${subject}.html`, conceptGroups }).body;
 }
 
 function composeCourseBody(html, structure) {
@@ -373,6 +375,16 @@ function renderNav(items, activeHref) {
       return `          <a class="nav-link${sub}${active}" href="${href}">${label}</a>`;
     })
     .join("\n");
+}
+
+function renderSearchBox(extraClass = "") {
+  return `        <div class="site-search${extraClass ? ` ${extraClass}` : ""}" data-site-search>
+          <label>
+            <span>Recherche</span>
+            <input type="search" placeholder="Rechercher une notion..." autocomplete="off" data-site-search-input>
+          </label>
+          <div class="site-search-results" data-site-search-results hidden></div>
+        </div>`;
 }
 
 function renderShell({ title, brandMark, brandTitle, brandSubtitle, nav, eyebrow, heading, cta, body, showAnnotations = false }) {
@@ -417,6 +429,8 @@ function renderShell({ title, brandMark, brandTitle, brandSubtitle, nav, eyebrow
             <small>${brandSubtitle}</small>
           </span>
         </a>
+
+${renderSearchBox()}
 
         <nav class="nav-list">
 ${nav}

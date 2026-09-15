@@ -183,17 +183,60 @@ function renderListLinks(body) {
     .join("\n");
 }
 
+function normalizeConceptHref(href = "") {
+  const cleanHref = String(href).trim();
+  if (!cleanHref) return "";
+  return cleanHref.replace(/^\.?\//, "");
+}
+
+function renderRelatedConceptLinks(currentHref, options = {}) {
+  const groups = Array.isArray(options.conceptGroups) ? options.conceptGroups : [];
+  const normalizedCurrentHref = normalizeConceptHref(currentHref);
+  if (!normalizedCurrentHref) return "";
+
+  const matches = groups
+    .filter((group) => (group.links || []).some((link) => normalizeConceptHref(link.href) === normalizedCurrentHref))
+    .slice(0, 2);
+
+  if (!matches.length) return "";
+
+  return matches.map((group) => {
+    const links = (group.links || [])
+      .filter((link) => normalizeConceptHref(link.href) !== normalizedCurrentHref)
+      .slice(0, 6)
+      .map((link) => `              <a href="${escapeHtml(link.href)}">
+                <strong>${escapeHtml(link.label)}</strong>
+                <small>${escapeHtml(link.subject || "")}</small>
+              </a>`)
+      .join("\n");
+
+    if (!links) return "";
+
+    return `          <aside class="related-links related-links--inline">
+            <span class="panel-label">Notions liees</span>
+            <h3>${escapeHtml(group.title)}</h3>
+            <p>${escapeHtml(group.description || "")}</p>
+            <div class="related-link-list">
+${links}
+            </div>
+          </aside>`;
+  }).filter(Boolean).join("\n");
+}
+
 function renderBlock(block, options = {}) {
   const attrs = block.attrs || {};
 
   switch (block.type) {
     case "section": {
+      const sectionHref = options.currentPage && attrs.id ? `${options.currentPage}#${attrs.id}` : "";
+      const related = renderRelatedConceptLinks(sectionHref, options);
       return `        <section id="${escapeHtml(attrs.id)}" class="page-section">
           <div class="section-heading">
             <span class="eyebrow">${escapeHtml(attrs.eyebrow || "")}</span>
             <h2>${escapeHtml(attrs.title || "")}</h2>
 ${attrs.summary ? `            <p>${escapeHtml(attrs.summary)}</p>\n` : ""}          </div>
 ${renderBlocks(block.body, options)}
+${related ? `\n${related}` : ""}
         </section>`;
     }
 
@@ -564,17 +607,18 @@ function renderBlocks(source, options = {}) {
     .join("\n\n");
 }
 
-function renderMarkdownCourse(filePath) {
+function renderMarkdownCourse(filePath, options = {}) {
   const source = fs.readFileSync(filePath, "utf8");
   const parsed = matter(source);
   return {
     data: parsed.data,
-    body: renderBlocks(parsed.content),
+    body: renderBlocks(parsed.content, options),
   };
 }
 
 module.exports = {
   renderBlocks,
   renderMarkdown,
+  renderRelatedConceptLinks,
   renderMarkdownCourse,
 };

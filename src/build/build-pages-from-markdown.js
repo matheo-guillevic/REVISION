@@ -2,12 +2,13 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const matter = require("gray-matter");
-const { renderBlocks } = require("./markdown-renderer");
+const { renderBlocks, renderRelatedConceptLinks } = require("./markdown-renderer");
 
 const root = process.cwd();
 const outDir = path.join(root, "out");
 const configDir = path.join(root, "src", "config");
 const publicDir = path.join(root, "public");
+const conceptLinksPath = path.join(configDir, "concept-links.json");
 
 function publicAssetRevision() {
   const hash = crypto.createHash("sha256");
@@ -19,6 +20,7 @@ function publicAssetRevision() {
 }
 
 const assetRevision = publicAssetRevision();
+const conceptGroups = JSON.parse(fs.readFileSync(conceptLinksPath, "utf8").replace(/^\uFEFF/, "")).groups || [];
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(path.join(configDir, file), "utf8").replace(/^\uFEFF/, ""));
@@ -39,6 +41,16 @@ function escapeHtml(value = "") {
 function write(filePath, html) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, `${html.trimEnd()}\n`, "utf8");
+}
+
+function renderSearchBox() {
+  return `        <div class="site-search site-search--page" data-site-search>
+          <label>
+            <span>Recherche</span>
+            <input type="search" placeholder="Rechercher une notion..." autocomplete="off" data-site-search-input>
+          </label>
+          <div class="site-search-results" data-site-search-results hidden></div>
+        </div>`;
 }
 
 function markdownPathFor(group, page, kind) {
@@ -69,6 +81,7 @@ function renderPage(group, page, kind, markdownPath) {
       });
     </script>`
     : "";
+  const related = renderRelatedConceptLinks(data.target, { conceptGroups });
 
   return `<!doctype html>
 <html lang="fr">
@@ -101,10 +114,12 @@ function renderPage(group, page, kind, markdownPath) {
         <div class="td-actions">
           <a class="back-link" href="${escapeHtml(group.courseHref)}">${escapeHtml(group.courseLabel)}</a>
         </div>
+${renderSearchBox()}
       </header>
 
       <section class="page-section">
-${renderBlocks(parsed.content)}
+${related ? `${related}\n` : ""}
+${renderBlocks(parsed.content, { currentPage: data.target, conceptGroups })}
       </section>
     </main>
   </body>

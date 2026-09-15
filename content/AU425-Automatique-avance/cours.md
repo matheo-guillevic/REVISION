@@ -15,6 +15,7 @@ type: course
 - [Commande LQR](#au425-lqr)
 - [Observateur LQ et pondérations](#au425-lqg)
 - [Études de cas](#au425-cas)
+- [TD](#AU425-Automatique-avance-td)
 - [Synthèse finale](#au425-revision)
 :::
 
@@ -1841,6 +1842,15 @@ T(s) = K_{\tilde{y}} \cdot \det(s I - A + L C)
 R(s) = K_{\tilde{y}} \cdot \det(s I - A + L C) + s \cdot K_x \cdot \text{adj}(s I - A + L C + B K_x) \cdot L
 \]
 Où \(\text{adj}(M)\) désigne la matrice adjointe (co-matrice transposée) de \(M\).
+:::
+:::
+
+:::section id="AU425-Automatique-avance-td" eyebrow="TD" title="Travaux dirigés" summary="Exercices corrigés pour appliquer la représentation d'état et la modélisation de systèmes physiques."
+
+:::dashboard
+:::card class="chapter-card" pill="TD 1" title="Représentation d'état et modélisation" href="AU425-Automatique-avance-td1.html" link="Ouvrir le TD"
+Modélisation de systèmes électriques, hydrauliques, différentiels et industriels sous forme \((A,B,C,D)\), avec calcul de fonction de transfert.
+:::
 :::
 :::
 

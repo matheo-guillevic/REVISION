@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "node src/build/build-html.js && node src/build/build-pages-from-markdown.js",
+    "build": "node src/build/build-html.js && node src/build/build-pages-from-markdown.js && node src/build/build-search-index.js && node src/build/build-concept-links.js",
     "check:content": "npm run build && node scripts/check-content-structure.js",
     "preview": "npm run build && node scripts/serve-out.js",
     "rebuild-pages": "node src/build/build-pages-from-markdown.js"

@@ -507,6 +507,26 @@
       ]
     },
     {
+      "subject": "AU425-Automatique-avance",
+      "label": "AU425-Automatique-avance",
+      "backHref": "AU425-Automatique-avance.html#AU425-Automatique-avance-td",
+      "backLabel": "Retour aux TD AU425-Automatique-avance",
+      "courseHref": "AU425-Automatique-avance.html",
+      "courseLabel": "Cours AU425-Automatique-avance",
+      "idPrefix": "AU425-Automatique-avance-td",
+      "pages": [
+        {
+          "n": 1,
+          "target": "AU425-Automatique-avance-td1.html",
+          "source": "td1-commande-avancee.md",
+          "title": "TD 1 corrige - Representation d etat et modelisation",
+          "eyebrow": "AU425 - TD 1",
+          "heading": "Representation d etat et modelisation",
+          "summary": "Modelisation par representation d etat de systemes electriques, hydrauliques, differentiels et industriels."
+        }
+      ]
+    },
+    {
       "subject": "MT461-Methode-numerique",
       "label": "MT461-Methode-numerique",
       "backHref": "MT461-Methode-numerique.html#MT461-Methode-numerique-td",

@@ -1,6 +1,230 @@
 const body = document.body;
 const navLinks = Array.from(document.querySelectorAll(".nav-link"));
 const exercises = Array.from(document.querySelectorAll("[data-exercise]"));
+let siteSearchIndexPromise = null;
+let conceptLinksPromise = null;
+
+function normalizeSearchText(value = "") {
+  return String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function loadSiteSearchIndex() {
+  if (!siteSearchIndexPromise) {
+    const version = window.REVISION_ASSET_VERSION ? `?v=${window.REVISION_ASSET_VERSION}` : "";
+    siteSearchIndexPromise = fetch(`search-index.json${version}`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Index introuvable (${response.status})`);
+        return response.json();
+      })
+      .then((index) => {
+        const documents = Array.isArray(index.documents) ? index.documents : [];
+        return documents.map((document) => ({
+          ...document,
+          searchable: normalizeSearchText(`${document.subject} ${document.type} ${document.title} ${document.text}`),
+          titleSearch: normalizeSearchText(document.title),
+          subjectSearch: normalizeSearchText(document.subject),
+        }));
+      });
+  }
+  return siteSearchIndexPromise;
+}
+
+function createSearchSnippet(text, tokens) {
+  const source = String(text || "");
+  const normalized = normalizeSearchText(source);
+  const firstHit = tokens
+    .map((token) => normalized.indexOf(token))
+    .filter((index) => index >= 0)
+    .sort((a, b) => a - b)[0] || 0;
+  const start = Math.max(0, firstHit - 80);
+  const excerpt = source.slice(start, start + 190);
+  return `${start > 0 ? "..." : ""}${excerpt}${start + 190 < source.length ? "..." : ""}`;
+}
+
+function searchSiteDocuments(documents, query) {
+  const normalizedQuery = normalizeSearchText(query);
+  const tokens = normalizedQuery.split(/\s+/).filter((token) => token.length >= 2);
+  if (!tokens.length) return [];
+
+  return documents
+    .map((document) => {
+      if (!tokens.every((token) => document.searchable.includes(token))) return null;
+      let score = document.searchable.includes(normalizedQuery) ? 30 : 0;
+      for (const token of tokens) {
+        if (document.titleSearch.includes(token)) score += 14;
+        if (document.subjectSearch.includes(token)) score += 8;
+        score += Math.min((document.searchable.match(new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 8);
+      }
+      return { ...document, score, snippet: createSearchSnippet(document.text, tokens) };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title, "fr"))
+    .slice(0, 10);
+}
+
+function renderSiteSearchResults(container, results, query) {
+  if (!query.trim()) {
+    container.hidden = true;
+    container.innerHTML = "";
+    return;
+  }
+
+  if (!results.length) {
+    container.hidden = false;
+    container.innerHTML = '<p class="site-search-empty">Aucun resultat trouve.</p>';
+    return;
+  }
+
+  container.hidden = false;
+  container.innerHTML = results.map((result) => `
+    <a class="site-search-result" href="${escapeHtmlText(result.href)}">
+      <span>${escapeHtmlText(result.subject)} · ${escapeHtmlText(result.type)}</span>
+      <strong>${escapeHtmlText(result.title)}</strong>
+      <small>${escapeHtmlText(result.snippet)}</small>
+    </a>
+  `).join("");
+}
+
+function initSiteSearch() {
+  document.querySelectorAll("[data-site-search]").forEach((search) => {
+    const input = search.querySelector("[data-site-search-input]");
+    const results = search.querySelector("[data-site-search-results]");
+    if (!input || !results) return;
+
+    let debounce = 0;
+    input.addEventListener("input", () => {
+      window.clearTimeout(debounce);
+      debounce = window.setTimeout(async () => {
+        const query = input.value.trim();
+        if (query.length < 2) {
+          renderSiteSearchResults(results, [], "");
+          return;
+        }
+        try {
+          const documents = await loadSiteSearchIndex();
+          renderSiteSearchResults(results, searchSiteDocuments(documents, query), query);
+        } catch (error) {
+          results.hidden = false;
+          results.innerHTML = `<p class="site-search-empty">${escapeHtmlText(error.message || "Recherche indisponible.")}</p>`;
+        }
+      }, 120);
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    document.querySelectorAll("[data-site-search]").forEach((search) => {
+      if (search.contains(event.target)) return;
+      const results = search.querySelector("[data-site-search-results]");
+      if (results) results.hidden = true;
+    });
+  });
+}
+
+function loadConceptLinks() {
+  if (!conceptLinksPromise) {
+    const version = window.REVISION_ASSET_VERSION ? `?v=${window.REVISION_ASSET_VERSION}` : "";
+    conceptLinksPromise = fetch(`concept-links.json${version}`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Liens de notions introuvables (${response.status})`);
+        return response.json();
+      })
+      .then((data) => (Array.isArray(data.groups) ? data.groups : []));
+  }
+  return conceptLinksPromise;
+}
+
+function normalizeConceptHref(href) {
+  const url = new URL(href || "", window.location.href);
+  return `${url.pathname.split("/").pop() || "index.html"}${url.hash || ""}`;
+}
+
+function currentConceptTargets() {
+  const page = window.location.pathname.split("/").pop() || "index.html";
+  const hash = window.location.hash || "";
+  const activeHref = document.querySelector(".nav-link.active")?.getAttribute("href") || "";
+  const targets = new Set([page]);
+
+  if (hash) targets.add(`${page}${hash}`);
+  if (activeHref) targets.add(normalizeConceptHref(activeHref));
+
+  return targets;
+}
+
+function relatedGroupScore(group, targets) {
+  let score = 0;
+  for (const link of group.links || []) {
+    const href = normalizeConceptHref(link.href);
+    const page = href.split("#")[0];
+    if (targets.has(href)) score += 12;
+    if (targets.has(page)) score += 3;
+  }
+  return score;
+}
+
+function renderRelatedLinksPanel(panel, groups) {
+  const content = panel.querySelector("[data-related-links-content]");
+  if (!content) return;
+
+  const targets = currentConceptTargets();
+  const matches = groups
+    .map((group) => ({ ...group, score: relatedGroupScore(group, targets) }))
+    .filter((group) => group.score > 0)
+    .sort((a, b) => b.score - a.score || String(a.title).localeCompare(String(b.title), "fr"))
+    .slice(0, 2);
+
+  if (!matches.length) {
+    panel.hidden = true;
+    content.innerHTML = "";
+    return;
+  }
+
+  panel.hidden = false;
+  content.innerHTML = matches.map((group) => {
+    const links = (group.links || [])
+      .filter((link) => !targets.has(normalizeConceptHref(link.href)))
+      .slice(0, 6)
+      .map((link) => `<a href="${escapeHtmlText(link.href)}">
+        <strong>${escapeHtmlText(link.label)}</strong>
+        <small>${escapeHtmlText(link.subject || "")}</small>
+      </a>`)
+      .join("");
+
+    return `<section>
+      <h3>${escapeHtmlText(group.title)}</h3>
+      <p>${escapeHtmlText(group.description || "")}</p>
+      <div class="related-link-list">${links}</div>
+    </section>`;
+  }).join("");
+}
+
+function initRelatedLinks() {
+  const panels = Array.from(document.querySelectorAll("[data-related-links]"));
+  if (!panels.length) return;
+
+  let groups = [];
+  const refresh = () => panels.forEach((panel) => renderRelatedLinksPanel(panel, groups));
+
+  loadConceptLinks()
+    .then((loadedGroups) => {
+      groups = loadedGroups;
+      refresh();
+    })
+    .catch(() => {
+      panels.forEach((panel) => {
+        panel.hidden = true;
+      });
+    });
+
+  window.addEventListener("hashchange", refresh);
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+    window.setTimeout(refresh, 80);
+  });
+}
 
 function rangeValues(start, end, count, scale = "linear") {
   const n = Math.max(Number(count) || 2, 2);
@@ -1817,6 +2041,8 @@ const observer = new IntersectionObserver(
 document.querySelectorAll(".page-section").forEach((section) => observer.observe(section));
 openDetailsFromHash();
 updateProgress();
+initSiteSearch();
+initRelatedLinks();
 initPlotlyCharts();
 initRPlaygrounds();
 initToeicQuizzes();

@@ -1,0 +1,315 @@
+{
+  "groups": [
+    {
+      "id": "signal-fourier-filtres",
+      "title": "Signaux, Fourier et filtres",
+      "description": "Relie les outils spectraux entre mathematiques, signal, electronique et automatique.",
+      "links": [
+        {
+          "href": "MT321-Mathematiques-general.html#mt321-chap6-series-fourier",
+          "label": "Series de Fourier",
+          "subject": "MT321-Mathematiques-general"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-signaux-continus",
+          "label": "Signaux continus",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-analyse-spectrale",
+          "label": "Analyse spectrale",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-echantillonnage",
+          "label": "Echantillonnage et TFD",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "EP361-electonique.html#elec-filtres",
+          "label": "Filtres analogiques",
+          "subject": "EP361-electonique"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-commande",
+          "label": "Analyse frequentielle",
+          "subject": "AU361-Automatique"
+        }
+      ]
+    },
+    {
+      "id": "automatique-etat-commande",
+      "title": "Systemes, stabilite et commande",
+      "description": "Passe de la fonction de transfert aux representations d'etat et aux correcteurs.",
+      "links": [
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-modelisation",
+          "label": "Representation externe",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-analyse",
+          "label": "Laplace et reponses temporelles",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-marges",
+          "label": "Marges de stabilite",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-pid-rst",
+          "label": "PID et RST",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-etat",
+          "label": "Representation d'etat",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-structure",
+          "label": "Commandabilite et observabilite",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-retour-etat",
+          "label": "Retour d'etat",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-observateurs",
+          "label": "Observateurs",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "electronique-analogique",
+      "title": "Electronique analogique",
+      "description": "Lie les composants, modeles petits signaux, quadripoles et fonctions analogiques.",
+      "links": [
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-fondations",
+          "label": "Methodologie statique / dynamique",
+          "subject": "EP331-Electronique-analogique"
+        },
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-diodes",
+          "label": "Diodes",
+          "subject": "EP331-Electronique-analogique"
+        },
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-bjt",
+          "label": "Transistors bipolaires",
+          "subject": "EP331-Electronique-analogique"
+        },
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-aop",
+          "label": "AOP",
+          "subject": "EP331-Electronique-analogique"
+        },
+        {
+          "href": "EP361-electonique.html#elec-quadripoles",
+          "label": "Quadripoles",
+          "subject": "EP361-electonique"
+        },
+        {
+          "href": "EP361-electonique.html#elec-amplis",
+          "label": "Amplificateurs",
+          "subject": "EP361-electonique"
+        },
+        {
+          "href": "EP361-electonique.html#elec-oscillateurs",
+          "label": "Oscillateurs",
+          "subject": "EP361-electonique"
+        }
+      ]
+    },
+    {
+      "id": "numerique-erreurs-signal",
+      "title": "Numerique, erreurs et calcul",
+      "description": "Relie representation machine, precision, calcul scientifique et traitements numeriques.",
+      "links": [
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-donnees",
+          "label": "Donnees et memoire",
+          "subject": "SN331-Architecture-processeur"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-software",
+          "label": "Virgule fixe en embarque",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-1",
+          "label": "Erreurs et flottants",
+          "subject": "MT461-Methode-numerique"
+        },
+        {
+          "href": "MT461-Methode-numerique-tp1.html",
+          "label": "TP arithmetique flottante",
+          "subject": "MT461-Methode-numerique"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-echantillonnage",
+          "label": "Echantillonnage numerique",
+          "subject": "AU331-Traitement-Signal"
+        }
+      ]
+    },
+    {
+      "id": "micro-architecture-embarque",
+      "title": "Architecture, microcontroleurs et bas niveau",
+      "description": "Relie ISA, memoire, interruptions, peripheriques et programmation C.",
+      "links": [
+        {
+          "href": "IN331-Algo.html#in331-chap1-fondations",
+          "label": "Fondations du C",
+          "subject": "IN331-Algo"
+        },
+        {
+          "href": "IN331-Algo.html#in331-chap6-pointeurs",
+          "label": "Pointeurs et adresses",
+          "subject": "IN331-Algo"
+        },
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-isa",
+          "label": "ISA et RISC-V",
+          "subject": "SN331-Architecture-processeur"
+        },
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-caches",
+          "label": "Caches",
+          "subject": "SN331-Architecture-processeur"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-mcu",
+          "label": "Microcontroleurs",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-periph",
+          "label": "GPIO, timers, ADC",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "SN421-Dev-Micro-tp1.html",
+          "label": "TP GPIO et interruptions",
+          "subject": "SN421-Dev-Micro"
+        }
+      ]
+    },
+    {
+      "id": "reseaux-systemes-protocoles",
+      "title": "Systemes, memoire et reseaux",
+      "description": "Fait le pont entre representation bas niveau, OS, protocoles et communications.",
+      "links": [
+        {
+          "href": "IN333-OS.html#in333-intro",
+          "label": "Systemes d'exploitation",
+          "subject": "IN333-OS"
+        },
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-memoire-virtuelle",
+          "label": "Memoire virtuelle",
+          "subject": "SN331-Architecture-processeur"
+        },
+        {
+          "href": "IN363-Reseau.html#reseau-osi",
+          "label": "Modele OSI",
+          "subject": "IN363-Reseau"
+        },
+        {
+          "href": "IN363-Reseau.html#reseau-couche2",
+          "label": "Ethernet et trames",
+          "subject": "IN363-Reseau"
+        },
+        {
+          "href": "IN363-Reseau.html#reseau-couche3",
+          "label": "IP et resolution",
+          "subject": "IN363-Reseau"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-bus",
+          "label": "Bus embarques",
+          "subject": "SN421-Dev-Micro"
+        }
+      ]
+    },
+    {
+      "id": "maths-proba-ia",
+      "title": "Mathematiques, probabilites et IA",
+      "description": "Relie algebre lineaire, probabilites, optimisation et apprentissage.",
+      "links": [
+        {
+          "href": "MT321-Mathematiques-general.html#mt321-chap2-espaces-vectoriels",
+          "label": "Espaces vectoriels",
+          "subject": "MT321-Mathematiques-general"
+        },
+        {
+          "href": "MT321-Mathematiques-general.html#mt321-chap4-determinants-diagonalisation",
+          "label": "Diagonalisation",
+          "subject": "MT321-Mathematiques-general"
+        },
+        {
+          "href": "MT331-Probabilites.html#probabilites-chap3",
+          "label": "Variables aleatoires discretes",
+          "subject": "MT331-Probabilites"
+        },
+        {
+          "href": "MT331-Probabilites.html#probabilites-chap4",
+          "label": "Variables continues",
+          "subject": "MT331-Probabilites"
+        },
+        {
+          "href": "IN451-IA.html#ia-definitions",
+          "label": "Concepts IA",
+          "subject": "IN451-IA"
+        },
+        {
+          "href": "IN451-IA.html#ia-deep-learning",
+          "label": "Deep learning",
+          "subject": "IN451-IA"
+        }
+      ]
+    },
+    {
+      "id": "logiciel-objet-ia",
+      "title": "Algorithmique, objet et projets",
+      "description": "Relie structures de donnees, Java objet et projets d'IA.",
+      "links": [
+        {
+          "href": "IN331-Algo.html#in331-chap5-structures",
+          "label": "Structures de donnees",
+          "subject": "IN331-Algo"
+        },
+        {
+          "href": "IN331-Algo.html#in331-chap8-allocation-listes",
+          "label": "Listes chainees",
+          "subject": "IN331-Algo"
+        },
+        {
+          "href": "IN361-JAVA.html#java-collections",
+          "label": "Collections Java",
+          "subject": "IN361-JAVA"
+        },
+        {
+          "href": "IN361-JAVA.html#java-objet",
+          "label": "Programmation objet",
+          "subject": "IN361-JAVA"
+        },
+        {
+          "href": "IN361-JAVA.html#java-interfaces",
+          "label": "Interfaces",
+          "subject": "IN361-JAVA"
+        },
+        {
+          "href": "IN451-IA.html#ia-gomoku",
+          "label": "Projet Gomoku",
+          "subject": "IN451-IA"
+        }
+      ]
+    }
+  ]
+}
