@@ -39,7 +39,7 @@ Un système continu stationnaire défini par le couple $(A, C)$ est **complètem
 
 ---
 
-:::section id="td2-ex1" eyebrow="Exercice 1" title="Analyse d'un système représenté par schéma-bloc" summary="Modélisation d'état à partir d'un schéma-bloc d'ordre 3, étude des modes, calcul de la fonction de transfert et tests de Kalman."
+:::section id="td2-ex1" eyebrow="Exercice 1" title="Analyse d'un système représenté par schéma-bloc" summary="Modélisation d'état à partir d'un schéma-bloc, étude des modes, calcul de la fonction de transfert et tests de Kalman."
 
 ### Énoncé de l'exercice 1
 On considère le système dynamique continu représenté par le schéma-bloc suivant :
@@ -47,17 +47,18 @@ On considère le système dynamique continu représenté par le schéma-bloc sui
 ```mermaid
 flowchart LR
     U[u] --> B1["-1 / (p + 1)"]
-    U --> B2["2 / (p - 2)"]
-    B1 --> X1["x1"]
-    B2 --> X2["x2"]
-    X2 --> B3["1 / (p - 1)"]
-    B3 --> X3["x3"]
-    X1 --> Add((+))
-    X3 --> Add
-    Add --> Y["y"]
+    U --> AddIn((+))
+    B1 --> X2["x2"]
+    X2 --> AddIn
+    AddIn --> B2["2 / (p - 2)"]
+    B2 --> X1["x1"]
+    X2 --> Add((+))
+    X1 --> Add
+    Add --> B3["1 / (p - 1)"]
+    B3 --> X3["x3 = y"]
 ```
 
-1.1 **Donner la représentation d'état** $(A, B, C, D)$ du système en prenant comme variables d'état les sorties des blocs intégrateurs/transferts $x_1, x_2, x_3$.  
+1.1 **Donner la représentation d'état** $(A, B, C, D)$ du système en prenant comme variables d'état les sorties des trois blocs dynamiques $x_1, x_2, x_3$.  
 1.2 **Déterminer les modes** du système et conclure sur sa stabilité en boucle ouverte.  
 1.3 **Donner la fonction de transfert globale** $H(p) = \frac{Y(p)}{U(p)}$.  
 1.4 **Le système est-il complètement commandable ? Est-il complètement observable ?**
@@ -69,75 +70,113 @@ flowchart LR
 #### 1.1 Représentation d'État
 Exprimons la dynamique temporelle de chaque variable d'état à partir des blocs fréquentiels $p X_i(p)$ :
 
-1. **Pour $x_1$ :** $X_1(p) = \frac{-1}{p+1} U(p) \implies (p+1)X_1(p) = -U(p) \implies \dot{x}_1(t) = -x_1(t) - u(t)$
-2. **Pour $x_2$ :** $X_2(p) = \frac{2}{p-2} U(p) \implies (p-2)X_2(p) = 2U(p) \implies \dot{x}_2(t) = 2x_2(t) + 2u(t)$
-3. **Pour $x_3$ :** $X_3(p) = \frac{1}{p-1} X_2(p) \implies (p-1)X_3(p) = X_2(p) \implies \dot{x}_3(t) = x_3(t) + x_2(t)$
-4. **Équation de mesure :** $y(t) = x_1(t) + x_3(t)$
+1. **Pour $x_1$ :** le bloc \(\frac{2}{p-2}\) reçoit la somme \(x_2+u\). Ainsi $X_1(p) = \frac{2}{p-2}\bigl(X_2(p)+U(p)\bigr)$, donc
+   \[
+   (p-2)X_1(p)=2X_2(p)+2U(p)
+   \quad\Longrightarrow\quad
+   \dot{x}_1(t)=2x_1(t)+2x_2(t)+2u(t).
+   \]
+2. **Pour $x_2$ :** $X_2(p) = \frac{-1}{p+1} U(p) \implies (p+1)X_2(p) = -U(p) \implies \dot{x}_2(t) = -x_2(t) - u(t)$
+3. **Pour $x_3$ :** le bloc \(\frac{1}{p-1}\) reçoit la somme \(x_1+x_2\). Ainsi $X_3(p)=\frac{1}{p-1}\bigl(X_1(p)+X_2(p)\bigr)$, donc
+   \[
+   (p-1)X_3(p)=X_1(p)+X_2(p)
+   \quad\Longrightarrow\quad
+   \dot{x}_3(t)=x_3(t)+x_1(t)+x_2(t).
+   \]
+4. **Équation de mesure :** la fiche note \(x_3\) la sortie, donc \(y(t)=x_3(t)\).
 
 Sous forme matricielle $\dot{x}(t) = A x(t) + B u(t)$ et $y(t) = C x(t) + D u(t)$ avec $x(t) = \begin{bmatrix} x_1(t) & x_2(t) & x_3(t) \end{bmatrix}^T$ :
 
 \[
-A = \begin{bmatrix} -1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 1 & 1 \end{bmatrix}, \quad
-B = \begin{bmatrix} -1 \\ 2 \\ 0 \end{bmatrix}, \quad
-C = \begin{bmatrix} 1 & 0 & 1 \end{bmatrix}, \quad
+A = \begin{bmatrix} 2 & 2 & 0 \\ 0 & -1 & 0 \\ 1 & 1 & 1 \end{bmatrix}, \quad
+B = \begin{bmatrix} 2 \\ -1 \\ 0 \end{bmatrix}, \quad
+C = \begin{bmatrix} 0 & 0 & 1 \end{bmatrix}, \quad
 D = 0
 \]
 
 #### 1.2 Modes du Système et Stabilité
-La matrice $A$ est une matrice triangulaire inférieure par blocs. Ses valeurs propres sont donc directement situées sur sa diagonale principale :
+La matrice $A$ est triangulaire par blocs. Ses valeurs propres sont donc directement situées sur sa diagonale principale :
 
 \[
-\det(pI - A) = (p + 1)(p - 2)(p - 1) = 0 \implies \begin{cases} \lambda_1 = -1 \\ \lambda_2 = 2 \\ \lambda_3 = 1 \end{cases}
+\det(pI - A) = (p - 2)(p + 1)(p - 1) = 0 \implies \begin{cases} \lambda_1 = 2 \\ \lambda_2 = -1 \\ \lambda_3 = 1 \end{cases}
 \]
 
 :::block type="warning" title="Analyse de la Stabilité"
-*   **Modes propres :** Les modes du système sont $e^{-t}$ (stable), $e^{2t}$ (instable) et $e^{t}$ (instable).
-*   **Conclusion :** Les deux valeurs propres $\lambda_2 = 2 > 0$ et $\lambda_3 = 1 > 0$ possèdent une partie réelle strictement positive. Le système est donc **instable en boucle ouverte**.
+*   **Modes propres :** Les modes du système sont $e^{2t}$ (instable), $e^{-t}$ (stable) et $e^t$ (instable).
+*   **Conclusion :** Les valeurs propres \(\lambda_1 = 2 > 0\) et \(\lambda_3=1>0\) possèdent une partie réelle strictement positive. Le système est donc **instable en boucle ouverte**.
 :::
 
 #### 1.3 Fonction de Transfert Global $H(p)$
 Par substitution directe dans le domaine de Laplace :
 
 \[
-Y(p) = X_1(p) + X_3(p) = \frac{-1}{p+1} U(p) + \frac{1}{p-1} X_2(p) = \left( \frac{-1}{p+1} + \frac{2}{(p-2)(p-1)} \right) U(p)
+Y(p)=X_3(p)=\frac{1}{p-1}\bigl(X_1(p)+X_2(p)\bigr)
+\]
+
+Or
+\[
+X_2(p)=\frac{-1}{p+1}U(p),
+\qquad
+X_1(p)=\frac{2}{p-2}\bigl(X_2(p)+U(p)\bigr).
+\]
+
+Donc
+\[
+X_1(p)
+=\frac{2}{p-2}\left(1-\frac{1}{p+1}\right)U(p)
+=\frac{2p}{(p-2)(p+1)}U(p).
 \]
 
 Mettons au même dénominateur :
 
 \[
-H(p) = \frac{-(p-2)(p-1) + 2(p+1)}{(p+1)(p-2)(p-1)} = \frac{-(p^2 - 3p + 2) + 2p + 2}{(p+1)(p-2)(p-1)} = \frac{-p^2 + 5p}{(p+1)(p-2)(p-1)}
-\]
-
-\[
-H(p) = \frac{-p(p - 5)}{(p+1)(p - 2)(p - 1)}
+H(p)=\frac{Y(p)}{U(p)}
+=\frac{1}{p-1}\left(\frac{2p}{(p-2)(p+1)}-\frac{1}{p+1}\right)
+=\frac{p+2}{(p-2)(p+1)(p-1)}
 \]
 
 :::block type="method" title="Vérification par la Formule Matricielle"
 On peut vérifier que $H(p) = C(pI-A)^{-1}B$ :
 \[
-(pI-A)^{-1} = \begin{bmatrix} \frac{1}{p+1} & 0 & 0 \\ 0 & \frac{1}{p-2} & 0 \\ 0 & \frac{1}{(p-2)(p-1)} & \frac{1}{p-1} \end{bmatrix} \implies C(pI-A)^{-1}B = \frac{-1}{p+1} + \frac{2}{(p-2)(p-1)} = \frac{-p(p-5)}{(p+1)(p-2)(p-1)}
+(pI-A)^{-1} =
+\begin{bmatrix}
+\frac{1}{p-2} & \frac{2}{(p-2)(p+1)} & 0 \\
+0 & \frac{1}{p+1} & 0 \\
+\frac{1}{(p-2)(p-1)} & \frac{p}{(p-2)(p+1)(p-1)} & \frac{1}{p-1}
+\end{bmatrix}
+\]
+\[
+C(pI-A)^{-1}B
+=\begin{bmatrix}0&0&1\end{bmatrix}
+\begin{bmatrix}
+\frac{1}{p-2} & \frac{2}{(p-2)(p+1)} & 0 \\
+0 & \frac{1}{p+1} & 0 \\
+\frac{1}{(p-2)(p-1)} & \frac{p}{(p-2)(p+1)(p-1)} & \frac{1}{p-1}
+\end{bmatrix}
+\begin{bmatrix}2\\-1\\0\end{bmatrix}
+=\frac{p+2}{(p-2)(p+1)(p-1)}
 \]
 :::
 
 #### 1.4 Test de Commandabilité et d'Observabilité
 
 ##### A. Commandabilité (Critère de Kalman)
-Calculons la matrice de commandabilité $\mathcal{C} = \begin{bmatrix} B & AB & A^2 B \end{bmatrix}$ :
+Calculons la matrice de commandabilité $\mathcal{C} = \begin{bmatrix} B & AB & A^2B \end{bmatrix}$ :
 
 \[
-B = \begin{bmatrix} -1 \\ 2 \\ 0 \end{bmatrix}, \quad
-AB = \begin{bmatrix} -1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 1 & 1 \end{bmatrix} \begin{bmatrix} -1 \\ 2 \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 4 \\ 2 \end{bmatrix}, \quad
-A^2 B = A (AB) = \begin{bmatrix} -1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 1 & 1 \end{bmatrix} \begin{bmatrix} 1 \\ 4 \\ 2 \end{bmatrix} = \begin{bmatrix} -1 \\ 8 \\ 6 \end{bmatrix}
+B = \begin{bmatrix} 2 \\ -1 \\ 0 \end{bmatrix}, \quad
+AB = \begin{bmatrix} 2 & 2 & 0 \\ 0 & -1 & 0 \\ 1 & 1 & 1 \end{bmatrix} \begin{bmatrix} 2 \\ -1 \\ 0 \end{bmatrix} = \begin{bmatrix} 2 \\ 1 \\ 1 \end{bmatrix}, \quad
+A^2B=A(AB)=\begin{bmatrix} 6 \\ -1 \\ 4 \end{bmatrix}
 \]
 
 D'où :
 \[
-\mathcal{C} = \begin{bmatrix} -1 & 1 & -1 \\ 2 & 4 & 8 \\ 0 & 2 & 6 \end{bmatrix}
+\mathcal{C} = \begin{bmatrix} 2 & 2 & 6 \\ -1 & 1 & -1 \\ 0 & 1 & 4 \end{bmatrix}
 \]
 
 Calculons son déterminant :
 \[
-\det(\mathcal{C}) = -1 \cdot (24 - 16) - 1 \cdot (12 - 0) + (-1) \cdot (4 - 0) = -8 - 12 - 4 = -24 \neq 0
+\det(\mathcal{C}) = 12 \neq 0
 \]
 
 Puisque $\det(\mathcal{C}) \neq 0$, la matrice est de rang 3 (rang plein).  
@@ -147,19 +186,19 @@ Puisque $\det(\mathcal{C}) \neq 0$, la matrice est de rang 3 (rang plein).
 Calculons la matrice d'observabilité $\mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \end{bmatrix}$ :
 
 \[
-C = \begin{bmatrix} 1 & 0 & 1 \end{bmatrix}, \quad
-CA = \begin{bmatrix} 1 & 0 & 1 \end{bmatrix} \begin{bmatrix} -1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 1 & 1 \end{bmatrix} = \begin{bmatrix} -1 & 1 & 1 \end{bmatrix}, \quad
-CA^2 = (CA) A = \begin{bmatrix} -1 & 1 & 1 \end{bmatrix} \begin{bmatrix} -1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 1 & 1 \end{bmatrix} = \begin{bmatrix} 1 & 3 & 1 \end{bmatrix}
+C = \begin{bmatrix} 0 & 0 & 1 \end{bmatrix}, \quad
+CA = \begin{bmatrix} 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} 2 & 2 & 0 \\ 0 & -1 & 0 \\ 1 & 1 & 1 \end{bmatrix} = \begin{bmatrix} 1 & 1 & 1 \end{bmatrix}, \quad
+CA^2=(CA)A=\begin{bmatrix} 3 & 2 & 1 \end{bmatrix}
 \]
 
 D'où :
 \[
-\mathcal{O} = \begin{bmatrix} 1 & 0 & 1 \\ -1 & 1 & 1 \\ 1 & 3 & 1 \end{bmatrix}
+\mathcal{O} = \begin{bmatrix} 0 & 0 & 1 \\ 1 & 1 & 1 \\ 3 & 2 & 1 \end{bmatrix}
 \]
 
 Calculons son déterminant :
 \[
-\det(\mathcal{O}) = 1 \cdot (1 - 3) - 0 + 1 \cdot (-3 - 1) = -2 - 4 = -6 \neq 0
+\det(\mathcal{O}) = -1 \neq 0
 \]
 
 Puisque $\det(\mathcal{O}) \neq 0$, la matrice est de rang 3 (rang plein).  
