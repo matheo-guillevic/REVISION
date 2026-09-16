@@ -2064,6 +2064,10 @@ Où \(\text{adj}(M)\) désigne la matrice adjointe (co-matrice transposée) de \
 :::card class="chapter-card" pill="TD 1" title="Représentation d'état et modélisation" href="AU425-Automatique-avance-td1.html" link="Ouvrir le TD"
 Modélisation de systèmes électriques, hydrauliques, différentiels et industriels sous forme \((A,B,C,D)\), avec calcul de fonction de transfert.
 :::
+
+:::card class="chapter-card" pill="TD 2" title="Commandabilité et observabilité" href="AU425-Automatique-avance-td2.html" link="Ouvrir le TD"
+Tests de Kalman, rang des matrices de commandabilité et d'observabilité, identification des états non commandables et non observables.
+:::
 :::
 :::
 

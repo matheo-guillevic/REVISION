@@ -523,6 +523,15 @@
           "eyebrow": "AU425 - TD 1",
           "heading": "Representation d etat et modelisation",
           "summary": "Modelisation par representation d etat de systemes electriques, hydrauliques, differentiels et industriels."
+        },
+        {
+          "n": 2,
+          "target": "AU425-Automatique-avance-td2.html",
+          "source": "td2-commande-avancee.md",
+          "title": "TD 2 corrige - Commandabilite et observabilite",
+          "eyebrow": "AU425 - TD 2",
+          "heading": "Commandabilite et observabilite",
+          "summary": "Tests de Kalman, noyaux de commandabilite et d'observabilite, modes non commandables et non observables."
         }
       ]
     },
