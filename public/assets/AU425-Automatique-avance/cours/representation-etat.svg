@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" role="img" aria-labelledby="title desc">
+  <title id="title">Representation d'etat continue</title>
+  <desc id="desc">Schema bloc de x point egal A x plus B u et y egal C x plus D u avec integrateur 1 sur p.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 10 5 0 10z" fill="#7c3aed"/>
+    </marker>
+    <style>
+      .block{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2}
+      .sum{fill:#fff;stroke:#7c3aed;stroke-width:2}
+      .line{fill:none;stroke:#7c3aed;stroke-width:2.4;marker-end:url(#arrow)}
+      .txt{font:600 20px system-ui,Segoe UI,sans-serif;fill:#0f172a;text-anchor:middle}
+      .lbl{font:16px system-ui,Segoe UI,sans-serif;fill:#475569;text-anchor:middle}
+    </style>
+  </defs>
+  <text class="txt" x="55" y="151">u</text>
+  <rect class="block" x="115" y="120" width="70" height="55" rx="12"/>
+  <text class="txt" x="150" y="154">B</text>
+  <circle class="sum" cx="250" cy="148" r="25"/>
+  <text class="txt" x="250" y="155">+</text>
+  <rect class="block" x="315" y="120" width="135" height="55" rx="12"/>
+  <text class="txt" x="382" y="143">1/p</text>
+  <text class="lbl" x="382" y="164">integrateur</text>
+  <rect class="block" x="515" y="120" width="90" height="55" rx="12"/>
+  <text class="txt" x="560" y="154">x</text>
+  <rect class="block" x="665" y="120" width="70" height="55" rx="12"/>
+  <text class="txt" x="700" y="154">C</text>
+  <circle class="sum" cx="795" cy="148" r="25"/>
+  <text class="txt" x="795" y="155">+</text>
+  <text class="txt" x="860" y="154">y</text>
+  <path class="line" d="M70 148 H115"/>
+  <path class="line" d="M185 148 H225"/>
+  <path class="line" d="M275 148 H315"/>
+  <path class="line" d="M450 148 H515"/>
+  <path class="line" d="M605 148 H665"/>
+  <path class="line" d="M735 148 H770"/>
+  <path class="line" d="M820 148 H845"/>
+  <rect class="block" x="515" y="230" width="90" height="55" rx="12"/>
+  <text class="txt" x="560" y="264">A</text>
+  <path class="line" d="M560 175 V230"/>
+  <path class="line" d="M515 258 H250 V173"/>
+  <rect class="block" x="665" y="230" width="70" height="55" rx="12"/>
+  <text class="txt" x="700" y="264">D</text>
+  <path class="line" d="M70 148 V258 H665"/>
+  <path class="line" d="M735 258 H795 V173"/>
+</svg>

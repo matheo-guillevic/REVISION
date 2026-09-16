@@ -308,17 +308,17 @@ flowchart TD
     Rec2["Recyclage S2 (Qs12)"] --> Sum1
     Sum1 --> B1["Broyeur B1 (T1 = 5mn)"]
     B1 --> x1["x1 (Débit sortie B1)"] --> S1["Séparateur S1 (k1 = 0.5)"]
-    
+
     S1 -- "Qs11 = k1*x1" --> Sum2((" + "))
     S1 -- "Qs21 = (1-k1)*x1" --> S2["Séparateur S2 (k2 = 0.3)"]
-    
+
     S2 -- "Qs12 = k2*Qs21" --> Rec2
     S2 -- "Qs22 = (1-k2)*Qs21" --> S3["Séparateur S3 (k3 = 0.1)"]
-    
+
     S3 -- "Qs31 = k3*x2" --> Sum2
     Sum2 --> B2["Broyeur B2 (T2 = 10mn)"]
     B2 --> x2["x2 (Débit sortie B2)"] --> S3
-    
+
     S3 -- "Qs32 = (1-k3)*x2" --> Exit["y (Produit Final)"]
 ```
 

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-labelledby="title desc">
+  <title id="title">Boucle asservie avec perturbations et bruit de mesure</title>
+  <desc id="desc">Consigne W, correcteur K, procede P, perturbations Wu et Wy, bruit de mesure Wb et retour negatif.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 10 5 0 10z" fill="#0f766e"/>
+    </marker>
+    <style>
+      .block{fill:#ecfeff;stroke:#0f766e;stroke-width:2}
+      .sum{fill:#fff;stroke:#0f766e;stroke-width:2}
+      .line{fill:none;stroke:#0f766e;stroke-width:2.5;marker-end:url(#arrow)}
+      .txt{font:600 20px system-ui,Segoe UI,sans-serif;fill:#0f172a;text-anchor:middle}
+      .lbl{font:16px system-ui,Segoe UI,sans-serif;fill:#334155;text-anchor:middle}
+      .sgn{font:700 24px system-ui,Segoe UI,sans-serif;fill:#0f766e;text-anchor:middle}
+    </style>
+  </defs>
+  <text class="lbl" x="67" y="145">Consigne W</text>
+  <path class="line" d="M95 155 H150"/>
+  <circle class="sum" cx="180" cy="155" r="27"/>
+  <text class="sgn" x="180" y="162">Σ</text>
+  <rect class="block" x="240" y="125" width="145" height="60" rx="12"/>
+  <text class="txt" x="312" y="162">K(p)</text>
+  <circle class="sum" cx="445" cy="155" r="27"/>
+  <text class="sgn" x="445" y="162">Σ</text>
+  <rect class="block" x="510" y="125" width="145" height="60" rx="12"/>
+  <text class="txt" x="582" y="162">P(p)</text>
+  <circle class="sum" cx="715" cy="155" r="27"/>
+  <text class="sgn" x="715" y="162">Σ</text>
+  <path class="line" d="M207 155 H240"/>
+  <path class="line" d="M385 155 H418"/>
+  <path class="line" d="M472 155 H510"/>
+  <path class="line" d="M655 155 H688"/>
+  <path class="line" d="M742 155 H890"/>
+  <text class="lbl" x="910" y="161">Sortie Y</text>
+  <text class="lbl" x="445" y="65">Wu</text>
+  <path class="line" d="M445 75 V128"/>
+  <text class="lbl" x="715" y="65">Wy</text>
+  <path class="line" d="M715 75 V128"/>
+  <circle class="sum" cx="715" cy="260" r="27"/>
+  <text class="sgn" x="715" y="267">Σ</text>
+  <text class="lbl" x="818" y="260">Bruit Wb</text>
+  <path class="line" d="M795 260 H742"/>
+  <path class="line" d="M805 155 V260 H742"/>
+  <path class="line" d="M688 260 H180 V182"/>
+  <text class="lbl" x="360" y="285">retour negatif</text>
+  <text class="sgn" x="160" y="190">−</text>
+</svg>

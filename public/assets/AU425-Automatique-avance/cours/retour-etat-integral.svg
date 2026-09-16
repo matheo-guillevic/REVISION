@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 390" role="img" aria-labelledby="title desc">
+  <title id="title">Retour d'etat avec effet integral</title>
+  <desc id="desc">L'erreur entre y et y reference est integree puis renvoyee avec le retour d'etat vers la commande u.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 10 5 0 10z" fill="#a16207"/>
+    </marker>
+    <style>
+      .block{fill:#fefce8;stroke:#a16207;stroke-width:2}
+      .sum{fill:#fff;stroke:#a16207;stroke-width:2}
+      .line{fill:none;stroke:#a16207;stroke-width:2.4;marker-end:url(#arrow)}
+      .txt{font:600 19px system-ui,Segoe UI,sans-serif;fill:#0f172a;text-anchor:middle}
+      .lbl{font:15px system-ui,Segoe UI,sans-serif;fill:#475569;text-anchor:middle}
+    </style>
+  </defs>
+  <text class="txt" x="75" y="85">y_ref</text>
+  <circle class="sum" cx="175" cy="85" r="25"/>
+  <text class="txt" x="175" y="92">Σ</text>
+  <text class="lbl" x="154" y="93">−</text>
+  <text class="lbl" x="178" y="66">+</text>
+  <rect class="block" x="245" y="55" width="120" height="60" rx="12"/>
+  <text class="txt" x="305" y="80">1/p</text>
+  <text class="lbl" x="305" y="101">integrateur</text>
+  <rect class="block" x="430" y="55" width="115" height="60" rx="12"/>
+  <text class="txt" x="487" y="91">K_tilde_y</text>
+  <circle class="sum" cx="640" cy="205" r="25"/>
+  <text class="txt" x="640" y="212">Σ</text>
+  <text class="txt" x="770" y="212">u</text>
+  <text class="lbl" x="624" y="197">−</text>
+  <text class="lbl" x="642" y="228">−</text>
+  <rect class="block" x="815" y="175" width="120" height="60" rx="12"/>
+  <text class="txt" x="875" y="200">Procede</text>
+  <text class="lbl" x="875" y="221">A, B, C</text>
+  <text class="txt" x="875" y="95">y</text>
+  <text class="txt" x="875" y="310">x</text>
+  <rect class="block" x="430" y="280" width="115" height="60" rx="12"/>
+  <text class="txt" x="487" y="316">K_x</text>
+  <path class="line" d="M95 85 H150"/>
+  <path class="line" d="M200 85 H245"/>
+  <path class="line" d="M365 85 H430"/>
+  <path class="line" d="M545 85 C610 85 640 130 640 180"/>
+  <path class="line" d="M665 205 H755"/>
+  <path class="line" d="M785 205 H815"/>
+  <path class="line" d="M875 175 V100"/>
+  <path class="line" d="M875 100 H175 V60"/>
+  <path class="line" d="M875 235 V305"/>
+  <path class="line" d="M875 305 H545"/>
+  <path class="line" d="M430 310 H640 V230"/>
+</svg>

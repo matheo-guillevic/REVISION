@@ -55,6 +55,12 @@ Contenu de la section.
 :::figure src="assets/elec/cellule-t.svg" alt="Cellule en T" caption="Legende optionnelle." :::
 ```
 
+Pour les schemas-blocs d'automatique a reproduire comme dans un enonce,
+preferer un SVG place dans `public/assets/<matiere>/...` et reference avec
+`:::figure`. Mermaid reste adapte aux syntheses rapides, organigrammes,
+schemas de procedes simples et graphes qui ne demandent pas un placement precis
+des sommateurs, retours et blocs de transfert.
+
 ## Mermaid
 
 Les diagrammes Mermaid peuvent etre ecrits dans un bloc de code classique :

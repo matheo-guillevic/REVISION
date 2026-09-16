@@ -104,20 +104,9 @@ K(p)=\frac{p^2+0{,}1p+1}{0{,}5p^2+p},
 P(p)=\frac{1}{p^2+0{,}1p+1}.
 \]
 
-```mermaid
-flowchart LR
-  W[Consigne W] --> E((Σ))
-  E --> K[Correcteur K]
-  K --> U((Σ))
-  Wu[Perturbation Wu] --> U
-  U --> P[Procédé P]
-  P --> O((Σ))
-  Wy[Perturbation Wy] --> O
-  O --> Y[Sortie Y]
-  Y --> M((Σ))
-  Wb[Bruit de mesure Wb] --> M
-  M -->|retour négatif| E
-```
+:::figure src="assets/AU425-Automatique-avance/cours/boucle-robustesse.svg" alt="Boucle asservie avec consigne W, correcteur K, procede P, perturbations Wu et Wy, bruit de mesure Wb et retour negatif." caption="Le schéma sépare la perturbation de commande, la perturbation de sortie et le bruit de mesure : chacun entre dans la boucle à un endroit différent." label="Boucle asservie avec perturbations et bruit de mesure"
+
+:::
 
 #### Calcul du transfert de boucle
 
@@ -431,20 +420,9 @@ Où :
 
 Le rôle de mémoire du système est illustré par l'intégration temporelle représentée par le schéma bloc ci-dessous où \(1/p\) désigne l'intégrateur :
 
-```mermaid
-flowchart LR
-    U[u] --> B(B)
-    B --> Add1((+))
-    Add1 --> Integrator["1/p (Intégrateur)"]
-    Integrator --> State["x"]
-    State --> C(C)
-    State --> A(A)
-    A --> Add1
-    C --> Add2((+))
-    U --> D(D)
-    D --> Add2
-    Add2 --> Y[y]
-```
+:::figure src="assets/AU425-Automatique-avance/cours/representation-etat.svg" alt="Schema bloc de la representation d'etat continue x point egal A x plus B u et y egal C x plus D u." caption="L'intégrateur porte la mémoire du système : son entrée est \(\dot{x}\), sa sortie est l'état \(x\)." label="Représentation d'état continue"
+
+:::
 
 ### 2. Exemples de modélisation du support
 
@@ -1219,7 +1197,7 @@ Une simplification pôle-zéro dans une fonction de transfert est le signe direc
 
 :::
 
-:::section id="au425-retour-etat" eyebrow="Chapitre 3" title="Commande par Retour d'État et Effet Intégral" summary="Synthèse de la loi de commande par placement de pôles, calcul du préfiltre de gain et rejet des perturbations constantes par système augmenté avec effet intégral."
+:::section id="au425-retour-etat" eyebrow="Chapitre 3" title="Commande par Retour d'État et Effet Intégral" summary="Synthèse de la loi de commande par placement de pôles, calcul du préfiltre de gain et rejet des perturbations par modèle interne."
 
 La commande par retour d'état consiste à modifier la dynamique naturelle du système en réinjectant l'état mesuré ou estimé sur l'entrée de commande.
 
@@ -1230,17 +1208,9 @@ u(t) = -K x(t) + h y_{ref}(t)
 \]
 Où \(K \in \mathbb{R}^{m \times n}\) est la matrice de gain de retour d'état, et \(h\) est un gain scalaire de préfiltrage.
 
-```mermaid
-flowchart LR
-    Ref[y_ref] --> h(h)
-    h --> Add1((+))
-    Add1 --> u["u"]
-    u --> Plant["Procédé (A, B, C)"]
-    Plant --> y["y"]
-    Plant --> x["x (État complet)"]
-    x --> K(K)
-    K --> Add1
-```
+:::figure src="assets/AU425-Automatique-avance/cours/retour-etat.svg" alt="Commande par retour d'etat avec reference y ref, prefiltre h, procede A B C, sortie y, et retour de l'etat x par le gain K." caption="Le gain \(K\) réinjecte l'état complet dans l'entrée pour imposer la dynamique de \(A-BK\)." label="Commande par retour d'état"
+
+:::
 
 La dynamique en boucle fermée (BF) est alors régie par :
 \[
@@ -1330,25 +1300,282 @@ La loi de commande par retour d'état augmenté est :
 u(t) = -K_a x_a(t) = -K_x x(t) - K_{\tilde{y}} \tilde{y}(t)
 \]
 
-```mermaid
-flowchart LR
-    Ref[y_ref] --> Add1((+))
-    Plant["Procédé (A, B, C)"] --> y["y"]
-    y --> Add1
-    Add1 --> Integrator["1/p (Intégrateur)"]
-    Integrator --> y_tilde["y_tilde"]
-    y_tilde --> K_y["K_tilde_y"]
-    Plant --> x["x"]
-    x --> K_x("K_x")
-    K_x --> Add2((+))
-    K_y --> Add2
-    Add2 --> Minus[(-)]
-    Minus --> u["u"]
-    u --> Plant
-```
+:::figure src="assets/AU425-Automatique-avance/cours/retour-etat-integral.svg" alt="Retour d'etat avec effet integral : erreur entre y et y ref, integrateur, gains K tilde y et K x, puis commande u vers le procede." caption="L'état augmenté ajoute l'intégrale de l'erreur afin d'annuler l'erreur statique en régime permanent." label="Retour d'état avec effet intégral"
+
+:::
 
 :::block type="remember" title="Propriété de l'effet intégral"
 Grâce à l'intégrateur de l'erreur, l'erreur statique reste strictement nulle en régime permanent (\(y \to y_{ref}\)), y compris en présence d'une perturbation constante \(d\), tant que la boucle fermée augmentée \(A_a - B_a K_a\) est stable.
+:::
+
+#### Exemple de la diapositive 60 : rejet d'une perturbation constante
+
+On considère
+\[
+\dot{x}=-x+u+d,
+\qquad
+y=x,
+\]
+avec l'objectif
+\[
+\lim_{t\to\infty} y(t)=y_{ref}
+\quad \text{pour toute perturbation constante } d.
+\]
+
+Comme \(d\) est constante, on ajoute un intégrateur de l'erreur :
+\[
+\eta(t)=\int_0^t (y(\tau)-y_{ref})\,d\tau,
+\qquad
+\dot{\eta}=y-y_{ref}=x-y_{ref}.
+\]
+
+Le système augmenté devient
+\[
+\begin{bmatrix}
+\dot{x}\\
+\dot{\eta}
+\end{bmatrix}
+=
+\begin{bmatrix}
+-1&0\\
+1&0
+\end{bmatrix}
+\begin{bmatrix}
+x\\
+\eta
+\end{bmatrix}
++
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix}u
++
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix}d
++
+\begin{bmatrix}
+0\\
+-1
+\end{bmatrix}y_{ref}.
+\]
+
+On choisit la commande
+\[
+u=-K_a
+\begin{bmatrix}
+x\\
+\eta
+\end{bmatrix}
+=-k_xx-k_i\eta.
+\]
+Avec
+\[
+A_a=
+\begin{bmatrix}
+-1&0\\
+1&0
+\end{bmatrix},
+\qquad
+B_a=
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix},
+\qquad
+K_a=\begin{bmatrix}k_x&k_i\end{bmatrix},
+\]
+la dynamique de boucle fermée est
+\[
+A_a-B_aK_a
+=
+\begin{bmatrix}
+-1&0\\
+1&0
+\end{bmatrix}
+-
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix}
+\begin{bmatrix}
+k_x&k_i
+\end{bmatrix}
+=
+\begin{bmatrix}
+-1-k_x&-k_i\\
+1&0
+\end{bmatrix}.
+\]
+Le polynôme caractéristique utilisé pour placer les pôles est donc
+\[
+\det\!\left(pI-(A_a-B_aK_a)\right)
+=
+\det
+\begin{bmatrix}
+p+1+k_x&k_i\\
+-1&p
+\end{bmatrix}.
+\]
+En développant :
+\[
+\det\!\left(pI-(A_a-B_aK_a)\right)
+=p^2+(1+k_x)p+k_i.
+\]
+
+Pour fixer les deux pôles en \(-2\), on impose
+\[
+(p+2)^2=p^2+4p+4.
+\]
+Par identification :
+\[
+1+k_x=4,
+\qquad
+k_i=4,
+\]
+d'où
+\[
+k_x=3,
+\qquad
+k_i=4,
+\qquad
+K_a=\begin{bmatrix}3&4\end{bmatrix}.
+\]
+
+Le correcteur équivalent dans le domaine de Laplace est
+\[
+C(p)=k_x+\frac{k_i}{p}=3+\frac{4}{p}
+=\frac{3p+4}{p}.
+\]
+Comme le procédé nominal entre \(u+d\) et \(y\) vaut
+\[
+P(p)=\frac{1}{p+1},
+\]
+la boucle ouverte est
+\[
+L(p)=C(p)P(p)=\frac{3p+4}{p(p+1)}.
+\]
+On en déduit
+\[
+S(p)=\frac{1}{1+L(p)}
+=\frac{p(p+1)}{(p+2)^2},
+\qquad
+T(p)=\frac{L(p)}{1+L(p)}
+=\frac{3p+4}{(p+2)^2}.
+\]
+
+La perturbation \(d\) entre au même endroit que la commande, donc son transfert vers la sortie est
+\[
+\frac{Y(p)}{D(p)}=P(p)S(p)
+=\frac{p}{(p+2)^2}.
+\]
+
+:::block type="method" title="Conclusion de l'exemple"
+Comme \(S(0)=0\) et \(\frac{Y}{D}(0)=0\), la perturbation constante est rejetée en régime permanent. Les deux pôles en \(-2\) fixent en même temps la rapidité du retour vers la consigne après une perturbation.
+:::
+
+### 5. Rejet de perturbations par modèle interne
+
+L'effet intégral est un cas particulier du **principe du modèle interne** : pour rejeter asymptotiquement une perturbation connue par sa forme temporelle, la commande doit contenir une dynamique capable de générer cette forme.
+
+:::block type="remember" title="Règle de conception"
+Si la perturbation est générée par un polynôme caractéristique \(\Phi_d(p)\), on ajoute ce modèle dans la boucle de commande, puis on place les pôles du système augmenté. Il faut ensuite vérifier la commandabilité du système augmenté : ajouter le modèle interne ne suffit pas si l'actionneur ne peut pas agir sur la sortie concernée.
+:::
+
+| Perturbation à rejeter | Modèle interne minimal | États ajoutés |
+| :--- | :--- | :--- |
+| Constante \(d(t)=d_0\) | \(\Phi_d(p)=p\) | un intégrateur |
+| Rampe \(d(t)=d_0+d_1t\) | \(\Phi_d(p)=p^2\) | deux intégrateurs en cascade |
+| Constante + sinusoïde \(d(t)=d_0+a\sin(\omega_0 t)+b\cos(\omega_0 t)\) | \(\Phi_d(p)=p(p^2+\omega_0^2)\) | un intégrateur + un oscillateur |
+
+#### Cas 1 : rejet d'une perturbation en rampe
+
+Une rampe vérifie \(\ddot d(t)=0\). Son modèle interne est donc un double intégrateur. On peut l'insérer à partir de l'erreur de sortie
+\[
+e_y(t)=y(t)-y_{ref}(t)
+\]
+en ajoutant deux états :
+\[
+\dot{\eta}_1=e_y=Cx-y_{ref},
+\qquad
+\dot{\eta}_2=\eta_1.
+\]
+
+Le système augmenté s'écrit alors, pour une perturbation \(\dot{x}=Ax+Bu+Ed\),
+\[
+\begin{bmatrix}
+\dot{x}\\
+\dot{\eta}_1\\
+\dot{\eta}_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+A&0&0\\
+C&0&0\\
+0&1&0
+\end{bmatrix}
+\begin{bmatrix}
+x\\
+\eta_1\\
+\eta_2
+\end{bmatrix}
++
+\begin{bmatrix}
+B\\
+0\\
+0
+\end{bmatrix}u
++
+\begin{bmatrix}
+E\\
+0\\
+0
+\end{bmatrix}d
++
+\begin{bmatrix}
+0\\
+-1\\
+0
+\end{bmatrix}y_{ref}.
+\]
+
+La commande devient
+\[
+u=-K_xx-K_1\eta_1-K_2\eta_2.
+\]
+
+:::block type="method" title="Lecture pratique"
+Pour rejeter une rampe, on augmente le type de la boucle : une perturbation constante demande une intégration de l'erreur, une rampe demande deux intégrations. Les gains \(K_1\) et \(K_2\) se règlent ensuite avec \(K_x\) par placement de pôles ou synthèse LQ sur le système augmenté.
+:::
+
+#### Cas 2 : rejet d'une constante couplée à une sinusoïde
+
+On considère maintenant
+\[
+d(t)=d_0+a\sin(\omega_0t)+b\cos(\omega_0t).
+\]
+La partie constante impose un intégrateur, tandis que la partie sinusoïdale impose un oscillateur autonome de pulsation \(\omega_0\) :
+\[
+\Phi_d(p)=p(p^2+\omega_0^2).
+\]
+
+On ajoute donc un état intégral \(\eta_0\) et deux états oscillants \(\eta_s,\eta_c\), corrigés par l'erreur :
+\[
+\dot{\eta}_0=e_y,
+\qquad
+\begin{cases}
+\dot{\eta}_s=\eta_c+\ell_s e_y\\
+\dot{\eta}_c=-\omega_0^2\eta_s+\ell_c e_y
+\end{cases}
+\]
+où \(\ell_s\) et \(\ell_c\) injectent l'erreur dans le modèle sinusoïdal. La commande peut ensuite être écrite
+\[
+u=-K_xx-K_0\eta_0-K_s\eta_s-K_c\eta_c.
+\]
+
+:::block type="remember" title="À retenir"
+Le rejet exact d'une sinusoïde n'est garanti qu'à la pulsation modélisée \(\omega_0\). Si la fréquence réelle varie, le rejet devient imparfait ; on passe alors à une pondération fréquentielle ou à une commande robuste/adaptative selon le niveau d'incertitude.
 :::
 
 :::
@@ -1364,19 +1591,9 @@ L'observateur est une simulation dynamique en temps réel du procédé, corrigé
 \]
 Où \(L \in \mathbb{R}^{n \times p}\) est la matrice de gain de l'observateur.
 
-```mermaid
-flowchart LR
-  U[Commande u] --> P[Procédé réel]
-  U --> O[Modèle de l'observateur]
-  P --> Y[Mesure y]
-  O --> YH[Sortie estimée ŷ]
-  Y --> INN[Innovation<br/>y moins ŷ]
-  YH --> INN
-  INN --> L[Correction par L]
-  L --> O
-  O --> XH[État estimé x̂]
-  XH --> K[Retour d'état K]
-```
+:::figure src="assets/AU425-Automatique-avance/cours/observateur-luenberger.svg" alt="Observateur de Luenberger : commande u vers procede reel et modele, innovation y moins y estimee, correction L et etat estime x chapeau." caption="L'observateur est une copie du modèle corrigée par l'innovation \(y-\hat{y}\)." label="Observateur d'état de Luenberger"
+
+:::
 
 L'observateur fonctionne comme une copie du modèle corrigée par l'**innovation** \(y-\hat y\). Si cette différence est nulle, il évolue uniquement grâce au modèle et à la commande connue.
 
@@ -1620,13 +1837,9 @@ En factorisant \(Q=Q^{1/2*}Q^{1/2}\) et \(R=R^{1/2*}R^{1/2}\), puis en appliquan
 \widetilde G(p)=R^{-1/2}(p)\,G(p)\,Q^{1/2}(p).
 \]
 
-```mermaid
-flowchart LR
-  U[Commande u] --> R[Préfiltre R^-1/2]
-  R --> G[Procédé G]
-  G --> Q[Postfiltre Q^1/2]
-  Q --> Y[Sortie pondérée]
-```
+:::figure src="assets/AU425-Automatique-avance/cours/ponderations-frequentielles.svg" alt="Commande u, prefiltre R moins un demi, procede G, postfiltre Q un demi et sortie ponderee." caption="Les pondérations fréquentielles transforment le compromis LQ en filtrant la commande et la sortie avant l'évaluation du critère." label="Pondérations fréquentielles"
+
+:::
 
 :::grid two-col
 :::block type="definition" title="Pondération de commande"
