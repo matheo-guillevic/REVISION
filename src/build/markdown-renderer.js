@@ -18,12 +18,58 @@ md.renderer.rules.fence = (tokens, idx, options, env, self) => {
   return defaultFence(tokens, idx, options, env, self);
 };
 
+const defaultHeadingOpen = md.renderer.rules.heading_open || ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options));
+const defaultHeadingClose = md.renderer.rules.heading_close || ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options));
+md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  const level = Number(token.tag.replace(/^h/, ""));
+  const inline = tokens[idx + 1];
+  env._pendingHeadingRelated = env._pendingHeadingRelated || [];
+
+  if (level >= 3 && level <= 6 && inline?.type === "inline" && env.currentPage && env.currentSectionId) {
+    const base = slugifyText(inline.content || "titre");
+    const scopedBase = `${env.currentSectionId}-${base || "titre"}`;
+    const id = uniqueHeadingId(scopedBase, env);
+    token.attrSet("id", id);
+
+    const headingHref = `${env.currentPage}#${id}`;
+    const related = renderRelatedConceptLinks(headingHref, { ...env, variant: "contextual" });
+    env._pendingHeadingRelated.push(related || "");
+  } else {
+    env._pendingHeadingRelated.push("");
+  }
+
+  return defaultHeadingOpen(tokens, idx, options, env, self);
+};
+
+md.renderer.rules.heading_close = (tokens, idx, options, env, self) => {
+  const related = (env._pendingHeadingRelated || []).shift() || "";
+  return `${defaultHeadingClose(tokens, idx, options, env, self)}${related ? `\n${related}` : ""}`;
+};
+
 function escapeHtml(value = "") {
   return String(value)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function slugifyText(value = "") {
+  return String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+function uniqueHeadingId(base, env) {
+  env._headingCounts = env._headingCounts || new Map();
+  const count = env._headingCounts.get(base) || 0;
+  env._headingCounts.set(base, count + 1);
+  return count ? `${base}-${count + 1}` : base;
 }
 
 function escapeJsonScript(value = "") {
@@ -41,7 +87,7 @@ function parseAttrs(source = "") {
   return attrs;
 }
 
-function renderMarkdown(source) {
+function renderMarkdown(source, options = {}) {
   const math = [];
   const withoutComments = source.replace(/<!--[\s\S]*?-->/g, "").trim();
   const protectedSource = withoutComments.replace(
@@ -53,7 +99,7 @@ function renderMarkdown(source) {
     }
   );
 
-  let html = md.render(protectedSource).trim();
+  let html = md.render(protectedSource, options).trim();
   html = html.replace(/<pre><code class="language-([^"]+)">/g, '<pre class="code-block language-$1"><code class="language-$1">');
   html = html.replace(/<pre><code>/g, '<pre class="code-block"><code>');
   html = html.replace(/&lt;br&gt;/g, "<br>");
@@ -87,10 +133,14 @@ function stripCodeFence(source = "") {
   return match ? match[1].trim() : trimmed;
 }
 
-function renderContentMarkdown(source, listMode = "formula") {
+function renderContentMarkdown(source, listMode = "formula", options = {}) {
+  if (listMode && typeof listMode === "object") {
+    options = listMode;
+    listMode = "formula";
+  }
   const ulClass = listMode === "plain" ? "" : ' class="formula-list"';
   const olClass = listMode === "card" ? ' class="ordered-list"' : ' class="solution-steps"';
-  return renderMarkdown(source)
+  return renderMarkdown(source, options)
     .replace(/<ul>/g, `<ul${ulClass}>`)
     .replace(/<ol>/g, `<ol${olClass}>`);
 }
@@ -189,9 +239,24 @@ function normalizeConceptHref(href = "") {
   return cleanHref.replace(/^\.?\//, "");
 }
 
+function splitConceptHref(href = "") {
+  const normalized = normalizeConceptHref(href);
+  const [page, hash = ""] = normalized.split("#");
+  return { page, hash };
+}
+
+function isSameConceptSection(href, options = {}) {
+  if (!options.currentPage || !options.currentSectionId) return false;
+  const link = splitConceptHref(href);
+  const current = splitConceptHref(options.currentPage);
+  return link.page === current.page && (link.hash === options.currentSectionId || link.hash.startsWith(`${options.currentSectionId}-`));
+}
+
 function renderRelatedConceptLinks(currentHref, options = {}) {
   const groups = Array.isArray(options.conceptGroups) ? options.conceptGroups : [];
   const normalizedCurrentHref = normalizeConceptHref(currentHref);
+  const variant = options.variant || "inline";
+  const className = "related-links related-links--inline";
   if (!normalizedCurrentHref) return "";
 
   const matches = groups
@@ -203,6 +268,7 @@ function renderRelatedConceptLinks(currentHref, options = {}) {
   return matches.map((group) => {
     const links = (group.links || [])
       .filter((link) => normalizeConceptHref(link.href) !== normalizedCurrentHref)
+      .filter((link) => variant !== "contextual" || !isSameConceptSection(link.href, options))
       .slice(0, 6)
       .map((link) => `              <a href="${escapeHtml(link.href)}">
                 <strong>${escapeHtml(link.label)}</strong>
@@ -212,7 +278,21 @@ function renderRelatedConceptLinks(currentHref, options = {}) {
 
     if (!links) return "";
 
-    return `          <aside class="related-links related-links--inline">
+    if (variant === "contextual") {
+      return `          <details class="related-popover">
+            <summary aria-label="Afficher les notions liées">?</summary>
+            <div class="related-popover-panel">
+              <span class="panel-label">Notions liees</span>
+              <h3>${escapeHtml(group.title)}</h3>
+              <p>${escapeHtml(group.description || "")}</p>
+              <div class="related-link-list">
+${links}
+              </div>
+            </div>
+          </details>`;
+    }
+
+    return `          <aside class="${className}">
             <span class="panel-label">Notions liees</span>
             <h3>${escapeHtml(group.title)}</h3>
             <p>${escapeHtml(group.description || "")}</p>
@@ -223,20 +303,34 @@ ${links}
   }).filter(Boolean).join("\n");
 }
 
+function contextualRelatedForId(id, options = {}) {
+  if (!id || !options.currentPage) return "";
+  const href = `${options.currentPage}#${id}`;
+  return renderRelatedConceptLinks(href, { ...options, variant: "contextual" });
+}
+
+function generatedSubheadingId(title, options = {}) {
+  if (!title || !options.currentSectionId) return "";
+  const base = slugifyText(title) || "titre";
+  return uniqueHeadingId(`${options.currentSectionId}-${base}`, options);
+}
+
 function renderBlock(block, options = {}) {
   const attrs = block.attrs || {};
 
   switch (block.type) {
     case "section": {
-      const sectionHref = options.currentPage && attrs.id ? `${options.currentPage}#${attrs.id}` : "";
-      const related = renderRelatedConceptLinks(sectionHref, options);
+      const sectionOptions = {
+        ...options,
+        currentSectionId: attrs.id,
+        _headingCounts: new Map(),
+      };
       return `        <section id="${escapeHtml(attrs.id)}" class="page-section">
           <div class="section-heading">
             <span class="eyebrow">${escapeHtml(attrs.eyebrow || "")}</span>
             <h2>${escapeHtml(attrs.title || "")}</h2>
 ${attrs.summary ? `            <p>${escapeHtml(attrs.summary)}</p>\n` : ""}          </div>
-${renderBlocks(block.body, options)}
-${related ? `\n${related}` : ""}
+${renderBlocks(block.body, sectionOptions)}
         </section>`;
     }
 
@@ -268,8 +362,10 @@ ${renderListLinks(block.body)}
 
     case "block": {
       const variant = attrs.type || attrs.variant || "neutral";
+      const headingId = generatedSubheadingId(attrs.title, options);
+      const related = contextualRelatedForId(headingId, options);
       return `            <div class="content-block ${escapeHtml(variant)}">
-${attrs.title ? `              <h4>${escapeHtml(attrs.title)}</h4>\n` : ""}${renderBlocks(block.body, { markdown: renderContentMarkdown })
+${attrs.title ? `              <h4${headingId ? ` id="${escapeHtml(headingId)}"` : ""}>${escapeHtml(attrs.title)}</h4>\n${related ? `${related}\n` : ""}` : ""}${renderBlocks(block.body, { ...options, markdown: renderContentMarkdown })
         .split("\n")
         .map((line) => `              ${line}`)
         .join("\n")}
@@ -277,8 +373,10 @@ ${attrs.title ? `              <h4>${escapeHtml(attrs.title)}</h4>\n` : ""}${ren
     }
 
     case "annotation": {
+      const headingId = generatedSubheadingId(attrs.title, options);
+      const related = contextualRelatedForId(headingId, options);
       return `          <div class="annotation" data-annotation>
-${attrs.title ? `            <strong>${escapeHtml(attrs.title)}</strong>\n` : ""}${renderBlocks(block.body, { markdown: renderContentMarkdown })
+${attrs.title ? `            <strong${headingId ? ` id="${escapeHtml(headingId)}"` : ""}>${escapeHtml(attrs.title)}</strong>\n${related ? `${related}\n` : ""}` : ""}${renderBlocks(block.body, { ...options, markdown: renderContentMarkdown })
         .split("\n")
         .map((line) => `            ${line}`)
         .join("\n")}
@@ -568,10 +666,6 @@ ${frame}
               <span class="status-pill">${escapeHtml(label)}</span>
               <h3>${escapeHtml(title)}</h3>
             </div>
-            <div class="button-row">
-              <button type="button" data-mark-done>Marquer comme fait</button>
-              <button type="button" data-toggle-redo>A refaire</button>
-            </div>
           </header>
           <div class="answer-block">
 ${renderBlocks(body, options)}
@@ -583,7 +677,7 @@ ${renderBlocks(body, options)}
       const title = attrs.title || "Correction détaillée";
       return `            <div class="content-block solution-panel">
               <h4>${escapeHtml(title)}</h4>
-${renderBlocks(block.body, { markdown: renderContentMarkdown })
+${renderBlocks(block.body, { ...options, markdown: renderContentMarkdown })
         .split("\n")
         .map((line) => `              ${line}`)
         .join("\n")}
@@ -602,7 +696,7 @@ ${renderBlocks(block.body, { markdown: renderContentMarkdown })
 function renderBlocks(source, options = {}) {
   const markdownRenderer = options.markdown || renderMarkdown;
   return splitBlocks(source)
-    .map((block) => (block.type === "markdown" ? markdownRenderer(block.text) : renderBlock(block, options)))
+    .map((block) => (block.type === "markdown" ? markdownRenderer(block.text, options) : renderBlock(block, options)))
     .filter(Boolean)
     .join("\n\n");
 }

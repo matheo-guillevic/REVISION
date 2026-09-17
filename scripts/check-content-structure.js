@@ -77,6 +77,10 @@ function checkConfiguredPages(configFile, kind, subjects, targets) {
       assert(parsed.data.subject === group.subject, `${rel(markdownPath)}: subject="${parsed.data.subject}" au lieu de "${group.subject}"`);
       assert(parsed.data.type === kind, `${rel(markdownPath)}: type="${parsed.data.type}" au lieu de "${kind}"`);
       assert(parsed.data.target === target, `${rel(markdownPath)}: target="${parsed.data.target}" au lieu de "${target}"`);
+      for (const field of ["title", "eyebrow", "heading", "summary"]) {
+        assert(Boolean(parsed.data[field] || page[field]), `${rel(markdownPath)}: frontmatter/config "${field}" manquant`);
+      }
+      warn(/^:::\s*section\b/m.test(parsed.content), `${rel(markdownPath)}: aucune section enrichie :::section detectee`);
 
       const outputPath = path.join(outDir, target);
       assert(fs.existsSync(outputPath), `HTML genere introuvable: ${rel(outputPath)}`);

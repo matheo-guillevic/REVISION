@@ -141,6 +141,24 @@ function normalizeConceptHref(href) {
   return `${url.pathname.split("/").pop() || "index.html"}${url.hash || ""}`;
 }
 
+function splitConceptHref(href) {
+  const normalized = normalizeConceptHref(href);
+  const [page, hash = ""] = normalized.split("#");
+  return { page, hash: hash.replace(/^#/, "") };
+}
+
+function currentConceptSectionId() {
+  const activeHref = document.querySelector(".nav-link.active")?.getAttribute("href") || "";
+  return splitConceptHref(activeHref).hash;
+}
+
+function isSameConceptSection(href, sectionId) {
+  if (!sectionId) return false;
+  const page = window.location.pathname.split("/").pop() || "index.html";
+  const link = splitConceptHref(href);
+  return link.page === page && (link.hash === sectionId || link.hash.startsWith(`${sectionId}-`));
+}
+
 function currentConceptTargets() {
   const page = window.location.pathname.split("/").pop() || "index.html";
   const hash = window.location.hash || "";
@@ -169,9 +187,16 @@ function renderRelatedLinksPanel(panel, groups) {
   if (!content) return;
 
   const targets = currentConceptTargets();
+  const sectionId = currentConceptSectionId();
   const matches = groups
-    .map((group) => ({ ...group, score: relatedGroupScore(group, targets) }))
-    .filter((group) => group.score > 0)
+    .map((group) => ({
+      ...group,
+      relatedLinks: (group.links || [])
+        .filter((link) => !targets.has(normalizeConceptHref(link.href)))
+        .filter((link) => !isSameConceptSection(link.href, sectionId)),
+      score: relatedGroupScore(group, targets),
+    }))
+    .filter((group) => group.score > 0 && group.relatedLinks.length)
     .sort((a, b) => b.score - a.score || String(a.title).localeCompare(String(b.title), "fr"))
     .slice(0, 2);
 
@@ -183,8 +208,7 @@ function renderRelatedLinksPanel(panel, groups) {
 
   panel.hidden = false;
   content.innerHTML = matches.map((group) => {
-    const links = (group.links || [])
-      .filter((link) => !targets.has(normalizeConceptHref(link.href)))
+    const links = group.relatedLinks
       .slice(0, 6)
       .map((link) => `<a href="${escapeHtmlText(link.href)}">
         <strong>${escapeHtmlText(link.label)}</strong>
@@ -1998,24 +2022,6 @@ document.querySelectorAll('a[href^="#"], a[href^="index.html#"]').forEach((link)
   });
 });
 
-document.querySelectorAll("[data-mark-done]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const card = button.closest("[data-exercise]");
-    card.classList.toggle("done");
-    button.textContent = card.classList.contains("done") ? "Fait" : "Marquer comme fait";
-    updateProgress();
-  });
-});
-
-document.querySelectorAll("[data-toggle-redo]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const card = button.closest("[data-exercise]");
-    card.classList.toggle("redo");
-    button.classList.toggle("active");
-    button.textContent = card.classList.contains("redo") ? "A refaire marque" : "A refaire";
-  });
-});
-
 const annotationToggle = document.querySelector("[data-toggle-annotations]");
 if (annotationToggle) {
   annotationToggle.addEventListener("click", (buttonEvent) => {
@@ -2031,7 +2037,8 @@ const observer = new IntersectionObserver(
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       navLinks.forEach((link) => {
-        link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
+        const linkHash = new URL(link.getAttribute("href"), window.location.href).hash;
+        link.classList.toggle("active", linkHash === `#${entry.target.id}`);
       });
     });
   },

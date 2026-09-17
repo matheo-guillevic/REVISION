@@ -293,13 +293,23 @@ summary: Correction guidee.
 Pour un TP, utiliser `type: tp` et une cible HTML de type
 `MT461-Methode-numerique-tp1.html`.
 
+Structure commune attendue :
+
+- le frontmatter doit fournir `title`, `subject`, `type`, `target`, `eyebrow`, `heading` et `summary` ;
+- le contenu doit etre decoupe avec `:::section` pour alimenter la sidebar locale et l'index de recherche ;
+- chaque exercice autonome doit utiliser `:::exercise`, avec `label`, `title` et si possible un `id` stable ;
+- les corrections detaillees doivent etre placees dans `:::solution` ou dans des blocs typés `:::block type="method|definition|warning|remember|theorem"` ;
+- les boutons d'etat "fait" et "a refaire" ne font plus partie du format : les TD restent des pages de revision statiques et navigables.
+
 Une carte d'exercice s'ecrit avec `:::exercise` :
 
 ```md
-:::exercise label="Exercice 1" title="Denombrement"
+:::section id="td1-ex1" eyebrow="Exercice 1" title="Denombrement" summary="Identifier l'univers et appliquer les regles de comptage."
+
+:::exercise id="td1-ex1-denombrement" label="Exercice 1" title="Denombrement"
 Enonce ou rappel.
 
-:::block type="method" title="Correction et raisonnement"
+:::solution title="Correction et raisonnement"
 1. Identifier l'univers.
 2. Appliquer la formule.
 
@@ -307,6 +317,8 @@ Enonce ou rappel.
 P(A)=\frac{|A|}{|\Omega|}
 \]
 :::
+:::
+
 :::
 ```
 
@@ -479,6 +491,21 @@ correspondances dans le titre, la matiere et le contenu.
 
 ## Liens entre notions
 
+Les methodes transverses qui ne dependent pas d'un semestre vivent dans les
+pages `OUTILS-*` :
+
+```text
+content/OUTILS-Mathematiques/cours.md
+content/OUTILS-Electronique/cours.md
+content/OUTILS-Automatique/cours.md
+```
+
+Elles servent a expliquer en detail les outils utilises dans les cours sans y
+etre redeveloppes : transformees, rang, pont de Wheatstone, AOP, fonction de
+transfert, marges, commandabilite, observateurs, etc. Les liens entre notions
+doivent pointer en priorite vers ces fiches outils quand une methode merite une
+explication generale.
+
 Les passerelles entre cours sont centralisees dans :
 
 ```text
@@ -503,9 +530,15 @@ sections utiles :
 }
 ```
 
-Au build, le renderer insere automatiquement un bloc **Notions liees** dans la
-section concernee quand une entree `href` pointe vers cette ancre. Pour une page
-TD/TP/examen entiere, utiliser une cible sans ancre, par exemple
+Au build, le renderer insere automatiquement un bloc **Notions liees** uniquement
+quand une entree `href` pointe vers l'ancre exacte d'un sous-titre Markdown ou du
+titre d'un bloc enrichi. Dans un cours, ce bloc est rendu comme un bouton
+contextuel `?` flottant a droite, au niveau precis ou la notion est utilisee. Le
+bouton ouvre le menu des notions liees ; sur mobile, il reprend naturellement le
+flux du document. Les liens vers le meme chapitre que l'emplacement courant sont
+masques automatiquement pour eviter les renvois internes trop proches.
+
+Pour une page TD/TP/examen entiere, utiliser une cible sans ancre, par exemple
 `MT461-Methode-numerique-tp1.html`.
 
 `src/build/build-concept-links.js` genere aussi `out/concept-links.json` afin de
@@ -514,5 +547,5 @@ verifier et publier l'index des passerelles.
 Pour ajouter une notion :
 
 1. creer ou completer un groupe dans `concept-links.json` ;
-2. utiliser des liens vers une page HTML et, si possible, une ancre stable ;
+2. utiliser des liens vers une page HTML et une ancre stable de sous-titre ou de bloc ;
 3. lancer `npm run build` pour verifier les pages et les ancres.

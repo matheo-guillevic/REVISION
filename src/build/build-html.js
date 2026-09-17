@@ -40,9 +40,54 @@ const pages = {
   "AU425-Automatique-avance": path.join(outDir, "AU425-Automatique-avance.html"),
   "IN451-IA": path.join(outDir, "IN451-IA.html"),
   "ANGLAIS-TOEIC": path.join(outDir, "ANGLAIS-TOEIC.html"),
+  "OUTILS-Mathematiques": path.join(outDir, "OUTILS-Mathematiques.html"),
+  "OUTILS-Electronique": path.join(outDir, "OUTILS-Electronique.html"),
+  "OUTILS-Automatique": path.join(outDir, "OUTILS-Automatique.html"),
 };
 
 const courseStructures = {
+  "OUTILS-Mathematiques": {
+    page: "OUTILS-Mathematiques.html",
+    subject: "OUTILS-Mathematiques",
+    intro: "outils-maths-intro",
+    contentHref: "outils-maths-derivation",
+    content: [
+      ["outils-maths-derivation", "Derivation"],
+      ["outils-maths-integrales", "Integrales"],
+      ["outils-maths-matrices", "Calcul matriciel"],
+      ["outils-maths-transformees", "Transformees"],
+      ["outils-maths-algebre", "Algebre lineaire"],
+      ["outils-maths-calcul", "Calcul numerique"],
+      ["outils-maths-probas", "Probabilites"],
+    ],
+  },
+  "OUTILS-Electronique": {
+    page: "OUTILS-Electronique.html",
+    subject: "OUTILS-Electronique",
+    intro: "outils-elec-intro",
+    contentHref: "outils-elec-bases",
+    content: [
+      ["outils-elec-bases", "Bases de circuits"],
+      ["outils-elec-aop", "AOP"],
+      ["outils-elec-capteurs", "Capteurs"],
+      ["outils-elec-composants", "Composants"],
+      ["outils-elec-filtres", "Filtres"],
+    ],
+  },
+  "OUTILS-Automatique": {
+    page: "OUTILS-Automatique.html",
+    subject: "OUTILS-Automatique",
+    intro: "outils-auto-intro",
+    contentHref: "outils-auto-modelisation",
+    content: [
+      ["outils-auto-modelisation", "Modelisation"],
+      ["outils-auto-laplace", "Laplace"],
+      ["outils-auto-schemas-blocs", "Schemas blocs"],
+      ["outils-auto-analyse", "Analyse"],
+      ["outils-auto-commande", "Commande"],
+      ["outils-auto-etat", "Espace d'etat"],
+    ],
+  },
   "IN331-Algo": {
     page: "IN331-Algo.html",
     subject: "IN331-Algo",
@@ -456,6 +501,15 @@ ${body}
 function renderHome() {
   const nav = `          <a class="nav-link active" href="index.html">Accueil</a>
           <details class="sidebar-semester">
+            <summary>Outils</summary>
+            <ul class="sidebar-semester-list">
+              <li><a href="index.html#outils">Vue outils</a></li>
+              <li><a href="OUTILS-Mathematiques.html">Methodes mathematiques</a></li>
+              <li><a href="OUTILS-Electronique.html">Methodes electroniques</a></li>
+              <li><a href="OUTILS-Automatique.html">Methodes automatique</a></li>
+            </ul>
+          </details>
+          <details class="sidebar-semester">
             <summary>Semestre 5</summary>
             <ul class="sidebar-semester-list">
               <li><a href="index.html#semestre-5">Vue semestre</a></li>
@@ -501,6 +555,37 @@ function renderHome() {
         </section>
 
         <section class="page-section semester-list">
+          <details id="outils" class="semester-group" open>
+            <summary>
+              <span>
+                <span class="eyebrow">Hors semestre</span>
+                <strong>Outils transverses</strong>
+              </span>
+              <span class="semester-count">3 pages</span>
+            </summary>
+
+            <div class="dashboard-grid semester-content">
+              <article class="chapter-card">
+                <span class="status-pill">Outil</span>
+                <h3>Methodes mathematiques</h3>
+                <p>Transformees, algebre lineaire, erreurs numeriques, iterations, EDO et probabilites utiles aux cours.</p>
+                <p class="secondary-link"><a href="OUTILS-Mathematiques.html">Ouvrir les outils</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Outil</span>
+                <h3>Methodes electroniques</h3>
+                <p>Diviseurs, ponts, AOP, instrumentation, diodes, BJT, filtres RC et bruit de mesure.</p>
+                <p class="secondary-link"><a href="OUTILS-Electronique.html">Ouvrir les outils</a></p>
+              </article>
+              <article class="chapter-card">
+                <span class="status-pill">Outil</span>
+                <h3>Methodes automatique</h3>
+                <p>Fonction de transfert, Bode, marges, precision, espace d'etat, commandabilite, observateurs et LQR.</p>
+                <p class="secondary-link"><a href="OUTILS-Automatique.html">Ouvrir les outils</a></p>
+              </article>
+            </div>
+          </details>
+
           <details id="semestre-5" class="semester-group">
             <summary>
               <span>
@@ -659,6 +744,25 @@ function renderHome() {
     heading: "Revisions par semestre",
     cta: '<a class="primary-button" href="#semestre-5">Semestre 5</a>',
     body,
+  });
+}
+
+function renderToolCourse(subject, brandMark, heading, subtitle) {
+  const structure = courseStructures[subject];
+  const course = readCourseBody(subject, structure);
+  const nav = renderCommonCourseNav(structure);
+
+  return renderShell({
+    title: `${subject} - Revision ESISAR`,
+    brandMark,
+    brandTitle: subject,
+    brandSubtitle: subtitle,
+    nav,
+    eyebrow: "Outils",
+    heading,
+    cta: '<a class="primary-button" href="index.html#outils">Outils</a>',
+    body: course,
+    showAnnotations: true,
   });
 }
 
@@ -1099,5 +1203,8 @@ write(pages["EP425-Capteur"], renderSensorCourse());
 write(pages["AU425-Automatique-avance"], renderAdvancedControlCourse());
 write(pages["IN451-IA"], renderArtificialIntelligenceCourse());
 write(pages["ANGLAIS-TOEIC"], renderToeicCourse());
+write(pages["OUTILS-Mathematiques"], renderToolCourse("OUTILS-Mathematiques", "M", "Methodes mathematiques transverses", "Outils mathematiques"));
+write(pages["OUTILS-Electronique"], renderToolCourse("OUTILS-Electronique", "E", "Methodes electroniques transverses", "Outils electroniques"));
+write(pages["OUTILS-Automatique"], renderToolCourse("OUTILS-Automatique", "A", "Methodes d'automatique transverses", "Outils automatique"));
 
 console.log("Application construite dans out/.");

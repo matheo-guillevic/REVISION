@@ -44,13 +44,120 @@ function write(filePath, html) {
 }
 
 function renderSearchBox() {
-  return `        <div class="site-search site-search--page" data-site-search>
+  return `        <div class="site-search" data-site-search>
           <label>
             <span>Recherche</span>
             <input type="search" placeholder="Rechercher une notion..." autocomplete="off" data-site-search-input>
           </label>
           <div class="site-search-results" data-site-search-results hidden></div>
         </div>`;
+}
+
+function renderNav(items, activeHref) {
+  return items
+    .map(([href, label, level]) => {
+      const active = href === activeHref ? " active" : "";
+      const sub = level === "sub" ? " nav-link-sub" : "";
+      return `          <a class="nav-link${sub}${active}" href="${escapeHtml(href)}">${escapeHtml(label)}</a>`;
+    })
+    .join("\n");
+}
+
+function slugify(value = "") {
+  return String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 72);
+}
+
+function addGeneratedExerciseIds(markdown, page) {
+  let exerciseIndex = 0;
+  return markdown.replace(/^:::\s*exercise([^\n]*)$/gm, (full, attrs) => {
+    if (/\bid="/.test(attrs)) return full;
+    exerciseIndex += 1;
+    const title = attrs.match(/\btitle="([^"]*)"/)?.[1] || attrs.match(/\blabel="([^"]*)"/)?.[1] || `exercice-${exerciseIndex}`;
+    const base = slugify(title) || `exercice-${exerciseIndex}`;
+    return `:::exercise id="${slugify(page.target.replace(/\.html$/i, ""))}-${base}"${attrs}`;
+  });
+}
+
+function parseDirectiveAttrs(source = "") {
+  const attrs = {};
+  for (const attr of source.matchAll(/([a-zA-Z0-9_-]+)="([^"]*)"/g)) {
+    attrs[attr[1]] = attr[2];
+  }
+  return attrs;
+}
+
+function extractMarkdownSections(markdown) {
+  return [...markdown.matchAll(/^:::\s*section\s+([^\n]*)$/gm)]
+    .map((match) => {
+      const attrs = parseDirectiveAttrs(match[1]);
+      return attrs.id && attrs.title ? { id: attrs.id, title: attrs.title, eyebrow: attrs.eyebrow || "" } : null;
+    })
+    .filter(Boolean);
+}
+
+function extractMarkdownExercises(markdown) {
+  return [...markdown.matchAll(/^:::\s*exercise\s+([^\n]*)$/gm)]
+    .map((match) => {
+      const attrs = parseDirectiveAttrs(match[1]);
+      return attrs.id && (attrs.title || attrs.label) ? { id: attrs.id, title: attrs.title || attrs.label } : null;
+    })
+    .filter(Boolean);
+}
+
+function kindNoun(kind) {
+  if (kind === "tp") return "TP";
+  if (kind === "exam") return "Examens";
+  return "TD";
+}
+
+function pagesForKind(group, kind) {
+  return kind === "exam" ? group.exams : group.pages;
+}
+
+function renderSidebarGroup(title, links, activeHref) {
+  if (!links.length) return "";
+  return `        <div class="sidebar-nav-group">
+          <span class="panel-label">${escapeHtml(title)}</span>
+          <nav class="nav-list">
+${renderNav(links, activeHref)}
+          </nav>
+        </div>`;
+}
+
+function renderPageNav(group, page, kind, sections, exercises) {
+  const subjectHref = group.courseHref || `${group.subject}.html`;
+  const sectionExerciseLinks = sections
+    .filter((section) => /exercice|partie/i.test(`${section.eyebrow} ${section.title}`))
+    .map((section) => [
+      `${page.target}#${section.id}`,
+      section.eyebrow ? `${section.eyebrow} - ${section.title}` : section.title,
+      "sub",
+    ]);
+  const exerciseLinks = (sectionExerciseLinks.length ? sectionExerciseLinks : exercises.map((exercise) => [
+    `${page.target}#${exercise.id}`,
+    exercise.title,
+    "sub",
+  ])).slice(0, 18);
+
+  return [
+    renderSidebarGroup("Cours associe", [
+      [subjectHref, group.courseLabel || group.label || group.subject],
+    ], ""),
+    renderSidebarGroup("Exercices", exerciseLinks, ""),
+  ].filter(Boolean).join("\n\n");
+}
+
+function renderRelatedLinksSidebar() {
+  return `        <aside class="related-links" data-related-links hidden>
+          <span class="panel-label">Notions liees</span>
+          <div data-related-links-content></div>
+        </aside>`;
 }
 
 function markdownPathFor(group, page, kind) {
@@ -61,6 +168,10 @@ function markdownPathFor(group, page, kind) {
 function renderPage(group, page, kind, markdownPath) {
   const parsed = matter(fs.readFileSync(markdownPath, "utf8"));
   const data = { ...page, ...parsed.data };
+  const content = addGeneratedExerciseIds(parsed.content, data);
+  const sections = extractMarkdownSections(content);
+  const exercises = extractMarkdownExercises(content);
+  const nav = renderPageNav(group, data, kind, sections, exercises);
   const kindLabels = {
     td: group.backLabel || "Retour aux TD",
     tp: group.backLabel || "Retour aux TP",
@@ -101,27 +212,44 @@ function renderPage(group, page, kind, markdownPath) {
     <script defer src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3/plotly.min.js"></script>
     <script defer src="script.js?v=${assetRevision}"></script>
   </head>
-  <body class="td-page">
-    <main class="main-content">
-      <header class="td-header">
-        <a class="back-link" href="${escapeHtml(group.backHref)}">${escapeHtml(kindLabels[kind] || "Retour au cours")}</a>
-        <div>
-          <span class="eyebrow">${escapeHtml(data.eyebrow || "")}</span>
-          <h1>${escapeHtml(data.heading || data.title || "")}</h1>
-          ${data.summary ? `<p>${escapeHtml(data.summary)}</p>` : ""}
-          <p>Page reconstruite depuis <code>${escapeHtml(sourceLabel)}</code>.</p>
-        </div>
-        <div class="td-actions">
-          <a class="back-link" href="${escapeHtml(group.courseHref)}">${escapeHtml(group.courseLabel)}</a>
-        </div>
-${renderSearchBox()}
-      </header>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navigation principale">
+        <a class="brand" href="index.html" aria-label="Retour a l'accueil">
+          <span class="brand-mark">ES</span>
+          <span>
+            <strong>Revision ESISAR</strong>
+            <small>${escapeHtml(group.label || group.subject)}</small>
+          </span>
+        </a>
 
-      <section class="page-section">
+${renderSearchBox()}
+
+${nav}
+
+${renderRelatedLinksSidebar()}
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar page-topbar">
+          <div>
+            <span class="eyebrow">${escapeHtml(data.eyebrow || "")}</span>
+            <h1>${escapeHtml(data.heading || data.title || "")}</h1>
+            ${data.summary ? `<p>${escapeHtml(data.summary)}</p>` : ""}
+            <p>Page reconstruite depuis <code>${escapeHtml(sourceLabel)}</code>.</p>
+          </div>
+          <div class="td-actions">
+            <a class="back-link" href="${escapeHtml(group.backHref)}">${escapeHtml(kindLabels[kind] || "Retour au cours")}</a>
+            <a class="back-link" href="${escapeHtml(group.courseHref)}">${escapeHtml(group.courseLabel)}</a>
+          </div>
+        </header>
+
+        <section class="page-section page-body">
 ${related ? `${related}\n` : ""}
-${renderBlocks(parsed.content, { currentPage: data.target, conceptGroups })}
-      </section>
-    </main>
+${renderBlocks(content, { currentPage: data.target, conceptGroups })}
+        </section>
+      </main>
+    </div>
   </body>
 </html>`;
 }
@@ -129,7 +257,7 @@ ${renderBlocks(parsed.content, { currentPage: data.target, conceptGroups })}
 function buildKind(configFile, kind) {
   const config = readJson(configFile);
   for (const group of config.groups) {
-    const pages = kind === "exam" ? group.exams : group.pages;
+    const pages = pagesForKind(group, kind);
     for (const page of pages) {
       const markdownPath = markdownPathFor(group, page, kind);
       if (!fs.existsSync(markdownPath)) {

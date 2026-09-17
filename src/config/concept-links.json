@@ -1,312 +1,1455 @@
 {
   "groups": [
     {
-      "id": "signal-fourier-filtres",
-      "title": "Signaux, Fourier et filtres",
-      "description": "Relie les outils spectraux entre mathematiques, signal, electronique et automatique.",
+      "id": "derivation-linearisation",
+      "title": "Derivation et linearisation",
+      "description": "Prerequis pour approximer localement un modele, une sensibilite ou un capteur.",
       "links": [
         {
-          "href": "MT321-Mathematiques-general.html#mt321-chap6-series-fourier",
+          "href": "OUTILS-Mathematiques.html#outils-maths-derivation-derivee-comme-pente-locale",
+          "label": "Derivee comme pente",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-derivation-linearisation-locale",
+          "label": "Linearisation locale",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-conditionnement-sensibilite-totale",
+          "label": "Sensibilite totale",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-cas-2-linearisation-et-modele-d-etat",
+          "label": "Linearisation et etat",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "integrales-moyennes-energie",
+      "title": "Integrales, moyennes et energie",
+      "description": "Prerequis pour les coefficients de Fourier, les valeurs moyennes et les criteres energetiques.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-integrales-integrale-comme-accumulation",
+          "label": "Integrale comme accumulation",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-integrales-valeur-moyenne",
+          "label": "Valeur moyenne",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-integrales-exemple-valeur-efficace",
+          "label": "Valeur efficace",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "MT321-Mathematiques-general.html#mt321-chap6-series-fourier-structure-et-coefficients",
+          "label": "Coefficients de Fourier",
+          "subject": "MT321-Mathematiques-general"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-lqr-critere-energetique-continu",
+          "label": "Critere LQR continu",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "calcul-matriciel-prerequis",
+      "title": "Calcul matriciel de base",
+      "description": "Prerequis pour les systemes lineaires, les changements de base et l'espace d'etat.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-matrices-produit-matrice-vecteur",
+          "label": "Produit matrice-vecteur",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-matrices-multiplier-deux-matrices",
+          "label": "Produit matriciel",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-matrices-resoudre-un-systeme-lineaire",
+          "label": "Systeme lineaire",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "MT321-Mathematiques-general.html#mt321-chap3-applications-lineaires-matrices-matrice-et-changement-de-base",
+          "label": "Matrices et changement de base",
+          "subject": "MT321-Mathematiques-general"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-etat-1-representation-interne-representation-d-etat-continue",
+          "label": "Matrices d'etat",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "fourier-spectres",
+      "title": "Fourier et spectres",
+      "description": "Meme outil mathematique, utilise pour decomposer un signal ou une fonction en frequences.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-transformees-transformee-de-fourier",
+          "label": "Methode Fourier",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "MT321-Mathematiques-general.html#mt321-chap6-series-fourier-structure-et-coefficients",
           "label": "Series de Fourier",
           "subject": "MT321-Mathematiques-general"
         },
         {
-          "href": "AU331-Traitement-Signal.html#au331-signaux-continus",
-          "label": "Signaux continus",
+          "href": "AU331-Traitement-Signal.html#au331-signaux-continus-dualite-temps-frequence-et-transformee-de-fourier",
+          "label": "Transformee de Fourier",
           "subject": "AU331-Traitement-Signal"
         },
         {
-          "href": "AU331-Traitement-Signal.html#au331-analyse-spectrale",
-          "label": "Analyse spectrale",
+          "href": "AU331-Traitement-Signal.html#au331-analyse-spectrale-densite-spectrale-d-energie-dse",
+          "label": "DSE",
           "subject": "AU331-Traitement-Signal"
-        },
-        {
-          "href": "AU331-Traitement-Signal.html#au331-echantillonnage",
-          "label": "Echantillonnage et TFD",
-          "subject": "AU331-Traitement-Signal"
-        },
-        {
-          "href": "EP361-electonique.html#elec-filtres",
-          "label": "Filtres analogiques",
-          "subject": "EP361-electonique"
-        },
-        {
-          "href": "AU361-Automatique.html#AU361-Automatique-commande",
-          "label": "Analyse frequentielle",
-          "subject": "AU361-Automatique"
         }
       ]
     },
     {
-      "id": "automatique-etat-commande",
-      "title": "Systemes, stabilite et commande",
-      "description": "Passe de la fonction de transfert aux representations d'etat et aux correcteurs.",
+      "id": "convolution-correlation-spectre",
+      "title": "Convolution, correlation, spectre",
+      "description": "Relie operation temporelle, ressemblance entre signaux et lecture spectrale.",
       "links": [
         {
-          "href": "AU361-Automatique.html#AU361-Automatique-modelisation",
-          "label": "Representation externe",
+          "href": "OUTILS-Mathematiques.html#outils-maths-transformees-convolution",
+          "label": "Methode convolution",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-signaux-continus-produit-de-convolution",
+          "label": "Produit de convolution",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-analyse-spectrale-fonctions-de-correlation",
+          "label": "Fonctions de correlation",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-analyse-spectrale-densite-spectrale-de-puissance-dsp",
+          "label": "DSP",
+          "subject": "AU331-Traitement-Signal"
+        }
+      ]
+    },
+    {
+      "id": "echantillonnage-adc",
+      "title": "Echantillonnage et ADC",
+      "description": "Passage du signal continu aux echantillons numeriques.",
+      "links": [
+        {
+          "href": "AU331-Traitement-Signal.html#au331-echantillonnage-principe-theorique-de-l-echantillonnage",
+          "label": "Principe d'echantillonnage",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-echantillonnage-theoreme-de-shannon-et-reconstitution",
+          "label": "Shannon",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-periph-convertisseur-analogique-numerique-adc",
+          "label": "ADC",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-periph-laboratoire-virtuel-wokwi-echantillonnage-adc-arithmetique-virgule-fixe",
+          "label": "ADC et virgule fixe",
+          "subject": "SN421-Dev-Micro"
+        }
+      ]
+    },
+    {
+      "id": "anti-repliement-filtrage",
+      "title": "Anti-repliement et filtrage",
+      "description": "Les filtres analogiques preparent le signal avant le traitement discret.",
+      "links": [
+        {
+          "href": "OUTILS-Electronique.html#outils-elec-filtres-lire-un-bode-de-filtre",
+          "label": "Lire un filtre",
+          "subject": "OUTILS-Electronique"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-echantillonnage-filtre-anti-repliement-anti-aliasing",
+          "label": "Filtre anti-repliement",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "EP361-electonique.html#elec-filtres-familles-ideales",
+          "label": "Familles de filtres",
+          "subject": "EP361-electonique"
+        },
+        {
+          "href": "EP361-electonique.html#elec-filtres-premier-et-second-ordre",
+          "label": "Ordre d'un filtre",
+          "subject": "EP361-electonique"
+        }
+      ]
+    },
+    {
+      "id": "fenetrage-rif",
+      "title": "Fenetrage et filtres RIF",
+      "description": "Le fenetrage relie la synthese temporelle et la reponse frequentielle.",
+      "links": [
+        {
+          "href": "AU331-Traitement-Signal.html#au331-signaux-continus-apodisation-filtrage-temporel",
+          "label": "Apodisation",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-systemes-rif-filtres-a-reponse-impulsionnelle-finie-rif",
+          "label": "Filtres RIF",
+          "subject": "AU331-Traitement-Signal"
+        },
+        {
+          "href": "AU331-Traitement-Signal.html#au331-systemes-rif-methode-de-synthese-par-la-fenetre",
+          "label": "Synthese par fenetre",
+          "subject": "AU331-Traitement-Signal"
+        }
+      ]
+    },
+    {
+      "id": "fonction-transfert-etat",
+      "title": "Fonction de transfert et etat",
+      "description": "Deux representations du meme systeme lineaire, externe et interne.",
+      "links": [
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-modelisation-fonction-de-transfert",
+          "label": "Methode fonction de transfert",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-laplace-pourquoi-laplace-en-automatique",
+          "label": "Laplace en automatique",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-transformees-transformee-de-laplace",
+          "label": "Laplace",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-modelisation-fonction-de-transfert",
+          "label": "Fonction de transfert",
           "subject": "AU361-Automatique"
         },
         {
-          "href": "AU361-Automatique.html#AU361-Automatique-analyse",
-          "label": "Laplace et reponses temporelles",
-          "subject": "AU361-Automatique"
-        },
-        {
-          "href": "AU361-Automatique.html#AU361-Automatique-marges",
-          "label": "Marges de stabilite",
-          "subject": "AU361-Automatique"
-        },
-        {
-          "href": "AU361-Automatique.html#AU361-Automatique-pid-rst",
-          "label": "PID et RST",
-          "subject": "AU361-Automatique"
-        },
-        {
-          "href": "AU425-Automatique-avance.html#au425-etat",
-          "label": "Representation d'etat",
+          "href": "AU425-Automatique-avance.html#au425-etat-4-passage-de-la-representation-interne-representation-d-etat-a-la-representation",
+          "label": "Etat vers transfert",
           "subject": "AU425-Automatique-avance"
         },
         {
-          "href": "AU425-Automatique-avance.html#au425-structure",
-          "label": "Commandabilite et observabilite",
+          "href": "AU425-Automatique-avance.html#au425-etat-5-passage-de-la-representation-externe-a-la-representation-interne-representatio",
+          "label": "Transfert vers etat",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "schemas-blocs-automatique",
+      "title": "Schemas blocs en automatique",
+      "description": "Lire, construire et reduire les schemas blocs utilises pour les fonctions de transfert.",
+      "links": [
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-schemas-blocs-elements-d-un-schema-bloc",
+          "label": "Elements d un schema bloc",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-schemas-blocs-boucle-fermee-negative",
+          "label": "Boucle fermee negative",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-schemas-blocs-construire-un-schema-bloc-depuis-une-equation",
+          "label": "Construire depuis une equation",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-commande-boucle-fermee",
+          "label": "Boucle fermee",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-etat-1-representation-interne-representation-d-etat-continue",
+          "label": "Schema d etat continu",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "poles-modes-stabilite",
+      "title": "Poles, modes et stabilite",
+      "description": "Les poles externes et modes internes portent la dynamique du systeme.",
+      "links": [
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-modelisation-second-ordre",
+          "label": "Second ordre methode",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-algebre-valeurs-propres-et-diagonalisation",
+          "label": "Valeurs propres",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-analyse-second-ordre",
+          "label": "Second ordre",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-etat-lien-entre-poles-externes-et-modes-internes",
+          "label": "Poles et modes internes",
           "subject": "AU425-Automatique-avance"
         },
         {
-          "href": "AU425-Automatique-avance.html#au425-retour-etat",
+          "href": "AU425-Automatique-avance.html#au425-cas-3-analyse-de-stabilite",
+          "label": "Analyse de stabilite",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "marges-frequentielles",
+      "title": "Marges frequentielles",
+      "description": "Lecture locale des marges de robustesse dans les diagrammes frequentiels.",
+      "links": [
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-analyse-marges-de-stabilite",
+          "label": "Lire les marges",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-marges-marge-de-phase-m-phi",
+          "label": "Marge de phase",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-marges-marge-de-gain-m-g",
+          "label": "Marge de gain",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-rappels-2-les-marges-de-robustesse-frequentielles",
+          "label": "Marges de robustesse",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-lqr-marges-garanties-de-la-commande-lq",
+          "label": "Marges garanties LQ",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "commandabilite-kalman",
+      "title": "Commandabilite de Kalman",
+      "description": "Verifier si l'entree peut piloter tous les etats pertinents.",
+      "links": [
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-etat-commandabilite",
+          "label": "Methode commandabilite",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-algebre-rang-noyau-et-image",
+          "label": "Rang et image",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-structure-definition-de-la-commandabilite",
+          "label": "Definition",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-structure-critere-de-rang-de-kalman",
+          "label": "Critere de rang",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-cas-2-analyse-de-commandabilite-de-kalman",
+          "label": "Cas d'etude",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "observabilite-luenberger",
+      "title": "Observabilite et observateur",
+      "description": "Reconstruire l'etat interne a partir des sorties mesurees.",
+      "links": [
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-etat-observabilite",
+          "label": "Methode observabilite",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-structure-definition-de-l-observabilite",
+          "label": "Definition",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-observateurs-1-observateur-d-identite-de-luenberger",
+          "label": "Luenberger",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-observateurs-convergence-de-l-erreur",
+          "label": "Convergence de l'erreur",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "placement-poles-retour-etat",
+      "title": "Placement de poles",
+      "description": "Synthese d'un retour d'etat par choix des poles de boucle fermee.",
+      "links": [
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-commande-placement-de-poles",
+          "label": "Placement de poles",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-retour-etat-1-commande-par-retour-d-etat-sans-perturbation",
           "label": "Retour d'etat",
           "subject": "AU425-Automatique-avance"
         },
         {
-          "href": "AU425-Automatique-avance.html#au425-observateurs",
-          "label": "Observateurs",
+          "href": "AU425-Automatique-avance.html#au425-retour-etat-theoreme-du-placement-de-poles",
+          "label": "Theoreme",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-retour-etat-3-exemple-du-cours-placement-du-pole-de-math0",
+          "label": "Exemple",
           "subject": "AU425-Automatique-avance"
         }
       ]
     },
     {
-      "id": "electronique-analogique",
-      "title": "Electronique analogique",
-      "description": "Lie les composants, modeles petits signaux, quadripoles et fonctions analogiques.",
+      "id": "commande-integrale-perturbations",
+      "title": "Effet integral et perturbations",
+      "description": "Ajouter un modele interne pour annuler certaines erreurs en regime permanent.",
       "links": [
         {
-          "href": "EP331-Electronique-analogique.html#ep331-fondations",
-          "label": "Methodologie statique / dynamique",
+          "href": "OUTILS-Automatique.html#outils-auto-commande-modele-interne",
+          "label": "Modele interne",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-commande-precision",
+          "label": "Precision",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-retour-etat-4-commande-avec-effet-integral-systeme-augmente",
+          "label": "Systeme augmente",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-retour-etat-5-rejet-de-perturbations-par-modele-interne",
+          "label": "Modele interne",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "diode-pn-shockley",
+      "title": "Diode PN et modele",
+      "description": "Du phenomene physique au modele utilisable en calcul de circuit.",
+      "links": [
+        {
+          "href": "OUTILS-Electronique.html#outils-elec-composants-diode-et-modele-affine",
+          "label": "Modele de diode",
+          "subject": "OUTILS-Electronique"
+        },
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-diodes-1-physique-de-la-jonction-pn",
+          "label": "Jonction PN",
           "subject": "EP331-Electronique-analogique"
         },
         {
-          "href": "EP331-Electronique-analogique.html#ep331-diodes",
-          "label": "Diodes",
+          "href": "EP331-Electronique-analogique.html#ep331-diodes-2-equation-de-shockley-et-caracteristique-reelle",
+          "label": "Shockley",
           "subject": "EP331-Electronique-analogique"
         },
         {
-          "href": "EP331-Electronique-analogique.html#ep331-bjt",
-          "label": "Transistors bipolaires",
+          "href": "EP331-Electronique-analogique.html#ep331-diodes-3-modelisations-lineaires-de-la-diode",
+          "label": "Modeles lineaires",
+          "subject": "EP331-Electronique-analogique"
+        }
+      ]
+    },
+    {
+      "id": "roue-libre-charge-inductive",
+      "title": "Charge inductive et roue libre",
+      "description": "Continuité du courant inductif et protection lors des commutations.",
+      "links": [
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-redressement-zener-1-redressement-simple-alternance-sur-charge-inductive-rl",
+          "label": "Charge RL",
           "subject": "EP331-Electronique-analogique"
         },
         {
-          "href": "EP331-Electronique-analogique.html#ep331-aop",
-          "label": "AOP",
+          "href": "EP331-Electronique-analogique.html#ep331-redressement-zener-role-de-la-diode-de-roue-libre-d-rl",
+          "label": "Roue libre",
           "subject": "EP331-Electronique-analogique"
         },
         {
-          "href": "EP361-electonique.html#elec-quadripoles",
-          "label": "Quadripoles",
-          "subject": "EP361-electonique"
+          "href": "EP331-Electronique-analogique.html#ep331-diodes-4-etude-temporelle-en-commutation",
+          "label": "Commutation",
+          "subject": "EP331-Electronique-analogique"
+        }
+      ]
+    },
+    {
+      "id": "zener-regulation",
+      "title": "Zener et regulation",
+      "description": "Stabiliser une tension en separant point de repos et petite variation.",
+      "links": [
+        {
+          "href": "OUTILS-Electronique.html#outils-elec-composants-diode-zener",
+          "label": "Modele Zener",
+          "subject": "OUTILS-Electronique"
         },
         {
-          "href": "EP361-electonique.html#elec-amplis",
-          "label": "Amplificateurs",
-          "subject": "EP361-electonique"
+          "href": "EP331-Electronique-analogique.html#ep331-redressement-zener-2-la-diode-zener-et-regulation-de-tension",
+          "label": "Diode Zener",
+          "subject": "EP331-Electronique-analogique"
         },
         {
-          "href": "EP361-electonique.html#elec-oscillateurs",
-          "label": "Oscillateurs",
+          "href": "EP331-Electronique-analogique.html#ep331-redressement-zener-application-de-la-methode-statique-dynamique-a-la-regulation-de-tension",
+          "label": "Statique / dynamique",
+          "subject": "EP331-Electronique-analogique"
+        },
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-redressement-zener-regulateur-zener",
+          "label": "Regulateur Zener",
+          "subject": "EP331-Electronique-analogique"
+        }
+      ]
+    },
+    {
+      "id": "bjt-petits-signaux-ampli",
+      "title": "BJT et petits signaux",
+      "description": "Passer du point de repos au gain de l'amplificateur.",
+      "links": [
+        {
+          "href": "OUTILS-Electronique.html#outils-elec-composants-bjt-petits-signaux",
+          "label": "BJT petits signaux",
+          "subject": "OUTILS-Electronique"
+        },
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-bjt-droites-de-charge-et-point-de-fonctionnement-statique",
+          "label": "Point de repos",
+          "subject": "EP331-Electronique-analogique"
+        },
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-bjt-2-modele-equivalent-petits-signaux-dynamique-lf",
+          "label": "Modele petits signaux",
+          "subject": "EP331-Electronique-analogique"
+        },
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-bjt-a-montage-emetteur-commun-amplificateur-de-tension",
+          "label": "Emetteur commun",
+          "subject": "EP331-Electronique-analogique"
+        },
+        {
+          "href": "EP361-electonique.html#elec-amplis-modele-quadripole",
+          "label": "Modele quadripole",
           "subject": "EP361-electonique"
         }
       ]
     },
     {
-      "id": "numerique-erreurs-signal",
-      "title": "Numerique, erreurs et calcul",
-      "description": "Relie representation machine, precision, calcul scientifique et traitements numeriques.",
+      "id": "aop-contre-reaction-mesure",
+      "title": "AOP et mesure differentielle",
+      "description": "AOP ideal, contre-reaction et montages utilises pour conditionner un signal.",
       "links": [
         {
-          "href": "SN331-Architecture-processeur.html#sn331-donnees",
-          "label": "Donnees et memoire",
-          "subject": "SN331-Architecture-processeur"
+          "href": "OUTILS-Electronique.html#outils-elec-aop-aop-ideal-et-contre-reaction",
+          "label": "Methode AOP",
+          "subject": "OUTILS-Electronique"
         },
         {
-          "href": "SN421-Dev-Micro.html#sn421-software",
-          "label": "Virgule fixe en embarque",
-          "subject": "SN421-Dev-Micro"
+          "href": "EP331-Electronique-analogique.html#ep331-aop-regle-de-la-contre-reaction-negative-regime-lineaire",
+          "label": "Contre-reaction",
+          "subject": "EP331-Electronique-analogique"
         },
         {
-          "href": "MT461-Methode-numerique.html#mt461-module-1",
-          "label": "Erreurs et flottants",
+          "href": "EP331-Electronique-analogique.html#ep331-aop-soustracteur-differentiel",
+          "label": "Soustracteur",
+          "subject": "EP331-Electronique-analogique"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-instrumentation-amplificateur-differentiel-a-un-aop",
+          "label": "AOP differentiel",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-instrumentation-amplificateur-d-instrumentation-a-trois-aop",
+          "label": "Instrumentation",
+          "subject": "EP425-Capteur"
+        }
+      ]
+    },
+    {
+      "id": "metrologie-sensibilite-etalonnage",
+      "title": "Etalonnage et sensibilite",
+      "description": "Lire une courbe de reponse et convertir une variation physique en signal utile.",
+      "links": [
+        {
+          "href": "OUTILS-Electronique.html#outils-elec-capteurs-sensibilite-et-etalonnage",
+          "label": "Sensibilite et etalonnage",
+          "subject": "OUTILS-Electronique"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-metrologie-courbe-de-reponse-et-etalonnage",
+          "label": "Courbe de reponse",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-metrologie-sensibilite-etendue-et-fso",
+          "label": "Sensibilite et FSO",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-conditionnement-sensibilite-totale",
+          "label": "Sensibilite totale",
+          "subject": "EP425-Capteur"
+        }
+      ]
+    },
+    {
+      "id": "incertitudes-bruits-mesure",
+      "title": "Incertitudes et bruits",
+      "description": "Separer dispersion, biais, incertitude et bruit physique.",
+      "links": [
+        {
+          "href": "OUTILS-Electronique.html#outils-elec-capteurs-bruit-et-incertitude-de-mesure",
+          "label": "Bruit de mesure",
+          "subject": "OUTILS-Electronique"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-calcul-erreurs-et-conditionnement",
+          "label": "Erreurs numeriques",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-metrologie-fidelite-justesse-et-precision",
+          "label": "Fidelite et justesse",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-erreurs-bruits-incertitudes-de-mesure",
+          "label": "Incertitudes",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-erreurs-bruits-bruits-intrinseques",
+          "label": "Bruits intrinseques",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-1-5-propagation-des-erreurs-et-conditionnement",
+          "label": "Propagation des erreurs",
           "subject": "MT461-Methode-numerique"
-        },
-        {
-          "href": "MT461-Methode-numerique-tp1.html",
-          "label": "TP arithmetique flottante",
-          "subject": "MT461-Methode-numerique"
-        },
-        {
-          "href": "AU331-Traitement-Signal.html#au331-echantillonnage",
-          "label": "Echantillonnage numerique",
-          "subject": "AU331-Traitement-Signal"
         }
       ]
     },
     {
-      "id": "micro-architecture-embarque",
-      "title": "Architecture, microcontroleurs et bas niveau",
-      "description": "Relie ISA, memoire, interruptions, peripheriques et programmation C.",
+      "id": "wheatstone-capteur-resistif",
+      "title": "Pont de Wheatstone",
+      "description": "Mesure differentielle de petites variations resistives.",
       "links": [
         {
-          "href": "IN331-Algo.html#in331-chap1-fondations",
-          "label": "Fondations du C",
-          "subject": "IN331-Algo"
+          "href": "OUTILS-Electronique.html#outils-elec-capteurs-pont-de-wheatstone",
+          "label": "Methode Wheatstone",
+          "subject": "OUTILS-Electronique"
         },
         {
-          "href": "IN331-Algo.html#in331-chap6-pointeurs",
-          "label": "Pointeurs et adresses",
-          "subject": "IN331-Algo"
+          "href": "EP425-Capteur.html#ep425-conditionnement-pont-de-wheatstone",
+          "label": "Pont de Wheatstone",
+          "subject": "EP425-Capteur"
         },
         {
-          "href": "SN331-Architecture-processeur.html#sn331-isa",
-          "label": "ISA et RISC-V",
+          "href": "EP425-Capteur.html#ep425-conditionnement-quart-de-pont",
+          "label": "Quart de pont",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-conditionnement-demi-pont-push-pull",
+          "label": "Demi-pont",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-instrumentation-amplificateur-d-instrumentation-a-trois-aop",
+          "label": "Amplification",
+          "subject": "EP425-Capteur"
+        }
+      ]
+    },
+    {
+      "id": "temperature-premier-ordre",
+      "title": "Temperature et premier ordre",
+      "description": "Une sonde thermique se lit souvent comme un systeme du premier ordre.",
+      "links": [
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-modelisation-premier-ordre",
+          "label": "Premier ordre",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-temperature-zone-thermique-et-dynamique-de-mesure",
+          "label": "Dynamique thermique",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "EP425-Capteur.html#ep425-temperature-modele-thermique-du-premier-ordre",
+          "label": "Modele thermique",
+          "subject": "EP425-Capteur"
+        },
+        {
+          "href": "AU361-Automatique.html#AU361-Automatique-analyse-premier-ordre",
+          "label": "Premier ordre",
+          "subject": "AU361-Automatique"
+        },
+        {
+          "href": "EP331-Electronique-analogique.html#ep331-thermique-1-analogie-electrique-thermique",
+          "label": "Analogie thermique",
+          "subject": "EP331-Electronique-analogique"
+        }
+      ]
+    },
+    {
+      "id": "von-neumann-memoire",
+      "title": "Von Neumann et memoire",
+      "description": "Architecture commune entre processeur, microcontroleur et programme C.",
+      "links": [
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-donnees-modele-de-von-neumann",
+          "label": "Von Neumann",
           "subject": "SN331-Architecture-processeur"
         },
         {
-          "href": "SN331-Architecture-processeur.html#sn331-caches",
-          "label": "Caches",
+          "href": "SN421-Dev-Micro.html#sn421-mcu-architecture-de-von-neumann",
+          "label": "Von Neumann MCU",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "IN331-Algo.html#in331-chap6-pointeurs-1-concepts-fondamentaux-memoire-adresses-et-pointeurs",
+          "label": "Adresses et pointeurs",
+          "subject": "IN331-Algo"
+        }
+      ]
+    },
+    {
+      "id": "isa-riscv-arm",
+      "title": "ISA et execution",
+      "description": "Le jeu d'instructions comme contrat entre logiciel bas niveau et processeur.",
+      "links": [
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-isa-isa",
+          "label": "ISA",
           "subject": "SN331-Architecture-processeur"
         },
         {
-          "href": "SN421-Dev-Micro.html#sn421-mcu",
-          "label": "Microcontroleurs",
+          "href": "SN331-Architecture-processeur.html#sn331-isa-risc-v",
+          "label": "RISC-V",
+          "subject": "SN331-Architecture-processeur"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-mcu-4-jeu-d-instructions-isa-et-pipeline",
+          "label": "ISA MCU",
           "subject": "SN421-Dev-Micro"
         },
         {
-          "href": "SN421-Dev-Micro.html#sn421-periph",
-          "label": "GPIO, timers, ADC",
-          "subject": "SN421-Dev-Micro"
-        },
-        {
-          "href": "SN421-Dev-Micro-tp1.html",
-          "label": "TP GPIO et interruptions",
+          "href": "SN421-Dev-Micro.html#sn421-mcu-exemple-de-l-architecture-arm-cortex-m",
+          "label": "ARM Cortex-M",
           "subject": "SN421-Dev-Micro"
         }
       ]
     },
     {
-      "id": "reseaux-systemes-protocoles",
-      "title": "Systemes, memoire et reseaux",
-      "description": "Fait le pont entre representation bas niveau, OS, protocoles et communications.",
+      "id": "pipeline-aleas",
+      "title": "Pipeline et aleas",
+      "description": "Ameliorer le debit d'instructions en surveillant les dependances.",
       "links": [
         {
-          "href": "IN333-OS.html#in333-intro",
-          "label": "Systemes d'exploitation",
-          "subject": "IN333-OS"
+          "href": "SN331-Architecture-processeur.html#sn331-pipeline-pipeline-5-etages",
+          "label": "Pipeline 5 etages",
+          "subject": "SN331-Architecture-processeur"
         },
         {
-          "href": "SN331-Architecture-processeur.html#sn331-memoire-virtuelle",
+          "href": "SN331-Architecture-processeur.html#sn331-pipeline-aleas",
+          "label": "Aleas",
+          "subject": "SN331-Architecture-processeur"
+        },
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-pipeline-load-use-hazard",
+          "label": "Load-use hazard",
+          "subject": "SN331-Architecture-processeur"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-mcu-fonctionnement-du-pipeline-d-instructions",
+          "label": "Pipeline Cortex-M",
+          "subject": "SN421-Dev-Micro"
+        }
+      ]
+    },
+    {
+      "id": "cache-localite",
+      "title": "Cache et localite",
+      "description": "Comprendre pourquoi les acces memoire dominent souvent les performances.",
+      "links": [
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-caches-pourquoi-un-cache",
+          "label": "Pourquoi un cache",
+          "subject": "SN331-Architecture-processeur"
+        },
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-caches-localite",
+          "label": "Localite",
+          "subject": "SN331-Architecture-processeur"
+        },
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-caches-adresse-de-cache",
+          "label": "Adresse de cache",
+          "subject": "SN331-Architecture-processeur"
+        }
+      ]
+    },
+    {
+      "id": "memoire-virtuelle-pagination",
+      "title": "Pagination et memoire virtuelle",
+      "description": "Traduire les adresses et traiter les defauts de page.",
+      "links": [
+        {
+          "href": "SN331-Architecture-processeur.html#sn331-memoire-virtuelle-memoire-virtuelle",
           "label": "Memoire virtuelle",
           "subject": "SN331-Architecture-processeur"
         },
         {
-          "href": "IN363-Reseau.html#reseau-osi",
-          "label": "Modele OSI",
-          "subject": "IN363-Reseau"
+          "href": "SN331-Architecture-processeur.html#sn331-memoire-virtuelle-tlb",
+          "label": "TLB processeur",
+          "subject": "SN331-Architecture-processeur"
         },
         {
-          "href": "IN363-Reseau.html#reseau-couche2",
-          "label": "Ethernet et trames",
-          "subject": "IN363-Reseau"
+          "href": "IN333-OS.html#chap-3-memoire-1-pagination-virtuelle-et-abstraction-materielle",
+          "label": "Pagination OS",
+          "subject": "IN333-OS"
         },
         {
-          "href": "IN363-Reseau.html#reseau-couche3",
-          "label": "IP et resolution",
-          "subject": "IN363-Reseau"
+          "href": "IN333-OS.html#chap-3-memoire-translation-lookaside-buffer-tlb",
+          "label": "TLB OS",
+          "subject": "IN333-OS"
+        }
+      ]
+    },
+    {
+      "id": "interruptions-isr-signaux",
+      "title": "Interruptions et asynchrone",
+      "description": "Meme idee d'evenement asynchrone, du noyau au microcontroleur.",
+      "links": [
+        {
+          "href": "IN333-OS.html#chap-1-architecture-2-interruptions-materielles-vs-exceptions",
+          "label": "Interruptions",
+          "subject": "IN333-OS"
         },
         {
-          "href": "SN421-Dev-Micro.html#sn421-bus",
-          "label": "Bus embarques",
+          "href": "IN333-OS.html#chap-6-signaux-1-cycle-de-vie-d-un-signal",
+          "label": "Signaux POSIX",
+          "subject": "IN333-OS"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-software-4-gestion-des-interruptions-et-variable-volatile",
+          "label": "Interruptions MCU",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-software-regles-d-or-pour-la-conception-d-une-isr",
+          "label": "ISR",
           "subject": "SN421-Dev-Micro"
         }
       ]
     },
     {
-      "id": "maths-proba-ia",
-      "title": "Mathematiques, probabilites et IA",
-      "description": "Relie algebre lineaire, probabilites, optimisation et apprentissage.",
+      "id": "volatile-memoire-partagee",
+      "title": "Donnees partagees et volatile",
+      "description": "Eviter les optimisations dangereuses quand une donnee change hors du flot principal.",
       "links": [
         {
-          "href": "MT321-Mathematiques-general.html#mt321-chap2-espaces-vectoriels",
+          "href": "SN421-Dev-Micro.html#sn421-software-role-du-mot-cle-volatile",
+          "label": "volatile",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-software-laboratoire-virtuel-wokwi-piege-d-optimisation-sans-le-mot-cle-volatile",
+          "label": "Piege sans volatile",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "IN333-OS.html#chap-7-ipc-4-memoire-partagee-system-v-shared-memory-shm",
+          "label": "Memoire partagee",
+          "subject": "IN333-OS"
+        },
+        {
+          "href": "IN333-OS.html#chap-7-ipc-synchronisation-indispensable",
+          "label": "Synchronisation",
+          "subject": "IN333-OS"
+        }
+      ]
+    },
+    {
+      "id": "gpio-timers-pwm",
+      "title": "GPIO, timers et PWM",
+      "description": "Relier broches, temporisation et commande temporelle des sorties.",
+      "links": [
+        {
+          "href": "SN421-Dev-Micro.html#sn421-periph-1-entrees-sorties-generales-gpio",
+          "label": "GPIO",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-periph-2-timers-et-temporisations",
+          "label": "Timers",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-periph-laboratoire-virtuel-wokwi-modulation-de-largeur-d-impulsion-pwm-oscilloscope",
+          "label": "PWM",
+          "subject": "SN421-Dev-Micro"
+        }
+      ]
+    },
+    {
+      "id": "bus-serie-trames",
+      "title": "Bus serie et trames",
+      "description": "Lire les transactions serie comme des trames cadencees et protocolaires.",
+      "links": [
+        {
+          "href": "SN421-Dev-Micro.html#sn421-bus-2-uart-universal-asynchronous-receiver-transmitter",
+          "label": "UART",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-bus-3-i2c-inter-integrated-circuit",
+          "label": "I2C",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-bus-4-spi-serial-peripheral-interface",
+          "label": "SPI",
+          "subject": "SN421-Dev-Micro"
+        },
+        {
+          "href": "IN363-Reseau.html#reseau-couche2-trame-ethernet",
+          "label": "Trame Ethernet",
+          "subject": "IN363-Reseau"
+        }
+      ]
+    },
+    {
+      "id": "osi-encapsulation",
+      "title": "Couches et encapsulation",
+      "description": "Structurer une communication par couches et enveloppes successives.",
+      "links": [
+        {
+          "href": "IN363-Reseau.html#reseau-osi-lecture-par-couches",
+          "label": "Modele OSI",
+          "subject": "IN363-Reseau"
+        },
+        {
+          "href": "IN363-Reseau.html#reseau-osi-encapsulation",
+          "label": "Encapsulation",
+          "subject": "IN363-Reseau"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-bus-1-fondements-et-modele-osi-applique-a-l-embarque",
+          "label": "OSI embarque",
+          "subject": "SN421-Dev-Micro"
+        }
+      ]
+    },
+    {
+      "id": "ip-mac-arp",
+      "title": "MAC, IP et resolution",
+      "description": "Associer adresse physique, adresse logique et mecanisme de resolution.",
+      "links": [
+        {
+          "href": "IN363-Reseau.html#reseau-couche2-adresse-mac",
+          "label": "Adresse MAC",
+          "subject": "IN363-Reseau"
+        },
+        {
+          "href": "IN363-Reseau.html#reseau-couche3-ipv4-et-masques",
+          "label": "IPv4 et masques",
+          "subject": "IN363-Reseau"
+        },
+        {
+          "href": "IN363-Reseau.html#reseau-couche3-arp-et-rarp",
+          "label": "ARP/RARP",
+          "subject": "IN363-Reseau"
+        }
+      ]
+    },
+    {
+      "id": "hamming-erreurs",
+      "title": "Detection et correction d'erreur",
+      "description": "Coder l'information pour reperer ou corriger des erreurs de transmission.",
+      "links": [
+        {
+          "href": "IN363-Reseau.html#reseau-couche1-verification-d-erreur",
+          "label": "Verification d'erreur",
+          "subject": "IN363-Reseau"
+        },
+        {
+          "href": "IN363-Reseau.html#reseau-couche1-hamming-7-4",
+          "label": "Hamming 7,4",
+          "subject": "IN363-Reseau"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm3-fiche-logic-gate-portes-logiques-de-base",
+          "label": "Portes logiques",
+          "subject": "SN361-VHDL"
+        }
+      ]
+    },
+    {
+      "id": "vhdl-combinatoire-table-verite",
+      "title": "Combinatoire et table de verite",
+      "description": "Construire une fonction logique sans memoire.",
+      "links": [
+        {
+          "href": "SN361-VHDL.html#vhdl-cm3-definition",
+          "label": "Logique combinatoire",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm3-comment-lire-une-table-de-verite",
+          "label": "Table de verite",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm3-process-combinatoire-complet",
+          "label": "Process combinatoire",
+          "subject": "SN361-VHDL"
+        }
+      ]
+    },
+    {
+      "id": "vhdl-sequentiel-registres",
+      "title": "Sequentiel, bascules et registres",
+      "description": "Introduire la memoire et l'horloge dans un circuit numerique.",
+      "links": [
+        {
+          "href": "SN361-VHDL.html#vhdl-cm4-d-latch-et-d-flip-flop",
+          "label": "D latch et flip-flop",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm4-registres",
+          "label": "Registres",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm4-registres-a-decalage",
+          "label": "Registres a decalage",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm4-compteurs",
+          "label": "Compteurs",
+          "subject": "SN361-VHDL"
+        }
+      ]
+    },
+    {
+      "id": "fsm-vhdl-embarque",
+      "title": "Machines a etats",
+      "description": "Decrire un comportement reactif par etats, transitions et sorties.",
+      "links": [
+        {
+          "href": "SN361-VHDL.html#vhdl-cm5-diagramme-de-transitions",
+          "label": "Diagramme",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm5-machine-de-moore",
+          "label": "Moore",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm5-machine-de-mealy",
+          "label": "Mealy",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-se-2-modelisation-comportementale-par-machine-a-etats-finis-fsm",
+          "label": "FSM embarquee",
+          "subject": "SN421-Dev-Micro"
+        }
+      ]
+    },
+    {
+      "id": "fpga-lut-reconfigurable",
+      "title": "FPGA, LUT et reconfigurable",
+      "description": "Comprendre ce que le VHDL devient dans le composant.",
+      "links": [
+        {
+          "href": "SN361-VHDL.html#vhdl-cm1-processeur-contre-logique-reconfigurable",
+          "label": "Processeur vs FPGA",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm1-architecture-d-un-fpga-sram",
+          "label": "Architecture SRAM",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm7-fpga",
+          "label": "FPGA",
+          "subject": "SN361-VHDL"
+        },
+        {
+          "href": "SN361-VHDL.html#vhdl-cm7-lut",
+          "label": "LUT",
+          "subject": "SN361-VHDL"
+        }
+      ]
+    },
+    {
+      "id": "flottants-ieee-erreurs",
+      "title": "Flottants IEEE et erreurs",
+      "description": "Representation finie des reels et consequences sur le calcul.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-calcul-erreurs-et-conditionnement",
+          "label": "Erreurs et conditionnement",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-1-2-representation-des-reels-sur-ordinateur",
+          "label": "Representation des reels",
+          "subject": "MT461-Methode-numerique"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-1-norme-ieee-754-standard-floating-point",
+          "label": "IEEE 754",
+          "subject": "MT461-Methode-numerique"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-1-phenomene-d-annihilation-perte-de-chiffres-significatifs",
+          "label": "Annihilation",
+          "subject": "MT461-Methode-numerique"
+        },
+        {
+          "href": "SN421-Dev-Micro.html#sn421-software-5-arithmetique-en-virgule-fixe",
+          "label": "Virgule fixe",
+          "subject": "SN421-Dev-Micro"
+        }
+      ]
+    },
+    {
+      "id": "point-fixe-newton",
+      "title": "Point fixe et Newton",
+      "description": "Deux familles d'iterations pour resoudre une equation non lineaire.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-calcul-point-fixe",
+          "label": "Point fixe",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-calcul-newton-raphson",
+          "label": "Newton-Raphson",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-2-1-theoreme-du-point-fixe-de-banach",
+          "label": "Point fixe",
+          "subject": "MT461-Methode-numerique"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-2-3-methodes-iteratives-de-resolution-de-math0",
+          "label": "Methodes iteratives",
+          "subject": "MT461-Methode-numerique"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-2-4-etude-approfondie-de-la-methode-de-newton-raphson",
+          "label": "Newton-Raphson",
+          "subject": "MT461-Methode-numerique"
+        }
+      ]
+    },
+    {
+      "id": "cauchy-euler-runge-kutta",
+      "title": "EDO et schemas numeriques",
+      "description": "Resoudre numeriquement un probleme de Cauchy.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-calcul-euler-et-runge-kutta",
+          "label": "Euler et Runge-Kutta",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-3-1-le-probleme-de-cauchy-et-son-conditionnement",
+          "label": "Probleme de Cauchy",
+          "subject": "MT461-Methode-numerique"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-3-schema-d-euler-explicite-ordre-1",
+          "label": "Euler explicite",
+          "subject": "MT461-Methode-numerique"
+        },
+        {
+          "href": "MT461-Methode-numerique.html#mt461-module-3-methodes-de-runge-kutta-rk",
+          "label": "Runge-Kutta",
+          "subject": "MT461-Methode-numerique"
+        }
+      ]
+    },
+    {
+      "id": "espaces-lineaires-etats",
+      "title": "Espaces vectoriels et etats",
+      "description": "Les matrices d'etat utilisent directement les outils d'algebre lineaire.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-algebre-rang-noyau-et-image",
+          "label": "Rang, noyau, image",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "OUTILS-Automatique.html#outils-auto-etat-representation-d-etat",
+          "label": "Representation d etat",
+          "subject": "OUTILS-Automatique"
+        },
+        {
+          "href": "MT321-Mathematiques-general.html#mt321-chap2-espaces-vectoriels-structures-de-base",
           "label": "Espaces vectoriels",
           "subject": "MT321-Mathematiques-general"
         },
         {
-          "href": "MT321-Mathematiques-general.html#mt321-chap4-determinants-diagonalisation",
-          "label": "Diagonalisation",
+          "href": "MT321-Mathematiques-general.html#mt321-chap3-applications-lineaires-matrices-applications-lineaires",
+          "label": "Applications lineaires",
           "subject": "MT321-Mathematiques-general"
         },
         {
-          "href": "MT331-Probabilites.html#probabilites-chap3",
-          "label": "Variables aleatoires discretes",
+          "href": "AU425-Automatique-avance.html#au425-etat-1-representation-interne-representation-d-etat-continue",
+          "label": "Etat continu",
+          "subject": "AU425-Automatique-avance"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-etat-3-changement-de-base-transformation-d-etat",
+          "label": "Changement de base",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "valeurs-propres-modes",
+      "title": "Valeurs propres et modes",
+      "description": "Lire la dynamique d'un systeme dans les elements propres de sa matrice.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-algebre-valeurs-propres-et-diagonalisation",
+          "label": "Valeurs propres",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "MT321-Mathematiques-general.html#mt321-chap4-determinants-diagonalisation-elements-propres-et-determinant",
+          "label": "Elements propres",
+          "subject": "MT321-Mathematiques-general"
+        },
+        {
+          "href": "MT321-Mathematiques-general.html#mt321-chap4-determinants-diagonalisation-diagonalisabilite",
+          "label": "Diagonalisabilite",
+          "subject": "MT321-Mathematiques-general"
+        },
+        {
+          "href": "AU425-Automatique-avance.html#au425-etat-lien-entre-poles-externes-et-modes-internes",
+          "label": "Modes internes",
+          "subject": "AU425-Automatique-avance"
+        }
+      ]
+    },
+    {
+      "id": "proba-lois-discretes",
+      "title": "Lois discretes",
+      "description": "Modeliser des tirages et comptages par des variables aleatoires discretes.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-probas-variable-aleatoire-discrete",
+          "label": "Variable discrete",
+          "subject": "OUTILS-Mathematiques"
+        },
+        {
+          "href": "MT331-Probabilites.html#probabilites-chap3-variable-aleatoire-discrete",
+          "label": "Variable discrete",
           "subject": "MT331-Probabilites"
         },
         {
-          "href": "MT331-Probabilites.html#probabilites-chap4",
-          "label": "Variables continues",
+          "href": "MT331-Probabilites.html#probabilites-chap3-loi-binomiale",
+          "label": "Loi binomiale",
           "subject": "MT331-Probabilites"
         },
         {
-          "href": "IN451-IA.html#ia-definitions",
-          "label": "Concepts IA",
-          "subject": "IN451-IA"
+          "href": "MT331-Probabilites.html#probabilites-chap3-loi-de-poisson",
+          "label": "Loi de Poisson",
+          "subject": "MT331-Probabilites"
+        }
+      ]
+    },
+    {
+      "id": "proba-lois-continues",
+      "title": "Lois continues",
+      "description": "Passer de la densite aux calculs de probabilite et de moments.",
+      "links": [
+        {
+          "href": "OUTILS-Mathematiques.html#outils-maths-probas-variable-aleatoire-continue",
+          "label": "Variable continue",
+          "subject": "OUTILS-Mathematiques"
         },
         {
-          "href": "IN451-IA.html#ia-deep-learning",
-          "label": "Deep learning",
+          "href": "MT331-Probabilites.html#probabilites-chap4-variable-continue",
+          "label": "Variable continue",
+          "subject": "MT331-Probabilites"
+        },
+        {
+          "href": "MT331-Probabilites.html#probabilites-chap4-densite",
+          "label": "Densite",
+          "subject": "MT331-Probabilites"
+        },
+        {
+          "href": "MT331-Probabilites.html#probabilites-chap4-loi-normale-centree-reduite",
+          "label": "Normale centree reduite",
+          "subject": "MT331-Probabilites"
+        },
+        {
+          "href": "MT331-Probabilites.html#probabilites-chap4-standardisation",
+          "label": "Standardisation",
+          "subject": "MT331-Probabilites"
+        }
+      ]
+    },
+    {
+      "id": "c-structures-listes-java-collections",
+      "title": "Structures lineaires",
+      "description": "Comparer structures C explicites et collections Java.",
+      "links": [
+        {
+          "href": "IN331-Algo.html#in331-chap5-structures-2-notion-de-structures-de-donnees-lineaires-pile-file",
+          "label": "Pile et file",
+          "subject": "IN331-Algo"
+        },
+        {
+          "href": "IN331-Algo.html#in331-chap8-allocation-listes-3-listes-chainees",
+          "label": "Listes chainees",
+          "subject": "IN331-Algo"
+        },
+        {
+          "href": "IN361-JAVA.html#java-collections-list",
+          "label": "List Java",
+          "subject": "IN361-JAVA"
+        },
+        {
+          "href": "IN361-JAVA.html#java-collections-choisir-la-bonne-collection",
+          "label": "Choix de collection",
+          "subject": "IN361-JAVA"
+        }
+      ]
+    },
+    {
+      "id": "objet-interface-polymorphisme",
+      "title": "Objet, interface, polymorphisme",
+      "description": "Construire des comportements interchangeables par contrats.",
+      "links": [
+        {
+          "href": "IN361-JAVA.html#java-objet-classe-et-objet",
+          "label": "Classe et objet",
+          "subject": "IN361-JAVA"
+        },
+        {
+          "href": "IN361-JAVA.html#java-heritage-polymorphisme",
+          "label": "Polymorphisme",
+          "subject": "IN361-JAVA"
+        },
+        {
+          "href": "IN361-JAVA.html#java-interfaces-contrat-de-comportement",
+          "label": "Interface",
+          "subject": "IN361-JAVA"
+        },
+        {
+          "href": "IN451-IA.html#ia-gomoku-mise-en-uvre-des-tables-de-transposition",
+          "label": "Projet Java IA",
           "subject": "IN451-IA"
         }
       ]
     },
     {
-      "id": "logiciel-objet-ia",
-      "title": "Algorithmique, objet et projets",
-      "description": "Relie structures de donnees, Java objet et projets d'IA.",
+      "id": "minmax-alpha-beta-gomoku",
+      "title": "Recherche adversariale",
+      "description": "Evaluer un jeu et reduire l'arbre de recherche.",
       "links": [
         {
-          "href": "IN331-Algo.html#in331-chap5-structures",
-          "label": "Structures de donnees",
-          "subject": "IN331-Algo"
+          "href": "IN451-IA.html#ia-jeux-echecs-1-la-fonction-d-evaluation",
+          "label": "Fonction d'evaluation",
+          "subject": "IN451-IA"
         },
         {
-          "href": "IN331-Algo.html#in331-chap8-allocation-listes",
-          "label": "Listes chainees",
-          "subject": "IN331-Algo"
+          "href": "IN451-IA.html#ia-jeux-echecs-2-l-algorithme-min-max",
+          "label": "Min-Max",
+          "subject": "IN451-IA"
         },
         {
-          "href": "IN361-JAVA.html#java-collections",
-          "label": "Collections Java",
-          "subject": "IN361-JAVA"
+          "href": "IN451-IA.html#ia-jeux-echecs-3-l-elagage-alpha-beta",
+          "label": "Alpha-beta",
+          "subject": "IN451-IA"
         },
         {
-          "href": "IN361-JAVA.html#java-objet",
-          "label": "Programmation objet",
-          "subject": "IN361-JAVA"
+          "href": "IN451-IA.html#ia-gomoku-problematique-de-l-explosion-combinatoire-au-gomoku",
+          "label": "Explosion combinatoire",
+          "subject": "IN451-IA"
+        }
+      ]
+    },
+    {
+      "id": "machine-learning-variable-cachee",
+      "title": "Apprentissage et variables cachees",
+      "description": "Relier vocabulaire ML, representation latente et deep learning.",
+      "links": [
+        {
+          "href": "IN451-IA.html#ia-definitions-terminologie-du-machine-learning-et-deep-learning",
+          "label": "Terminologie ML/DL",
+          "subject": "IN451-IA"
         },
         {
-          "href": "IN361-JAVA.html#java-interfaces",
-          "label": "Interfaces",
-          "subject": "IN361-JAVA"
+          "href": "IN451-IA.html#ia-definitions-notion-de-variable-cachee",
+          "label": "Variable cachee",
+          "subject": "IN451-IA"
         },
         {
-          "href": "IN451-IA.html#ia-gomoku",
-          "label": "Projet Gomoku",
+          "href": "IN451-IA.html#ia-deep-learning-pourquoi-cet-essor-si-tardif",
+          "label": "Essor du deep learning",
+          "subject": "IN451-IA"
+        },
+        {
+          "href": "IN451-IA.html#ia-deep-learning-notion-de-variable-cachee",
+          "label": "Variable cachee en DL",
           "subject": "IN451-IA"
         }
       ]
