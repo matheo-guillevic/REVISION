@@ -162,9 +162,22 @@ On prend comme valeur mesurée $g = 9{,}8\text{ m/s}^2$.
 **Correction détaillée :**
 
 1. **Calcul des incertitudes sur $g$ :**
-   Passons par la différentielle logarithmique de $g(L, T) = 4\pi^2 L T^{-2}$ :
+   La formule utile est :
+   $$g = 4\pi^2 \frac{L}{T^2} = 4\pi^2 L T^{-2}$$
+
+   Elle montre que \(g\) dépend de deux grandeurs mesurées :
+   - \(L\), qui apparaît à la puissance \(+1\) ;
+   - \(T\), qui apparaît à la puissance \(-2\).
+
+   Cela veut dire qu'une erreur relative sur \(L\) se transmet une fois à \(g\), alors qu'une erreur relative sur \(T\) se transmet deux fois. Par exemple, si \(T\) est surestimée de \(2\%\), alors \(T^2\) est environ surestimé de \(4\%\), donc \(g\) est environ sous-estimé de \(4\%\).
+
+   Pour formaliser cette idée, on passe par la différentielle logarithmique. C'est une méthode très pratique dès qu'une formule contient des produits, quotients ou puissances, car elle transforme les variations en **erreurs relatives** :
    $$\ln g = \ln(4\pi^2) + \ln L - 2 \ln T$$
+
+   En dérivant :
    $$\frac{dg}{g} = \frac{dL}{L} - 2 \frac{dT}{T}$$
+
+   Le signe moins indique seulement le sens de variation : si \(T\) augmente, \(g\) diminue. Pour une incertitude maximale, on ne sait pas si les erreurs vont se compenser ou s'ajouter, donc on prend les valeurs absolues.
 
    - **Approche Pire des cas (Incertitude maximale) :**
      $$\left|\frac{\Delta g}{g}\right|_{max} = \left|\frac{\Delta L}{L}\right| + 2 \left|\frac{\Delta T}{T}\right| = 3\% + 2 \times 2\% = 7\%$$
@@ -172,12 +185,38 @@ On prend comme valeur mesurée $g = 9{,}8\text{ m/s}^2$.
      $$\Delta g_{max} = 0{,}07 \times 9{,}8\text{ m/s}^2 = 0{,}686\text{ m/s}^2$$
 
    - **Approche Statistique (Loi de propagation quadratique) :**
+     La correction du professeur utilise la forme générale par dérivées partielles :
+     $$\left(\Delta g\right)^2 =
+     \left(\frac{\partial g}{\partial L}\Delta L\right)^2
+     + \left(\frac{\partial g}{\partial T}\Delta T\right)^2$$
+
+     Avec :
+     $$g = 4\pi^2\frac{L}{T^2}$$
+
+     on a :
+     $$\frac{\partial g}{\partial L} = \frac{4\pi^2}{T^2} = \frac{g}{L}$$
+     $$\frac{\partial g}{\partial T} = -2\frac{4\pi^2L}{T^3} = -2\frac{g}{T}$$
+
+     Donc :
+     $$\left(\Delta g\right)^2 =
+     \left(g\frac{\Delta L}{L}\right)^2
+     + \left(2g\frac{\Delta T}{T}\right)^2$$
+
+     En divisant par \(g^2\), on retrouve exactement la formule en erreur relative :
+     $$\left(\frac{\Delta g}{g}\right)^2 =
+     \left(\frac{\Delta L}{L}\right)^2
+     + \left(2\frac{\Delta T}{T}\right)^2$$
+
      $$\frac{\sigma_g}{g} = \sqrt{\left(\frac{\sigma_L}{L}\right)^2 + 4 \left(\frac{\sigma_T}{T}\right)^2} = \sqrt{(0{,}03)^2 + 4 \times (0{,}02)^2} = \sqrt{0{,}0009 + 0{,}0016} = \sqrt{0{,}0025} = 5\%$$
      En valeur absolue :
      $$\sigma_g = 0{,}05 \times 9{,}8\text{ m/s}^2 = 0{,}49\text{ m/s}^2$$
 
+     Remarque sur la dernière ligne de la correction manuscrite : il faut écrire
+     $$\Delta g = \sqrt{g^2 \times 0{,}0025} = g\sqrt{0{,}0025} = 0{,}49\text{ m/s}^2$$
+     et non \(\sqrt{g \times 0{,}0025}\), qui donnerait \(0{,}157\) avec une dimension incorrecte.
+
 2. **Grandeur prioritaire à minimiser :**
-   C's est la mesure du **temps (la période $T$)** qu'il faut améliorer en priorité. Comme $T$ intervient avec une puissance $-2$, son erreur relative est multipliée par un facteur $2$ dans la propagation d'erreur.
+   C'est la mesure du **temps (la période $T$)** qu'il faut améliorer en priorité. Comme $T$ intervient avec une puissance $-2$, son erreur relative est multipliée par un facteur $2$ dans la propagation d'erreur.
 :::
 :::
 
@@ -339,10 +378,10 @@ On donne : $\alpha_K = 1{,}2 \cdot 10^{-4}/^\circ\text{C}$, $\alpha_R = 2{,}0 \c
 6. **Applications numériques pour $S_\epsilon$ :**
    - À $T = 0^\circ\text{C}$ : $S_\epsilon(0^\circ\text{C}) = 100 \times 2 = 200\,\Omega$.
    - À $T = 50^\circ\text{C}$ :
-     $$S_\epsilon(50^\circ\text{C}) = 100 \times 2 \left[ 1 + (1{,}2 + 2{,}0) \cdot 10^{-4} \times 50 + 1{,}2 \cdot 2{,}0 \cdot 10^{-8} \times 2500 \right] = 200{,}16\,\Omega$$
+     $$S_\epsilon(50^\circ\text{C}) = 100 \times 2 \left[ 1 + (1{,}2 + 2{,}0) \cdot 10^{-4} \times 50 + 1{,}2 \cdot 2{,}0 \cdot 10^{-8} \times 2500 \right] \approx 203{,}21\,\Omega$$
 
 7. **Conclusion :**
-   La variation de sensibilité entre $0^\circ\text{C}$ et $50^\circ\text{C}$ n'est que de $+0{,}08\%$. L'effet de la température sur le facteur de jauge est négligeable devant la variation utile. Le montage en **pont push-pull à 2 ou 4 jauges** permet de compenser totalement la dérive thermique de la résistance au repos.
+   La variation de sensibilité entre $0^\circ\text{C}$ et $50^\circ\text{C}$ vaut environ $+1{,}61\%$. La dérive de la sensibilité reste modérée, mais elle n'est pas nulle. Le montage en **pont push-pull à 2 ou 4 jauges** permet surtout de compenser la dérive thermique commune de la résistance au repos.
 :::
 :::
 
@@ -419,7 +458,7 @@ On linéarise la réponse autour de $0^\circ\text{C}$ en plaçant une résistanc
    - $R_N(25^\circ\text{C}) = 50 \times (1 + 5{,}5 \cdot 10^{-3} \times 25 + 6{,}7 \cdot 10^{-6} \times 625) = 57{,}08\,\Omega$.
    - Sensibilité équivalente :
      $$S_e(25^\circ\text{C}) = \left(\frac{R_1}{R_1 + R_N(25)}\right)^2 \cdot S_N(25^\circ\text{C})$$
-     $$S_e(25^\circ\text{C}) = \left(\frac{175}{175 + 57{,}08}\right)^2 \times 0{,}2915 = (0{,}754)^2 \times 0{,}2915 \approx 0{,}166\,\Omega/^\circ\text{C}$$
+     $$S_e(25^\circ\text{C}) = \left(\frac{175{,}7}{175{,}7 + 57{,}08}\right)^2 \times 0{,}2915 = (0{,}755)^2 \times 0{,}2915 \approx 0{,}166\,\Omega/^\circ\text{C}$$
 
 :::plotly id="ep425-td-nickel-courbe" label="Linéarisation" title="Sonde nickel seule et résistance équivalente" height="410" caption="La résistance en parallèle réduit la sensibilité mais diminue la courbure de la réponse autour de 0 °C."
 {
@@ -458,8 +497,8 @@ Elle est montée dans un pont de Wheatstone équilibré à $25^\circ\text{C}$ so
 3. **Prise en compte de l'auto-échauffement (tension mesurée $V = -15\text{ mV}$) :**
    La tension du pont s'écrit $V = V_s \left( \frac{R(T)}{R_1 + R(T)} - \frac{1}{2} \right)$.
    $$V = -15\text{ mV} \implies \frac{R(T)}{R_1 + R(T)} = \frac{1}{2} - \frac{0{,}015}{13{,}33} = 0{,}49887$$
-   $$R(T) = 4977{,}5\,\Omega \implies T \approx 25{,}15^\circ\text{C}$$
-   L'auto-échauffement par effet Joule induit une élévation intrinsèque de température de $+0{,}15^\circ\text{C}$.
+   $$R(T) = 4977{,}5\,\Omega \implies T \approx 25{,}12^\circ\text{C}$$
+   L'auto-échauffement par effet Joule induit une élévation intrinsèque de température d'environ $+0{,}12^\circ\text{C}$.
 
 4. **Bilan de puissance en bolomètre :**
    $$\phi_{absorbée} + P_{Joule} = \alpha_a \cdot (T - T_{enceinte})$$
@@ -487,10 +526,20 @@ Un gyromètre optique est constitué d'une fibre optique enroulée $N = 1200$ fo
 2. **Sensibilité du gyromètre :**
    Le signal de sortie varie selon $V(\Omega) = V_{max} \cos^2\left(\frac{\Delta \phi}{2}\right)$.
    La sensibilité maximale est obtenue pour un déphasage au repos de $\frac{\pi}{2}$ (fonctionnement au point d'inflexion).
+   Au voisinage de ce point :
+   $$\left|\frac{dV}{d\Delta\phi}\right|_{max} = \frac{V_{max}}{2}$$
+   donc :
+   $$\left|\frac{dV}{d\Omega}\right|_{max} = \frac{V_{max}}{2}\frac{8 \pi N A}{\lambda c}$$
+   Numériquement :
+   $$\frac{8 \pi N A}{\lambda c} = \frac{8\pi \times 1200 \times 0{,}01767}{0{,}67\cdot10^{-6}\times 3\cdot10^8} \approx 2{,}65\text{ rad}/(\text{rad/s})$$
+   $$\left|\frac{dV}{d\Omega}\right|_{max} \approx 1{,}33\text{ V}/(\text{rad/s})$$
 
 3. **Résolution avec un CAN 8 bits ($256$ niveaux) :**
    La plus petite variation de tension détectable est $1\text{ LSB} = \frac{1\text{ V}}{256} \approx 3{,}9\text{ mV}$.
-   En divisant par la sensibilité max, on extrait la vitesse angulaire minimale détectable $\Omega_{min}$.
+   En divisant par la sensibilité maximale :
+   $$\Omega_{min} = \frac{3{,}9\text{ mV}}{1{,}33\text{ V}/(\text{rad/s})} \approx 2{,}95\cdot10^{-3}\text{ rad/s}$$
+   soit environ :
+   $$\Omega_{min} \approx 0{,}17^\circ/\text{s}$$
 
 :::plotly id="ep425-td-sagnac-courbe" label="Point de fonctionnement" title="Signal interferométrique du gyromètre" height="400" caption="La pente est maximale au voisinage de Δφ = π/2 : une petite rotation y produit alors la plus grande variation de tension."
 {
