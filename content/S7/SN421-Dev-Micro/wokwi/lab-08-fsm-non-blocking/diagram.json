@@ -3,28 +3,44 @@
   "author": "Cours SN421 Dev-Micro",
   "editor": "wokwi",
   "parts": [
-    { "type": "board-stm32-bluepill", "id": "stm32", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "board-stm32-bluepill",
+      "id": "stm32",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
     {
       "type": "wokwi-pushbutton",
       "id": "start",
       "top": 135.4,
       "left": 182.6,
       "rotate": 180,
-      "attrs": { "color": "green", "label": "START", "bounce": "0" }
+      "attrs": {
+        "color": "green",
+        "label": "START",
+        "bounce": "0"
+      }
     },
     {
       "type": "wokwi-pushbutton",
       "id": "reset",
       "top": 159.8,
       "left": -172.8,
-      "attrs": { "color": "red", "label": "RESET", "bounce": "0" }
+      "attrs": {
+        "color": "red",
+        "label": "RESET",
+        "bounce": "0"
+      }
     },
     {
       "type": "wokwi-rgb-led",
       "id": "rgb",
       "top": -140,
       "left": 183.5,
-      "attrs": { "common": "cathode" }
+      "attrs": {
+        "common": "cathode"
+      }
     },
     {
       "type": "wokwi-resistor",
@@ -32,7 +48,9 @@
       "top": 41.8,
       "left": 200.75,
       "rotate": 270,
-      "attrs": { "value": "220" }
+      "attrs": {
+        "value": "220"
+      }
     },
     {
       "type": "wokwi-resistor",
@@ -40,7 +58,9 @@
       "top": 3.4,
       "left": 181.55,
       "rotate": 270,
-      "attrs": { "value": "220" }
+      "attrs": {
+        "value": "220"
+      }
     },
     {
       "type": "wokwi-resistor",
@@ -48,23 +68,149 @@
       "top": -15.8,
       "left": 152.75,
       "rotate": 270,
-      "attrs": { "value": "220" }
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "chip-logic-scope",
+      "id": "scope",
+      "top": -638,
+      "left": 410,
+      "attrs": {
+        "refreshHz": "20",
+        "timebaseIndex": "12",
+        "channelMask": "7",
+        "measureChannel": "0"
+      },
+      "scale": 0.65
     }
   ],
   "connections": [
-    [ "$serialMonitor:TX", "stm32:A10", "", [] ],
-    [ "$serialMonitor:RX", "stm32:A9", "", [] ],
-    [ "stm32:A0", "start:1.r", "green", [ "v-1.36", "h80.84", "v48" ] ],
-    [ "stm32:GND.1", "start:2.r", "black", [ "h-70.83", "v56.24", "h201.6", "v-76.6" ] ],
-    [ "stm32:A1", "reset:1.r", "red", [] ],
-    [ "stm32:GND.1", "reset:2.r", "black", [ "h-70.83", "v8.24", "h-48.2" ] ],
-    [ "stm32:B0", "rr:1", "red", [] ],
-    [ "rr:2", "rgb:R", "red", [ "h9.6", "v-190.8", "h-57.6", "v57.6" ] ],
-    [ "stm32:B1", "rg:1", "green", [] ],
-    [ "rg:2", "rgb:G", "green", [] ],
-    [ "stm32:B10", "rb:1", "blue", [] ],
-    [ "rb:2", "rgb:B", "blue", [ "h9.6", "v-37.2", "h27.2" ] ],
-    [ "rgb:COM", "stm32:GND.1", "black", [] ]
+    [
+      "$serialMonitor:TX",
+      "stm32:A10",
+      "",
+      []
+    ],
+    [
+      "$serialMonitor:RX",
+      "stm32:A9",
+      "",
+      []
+    ],
+    [
+      "stm32:A0",
+      "start:1.r",
+      "green",
+      [
+        "v-1.36",
+        "h80.84",
+        "v48"
+      ]
+    ],
+    [
+      "stm32:GND.1",
+      "start:2.r",
+      "black",
+      [
+        "h-70.83",
+        "v56.24",
+        "h201.6",
+        "v-76.6"
+      ]
+    ],
+    [
+      "stm32:A1",
+      "reset:1.r",
+      "red",
+      []
+    ],
+    [
+      "stm32:GND.1",
+      "reset:2.r",
+      "black",
+      [
+        "h-70.83",
+        "v8.24",
+        "h-48.2"
+      ]
+    ],
+    [
+      "stm32:B0",
+      "rr:1",
+      "red",
+      []
+    ],
+    [
+      "rr:2",
+      "rgb:R",
+      "red",
+      [
+        "h9.6",
+        "v-190.8",
+        "h-57.6",
+        "v57.6"
+      ]
+    ],
+    [
+      "stm32:B1",
+      "rg:1",
+      "green",
+      []
+    ],
+    [
+      "rg:2",
+      "rgb:G",
+      "green",
+      []
+    ],
+    [
+      "stm32:B10",
+      "rb:1",
+      "blue",
+      []
+    ],
+    [
+      "rb:2",
+      "rgb:B",
+      "blue",
+      [
+        "h9.6",
+        "v-37.2",
+        "h27.2"
+      ]
+    ],
+    [
+      "rgb:COM",
+      "stm32:GND.1",
+      "black",
+      []
+    ],
+    [
+      "stm32:B0",
+      "scope:D0",
+      "red",
+      []
+    ],
+    [
+      "stm32:B1",
+      "scope:D1",
+      "green",
+      []
+    ],
+    [
+      "stm32:B10",
+      "scope:D2",
+      "blue",
+      []
+    ],
+    [
+      "stm32:GND.1",
+      "scope:GND",
+      "black",
+      []
+    ]
   ],
   "dependencies": {}
 }

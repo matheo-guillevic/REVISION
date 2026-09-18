@@ -19,5 +19,8 @@
     [ "stm32:GND.1", "pot:GND", "black", [] ],
     [ "stm32:A0", "pot:SIG", "green", [] ]
   ],
+  "serialMonitor": {
+    "display": "plotter"
+  },
   "dependencies": {}
 }

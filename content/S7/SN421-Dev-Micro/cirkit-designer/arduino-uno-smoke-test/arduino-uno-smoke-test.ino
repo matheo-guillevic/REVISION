@@ -1,0 +1,53 @@
+const byte LED_HEARTBEAT = 13;
+const byte LED_PWM = 9;
+const byte BUTTON_PIN = 2;
+const byte POT_PIN = A0;
+
+const unsigned long BLINK_PERIOD_MS = 500;
+const unsigned long REPORT_PERIOD_MS = 250;
+
+unsigned long lastBlinkAt = 0;
+unsigned long lastReportAt = 0;
+bool heartbeatState = false;
+
+void setup() {
+  pinMode(LED_HEARTBEAT, OUTPUT);
+  pinMode(LED_PWM, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+  Serial.begin(115200);
+  Serial.println("Cirkit Designer smoke test - Arduino Uno");
+  Serial.println("A0=potentiometre, D2=bouton, D9=PWM, D13=LED");
+}
+
+void loop() {
+  const unsigned long now = millis();
+
+  const int adcValue = analogRead(POT_PIN);
+  const byte pwmValue = map(adcValue, 0, 1023, 0, 255);
+  const bool buttonPressed = digitalRead(BUTTON_PIN) == LOW;
+
+  analogWrite(LED_PWM, pwmValue);
+
+  if (buttonPressed) {
+    heartbeatState = true;
+    digitalWrite(LED_HEARTBEAT, HIGH);
+  } else if (now - lastBlinkAt >= BLINK_PERIOD_MS) {
+    lastBlinkAt = now;
+    heartbeatState = !heartbeatState;
+    digitalWrite(LED_HEARTBEAT, heartbeatState ? HIGH : LOW);
+  }
+
+  if (now - lastReportAt >= REPORT_PERIOD_MS) {
+    lastReportAt = now;
+    Serial.print("adc=");
+    Serial.print(adcValue);
+    Serial.print(" pwm=");
+    Serial.print(pwmValue);
+    Serial.print(" button=");
+    Serial.print(buttonPressed ? "pressed" : "released");
+    Serial.print(" led13=");
+    Serial.println(heartbeatState ? "on" : "off");
+  }
+}
+

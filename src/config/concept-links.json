@@ -930,7 +930,7 @@
           "subject": "SN421-Dev-Micro"
         },
         {
-          "href": "SN421-Dev-Micro.html#sn421-periph-laboratoire-virtuel-wokwi-modulation-de-largeur-d-impulsion-pwm-oscilloscope",
+          "href": "SN421-Dev-Micro.html#sn421-periph-laboratoire-virtuel-wokwi-modulation-de-largeur-d-impulsion-pwm-analyseur-logiqu",
           "label": "PWM",
           "subject": "SN421-Dev-Micro"
         }
@@ -1443,12 +1443,12 @@
           "subject": "IN451-IA"
         },
         {
-          "href": "IN451-IA.html#ia-deep-learning-pourquoi-cet-essor-si-tardif",
+          "href": "IN451-IA.html#ia-historique-pourquoi-l-essor-du-deep-learning-fut-il-si-tardif",
           "label": "Essor du deep learning",
           "subject": "IN451-IA"
         },
         {
-          "href": "IN451-IA.html#ia-deep-learning-notion-de-variable-cachee",
+          "href": "IN451-IA.html#ia-definitions-notion-de-variable-cachee",
           "label": "Variable cachee en DL",
           "subject": "IN451-IA"
         }

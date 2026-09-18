@@ -3,35 +3,86 @@
   "author": "SN421 TP1",
   "editor": "wokwi",
   "parts": [
-    { "type": "wokwi-arduino-uno", "id": "uno", "top": 0.6, "left": -0.6, "attrs": {} },
+    {
+      "type": "wokwi-arduino-uno",
+      "id": "uno",
+      "top": 0.6,
+      "left": -0.6,
+      "attrs": {}
+    },
     {
       "type": "wokwi-led",
       "id": "led",
       "top": -147.6,
       "left": 51.8,
-      "attrs": { "color": "red", "flip": "1" }
+      "attrs": {
+        "color": "red",
+        "flip": "1"
+      }
     },
     {
       "type": "wokwi-resistor",
       "id": "rled",
       "top": -92.05,
       "left": 0,
-      "attrs": { "value": "220" }
+      "attrs": {
+        "value": "220"
+      }
     },
     {
-      "type": "wokwi-logic-analyzer",
-      "id": "logic",
-      "top": -162.85,
+      "type": "chip-logic-scope",
+      "id": "scope",
+      "top": -542.85,
       "left": 230.4,
-      "attrs": { "channels": "8" }
+      "attrs": {
+        "refreshHz": "20",
+        "timebaseIndex": "8",
+        "channelMask": "1",
+        "measureChannel": "0"
+      },
+      "scale": 0.65
     }
   ],
   "connections": [
-    [ "uno:13", "rled:1", "orange", [ "h-0.2", "v-60", "h-124.8" ] ],
-    [ "rled:2", "led:A", "orange", [ "h30" ] ],
-    [ "led:C", "uno:GND.1", "black", [ "v72", "h-250" ] ],
-    [ "uno:13", "logic:D0", "orange", [ "v-66.6", "h47.8", "v-96" ] ],
-    [ "uno:GND.1", "logic:GND", "black", [ "v-114.6", "h220.5" ] ]
+    [
+      "uno:13",
+      "rled:1",
+      "orange",
+      [
+        "h-0.2",
+        "v-60",
+        "h-124.8"
+      ]
+    ],
+    [
+      "rled:2",
+      "led:A",
+      "orange",
+      [
+        "h30"
+      ]
+    ],
+    [
+      "led:C",
+      "uno:GND.1",
+      "black",
+      [
+        "v72",
+        "h-250"
+      ]
+    ],
+    [
+      "uno:13",
+      "scope:D0",
+      "orange",
+      []
+    ],
+    [
+      "uno:GND.1",
+      "scope:GND",
+      "black",
+      []
+    ]
   ],
   "dependencies": {}
 }

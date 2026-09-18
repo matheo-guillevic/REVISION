@@ -3,7 +3,7 @@ const uint8_t ADC_PIN = PA0;
 void setup() {
   analogReadResolution(12);
   Serial.begin(115200);
-  Serial.println("Lab 04 - ADC 12 bits et conversion mV en entier.");
+  Serial.println("adc:0 millivolts:0");
 }
 
 void loop() {
@@ -13,10 +13,10 @@ void loop() {
   uint32_t millivoltsQ8 = (uint32_t)raw * 206UL;
   uint16_t millivolts = millivoltsQ8 >> 8;
 
-  Serial.print("ADC=");
+  Serial.print("adc:");
   Serial.print(raw);
-  Serial.print("  U=");
+  Serial.print(" millivolts:");
   Serial.print(millivolts);
-  Serial.println(" mV");
+  Serial.println();
   delay(400);
 }

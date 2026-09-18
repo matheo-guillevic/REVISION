@@ -3,23 +3,92 @@
   "author": "Cours SN421 Dev-Micro",
   "editor": "wokwi",
   "parts": [
-    { "type": "board-stm32-bluepill", "id": "stm32", "top": 0, "left": 0, "attrs": {} },
-    { "type": "wokwi-led", "id": "led", "top": -70.8, "left": 23, "attrs": { "color": "red" } },
+    {
+      "type": "board-stm32-bluepill",
+      "id": "stm32",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led",
+      "top": -70.8,
+      "left": 23,
+      "attrs": {
+        "color": "red"
+      }
+    },
     {
       "type": "wokwi-resistor",
       "id": "rled",
       "top": -24.55,
       "left": 85,
       "rotate": 180,
-      "attrs": { "value": "220" }
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "chip-logic-scope",
+      "id": "scope",
+      "top": -585,
+      "left": 280,
+      "attrs": {
+        "refreshHz": "20",
+        "timebaseIndex": "12",
+        "channelMask": "1",
+        "measureChannel": "0"
+      },
+      "scale": 0.65
     }
   ],
   "connections": [
-    [ "$serialMonitor:TX", "stm32:A10", "", [] ],
-    [ "$serialMonitor:RX", "stm32:A9", "", [] ],
-    [ "stm32:B0", "rled:1", "red", [] ],
-    [ "rled:2", "led:A", "red", [] ],
-    [ "led:C", "stm32:GND.1", "black", [ "h-57.2", "v212.56" ] ]
+    [
+      "$serialMonitor:TX",
+      "stm32:A10",
+      "",
+      []
+    ],
+    [
+      "$serialMonitor:RX",
+      "stm32:A9",
+      "",
+      []
+    ],
+    [
+      "stm32:B0",
+      "rled:1",
+      "red",
+      []
+    ],
+    [
+      "rled:2",
+      "led:A",
+      "red",
+      []
+    ],
+    [
+      "led:C",
+      "stm32:GND.1",
+      "black",
+      [
+        "h-57.2",
+        "v212.56"
+      ]
+    ],
+    [
+      "stm32:B0",
+      "scope:D0",
+      "red",
+      []
+    ],
+    [
+      "stm32:GND.1",
+      "scope:GND",
+      "black",
+      []
+    ]
   ],
   "dependencies": {}
 }

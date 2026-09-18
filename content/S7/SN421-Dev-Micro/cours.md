@@ -488,22 +488,22 @@ flowchart TD
 <!-- [EMPLACEMENT INTERACTIF WOKWI 03]                                       -->
 <!-- Chapitre 3 / Section 2 : Timers et Génération PWM (Output Compare)      -->
 <!-- Cible : ARM Cortex-M / Raspberry Pi Pico / STM32                        -->
-<!-- Schéma : MCU + LED + Oscilloscope virtuel Wokwi                         -->
+<!-- Schéma : MCU + LED + analyseur logique Wokwi                            -->
 <!-- Objectif : Mesurer la fréquence et le rapport cyclique (Duty Cycle)     -->
 <!-- Iframe d'intégration Wokwi :                                            -->
 <!-- <iframe src="https://wokwi.com/projects/YOUR_PROJECT_ID_03"             -->
 <!--         width="100%" height="500px" frameborder="0"></iframe>           -->
 <!-- ======================================================================= -->
-:::block type="method" title="Laboratoire Virtuel Wokwi : Modulation de Largeur d'Impulsion (PWM) & Oscilloscope"
-**Objectif pédagogique :** Dimensionner les registres matériels d'un timer (Prescaler, Auto-Reload, Capture/Compare) et vérifier la forme d'onde générée sur un oscilloscope virtuel.
-* **Cible et composants virtuels :** Périphérique Timer en mode Output Compare (PWM), sortie reliée à une LED et à la voie A de l'oscilloscope virtuel Wokwi.
+:::block type="method" title="Laboratoire Virtuel Wokwi : Modulation de Largeur d'Impulsion (PWM) & analyseur logique"
+**Objectif pédagogique :** Dimensionner les registres matériels d'un timer (Prescaler, Auto-Reload, Capture/Compare) et vérifier la forme d'onde générée avec l'analyseur logique Wokwi.
+* **Cible et composants virtuels :** Périphérique Timer en mode Output Compare (PWM), sortie reliée à une LED et à la voie D0 de l'analyseur logique Wokwi.
 * **Protocole d'expérimentation pas-à-pas :**
   1. Fixer l'horloge du timer à $1\,\text{MHz}$ via le registre `PSC` et la période à $1\,\text{ms}$ ($1\,\text{kHz}$) via le registre `ARR = 999`.
   2. Modifier dynamiquement la valeur du registre de comparaison `CCR` ($250$, $500$, $750$) pour générer des rapports cycliques de 25%, 50% et 75%.
-  3. Mesurer les curseurs de temps sur l'oscilloscope virtuel pour vérifier la durée de l'état haut $t_{\text{on}}$ et observer la variation continue de luminosité sur la LED.
+  3. Arrêter la simulation, ouvrir la capture VCD dans PulseView ou GTKWave, puis vérifier la durée de l'état haut $t_{\text{on}}$ et observer la variation continue de luminosité sur la LED.
 :::
 
-:::wokwi id="sn421-wokwi-03" label="Wokwi 03" title="Timer PWM et oscilloscope" src="https://wokwi.com/projects/473973832048636929"
+:::wokwi id="sn421-wokwi-03" label="Wokwi 03" title="Timer PWM et analyseur logique" src="https://wokwi.com/projects/473973832048636929"
 Mesure de fréquence, rapport cyclique et variation de luminosité.
 :::
 

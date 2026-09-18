@@ -54,6 +54,19 @@
       "attrs": {
         "value": "4700"
       }
+    },
+    {
+      "type": "chip-logic-scope",
+      "id": "scope",
+      "top": -605,
+      "left": 380,
+      "attrs": {
+        "refreshHz": "20",
+        "timebaseIndex": "12",
+        "channelMask": "3",
+        "measureChannel": "0"
+      },
+      "scale": 0.65
     }
   ],
   "connections": [
@@ -115,6 +128,24 @@
       "ledOpenDrain:A",
       "stm32:3V3.1",
       "red",
+      []
+    ],
+    [
+      "stm32:B0",
+      "scope:D0",
+      "green",
+      []
+    ],
+    [
+      "stm32:B1",
+      "scope:D1",
+      "blue",
+      []
+    ],
+    [
+      "stm32:GND.1",
+      "scope:GND",
+      "black",
       []
     ]
   ],
