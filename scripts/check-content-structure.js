@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
+const { listSubjectDirs, subjectFile } = require("../src/build/content-paths");
 
 const root = process.cwd();
-const contentDir = path.join(root, "content");
 const outDir = path.join(root, "out");
 const configDir = path.join(root, "src", "config");
 
@@ -30,17 +30,9 @@ function warn(condition, message) {
   if (!condition) warnings.push(message);
 }
 
-function listSubjectDirs() {
-  return fs
-    .readdirSync(contentDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort((a, b) => a.localeCompare(b, "fr"));
-}
-
 function checkCourseFrontmatter(subjects) {
   for (const subject of subjects) {
-    const coursePath = path.join(contentDir, subject, "cours.md");
+    const coursePath = subjectFile(subject, "cours.md");
     assert(fs.existsSync(coursePath), `${subject}: cours.md introuvable`);
     if (!fs.existsSync(coursePath)) continue;
 
@@ -69,7 +61,7 @@ function checkConfiguredPages(configFile, kind, subjects, targets) {
       targets.add(target);
 
       const source = page.source || target.replace(/\.html$/i, ".md");
-      const markdownPath = path.join(contentDir, group.subject, kind, source);
+      const markdownPath = subjectFile(group.subject, kind, source);
       assert(fs.existsSync(markdownPath), `${configFile}: source Markdown introuvable ${rel(markdownPath)}`);
       if (!fs.existsSync(markdownPath)) continue;
 
@@ -94,14 +86,14 @@ function checkOrphanMarkdown(subjects, pageConfigs) {
     for (const group of config.groups || []) {
       const pages = kind === "exam" ? group.exams : group.pages;
       for (const page of pages || []) {
-        configured.add(rel(path.join(contentDir, group.subject, kind, page.source || page.target.replace(/\.html$/i, ".md"))));
+        configured.add(rel(subjectFile(group.subject, kind, page.source || page.target.replace(/\.html$/i, ".md"))));
       }
     }
   }
 
   for (const subject of subjects) {
     for (const kind of ["td", "tp", "exam"]) {
-      const dir = path.join(contentDir, subject, kind);
+      const dir = subjectFile(subject, kind);
       if (!fs.existsSync(dir)) continue;
       for (const file of fs.readdirSync(dir).filter((entry) => entry.endsWith(".md"))) {
         const filePath = rel(path.join(dir, file));

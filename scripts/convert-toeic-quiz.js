@@ -1,10 +1,10 @@
 const fs = require("fs");
 const path = require("path");
+const { subjectFile } = require("../src/build/content-paths");
 
-const root = process.cwd();
 const subject = "ANGLAIS-TOEIC";
-const sourcePath = path.join(root, "content", subject, "cours-quizz.md");
-const targetPath = path.join(root, "content", subject, "cours.md");
+const sourcePath = subjectFile(subject, "cours-quizz.md");
+const targetPath = subjectFile(subject, "cours.md");
 
 function slugify(value) {
   return String(value)

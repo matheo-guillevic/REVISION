@@ -101,8 +101,8 @@ N_{\text{cycles/toggle}} = \frac{f_{\text{CPU}}}{2f_{\text{signal}}}
 avec \( f_{\text{CPU}} = 16\,\text{MHz} \).
 :::
 
-:::wokwi id="sn421-tp1-wokwi-gpio" label="Wokwi TP1.1" title="GPIO - digitalWrite vs registres" src="https://wokwi.com/projects/YOUR_PROJECT_ID_SN421_TP1_GPIO" height="620"
-Montage a importer depuis `content/SN421-Dev-Micro/wokwi/tp1-01-gpio-performance`.
+:::wokwi id="sn421-tp1-wokwi-gpio" label="Wokwi TP1.1" title="GPIO - digitalWrite vs registres" src="https://wokwi.com/projects/475481421742399489" height="620"
+Montage a importer depuis `content/S7/SN421-Dev-Micro/wokwi/tp1-01-gpio-performance`.
 
 Manipulations :
 
@@ -225,8 +225,8 @@ ISR(INT0_vect) {
 ```
 :::
 
-:::wokwi id="sn421-tp1-wokwi-int0" label="Wokwi TP1.2" title="INT0 - bouton sur D2 et reponse LED" src="https://wokwi.com/projects/YOUR_PROJECT_ID_SN421_TP1_INT0" height="620"
-Montage a importer depuis `content/SN421-Dev-Micro/wokwi/tp1-02-int0-response`.
+:::wokwi id="sn421-tp1-wokwi-int0" label="Wokwi TP1.2" title="INT0 - bouton sur D2 et reponse LED" src="https://wokwi.com/projects/475481683256289281" height="620"
+Montage a importer depuis `content/S7/SN421-Dev-Micro/wokwi/tp1-02-int0-response`.
 
 Manipulations :
 
@@ -315,8 +315,8 @@ Avec `N = 256` et `T = 1 s` :
 \]
 :::
 
-:::wokwi id="sn421-tp1-wokwi-timer1" label="Wokwi TP1.3" title="Timer1 - CTC et PWM materielle" src="https://wokwi.com/projects/YOUR_PROJECT_ID_SN421_TP1_TIMER1" height="620"
-Montage a importer depuis `content/SN421-Dev-Micro/wokwi/tp1-03-timer1-ctc-pwm`.
+:::wokwi id="sn421-tp1-wokwi-timer1" label="Wokwi TP1.3" title="Timer1 - CTC et PWM materielle" src="https://wokwi.com/projects/475481954633085953" height="620"
+Montage a importer depuis `content/S7/SN421-Dev-Micro/wokwi/tp1-03-timer1-ctc-pwm`.
 
 Manipulations :
 

@@ -232,8 +232,8 @@ associee a la question.
 
 Pour les gros corpus, preferer un script de conversion qui produit ce JSON
 depuis une source plus lisible. Le script `scripts/convert-toeic-quiz.js`
-genere actuellement `content/ANGLAIS-TOEIC/cours.md` depuis
-`content/ANGLAIS-TOEIC/cours-quizz.md`.
+genere actuellement `content/S7/ANGLAIS-TOEIC/cours.md` depuis
+`content/S7/ANGLAIS-TOEIC/cours-quizz.md`.
 
 ## CircuitJS
 

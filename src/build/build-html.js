@@ -2,6 +2,7 @@
 const path = require("path");
 const crypto = require("crypto");
 const { renderMarkdownCourse } = require("./markdown-renderer");
+const { subjectFile } = require("./content-paths");
 
 const root = process.cwd();
 const outDir = path.join(root, "out");
@@ -372,7 +373,7 @@ function renderCommonCourseNav(structure) {
 }
 
 function readCourseBody(subject, structure) {
-  const markdownPath = path.join(root, "content", subject, "cours.md");
+  const markdownPath = subjectFile(subject, "cours.md");
   if (!fs.existsSync(markdownPath)) {
     throw new Error(`Source Markdown introuvable : ${path.relative(root, markdownPath)}`);
   }
@@ -381,7 +382,7 @@ function readCourseBody(subject, structure) {
 }
 
 function readStandaloneCourseBody(subject) {
-  const markdownPath = path.join(root, "content", subject, "cours.md");
+  const markdownPath = subjectFile(subject, "cours.md");
   if (!fs.existsSync(markdownPath)) {
     throw new Error(`Source Markdown introuvable : ${path.relative(root, markdownPath)}`);
   }

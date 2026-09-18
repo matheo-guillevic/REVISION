@@ -3,6 +3,7 @@ const path = require("path");
 const crypto = require("crypto");
 const matter = require("gray-matter");
 const { renderBlocks, renderRelatedConceptLinks } = require("./markdown-renderer");
+const { subjectFile } = require("./content-paths");
 
 const root = process.cwd();
 const outDir = path.join(root, "out");
@@ -162,7 +163,7 @@ function renderRelatedLinksSidebar() {
 
 function markdownPathFor(group, page, kind) {
   const source = page.source || page.target.replace(/\.html$/i, ".md");
-  return path.join(root, "content", group.subject, kind, source);
+  return subjectFile(group.subject, kind, source);
 }
 
 function renderPage(group, page, kind, markdownPath) {

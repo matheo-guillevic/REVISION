@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
+const { listSubjectDirs, subjectFile } = require("./content-paths");
 
 const root = process.cwd();
-const contentDir = path.join(root, "content");
 const configDir = path.join(root, "src", "config");
 const outDir = path.join(root, "out");
 
@@ -108,7 +108,7 @@ function configuredPages(kind) {
     const pages = kind === "exam" ? group.exams : group.pages;
     for (const page of pages || []) {
       const source = page.source || page.target.replace(/\.html$/i, ".md");
-      entries.set(path.join(contentDir, group.subject, kind, source), {
+      entries.set(subjectFile(group.subject, kind, source), {
         subject: group.subject,
         type: kind,
         title: page.title || page.heading || source,
@@ -120,11 +120,9 @@ function configuredPages(kind) {
 }
 
 function courseEntries() {
-  return fs.readdirSync(contentDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => {
-      const subject = entry.name;
-      const filePath = path.join(contentDir, subject, "cours.md");
+  return listSubjectDirs()
+    .map((subject) => {
+      const filePath = subjectFile(subject, "cours.md");
       if (!fs.existsSync(filePath)) return null;
       return [filePath, { subject, type: "course", title: subject, href: `${subject}.html` }];
     })
